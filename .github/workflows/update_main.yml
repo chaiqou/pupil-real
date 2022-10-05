@@ -17,7 +17,8 @@ jobs:
           port: 22
           script: |
             cd /var/www/main
-            php artisan down --message="Karbantartás folyamatban..."
+            php artisan down
+            git stash
             git pull origin main
             php artisan migrate
             php artisan up
