@@ -15,20 +15,20 @@ jobs:
           port: 22
           script: |
             cd /var/www/
-            git clone git@github.com:PupilPay/Portal.git ${ GITHUB_REF##*/ }
-            cd ${ GITHUB_REF##*/ }
-            git checkout -b ${ GITHUB_REF##*/ }
+            git clone git@github.com:PupilPay/Portal.git ${{ GITHUB_REF##*/ }}
+            cd ${{ GITHUB_REF##*/ }}
+            git checkout -b ${{ GITHUB_REF##*/ }}
             composer install --no-interaction
             npm install
             cp .env.example .env
-            sed -i 's/branchname/${ GITHUB_REF##*/ }/g' .env
+            sed -i 's/branchname/${{ GITHUB_REF##*/ }}/g' .env
             sed -i 's/dbpass/${{ secrets.PASSWORD }}/g' .env
             sed -i 's/mailpass/${{ secrets.MAIL_PASS }}/g' .env
-            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${ GITHUB_REF##*/ };"
+            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${{ GITHUB_REF##*/ }};"
             php artisan migrate
             chmod -R 755 storage
             chown -R www-data:www-data storage
             php artisan key:generate
-            sed -i 's/branchname/${ GITHUB_REF##*/ }/g' apache.conf
-            cp apache.conf /etc/apache2/sites-enabled/${ GITHUB_REF##*/ }.conf
+            sed -i 's/branchname/${{ GITHUB_REF##*/ }}/g' apache.conf
+            cp apache.conf /etc/apache2/sites-enabled/${{ GITHUB_REF##*/ }}.conf
             service apache2 restart
