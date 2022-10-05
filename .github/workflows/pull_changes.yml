@@ -1,13 +1,15 @@
-name: remote ssh command
+name: Pull changes
 on: 
-  push:
-    branches:
-      - main
+  push
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -16,9 +18,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd /var/www/main
+            cd /var/www/${{ steps.extract_branch.outputs.branch }}
             php artisan down
             git stash
-            git pull origin main
+            git pull origin ${{ steps.extract_branch.outputs.branch }}
             php artisan migrate
             php artisan up
