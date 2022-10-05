@@ -6,6 +6,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -15,21 +19,21 @@ jobs:
           port: 22
           script: |
             cd /var/www/
-            git clone git@github.com:PupilPay/Portal.git ${{ github.ref#refs/heads/ }}
-            cd ${{ github.ref#refs/heads/ }}
-            git checkout -b ${{ github.ref#refs/heads/ }}
+            git clone git@github.com:PupilPay/Portal.git ${{ steps.extract_branch.outputs.branch }}
+            cd ${{ steps.extract_branch.outputs.branch }}
+            git checkout -b ${{ steps.extract_branch.outputs.branch }}
             composer install --no-interaction
             npm install
             cp .env.example .env
-            echo "${{ github.ref#refs/heads/ }}"
-            sed -i 's/branchname/${{ github.ref#refs/heads/ }}/g' .env
+            echo "${{ steps.extract_branch.outputs.branch }}"
+            sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' .env
             sed -i 's/dbpass/${{ secrets.PASSWORD }}/g' .env
             sed -i 's/mailpass/${{ secrets.MAIL_PASS }}/g' .env
-            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${{ github.ref#refs/heads/ }};"
+            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${{ steps.extract_branch.outputs.branch }};"
             php artisan migrate
             chmod -R 755 storage
             chown -R www-data:www-data storage
             php artisan key:generate
-            sed -i 's/branchname/${{ github.ref#refs/heads/ }}/g' apache.conf
-            cp apache.conf /etc/apache2/sites-enabled/${{ github.ref#refs/heads/ }}.conf
+            sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' apache.conf
+            cp apache.conf /etc/apache2/sites-enabled/${{ steps.extract_branch.outputs.branch }}.conf
             service apache2 restart
