@@ -17,7 +17,6 @@
             <div>
                 <img data-aos="fade-up" class="mx-auto h-20 w-auto" src="{{asset('img/dash-color.svg')}}" alt="Dash">
                 <h2 data-aos="fade-up" data-aos-delay="100" class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to Dash</h2>
-                <h2 data-aos="fade-up" data-aos-delay="100" class="mt-6 text-center text-3xl font-medium text-gray-900">Auto-deploy works!</h2>
                 @if ($errors->has('email'))
                 <div data-aos="fade-up" data-aos-delay="150" class="rounded-md bg-red-50 p-3 mt-4">
                     <div class="flex">
