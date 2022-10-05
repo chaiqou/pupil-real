@@ -15,21 +15,21 @@ jobs:
           port: 22
           script: |
             cd /var/www/
-            git clone git@github.com:PupilPay/Portal.git ${{ github.ref }}
-            cd ${{ github.ref }}
-            git checkout -b ${{ github.ref }}
+            git clone git@github.com:PupilPay/Portal.git ${{ github.ref#refs/heads/ }}
+            cd ${{ github.ref#refs/heads/ }}
+            git checkout -b ${{ github.ref#refs/heads/ }}
             composer install --no-interaction
             npm install
             cp .env.example .env
-            echo "${{ github.ref.split('/')[2] }}"
-            sed -i 's/branchname/${{ github.ref }}/g' .env
+            echo "${{ github.ref#refs/heads/ }}"
+            sed -i 's/branchname/${{ github.ref#refs/heads/ }}/g' .env
             sed -i 's/dbpass/${{ secrets.PASSWORD }}/g' .env
             sed -i 's/mailpass/${{ secrets.MAIL_PASS }}/g' .env
-            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${{ github.ref }};"
+            mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE ${{ github.ref#refs/heads/ }};"
             php artisan migrate
             chmod -R 755 storage
             chown -R www-data:www-data storage
             php artisan key:generate
-            sed -i 's/branchname/${{ github.ref }}/g' apache.conf
-            cp apache.conf /etc/apache2/sites-enabled/${{ github.ref }}.conf
+            sed -i 's/branchname/${{ github.ref#refs/heads/ }}/g' apache.conf
+            cp apache.conf /etc/apache2/sites-enabled/${{ github.ref#refs/heads/ }}.conf
             service apache2 restart
