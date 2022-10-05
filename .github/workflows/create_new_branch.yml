@@ -25,7 +25,6 @@ jobs:
             composer install --no-interaction
             npm install
             cp .env.example .env
-            echo "${{ steps.extract_branch.outputs.branch }}"
             sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' .env
             sed -i 's/dbpass/${{ secrets.PASSWORD }}/g' .env
             sed -i 's/mailpass/${{ secrets.MAIL_PASS }}/g' .env
@@ -37,3 +36,4 @@ jobs:
             sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' apache.conf
             cp apache.conf /etc/apache2/sites-enabled/${{ steps.extract_branch.outputs.branch }}.conf
             service apache2 restart
+            git pull origin ${{ steps.extract_branch.outputs.branch }}
