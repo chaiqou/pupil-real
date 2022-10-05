@@ -1,0 +1,23 @@
+name: remote ssh command
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 30042
+          script: |
+            cd /var/www/main
+            php artisan down --message="Karbantartás folyamatban..."
+            git pull origin main
+            php artisan migrate
+            php artisan up
