@@ -36,4 +36,6 @@ jobs:
             sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' apache.conf
             cp apache.conf /etc/apache2/sites-enabled/${{ steps.extract_branch.outputs.branch }}.conf
             service apache2 restart
+            git stash
             git pull origin ${{ steps.extract_branch.outputs.branch }}
+            npm run prod

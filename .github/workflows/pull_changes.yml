@@ -23,4 +23,5 @@ jobs:
             git stash
             git pull origin ${{ steps.extract_branch.outputs.branch }}
             php artisan migrate
+            npm run prod
             php artisan up
