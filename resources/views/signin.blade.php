@@ -38,7 +38,7 @@
                     </div>
                 @endif
             </div>
-            <form data-aos="fade-up" data-aos-delay="200" class="mt-8 space-y-6" action="{{ route('login.post') }}"
+            <form data-aos="fade-up" data-aos-delay="200" class="mt-8 space-y-6" action="{{ route('login') }}"
                 method="POST" onsubmit="document.getElementById('submit-button').disabled = true;">
                 @csrf
                 <input type="hidden" name="remember" value="true">
