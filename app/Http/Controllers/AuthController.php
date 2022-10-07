@@ -33,7 +33,7 @@ class AuthController extends Controller
 
     public function redirectIfLoggedIn(Request $request): View|RedirectResponse
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect(route('dashboard'));
         }
         return view('signin');
