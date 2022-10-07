@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthenticationRequest;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -10,21 +11,21 @@ use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
-    public function authenticate(Request $request): RedirectResponse
+    public function authenticate(AuthenticationRequest $request): RedirectResponse
     {
         Log::info('Attempting to authenticate user');
         Log::info($request->all());
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $remember = $request->input('remember-me');
-        if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
-            // Authentication passed...
+
+        $validated = $request->validated();
+
+       if(Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
+       {
             Log::info('Authentication successful');
             $request->session()->regenerate();
             return redirect()->intended('dashboard');
         }
         Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
-        //Pass the error message to the view
+
 
         return back()->withErrors(['email' => 'These credentials do not match our records.',]);
     }
@@ -41,6 +42,8 @@ class AuthController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect(route('default'));
     }
 }
