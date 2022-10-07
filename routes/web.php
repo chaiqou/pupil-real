@@ -17,7 +17,7 @@ use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
-Route::post('/login-post', [AuthController::class, 'authenticate'])->name('login.post');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 
 Route::middleware(['auth'])->group(function(){

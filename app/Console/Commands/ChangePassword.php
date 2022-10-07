@@ -38,6 +38,5 @@ class ChangePassword extends Command
         $user->password = bcrypt($password);
         $user->save();
         $this->info('Password changed successfully.');
-        return 0;
     }
 }
