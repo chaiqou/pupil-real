@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\LoginController@redirIfLoggedIn')->name('default');
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dash', function () {
-        return view('dashboard')->with('page', 'Dashboard');
-    })->name('dashboard');
+
+Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
+Route::post('/login-post', [AuthController::class, 'authenticate'])->name('login.post');
+
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-Route::post('/login-post', 'App\Http\Controllers\LoginController@authenticate')->name('login.post');
-Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');

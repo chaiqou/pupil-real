@@ -2,27 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
-    //
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        return redirect('/');
-    }
-
-    public function redirIfLoggedIn(Request $request){
-        if(Auth::check()){
-            return redirect('/dash');
-        }
-        return view('signin');
-    }
-
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): RedirectResponse
     {
         Log::info('Attempting to authenticate user');
         Log::info($request->all());
@@ -33,11 +21,26 @@ class LoginController extends Controller
             // Authentication passed...
             Log::info('Authentication successful');
             $request->session()->regenerate();
-            return redirect()->intended('dash');
+            return redirect()->intended('dashboard');
         }
         Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
         //Pass the error message to the view
 
         return back()->withErrors(['email' => 'These credentials do not match our records.',]);
+    }
+
+
+    public function redirectIfLoggedIn(Request $request): View|RedirectResponse
+    {
+        if(Auth::check()){
+            return redirect(route('dashboard'));
+        }
+        return view('signin');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        return redirect(route('default'));
     }
 }
