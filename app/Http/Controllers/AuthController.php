@@ -27,11 +27,11 @@ class AuthController extends Controller
         Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
 
 
-        return back()->withErrors(['email' => 'These credentials do not match our records.',]);
+        return back()->withErrors(['email' => 'These credentials do not match our records.']);
     }
 
 
-    public function redirectIfLoggedIn(Request $request): View|RedirectResponse
+    public function redirectIfLoggedIn(): View|RedirectResponse
     {
         if (Auth::check()) {
             return redirect(route('dashboard'));
