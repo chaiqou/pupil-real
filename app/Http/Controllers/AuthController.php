@@ -17,7 +17,7 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $remember = $request->input('remember-me');
-        if(Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+        if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
             // Authentication passed...
             Log::info('Authentication successful');
             $request->session()->regenerate();
@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function redirectIfLoggedIn(Request $request): View|RedirectResponse
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect(route('dashboard'));
         }
         return view('signin');
