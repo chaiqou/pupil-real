@@ -15,12 +15,10 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
-
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
