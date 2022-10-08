@@ -17,7 +17,11 @@ return new class() extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password');
-			$table->unsignedInteger('school_id');
+			$table->foreignId('school_id')->constrained();
+			$table->foreignId('billingo_id')->constrained();
+			$table->integer('summary_frequency');
+			$table->integer('finished_onboarding');
+			$table->json('user_information');
 			$table->rememberToken();
 			$table->timestamps();
 		});
