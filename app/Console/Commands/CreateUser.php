@@ -43,7 +43,7 @@ class CreateUser extends Command
 			'name'     => $name,
 			'email'    => $email,
 			'password' => bcrypt($password),
-		]);
+		])->assignRole('admin');
 
 		$this->info('User created successfully.');
 	}
