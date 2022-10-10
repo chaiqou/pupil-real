@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
 			'school_id'               => 1,
 			'billingo_id'             => 2,
 			'summary_frequency'       => 2,
-			'finished_onboarding'     => 2,
+			'finished_onboarding'     => 0,
 			'user_information'        => json_encode([
 				$faker->randomElement(
 					[
@@ -57,15 +57,15 @@ class UserSeeder extends Seeder
 			]),
 			'email'                   => 'school@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
-		])->assignRole('shcool');
+		])->assignRole('school');
 
 		$parent = User::query()->updateOrCreate([
 			'first_name'              => 'parent',
 			'last_name'               => 'parentlast',
 			'school_id'               => 1,
 			'billingo_id'             => 3,
-			'summary_frequency'       => 3,
-			'finished_onboarding'     => 3,
+			'summary_frequency'       => 1,
+			'finished_onboarding'     => 2,
 			'user_information'        => json_encode([
 				$faker->randomElement(
 					[
