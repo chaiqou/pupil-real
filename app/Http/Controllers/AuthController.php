@@ -35,7 +35,7 @@ class AuthController extends Controller
 		{
 			return redirect(route('dashboard'));
 		}
-		return view('signin');
+		return view('sign-in');
 	}
 
 	public function logout(Request $request): RedirectResponse
