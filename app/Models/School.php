@@ -16,4 +16,9 @@ class School extends Model
 	{
 		return $this->hasMany(User::class);
 	}
+
+	public function invite(): HasMany
+	{
+		return $this->hasMany(Invite::class);
+	}
 }

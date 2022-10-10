@@ -22,7 +22,7 @@ return new class() extends Migration {
 			$table->tinyInteger('billingo_id');
 			$table->tinyInteger('summary_frequency');
 			$table->tinyInteger('finished_onboarding');
-			$table->json('user_information');
+			$table->json('user_information')->nullable();
 			$table->rememberToken();
 			$table->timestamps();
 		});

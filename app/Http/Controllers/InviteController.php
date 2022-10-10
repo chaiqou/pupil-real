@@ -12,12 +12,15 @@ class InviteController extends Controller
 {
 	public function sendInvite(InviteRequest $request)
 	{
-		$invite = new Invite();
-		Mail::to($request->email)->send(new InviteUser($invite));
-		$invite->update([
-			'uniqueID' => Str::random(32),
-			'email'    => $request->email,
-			'state'    => 1,
+		$invite = Invite::create([
+			'uniqueID'  => Str::random(32),
+			'email'     => $request->email,
+			'state'     => 0,
+			'school_id' => 32,
 		]);
+		Mail::to($invite->email)->send(new InviteUser($invite->email));
+		$invite->update(['state' => 1]);
+
+		return redirect()->back();
 	}
 }

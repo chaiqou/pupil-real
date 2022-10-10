@@ -89,10 +89,6 @@
         </div>
         </form>
     </div>
-    <form method="POST" action="{{route('send.invite')}}">
-        @csrf
-        <input name="invite" type="text"/>
-    </form>
     </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>

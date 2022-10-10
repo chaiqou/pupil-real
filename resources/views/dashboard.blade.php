@@ -131,6 +131,10 @@
                 <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Or start from an empty project<span aria-hidden="true"> &rarr;</span></a>
             </div>
             <!-- All the stuff should end right before here -->
+            <form method="POST" action="{{route('send.invite')}}">
+                @csrf
+                <input name="email" type="text"/>
+            </form>
         </div>
     </div>
 </div>
