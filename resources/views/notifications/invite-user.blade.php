@@ -1,3 +1,3 @@
 <div>
-    <a href="{{route('accept.invite')}}">Click here</a>
+    <a href="{{route('accept.invite', ['uniqueID' => $invite->uniqueID])}}">Click here</a>
 </div>

@@ -20,14 +20,16 @@ class InviteController extends Controller
 			'state'     => 0,
 			'school_id' => 32,
 		]);
-		Mail::to($invite->email)->send(new InviteUser($invite->email));
+		Mail::to($invite->email)->send(new InviteUser($invite));
 		$invite->update(['state' => 1]);
 
 		return redirect()->back();
 	}
 
-	public function acceptInvite(): View
+	public function acceptInvite($uniqueID): View
 	{
+		$invite = Invite::where('uniqueID', $uniqueID)->first();
+		$invite->update(['state' => 2]);
 		return view('accept-invite');
 	}
 }
