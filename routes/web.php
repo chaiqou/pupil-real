@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -15,12 +16,13 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
 Route::post('/login-post', [AuthController::class, 'authenticate'])->name('login.post');
 
-
-Route::middleware(['auth'])->group(function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth'])->group(function () {
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+
+Route::post('/send-invite', [InviteController::class, 'sendInvite'])->('send.invite');
