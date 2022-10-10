@@ -19,7 +19,7 @@ return new class() extends Migration {
 			$table->string('email')->unique();
 			$table->string('password');
 			$table->foreignId('school_id')->constrained();
-			$table->tinyInteger('billingo_id');
+			$table->integer('billingo_id');
 			$table->tinyInteger('summary_frequency');
 			$table->tinyInteger('finished_onboarding');
 			$table->json('user_information');
