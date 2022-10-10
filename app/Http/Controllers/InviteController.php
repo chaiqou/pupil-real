@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InviteRequest;
 use App\Mail\InviteUser;
 use App\Models\Invite;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-	public function sendInvite(InviteRequest $request)
+	public function sendInvite(InviteRequest $request): RedirectResponse
 	{
 		$invite = Invite::create([
 			'uniqueID'  => Str::random(32),
@@ -22,5 +24,10 @@ class InviteController extends Controller
 		$invite->update(['state' => 1]);
 
 		return redirect()->back();
+	}
+
+	public function acceptInvite(): View
+	{
+		return view('accept-invite');
 	}
 }

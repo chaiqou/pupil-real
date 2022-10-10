@@ -1,3 +1,3 @@
 <div>
-    <h1>Hello</h1>
+    <a href="{{route('accept.invite')}}">Click here</a>
 </div>

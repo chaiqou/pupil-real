@@ -25,3 +25,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
+Route::get('/accept-invite', [InviteController::class, 'acceptInvite'])->name('accept.invite');

@@ -1,8 +1,6 @@
 require('./bootstrap');
 
 import { createApp } from 'vue'
-import Welcome from './components/Welcome.vue'
-const app = createApp({})
+import CreatePassword from './components/CreatePassword.vue'
 
-app.component('welcome', Welcome)
-app.mount('#app')
+createApp(CreatePassword).mount('#app');

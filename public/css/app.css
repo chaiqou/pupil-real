@@ -1005,6 +1005,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(67 193 255 / var(--tw-text-opacity));
 }
+.text-blue-800 {
+  --tw-text-opacity: 1;
+  color: rgb(27 77 102 / var(--tw-text-opacity));
+}
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
