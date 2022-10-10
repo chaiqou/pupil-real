@@ -24,5 +24,4 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-
-Route::post('/send-invite', [InviteController::class, 'sendInvite'])->('send.invite');
+Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
