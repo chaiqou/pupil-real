@@ -17,7 +17,8 @@
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account
                 </h2>
             </div>
-            <form class="mt-8 space-y-6" action="#" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+                @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
@@ -42,7 +43,8 @@
                     </div>
 
                     <div class="text-sm text-right">
-                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your
+                        <a href="{{ route('forgot.form') }}"
+                            class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your
                             password?</a>
                     </div>
                 </div>
@@ -63,7 +65,12 @@
                         Sign in
                     </button>
                 </div>
+                @if (session('updated'))
+                    @include('alerts.success')
+                @endif
             </form>
+
+
         </div>
     </div>
 </body>

@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 */
 
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('login.request');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 Route::middleware(['guest'])->group(function () {
 	Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');

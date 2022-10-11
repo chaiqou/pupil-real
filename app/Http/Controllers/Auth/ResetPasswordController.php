@@ -7,8 +7,8 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\ResetPasswordRequest;
+use Illuminate\Http\RedirectResponse;
 
 class ResetPasswordController extends Controller
 {
@@ -27,6 +27,6 @@ class ResetPasswordController extends Controller
 			->where(['email' => $request->email])
 			->delete();
 
-		return redirect()->route('dashboard');
+		return redirect()->route('dashboard')->with('updated', 'Password updated');
 	}
 }
