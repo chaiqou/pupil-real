@@ -17,15 +17,38 @@
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Reset your password
                 </h2>
             </div>
-            <form class="mt-8 space-y-6" action="#" method="POST">
+            <form class="mt-8 space-y-6" action="{{ }}" method="POST">
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         <label for="password" class="sr-only">New password</label>
-                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                        <input id="password" name="password" type="password" autocomplete="new-password"
                             class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             placeholder="New password" />
                     </div>
+                    <div>
+                        <label for="repeat-password" class="sr-only">Password</label>
+                        <input id="repeat-password" name="repeat-password" type="password" autocomplete="new-password"
+                            class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Repeat new password" />
+                    </div>
+                    @error('email')
+                        <div class="rounded-md bg-red-50 p-4 mt-3">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                        fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-red-800">{{ $message }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    @enderror
                 </div>
 
                 <div>
