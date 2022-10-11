@@ -12,20 +12,36 @@ use Illuminate\Http\RedirectResponse;
 
 class ResetPasswordController extends Controller
 {
-	public function resetPasswordForm(Request $request, $token = null): View
+	public function resetPasswordForm(Request $request, $token = null): View|RedirectResponse
 	{
-		return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
+		$check_if_token_exists = DB::table('password_resets')
+		->where([
+			'email' => $request->email,
+			'token' => $request->token, ])
+		->first();
+
+		if ($check_if_token_exists)
+		{
+			return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
+		}
+
+		// here should be error page - work for morning
+		return redirect()->route('dashboard');
 	}
 
 	public function passwordUpdate(ResetPasswordRequest $request): RedirectResponse
 	{
-		User::where('email', $request->email)->update([
-			'password' => bcrypt($request->password),
-		]);
+		DB::transaction(function () use ($request) {
+			User::where('email', $request->email)->update([
+				'password' => bcrypt($request->password),
+			]);
 
-		DB::table('password_resets')
-			->where(['email' => $request->email])
-			->delete();
+			DB::table('password_resets')
+				->where([
+					'email' => $request->email,
+					'token' => $request->token, ])
+				->delete();
+		});
 
 		return redirect()->route('dashboard')->with('updated', 'Password updated');
 	}
