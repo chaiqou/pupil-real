@@ -644,14 +644,17 @@ select {
 .mt-8 {
   margin-top: 2rem;
 }
+.mt-3 {
+  margin-top: 0.75rem;
+}
+.ml-3 {
+  margin-left: 0.75rem;
+}
 .ml-2 {
   margin-left: 0.5rem;
 }
 .-mr-2 {
   margin-right: -0.5rem;
-}
-.mt-3 {
-  margin-top: 0.75rem;
 }
 .block {
   display: block;
@@ -683,11 +686,11 @@ select {
 .h-12 {
   height: 3rem;
 }
-.h-4 {
-  height: 1rem;
-}
 .h-5 {
   height: 1.25rem;
+}
+.h-4 {
+  height: 1rem;
 }
 .h-8 {
   height: 2rem;
@@ -707,11 +710,11 @@ select {
 .w-auto {
   width: auto;
 }
-.w-4 {
-  width: 1rem;
-}
 .w-5 {
   width: 1.25rem;
+}
+.w-4 {
+  width: 1rem;
 }
 .max-w-md {
   max-width: 28rem;
@@ -812,6 +815,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -855,6 +862,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
+.bg-red-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity));
+}
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity));
@@ -868,6 +879,9 @@ select {
 }
 .p-2 {
   padding: 0.5rem;
+}
+.p-4 {
+  padding: 1rem;
 }
 .p-1 {
   padding: 0.25rem;
@@ -939,13 +953,13 @@ select {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 .text-base {
   font-size: 1rem;
@@ -978,6 +992,14 @@ select {
 .text-indigo-600 {
   --tw-text-opacity: 1;
   color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 .text-indigo-500 {
   --tw-text-opacity: 1;
