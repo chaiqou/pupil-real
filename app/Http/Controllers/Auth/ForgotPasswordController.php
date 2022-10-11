@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Password;
-use App\Http\Requests\Auth\ForgotPasswordRequest;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 
 class ForgotPasswordController extends Controller
 {
@@ -17,12 +20,16 @@ class ForgotPasswordController extends Controller
 
 	public function sendForgotPasswordEmail(ForgotPasswordRequest $request): RedirectResponse
 	{
-		$status = Password::sendResetLink(
-			$request->only('email')
-		);
+		$token = Str::random(64);
 
-		return $status === Password::RESET_LINK_SENT
-					? back()->with(['status' => __($status)])
-					: back()->withErrors(['email' => __($status)]);
+		DB::table('password_resets')->insert([
+			'email'      => $request->email,
+			'token'      => $token,
+			'created_at' => now(),
+		]);
+
+		Mail::to($request->email)->send(new ForgotPasswordMail($token));
+
+		return redirect()->route('default');
 	}
 }

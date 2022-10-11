@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,7 @@ Route::middleware(['guest'])->group(function () {
 	Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('password.request');
 	Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordEmail'])->name('password.email');
 	Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
+	Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
 
 Route::middleware(['auth'])->group(function () {
