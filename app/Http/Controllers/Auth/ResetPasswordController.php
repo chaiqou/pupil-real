@@ -19,12 +19,6 @@ class ResetPasswordController extends Controller
 
 	public function passwordUpdate(ResetPasswordRequest $request): RedirectResponse
 	{
-		$check_if_token_exists = DB::table('password_resets')
-		->where([
-			'email' => $request->email,
-			'token' => $request->token, ])
-		->first();
-
 		User::where('email', $request->email)->update([
 			'password' => bcrypt($request->password),
 		]);

@@ -18,7 +18,7 @@ class ForgotPasswordController extends Controller
 		return view('auth.forgot-password');
 	}
 
-	public function sendForgotPasswordEmail(ForgotPasswordRequest $request): RedirectResponse
+	public function sendForgotPasswordMail(ForgotPasswordRequest $request): RedirectResponse
 	{
 		$token = Str::random(64);
 
@@ -30,6 +30,12 @@ class ForgotPasswordController extends Controller
 
 		Mail::to($request->email)->send(new ForgotPasswordMail($token));
 
-		return redirect()->route('default');
+		return redirect()->route('forgot.redirect');
+	}
+
+	public function forgotRedirect(): View
+	{
+		return view('auth.redirect-template')
+		->with(['header' => 'Email sent', 'title' => 'Check your email', 'description' => 'Check your email address for instructions on how to reset your password', 'small_description' => "If you can't find the email in a few minutes, check your spam folder."]);
 	}
 }

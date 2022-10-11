@@ -16,7 +16,7 @@
                     alt="PupilPay" />
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Request password reset</h2>
             </div>
-            <form class="mt-8 space-y-6" action="{{ route('password.request') }}" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('forgot.form') }}" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
