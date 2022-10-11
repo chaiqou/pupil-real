@@ -78,5 +78,25 @@ class UserSeeder extends Seeder
 			'email'                   => 'parent@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('parent');
+
+		$nika = User::query()->updateOrCreate([
+			'first_name'              => 'nika',
+			'last_name'               => 'lomtadze',
+			'school_id'               => 1,
+			'billingo_id'             => 1,
+			'summary_frequency'       => 1,
+			'finished_onboarding'     => 1,
+			'user_information'        => json_encode([
+				$faker->randomElement(
+					[
+						'Nikoloz',
+						'Levente',
+						'Luka',
+					]
+				),
+			]),
+			'email'                   => 'lomtadzenikusha@gmail.com',
+			'password'                => bcrypt('adminadmin'),
+		])->assignRole('admin');
 	}
 }
