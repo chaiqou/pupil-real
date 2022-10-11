@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->middleware('guest')->name('password.request');
 
 Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
