@@ -19,8 +19,8 @@ class ResetPasswordController extends Controller
 			return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
 		}
 
-		// here should be error page - work for morning
-		return redirect()->route('dashboard');
+		return view('auth.redirect-template')
+		->with(['header' => 'Invalid token', 'title' => 'Invalid token', 'description' => 'Your request is either missing, using an invalid or expired token.', 'small_description' => ' Try requesting a new password reset.']);
 	}
 
 	public function passwordUpdate(ResetPasswordRequest $request): RedirectResponse
