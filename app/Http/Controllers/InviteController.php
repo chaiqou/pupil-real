@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InviteRequest;
+use App\Http\Requests\Invite\InviteRequest;
+use App\Http\Requests\Invite\PersonalFormRequest;
+use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Mail\InviteUser;
 use App\Models\Invite;
 use Illuminate\Http\RedirectResponse;
@@ -30,11 +32,25 @@ class InviteController extends Controller
 	{
 		$invite = Invite::where('uniqueID', $uniqueID)->first();
 		$invite->update(['state' => 2]);
-		return view('invite.setup-account');
+		return view('invite.setup-account', [
+			'uniqueID' => $uniqueID,
+		]);
+	}
+
+	public function submitSetupAccount(SetupAccountRequest $request): RedirectResponse
+	{
+		return redirect()->back();
 	}
 
 	public function personalForm(): View
 	{
-		return view('invite.personal-form');
+		return view('invite.personal-form', [
+			'uniqueID' => request()->uniqueID,
+		]);
+	}
+
+	public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
+	{
+		return redirect()->back();
 	}
 }
