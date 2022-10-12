@@ -16,7 +16,7 @@ class ResetPasswordController extends Controller
 	{
 		if ($this->checkIfTokenExists($request))
 		{
-			return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
+			return view('auth.reset-password')->with(['token' => $token]);
 		}
 
 		return view('auth.redirect-template')
@@ -33,9 +33,7 @@ class ResetPasswordController extends Controller
 				]);
 
 				DB::table('password_resets')
-					->where([
-						'email' => $request->email,
-						'token' => $request->token, ])
+					->where(['token' => $request->token])
 					->delete();
 			}
 		});
@@ -46,9 +44,7 @@ class ResetPasswordController extends Controller
 	protected function checkIfTokenExists($request)
 	{
 		return DB::table('password_resets')
-		->where([
-			'email' => $request->email,
-			'token' => $request->token, ])
+		->where(['token' => $request->token])
 		->first();
 	}
 }
