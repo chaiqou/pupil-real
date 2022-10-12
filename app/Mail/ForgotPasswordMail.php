@@ -27,7 +27,7 @@ class ForgotPasswordMail extends Mailable
 	 */
 	public function build(ForgotPasswordRequest $request)
 	{
-		$action_link = route('password.reset', ['token' => $this->token, 'email' => $request->email]);
+		$action_link = route('password.reset', ['token' => $this->token]);
 		return $this->view('mail/email-forgot', ['action_link' => $action_link, 'body' => 'Check your password reset link']);
 	}
 }

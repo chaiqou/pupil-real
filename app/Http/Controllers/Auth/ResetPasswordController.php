@@ -12,21 +12,39 @@ use Illuminate\Http\RedirectResponse;
 
 class ResetPasswordController extends Controller
 {
-	public function resetPasswordForm(Request $request, $token = null): View
+	public function resetPasswordForm(Request $request, $token = null): View|RedirectResponse
 	{
-		return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
+		if ($this->checkIfTokenExists($request))
+		{
+			return view('auth.reset-password')->with(['token' => $token]);
+		}
+
+		return view('auth.redirect-template')
+		->with(['header' => 'Invalid token', 'title' => 'Invalid token', 'description' => 'Your request is either missing, using an invalid or expired token.', 'small_description' => ' Try requesting a new password reset.']);
 	}
 
 	public function passwordUpdate(ResetPasswordRequest $request): RedirectResponse
 	{
-		User::where('email', $request->email)->update([
-			'password' => bcrypt($request->password),
-		]);
+		DB::transaction(function () use ($request) {
+			if ($this->checkIfTokenExists($request))
+			{
+				User::where('email', $request->email)->update([
+					'password' => bcrypt($request->password),
+				]);
 
-		DB::table('password_resets')
-			->where(['email' => $request->email])
-			->delete();
+				DB::table('password_resets')
+					->where(['token' => $request->token])
+					->delete();
+			}
+		});
 
 		return redirect()->route('dashboard')->with('updated', 'Password updated');
+	}
+
+	protected function checkIfTokenExists($request)
+	{
+		return DB::table('password_resets')
+		->where(['token' => $request->token])
+		->first();
 	}
 }

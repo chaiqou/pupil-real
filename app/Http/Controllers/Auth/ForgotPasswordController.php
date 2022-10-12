@@ -20,7 +20,7 @@ class ForgotPasswordController extends Controller
 
 	public function sendForgotPasswordMail(ForgotPasswordRequest $request): RedirectResponse
 	{
-		$token = Str::random(64);
+		$token = Str::random(32);
 
 		DB::table('password_resets')->insert([
 			'email'      => $request->email,
