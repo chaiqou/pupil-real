@@ -18,9 +18,8 @@
             </div>
             <form class="mt-8 space-y-6" action="{{ route('password.update') }}" method="POST">
                 @csrf
-                {{-- <input type="hidden" name="remember" value="true" /> --}}
+                <input type="hidden" name="remember" value="true" />
                 <input type="hidden" name="token" value="{{ $token }}">
-                {{-- <input type="hidden" id="email" name="email" autofocus value="{{ $email }}"> --}}
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         <label for="password" class="sr-only">Email address</label>

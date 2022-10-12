@@ -24,6 +24,7 @@ return new class() extends Migration {
 			$table->tinyInteger('summary_frequency');
 			$table->tinyInteger('finished_onboarding');
 			$table->json('user_information');
+			$table->string('token')->nullable()->unique();
 			$table->rememberToken();
 			$table->timestamps();
 		});
