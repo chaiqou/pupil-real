@@ -14,13 +14,7 @@ class ResetPasswordController extends Controller
 {
 	public function resetPasswordForm(Request $request, $token = null): View|RedirectResponse
 	{
-		$check_if_token_exists = DB::table('password_resets')
-		->where([
-			'email' => $request->email,
-			'token' => $request->token, ])
-		->first();
-
-		if ($check_if_token_exists)
+		if ($this->checkIfTokenExists($request))
 		{
 			return view('auth.reset-password')->with(['token' => $token, 'email' => $request->email]);
 		}
@@ -32,17 +26,29 @@ class ResetPasswordController extends Controller
 	public function passwordUpdate(ResetPasswordRequest $request): RedirectResponse
 	{
 		DB::transaction(function () use ($request) {
-			User::where('email', $request->email)->update([
-				'password' => bcrypt($request->password),
-			]);
+			if ($this->checkIfTokenExists($request))
+			{
+				User::where('email', $request->email)->update([
+					'password' => bcrypt($request->password),
+				]);
 
-			DB::table('password_resets')
-				->where([
-					'email' => $request->email,
-					'token' => $request->token, ])
-				->delete();
+				DB::table('password_resets')
+					->where([
+						'email' => $request->email,
+						'token' => $request->token, ])
+					->delete();
+			}
 		});
 
 		return redirect()->route('dashboard')->with('updated', 'Password updated');
+	}
+
+	protected function checkIfTokenExists($request)
+	{
+		return DB::table('password_resets')
+		->where([
+			'email' => $request->email,
+			'token' => $request->token, ])
+		->first();
 	}
 }
