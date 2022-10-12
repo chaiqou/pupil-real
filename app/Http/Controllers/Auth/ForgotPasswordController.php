@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Models\User;
 
 class ForgotPasswordController extends Controller
 {
@@ -20,7 +21,11 @@ class ForgotPasswordController extends Controller
 
 	public function sendForgotPasswordMail(ForgotPasswordRequest $request): RedirectResponse
 	{
-		$token = Str::random(32);
+		$token = Str::random(64);
+
+		$user = User::where('email', $request->email)->first();
+
+		$user->update(['token' => $token]);
 
 		DB::table('password_resets')->insert([
 			'email'      => $request->email,
