@@ -1,6 +1,10 @@
-require('./bootstrap');
+require('./bootstrap')
 
 import { createApp } from 'vue'
-import CreatePassword from './components/CreatePassword.vue'
+import SetupAccount from './components/SetupAccount.vue'
 
-createApp(CreatePassword).mount('#app');
+const app = createApp({})
+
+app.component('setup-account', SetupAccount)
+
+app.mount('#app')

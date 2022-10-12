@@ -26,10 +26,15 @@ class InviteController extends Controller
 		return redirect()->back();
 	}
 
-	public function acceptInvite($uniqueID): View
+	public function setupAccount($uniqueID): View
 	{
 		$invite = Invite::where('uniqueID', $uniqueID)->first();
 		$invite->update(['state' => 2]);
-		return view('accept-invite');
+		return view('invite.setup-account');
+	}
+
+	public function personalForm(): View
+	{
+		return view('invite.personal-form');
 	}
 }

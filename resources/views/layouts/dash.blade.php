@@ -137,11 +137,4 @@ $page = 'none';
 </script>
 
 </html>
-<script>
-    import Welcome from "../../js/components/CreatePassword";
-    import App from "../../js/components/CreatePassword";
-    export default {
-        components: {App, Welcome}
-    }
-</script>
 <script src="{{ mix('js/app.js') }}"></script>
