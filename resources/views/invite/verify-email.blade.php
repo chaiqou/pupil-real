@@ -55,29 +55,27 @@
         <h1 class="text-4xl font-extrabold mt-7">Verify email</h1>
     </div>
 
-    <div class="mt-12 p-7 rounded-md">
+    <div class="mt-12 border-t-[1px] border-b-[3px] border-l-[1.5px] border-r-[1.5px]  border-opacity-10 shadow-md border-gray-400 p-7 rounded-md">
+        <p class="text-4xl font-bold text-center my-4">Check *email* for a verification code</p>
         <form id="form" method="POST" action="{{route('setup.account_submit', ['uniqueID' => $uniqueID])}}" class="flex flex-col">
             @csrf
             <div>
-                <label for="email">Email Address</label>
-                <div class="p-2 mt-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                    <input id="email" value="{{old('email')}}" name="email" type="text" class="border-none focus:ring-0 bg-gray-50 w-[44.7rem]"/>
+                <label for="code">Verification code</label>
+                <div class="p-2 mt-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem] justify-around flex">
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
+                    <div><input id="code" value="{{old('code')}}" name="code" type="text" class="border-2 border-gray-400 focus:ring-0 bg-gray-50 p-2 w-[2rem] text-center rounded-md"/></div>
                 </div>
-                @error('email')
-                <p class="mt-2 text-red-500">{{$message}}</p>
-                @enderror
-
-            </div>
-            <div class="mt-4">
-                <label for="password">Password</label>
-                <div class="p-2 mt-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                    <input id="password" name="password" type="password" class="border-none focus:ring-0 bg-gray-50 w-[44.7rem]"/>
-                </div>
-                @error('password')
+                @error('code')
                 <p class="mt-2 text-red-500">{{$message}}</p>
                 @enderror
             </div>
-            <button type="submit" class="bg-[#3341FF] text-white p-3 mt-8 text-xl rounded-md">Sign up</button>
+            <button type="submit" class="bg-[#3341FF] text-white p-3 mt-8 text-xl rounded-md">Verify</button>
         </form>
     </div>
 

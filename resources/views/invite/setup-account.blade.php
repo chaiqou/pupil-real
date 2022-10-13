@@ -6,7 +6,10 @@
 
 <main class="flex justify-center mt-48 flex-col items-center">
 
-   <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
+
+
+
+   <div class="border-[0.1rem] text-gray-400 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
        <article class="flex items-center text-[#3341FF]">
            <div class="mr-3 p-5 rounded-full border-2 border-[#3341FF] w-4 h-4 justify-center items-center flex">
                <p>01</p>
@@ -40,7 +43,7 @@
             <h1 class="text-4xl font-extrabold mt-7">Set up your account</h1>
         </div>
 
-    <div class="mt-12 p-7 rounded-md">
+    <div class="mt-12 border-t-[1px] border-b-[3px] border-l-[1.5px] border-r-[1.5px]  border-opacity-10 shadow-md border-gray-400 p-7 rounded-md">
         <form id="form" method="POST" action="{{route('setup.account_submit', ['uniqueID' => $uniqueID])}}" class="flex flex-col">
             @csrf
             <div>
