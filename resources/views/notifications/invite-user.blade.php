@@ -1,3 +1,3 @@
 <div>
-    <h1>Hello</h1>
+    <a href="{{route('setup.account', ['uniqueID' => $invite->uniqueID])}}">Click here</a>
 </div>

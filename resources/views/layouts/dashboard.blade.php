@@ -20,6 +20,7 @@ $page = 'none';
 
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css') ?>" type="text/css">
+
 </head>
 
 <body class="h-full">
@@ -136,3 +137,4 @@ $page = 'none';
 </script>
 
 </html>
+<script src="{{ mix('js/app.js') }}"></script>

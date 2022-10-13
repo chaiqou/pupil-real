@@ -35,3 +35,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
+
+Route::get('/setup-account/{uniqueID}', [InviteController::class, 'setupAccount'])->name('setup.account');
+Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupAccount'])->name('setup.account_submit');
+
+Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
+Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
