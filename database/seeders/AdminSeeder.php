@@ -15,12 +15,12 @@ class AdminSeeder extends Seeder
 	 */
 	public function run()
 	{
-		School::create(['id' => 1]);
-		$admin = User::create([
-			'email'                   => 'admin@admin.com',
-			'password'                => bcrypt('adminadmin'),
-		]);
-
-		$admin->assignRole('admin');
+//		School::create(['id' => 1]);
+//		$admin = User::create([
+//			'email'                   => 'admin@admin.com',
+//			'password'                => bcrypt('adminadmin'),
+//		]);
+//
+//		$admin->assignRole('admin');
 	}
 }

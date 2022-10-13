@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InviteController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,14 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+
+Route::middleware(['guest'])->group(function () {
+	Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');
+	Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordMail'])->name('forgot.request');
+	Route::get('/mail-sent', [ForgotPasswordController::class, 'forgotRedirect'])->name('forgot.redirect');
+	Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
+	Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
+});
 
 Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -19617,7 +19617,7 @@ app.mount('#app');
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+ewindow._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -37094,13 +37094,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+<<<<<<< HEAD
 /* harmony import */ var _SetupAccount_vue_vue_type_template_id_fbf1e64a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SetupAccount.vue?vue&type=template&id=fbf1e64a */ "./resources/js/components/SetupAccount.vue?vue&type=template&id=fbf1e64a");
 /* harmony import */ var _home_xjexe_Portal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+=======
+/* harmony import */ var _Welcome_vue_vue_type_template_id_51777872__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Welcome.vue?vue&type=template&id=51777872 */ "./resources/js/components/Welcome.vue?vue&type=template&id=51777872");
+/* harmony import */ var _Welcome_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Welcome.vue?vue&type=script&lang=js */ "./resources/js/components/Welcome.vue?vue&type=script&lang=js");
+/* harmony import */ var _home_nika_Desktop_Portal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+>>>>>>> 96d268771548e2513371c772d8b22a3de3f1edef
 
 const script = {}
 
 ;
+<<<<<<< HEAD
 const __exports__ = /*#__PURE__*/(0,_home_xjexe_Portal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(script, [['render',_SetupAccount_vue_vue_type_template_id_fbf1e64a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/SetupAccount.vue"]])
+=======
+const __exports__ = /*#__PURE__*/(0,_home_nika_Desktop_Portal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Welcome_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Welcome_vue_vue_type_template_id_51777872__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/Welcome.vue"]])
+>>>>>>> 96d268771548e2513371c772d8b22a3de3f1edef
 /* hot reload */
 if (false) {}
 
