@@ -26,7 +26,6 @@
                         </div>
                     </div>
                 </li>
-
                 <li class="flow-root">
                     <div class="relative -m-2 p-2 flex items-center space-x-4 rounded-xl hover:bg-gray-50 focus-within:ring-2 focus-within:ring-indigo-500">
                         <div class="flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-lg bg-yellow-500">
@@ -131,6 +130,10 @@
                 <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Or start from an empty project<span aria-hidden="true"> &rarr;</span></a>
             </div>
             <!-- All the stuff should end right before here -->
+            <form method="POST" action="{{route('send.invite')}}">
+                @csrf
+                <input name="email" type="text"/>
+            </form>
         </div>
     </div>
 </div>
