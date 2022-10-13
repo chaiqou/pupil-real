@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
 					]
 				),
 			]),
-			'email'                   => 'admin@pupilpay.hu',
+			'email'                   => 'info+admin@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('admin');
 
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
 					]
 				),
 			]),
-			'email'                   => 'school@pupilpay.hu',
+			'email'                   => 'info+school@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('school');
 
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
 					]
 				),
 			]),
-			'email'                   => 'parent@pupilpay.hu',
+			'email'                   => 'info+parent@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('parent');
 
