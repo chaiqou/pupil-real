@@ -74,6 +74,15 @@ class InviteController extends Controller
             ]
 		]);
         $invite->update(['state' => 4]);
-		return redirect()->back();
+		return redirect()->route('verify.email', [
+            'uniqueID' => request()->uniqueID
+        ]);
 	}
+
+    public function verifyEmail(): View
+    {
+        return view('invite.verify-email', [
+            'uniqueID' => request()->uniqueID
+        ]);
+    }
 }

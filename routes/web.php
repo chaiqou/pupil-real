@@ -41,3 +41,6 @@ Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupA
 
 Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
 Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
+
+Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
+Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');

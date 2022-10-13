@@ -6,8 +6,14 @@
 <main class="flex justify-center mt-48 flex-col items-center mb-32">
     <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
         <article class="flex items-center">
-            <div class="mr-3 p-5 rounded-full border-2 border-gray-400 w-4 h-4 justify-center items-center flex">
-                <p>01</p>
+            <div class="mr-3 p-5 rounded-full border-[1px] border-[#3341FF] w-4 h-4 justify-center items-center flex">
+                <div class="z-40">
+                    <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                </div>
+
+                <div class="bg-[#3341FF] text-white absolute z-30 rounded-full absolute p-5"></div>
             </div>
             <div>
                 <p>Setup Account</p>
