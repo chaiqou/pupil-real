@@ -13,8 +13,8 @@
                 <p>Setup Account</p>
             </div>
         </article>
-        <article class="flex mx-16 items-center">
-            <div class="mr-3 p-5 rounded-full border-2 border-gray-400 w-4 h-4 justify-center items-center flex">
+        <article class="flex mx-16 items-center text-[#3341FF]">
+            <div class="mr-3 p-5 rounded-full border-2 border-[#3341FF] w-4 h-4 justify-center items-center flex">
                 <p>02</p>
             </div>
             <div>
@@ -341,7 +341,7 @@
             <div class="mt-4">
                 <label for="street_address">Street address</label>
                 <div class="p-2 rounded-md border-gray-400 bg-gray-50 border-[0.01rem]">
-                    <input name="street_address" type="select" class="bg-gray-50 outline-none w-[13rem]"/>
+                    <input name="street_address" type="select" class="bg-gray-50 outline-none w-full"/>
                 </div>
                 @error('street_address')
                 <p class="mt-2 text-red-500">{{$message}}</p>

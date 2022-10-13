@@ -7,8 +7,8 @@
 <main class="flex justify-center mt-48 flex-col items-center">
 
    <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
-       <article class="flex items-center">
-           <div class="mr-3 p-5 rounded-full border-2 border-gray-400 w-4 h-4 justify-center items-center flex">
+       <article class="flex items-center text-[#3341FF]">
+           <div class="mr-3 p-5 rounded-full border-2 border-[#3341FF] w-4 h-4 justify-center items-center flex">
                <p>01</p>
            </div>
            <div>
@@ -46,7 +46,7 @@
             <div>
                 <label for="email">Email Address</label>
                 <div class="p-2 mt-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                    <input id="email" value="{{old('username')}}" name="email" type="text" class="border-none focus:ring-0 bg-gray-50 w-[44.7rem]"/>
+                    <input id="email" value="{{old('email')}}" name="email" type="text" class="border-none focus:ring-0 bg-gray-50 w-[44.7rem]"/>
                 </div>
                 @error('email')
                 <p class="mt-2 text-red-500">{{$message}}</p>
@@ -54,7 +54,7 @@
 
             </div>
             <div class="mt-4">
-                <label for="password"">Password</label>
+                <label for="password">Password</label>
                 <div class="p-2 mt-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
                     <input id="password" name="password" type="password" class="border-none focus:ring-0 bg-gray-50 w-[44.7rem]"/>
                 </div>

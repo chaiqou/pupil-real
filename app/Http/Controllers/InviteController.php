@@ -7,6 +7,7 @@ use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Mail\InviteUser;
 use App\Models\Invite;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -19,8 +20,6 @@ class InviteController extends Controller
 		$invite = Invite::create([
 			'uniqueID'  => Str::random(32),
 			'email'     => $request->email,
-			'state'     => 0,
-			'school_id' => 32,
 		]);
 		Mail::to($invite->email)->send(new InviteUser($invite));
 		$invite->update(['state' => 1]);
@@ -39,7 +38,16 @@ class InviteController extends Controller
 
 	public function submitSetupAccount(SetupAccountRequest $request): RedirectResponse
 	{
-		return redirect()->back();
+		$user = User::create([
+			'email'     => $request->email,
+			'password'  => bcrypt($request->password),
+		]);
+		$invite = Invite::where('uniqueID', request()->uniqueID)->first();
+		$invite->update([
+			'email' => $user->email,
+			'state' => 3,
+		]);
+		return redirect()->route('personal.form', ['uniqueID' => request()->uniqueID]);
 	}
 
 	public function personalForm(): View
@@ -51,6 +59,19 @@ class InviteController extends Controller
 
 	public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
 	{
+		$user = User::where('uniqueID', request()->uniqueID)->first();
+		$user->update([
+			'last_name'   => $request->last_name,
+			'first_name'  => $request->first_name,
+			'middle_name' => $request->middle_name,
+			'first_name'  => $request->first_name,
+			'last_name'   => $request->last_name,
+			'first_name'  => $request->first_name,
+			'last_name'   => $request->last_name,
+			'first_name'  => $request->first_name,
+			'last_name'   => $request->last_name,
+			'first_name'  => $request->first_name,
+		]);
 		return redirect()->back();
 	}
 }

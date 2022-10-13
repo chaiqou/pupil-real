@@ -15,18 +15,10 @@ class AdminSeeder extends Seeder
 	 */
 	public function run()
 	{
-		School::create(['id' => 32]);
+		School::create(['id' => 1]);
 		$admin = User::create([
-			'first_name'              => 'admin',
-			'last_name'               => 'admin',
 			'email'                   => 'admin@admin.com',
 			'password'                => bcrypt('adminadmin'),
-			'school_id'               => 32,
-			'billingo_id'             => 1,
-			'summary_frequency'       => 3,
-			'finished_onboarding'     => 7,
-			'user_information'        => null,
-			'remember_token'          => 'no',
 		]);
 
 		$admin->assignRole('admin');

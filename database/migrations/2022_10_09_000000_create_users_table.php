@@ -14,14 +14,14 @@ return new class() extends Migration {
 	{
 		Schema::create('users', function (Blueprint $table) {
 			$table->id();
-			$table->string('first_name');
-			$table->string('last_name');
+			$table->string('first_name')->default('unfilled');
+			$table->string('last_name')->default('unfilled');
 			$table->string('email')->unique();
 			$table->string('password');
-			$table->foreignId('school_id')->constrained();
-			$table->tinyInteger('billingo_id');
-			$table->tinyInteger('summary_frequency');
-			$table->tinyInteger('finished_onboarding');
+			$table->foreignId('school_id')->default(1)->constrained();
+			$table->tinyInteger('billingo_id')->default(0);
+			$table->tinyInteger('summary_frequency')->default(0);
+			$table->tinyInteger('finished_onboarding')->default(0);
 			$table->json('user_information')->nullable();
 			$table->rememberToken();
 			$table->timestamps();

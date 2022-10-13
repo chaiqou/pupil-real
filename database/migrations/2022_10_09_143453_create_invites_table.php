@@ -16,8 +16,8 @@ return new class extends Migration {
 			$table->id();
 			$table->string('uniqueID')->unique();
 			$table->string('email')->unique();
-			$table->foreignID('school_id')->constrained()->cascadeOnDelete();
-			$table->integer('state');
+			$table->foreignID('school_id')->default(1)->constrained()->cascadeOnDelete();
+			$table->integer('state')->default(0);
 			$table->timestamps();
 		});
 	}
