@@ -59,19 +59,21 @@ class InviteController extends Controller
 
 	public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
 	{
-		$user = User::where('uniqueID', request()->uniqueID)->first();
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+		$user = User::where('email', $invite->email)->first();
 		$user->update([
-			'last_name'   => $request->last_name,
-			'first_name'  => $request->first_name,
-			'middle_name' => $request->middle_name,
-			'first_name'  => $request->first_name,
-			'last_name'   => $request->last_name,
-			'first_name'  => $request->first_name,
-			'last_name'   => $request->last_name,
-			'first_name'  => $request->first_name,
-			'last_name'   => $request->last_name,
-			'first_name'  => $request->first_name,
+			'user_information' => [
+                'last_name'   => $request->last_name,
+                'first_name'  => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'country'  => $request->country,
+                'street_address'   => $request->street_address,
+                'city'  => $request->city,
+                'state'   => $request->state,
+                'zip'  => (int)$request->zip,
+            ]
 		]);
+        $invite->update(['state' => 4]);
 		return redirect()->back();
 	}
 }
