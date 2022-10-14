@@ -96,7 +96,7 @@
                           </tr>
                         </table>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                          For security, this request was received an {{$device}} device using {{$browser}}.
+                          For security, this request was received from an {{$device}} device using {{$browser}}.
                           If you did not request a password reset, please ignore this email or <a target="_blank" href="https://pupilpay.hu/elérhetőségek/" style="color: #3869D4">contact support</a> if you have questions.
                         </p>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
