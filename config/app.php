@@ -165,7 +165,7 @@ return [
 		/*
 		 * Package Service Providers...
 		 */
-
+		hisorange\BrowserDetect\ServiceProvider::class,
 		/*
 		 * Application Service Providers...
 		 */
@@ -189,5 +189,6 @@ return [
 
 	'aliases' => Facade::defaultAliases()->merge([
 		// 'ExampleClass' => App\Example\ExampleClass::class,
+		'BrowserDetect' => hisorange\BrowserDetect\Facade::class,
 	])->toArray(),
 ];
