@@ -9,7 +9,9 @@
 </head>
 
 <body class="h-full">
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8" data-sal="slide-up"
+        data-sal-duration="500"
+        data-sal-delay="200">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
@@ -33,7 +35,7 @@
                                 </div>
                             </div>
                         @enderror
-            <form class="mt-8 space-y-6" action="{{ route('forgot.form') }}" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('forgot.form') }}" method="POST" onsubmit="document.getElementById('submit').disabled=true;document.getElementById('submit').classlist.add('animate-pulse');">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
@@ -50,6 +52,7 @@
 
                 <div>
                     <button type="submit"
+                    id="submit"
                         class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <!-- Heroicon name: mini/key -->
@@ -66,6 +69,13 @@
             </form>
         </div>
     </div>
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+<script>
+sal({
+    threshold: 0,
+    once: true,
+});
+</script>
 </body>
 
 </html>
