@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rules\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -24,6 +25,16 @@ class ResetPasswordController extends Controller
 
 	public function passwordUpdate(Request $request): RedirectResponse
 	{
+		$request->validate([
+			'password'=>[
+				'required',
+				'confirmed',
+				'string',
+				Password::min(8)
+				->mixedCase()
+				->numbers()
+			]
+		]);
 		DB::transaction(function () use ($request) {
 			if ($this->checkIfTokenExists($request))
 			{
@@ -37,7 +48,7 @@ class ResetPasswordController extends Controller
 			}
 		});
 
-		return redirect()->route('dashboard')->with('updated', 'Password updated');
+		return redirect()->route('default')->with(with(['success' => 'success', 'success_title' => 'Password updated', 'success_message' => 'You successfully updated your password.']));
 	}
 
 	protected function checkIfTokenExists($request)
