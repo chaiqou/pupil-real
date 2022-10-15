@@ -16,19 +16,7 @@
                     alt="PupilPay" />
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Request password reset</h2>
             </div>
-            <form class="mt-8 space-y-6" action="{{ route('forgot.form') }}" method="POST">
-                @csrf
-                <input type="hidden" name="remember" value="true" />
-                <div class="-space-y-px rounded-md shadow-sm">
-                    <div>
-                        <label for="email" class="sr-only">Email address</label>
-                        <input id="email" name="email" type="email" autocomplete="email"
-                            class="@if ($errors->has('email')) border border-red-500 @else border border-gray-300 @endif
-                            relative block w-full appearance-none rounded-md  px-3 py-2
-                            text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none
-                            focus:ring-indigo-500 sm:text-sm"
-                            placeholder="Email address" />
-                        @error('email')
+            @error('email')
                             <div class="rounded-md bg-red-50 p-4 mt-3">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
@@ -45,6 +33,18 @@
                                 </div>
                             </div>
                         @enderror
+            <form class="mt-8 space-y-6" action="{{ route('forgot.form') }}" method="POST">
+                @csrf
+                <input type="hidden" name="remember" value="true" />
+                <div class="-space-y-px rounded-md shadow-sm">
+                    <div>
+                        <label for="email" class="sr-only">Email address</label>
+                        <input id="email" name="email" type="email" autocomplete="email"
+                            class="@if ($errors->has('email')) border border-red-500 @else border border-gray-300 @endif
+                            relative block w-full appearance-none rounded-md  px-3 py-2
+                            text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none
+                            focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Email address" />
                     </div>
                 </div>
 
