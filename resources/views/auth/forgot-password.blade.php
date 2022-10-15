@@ -14,7 +14,7 @@
         data-sal-delay="200">
         <div class="w-full max-w-md space-y-8">
             <div>
-                <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
+                <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Request password reset</h2>
             </div>
