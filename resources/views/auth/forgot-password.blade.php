@@ -9,7 +9,9 @@
 </head>
 
 <body class="h-full">
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8" data-sal="slide-up"
+        data-sal-duration="500"
+        data-sal-delay="200">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
@@ -67,6 +69,13 @@
             </form>
         </div>
     </div>
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+<script>
+sal({
+    threshold: 0,
+    once: true,
+});
+</script>
 </body>
 
 </html>
