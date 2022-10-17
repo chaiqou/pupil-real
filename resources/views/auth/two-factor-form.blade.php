@@ -30,24 +30,24 @@
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
                     <div class="row-start-2 grid grid-cols-6">
-                        <input id="two_factor_token" name="two_factor_token" type="text" autocomplete="on"
-                            class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="1"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="2"></input>
+                            placeholder="1" maxlength="1" name="two_factor_token[0]"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="3"></input>
+                            placeholder="2" maxlength="1" name="two_factor_token[1]"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="4"></input>
+                            placeholder="3" maxlength="1" name="two_factor_token[2]"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="5"></input>
+                            placeholder="4" maxlength="1" name="two_factor_token[3]"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="6"></input>
+                            placeholder="5" maxlength="1" name="two_factor_token[4]"></input>
+                        <input
+                            class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
+                            placeholder="6" maxlength="1" name="two_factor_token[5]"></input>
                     </div>
                 </div>
 

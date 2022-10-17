@@ -17,9 +17,10 @@ class TwoFactorAuthenticationController extends Controller
 
 	public function verify(TwoFactorAuthenticationRequest $request): RedirectResponse
 	{
-		$validated = $request->validated();
+		$two_factor_authentication_code = implode('', $request->input('two_factor_token.*'));
+		$two_factor_integer = (int) $two_factor_authentication_code;
 
-		if ($validated['two_factor_token'] == Auth::user()->two_factor_token)
+		if ($two_factor_integer == Auth::user()->two_factor_token)
 		{
 			Auth::user()->update(['is_verified' => true]);
 			return redirect()->route('dashboard');

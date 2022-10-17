@@ -24,7 +24,7 @@ class TwoFactorAuthenticationRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'two_factor_token' => ['required', 'integer', 'digits:6'],
+			'two_factor_token.*' => ['required', 'integer'],
 		];
 	}
 }
