@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\TwoFactorAuthenticationMail;
 use App\Http\Requests\AuthenticationRequest;
-use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -26,9 +25,10 @@ class AuthController extends Controller
 			if (Auth::user()->hasRole(['2fa', 'school']))
 			{
 				$code = random_int(100000, 999999);
-				$name = Auth::user()->first_name;
-				Cache::put('2fa', $code, now()->addSeconds(20));
-				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, $name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
+
+				Auth::user()->update(['two_factor_token' => bcrypt($code)]);
+
+				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
 			}
 
 			$request->session()->regenerate();

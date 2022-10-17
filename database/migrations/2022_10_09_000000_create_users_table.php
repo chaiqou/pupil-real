@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +24,7 @@ return new class() extends Migration {
 			$table->tinyInteger('summary_frequency');
 			$table->tinyInteger('finished_onboarding');
 			$table->json('user_information');
-			$table->string('token')->nullable()->unique();
+			$table->string('two_factor_token')->nullable()->unique();
 			$table->rememberToken();
 			$table->timestamps();
 		});

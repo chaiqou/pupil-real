@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Client\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 
 class TwoFactorAuthenticationController extends Controller
 {
@@ -16,10 +16,11 @@ class TwoFactorAuthenticationController extends Controller
 
 	public function verify(Request $request)
 	{
-		if ($request->input('2fa') == Cache::get('2fa'))
+		if ($request->input('2fa') == auth()->user()->two_factor_token)
 		{
+			Auth::user()->update(['2fa' => null]);
 			$request->session()->regenerate();
-			return redirect()->intended('dashboard');
+			return redirect(route('dashboard'));
 		}
 	}
 }
