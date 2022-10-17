@@ -21,8 +21,8 @@ class TwoFactorAuthenticationController extends Controller
 
 		if ($validated['two_factor_token'] == Auth::user()->two_factor_token)
 		{
-			Auth::user()->update(['two_factor_token' => true]);
-			return redirect()->intended('dashboard');
+			Auth::user()->update(['is_verified' => true]);
+			return redirect()->route('dashboard');
 		}
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The two factor authentication code you entered is incorrect.']);

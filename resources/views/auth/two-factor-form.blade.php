@@ -25,29 +25,29 @@
                     If you can't find the email in a few minutes, check your spam folder.
                 </p>
             </div>
-            <form class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
+            <form class="mt-8 space-y-6" action="/submit-two-factor-authentication" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
                     <div class="row-start-2 grid grid-cols-6">
+                        <input id="two_factor_token" name="two_factor_token" type="text" autocomplete="on"
+                            class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
+                            placeholder="1"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="1" value=""></input>
+                            placeholder="2"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="2" value=""></input>
+                            placeholder="3"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="3" value=""></input>
+                            placeholder="4"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="4" value=""></input>
+                            placeholder="5"></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="5" value=""></input>
-                        <input
-                            class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="6" value=""></input>
+                            placeholder="6"></input>
                     </div>
                 </div>
 
