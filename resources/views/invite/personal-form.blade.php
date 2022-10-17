@@ -1,92 +1,107 @@
+<!DOCTYPE html>
+<html class="h-full bg-gray-50">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<?php echo asset('css/app.css') ?>" type="text/css">
+    <title>Personal form | PupilPay</title>
+    <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
-<body>
-<main class="flex justify-center mt-12 md:mt-48 flex-col items-center mb-32">
-    <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 px-4 py-4 rounded-md hidden md:flex">
-        <article class="flex text-[#3341FF] items-center">
-            <div class="mr-3 p-5 rounded-full border-[1px] border-[#3341FF] w-4 h-4 justify-center items-center flex">
-                <div class="z-40">
-                    <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
+<body class="h-full">
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-xl space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+            <nav aria-label="Progress">
+                <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
+                    <li class="relative md:flex md:flex-1">
+                        <!-- Completed Step -->
+                        <div class="group flex w-full items-center">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 group-hover:bg-indigo-800">
+                                    <!-- Heroicon name: solid/check -->
+                                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <span class="ml-4 text-sm font-medium text-gray-900">Set up Account</span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
+                        <!-- Current Step -->
+                        <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
+                                <span class="text-indigo-600">02</span>
+                            </span>
+                            <span class="ml-4 text-sm font-medium text-indigo-600">Personal Form</span>
+                        </div>
+
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
+                        <!-- Upcoming Step -->
+                        <div class="group flex items-center">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                    <span class="text-gray-500">03</span>
+                                </span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
+                            </span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+            <div>
+                <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Set up your account</h2>
+            </div>
+            @error('*')
+            <div class="rounded-md bg-red-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">{{ $message }}</h3>
+                    </div>
                 </div>
-
-                <div class="bg-[#3341FF] text-white absolute z-30 rounded-full absolute p-5"></div>
             </div>
-            <div>
-                <p>Setup Account</p>
-            </div>
-        </article>
-        <article class="flex mx-16 items-center text-[#3341FF]">
-            <div class="mr-3 p-5 rounded-full border-2 border-[#3341FF] w-4 h-4 justify-center items-center flex">
-                <p>02</p>
-            </div>
-            <div>
-                <p>Personal Form</p>
-            </div>
-        </article>
-        <article class="flex items-center">
-            <div class="mr-3 p-5 rounded-full border-2 border-gray-400 w-4 h-4 justify-center items-center flex">
-                <p>03</p>
-            </div>
-            <div>
-                <p>Verify Account</p>
-            </div>
-        </article>
-    </div>
-
-    <div class="flex md:mt-12 flex-col items-center">
-        <div class="w-60 md:w-80">
-            <img src="{{asset('/img/pupilpay-black-color.svg')}}"/>
-        </div>
-        <h1 class="text-4xl font-extrabold mt-7 mx-9 text-center">Fill out your personal info</h1>
-    </div>
-
-    <div class="mt-12 w-[22rem] md:w-[47.3rem] border-t-[1px] border-b-[3px] border-l-[1.5px] border-r-[1.5px]  border-opacity-10 shadow-md border-gray-400 p-3 md:p-7 rounded-md">
-       <div>
-           <h1 class="text-2xl">Personal Information</h1>
-           <p class="text-gray-600 mt-2 mb-7">
-               Use a permanent address where you can receive mail
-           </p>
-       </div>
-        <form method="POST" action="{{route('personal.form_submit', ['uniqueID' => $uniqueID])}}" id="form">
-            @csrf
-    <div class="flex md:flex-row flex-col items-center justify-between">
-        <div class="mt-4">
-            <label for="last_name">Last name</label>
-            <div class="p-2 rounded-md bg-gray-50 border-gray-400 border-[0.01rem]">
-                <input value="{{old('last_name')}}" name="last_name" class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-            </div>
-            @error('last_name')
-            <p class="mt-2 text-red-500">{{$message}}</p>
             @enderror
-        </div>
-        <div class="mt-4">
-            <label for="first_name">First name</label>
-            <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                <input value="{{old('first_name')}}" name="first_name" class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-            </div>
-            @error('first_name')
-            <p class="mt-2 text-red-500">{{$message}}</p>
-            @enderror
-        </div>
-        <div class="mt-4">
-            <label for="middle_name">Middle name</label>
-            <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                <input value="{{old('middle_name')}}" name="middle_name" class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-            </div>
-        </div>
-    </div>
+            <form id="form" method="POST" action="{{route('personal.form_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
+                @csrf
+                <div class="bg-white p-8">
+                    <div>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+                        <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
+                    </div>
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-2">
+                            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('last_name')}}" required name="last_name" id="last_name" autocomplete="given-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
 
-          <div class="flex flex-col md:block items-center">
-              <div class="mt-4">
-                  <label for="country" class="block mb-2 text-sm text-start font-medium text-gray-900">Country / Region</label>
-                  <select value="{{old('country')}}" id="country" name="country" class="rounded-md bg-gray-50 w-[17.2rem] md:w-[32rem]">
-                      <option selected>Hungary</option>
+                        <div class="sm:col-span-2">
+                            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('first_name')}}" required name="first_name" id="first_name" autocomplete="family-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="middle-name" class="block text-sm font-medium text-gray-700">Middle name</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('middle_name')}}" name="middle_name" id="middle_name" autocomplete="additional-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                            <div class="mt-1">
+                                <select id="country" value="{{old('country')}}" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                       <option value="AF">Afghanistan</option>
                       <option value="AX">Aland Islands</option>
                       <option value="AL">Albania</option>
@@ -187,7 +202,7 @@
                       <option value="VA">Holy See (Vatican City State)</option>
                       <option value="HN">Honduras</option>
                       <option value="HK">Hong Kong</option>
-                      <option value="HU">Hungary</option>
+                      <option selected value="HU">Hungary</option>
                       <option value="IS">Iceland</option>
                       <option value="IN">India</option>
                       <option value="ID">Indonesia</option>
@@ -339,58 +354,56 @@
                       <option value="YE">Yemen</option>
                       <option value="ZM">Zambia</option>
                       <option value="ZW">Zimbabwe</option>
-                  </select>
-                  @error('country')
-                  <p class="mt-2 text-red-500">{{$message}}</p>
-                  @enderror
-              </div>
-          </div>
-         <div class="flex flex-col  items-center md:block">
-             <div class="mt-4">
-                 <label for="street_address">Street address</label>
-                 <div class="p-2 rounded-md border-gray-400 bg-gray-50 border-[0.01rem]">
-                     <input value="{{old('street_address')}}" name="street_address" type="select" class="bg-gray-50 outline-none w-[16rem] md:w-full"/>
-                 </div>
-                 @error('street_address')
-                 <p class="mt-2 text-red-500">Address field is required.</p>
-                 @enderror
-             </div>
-         </div>
+                                </select>
+                            </div>
+                        </div>
 
-            <div class="flex items-center justify-between md:flex-row flex-col">
-                <div class="mt-4">
-                    <label for="city">City</label>
-                    <div class="p-2 rounded-md bg-gray-50 border-gray-400 border-[0.01rem]">
-                        <input value="{{old('city')}}" name="city"  class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-                    </div>
-                    @error('city')
-                    <p class="mt-2 text-red-500">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="mt-4">
-                    <label for="state">State / Province</label>
-                    <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                        <input value="{{old('state')}}" name="state" class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-                    </div>
-                    @error('state')
-                    <p class="mt-2 text-red-500">{{$message}}</p>
-                    @enderror
-                </div>
-                <div class="mt-4">
-                    <label for="zip">Zip / Postal</label>
-                    <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                        <input value="{{old('zip')}}" name="zip" class="bg-gray-50 outline-none w-[16rem] md:w-[13rem]"/>
-                    </div>
-                    @error('zip')
-                    <p class="mt-2 text-red-500">{{$message}}</p>
-                    @enderror
-                </div>
-            </div>
+                        <div class="sm:col-span-6">
+                            <label for="street_address" class="block text-sm font-medium text-gray-700">Street address</label>
+                            <div class="mt-1">
+                                <input value="{{old('street_address')}}" type="text" name="street_address" id="street_address" autocomplete="street-address" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
 
-            <div  class="flex flex-col text-white items-end  w-full ">
-                <button type="submit" class="bg-[#3341FF] text-white p-3 mt-8 text-xl rounded-md">Save</button>
-            </div>
-        </form>
+                        <div class="sm:col-span-2">
+                            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('city')}}" name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="state" class="block text-sm font-medium text-gray-700">State / Province</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('state')}}" name="state" id="state" autocomplete="address-level1" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+                            <div class="mt-1">
+                                <input type="text" value="{{old('zip')}}" name="zip" id="zip" autocomplete="postal-code" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <div class="flex justify-end">
+                            <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
     </div>
-</main>
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script>
+        sal({
+            threshold: 0,
+            once: true,
+        });
+    </script>
 </body>
+
+</html>
