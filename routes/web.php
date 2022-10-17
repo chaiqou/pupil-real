@@ -43,4 +43,5 @@ Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupA
 Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
 Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
 
-Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('submit.2fa');
+Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
+Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
