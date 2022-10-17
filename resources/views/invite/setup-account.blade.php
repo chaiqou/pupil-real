@@ -9,7 +9,7 @@
 
 
 
-   <div class="border-[0.1rem] text-gray-400 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
+   <div class="border-[0.1rem] text-gray-400 font-bold text-xl border-gray-300 px-4 py-4 rounded-md flex">
        <article class="flex items-center text-[#3341FF]">
            <div class="mr-3 p-5 rounded-full border-2 border-[#3341FF] w-4 h-4 justify-center items-center flex">
                <p>01</p>

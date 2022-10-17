@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
+Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
 
 Route::get('/setup-account/{uniqueID}', [InviteController::class, 'setupAccount'])->name('setup.account');

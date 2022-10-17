@@ -57,7 +57,7 @@
         <div class="mt-4">
             <label for="last_name">Last name</label>
             <div class="p-2 rounded-md bg-gray-50 border-gray-400 border-[0.01rem]">
-                <input name="last_name" class="bg-gray-50 outline-none w-[13rem]"/>
+                <input value="{{old('last_name')}}" name="last_name" class="bg-gray-50 outline-none w-[13rem]"/>
             </div>
             @error('last_name')
             <p class="mt-2 text-red-500">{{$message}}</p>
@@ -66,7 +66,7 @@
         <div class="mt-4">
             <label for="first_name">First name</label>
             <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                <input name="first_name" class="bg-gray-50 outline-none w-[13rem]"/>
+                <input value="{{old('first_name')}}" name="first_name" class="bg-gray-50 outline-none w-[13rem]"/>
             </div>
             @error('first_name')
             <p class="mt-2 text-red-500">{{$message}}</p>
@@ -75,17 +75,14 @@
         <div class="mt-4">
             <label for="middle_name">Middle name</label>
             <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                <input name="middle_name" class="bg-gray-50 outline-none w-[13rem]"/>
+                <input value="{{old('middle_name')}}" name="middle_name" class="bg-gray-50 outline-none w-[13rem]"/>
             </div>
-            @error('middle_name')
-            <p class="mt-2 text-red-500">{{$message}}</p>
-            @enderror
         </div>
     </div>
 
            <div class="mt-4">
                <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Country / Region</label>
-               <select id="country" name="country" class="rounded-md bg-gray-50 w-[32rem]">
+               <select value="{{old('country')}}" id="country" name="country" class="rounded-md bg-gray-50 w-[32rem]">
                    <option selected>Hungary</option>
                    <option value="AF">Afghanistan</option>
                    <option value="AX">Aland Islands</option>
@@ -347,7 +344,7 @@
             <div class="mt-4">
                 <label for="street_address">Street address</label>
                 <div class="p-2 rounded-md border-gray-400 bg-gray-50 border-[0.01rem]">
-                    <input name="street_address" type="select" class="bg-gray-50 outline-none w-full"/>
+                    <input value="{{old('street_address')}}" name="street_address" type="select" class="bg-gray-50 outline-none w-full"/>
                 </div>
                 @error('street_address')
                 <p class="mt-2 text-red-500">{{$message}}</p>
@@ -358,7 +355,7 @@
                 <div class="mt-4">
                     <label for="city">City</label>
                     <div class="p-2 rounded-md bg-gray-50 border-gray-400 border-[0.01rem]">
-                        <input name="city"  class="bg-gray-50 outline-none w-[13rem]"/>
+                        <input value="{{old('city')}}" name="city"  class="bg-gray-50 outline-none w-[13rem]"/>
                     </div>
                     @error('city')
                     <p class="mt-2 text-red-500">{{$message}}</p>
@@ -367,7 +364,7 @@
                 <div class="mt-4">
                     <label for="state">State / Province</label>
                     <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                        <input name="state" class="bg-gray-50 outline-none w-[13rem]"/>
+                        <input value="{{old('state')}}" name="state" class="bg-gray-50 outline-none w-[13rem]"/>
                     </div>
                     @error('state')
                     <p class="mt-2 text-red-500">{{$message}}</p>
@@ -376,7 +373,7 @@
                 <div class="mt-4">
                     <label for="zip">Zip / Postal</label>
                     <div class="p-2 bg-gray-50 rounded-md border-gray-400 border-[0.01rem]">
-                        <input name="zip" class="bg-gray-50 outline-none w-[13rem]"/>
+                        <input value="{{old('zip')}}" name="zip" class="bg-gray-50 outline-none w-[13rem]"/>
                     </div>
                     @error('zip')
                     <p class="mt-2 text-red-500">{{$message}}</p>

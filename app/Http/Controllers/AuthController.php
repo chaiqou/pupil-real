@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthenticationRequest;
+use App\Models\Invite;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,6 +23,14 @@ class AuthController extends Controller
 		{
 			Log::info('Authentication successful');
 			$request->session()->regenerate();
+            $user = auth()->user();
+            if($user->finished_onboarding === 1) {
+                $user->update(['finished_onboarding' => 2]);
+            }
+            if($user->finished_onboarding === 0) {
+                $invite = Invite::where('email', $user->email)->first();
+                return redirect()->route('personal.form', ['uniqueID' => $invite->uniqueID]);
+            }
 			return redirect()->intended('dashboard');
 		}
 		Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
