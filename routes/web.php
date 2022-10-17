@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
+Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
 
 Route::get('/setup-account/{uniqueID}', [InviteController::class, 'setupAccount'])->name('setup.account');
@@ -41,3 +42,6 @@ Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupA
 
 Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
 Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
+
+Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
+Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');

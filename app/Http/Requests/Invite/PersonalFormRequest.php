@@ -26,7 +26,6 @@ class PersonalFormRequest extends FormRequest
 		return [
 			'last_name'      => 'required',
 			'first_name'     => 'required',
-			'middle_name'    => 'required',
 			'country'        => 'required',
 			'street_address' => 'required',
 			'city'           => 'required',
@@ -40,7 +39,6 @@ class PersonalFormRequest extends FormRequest
 		return [
 			'last_name.required'   => 'Last name is required.',
 			'first_name.required'  => 'First name is required.',
-			'middle_name.required' => 'Middle name is required.',
 		];
 	}
 }

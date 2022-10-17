@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Invite;
+use App\Models\School;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -13,5 +16,11 @@ class AdminSeeder extends Seeder
 	 */
 	public function run()
 	{
+        School::create(['id' => 1]);
+
+        User::create([
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('adminadmin'),
+        ]);
 	}
 }
