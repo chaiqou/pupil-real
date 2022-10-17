@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\TwoFactorAuthenticationMail;
-use App\Http\Requests\AuthenticationRequest;
+use App\Http\Requests\Auth\AuthenticationRequest;
 
 class AuthController extends Controller
 {

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Client\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\TwoFactorAuthenticationRequest;
 
 class TwoFactorAuthenticationController extends Controller
 {
@@ -14,13 +15,16 @@ class TwoFactorAuthenticationController extends Controller
 		return view('auth/two-factor-form');
 	}
 
-	public function verify(Request $request)
+	public function verify(TwoFactorAuthenticationRequest $request): RedirectResponse
 	{
-		if ($request->input('2fa') == auth()->user()->two_factor_token)
+		$validated = $request->validated();
+
+		if (Auth::user()->two_factor_token === bcrypt($validated['two_factor_token']))
 		{
-			Auth::user()->update(['2fa' => null]);
 			$request->session()->regenerate();
-			return redirect(route('dashboard'));
+			return redirect()->intended('dashboard');
 		}
+
+		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The two factor authentication code you entered is incorrect.']);
 	}
 }
