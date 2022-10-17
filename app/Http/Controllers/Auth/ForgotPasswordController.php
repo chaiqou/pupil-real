@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Support\Str;
 use App\Mail\ForgotPasswordMail;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Models\User;
-use BrowserDetect;
-
 
 class ForgotPasswordController extends Controller
 {
+	use BrowserNameAndDevice;
+
 	public function forgotPasswordForm(): View
 	{
 		return view('auth.forgot-password');
@@ -36,11 +37,8 @@ class ForgotPasswordController extends Controller
 		]);
 
 		$name = $user->first_name;
-		//Get browser of user
-		$browser = BrowserDetect::browserName();
-		$device = BrowserDetect::deviceFamily() . ' ' . BrowserDetect::deviceModel();
-		
-		Mail::to($request->email)->send(new ForgotPasswordMail($token, $name, $browser,$device));
+
+		Mail::to($request->email)->send(new ForgotPasswordMail($token, $name, $this->getBrowserName(), $this->getDeviceName()));
 
 		return redirect()->route('forgot.redirect');
 	}

@@ -2,21 +2,33 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
+use App\Mail\TwoFactorAuthenticationMail;
 use App\Http\Requests\AuthenticationRequest;
 
 class AuthController extends Controller
 {
+	use BrowserNameAndDevice;
+
 	public function authenticate(AuthenticationRequest $request): RedirectResponse
 	{
 		$validated = $request->validated();
 
 		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
 		{
+			// send mail for OTP authentication if user is 2fa role or school admin
+			if (Auth::user()->hasRole(['2fa', 'school']))
+			{
+				$code = random_int(100000, 999999);
+				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName()));
+			}
+
 			$request->session()->regenerate();
 			return redirect()->intended('dashboard');
 		}
