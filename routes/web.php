@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,5 @@ Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupA
 
 Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
 Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
+
+Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('submit.2fa');
