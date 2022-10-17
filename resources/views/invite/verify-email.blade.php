@@ -1,15 +1,14 @@
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo asset('css/app.css') ?>" type="text/css">
 </head>
 
 <body>
-<main class="flex justify-center mt-48 flex-col items-center">
+<main class="flex justify-center mt-12 md:mt-48 flex-col items-center">
 
-    <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 flex px-4 py-4 rounded-md">
+    <div class="border-[0.1rem] text-gray-500 font-bold text-xl border-gray-300 px-4 py-4 rounded-md hidden md:flex">
         <article class="flex  items-center text-[#3341FF]">
-
-
-
                 <div class="mr-3 p-5 rounded-full border-[1px] border-[#3341FF] w-4 h-4 justify-center items-center flex">
                     <div class="z-40">
                         <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
@@ -56,7 +55,8 @@
     </div>
 
     <div class="mt-12 border-t-[1px] border-b-[3px] border-l-[1.5px] border-r-[1.5px]  border-opacity-10 shadow-md border-gray-400 p-7 rounded-md">
-        <p class="text-4xl font-bold text-center my-4">Check *email* for a verification code</p>
+        <p class="md:text-4xl font-bold text-center my-2">Check {{$email}}</p>
+        <p class="md:text-4xl font-bold text-center my-2">for a verification code</p>
         <form id="form" method="POST" action="{{route('verify.email_submit', ['uniqueID' => $uniqueID])}}" class="flex flex-col">
             @csrf
             <div>

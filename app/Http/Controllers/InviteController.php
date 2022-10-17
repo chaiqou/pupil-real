@@ -92,8 +92,10 @@ class InviteController extends Controller
 
     public function verifyEmail(): View
     {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         return view('invite.verify-email', [
-            'uniqueID' => request()->uniqueID
+            'uniqueID' => request()->uniqueID,
+            'email' => $invite->email,
         ]);
     }
 
