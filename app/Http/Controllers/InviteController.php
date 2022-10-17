@@ -42,6 +42,7 @@ class InviteController extends Controller
 		$invite->update(['state' => 2]);
 		return view('invite.setup-account', [
 			'uniqueID' => $uniqueID,
+			'email'    => $invite->email,
 		]);
 	}
 
