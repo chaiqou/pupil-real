@@ -15,7 +15,7 @@ class TwoFactorAuthenticationMail extends Mailable
 	 *
 	 * @return void
 	 */
-	public function __construct(private int $code, private string $name, private string $browser, private string $device)
+	public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year)
 	{
 	}
 
@@ -26,6 +26,6 @@ class TwoFactorAuthenticationMail extends Mailable
 	 */
 	public function build()
 	{
-		return $this->view('mail.two-factor-auth', ['code' => $this->code]);
+		return $this->view('mail.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
 	}
 }

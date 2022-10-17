@@ -22,11 +22,11 @@ class AuthController extends Controller
 
 		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
 		{
-			// send mail for OTP authentication if user is 2fa role or school admin
 			if (Auth::user()->hasRole(['2fa', 'school']))
 			{
 				$code = random_int(100000, 999999);
-				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName()));
+				$name = Auth::user()->first_name;
+				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, $name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
 			}
 
 			$request->session()->regenerate();

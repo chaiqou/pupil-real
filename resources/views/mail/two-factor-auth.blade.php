@@ -132,8 +132,8 @@
                                                 </table>
                                                 <p
                                                     style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                                                    This request was received from an {{ $operating_system }}
-                                                    device using {{ $browser_name }}.
+                                                    This request was received from an {{ $device }}
+                                                    device using {{ $browser }}.
                                                     If you did not try logging in, consider updating your password or <a
                                                         target="_blank" href="https://pupilpay.hu/elérhetőségek/"
                                                         style="color: #3869D4">contact support</a> if you have
@@ -159,7 +159,7 @@
                                         <td align="center" style="padding: 45px; font-size: 16px">
                                             <p
                                                 style="margin-top: 6px; margin-bottom: 20px; text-align: center; font-size: 12px; line-height: 24px; color: #A8AAAF">
-                                                &copy; {{ replace . year }} PupilPay. All rights reserved.</p>
+                                                &copy; {{ $year }} PupilPay. All rights reserved.</p>
                                         </td>
                                     </tr>
                                 </table>
