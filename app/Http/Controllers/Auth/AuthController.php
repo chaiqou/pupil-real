@@ -25,10 +25,9 @@ class AuthController extends Controller
 			if (Auth::user()->hasRole(['2fa', 'school']))
 			{
 				$code = random_int(100000, 999999);
-
-				Auth::user()->update(['two_factor_token' => bcrypt($code)]);
-
+				Auth::user()->update(['two_factor_token' => $code]);
 				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
+				return redirect('two-factor-authentication');
 			}
 
 			$request->session()->regenerate();

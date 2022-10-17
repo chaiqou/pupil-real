@@ -25,7 +25,8 @@
                     If you can't find the email in a few minutes, check your spam folder.
                 </p>
             </div>
-            <form class="mt-8 space-y-6" action="#" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
+                @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
                     <div class="row-start-2 grid grid-cols-6">

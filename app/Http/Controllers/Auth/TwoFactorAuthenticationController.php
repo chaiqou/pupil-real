@@ -19,9 +19,9 @@ class TwoFactorAuthenticationController extends Controller
 	{
 		$validated = $request->validated();
 
-		if (Auth::user()->two_factor_token === bcrypt($validated['two_factor_token']))
+		if ($validated['two_factor_token'] == Auth::user()->two_factor_token)
 		{
-			$request->session()->regenerate();
+			Auth::user()->update(['two_factor_token' => true]);
 			return redirect()->intended('dashboard');
 		}
 

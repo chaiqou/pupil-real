@@ -25,6 +25,7 @@ return new class() extends Migration {
 			$table->tinyInteger('finished_onboarding');
 			$table->json('user_information');
 			$table->string('two_factor_token')->nullable()->unique();
+			$table->boolean('is_verified')->default(false);
 			$table->rememberToken();
 			$table->timestamps();
 		});
