@@ -20,18 +20,24 @@ class AuthController extends Controller
 
 		$validated = $request->validated();
 
-		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
-		{
+		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
 			Log::info('Authentication successful');
+			$user = auth()->user();
+			if ($user->finished_onboarding === 1) {
+				$user->update(['finished_onboarding' => 2]);
+			}
+			if ($user->finished_onboarding === 0) {
+				$invite = Invite::where('email', $user->email)->first();
+				if ($invite->state == 2 || $invite->state == 3) {
+					Auth::logout();
+					return redirect()->route('personal.form', ['uniqueID' => $invite->uniqueID]);
+				}
+				if ($invite->state == 4) {
+					Auth::logout();
+					return redirect()->route('verify.email', ['uniqueID' => $invite->uniqueID]);
+				}
+			}
 			$request->session()->regenerate();
-            $user = auth()->user();
-            if($user->finished_onboarding === 1) {
-                $user->update(['finished_onboarding' => 2]);
-            }
-            if($user->finished_onboarding === 0) {
-                $invite = Invite::where('email', $user->email)->first();
-                return redirect()->route('personal.form', ['uniqueID' => $invite->uniqueID]);
-            }
 			return redirect()->intended('dashboard');
 		}
 		Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
@@ -41,8 +47,7 @@ class AuthController extends Controller
 
 	public function redirectIfLoggedIn(): View|RedirectResponse
 	{
-		if (Auth::check())
-		{
+		if (Auth::check()) {
 			return redirect(route('dashboard'));
 		}
 		return view('auth/sign-in');

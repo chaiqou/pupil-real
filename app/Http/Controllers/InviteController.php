@@ -12,6 +12,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -19,10 +20,10 @@ use Illuminate\View\View;
 class InviteController extends Controller
 {
 
-    public function index(): View
-    {
-        return view('invite.user-invite');
-    }
+	public function index(): View
+	{
+		return view('invite.user-invite');
+	}
 
 	public function sendInvite(InviteRequest $request): RedirectResponse
 	{
@@ -38,7 +39,11 @@ class InviteController extends Controller
 
 	public function setupAccount($uniqueID): View
 	{
+		// Check if the invite exists
 		$invite = Invite::where('uniqueID', $uniqueID)->first();
+		if (!$invite) {
+			return view('invite.invalid-invite');
+		}
 		$invite->update(['state' => 2]);
 		return view('invite.setup-account', [
 			'uniqueID' => $uniqueID,
@@ -48,11 +53,11 @@ class InviteController extends Controller
 
 	public function submitSetupAccount(SetupAccountRequest $request): RedirectResponse
 	{
+		$invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
 		$user = User::create([
 			'email'     => $request->email,
 			'password'  => bcrypt($request->password),
 		]);
-		$invite = Invite::where('uniqueID', request()->uniqueID)->first();
 		$invite->update([
 			'email' => $user->email,
 			'state' => 3,
@@ -62,6 +67,7 @@ class InviteController extends Controller
 
 	public function personalForm(): View
 	{
+		$invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
 		return view('invite.personal-form', [
 			'uniqueID' => request()->uniqueID,
 		]);
@@ -69,48 +75,62 @@ class InviteController extends Controller
 
 	public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
 	{
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+		$invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
 		$user = User::where('email', $invite->email)->first();
 		$user->update([
-            'last_name'   => $request->last_name,
-            'first_name'  => $request->first_name,
-            'middle_name' => $request->middle_name,
+			'last_name'   => $request->last_name,
+			'first_name'  => $request->first_name,
+			'middle_name' => $request->middle_name,
 			'user_information' => [
-                'country'  => $request->country,
-                'street_address'   => $request->street_address,
-                'city'  => $request->city,
-                'state'   => $request->state,
-                'zip'  => (int)$request->zip,
-            ]
+				'country'  => $request->country,
+				'street_address'   => $request->street_address,
+				'city'  => $request->city,
+				'state'   => $request->state,
+				'zip'  => (int)$request->zip,
+			]
 		]);
-        $invite->update(['state' => 4]);
-        $random_integer = VerificationCode::create(['code' => mt_rand(10000000,99999999), 'invite_id' => $invite->id]);
-        Mail::to($user->email)->send(new RandomInteger($random_integer));
+		$invite->update(['state' => 4]);
 		return redirect()->route('verify.email', [
-            'uniqueID' => request()->uniqueID
-        ]);
+			'uniqueID' => request()->uniqueID
+		]);
 	}
 
-    public function verifyEmail(): View
-    {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-        return view('invite.verify-email', [
-            'uniqueID' => request()->uniqueID,
-            'email' => $invite->email,
-        ]);
-    }
+	public function verifyEmail(): View
+	{
+		$invite = Invite::where('uniqueID', request()->uniqueID)->first();
+		if (!$invite) {
+			return view('auth.redirect-template')
+				->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => "Try opening your link again, or check if you entered everything correctly."]);
+		}
+		$user = User::where('email', $invite->email)->first();
+		//Check if invite has VerificationCode
+		$verificationCode = VerificationCode::where('invite_id', $invite->id)->first();
+		if (!$verificationCode) {
+			$verificationCode = VerificationCode::create([
+				'invite_id' => $invite->id,
+				'code'      => random_int(100000, 999999),
+			]);
+		}
+		Mail::to($user->email)->send(new RandomInteger($verificationCode));
+		return view('invite.verify-email', [
+			'uniqueID' => request()->uniqueID,
+			'email' => $invite->email,
+		]);
+	}
 
-    public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
-    {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-        $user = User::where('email', $invite->email)->first();
-        $input_summary = (int)($request->input('code_each.1') . '' . $request->input('code_each.2') . '' . $request->input('code_each.3') . '' . $request->input('code_each.4') . '' . $request->input('code_each.5') . '' . $request->input('code_each.6') . '' . $request->input('code_each.7') . '' . $request->input('code_each.8'));
-        $verification_code = VerificationCode::where('invite_id', $invite->id)->first();
-        if($input_summary !== $verification_code->code) {
-            return back()->withErrors(['code' => 'These credentials do not match our records.']);
-        }
-            $user->update(['finished_onboarding' => 1]);
-            $invite->delete();
-            return redirect()->route('default');
-    }
+	public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
+	{
+		$invite = Invite::where('uniqueID', request()->uniqueID)->first();
+		$user = User::where('email', $invite->email)->first();
+		$input_summary = (int)($request->input('code_each.1') . '' . $request->input('code_each.2') . '' . $request->input('code_each.3') . '' . $request->input('code_each.4') . '' . $request->input('code_each.5') . '' . $request->input('code_each.6'));
+		$verification_code = VerificationCode::where('invite_id', $invite->id)->first();
+		Log::info($input_summary);
+		Log::info($verification_code->code);
+		if ($verification_code->code == $input_summary) {
+			$user->update(['finished_onboarding' => 1]);
+		$invite->delete();
+		return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
+		}
+	return back()->withErrors(['code' => 'These credentials do not match our records.']);
+	}
 }
