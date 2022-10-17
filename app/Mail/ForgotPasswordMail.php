@@ -16,8 +16,9 @@ class ForgotPasswordMail extends Mailable
 	 *
 	 * @return void
 	 */
-	public function __construct(private string $token)
+	public function __construct(private string $token, private string $name, private string $browser, private string $device)
 	{
+		//
 	}
 
 	/**
@@ -28,6 +29,6 @@ class ForgotPasswordMail extends Mailable
 	public function build(ForgotPasswordRequest $request)
 	{
 		$action_link = route('password.reset', ['token' => $this->token]);
-		return $this->view('mail/email-forgot', ['action_link' => $action_link, 'body' => 'Check your password reset link']);
+		return $this->view('mail/email-forgot', ['action_link' => $action_link, 'body' => 'Check your password reset link', 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device]);
 	}
 }

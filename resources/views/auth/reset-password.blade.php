@@ -9,14 +9,34 @@
 </head>
 
 <body class="h-full">
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 "
+    data-sal="slide-up"
+        data-sal-duration="500"
+        data-sal-delay="200">
         <div class="w-full max-w-md space-y-8">
             <div>
-                <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
+                <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Reset your password</h2>
             </div>
-            <form class="mt-8 space-y-6" action="{{ route('password.update') }}" method="POST">
+            @error('password')
+                    <div class="rounded-md bg-red-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                    fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">{{ $message }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                @enderror
+            <form class="mt-8 space-y-6" action="{{ route('password.update') }}" method="POST" onsubmit="document.getElementById('submit').disabled=true;document.getElementById('submit').classlist.add('animate-pulse');">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <input type="hidden" name="token" value="{{ $token }}">
@@ -36,26 +56,10 @@
                     </div>
 
                 </div>
-                @error('password')
-                    <div class="rounded-md bg-red-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                    fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">{{ $message }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                @enderror
 
                 <div>
                     <button type="submit"
+                    id="submit"
                         class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <!-- Heroicon name: mini/key -->
@@ -72,6 +76,13 @@
             </form>
         </div>
     </div>
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+<script>
+sal({
+    threshold: 0,
+    once: true,
+});
+</script>
 </body>
 
 

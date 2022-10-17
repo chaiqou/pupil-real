@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\AuthenticationRequest;
 use App\Models\Invite;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\AuthenticationRequest;
 
 class AuthController extends Controller
 {
@@ -35,7 +36,7 @@ class AuthController extends Controller
 		}
 		Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
 
-		return back()->withErrors(['email' => 'These credentials do not match our records.']);
+		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
 
 	public function redirectIfLoggedIn(): View|RedirectResponse
