@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RandomInteger extends Mailable
+class OnboardingVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,7 +16,7 @@ class RandomInteger extends Mailable
      *
      * @return void
      */
-    public function __construct(public $random_integer)
+    public function __construct(public $inviteCode, public $user)
     {
         //
     }
@@ -28,6 +28,6 @@ class RandomInteger extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.random-integer');
+        return $this->view('mail.onboarding-verification')->subject('Verification for PupilPay');
     }
 }

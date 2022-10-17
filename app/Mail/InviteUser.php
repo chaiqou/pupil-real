@@ -26,6 +26,6 @@ class InviteUser extends Mailable
 	 */
 	public function build()
 	{
-		return $this->view('mail.invite-user');
+		return $this->view('mail.invite-user')->subject('Invitation to PupilPay');
 	}
 }

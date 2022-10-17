@@ -7,7 +7,7 @@ use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
 use App\Mail\InviteUser;
-use App\Mail\RandomInteger;
+use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
@@ -111,7 +111,7 @@ class InviteController extends Controller
 				'code'      => random_int(100000, 999999),
 			]);
 		}
-		Mail::to($user->email)->send(new RandomInteger($verificationCode));
+		Mail::to($user->email)->send(new OnboardingVerification($verificationCode,$user));
 		return view('invite.verify-email', [
 			'uniqueID' => request()->uniqueID,
 			'email' => $invite->email,
