@@ -48,6 +48,7 @@ class AuthController extends Controller
 
 	public function logout(Request $request): RedirectResponse
 	{
+		Auth::user()->update(['is_verified' => false, 'two_factor_token' => null]);
 		Auth::logout();
 		$request->session()->invalidate();
 		$request->session()->regenerateToken();
