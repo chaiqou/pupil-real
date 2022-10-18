@@ -26,6 +26,6 @@ class TwoFactorAuthenticationController extends Controller
 			return redirect()->route('dashboard');
 		}
 
-		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The two factor authentication code you entered is incorrect.']);
+		return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);
 	}
 }

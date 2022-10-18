@@ -18,7 +18,7 @@
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Enter the
-                    <span href="#" class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
+                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
                     verification code sent to your email address
                 </p>
                 <p class="mt-2 text-center text-xs text-gray-600">
@@ -32,30 +32,30 @@
                     <div class="row-start-2 grid grid-cols-6">
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="1" maxlength="1" name="two_factor_token[0]"></input>
+                            placeholder="1" maxlength="1" name="two_factor_token[0]" required></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="2" maxlength="1" name="two_factor_token[1]"></input>
+                            placeholder="2" maxlength="1" name="two_factor_token[1]" required></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="3" maxlength="1" name="two_factor_token[2]"></input>
+                            placeholder="3" maxlength="1" name="two_factor_token[2]" required></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="4" maxlength="1" name="two_factor_token[3]"></input>
+                            placeholder="4" maxlength="1" name="two_factor_token[3]" required></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="5" maxlength="1" name="two_factor_token[4]"></input>
+                            placeholder="5" maxlength="1" name="two_factor_token[4]" required></input>
                         <input
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="6" maxlength="1" name="two_factor_token[5]"></input>
+                            placeholder="6" maxlength="1" name="two_factor_token[5]" required></input>
                     </div>
                 </div>
 
                 <div>
+                    <x-alerts.error type="error" />
                     <button type="submit"
-                        class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="group relative mt-4 flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <!-- Heroicon name: mini/lock-closed -->
                             <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
