@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Traits\BrowserNameAndDevice;
+use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
@@ -29,7 +31,6 @@ class AuthController extends Controller
 				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
 				return redirect('two-factor-authentication');
 			}
-
 			$request->session()->regenerate();
 			return redirect(route('dashboard'));
 		}
@@ -39,8 +40,7 @@ class AuthController extends Controller
 
 	public function redirectIfLoggedIn(): View|RedirectResponse
 	{
-		if (Auth::check())
-		{
+		if (Auth::check()) {
 			return redirect(route('dashboard'));
 		}
 		return view('auth/sign-in');

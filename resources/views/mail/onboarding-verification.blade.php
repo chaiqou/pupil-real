@@ -13,11 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet" media="screen">
   <style>
-    @media (max-width: 600px) {
-      .button {
-        width: 100% !important;
-        text-align: center !important;
-      }
+    .body-sub {
+      margin-top: 25px;
+      border-top-width: 1px;
+      padding-top: 25px;
+      border-top-color: #EAEAEC;
+      border-top-style: solid;
     }
     @media (prefers-color-scheme: dark) {
       body,
@@ -37,6 +38,9 @@
       h2,
       h3 {
         color: #fff !important;
+      }
+      .attributes_content {
+        background-color: #222222 !important;
       }
     }
     @media (max-width: 600px) {
@@ -58,7 +62,7 @@
   <div role="article" aria-roledescription="email" aria-label="" lang="en">
     <table class="email-wrapper" style="width: 100%; background-color: #F2F4F6; font-family: 'Nunito Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" cellpadding="0" cellspacing="0" role="presentation">
       <tr>
-        <td align="center">
+        <td>
           <table class="email-content" style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
               <td align="center">
@@ -76,24 +80,19 @@
             </tr>
             <tr>
               <td class="email-body" style="width: 100%">
-                <table align="center" class="email-body_inner sm-w-11-12" style="margin-left: auto; margin-right: auto; width: 570px; border-radius: 6px; background-color: #fff" cellpadding="0" cellspacing="0" role="presentation">
+                <table class="email-body_inner sm-w-11-12" style="margin-left: auto; margin-right: auto; width: 570px; border-radius: 6px; background-color: #fff" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td style="padding: 45px">
                       <div style="font-size: 16px">
-                      @if ($name != "unfilled")
-                        
-                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi {{$name}},</h1>
-                      @else
-                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi there!</h1>
-                      @endif
-                        <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">You recently requested to reset your password for your PupilPay account. Use the button below to reset it. <strong>This password reset is only valid for the next 30 minutes.</strong></p>
-                        <table align="center" style="margin: 30px auto; width: 100%; text-align: center" cellpadding="0" cellspacing="0" role="presentation">
-                          <tr>
-                            <td align="center">
-                              <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
+                        <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi {{$user->first_name}},</h1>
+                        <p style="margin-top: 6px; margin-bottom: 21px; font-size: 16px; line-height: 24px; color: #51545E">You're just one step away from opening your PupilPay account. For the last step, all you have left is <strong>entering the code below on the verification screen.</strong></p>
+                        <table style="margin-bottom: 21px; width: 100%" cellpadding="0" cellspacing="0" role="presentation">
+                          <tr style="display: grid; justify-content: center">
+                            <td align="center" class="attributes_content">
+                              <table style="width: fit-content; background-color: #F4F4F7; padding: 16px" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
-                                  <td align="center" style="font-size: 16px">
-                                    <a href="{{ $action_link }}" target="_blank" style="display: inline-block; color: #fff; text-decoration-line: none; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); background-color: #22BC66; border-color: #22bc66; border-style: solid; border-width: 10px 18px">Reset your password</a>
+                                  <td align="center" style="text-align: center; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 30px; font-weight: 700; letter-spacing: .3em; color: #374151">
+                                    {{$inviteCode->code}}
                                   </td>
                                 </tr>
                               </table>
@@ -101,21 +100,9 @@
                           </tr>
                         </table>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                          For security, this request was received from an {{$device}} device using {{$browser}}.
-                          If you did not request a password reset, please ignore this email or <a target="_blank" href="https://pupilpay.hu/elérhetőségek/" style="color: #3869D4">contact support</a> if you have questions.
-                        </p>
-                        <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
                           Thanks,
                           <br>The PupilPay Team
                         </p>
-                        <table style="margin-top: 25px; padding-top: 25px; border-top: 1px solid #eaeaec" cellpadding="0" cellspacing="0" role="presentation">
-                          <tr>
-                            <td>
-                              <p style="margin-top: 6px; margin-bottom: 5px; font-size: 12px; line-height: 24px; color: #51545E">If you're having trouble with the button above, try opening, or copy and paste the URL below into your web browser.</p>
-                              <p style="margin-top: 6px; margin-bottom: 5px; font-size: 12px; line-height: 24px; color: #51545E"><a target="_blank" href="{{$action_link}}" style="color: #3869D4">{{$action_link}}</a></p>
-                            </td>
-                          </tr>
-                        </table>
                       </div>
                     </td>
                   </tr>
