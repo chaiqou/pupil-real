@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\AuthenticationRequest;
@@ -27,15 +28,8 @@ class AuthController extends Controller
 				$user->update(['finished_onboarding' => 2]);
 			}
 			if ($user->finished_onboarding === 0) {
-				$invite = Invite::where('email', $user->email)->first();
-				if ($invite->state == 2 || $invite->state == 3) {
-					Auth::logout();
-					return redirect()->route('personal.form', ['uniqueID' => $invite->uniqueID]);
-				}
-				if ($invite->state == 4) {
-					Auth::logout();
-					return redirect()->route('verify.email', ['uniqueID' => $invite->uniqueID]);
-				}
+				$route = InviteController::continueOnboarding($user);
+				return redirect($route);
 			}
 			$request->session()->regenerate();
 			return redirect()->intended('dashboard');
