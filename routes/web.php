@@ -30,9 +30,10 @@ Route::middleware(['guest'])->group(function () {
 	Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
 
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::middleware(['auth','two_factor_auth'])->group(function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
