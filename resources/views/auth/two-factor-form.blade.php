@@ -25,15 +25,11 @@
                     If you can't find the email in a few minutes, check your spam folder.
                 </p>
             </div>
-            <div class='flex items-center space-x-8 justify-around'>
-                <button type="button" name='two_factor_token' id='two_factor_token'
-                    class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                    Resent code
-                </button>
+            <div class="flex items-center justify-center">
                 <button type="button"
-                    class="inline-flex items-center rounded-md border border-transparent bg-red-600 px-10 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                    Log Out</button>
-
+                    class="group relative mt-4 flex w-fit justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Resend Code
+                </button>
             </div>
             <form class="mt-8 space-y-6" action="/submit-two-factor-authentication" method="POST">
                 @csrf
@@ -84,6 +80,11 @@
                     </button>
                 </div>
             </form>
+            <div class="flex items-center justify-center">
+                <button type="button"
+                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Log
+                    out</button>
+            </div>
         </div>
     </div>
     <script>
