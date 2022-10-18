@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthenticationRequest extends FormRequest
+class TwoFactorAuthenticationRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -19,13 +19,12 @@ class AuthenticationRequest extends FormRequest
 	/**
 	 * Get the validation rules that apply to the request.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function rules()
 	{
 		return [
-			'email'    => ['required', 'email', 'exists:users,email'],
-			'password' => ['required', 'min:8'],
+			'two_factor_token.*' => ['required', 'integer'],
 		];
 	}
 }

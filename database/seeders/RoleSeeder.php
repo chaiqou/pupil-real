@@ -17,5 +17,6 @@ class RoleSeeder extends Seeder
 		Role::create(['name' => 'admin']);
 		Role::create(['name' => 'school']);
 		Role::create(['name' => 'parent']);
+		Role::create(['name' => '2fa']);
 	}
 }

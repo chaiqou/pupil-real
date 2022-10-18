@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::middleware(['guest'])->group(function () {
 	Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'two_factor_auth'])->group(function () {
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 	Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -43,5 +44,8 @@ Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupA
 Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
 Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
 
+Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
+Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
+

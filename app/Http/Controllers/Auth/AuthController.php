@@ -5,36 +5,35 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Traits\BrowserNameAndDevice;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\AuthenticationRequest;
+use App\Mail\TwoFactorAuthenticationMail;
+use App\Http\Requests\Auth\AuthenticationRequest;
 
 class AuthController extends Controller
 {
+	use BrowserNameAndDevice;
+
 	public function authenticate(AuthenticationRequest $request): RedirectResponse
 	{
-		Log::info('Attempting to authenticate user');
-		Log::info($request->all());
-
 		$validated = $request->validated();
 
-		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
-			Log::info('Authentication successful');
-			$user = auth()->user();
-			if ($user->finished_onboarding === 1) {
-				$user->update(['finished_onboarding' => 2]);
-			}
-			if ($user->finished_onboarding === 0) {
-				$route = InviteController::continueOnboarding($user);
-				return redirect($route);
+		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
+		{
+			if (Auth::user()->hasRole(['2fa', 'school']))
+			{
+				$code = random_int(100000, 999999);
+				Auth::user()->update(['two_factor_token' => $code]);
+				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
+				return redirect('two-factor-authentication');
 			}
 			$request->session()->regenerate();
-			return redirect()->intended('dashboard');
+			return redirect(route('dashboard'));
 		}
-		Log::info('Authentication failed at' . date('Y-m-d H:i:s'));
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
@@ -49,6 +48,7 @@ class AuthController extends Controller
 
 	public function logout(Request $request): RedirectResponse
 	{
+		Auth::user()->update(['is_verified' => false, 'two_factor_token' => null]);
 		Auth::logout();
 		$request->session()->invalidate();
 		$request->session()->regenerateToken();
