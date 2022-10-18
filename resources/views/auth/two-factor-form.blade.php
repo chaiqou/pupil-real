@@ -25,6 +25,16 @@
                     If you can't find the email in a few minutes, check your spam folder.
                 </p>
             </div>
+            <div class='flex items-center space-x-8 justify-around'>
+                <button type="button" name='two_factor_token' id='two_factor_token'
+                    class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Resent code
+                </button>
+                <button type="button"
+                    class="inline-flex items-center rounded-md border border-transparent bg-red-600 px-10 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                    Log Out</button>
+
+            </div>
             <form class="mt-8 space-y-6" action="/submit-two-factor-authentication" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />

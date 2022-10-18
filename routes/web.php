@@ -46,6 +46,9 @@ Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPerson
 
 Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
 Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
+Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
+
+
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
 
