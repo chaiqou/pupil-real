@@ -30,22 +30,28 @@
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
                     <div class="row-start-2 grid grid-cols-6">
-                        <input
+                        <input onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)"
+                            id="sc-1"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="1" maxlength="1" name="two_factor_token[0]" required></input>
-                        <input
+                        <input onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)"
+                            id="sc-2"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="2" maxlength="1" name="two_factor_token[1]" required></input>
-                        <input
+                        <input onkeyup="stepForward(3)" onkeydown="stepBack(event, 3)" onclick="resetValue(3)"
+                            id="sc-3"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="3" maxlength="1" name="two_factor_token[2]" required></input>
-                        <input
+                        <input onkeyup="stepForward(4)" onkeydown="stepBack(event, 4)" onclick="resetValue(4)"
+                            id="sc-4"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="4" maxlength="1" name="two_factor_token[3]" required></input>
-                        <input
+                        <input onkeyup="stepForward(5)" onkeydown="stepBack(event, 5)" onclick="resetValue(5)"
+                            id="sc-5"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="5" maxlength="1" name="two_factor_token[4]" required></input>
-                        <input
+                        <input onkeyup="stepForward(6)" onkeydown="stepBack(event, 6)" onclick="resetValue(6)"
+                            id="sc-6"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
                             placeholder="6" maxlength="1" name="two_factor_token[5]" required></input>
                     </div>
@@ -70,6 +76,58 @@
             </form>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            document.getElementById("sc-1").focus();
+        };
+        //Listen to paste event
+        document.addEventListener('paste', function(e) {
+            var pastedText = e.clipboardData.getData('text/plain');
+            //wait a second, then paste it
+            if (pastedText.length == 6) {
+                setTimeout(function() {
+                    var sc = document.getElementById("sc-1");
+                    sc.value = pastedText.substring(0, 1);
+                    sc = document.getElementById("sc-2");
+                    sc.value = pastedText.substring(1, 2);
+                    sc = document.getElementById("sc-3");
+                    sc.value = pastedText.substring(2, 3);
+                    sc = document.getElementById("sc-4");
+                    sc.value = pastedText.substring(3, 4);
+                    sc = document.getElementById("sc-5");
+                    sc.value = pastedText.substring(4, 5);
+                    sc = document.getElementById("sc-6");
+                    sc.value = pastedText.substring(5, 6);
+                }, 300);
+            }
+        });
+
+        function resetValue(i) {
+            //Reset sc-n if it equals or is higher than i
+            for (let j = i; j <= 6; j++) {
+                document.getElementById("sc-" + j).value = "";
+            }
+        }
+
+        function stepForward(i) {
+            if (document.getElementById('sc-' + i).value.length != 1) {
+                document.getElementById('sc-' + i).value = ''
+            } else {
+                if (i != 6) {
+                    document.getElementById('sc-' + i).value = document.getElementById('sc-' + i).value.toUpperCase()
+                    document.getElementById('sc-' + (i + 1)).focus()
+                }
+            }
+        }
+
+        function stepBack(evtobj, i) {
+            //If sender pressed backspace, reset sc-i and focus on sc-i-1
+            if (evtobj.keyCode == 8) {
+                document.getElementById('sc-' + i).value = ''
+                document.getElementById('sc-' + (i - 1)).focus()
+            }
+        }
+    </script>
 </body>
 
 </html>
