@@ -12,6 +12,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -23,6 +24,20 @@ class InviteController extends Controller
 	public function index(): View
 	{
 		return view('invite.user-invite');
+	}
+
+	public static function continueOnboarding($user)
+	{
+		//Get the invite
+		$invite = Invite::where('email', $user->email)->first();
+		//Log out the user (So they don't have access to the dashboard)
+		Auth::logout();
+		if ($invite->state == 4) {
+			//If the invite is in state 4, redirect to email verification
+			return route('verify.email', ['uniqueID' => $invite->uniqueID]);
+		}
+		//If the invite is not state 4 (Aka before the personal form, but after the user has already been created)
+		return route('personal.form', ['uniqueID' => $invite->uniqueID]);
 	}
 
 	public function sendInvite(InviteRequest $request): RedirectResponse
