@@ -31,8 +31,8 @@ class AuthController extends Controller
 				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
 				return redirect('two-factor-authentication');
 			}
-			$request->session()->regenerate();
-			return redirect(route('dashboard'));
+
+			return redirect()->route('dashboard');
 		}
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
