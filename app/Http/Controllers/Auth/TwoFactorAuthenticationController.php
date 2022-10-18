@@ -23,6 +23,7 @@ class TwoFactorAuthenticationController extends Controller
 		if ($two_factor_integer == Auth::user()->two_factor_token)
 		{
 			Auth::user()->update(['is_verified' => true]);
+
 			return redirect()->route('dashboard');
 		}
 

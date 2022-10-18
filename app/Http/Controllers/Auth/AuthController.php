@@ -31,7 +31,7 @@ class AuthController extends Controller
 			}
 
 			$request->session()->regenerate();
-			return redirect()->intended('dashboard');
+			return redirect(route('dashboard'));
 		}
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
