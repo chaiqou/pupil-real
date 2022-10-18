@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Invite;
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Traits\BrowserNameAndDevice;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -16,9 +15,8 @@ use App\Http\Requests\Auth\AuthenticationRequest;
 
 class AuthController extends Controller
 {
-	use BrowserNameAndDevice;
-
-	public function authenticate(AuthenticationRequest $request): RedirectResponse
+    use BrowserNameAndDevice;
+    	public function authenticate(AuthenticationRequest $request): RedirectResponse
 	{
 		$validated = $request->validated();
 
@@ -30,6 +28,15 @@ class AuthController extends Controller
 				Auth::user()->update(['two_factor_token' => $code]);
 				Mail::to(Auth::user()->email)->send(new TwoFactorAuthenticationMail($code, Auth::user()->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
 				return redirect('two-factor-authentication');
+			}
+
+            if (Auth::user()->finished_onboarding === 1) {
+				Auth::user()->update(['finished_onboarding' => 2]);
+			}
+
+			if (Auth::user()->finished_onboarding === 0){
+				$route = InviteController::continueOnboarding(Auth::user());
+				return redirect($route);
 			}
 
 			return redirect()->route('dashboard');
