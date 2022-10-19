@@ -98,5 +98,27 @@ class UserSeeder extends Seeder
 			'email'                   => 'lomtadzenikusha@gmail.com',
 			'password'                => bcrypt('adminadmin'),
 		])->assignRole('school');
+
+        $luka = User::query()->updateOrCreate([
+            'first_name'              => 'luka',
+            'last_name'               => 'ramishvili',
+            'school_id'               => 1,
+            'billingo_id'             => 1,
+            'summary_frequency'       => 1,
+            'finished_onboarding'     => 1,
+            'user_information'        => json_encode([
+                $faker->randomElement(
+                    [
+                        'Nikoloz',
+                        'Levente',
+                        'Luka',
+                    ]
+                ),
+            ]),
+            'email'                   => 'jackrestler@gmail.com',
+            'password'                => bcrypt('adminadmin'),
+        ])->assignRole('school');
 	}
+
+
 }

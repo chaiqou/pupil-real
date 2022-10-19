@@ -36,7 +36,7 @@
                 <div class="flex flex-shrink-0 items-center px-4">
                     <img class="h-8 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
                 </div>
-                <dashboard-navigation/>
+                <dashboard-navigation :navigation="{{json_encode($navigation)}}"/>
             </div>
             <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
                 <switch-account/>
