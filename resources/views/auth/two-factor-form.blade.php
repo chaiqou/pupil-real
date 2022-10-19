@@ -31,7 +31,7 @@
                     Resend Code
                 </button>
             </div>
-            <form class="mt-8 space-y-6" action="/submit-two-factor-authentication" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
