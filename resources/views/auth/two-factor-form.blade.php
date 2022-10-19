@@ -26,10 +26,13 @@
                 </p>
             </div>
             <div class="flex items-center justify-center">
-                <button type="button"
-                    class="group relative mt-4 flex w-fit justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    Resend Code
-                </button>
+                <form action="{{ route('2fa.resend') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="group relative mt-4 flex w-fit justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Resend Code
+                    </button>
+                </form>
             </div>
             <form class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
                 @csrf

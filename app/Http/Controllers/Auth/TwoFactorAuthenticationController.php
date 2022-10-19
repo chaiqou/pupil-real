@@ -31,5 +31,8 @@ class TwoFactorAuthenticationController extends Controller
 		return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);
 	}
 
-
+   public function resend(): RedirectResponse
+   {
+       return Auth::user()->sendTwoFactorCode();
+   }
 }
