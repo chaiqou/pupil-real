@@ -17,7 +17,7 @@ class TwoFactorAuthentication
 	 */
 	public function handle(Request $request, Closure $next)
 	{
-		if ($request->user()->hasRole(['2fa', 'school']) && $request->user()->is_verified !== true)
+		if ($request->user()->hasRole(['2fa', 'school']) && $request->user()->is_verified === 0)
 		{
 			return redirect('two-factor-authentication');
 		}
