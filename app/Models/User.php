@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\BrowserNameAndDevice;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use App\Mail\TwoFactorAuthenticationMail;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +30,11 @@ class User extends Authenticatable implements CanResetPassword
 	{
 		return $this->belongsTo(School::class);
 	}
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class);
+    }
 
     public function sendTwoFactorCode(): RedirectResponse
     {
