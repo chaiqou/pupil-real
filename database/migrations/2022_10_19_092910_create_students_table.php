@@ -23,7 +23,6 @@ return new class extends Migration
             $table->json('user_information')->nullable();
             $table->json('balances');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('school_id')->constrained();
             $table->timestamps();
         });
     }
