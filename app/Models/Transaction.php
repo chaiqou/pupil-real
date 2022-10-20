@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Student extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function user(): BelongsTo
+    public function merchant(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Merchant::class);
     }
 
-    public function school(): BelongsTo
+    public function student(): BelongsTo
     {
-        return $this->belongsTo(School::class);
+        return $this->belongsTo(Student::class);
     }
+
 
 }

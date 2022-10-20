@@ -6,20 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Student extends Model
+class PeriodicLunch extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function user(): BelongsTo
+    public function student(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Student::class);
     }
-
-    public function school(): BelongsTo
-    {
-        return $this->belongsTo(School::class);
-    }
-
 }

@@ -19,7 +19,7 @@ class User extends Authenticatable implements CanResetPassword
 {
 	use HasApiTokens,HasFactory,Notifiable,HasRoles,BrowserNameAndDevice;
 
-	protected $guarded = [];
+	protected $guarded = ['id'];
 
 	protected $hidden = [
 		'password',
