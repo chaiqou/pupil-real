@@ -25,7 +25,7 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-     <dashboard-navigation-mobile/>
+     <dashboard-navigation-mobile :navigation="{{json_encode($navigation)}}"/>
     </div>
 
     <!-- Static sidebar for desktop -->

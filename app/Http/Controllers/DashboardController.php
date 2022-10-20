@@ -17,12 +17,16 @@ class DashboardController extends Controller
                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
                 ];
         }
-        if($user->hasRole('school'))
+        if($user->hasRole('school') || $user->hasRole('parent'))
         {
             $navigation =
                 [
-                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
-                    ['name' => 'projects', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#'],
+                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#'],
+                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#'],
+                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#'],
+                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#'],
+                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#'],
                 ];
         }
 		return view('dashboard', [
