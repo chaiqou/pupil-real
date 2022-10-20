@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periodic_lunches', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained();
-            $table->foreignId('card_data')->constrained();
-            $table->foreignId('transaction_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
-            $table->foreignId('lunch_id')->constrained();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
-            $table->json('claims');
+            $table->date('transaction_date');
+            $table->integer('billingo_transaction_id')->nullable();
+            $table->integer('amount');
+            $table->string('transaction_type');
+            $table->json('pending');
+            $table->json('comment');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periodic_lunches');
+        Schema::dropIfExists('transactions');
     }
 };

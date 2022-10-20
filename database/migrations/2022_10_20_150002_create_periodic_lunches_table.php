@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('periodic_lunches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained();
+            $table->integer('card_data')->constrained('students','card_data');
+            $table->foreignId('transaction_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
-            $table->date('transaction_date');
-            $table->integer('billingo_transaction_id')->nullable();
-            $table->integer('amount');
-            $table->set('transaction_type', ['Top-up, Payment, Refund','cancelled']);
-            $table->json('pending');
-            $table->json('comment');
+            $table->foreignId('lunch_id')->constrained();
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->json('claims');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('periodic_lunches');
     }
 };
