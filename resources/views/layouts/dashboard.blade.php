@@ -25,7 +25,7 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-     <dashboard-navigation-mobile :navigation="{{json_encode($navigation)}}"/>
+     <dashboard-navigation-mobile :role="{{json_encode($role)}}" :navigation="{{json_encode($navigation)}}"/>
     </div>
 
     <!-- Static sidebar for desktop -->
@@ -39,7 +39,7 @@
                 <dashboard-navigation :navigation="{{json_encode($navigation)}}"/>
             </div>
             <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                <switch-account :role="{{$role}}"/>
+                <switch-account :role="{{json_encode($role)}}"/>
             </div>
         </div>
     </div>

@@ -64,37 +64,39 @@
 
                           Highlighted: "text-white bg-indigo-500", Not Highlighted: "text-gray-900"
                         -->
-                                <li class="cursor-default select-none bg-indigo-500 p-4 text-sm text-white" id="listbox-option-0" role="option">
-                                    <div class="flex flex-col">
-                                        <div class="flex justify-between">
-                                            <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-                                            <p class="font-normal">John Doe</p>
+         <div v-if="role === 'parent'" >
+             <li class="cursor-default select-none bg-indigo-500 p-4 text-sm text-white" id="listbox-option-0" role="option">
+                 <div class="flex flex-col">
+                     <div class="flex justify-between">
+                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                         <p class="font-normal">John Doe</p>
 
-                                            <span class="text-white">
+                         <span class="text-white">
                       <!-- Heroicon name: mini/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
                     </span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="cursor-default select-none p-4 text-sm text-gray-900" id="listbox-option-0" role="option">
-                                    <div class="flex flex-col">
-                                        <div class="flex justify-between">
-                                            <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-                                            <p class="font-normal">Jane Doe</p>
+                     </div>
+                 </div>
+             </li>
+             <li class="cursor-default select-none p-4 text-sm text-gray-900" id="listbox-option-0" role="option">
+                 <div class="flex flex-col">
+                     <div class="flex justify-between">
+                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                         <p class="font-normal">Jane Doe</p>
 
-                                            <span class="hidden text-indigo-500">
+                         <span class="hidden text-indigo-500">
                       <!-- Heroicon name: mini/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
                     </span>
-                                        </div>
-                                        <!-- Highlighted: "text-indigo-200", Not Highlighted: "text-gray-500" -->
-                                    </div>
-                                </li>
+                     </div>
+                     <!-- Highlighted: "text-indigo-200", Not Highlighted: "text-gray-500" -->
+                 </div>
+             </li>
+         </div>
                                 <li class="cursor-default select-none p-4 py-3 text-sm text-gray-900" id="listbox-option-0" role="option">
                                     <div class="flex flex-col">
                                         <div class="flex justify-between">
@@ -159,6 +161,9 @@ export default {
         navigation: {
             type: Array,
             required: true,
+        },
+        role: {
+            type: String,
         }
     }
 };

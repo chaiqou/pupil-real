@@ -84,7 +84,6 @@ export default {
     props: {
         role: {
             type: String,
-            required: true,
         }
     }
 }
