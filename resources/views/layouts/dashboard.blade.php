@@ -39,7 +39,7 @@
                 <dashboard-navigation :navigation="{{json_encode($navigation)}}"/>
             </div>
             <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                <switch-account/>
+                <switch-account :role="{{$role}}"/>
             </div>
         </div>
     </div>

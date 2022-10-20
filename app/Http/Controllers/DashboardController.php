@@ -10,27 +10,44 @@ class DashboardController extends Controller
 	{
         $user = auth()->user();
         $navigation = [];
+        $role = '';
         if($user->hasRole('admin'))
         {
             $navigation =
                 [
                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
                 ];
+            $role = 'admin';
         }
-        if($user->hasRole('school') || $user->hasRole('parent'))
+        if($user->hasRole('school'))
         {
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#'],
-                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#'],
-                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#'],
-                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#'],
-                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#'],
-                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#'],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
+                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#', 'current' => false],
                 ];
+            $role = 'school';
+        }
+        if($user->hasRole('parent'))
+        {
+            $navigation =
+                [
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
+                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#', 'current' => false],
+                ];
+            $role = 'parent';
         }
 		return view('dashboard', [
-            'navigation' => $navigation
+            'navigation' => $navigation,
+            'role' => $role,
         ])->with('page', 'Dashboard');
 	}
 }
