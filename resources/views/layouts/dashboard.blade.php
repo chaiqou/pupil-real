@@ -45,7 +45,11 @@
     </div>
     <div class="flex flex-1 flex-col md:pl-64">
         <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
-           <navigation-menu-button/>
+            <div class="flex items-center flex-row-reverse justify-between">
+                <img class="h-8 w-auto mr-5" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
+                <navigation-menu-button/>
+            </div>
+
         </div>
         <main class="flex-1">
             <div class="py-6">
