@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-    <h1>Reports</h1>
+    <h1>Knowledge Base</h1>
 @endsection

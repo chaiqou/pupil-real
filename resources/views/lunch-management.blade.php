@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-    <h1>Team</h1>
+    <h1>Lunch Management</h1>
 @endsection

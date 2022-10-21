@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-    <h1>Calendar</h1>
+    <h1>Students</h1>
 @endsection
