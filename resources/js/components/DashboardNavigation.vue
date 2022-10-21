@@ -1,7 +1,7 @@
 <template>
     <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
     <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-        <a :href="item.href" v-for="item in navigation" :key="item" :class="item.current ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900' : 'group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'">
+     <a :href="item.href" v-for="item in navigation" :key="item" :class="item.current ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900' : 'group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'">
         <!--
         Heroicon name: outline/home
 
