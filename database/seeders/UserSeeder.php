@@ -20,9 +20,10 @@ class UserSeeder extends Seeder
 		School::create();
 
 		$faker = Factory::create();
-		$admin = User::query()->updateOrCreate([
-			'first_name'              => 'admin',
-			'last_name'               => 'adminlast',
+
+		$levente = User::create([
+			'first_name'              => 'Levente',
+			'last_name'               => 'Kazo',
 			'school_id'               => 1,
 			'billingo_id'             => 1,
 			'summary_frequency'       => 1,
@@ -36,37 +37,17 @@ class UserSeeder extends Seeder
 					]
 				),
 			]),
-			'email'                   => 'info+admin@pupilpay.hu',
-			'password'                => bcrypt('pupilpay'),
-		])->assignRole('admin');
-
-		$school = User::query()->updateOrCreate([
-			'first_name'              => 'school',
-			'last_name'               => 'schoollast',
-			'school_id'               => 1,
-			'billingo_id'             => 2,
-			'summary_frequency'       => 2,
-			'finished_onboarding'     => 0,
-			'user_information'        => json_encode([
-				$faker->randomElement(
-					[
-						'Nikoloz',
-						'Levente',
-						'Luka',
-					]
-				),
-			]),
-			'email'                   => 'info+school@pupilpay.hu',
+			'email'                   => 'klevente@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('school');
 
-		$parent = User::query()->updateOrCreate([
-			'first_name'              => 'parent',
-			'last_name'               => 'parentlast',
+        $luka = User::create([
+			'first_name'              => 'Luka',
+			'last_name'               => 'Ramishvili',
 			'school_id'               => 1,
-			'billingo_id'             => 3,
+			'billingo_id'             => 1,
 			'summary_frequency'       => 1,
-			'finished_onboarding'     => 2,
+			'finished_onboarding'     => 1,
 			'user_information'        => json_encode([
 				$faker->randomElement(
 					[
@@ -76,11 +57,11 @@ class UserSeeder extends Seeder
 					]
 				),
 			]),
-			'email'                   => 'info+parent@pupilpay.hu',
-			'password'                => bcrypt('pupilpay'),
-		])->assignRole('parent');
+			'email'                   => 'jackrestler@gmail.com',
+			'password'                => bcrypt('adminadmin'),
+		])->assignRole('school');
 
-		$nika = User::query()->updateOrCreate([
+		$nikoloz = User::create([
 			'first_name'              => 'nika',
 			'last_name'               => 'lomtadze',
 			'school_id'               => 1,
@@ -101,3 +82,5 @@ class UserSeeder extends Seeder
 		])->assignRole('school');
 	}
 }
+
+
