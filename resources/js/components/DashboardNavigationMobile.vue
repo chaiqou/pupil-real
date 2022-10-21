@@ -40,7 +40,7 @@
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
                         <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-                        <a v-for="item in navigation" :key="item" :href="item.href" class="group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-base font-medium text-gray-900">
+                        <a v-for="item in navigation" :key="item" :href="item.href" :class="item.current ? 'group flex items-center rounded-md bg-gray-300 px-2 py-2 text-base font-medium text-gray-900' : 'group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-900'">
                             <!--
                             Heroicon name: outline/home
 
