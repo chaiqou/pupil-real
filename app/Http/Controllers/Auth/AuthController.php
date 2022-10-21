@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -36,8 +37,15 @@ class AuthController extends Controller
 				return redirect($route);
 			}
 
-			return redirect()->route('dashboard');
-		}
+            $user = User::find(Auth::user()->id);
+
+            if($user->students->count() > 1) {
+                return redirect()->route('dashboard');
+            }
+
+            return redirect()->route('student.dashboard', $user->students->first()->id);
+
+}
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
