@@ -1,8 +1,10 @@
 <template>
-    <div class="bg-gray-900 rounded-xl h-full w-full">
+    <div class="bg-gray-900 rounded-xl">
       <div class="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
         <div class="space-y-12">
           <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
+           <img class="mx-left h-12 w-auto"
+           src="https://pupilpay.hu/resc/img/pupilpay-white-white.svg" alt="white-logo" >
             <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome Nikoloz!</h2>
             <p class="text-xl text-gray-300">Select a student dashboard.</p>
           </div>
@@ -22,7 +24,7 @@
   </template>
 
   <script setup>
-  const people = [
+ const people = [
     {
       name: 'Leonard Krasner',
     },
