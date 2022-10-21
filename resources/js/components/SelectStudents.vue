@@ -9,13 +9,13 @@
             <p class="text-xl text-gray-300">Select a student dashboard.</p>
           </div>
           <ul role="list" class="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
-            <li v-for="person in students" :key="person.first_name" class="rounded-lg bg-gray-800 py-10 px-6 text-center xl:px-10 xl:text-left">
+            <li v-for="student in students" :key="student.first_name" class="rounded-lg bg-gray-800 py-10 px-6 text-center xl:px-10 xl:text-left">
                 <a href="#" class="group flex flex-col items-center gap-2">
       <span class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500">
-        <span class="text-xl font-medium leading-none text-white">{{ person['first_name'].slice(0,2).toUpperCase() }}</span>
+        <span class="text-xl font-medium leading-none text-white">{{ student['first_name'].slice(0,2).toUpperCase() }}</span>
       </span>
-      <p class="text-gray-500 group-hover:text-gray-300">{{ person['first_name']  + ' ' + person['last_name'] }}</p>
-    </a>
+      <p class="text-gray-500 mt-2 group-hover:text-gray-300">{{ student['first_name']  + ' ' + student['last_name'] }}</p>
+   </a>
             </li>
           </ul>
         </div>
