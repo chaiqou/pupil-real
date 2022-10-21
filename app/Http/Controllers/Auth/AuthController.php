@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Dashboard\ParentController;
 use App\Models\User;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
@@ -36,17 +37,20 @@ class AuthController extends Controller
 				$route = InviteController::continueOnboarding(Auth::user());
 				return redirect($route);
 			}
+
+            if(Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
+                return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
+              } else {
+                return redirect()->route('dashboard');
+              }
 }
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
 
-	public function redirectIfLoggedIn(): View|RedirectResponse
+	public function redirectIfLoggedIn(): View
 	{
-		if (Auth::check()) {
-			return redirect()->route('dashboard');
-		}
-		return view('auth/sign-in');
+     	return view('auth/sign-in');
 	}
 
 	public function logout(Request $request): RedirectResponse

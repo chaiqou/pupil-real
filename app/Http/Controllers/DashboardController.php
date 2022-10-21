@@ -12,8 +12,4 @@ class DashboardController extends Controller
 		return view('dashboard')->with('page', 'Dashboard');
 	}
 
-    public function selectStudents(): View
-    {
-        return view('layouts.select-students', ['students' => Auth::user()->students->all()]);
-    }
 }

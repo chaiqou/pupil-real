@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ParentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Auth\AuthController;
@@ -33,8 +34,10 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth','two_factor_auth'])->group(function () {
-	Route::get('/parent/dashboard', [DashboardController::class, 'selectStudents'])->name('dashboard');
-});
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
+
+Route::get('/parents-dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
