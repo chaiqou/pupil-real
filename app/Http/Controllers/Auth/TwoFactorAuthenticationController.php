@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\ResendTwoFactorCodeRequest;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\ResendTwoFactorCodeRequest;
 use App\Http\Requests\Auth\TwoFactorAuthenticationRequest;
 
 class TwoFactorAuthenticationController extends Controller
@@ -25,7 +26,14 @@ class TwoFactorAuthenticationController extends Controller
 		{
 			Auth::user()->update(['is_verified' => true]);
 
-			return redirect()->route('dashboard');
+            $user = User::find(Auth::user()->id);
+
+            if($user->students->count() > 1) {
+                return redirect()->route('dashboard');
+            }
+
+            // here student is redirected to select students page
+			return redirect()->back();
 		}
 
 		return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);

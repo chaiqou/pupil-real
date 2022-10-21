@@ -36,15 +36,6 @@ class AuthController extends Controller
 				$route = InviteController::continueOnboarding(Auth::user());
 				return redirect($route);
 			}
-
-            $user = User::find(Auth::user()->id);
-
-            if($user->students->count() > 1) {
-                return redirect()->route('dashboard');
-            }
-
-            return redirect()->route('student.dashboard', $user->students->first()->id);
-
 }
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
@@ -53,7 +44,7 @@ class AuthController extends Controller
 	public function redirectIfLoggedIn(): View|RedirectResponse
 	{
 		if (Auth::check()) {
-			return redirect(route('dashboard'));
+			return redirect()->route('dashboard');
 		}
 		return view('auth/sign-in');
 	}
