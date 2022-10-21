@@ -1,7 +1,7 @@
 <template>
     <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
     <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-    <a :href="item.href" v-for="item in navigation" :key="item" :class="item.current ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-300 px-2 py-2 text-sm font-medium text-gray-900' : 'group flex items-center rounded-md bg-gray-100 hover:bg-gray-300 px-2 py-2 text-sm font-medium text-gray-900'">
+    <a :href="item.href" v-for="item in navigation" @click="finder(item)" :key="item" :class="item.current ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-300 px-2 py-2 text-sm font-medium text-gray-900' : 'group flex items-center rounded-md bg-gray-100 hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'">
         <!--
         Heroicon name: outline/home
 
@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon } from '@heroicons/vue/24/outline'
+import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon } from '@heroicons/vue/24/outline';
+
 export default {
     components: {
         CalendarIcon,
@@ -31,6 +32,13 @@ export default {
         navigation: {
             type: Array,
             required: true,
+        }
+    },
+    methods: {
+        finder(item) {
+            let navigation = this.navigation.find((col => col.name === item.name));
+            navigation.current = true;
+            console.log(navigation, 'current');
         }
     }
 }

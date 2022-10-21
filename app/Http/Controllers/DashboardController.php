@@ -8,14 +8,14 @@ class DashboardController extends Controller
 {
 	public function index(): View
 	{
-        $user = auth()->user();
         $navigation = [];
         $role = '';
+        $user = auth()->user();
         if($user->hasRole('admin'))
         {
             $navigation =
                 [
-                   ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
+                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
                 ];
             $role = 'admin';
         }
@@ -23,8 +23,8 @@ class DashboardController extends Controller
         {
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
-                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => 'dashboard', 'current' => true],
+                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => 'team', 'current' => false],
                     ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#', 'current' => false],
                     ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#', 'current' => false],
                     ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#', 'current' => false],

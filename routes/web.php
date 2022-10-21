@@ -53,3 +53,4 @@ Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationControl
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
 
+Route::get('/team', [DashboardController::class, 'index']);
