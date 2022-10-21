@@ -14,4 +14,10 @@ class ParentController extends Controller
         return view('layouts.select-students', ['students' => Auth::user()->students->all()]);
     }
 
+    public function parentStudent($student_id): View
+    {
+        $student = Auth::user()->students->find($student_id);
+        return view('layouts.dashboard', ['student' => $student]);
+    }
+
 }
