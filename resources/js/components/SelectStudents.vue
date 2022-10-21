@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-900 rounded-xl">
+    <div class="bg-gray-900 md:w-full md:h-full">
       <div class="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
         <div class="space-y-12">
           <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">

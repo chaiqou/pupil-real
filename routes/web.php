@@ -33,7 +33,7 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth','two_factor_auth'])->group(function () {
-	Route::get('/parent/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+	Route::get('/parent/dashboard', [DashboardController::class, 'selectStudents'])->name('dashboard');
 });
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
