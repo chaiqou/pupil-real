@@ -29,7 +29,7 @@ class TwoFactorAuthenticationController extends Controller
             $user = User::find(Auth::user()->id);
 
             if($user->students->count() > 1) {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard', ['students' => $user->students->all()]);
             }
 
             // here student is redirected to select students page

@@ -10,7 +10,7 @@
 </head>
 
 <body id='app' class="h-full">
-    <select-students></select-students>
+    <select-students :students='{{ json_encode($students) }}'></select-students>
 </body>
 
 </html>
