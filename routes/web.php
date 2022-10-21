@@ -38,7 +38,7 @@ Route::middleware(['auth','two_factor_auth'])->group(function () {
     });
 
 Route::get('/parent/dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
-Route::post('/parent/dashboard/{student_id}', [ParentController::class, 'parentStudent'])->name('parent.students');
+Route::get('/parent/dashboard/{student_id}', [ParentController::class, 'parentStudent'])->name('parent.students');
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
