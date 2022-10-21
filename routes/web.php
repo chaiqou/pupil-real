@@ -32,8 +32,13 @@ Route::middleware(['guest'])->group(function () {
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth','two_factor_auth'])->group(function () {
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth','two_factor_auth'])->controller(DashboardController::class)->group(function () {
+	Route::get('/dashboard', 'index')->name('dashboard');
+    Route::get('/team', 'index')->name('team');
+    Route::get('/projects', 'index')->name('projects');
+    Route::get('/calendar', 'index')->name('calendar');
+    Route::get('/documents', 'index')->name('documents');
+    Route::get('/reports', 'index')->name('reports');
 });
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
@@ -53,4 +58,4 @@ Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationControl
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
 
-Route::get('/team', [DashboardController::class, 'index']);
+

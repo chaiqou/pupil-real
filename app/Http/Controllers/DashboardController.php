@@ -23,12 +23,12 @@ class DashboardController extends Controller
         {
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => 'dashboard', 'current' => true],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => 'dashboard', 'current' => false],
                     ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => 'team', 'current' => false],
-                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => 'projects', 'current' => false],
+                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => 'calendar', 'current' => false],
+                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => 'documents', 'current' => false],
+                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => 'reports', 'current' => false],
                 ];
             $role = 'school';
         }
@@ -36,18 +36,75 @@ class DashboardController extends Controller
         {
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
-                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => '#', 'current' => false],
-                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => '#', 'current' => false],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => 'dashboard', 'current' => false],
+                    ['name' => 'Team', 'icon' => 'UsersIcon', 'href' => 'team', 'current' => false],
+                    ['name' => 'Projects', 'icon' => 'FolderIcon', 'href' => 'projects', 'current' => false],
+                    ['name' => 'Calendar', 'icon' => 'CalendarIcon', 'href' => 'calendar', 'current' => false],
+                    ['name' => 'Documents', 'icon' => 'InboxIcon', 'href' => 'documents', 'current' => false],
+                    ['name' => 'Reports', 'icon' => 'ChartBarIcon', 'href' => 'reports', 'current' => false],
                 ];
             $role = 'parent';
         }
-		return view('dashboard', [
+
+        $currentTab = request()->route()->getName();
+
+        if($currentTab === 'team')
+        {
+            return view('team', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role
+                ])->with(['page', 'Dashboard']);
+        }
+
+        if($currentTab === 'projects')
+        {
+            return view('projects', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role
+            ]);
+        }
+
+        if($currentTab === 'calendar')
+        {
+            return view('calendar', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role
+            ]);
+        }
+
+        if($currentTab === 'documents')
+        {
+            return view('documents', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role
+            ]);
+        }
+
+        if($currentTab === 'reports')
+        {
+            return view('reports', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role
+            ]);
+        }
+
+        if($currentTab === 'dashboard') {
+            return view('dashboard', [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role,
+            ]);
+        }
+
+        return view('dashboard', [
+            'current' => $currentTab,
             'navigation' => $navigation,
             'role' => $role,
-        ])->with('page', 'Dashboard');
+        ])->with(['page', 'Dashboard']);
 	}
 }
