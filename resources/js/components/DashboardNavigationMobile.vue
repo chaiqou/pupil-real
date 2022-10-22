@@ -140,16 +140,16 @@
 import { mapWritableState, mapActions } from 'pinia'
 import { useModalStore } from "../stores/useModalStore";
 import { OnClickOutside } from '@vueuse/components'
-import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon } from "@heroicons/vue/24/outline";
+import { HomeIcon, ListBulletIcon, BuildingOffice2Icon, UsersIcon, BookOpenIcon, Cog8ToothIcon, } from "@heroicons/vue/24/outline";
 export default {
     components: {
         OnClickOutside,
-        CalendarIcon,
-        ChartBarIcon,
-        FolderIcon,
         HomeIcon,
-        InboxIcon,
+        ListBulletIcon,
+        BuildingOffice2Icon,
         UsersIcon,
+        BookOpenIcon,
+        Cog8ToothIcon
     },
     computed: {
       ...mapWritableState(useModalStore, ["isNavbarVisible", "isMobileSwitchAccountVisible"])

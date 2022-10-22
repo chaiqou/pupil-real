@@ -17,21 +17,37 @@
 </template>
 
 <script>
-import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, ListBulletIcon, BuildingOffice2Icon, UsersIcon, BookOpenIcon, Cog8ToothIcon, } from "@heroicons/vue/24/outline";
+
 export default {
     components: {
-        CalendarIcon,
-        ChartBarIcon,
-        FolderIcon,
         HomeIcon,
-        InboxIcon,
+        ListBulletIcon,
+        BuildingOffice2Icon,
         UsersIcon,
+        BookOpenIcon,
+        Cog8ToothIcon
     },
     props: {
         navigation: {
             type: Array,
             required: true,
+        },
+        current: {
+            type: String,
         }
+    },
+    methods: {
+      findCurrent() {
+          let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '-') === this.current));
+          navigation.current = true;
+          console.log(this.navigation);
+          console.log(this.current);
+          console.log(navigation, 'current');
+      }
+    },
+    created() {
+           this.findCurrent();
     }
 }
 </script>

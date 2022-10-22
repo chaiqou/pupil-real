@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
@@ -32,8 +32,13 @@ Route::middleware(['guest'])->group(function () {
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth','two_factor_auth'])->group(function () {
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth','two_factor_auth'])->controller(NavigationController::class)->group(function () {
+	Route::get('/dashboard', 'index')->name('dashboard');
+    Route::get('/lunch-management', 'index')->name('lunch-management');
+    Route::get('/transactions', 'index')->name('transactions');
+    Route::get('/students', 'index')->name('students');
+    Route::get('/knowledge-base', 'index')->name('knowledge-base');
+    Route::get('/settings', 'index')->name('settings');
 });
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
@@ -52,4 +57,5 @@ Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationControl
 
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
+
 
