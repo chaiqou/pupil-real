@@ -15,11 +15,11 @@ class ParentController extends Controller
         return view('layouts.select-students', ['students' => Auth::user()->students->all()]);
     }
 
-    public function parentStudent($student_id): View
-    {
-        $student = Student::where('id', $student_id)->first();
-        $user = Auth::user()->where('id', $student->id)->first();
-        return view('layouts.dashboard', ['student' => $user]);
-    }
+    // public function parentStudent($student_id): View
+    // {
+    //     $student = Student::where('id', $student_id)->first();
+    //     $user = Auth::user()->where('id', $student->id)->first();
+    //     return view('layouts.dashboard', ['student' => $user, 'role' => 'parent', 'navigation' => '/']);
+    // }
 
 }
