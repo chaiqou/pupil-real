@@ -16,7 +16,8 @@
                 <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
                     <img class="mx-left h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-white-white.svg"
                         alt="white-logo">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome Nikoloz!</h2>
+                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome
+                        {{ auth()->user()->first_name }}!</h2>
                     <p class="text-xl text-gray-300">Select a student dashboard.</p>
                 </div>
                 <ul role="list"
@@ -39,7 +40,16 @@
                 </ul>
             </div>
         </div>
+        <div class="flex items-center justify-center">
+            <form action="{{ route('logout') }}" method="GET">
+                @csrf
+                <button type="submit"
+                    class="inline-flex items-center rounded-md h-12 w-36 text-center px-10 py-4 bg-gray-800  text-md font-medium leading-4 text-white shadow-sm hover:bg-gray-900 focus:outline-none">Log
+                    out</button>
+            </form>
+        </div>
     </div>
+
 </body>
 
 </html>
