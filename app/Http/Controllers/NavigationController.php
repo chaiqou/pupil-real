@@ -13,7 +13,7 @@ class NavigationController extends Controller
         $navigation = [];
         $role = '';
         $student = Student::where('id', $student_id)->first();
-        $user = Auth::user()->where('id', $student->id)->first();
+        $user = auth()->user();
 
         if($user->hasRole('admin'))
         {
