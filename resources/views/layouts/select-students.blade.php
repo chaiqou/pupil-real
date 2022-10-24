@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full bg-gray-50">
+<html class="h-screen bg-gray-900">
 
 <head>
     <meta charset="utf-8">
@@ -10,14 +10,13 @@
 </head>
 
 <body class="h-full">
-    <div class="bg-gray-900 md:w-full md:h-full">
+    <div class="bg-gray-900 w-full h-full">
         <div class="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
             <div class="space-y-12">
                 <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
                     <img class="mx-left h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-white-white.svg"
                         alt="white-logo">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome
-                        {{ auth()->user()->first_name }}!</h2>
+                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome Nikoloz!</h2>
                     <p class="text-xl text-gray-300">Select a student dashboard.</p>
                 </div>
                 <ul role="list"
@@ -44,7 +43,7 @@
             <form action="{{ route('logout') }}" method="GET">
                 @csrf
                 <button type="submit"
-                    class="inline-flex items-center rounded-md h-12 w-36 text-center px-10 py-4 bg-gray-800  text-md font-medium leading-4 text-white shadow-sm hover:bg-gray-900 focus:outline-none">Log
+                    class="inline-flex items-center mb-10 rounded-md h-12 w-36 text-center px-10 py-4 bg-gray-800  text-md font-medium leading-4 text-white shadow-sm hover:bg-gray-900 focus:outline-none">Log
                     out</button>
             </form>
         </div>
