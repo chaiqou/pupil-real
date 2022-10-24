@@ -24,10 +24,18 @@ class RedirectIfAuthenticated
 
 		foreach ($guards as $guard)
 		{
-			if (Auth::guard($guard)->check())
-			{
-				return redirect(RouteServiceProvider::HOME);
-			}
+
+            switch(Auth::guard($guard)->check())
+            {
+                case auth()->user()->hasRole('admin'):
+                    return redirect(RouteServiceProvider::ADMIN);
+                case auth()->user()->hasRole('user'):
+                    return redirect(RouteServiceProvider::HOME);
+                case auth()->user()->hasRole('parent'):
+                    return redirect(RouteServiceProvider::PARENT);
+                case auth()->user()->hasRole('school'):
+                    return redirect(RouteServiceProvider::SCHOOL);
+            }
 		}
 
 		return $next($request);
