@@ -10,8 +10,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 
 
-Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->middleware('guest')->name('default');
+Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->name('login');
 
 Route::middleware(['guest'])->group(function () {
 	Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');
@@ -24,7 +24,7 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/parent/dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
-Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'index'])->name('dashboard');
+Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'index'])->middleware('auth')->name('dashboard');
 
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');

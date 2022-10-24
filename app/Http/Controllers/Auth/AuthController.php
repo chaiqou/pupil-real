@@ -41,17 +41,22 @@ class AuthController extends Controller
             if(Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
                 return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
               } else {
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard', ['student_id' => Auth::user()->students->first()->id]);
               }
 }
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
 
-	public function redirectIfLoggedIn(): View
+	public function redirectIfLoggedIn()
 	{
-     	return view('auth/sign-in');
+	if (Auth::user() && Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1)
+	{
+		return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
 	}
+
+    return view ('auth/sign-in');
+}
 
 	public function logout(Request $request): RedirectResponse
 	{
