@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Dashboard\ParentController;
 use App\Models\User;
-use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\InviteController;
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\TwoFactorAuthenticationMail;
+use App\Http\Controllers\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
+use App\Http\Controllers\Dashboard\ParentController;
 
 class AuthController extends Controller
 {
@@ -24,24 +24,24 @@ class AuthController extends Controller
 
 		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
 		{
-			if (Auth::user()->hasRole(['2fa', 'school']))
+			if (auth()->user()->hasRole(['2fa', 'school']))
 			{
-                return Auth::user()->sendTwoFactorCode();
+                return auth()->user()->sendTwoFactorCode();
 			}
 
-            if (Auth::user()->finished_onboarding === 1) {
-				Auth::user()->update(['finished_onboarding' => 2]);
+            if (auth()->user()->finished_onboarding === 1) {
+				auth()->user()->update(['finished_onboarding' => 2]);
 			}
 
-			if (Auth::user()->finished_onboarding === 0){
-				$route = InviteController::continueOnboarding(Auth::user());
+			if (auth()->user()->finished_onboarding === 0){
+				$route = InviteController::continueOnboarding(auth()->user());
 				return redirect($route);
 			}
 
-            if(Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
-                return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
+            if(auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1) {
+                return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
               } else {
-                return redirect()->route('dashboard', ['student_id' => Auth::user()->students->first()->id]);
+                return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
               }
 }
 
@@ -50,17 +50,22 @@ class AuthController extends Controller
 
 	public function redirectIfLoggedIn()
 	{
-	if (Auth::user() && Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1)
+	if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1)
 	{
-		return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
+		return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
 	}
+	elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1)
+    {
+        return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
+    }
 
-    return view ('auth/sign-in');
+    return view('auth.sign-in');
+
 }
 
 	public function logout(Request $request): RedirectResponse
 	{
-		Auth::user()->update(['is_verified' => false, 'two_factor_token' => null]);
+		auth()->user()->update(['is_verified' => false, 'two_factor_token' => null]);
 		Auth::logout();
 		$request->session()->invalidate();
 		$request->session()->regenerateToken();
