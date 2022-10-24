@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Student;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,9 +15,10 @@ class ParentController extends Controller
         return view('layouts.select-students', ['students' => Auth::user()->students->all()]);
     }
 
-    public function parentStudent($student_id): View
+    public function parentStudent($student): View
     {
-        $student = Auth::user()->students->find($student_id);
+        $rame = Student::where('id', $student)->first();
+        $student = Auth::user()->where('id', $rame->id)->first();
         return view('layouts.dashboard', ['student' => $student]);
     }
 
