@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
+            $table->string('merchant_nick');
             $table->foreignId('user_id')->constrained();
             $table->string('billingo_api_key');
             $table->boolean('has_balance')->default(false);
