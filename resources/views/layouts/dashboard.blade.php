@@ -25,7 +25,7 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-     <dashboard-navigation-mobile/>
+     <dashboard-navigation-mobile :role="{{json_encode($role)}}" :navigation="{{json_encode($navigation)}}"/>
     </div>
 
     <!-- Static sidebar for desktop -->
@@ -36,31 +36,25 @@
                 <div class="flex flex-shrink-0 items-center px-4">
                     <img class="h-8 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
                 </div>
-                <dashboard-navigation/>
+                <dashboard-navigation :current="{{json_encode($current)}}" :navigation="{{json_encode($navigation)}}"/>
             </div>
             <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                <switch-account/>
+                <switch-account :role="{{json_encode($role)}}"/>
             </div>
         </div>
     </div>
     <div class="flex flex-1 flex-col md:pl-64">
         <div class="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
-           <navigation-menu-button/>
-        </div>
-        <main class="flex-1">
-            <div class="py-6">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                    <h1 class="text-2xl font-semibold text-gray-900">John's Dashboard</h1>
-                </div>
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                    <!-- Replace with your content -->
-                    <div class="py-4">
-                        <div class="flex h-96 items-center justify-center rounded-lg border-4 border-gray-200 bg-gray-100"><p class="text-xl font-medium text-gray-500">Content comes in here</p></div>
-                    </div>
-                    <!-- /End replace -->
-                </div>
+            <div class="flex items-center flex-row-reverse justify-between">
+                <img class="h-8 w-auto mr-5" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
+                <navigation-menu-button/>
             </div>
-        </main>
+
+        </div>
+
+    @yield('content')
+
+
     </div>
 </div>
 </body>
