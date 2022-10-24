@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ParentController extends Controller
 {
-    public function parentDashboard(): RedirectResponse
+    public function parentDashboard(): RedirectResponse|View
     {
 
         if(Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
-            return redirect()->route('parents.dashboard', ['students' =>  Auth::user()->students->all()]);
+            return view('layouts.select-students', ['students' =>  Auth::user()->students->all()]);
           } else {
             return redirect()->route('dashboard', ['student_id' => Auth::user()->students->first()->id]);
           }
