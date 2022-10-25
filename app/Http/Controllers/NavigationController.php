@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Transaction;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,7 @@ class NavigationController extends Controller
         $role = '';
         $student = Student::where('id', $student_id)->first();
         $user = auth()->user();
+        $students = Auth::user()->students->all();
 
         if($user->hasRole('admin'))
         {
@@ -40,7 +42,7 @@ class NavigationController extends Controller
         {
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => $student->id, 'current' => false],
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => "/parent/dashboard/".$student->id, 'current' => false],
                     ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' =>  "/parent/transactions/".$student->id, 'current' => false],
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => "/parent/students/".$student->id, 'current' => false],
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => "/parent/knowledge-base/".$student->id, 'current' => false],
@@ -51,11 +53,16 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
+        $transactions = Transaction::where('student_id', $user->id)->with('merchant')->get();
+
+
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,
             'role' => $role,
             'student' => $user,
+            'students' => $students,
+            'transactions' => $transactions,
         ])->with(['page', 'Dashboard']);
 	}
 }
