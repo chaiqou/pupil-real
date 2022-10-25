@@ -13,9 +13,7 @@
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <transactions :role="{{json_encode($role)}}" :user-id="{{$userId}}"  :student="{{$student}}"></transactions>
                     </div>
-                    <div class="animate-pulse">
-                        <transaction-skeleton></transaction-skeleton>
-                    </div>
+
                 </div>
             </div>
         </div>
