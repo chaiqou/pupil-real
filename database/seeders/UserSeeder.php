@@ -79,7 +79,8 @@ class UserSeeder extends Seeder
 			]),
 			'email'                   => 'lomtadzenikusha@gmail.com',
 			'password'                => bcrypt('adminadmin'),
-		])->assignRole('parent');
+		])->assignRole('school');
+
 	}
 
 
