@@ -86,7 +86,7 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-        $transactions = Transaction::where('student_id', $user->id)->with('merchant')->get();
+        $transactions = Transaction::where('merchant_id', $user->id)->with('merchant')->get();
 
 
         return view($currentTab, [
