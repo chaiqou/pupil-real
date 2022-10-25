@@ -3,27 +3,9 @@
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
         <div class="fixed inset-0 z-40 flex">
-            <!--
-            Off-canvas menu, show/hide based on off-canvas menu state.
 
-            Entering: "transition ease-in-out duration-300 transform"
-              From: "-translate-x-full"
-              To: "translate-x-0"
-            Leaving: "transition ease-in-out duration-300 transform"
-              From: "translate-x-0"
-              To: "-translate-x-full"
-          -->
             <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white">
-                <!--
-                Close button, show/hide based on off-canvas menu state.
 
-                Entering: "ease-in-out duration-300"
-                  From: "opacity-0"
-                  To: "opacity-100"
-                Leaving: "ease-in-out duration-300"
-                  From: "opacity-100"
-                  To: "opacity-0"
-              -->
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                     <button @click="showHideNavbar" type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span class="sr-only">Close sidebar</span>
@@ -39,14 +21,8 @@
                         <img class="h-8 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
                         <a v-for="item in navigation" :key="item" :href="item.href" :class="item.current ? 'group flex items-center rounded-md bg-gray-300 px-2 py-2 text-base font-medium text-gray-900' : 'group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-900'">
-                            <!--
-                            Heroicon name: outline/home
-
-                            Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
-                          -->
-                            <div class="w-5 mr-3">
+                          <div class="w-5 mr-3">
                                 <component :is="item.icon"/>
                             </div>
                             {{item.name}}
@@ -59,20 +35,13 @@
 
                         <OnClickOutside v-if="isMobileSwitchAccountVisible" @trigger="showHideMobileSwitchAccount">
                             <ul  class="absolute bottom-4 z-10 mt-2 w-72 origin-top-right divide-y divide-gray-200 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-0">
-                                <!--
-                          Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-
-                          Highlighted: "text-white bg-indigo-500", Not Highlighted: "text-gray-900"
-                        -->
          <div v-if="role === 'parent'" >
              <li class="cursor-default select-none bg-indigo-500 p-4 text-sm text-white" id="listbox-option-0" role="option">
                  <div class="flex flex-col">
                      <div class="flex justify-between">
-                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                          <p class="font-normal">John Doe</p>
 
                          <span class="text-white">
-                      <!-- Heroicon name: mini/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
@@ -83,17 +52,14 @@
              <li class="cursor-default select-none p-4 text-sm text-gray-900" id="listbox-option-0" role="option">
                  <div class="flex flex-col">
                      <div class="flex justify-between">
-                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                          <p class="font-normal">Jane Doe</p>
 
                          <span class="hidden text-indigo-500">
-                      <!-- Heroicon name: mini/check -->
                       <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
                     </span>
                      </div>
-                     <!-- Highlighted: "text-indigo-200", Not Highlighted: "text-gray-500" -->
                  </div>
              </li>
          </div>
@@ -111,11 +77,8 @@
                       </svg>
                     </span>
                                         </div>
-                                        <!-- Highlighted: "text-indigo-200", Not Highlighted: "text-gray-500" -->
                                     </div>
                                 </li>
-
-                                <!-- More items... -->
                             </ul>
                         </OnClickOutside>
 
@@ -155,7 +118,12 @@ export default {
       ...mapWritableState(useModalStore, ["isNavbarVisible", "isMobileSwitchAccountVisible"])
     },
     methods: {
-      ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"])
+      ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"]),
+
+      findCurrent() {
+          let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '-') === this.current));
+          navigation.current = true;
+      }
     },
     props: {
         navigation: {
@@ -164,8 +132,15 @@ export default {
         },
         role: {
             type: String,
+        },
+        current: {
+            type: String,
         }
-    }
+    },
+
+    created() {
+           this.findCurrent();
+    },
 };
 </script>
 

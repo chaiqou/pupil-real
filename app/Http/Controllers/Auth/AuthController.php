@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Traits\BrowserNameAndDevice;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\InviteController;
+use App\Traits\BrowserNameAndDevice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\TwoFactorAuthenticationMail;
+use App\Http\Controllers\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
+use App\Http\Controllers\Dashboard\ParentController;
 
 class AuthController extends Controller
 {
@@ -22,37 +24,48 @@ class AuthController extends Controller
 
 		if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me')))
 		{
-			if (Auth::user()->hasRole(['2fa', 'school']))
+			if (auth()->user()->hasRole(['2fa', 'school']))
 			{
-                return Auth::user()->sendTwoFactorCode();
+                return auth()->user()->sendTwoFactorCode();
 			}
 
-            if (Auth::user()->finished_onboarding === 1) {
-				Auth::user()->update(['finished_onboarding' => 2]);
+            if (auth()->user()->finished_onboarding === 1) {
+				auth()->user()->update(['finished_onboarding' => 2]);
 			}
 
-			if (Auth::user()->finished_onboarding === 0){
-				$route = InviteController::continueOnboarding(Auth::user());
+			if (auth()->user()->finished_onboarding === 0){
+				$route = InviteController::continueOnboarding(auth()->user());
 				return redirect($route);
 			}
 
-			return redirect()->route('dashboard');
-		}
+            if(auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1) {
+                return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
+              } else {
+                return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
+              }
+}
 
 		return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 	}
 
-	public function redirectIfLoggedIn(): View|RedirectResponse
+	public function redirectIfLoggedIn()
 	{
-		if (Auth::check()) {
-			return redirect(route('dashboard'));
-		}
-		return view('auth/sign-in');
+	if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1)
+	{
+		return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
 	}
+	elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1)
+    {
+        return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
+    }
+
+    return view('auth.sign-in');
+
+}
 
 	public function logout(Request $request): RedirectResponse
 	{
-		Auth::user()->update(['is_verified' => false, 'two_factor_token' => null]);
+		auth()->user()->update(['is_verified' => false, 'two_factor_token' => null]);
 		Auth::logout();
 		$request->session()->invalidate();
 		$request->session()->regenerateToken();
