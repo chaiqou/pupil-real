@@ -28,7 +28,7 @@
                         :navigation="{{ json_encode($navigation) }}" />
                 </div>
                 <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                    <switch-account :role="{{ json_encode($role) }}" />
+                    <switch-account :role="{{ json_encode($role) }}" :student="{{ json_encode($student)}}" :students="{{json_encode($students)}}"/>
                 </div>
             </div>
         </div>
