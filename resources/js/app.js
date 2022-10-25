@@ -7,6 +7,7 @@ import DashboardNavigation from './components/DashboardNavigation.vue'
 import DashboardNavigationMobile from './components/DashboardNavigationMobile.vue'
 import NavigationMenuButton from './components/NavigationMenuButton.vue'
 import SwitchAccount from './components/SwitchAccount.vue'
+import MerchantCalendar from './components/merchants/Calendar.vue'
 
 
 const pinia = createPinia()
@@ -16,6 +17,7 @@ app.component('dashboard-navigation', DashboardNavigation)
 app.component('dashboard-navigation-mobile', DashboardNavigationMobile)
 app.component('navigation-menu-button', NavigationMenuButton)
 app.component('switch-account', SwitchAccount)
+app.component('merchant-calendar', MerchantCalendar)
 
 
 app.use(pinia)
