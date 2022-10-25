@@ -10,8 +10,8 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-        <tr v-for="transaction in transactions" :key="transaction">
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{student.first_name}}</td>
+        <tr v-for="transaction in transactions" :key="transaction.id">
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{transaction.student.first_name}}</td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.amount}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_type}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_date}} </td>
@@ -27,23 +27,62 @@
 import {mapWritableState} from "pinia";
 import {useTransactionStore} from "../stores/useTransactionStore";
 export default {
+    data() {
+        return {
+         transactions: [],
+        }
+    },
     props: {
-        transactions: {
-            type: Array,
-            required: true,
-        },
         student: {
             type: Object,
             required: true,
         },
+        userId: {
+            type: Number,
+            required: true,
+        },
+        role: {
+            type: String,
+            required: true,
+        }
     },
     computed: {
         ...mapWritableState(useTransactionStore, ["isTransactionsLoaded"])
     },
-    mounted() {
-        setTimeout(() => {
-            this.isTransactionsLoaded = true;
-        }, 2000)
+    methods: {
+        handleNotificationRequest() {
+            if(this.role === 'school') {
+                fetch(`/api/school/transactions/${this.userId}`, {
+                    method: 'get',
+                    headers: {
+                        'content-type': 'application-json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        this.transactions = res.data
+                    })
+                    .finally(() => this.isTransactionsLoaded = true)
+                console.log(this.transactions, 1);
+            } else {
+                fetch(`/api/parent/transactions/${this.userId}`, {
+                    method: 'get',
+                    headers: {
+                        'content-type': 'application-json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        this.transactions = res.data
+                    })
+                    .finally(() => this.isTransactionsLoaded = true)
+                console.log(this.transactions, 1);
+            }
+        }
+
+    },
+    created() {
+        this.handleNotificationRequest()
     },
 }
 </script>

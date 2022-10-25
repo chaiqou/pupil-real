@@ -127,7 +127,7 @@ export default {
         },
         current: {
             type: String,
-        }
+        },
     },
     methods: {
         ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"]),
@@ -137,10 +137,9 @@ export default {
             cleanedCurrent =  cleanedCurrent.split('.').splice(1).join('.');
             let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '.') === cleanedCurrent));
             navigation.current = true;
-        }
+        },
     },
     created() {
-
         this.findCurrent();
     },
 };

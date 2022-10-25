@@ -26,12 +26,6 @@
 import {mapWritableState} from "pinia";
 import {useTransactionStore} from "../stores/useTransactionStore";
 export default {
-    props: {
-        transactions: {
-            type: Array,
-            required: true,
-        },
-    },
     computed: {
         ...mapWritableState(useTransactionStore, ["isTransactionsLoaded"])
     },

@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
     Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
     Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
-    Route::get('/parent/transactions/{student_id}', [NavigationController::class, 'index'])->name('transactions');
+    Route::get('/parent/transactions/{student_id}', [NavigationController::class, 'index'])->name('parent.transactions');
     Route::get('/school/dashboard', [NavigationController::class, 'school'])->name('school.dashboard');
     Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
 });
