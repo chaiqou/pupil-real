@@ -11,10 +11,10 @@
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <transactions :role="{{json_encode($role)}}" :user-id="{{$userId}}" :transactions="{{$transactions}}" :student="{{$student}}"></transactions>
+                        <transactions :role="{{json_encode($role)}}" :user-id="{{$userId}}"  :student="{{$student}}"></transactions>
                     </div>
                     <div class="animate-pulse">
-                        <transaction-skeleton :transactions="{{$transactions}}"></transaction-skeleton>
+                        <transaction-skeleton></transaction-skeleton>
                     </div>
                 </div>
             </div>

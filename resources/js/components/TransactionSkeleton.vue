@@ -29,10 +29,5 @@ export default {
     computed: {
         ...mapWritableState(useTransactionStore, ["isTransactionsLoaded"])
     },
-    mounted() {
-        setTimeout(() => {
-            this.isTransactionsLoaded = true;
-        }, 2000)
-    },
 }
 </script>
