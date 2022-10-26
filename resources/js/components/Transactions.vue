@@ -90,6 +90,7 @@ export default {
 
     },
     created() {
+        console.log(this.userId);
         this.handleGetNotificationRequest()
     },
 }
