@@ -27,11 +27,16 @@
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            @click="console.log('tse')"
+                            @click="updateSelectedDay(day)"
                             v-for="day in newDays"
                             :key="day.toString()"
                             type="button"
-                            class="bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10"
+                            :class="[
+                                selectedDay === day
+                                    ? 'bg-indigo-600 text-white'
+                                    : 'bg-white text-gray-900',
+                                'bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10',
+                            ]"
                         >
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
@@ -52,6 +57,8 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 import {
     startOfToday,
     format,
@@ -59,19 +66,23 @@ import {
     startOfMonth,
     endOfMonth,
     isToday,
-    setSelectedDay,
 } from "date-fns";
 
-let today = startOfToday();
+const selectedDay = ref(startOfToday());
 
 let newDays = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
+    start: startOfMonth(selectedDay.value),
+    end: endOfMonth(selectedDay.value),
 });
+
+function updateSelectedDay(event) {
+    selectedDay.value = event;
+    console.log(selectedDay.value);
+}
 
 const months = [
     {
-        name: format(today, "MMM yyyy"),
+        name: format(selectedDay.value, "MMM yyyy"),
         days: newDays,
     },
 ];
