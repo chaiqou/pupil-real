@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useTransactionStore = defineStore("transaction", {
+export const useStudentStore = defineStore("student", {
     state: () => {
         return {
             isStudentsLoaded: false,

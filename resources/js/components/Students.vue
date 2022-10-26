@@ -26,12 +26,12 @@
         </tbody>
     </table>
 
-<transaction-slide-over v-if="this.isSlideOverOpen"/>
+<students-slide-over v-if="this.isSlideOverOpen"/>
 </template>
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
-import {useTransactionStore} from "../stores/useTransactionStore";
+import {useStudentStore} from "../stores/useStudentStore";
 export default {
     props: {
         student: {
@@ -48,10 +48,10 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useTransactionStore, ["isStudentsLoaded", "isSlideOverOpen", "students"])
+        ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"])
     },
     methods: {
-        ...mapActions(useTransactionStore, ["showHideSlideOver"]),
+        ...mapActions(useStudentStore, ["showHideSlideOver"]),
         handleGetStudentRequest() {
                 fetch(`/api/school/students`, {
                     method: 'post',
