@@ -32,26 +32,22 @@
         </tbody>
     </table>
 
-<transaction-slide-over v-if="this.isSlideOverOpen"/>
+<school-transaction-slide-over v-if="this.isSlideOverOpen"/>
 </template>
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
-import {useTransactionStore} from "../stores/useTransactionStore";
+import {useTransactionStore} from "../../stores/useTransactionStore";
 export default {
     props: {
         student: {
             type: Object,
             required: true,
         },
-        userId: {
+        schoolId: {
             type: Number,
             required: true,
         },
-        role: {
-            type: String,
-            required: true,
-        }
     },
     computed: {
         ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"])
@@ -59,10 +55,9 @@ export default {
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver"]),
         handleGetNotificationRequest() {
-            if(this.role === 'school') {
                 fetch(`/api/school/transactions`, {
                     method: 'post',
-                    body: JSON.stringify({user_id: this.userId}),
+                    body: JSON.stringify({user_id: this.schoolId}),
                     headers: {
                         'Content-Type': 'application/json',
                     }
@@ -72,25 +67,10 @@ export default {
                         this.transactions = res.data
                     })
                     .finally(() => this.isTransactionsLoaded = true)
-            } else {
-                fetch(`/api/parent/transactions`, {
-                    method: 'post',
-                    body: JSON.stringify({user_id: this.userId}),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        this.transactions = res.data
-                    })
-                    .finally(() => this.isTransactionsLoaded = true)
-            }
         }
 
     },
     created() {
-        console.log(this.userId);
         this.handleGetNotificationRequest()
     },
 }

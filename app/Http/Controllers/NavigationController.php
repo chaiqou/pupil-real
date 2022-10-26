@@ -52,7 +52,7 @@ class NavigationController extends Controller
             'role' => $role,
             'student' => $student,
             'students' => $students,
-            'userId' => $student->id,
+            'studentId' => $student->id,
         ])->with(['page', 'Dashboard']);
 	}
 
@@ -94,7 +94,7 @@ class NavigationController extends Controller
             'role' => $role,
             'students' => $students,
             'student' => $user,
-            'userId' => $user->id,
+            'schoolId' => $user->id,
         ])->with(['page', 'Dashboard']);
     }
 }

@@ -42,10 +42,6 @@ export default {
             type: Number,
             required: true,
         },
-        role: {
-            type: String,
-            required: true,
-        }
     },
     computed: {
         ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"])
@@ -63,7 +59,6 @@ export default {
                     .then(res => res.json())
                     .then(res => {
                         this.students = res.data
-                        console.log(this.students)
                     })
                     .finally(() => this.isStudentsLoaded = true)
         },
