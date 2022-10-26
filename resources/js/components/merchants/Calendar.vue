@@ -28,7 +28,7 @@
                     >
                         <button
                             @click="updateSelectedDay(day)"
-                            v-for="day in newDays"
+                            v-for="day in allDays"
                             :key="day.toString()"
                             type="button"
                             :class="[
@@ -68,22 +68,23 @@ import {
     isToday,
 } from "date-fns";
 
-const selectedDay = ref(startOfToday());
+let today = startOfToday();
 
-let newDays = eachDayOfInterval({
+let selectedDay = ref(today);
+
+let allDays = eachDayOfInterval({
     start: startOfMonth(selectedDay.value),
     end: endOfMonth(selectedDay.value),
 });
 
 function updateSelectedDay(event) {
     selectedDay.value = event;
-    console.log(selectedDay.value);
 }
 
 const months = [
     {
         name: format(selectedDay.value, "MMM yyyy"),
-        days: newDays,
+        days: allDays,
     },
 ];
 </script>
