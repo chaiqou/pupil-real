@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\School\StudentRequest;
+use App\Http\Resources\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
 use App\Models\Transaction;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class NavigationController extends Controller
 {
-	public function index($student_id): View
+	public function parent($student_id): View
 	{
         $navigation = [];
         $role = '';
@@ -34,7 +36,6 @@ class NavigationController extends Controller
                 [
                     ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => "/parent/dashboard/".$student->id, 'current' => false],
                     ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' =>  "/parent/transactions/".$student->id, 'current' => false],
-                    ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => "/parent/students/".$student->id, 'current' => false],
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => "/parent/knowledge-base/".$student->id, 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => "/parent/settings/".$student->id, 'current' => false],
                 ];
@@ -95,17 +96,5 @@ class NavigationController extends Controller
             'student' => $user,
             'userId' => $user->id,
         ])->with(['page', 'Dashboard']);
-    }
-
-    public function getSchoolTransactions($id): ResourceCollection
-    {
-     $transactions = Transaction::where('merchant_id', $id)->with('merchant', 'student')->get();
-     return TransactionResource::collection($transactions);
-    }
-
-    public function getParentTransactions($id): ResourceCollection
-    {
-        $transactions = Transaction::where('student_id', $id)->with('merchant', 'student')->get();
-        return TransactionResource::collection($transactions);
     }
 }

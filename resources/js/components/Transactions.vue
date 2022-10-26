@@ -58,12 +58,13 @@ export default {
     },
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver"]),
-        handleNotificationRequest() {
+        handleGetNotificationRequest() {
             if(this.role === 'school') {
-                fetch(`/api/school/transactions/${this.userId}`, {
-                    method: 'get',
+                fetch(`/api/school/transactions`, {
+                    method: 'post',
+                    body: JSON.stringify({user_id: this.userId}),
                     headers: {
-                        'content-type': 'application-json'
+                        'Content-Type': 'application/json',
                     }
                 })
                     .then(res => res.json())
@@ -72,10 +73,11 @@ export default {
                     })
                     .finally(() => this.isTransactionsLoaded = true)
             } else {
-                fetch(`/api/parent/transactions/${this.userId}`, {
-                    method: 'get',
+                fetch(`/api/parent/transactions`, {
+                    method: 'post',
+                    body: JSON.stringify({user_id: this.userId}),
                     headers: {
-                        'content-type': 'application-json'
+                        'Content-Type': 'application/json',
                     }
                 })
                     .then(res => res.json())
@@ -88,7 +90,7 @@ export default {
 
     },
     created() {
-        this.handleNotificationRequest()
+        this.handleGetNotificationRequest()
     },
 }
 </script>

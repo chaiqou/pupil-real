@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\ParentController;
+use App\Http\Controllers\SchoolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::get('/parent/transactions/{id}', [NavigationController::class, 'getParentTransactions'])->name('parent.transactions_api');
-Route::get('/school/transactions/{id}', [NavigationController::class, 'getSchoolTransactions'])->name('school.transactions_api');
+Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api');
+Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api');
+Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api');
