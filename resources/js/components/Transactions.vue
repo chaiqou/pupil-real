@@ -16,6 +16,11 @@
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_type}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_date}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.merchant.merchant_nick}} </td>
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                <button @click="showHideSlideOver(transaction.id)" class="text-indigo-600 hover:text-indigo-900"
+                >Details</button
+                >
+            </td>
         </tr>
         <tr v-if="!this.isTransactionsLoaded" v-for="n in 7">
             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
@@ -27,18 +32,13 @@
         </tbody>
     </table>
 
-
+<transaction-slide-over v-if="this.isSlideOverOpen"/>
 </template>
 
 <script>
-import {mapWritableState} from "pinia";
+import {mapActions, mapWritableState} from "pinia";
 import {useTransactionStore} from "../stores/useTransactionStore";
 export default {
-    data() {
-        return {
-         transactions: [],
-        }
-    },
     props: {
         student: {
             type: Object,
@@ -54,9 +54,10 @@ export default {
         }
     },
     computed: {
-        ...mapWritableState(useTransactionStore, ["isTransactionsLoaded"])
+        ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"])
     },
     methods: {
+        ...mapActions(useTransactionStore, ["showHideSlideOver"]),
         handleNotificationRequest() {
             if(this.role === 'school') {
                 fetch(`/api/school/transactions/${this.userId}`, {
@@ -70,7 +71,6 @@ export default {
                         this.transactions = res.data
                     })
                     .finally(() => this.isTransactionsLoaded = true)
-                console.log(this.transactions, 1);
             } else {
                 fetch(`/api/parent/transactions/${this.userId}`, {
                     method: 'get',
@@ -83,7 +83,6 @@ export default {
                         this.transactions = res.data
                     })
                     .finally(() => this.isTransactionsLoaded = true)
-                console.log(this.transactions, 1);
             }
         }
 

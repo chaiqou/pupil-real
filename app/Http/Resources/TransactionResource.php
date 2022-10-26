@@ -21,6 +21,8 @@ class TransactionResource extends JsonResource
           'transaction_date' => $this->transaction_date,
           'merchant' => $this->merchant,
           'student'  =>  $this->student,
+          'pending'  => $this->pending,
+          'comment'  => $this->comment,
         ];
     }
 }

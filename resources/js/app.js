@@ -8,6 +8,7 @@ import DashboardNavigationMobile from './components/DashboardNavigationMobile.vu
 import NavigationMenuButton from './components/NavigationMenuButton.vue'
 import SwitchAccount from './components/SwitchAccount.vue'
 import Transactions from './components/Transactions.vue'
+import TransactionSlideOver from './components/TransactionSlideOver.vue'
 
 
 const pinia = createPinia()
@@ -18,6 +19,7 @@ app.component('dashboard-navigation-mobile', DashboardNavigationMobile)
 app.component('navigation-menu-button', NavigationMenuButton)
 app.component('switch-account', SwitchAccount)
 app.component('transactions', Transactions)
+app.component('transaction-slide-over', TransactionSlideOver);
 
 
 
