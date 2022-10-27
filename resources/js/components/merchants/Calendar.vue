@@ -27,7 +27,6 @@
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            @click="updateSelectedDay(day)"
                             v-for="day in month.days"
                             :key="day"
                             type="button"
@@ -75,7 +74,7 @@ const selectedDay = ref(today);
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
         start: today,
-        end: add(today, { months: 5 }),
+        end: add(today, { months: 11 }),
     })
 );
 
