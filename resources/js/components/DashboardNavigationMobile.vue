@@ -36,35 +36,22 @@
                         <OnClickOutside v-if="isMobileSwitchAccountVisible" @trigger="showHideMobileSwitchAccount">
                             <ul  class="absolute bottom-4 z-10 mt-2 w-72 origin-top-right divide-y divide-gray-200 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-0">
          <div v-if="role === 'parent'" >
-             <li class="cursor-default select-none bg-indigo-500 p-4 text-sm text-white" id="listbox-option-0" role="option">
-                 <div class="flex flex-col">
+             <li v-for="item in students" :key="item.id" :class="item.id === student.id ? 'cursor-default select-none bg-indigo-500 hover:bg-indigo-600 p-4 text-sm text-white' : 'cursor-default hover:bg-gray-200 select-none p-4 text-sm text-black'" id="listbox-option-0" role="option">
+                 <a :href="item.id" class="flex flex-col">
                      <div class="flex justify-between">
-                         <p class="font-normal">John Doe</p>
+                         <p class="font-normal">{{item.first_name + ' ' + item.last_name}}</p>
 
                          <span class="text-white">
-                      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <svg :class="item.id === student.id ? 'h-5 w-5' : 'hidden'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
                     </span>
                      </div>
-                 </div>
-             </li>
-             <li class="cursor-default select-none p-4 text-sm text-gray-900" id="listbox-option-0" role="option">
-                 <div class="flex flex-col">
-                     <div class="flex justify-between">
-                         <p class="font-normal">Jane Doe</p>
-
-                         <span class="hidden text-indigo-500">
-                      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                     </div>
-                 </div>
+                 </a>
              </li>
          </div>
-                                <li class="cursor-default select-none p-4 py-3 text-sm text-gray-900" id="listbox-option-0" role="option">
-                                    <div class="flex flex-col">
+                                <li class="cursor-default hover:bg-gray-200 select-none p-4 py-3 text-sm text-gray-900" id="listbox-option-0" role="option">
+                                    <a href="/logout" class="flex flex-col">
                                         <div class="flex justify-between">
                                             <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                                             <p class="font-normal">Log out</p>
@@ -77,7 +64,7 @@
                       </svg>
                     </span>
                                         </div>
-                                    </div>
+                                    </a>
                                 </li>
                             </ul>
                         </OnClickOutside>
@@ -128,6 +115,12 @@ export default {
         current: {
             type: String,
         },
+        students: {
+            type: Array,
+        },
+        student: {
+            type: Object
+        }
     },
     methods: {
         ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"]),

@@ -6,7 +6,7 @@
       Highlighted: "text-white bg-indigo-500", Not Highlighted: "text-gray-900"
     -->
             <div v-if="role === 'parent'">
-                <li v-for="item in students" :key="item.id"  :class="item.id === student.id ?  ' select-none bg-indigo-500   text-sm text-white' : 'select-none text-sm text-black'" id="listbox-option-0" role="option">
+                <li v-for="item in students" :key="item.id"  :class="item.id === student.id ? 'select-none bg-indigo-500 hover:bg-indigo-600 text-sm text-white' : 'select-none hover:bg-gray-200 text-sm text-black'" id="listbox-option-0" role="option">
                     <a :href="item.id" class="flex flex-col p-4 cursor-pointer">
                         <div class="flex justify-between">
                             <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
@@ -14,7 +14,7 @@
 
                             <span class="text-white">
                       <!-- Heroicon name: mini/check -->
-                      <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <svg :class="item.id === student.id ? 'h-5 w-5' : 'hidden'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
                       </svg>
                     </span>
@@ -22,7 +22,7 @@
                     </a>
                 </li>
             </div>
-            <li class="cursor-default select-none p-4 py-3 text-sm text-gray-900" id="listbox-option-0" role="option">
+            <li class="cursor-default select-none p-4 py-3 hover:bg-gray-200 text-sm text-gray-900" id="listbox-option-0" role="option">
                 <a href="/logout" class="flex flex-col">
                     <div class="flex justify-between">
                         <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
