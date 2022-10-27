@@ -81,6 +81,26 @@ class UserSeeder extends Seeder
 			'password'                => bcrypt('adminadmin'),
 		])->assignRole('parent');
 
+        $school = User::create([
+            'first_name'              => 'School',
+            'last_name'               => 'School',
+            'school_id'               => 1,
+            'billingo_id'             => 1,
+            'summary_frequency'       => 1,
+            'finished_onboarding'     => 1,
+            'user_information'        => json_encode([
+                $faker->randomElement(
+                    [
+                        'Nikoloz',
+                        'Levente',
+                        'Luka',
+                    ]
+                ),
+            ]),
+            'email'                   => 'school@gmail.com',
+            'password'                => bcrypt('adminadmin'),
+        ])->assignRole('school');
+
 	}
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Auth\AuthController;

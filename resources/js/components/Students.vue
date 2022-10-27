@@ -38,7 +38,7 @@ export default {
             type: Object,
             required: true,
         },
-        userId: {
+        schoolId: {
             type: Number,
             required: true,
         },
@@ -51,7 +51,7 @@ export default {
         handleGetStudentRequest() {
                 fetch(`/api/school/students`, {
                     method: 'post',
-                    body: JSON.stringify({school_id: this.userId}),
+                    body: JSON.stringify({school_id: this.schoolId}),
                     headers: {
                         'Content-Type': 'application/json',
                     }
