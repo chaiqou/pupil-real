@@ -72,17 +72,12 @@ import {
 
 const today = startOfToday();
 const selectedDay = ref(today);
-const currentMonth = ref(format(today, "MMM-yyyy"));
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
-        start: add(today, { months: 0 }),
+        start: today,
         end: add(today, { months: 5 }),
     })
 );
-
-let firstDayCurrentMonth = parse(currentMonth.value, "MMM-yyyy", new Date());
-let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-currentMonth.value = format(firstDayNextMonth, "MMM-yyyy");
 
 const months = [
     ...currentMonthPlusFiveMonth.value.map((month) => ({
