@@ -15,7 +15,7 @@
     <div id="app">
         <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
             <dashboard-navigation-mobile :role="{{ json_encode($role) }}" :current="{{ json_encode($current) }}"
-                :navigation="{{ json_encode($navigation) }}" />
+                                         :navigation="{{ json_encode($navigation) }}" :students="{{json_encode($students)}}" :student="{{json_encode($student)}}"/>
         </div>
         <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
             <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
@@ -28,7 +28,7 @@
                         :navigation="{{ json_encode($navigation) }}" />
                 </div>
                 <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                    <switch-account :role="{{ json_encode($role) }}" />
+                    <switch-account :role="{{ json_encode($role) }}" :student="{{ json_encode($student)}}" :students="{{json_encode($students)}}"/>
                 </div>
             </div>
         </div>

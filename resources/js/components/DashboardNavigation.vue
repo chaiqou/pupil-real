@@ -34,7 +34,9 @@ export default {
     },
     methods: {
       findCurrent() {
-          let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '-') === this.current));
+          let cleanedCurrent = this.current;
+          cleanedCurrent =  cleanedCurrent.split('.').splice(1).join('.');
+          let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '.') === cleanedCurrent));
           navigation.current = true;
       }
     },

@@ -21,6 +21,7 @@ class MerchantSeeder extends Seeder
             'company_details' => json_encode([
                 'company_name' => 'Levente',
                    ]),
+            'merchant_nick' => 'Cafeteria',
        ]);
     }
 }

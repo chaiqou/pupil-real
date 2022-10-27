@@ -25,7 +25,7 @@ class TwoFactorAuthenticationController extends Controller
 		{
 			Auth::user()->update(['is_verified' => true]);
 
-			return redirect()->route('dashboard', ['student_id' => Auth::user()->students->first()->id]);
+			return redirect()->route('parent.dashboard', ['student_id' => Auth::user()->students->first()->id]);
 		}
 
 		return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);
