@@ -117,14 +117,6 @@ export default {
     computed: {
       ...mapWritableState(useModalStore, ["isNavbarVisible", "isMobileSwitchAccountVisible"])
     },
-    methods: {
-      ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"]),
-
-      findCurrent() {
-          let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '-') === this.current));
-          navigation.current = true;
-      }
-    },
     props: {
         navigation: {
             type: Array,
@@ -135,11 +127,20 @@ export default {
         },
         current: {
             type: String,
-        }
+        },
     },
+    methods: {
+        ...mapActions(useModalStore, ["showHideNavbar", "showHideMobileSwitchAccount"]),
 
+        findCurrent() {
+            let cleanedCurrent = this.current;
+            cleanedCurrent =  cleanedCurrent.split('.').splice(1).join('.');
+            let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '.') === cleanedCurrent));
+            navigation.current = true;
+        },
+    },
     created() {
-           this.findCurrent();
+        this.findCurrent();
     },
 };
 </script>

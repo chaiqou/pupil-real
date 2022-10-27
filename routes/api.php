@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ParentController;
+use App\Http\Controllers\SchoolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
+
+
+
+
+Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api');
+Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api');
+Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api');

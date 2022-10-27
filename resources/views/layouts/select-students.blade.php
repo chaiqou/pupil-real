@@ -23,7 +23,7 @@
                     class="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
                     @foreach ($students as $student)
                         <li class="rounded-lg bg-gray-800 py-10 px-6 text-center xl:px-10 xl:text-left">
-                            <a href="{{ route('dashboard', ['student_id' => $student->id]) }}"
+                            <a href="{{ route('parent.dashboard', ['student_id' => $student->id]) }}"
                                 class="group flex flex-col items-center gap-2">
                                 <span
                                     class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500">

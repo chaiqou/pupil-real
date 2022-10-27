@@ -24,10 +24,15 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/parent/dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
-    Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'index'])->name('dashboard');
+    Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'parent'])->name('parent.dashboard');
     Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
     Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
     Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
+    Route::get('/parent/transactions/{student_id}', [NavigationController::class, 'parent'])->name('parent.transactions');
+    Route::get('/school/dashboard', [NavigationController::class, 'school'])->name('school.dashboard');
+    Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
+    Route::get('/school/students', [NavigationController::class, 'school'])->name('school.students');
+
 });
 
 

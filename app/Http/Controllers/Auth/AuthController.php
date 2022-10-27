@@ -41,7 +41,7 @@ class AuthController extends Controller
             if(auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1) {
                 return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
               } else {
-                return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
+                return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
               }
 }
 
@@ -56,7 +56,7 @@ class AuthController extends Controller
 	}
 	elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1)
     {
-        return redirect()->route('dashboard', ['student_id' => auth()->user()->students->first()->id]);
+        return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
     }
 
     return view('auth.sign-in');
