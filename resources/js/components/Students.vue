@@ -13,7 +13,7 @@
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.card_number}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user.email}} </td>
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <button @click="showHideSlideOver(student.id)" class="text-indigo-600 hover:text-indigo-900"
+                <button @click="showHideSlideOver(); currentStudentDetails(student.id)" class="text-indigo-600 hover:text-indigo-900"
                 >Details</button
                 >
             </td>
@@ -26,7 +26,8 @@
         </tbody>
     </table>
 
-<students-slide-over v-if="this.isSlideOverOpen"/>
+    <students-slide-over/>
+
 </template>
 
 <script>
@@ -44,14 +45,14 @@ export default {
         },
     },
     computed: {
-        ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"])
+        ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"]),
     },
     methods: {
-        ...mapActions(useStudentStore, ["showHideSlideOver"]),
+        ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
         handleGetStudentRequest() {
                 fetch(`/api/school/students`, {
                     method: 'post',
-                    body: JSON.stringify({school_id: this.schoolId}),
+                    body: JSON.stringify({school_id: 1}),
                     headers: {
                         'Content-Type': 'application/json',
                     }

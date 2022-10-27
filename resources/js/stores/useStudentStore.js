@@ -10,8 +10,10 @@ export const useStudentStore = defineStore("student", {
         };
     },
     actions: {
-        showHideSlideOver(id) {
+        showHideSlideOver() {
             this.isSlideOverOpen = !this.isSlideOverOpen;
+        },
+        currentStudentDetails(id) {
             this.student = this.students.find(item => item.id === id)
         }
     }
