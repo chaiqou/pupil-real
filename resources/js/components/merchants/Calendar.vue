@@ -28,7 +28,7 @@
                     >
                         <button
                             @click="updateSelectedDay(day)"
-                            v-for="day in currentMonthDays"
+                            v-for="day in parseISO(result)"
                             :key="day.toString()"
                             type="button"
                             :class="[
@@ -58,7 +58,6 @@
 
 <script setup>
 import { ref } from "vue";
-
 import {
     startOfToday,
     format,
@@ -68,11 +67,13 @@ import {
     isToday,
     add,
     eachMonthOfInterval,
+    parse,
+    parseISO,
 } from "date-fns";
 
 const today = startOfToday();
-
 const selectedDay = ref(today);
+const currentMonth = ref(format(today, "MMM-yyyy"));
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
         start: add(today, { months: 1 }),
@@ -80,26 +81,19 @@ const currentMonthPlusFiveMonth = ref(
     })
 );
 
-const currentMonthDays = eachDayOfInterval({
-    start: startOfMonth(selectedDay.value),
-    end: endOfMonth(selectedDay.value),
-});
-
-function updateSelectedDay(event) {
-    selectedDay.value = event;
-}
+let firstDayCurrentMonth = parse(currentMonth.value, "MMM-yyyy", new Date());
+let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+currentMonth.value = format(firstDayNextMonth, "MMM-yyyy");
 
 const months = [
-    {
-        name: format(selectedDay.value, "MMM yyyy"),
-        days: selectedDay,
-    },
     ...currentMonthPlusFiveMonth.value.map((month) => ({
         name: format(month, "MMM yyyy"),
         days: eachDayOfInterval({
-            start: startOfMonth(1),
+            start: startOfMonth(month),
             end: endOfMonth(month),
         }),
     })),
 ];
+
+let monthDaysArray = months.map(({ days }) => days);
 </script>
