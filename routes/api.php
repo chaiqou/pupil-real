@@ -23,6 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api');
-Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api');
-Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api');
+Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api')->middleware('auth');
+Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api')->middleware('auth');
+Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api')->middleware('auth');
