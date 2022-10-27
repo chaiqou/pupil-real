@@ -28,8 +28,8 @@
                     >
                         <button
                             @click="updateSelectedDay(day)"
-                            v-for="day in month.days"
-                            :key="day"
+                            v-for="day in parseISO(monthDaysArray[0])"
+                            :key="day.toString()"
                             type="button"
                             :class="[
                                 selectedDay === day
@@ -68,6 +68,7 @@ import {
     add,
     eachMonthOfInterval,
     parse,
+    parseISO,
 } from "date-fns";
 
 const today = startOfToday();
@@ -75,7 +76,7 @@ const selectedDay = ref(today);
 const currentMonth = ref(format(today, "MMM-yyyy"));
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
-        start: add(today, { months: 0 }),
+        start: add(today, { months: 1 }),
         end: add(today, { months: 5 }),
     })
 );
@@ -87,12 +88,16 @@ currentMonth.value = format(firstDayNextMonth, "MMM-yyyy");
 const months = [
     ...currentMonthPlusFiveMonth.value.map((month) => ({
         name: format(month, "MMM yyyy"),
-        days: [
-            ...eachDayOfInterval({
-                start: startOfMonth(month),
-                end: endOfMonth(month),
-            }),
-        ],
+        days: eachDayOfInterval({
+            start: startOfMonth(month),
+            end: endOfMonth(month),
+        }),
     })),
 ];
+
+let monthDaysArray = months.map(({ days }) => days);
+
+for (let i = 0; i < monthDaysArray.length; i++) {
+    monthDaysArray[i] = monthDaysArray[i].map((day) => day);
+}
 </script>
