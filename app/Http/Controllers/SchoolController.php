@@ -18,7 +18,7 @@ class SchoolController extends Controller
     {
         if(auth()->user()->hasRole('school'))
         {
-            $transactions = Transaction::where('merchant_id', $request->user_id)->with('merchant', 'student')->get();
+            $transactions = Transaction::where('merchant_id', $request->school_id)->with('merchant', 'student')->get();
             return TransactionResource::collection($transactions);
         }
        return response()->json(['error' => 'To get this information you should be role of school and be authorized.']);
