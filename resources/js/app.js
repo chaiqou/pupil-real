@@ -14,6 +14,7 @@ import ParentTransactions from './components/parent/Transactions.vue'
 import ParentTransactionSlideOver from './components/parent/TransactionSlideOver.vue'
 import Students from "./components/Students.vue";
 import StudentsSlideOver from "./components/StudentsSlideOver.vue";
+import Dashboard from './components/parent/Dashboard.vue';
 
 
 
@@ -32,6 +33,7 @@ app.component('parent-transactions', ParentTransactions);
 app.component('parent-transaction-slide-over', ParentTransactionSlideOver);
 app.component('students', Students);
 app.component('students-slide-over', StudentsSlideOver);
+app.component('dashboard', Dashboard);
 
 
 

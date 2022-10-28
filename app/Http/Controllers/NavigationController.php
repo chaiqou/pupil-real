@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\School\StudentRequest;
-use App\Http\Resources\StudentResource;
-use App\Http\Resources\TransactionResource;
 use App\Models\Student;
-use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class NavigationController extends Controller
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\School\StudentRequest;
 use App\Http\Requests\School\TransactionRequest;
-use App\Http\Resources\StudentResource;
+use App\Http\Resources\school\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SchoolController extends Controller

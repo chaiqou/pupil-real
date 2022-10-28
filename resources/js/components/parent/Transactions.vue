@@ -57,7 +57,7 @@ export default {
         handleGetNotificationRequest() {
                 fetch(`/api/parent/transactions`, {
                     method: 'post',
-                    body: JSON.stringify({user_id: this.studentId}),
+                    body: JSON.stringify({student_id: this.studentId}),
                     headers: {
                         'Content-Type': 'application/json',
                     }

@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ParentController;
-use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\Api\ParentController;
+use App\Http\Controllers\Api\SchoolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +26,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api')->middleware('auth');
 Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api')->middleware('auth');
 Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api')->middleware('auth');
+Route::post('/parent/week-spending', [ParentController::class, 'getLastWeekTransactionsSpending'])->name('parent.week.spending_api');
+Route::post('/parent/month-spending', [ParentController::class, 'getLastMonthTransactionsSpending'])->name('parent.month.spending_api');
