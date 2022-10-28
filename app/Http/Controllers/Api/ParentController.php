@@ -22,7 +22,7 @@ class ParentController extends Controller
 
     public function getLastWeekTransactionsSpending(TransactionRequest $request): ResourceCollection|JsonResponse
     {
-        $date = Carbon::now()->subDays(7);
+        $date = Carbon::now()->subWeeks();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
     }
@@ -31,6 +31,12 @@ class ParentController extends Controller
     {
         $date = Carbon::now()->subMonths();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
+        return TransactionResource::collection($transactions);
+    }
+
+    public function getLastFiveTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+    {
+        $transactions = Transaction::where('student_id', $request->student_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
     }
 }

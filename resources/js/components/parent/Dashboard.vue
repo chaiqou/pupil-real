@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 class="mt-5 text-xl">Spendings</h1>
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
             <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <dt class="truncate text-sm font-medium text-gray-500">Last week total spending</dt>
@@ -12,6 +13,11 @@
         </dl>
     </div>
 
+
+        <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+
+
+
 </template>
 
 <script>
@@ -22,6 +28,8 @@ export default {
          weekSumAmount: null,
          monthSpending: null,
          monthSumAmount: null,
+         isWeekSpendingLoaded: false,
+         isMonthSpendingLoaded: false,
         }
     },
     props: {
@@ -46,7 +54,7 @@ export default {
                         return a + b.amount
                     }, 0)
                 })
-                //.finally(() => this.isStudentsLoaded = true)
+                .finally(() => this.isWeekSpendingLoaded = true)
         },
 
         handleGetLastMonthSpending() {
@@ -65,8 +73,9 @@ export default {
                     }, 0)
 
                 })
-            //.finally(() => this.isStudentsLoaded = true)
+            .finally(() => this.isMonthSpendingLoaded = true)
         },
+
     },
     created() {
         this.handleGetLastWeekSpending();

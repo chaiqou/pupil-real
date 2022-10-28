@@ -15,7 +15,7 @@ import ParentTransactionSlideOver from './components/parent/TransactionSlideOver
 import Students from "./components/Students.vue";
 import StudentsSlideOver from "./components/StudentsSlideOver.vue";
 import Dashboard from './components/parent/Dashboard.vue';
-
+import DashboardTransactions from './components/parent/DashboardTransactions.vue';
 
 
 const pinia = createPinia()
@@ -34,7 +34,7 @@ app.component('parent-transaction-slide-over', ParentTransactionSlideOver);
 app.component('students', Students);
 app.component('students-slide-over', StudentsSlideOver);
 app.component('dashboard', Dashboard);
-
+app.component('dashboard-transactions', DashboardTransactions);
 
 
 app.use(pinia)
