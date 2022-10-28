@@ -17,7 +17,7 @@
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_date}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.merchant.merchant_nick}} </td>
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <button @click="showHideSlideOver(transaction.id)" class="text-indigo-600 hover:text-indigo-900"
+                <button @click="showHideSlideOver(); currentTransactionDetails(transaction.id)" class="text-indigo-600 hover:text-indigo-900"
                 >Details</button
                 >
             </td>
@@ -32,7 +32,7 @@
         </tbody>
     </table>
 
-<parent-transaction-slide-over v-if="this.isSlideOverOpen"/>
+<parent-transaction-slide-over />
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
         ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"])
     },
     methods: {
-        ...mapActions(useTransactionStore, ["showHideSlideOver"]),
+        ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
         handleGetNotificationRequest() {
                 fetch(`/api/parent/transactions`, {
                     method: 'post',
