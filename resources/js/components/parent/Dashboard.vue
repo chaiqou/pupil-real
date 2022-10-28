@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="mt-5 text-xl">Spendings</h1>
-        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <dl v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
             <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <dt class="truncate text-sm font-medium text-gray-500">Last week total spending</dt>
                 <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.weekSumAmount || 'No spending for last week'}}</dd>
@@ -11,10 +11,27 @@
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.monthSumAmount || 'No spending for last month'}}</dd>
             </div>
         </dl>
+
+        <dl v-if="!(this.isWeekSpendingLoaded && this.isMonthSpendingLoaded)" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
+                <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
+            </div>
+            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
+                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
+            </div>
+        </dl>
+
+        <div class="border-[1px] border-gray-200 rounded-md mt-10">
+            <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+        </div>
     </div>
 
 
-        <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+
+
+
 
 
 
