@@ -21,10 +21,7 @@ const pinia = createPinia()
 const app = createApp({})
 
 
-app.component('dashboard-navigation', DashboardNavigation)
-app.component('dashboard-navigation-mobile', DashboardNavigationMobile)
-app.component('navigation-menu-button', NavigationMenuButton)
-app.component('switch-account', SwitchAccount)
+
 app.component('merchant-calendar', MerchantCalendar)
 app.component('dashboard-navigation', DashboardNavigation);
 app.component('dashboard-navigation-mobile', DashboardNavigationMobile);
