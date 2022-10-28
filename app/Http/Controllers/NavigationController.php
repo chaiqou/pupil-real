@@ -88,6 +88,11 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
+        if(auth()->user()->is_verified === 0)
+        {
+            return redirect()->route('2fa.form');
+        }
+
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,
