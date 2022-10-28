@@ -7,13 +7,14 @@ use App\Http\Resources\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
 use App\Models\Transaction;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class NavigationController extends Controller
 {
-	public function parent($student_id): View
+	public function parent($student_id): View|RedirectResponse
 	{
         $navigation = [];
         $role = '';
@@ -44,21 +45,23 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-
-
-        return view($currentTab, [
-            'current' => $currentTab,
-            'navigation' => $navigation,
-            'role' => $role,
-            'student' => $student,
-            'students' => $students,
-            'studentId' => $student->id,
-        ])->with(['page', 'Dashboard']);
+        if(auth()->user()->hasRole('2fa') && auth()->user()->is_verified === 0)
+        {
+            return redirect()->route('2fa.form');
+        }
+            return view($currentTab, [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role,
+                'student' => $student,
+                'students' => $students,
+                'studentId' => $student->id,
+            ])->with(['page', 'Dashboard']);
 	}
 
 
 
-    public function school(): View
+    public function school(): View|RedirectResponse
     {
         $navigation = [];
         $role = '';
@@ -88,13 +91,19 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-        return view($currentTab, [
-            'current' => $currentTab,
-            'navigation' => $navigation,
-            'role' => $role,
-            'students' => $students,
-            'student' => $user,
-            'schoolId' => $user->id,
-        ])->with(['page', 'Dashboard']);
+        if(auth()->user()->is_verified === 0)
+        {
+            return redirect()->route('2fa.form');
+        }
+
+            return view($currentTab, [
+                'current' => $currentTab,
+                'navigation' => $navigation,
+                'role' => $role,
+                'students' => $students,
+                'student' => $user,
+                'schoolId' => $user->id,
+            ])->with(['page', 'Dashboard']);
+
     }
 }

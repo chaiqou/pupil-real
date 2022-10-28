@@ -38,9 +38,10 @@ class AuthController extends Controller
 				return redirect($route);
 			}
 
-            if(auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1) {
+            if(auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && auth()->user()->is_verified === 1) {
                 return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
-              } else {
+              }
+            elseif(auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && auth()->user()->is_verified === 1) {
                 return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
               }
 }
@@ -50,11 +51,11 @@ class AuthController extends Controller
 
 	public function redirectIfLoggedIn()
 	{
-	if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1)
+	if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && auth()->user()->is_verified === 1)
 	{
 		return redirect()->route('parents.dashboard', ['students' =>  auth()->user()->students->all()]);
 	}
-	elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1)
+	elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && auth()->user()->is_verified === 1)
     {
         return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
     }
