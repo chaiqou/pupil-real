@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="bg-white">
+        <div class="bg-inhrtit">
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
+                class="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 sm:px-6 xl:max-w-3xl xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
             >
                 <section
                     v-for="month in months"
@@ -34,7 +34,7 @@
                                 selectedDay === day
                                     ? 'bg-indigo-600 text-white'
                                     : 'bg-white text-gray-900',
-                                'bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10',
+                                'bg-white text-gray-900 py-1.5 hover:bg-indigo-100 focus:z-10',
                             ]"
                         >
                             <time
