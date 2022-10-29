@@ -1,35 +1,51 @@
 <template>
-    <div>
-        <h1 class="mt-5 text-xl">Spendings</h1>
-        <dl v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500">Last week total spending</dt>
-                <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.weekSumAmount || '0'}}</dd>
-            </div>
-            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500">Last month total spending</dt>
-                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.monthSumAmount || '0'}}</dd>
-            </div>
-        </dl>
+    <div class="md:overflow-hidden">
+       <div>
+           <h1 class="mt-5 text-xl">Spendings</h1>
+           <dl v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+               <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                   <dt class="truncate text-sm font-medium text-gray-500">Last week total spending</dt>
+                   <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.weekSumAmount || '0'}}</dd>
+               </div>
+               <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                   <dt class="truncate text-sm font-medium text-gray-500">Last month total spending</dt>
+                   <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.monthSumAmount || '0'}}</dd>
+               </div>
+           </dl>
 
-        <dl v-if="!(this.isWeekSpendingLoaded && this.isMonthSpendingLoaded)" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
-                <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
-            </div>
-            <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
-                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
-            </div>
-        </dl>
+           <dl v-if="!(this.isWeekSpendingLoaded && this.isMonthSpendingLoaded)" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+               <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                   <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
+                   <dd  class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
+               </div>
+               <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                   <dt class="truncate text-sm font-medium text-gray-500"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dt>
+                   <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div></dd>
+               </div>
+           </dl>
 
-        <div class="border-[1px] border-gray-200 rounded-md mt-10 w-fit">
-            <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
-        </div>
 
-        <div class="mt-10">
-            <h1>Lunch orders</h1>
-        </div>
+
+
+
+           <div>
+               <h1 class="text-xl my-5">Last transactions</h1>
+               <div class="border-[1px] border-gray-200 rounded-md w-fit">
+                   <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+               </div>
+           </div>
+       </div>
+
+
+            <div class="md:relative md:bottom-[30rem] md:left-[55rem]">
+                <div class="w-[20rem] mt-5 md:mt-0">
+                    <h1 class="text-xl ml-8">Lunch orders</h1>
+                </div>
+                    <div>
+                        <calendar :months="0"></calendar>
+                    </div>
+            </div>
+
     </div>
 
 
