@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\ParentController;
-use App\Http\Controllers\Api\SchoolController;
+use App\Http\Controllers\Dashboard\ParentController;
+use App\Http\Controllers\Dashboard\SchoolController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
