@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="bg-white">
+        <div>
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-8 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
             >
                 <section
                     v-for="month in months"
                     :key="month.name"
-                    class="text-center"
+                    class="text-center border-[1px] border-gray-200 rounded-md"
                 >
                     <h2 class="font-semibold text-gray-900">
                         {{ month.name }}
@@ -69,12 +69,19 @@ import {
     parse,
 } from "date-fns";
 
+const props = defineProps({
+    months: {
+        type: Number,
+        required: true,
+    }
+})
+
 const today = startOfToday();
 const selectedDay = ref(today);
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
         start: today,
-        end: add(today, { months: 11 }),
+        end: add(today, { months: props.months }),
     })
 );
 

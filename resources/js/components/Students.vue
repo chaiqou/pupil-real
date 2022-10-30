@@ -54,7 +54,7 @@ export default {
         handleGetStudentRequest() {
                 fetch(`/api/school/students`, {
                     method: 'post',
-                    body: JSON.stringify({school_id: 1}),
+                    body: JSON.stringify({school_id: this.schoolId}),
                     headers: {
                         'Content-Type': 'application/json',
                     }
