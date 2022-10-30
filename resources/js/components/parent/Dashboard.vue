@@ -1,7 +1,7 @@
 <template>
     <div class="md:overflow-hidden">
        <div>
-           <h1 class="mt-5 text-xl">Spendings</h1>
+           <h1 class="mt-5 text-xl p-5">Spendings</h1>
            <dl v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                <div  class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                    <dt class="truncate text-sm font-medium text-gray-500">Last week total spending</dt>
@@ -29,7 +29,7 @@
 
 
            <div>
-               <h1 class="text-xl my-5">Last transactions</h1>
+               <h1 class="text-xl my-5 p-5">Last transactions</h1>
                <div class="border-[1px] border-gray-200 rounded-md w-fit">
                    <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
                </div>
@@ -37,9 +37,9 @@
        </div>
 
 
-            <div class="md:relative md:bottom-[30rem] md:left-[55rem]">
-                <div class="w-[20rem] mt-5 md:mt-0">
-                    <h1 class="text-xl ml-8">Lunch orders</h1>
+            <div>
+                <div class="w-[20rem] mt-5">
+                    <h1 class="text-xl p-5">Lunch orders</h1>
                 </div>
                     <div>
                         <calendar :months="0"></calendar>
