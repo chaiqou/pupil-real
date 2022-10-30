@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/school/dashboard', [NavigationController::class, 'school'])->name('school.dashboard');
     Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
     Route::get('/school/students', [NavigationController::class, 'school'])->name('school.students');
+    Route::get('/parent/settings/{student_id}', [NavigationController::class, 'parent'])->name('parent.settings');
 
 });
 
