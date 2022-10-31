@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Requests\Parent\CreateStudentRequest;
 use App\Http\Requests\Parent\TransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
@@ -19,16 +20,51 @@ class ParentController extends Controller
 {
     public function parentDashboard(): RedirectResponse|View
     {
-
         if(Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
             return view('layouts.select-students', ['students' =>  Auth::user()->students->all()]);
-          } else  {
+          } elseif(Auth::user()->hasRole('parent') && Auth::user()->students->count() === 1)  {
             return redirect()->route('parent.dashboard', ['student_id' => Auth::user()->students->first()->id]);
-          }
-
+          } else {
+            return redirect()->route('parent.create-student', ['user_id' => Auth::user()->id]);
+        }
     }
 
-    public function getTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function createStudent(): View
+    {
+        return view('parent.create-student', ['user_id' => Auth::user()->id], [
+            'user_id' => auth()->user()->id,
+        ]);
+    }
+
+    public function submitStudent(CreateStudentRequest $request): RedirectResponse
+    {
+       $user = auth()->user();
+       Student::create([
+           'user_id' => $user->id,
+           'school_id' => $user->school_id,
+           'first_name' => $request->first_name,
+           'last_name' => $request->last_name,
+           'middle_name' => $request->middle_name,
+           'user_information' => [
+               'country'  => $request->country,
+               'street_address'   => $request->street_address,
+               'city'  => $request->city,
+               'state'   => $request->state,
+               'zip'  => (int)$request->zip,
+           ]
+       ]);
+
+        return redirect()->route('parent.create-student_submit', ['user_id' => auth()->user()->id]);
+    }
+
+    public function submitStudentCreation(): view
+    {
+        return view('create-student-verify');
+    }
+
+
+
+        public function getTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
     {
         $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);

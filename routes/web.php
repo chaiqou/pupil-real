@@ -33,7 +33,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
     Route::get('/school/students', [NavigationController::class, 'school'])->name('school.students');
     Route::get('/parent/settings/{student_id}', [NavigationController::class, 'parent'])->name('parent.settings');
-
+    Route::get('/parent/create-student/{user_id}', [ParentController::class, 'createStudent'])->name('parent.create-student');
+    Route::post('/parent/create-student/{user_id}', [ParentController::class, 'submitStudent'])->name('parent.create-student_submit');
 });
 
 
