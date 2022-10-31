@@ -13,6 +13,7 @@
             placeholder="Enter a tag"
             name="tagInput"
             @keydown="addTag"
+            @keydown.delete="removeTagWithBackspace"
         />
     </div>
 </template>
@@ -35,5 +36,11 @@ function addTag(event) {
 
 function removeTag(index) {
     store.removeTag(index);
+}
+
+function removeTagWithBackspace(event) {
+    if (event.target.value.length === 0) {
+        store.removeTag(store.tags.length - 1);
+    }
 }
 </script>
