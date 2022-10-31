@@ -13,4 +13,10 @@ export const useMerchantFormStore = defineStore("merchantForm", {
             tags: ["Breakfest", "test"],
         };
     },
+
+    actions: {
+        addTag(tag) {
+            this.tags.push(tag);
+        },
+    },
 });

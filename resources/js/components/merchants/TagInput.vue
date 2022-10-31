@@ -8,7 +8,12 @@
             {{ tag }}
             <span class="cursor-pointer">x</span>
         </div>
-        <Field type="text" placeholder="Enter a tag" name="tagInput" />
+        <Field
+            type="text"
+            placeholder="Enter a tag"
+            name="tagInput"
+            @keydown="addTag"
+        />
     </div>
 </template>
 
@@ -17,4 +22,14 @@ import { Field } from "vee-validate";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 const store = useMerchantFormStore();
+
+function addTag(event) {
+    if (event.code === "Enter") {
+        let value = event.target.value.trim();
+        if (value.length > 0) {
+            store.addTag(value);
+            event.target.value = "";
+        }
+    }
+}
 </script>
