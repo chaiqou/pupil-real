@@ -4,15 +4,16 @@
         <Field name="description" type="text" />
         <Datepicker v-model="date" range />
         <Field name="period" type="number" />
-        <button type="submit">click me</button>
+        <MerchantRadioGroup />
     </Form>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { Form, Field } from "vee-validate";
+import MerchantRadioGroup from "./MerchantRadioGroup.vue";
+import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
-const date = ref();
+const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(values) {
     console.log(date.value);
