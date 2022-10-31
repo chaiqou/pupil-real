@@ -2,7 +2,7 @@
     <Form @submit="onSubmitMerchantForm">
         <Field name="title" type="text" />
         <Field name="description" type="text" />
-        <Datepicker v-model="date" range />
+        <Datepicker v-model="store.dateRange" range />
         <Field name="period" type="number" />
         <MerchantRadioGroup />
     </Form>

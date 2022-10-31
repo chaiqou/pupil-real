@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RadioGroup v-model="days" class="mt-2">
+        <RadioGroup v-model="store.radioDays" class="mt-2">
             <RadioGroupLabel class="sr-only">
                 Choose a day option
             </RadioGroupLabel>
