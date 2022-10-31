@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RadioGroup v-model="store.radioDays" class="mt-2">
+        <RadioGroup v-model="store.radioDay" class="mt-2">
             <RadioGroupLabel class="sr-only">
                 Choose a day option
             </RadioGroupLabel>
@@ -37,7 +37,6 @@
 
 <script setup>
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 const dayOptions = [

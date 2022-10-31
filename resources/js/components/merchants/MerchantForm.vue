@@ -1,10 +1,12 @@
 <template>
     <Form @submit="onSubmitMerchantForm">
-        <Field name="title" type="text" />
-        <Field name="description" type="text" />
+        <Field v-model="title" name="title" type="text" />
+        <Field v-model="description" name="description" type="text" />
         <Datepicker v-model="store.dateRange" range />
-        <Field name="period" type="number" />
+        <Field v-model="period" name="period" type="number" />
         <MerchantRadioGroup />
+        <Datepicker v-model="store.holds" range />
+        <Datepicker v-model="store.extras" range />
     </Form>
 </template>
 
