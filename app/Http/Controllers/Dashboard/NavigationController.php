@@ -16,6 +16,7 @@ class NavigationController extends Controller
         $role = '';
         $student = Student::where('id', $student_id)->first();
         $user = Auth::user();
+        $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
 
         if($user->hasRole('admin'))
@@ -52,6 +53,8 @@ class NavigationController extends Controller
                 'student' => $student,
                 'students' => $students,
                 'studentId' => $student->id,
+                'user' => $user,
+                'userInfo' => $userInfo,
             ])->with(['page', 'Dashboard']);
 	}
 
