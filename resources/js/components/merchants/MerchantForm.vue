@@ -30,14 +30,18 @@
         <Datepicker v-model="store.holds" range />
         <MerchantLabel label="Extras" />
         <Datepicker v-model="store.extras" range />
+        <TagInput />
     </Form>
 </template>
 
 <script setup>
 import { Form, Field } from "vee-validate";
-import MerchantRadioGroup from "./MerchantRadioGroup.vue";
+import { ref } from "vue";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
+
+import MerchantRadioGroup from "./MerchantRadioGroup.vue";
 import MerchantLabel from "./MerchantLabel.vue";
+import TagInput from "./TagInput.vue";
 
 const store = useMerchantFormStore();
 

@@ -10,6 +10,7 @@ export const useMerchantFormStore = defineStore("merchantForm", {
             title: "",
             description: "",
             period: "",
+            tags: ["Breakfest", "test"],
         };
     },
 });
