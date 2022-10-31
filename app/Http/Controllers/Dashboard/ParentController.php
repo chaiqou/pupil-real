@@ -54,37 +54,37 @@ class ParentController extends Controller
            ]
        ]);
 
-        return redirect()->route('parent.create-student_submit', ['user_id' => auth()->user()->id]);
+        return redirect()->route('parent.create-student-verify', ['user_id' => auth()->user()->id]);
     }
 
-    public function submitStudentCreation(): view
+    public function verifyStudentCreation(): view
     {
-        return view('create-student-verify');
+        return view('parent.create-student-verify', [
+            'user_id' => auth()->user()->id
+        ]);
     }
 
-
-
-        public function getTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+        public function getTransactions(TransactionRequest $request): ResourceCollection
     {
         $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
     }
 
-    public function getLastWeekTransactionsSpending(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function getLastWeekTransactionsSpending(TransactionRequest $request): ResourceCollection
     {
         $date = Carbon::now()->subWeeks();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
     }
 
-    public function getLastMonthTransactionsSpending(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function getLastMonthTransactionsSpending(TransactionRequest $request): ResourceCollection
     {
         $date = Carbon::now()->subMonths();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
     }
 
-    public function getLastFiveTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function getLastFiveTransactions(TransactionRequest $request): ResourceCollection
     {
         $transactions = Transaction::where('student_id', $request->student_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);

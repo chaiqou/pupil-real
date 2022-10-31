@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/parent/settings/{student_id}', [NavigationController::class, 'parent'])->name('parent.settings');
     Route::get('/parent/create-student/{user_id}', [ParentController::class, 'createStudent'])->name('parent.create-student');
     Route::post('/parent/create-student/{user_id}', [ParentController::class, 'submitStudent'])->name('parent.create-student_submit');
+    Route::get('/parent/create-student/verify/{user_id}', [ParentController::class, 'verifyStudentCreation'])->name('parent.create-student-verify');
 });
 
 

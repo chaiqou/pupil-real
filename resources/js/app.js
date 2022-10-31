@@ -39,5 +39,6 @@ app.component('dashboard-transactions', DashboardTransactions);
 app.component('calendar', Calendar);
 
 
+
 app.use(pinia)
 app.mount('#app')
