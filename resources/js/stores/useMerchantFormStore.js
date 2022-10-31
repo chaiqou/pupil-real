@@ -18,5 +18,8 @@ export const useMerchantFormStore = defineStore("merchantForm", {
         addTag(tag) {
             this.tags.push(tag);
         },
+        removeTag(index) {
+            this.tags.splice(index, 1);
+        },
     },
 });

@@ -1,12 +1,12 @@
 <template>
     <div class="w-96 text-base h-12">
         <div
-            v-for="tag in store.tags"
+            v-for="(tag, index) in store.tags"
             :key="tag"
             class="flex justify-between px-4 h-8 mr-2 bg-[#eee] mt-2 leading-8"
         >
             {{ tag }}
-            <span class="cursor-pointer">x</span>
+            <span @click="removeTag(index)" class="cursor-pointer">x</span>
         </div>
         <Field
             type="text"
@@ -31,5 +31,9 @@ function addTag(event) {
             event.target.value = "";
         }
     }
+}
+
+function removeTag(index) {
+    store.removeTag(index);
 }
 </script>
