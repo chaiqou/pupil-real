@@ -10,7 +10,6 @@
         </div>
         <Field
             type="text"
-            placeholder="Enter a tag"
             name="tagInput"
             @keydown="addTag"
             @keydown.delete="removeTagWithBackspace"

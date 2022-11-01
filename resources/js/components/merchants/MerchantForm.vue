@@ -2,7 +2,6 @@
     <Form @submit="onSubmitMerchantForm">
         <MerchantLabel label="Title" />
         <Field
-            placeholder="Title"
             v-model="store.title"
             name="title"
             type="text"
@@ -10,7 +9,6 @@
         />
         <MerchantLabel label="Description" />
         <Field
-            placeholder="Description"
             v-model="store.description"
             name="description"
             type="text"
