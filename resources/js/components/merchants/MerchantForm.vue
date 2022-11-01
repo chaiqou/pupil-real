@@ -45,6 +45,7 @@
             type="number"
             class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
         />
+        <button type="submit">Save Period</button>
     </Form>
 </template>
 
@@ -58,7 +59,7 @@ import TagInput from "./TagInput.vue";
 
 const store = useMerchantFormStore();
 
-function onSubmitMerchantForm(values) {
-    console.log(date.value);
+function onSubmitMerchantForm(value) {
+    console.log(value);
 }
 </script>
