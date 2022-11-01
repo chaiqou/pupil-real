@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="invisible lg:visible w-full">
         <div class="bg-inhrtit">
             <div
-                class="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 sm:px-6 xl:max-w-3xl xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
+                class="mx-auto max-w-7xl grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 sm:px-6 xl:max-w-3xl xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
             >
                 <section
                     v-for="month in months"
@@ -24,7 +24,7 @@
                         <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg w-60 bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
                             v-for="day in month.days"

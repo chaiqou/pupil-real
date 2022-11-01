@@ -5,14 +5,14 @@
             v-model="store.title"
             name="title"
             type="text"
-            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Description" />
         <Field
             v-model="store.description"
             name="description"
             type="text"
-            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Active Range" />
         <Datepicker v-model="store.dateRange" range />
@@ -21,7 +21,7 @@
             v-model="store.period"
             name="period"
             type="number"
-            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantRadioGroup />
         <MerchantLabel label="Holds" />
@@ -34,14 +34,14 @@
             v-model="store.priceDay"
             name="priceDay"
             type="number"
-            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Price/Period" />
         <Field
             v-model="store.pricePeriod"
             name="pricePeriod"
             type="number"
-            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <button type="submit">Save Period</button>
     </Form>
