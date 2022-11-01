@@ -351,7 +351,7 @@
             </two-factor-auth-modal>
 
             <change-password-modal>
-                <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
+                <form method="POST" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
                     @csrf
                     <div class="flex flex-col justify-around h-[10rem]">
                         <div>

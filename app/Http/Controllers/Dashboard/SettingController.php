@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\UpdatePasswordRequest;
+use App\Http\Requests\User\UpdatePersonalRequest;
 use Illuminate\Http\RedirectResponse;
 
 class SettingController extends Controller
 {
-    public function update(UpdateUserRequest $request): RedirectResponse
+    public function updatePersonal(UpdatePersonalRequest $request): RedirectResponse
     {
       $user = auth()->user();
       $user->update([
-          'password' => bcrypt($request->password),
           'first_name' => $request->first_name,
           'last_name' => $request->last_name,
           'middle_name' => $request->middle_name,
@@ -26,6 +26,15 @@ class SettingController extends Controller
       ]);
 
       return redirect()->back();
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
+    {
+        $user = auth()->user();
+        $user->update([
+            'password' => bcrypt($request->password)
+        ]);
+        return redirect()->back();
     }
 
     public function changeTwoFa(): RedirectResponse
