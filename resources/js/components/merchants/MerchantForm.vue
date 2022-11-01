@@ -5,6 +5,7 @@
             v-model="store.title"
             name="title"
             type="text"
+            rules="required"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Description" />
@@ -12,6 +13,7 @@
             v-model="store.description"
             name="description"
             type="text"
+            rules="required"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Active Range" />
@@ -21,13 +23,14 @@
             v-model="store.period"
             name="period"
             type="number"
+            rules="required|numeric|min:1|max:31"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-        <MerchantRadioGroup />
+        <MerchantRadioGroup rules="required" />
         <MerchantLabel label="Holds" />
-        <Datepicker v-model="store.holds" range />
+        <Datepicker v-model="store.holds" range rules="required" />
         <MerchantLabel label="Extras" />
-        <Datepicker v-model="store.extras" range />
+        <Datepicker v-model="store.extras" range rules="required" />
         <MerchantLabel label="Claimables" />
         <Multiselect
             class="mt-8"
@@ -39,12 +42,14 @@
             :searchable="true"
             :options="mealOptions"
             @change="updateSelectedMeal"
+            rules="required"
         />
         <MerchantLabel label="Price/Day" />
         <Field
             v-model="store.priceDay"
             name="priceDay"
             type="number"
+            rules="required|numeric|min:1|max:99999"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantLabel label="Price/Period" />
@@ -52,6 +57,7 @@
             v-model="store.pricePeriod"
             name="pricePeriod"
             type="number"
+            rules="required|numeric|min:1|max:99999"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <button
@@ -64,7 +70,7 @@
 </template>
 
 <script setup>
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 import MerchantRadioGroup from "./MerchantRadioGroup.vue";
