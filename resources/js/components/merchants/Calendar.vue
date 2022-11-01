@@ -2,12 +2,12 @@
     <div class="invisible lg:visible w-full">
         <div class="bg-inhrtit">
             <div
-                class="mx-auto max-w-7xl grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 sm:px-6 xl:max-w-3xl xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-8 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-3"
             >
                 <section
                     v-for="month in months"
                     :key="month.name"
-                    class="text-center"
+                    class="text-center border-[1px] border-gray-200 rounded-md"
                 >
                     <h2 class="font-semibold text-gray-900">
                         {{ month.name }}
@@ -24,7 +24,7 @@
                         <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg w-60 bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
                             v-for="day in month.days"
@@ -34,7 +34,7 @@
                                 selectedDay === day
                                     ? 'bg-indigo-600 text-white'
                                     : 'bg-white text-gray-900',
-                                'bg-white text-gray-900 py-1.5 hover:bg-indigo-100 focus:z-10',
+                                'bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
                             <time
@@ -69,12 +69,19 @@ import {
     parse,
 } from "date-fns";
 
+const props = defineProps({
+    months: {
+        type: Number,
+        required: true,
+    },
+});
+
 const today = startOfToday();
 const selectedDay = ref(today);
 const currentMonthPlusFiveMonth = ref(
     eachMonthOfInterval({
         start: today,
-        end: add(today, { months: 11 }),
+        end: add(today, { months: props.months }),
     })
 );
 
