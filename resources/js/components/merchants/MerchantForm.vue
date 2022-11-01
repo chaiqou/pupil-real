@@ -1,5 +1,5 @@
 <template>
-    <Form @submit="onSubmitMerchantForm">
+    <Form class="mt-[4.2rem]" @submit="onSubmitMerchantForm">
         <MerchantLabel label="Title" />
         <Field
             v-model="store.title"

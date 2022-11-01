@@ -19,11 +19,13 @@
                             option.validOption
                                 ? 'cursor-pointer focus:outline-none'
                                 : 'opacity-25 cursor-not-allowed',
-                            active ? 'ring-2 ring-offset-2 ring-red-500' : '',
+                            active
+                                ? 'ring-2 ring-offset-2 ring-indigo-500'
+                                : '',
                             checked
-                                ? 'bg-red-600 border-transparent text-white hover:bg-red-700'
+                                ? 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700'
                                 : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50',
-                            'border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1',
+                            'border rounded-md flex flex-nowrap items-center justify-center text-sm font-medium uppercase py-3 px-3 sm:flex-1',
                         ]"
                     >
                         <RadioGroupLabel as="span">{{
