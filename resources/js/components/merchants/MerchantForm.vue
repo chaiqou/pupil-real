@@ -8,6 +8,7 @@
             rules="required"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        <MerchantErrorMessage name="title" />
         <MerchantLabel label="Description" />
         <Field
             v-model="store.description"
@@ -16,6 +17,7 @@
             rules="required"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        <MerchantErrorMessage name="description" />
         <MerchantLabel label="Active Range" />
         <Datepicker v-model="store.dateRange" range />
         <MerchantLabel label="Period Length" />
@@ -26,11 +28,16 @@
             rules="required|numeric|min:1|max:31"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-        <MerchantRadioGroup rules="required" />
+        <MerchantRadioGroup rules="required" name="day" />
         <MerchantLabel label="Holds" />
-        <Datepicker v-model="store.holds" range rules="required" />
+        <Datepicker v-model="store.holds" range rules="required" name="holds" />
         <MerchantLabel label="Extras" />
-        <Datepicker v-model="store.extras" range rules="required" />
+        <Datepicker
+            v-model="store.extras"
+            range
+            rules="required"
+            name="extras"
+        />
         <MerchantLabel label="Claimables" />
         <Multiselect
             class="mt-8"
@@ -43,23 +50,26 @@
             :options="mealOptions"
             @change="updateSelectedMeal"
             rules="required"
+            name="claimables"
         />
         <MerchantLabel label="Price/Day" />
         <Field
             v-model="store.priceDay"
-            name="priceDay"
+            name="price day"
             type="number"
             rules="required|numeric|min:1|max:99999"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        <MerchantErrorMessage name="price day" />
         <MerchantLabel label="Price/Period" />
         <Field
             v-model="store.pricePeriod"
-            name="pricePeriod"
+            name="price period"
             type="number"
             rules="required|numeric|min:1|max:99999"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
+        <MerchantErrorMessage name="price period" />
         <button
             type="submit"
             class="inline-flex mt-4 w-full text-center items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -70,17 +80,18 @@
 </template>
 
 <script setup>
-import { Form, Field, ErrorMessage } from "vee-validate";
+import { Form, Field } from "vee-validate";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 import MerchantRadioGroup from "./MerchantRadioGroup.vue";
 import MerchantLabel from "./MerchantLabel.vue";
 import Multiselect from "@vueform/multiselect";
+import MerchantErrorMessage from "./MerchantErrorMessage.vue";
 
 const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(value) {
-    console.log(store.getMerchantData);
+    console.log(value);
 }
 
 function updateSelectedMeal(value) {

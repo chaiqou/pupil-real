@@ -1,6 +1,6 @@
 <template>
     <p class="mt-2 text-sm text-red-500">
-        <ErrorMessage name="{{ name }}" />
+        <ErrorMessage :name="name" />
     </p>
 </template>
 
