@@ -3,7 +3,7 @@
         <MerchantLabel label="Title" />
         <Field
             placeholder="Title"
-            v-model="title"
+            v-model="store.title"
             name="title"
             type="text"
             class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
@@ -11,7 +11,7 @@
         <MerchantLabel label="Description" />
         <Field
             placeholder="Description"
-            v-model="description"
+            v-model="store.description"
             name="description"
             type="text"
             class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
@@ -20,7 +20,7 @@
         <Datepicker v-model="store.dateRange" range />
         <MerchantLabel label="Period Length" />
         <Field
-            v-model="period"
+            v-model="store.period"
             name="period"
             type="number"
             class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
@@ -31,12 +31,25 @@
         <MerchantLabel label="Extras" />
         <Datepicker v-model="store.extras" range />
         <TagInput />
+        <MerchantLabel label="Price/Day" />
+        <Field
+            v-model="store.priceDay"
+            name="priceDay"
+            type="number"
+            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+        />
+        <MerchantLabel label="Price/Period" />
+        <Field
+            v-model="store.pricePeriod"
+            name="pricePeriod"
+            type="number"
+            class="inline-block w-full placeholder-[#626262] rounded-md border border-[#626262] whitespace-nowrap"
+        />
     </Form>
 </template>
 
 <script setup>
 import { Form, Field } from "vee-validate";
-import { ref } from "vue";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 import MerchantRadioGroup from "./MerchantRadioGroup.vue";

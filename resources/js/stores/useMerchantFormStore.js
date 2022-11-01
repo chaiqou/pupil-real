@@ -3,14 +3,15 @@ import { defineStore } from "pinia";
 export const useMerchantFormStore = defineStore("merchantForm", {
     state: () => {
         return {
-            radioDay: "",
-            date: "",
-            holds: "",
-            extras: "",
             title: "",
             description: "",
-            period: "",
-            tags: ["Breakfest", "test"],
+            dateRange: [],
+            period: null,
+            holds: [],
+            extras: [],
+            tags: [],
+            priceDay: null,
+            pricePeriod: null,
         };
     },
 
