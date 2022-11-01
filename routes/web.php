@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/parent/create-student/{user_id}', [ParentController::class, 'submitStudent'])->name('parent.create-student_submit');
     Route::get('/parent/create-student/verify/{student_id}', [ParentController::class, 'verifyStudentCreation'])->name('parent.create-student-verify');
     Route::post('/parent/create-student-verify/{student_id}', [ParentController::class, 'submitStudentCreation'])->name('parent.create-student-verify_submit');
+    Route::post('/parent/two-fa/{user_id}', [SettingController::class, 'changeTwoFa'])->name('parent.two-fa');
 });
 
 

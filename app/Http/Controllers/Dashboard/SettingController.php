@@ -27,4 +27,19 @@ class SettingController extends Controller
 
       return redirect()->back();
     }
+
+    public function changeTwoFa(): RedirectResponse
+    {
+        $user = auth()->user();
+        if($user->hasRole('2fa'))
+        {
+            $user->removeRole('2fa');
+            $user->update([
+                'is_verified' => false
+            ]);
+        } else {
+            $user->assignRole('2fa');
+        }
+        return redirect()->back();
+    }
 }

@@ -18,7 +18,7 @@ class NavigationController extends Controller
         $user = Auth::user();
         $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
-
+        $twoFa = false;
         if($user->hasRole('admin'))
         {
             $role = 'admin';
@@ -46,6 +46,12 @@ class NavigationController extends Controller
         {
             return redirect()->route('2fa.form');
         }
+
+        if(auth()->user()->hasRole('2fa'))
+        {
+            $twoFa = true;
+        }
+
             return view($currentTab, [
                 'current' => $currentTab,
                 'navigation' => $navigation,
@@ -55,6 +61,7 @@ class NavigationController extends Controller
                 'studentId' => $student->id,
                 'user' => $user,
                 'userInfo' => $userInfo,
+                'twoFa' => $twoFa,
             ])->with(['page', 'Dashboard']);
 	}
 
