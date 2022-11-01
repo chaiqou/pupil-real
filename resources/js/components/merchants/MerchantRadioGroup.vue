@@ -12,6 +12,7 @@
                     :value="option.fullName"
                     :disabled="!option.validOption"
                     v-slot="{ active, checked }"
+                    v-model="store.radioDay"
                 >
                     <div
                         :class="[

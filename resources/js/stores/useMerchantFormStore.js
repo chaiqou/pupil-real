@@ -12,6 +12,7 @@ export const useMerchantFormStore = defineStore("merchantForm", {
             tags: [],
             priceDay: null,
             pricePeriod: null,
+            radioDay: null,
         };
     },
 
@@ -21,6 +22,22 @@ export const useMerchantFormStore = defineStore("merchantForm", {
         },
         removeTag(index) {
             this.tags.splice(index, 1);
+        },
+    },
+    getters: {
+        getMerchantData() {
+            return {
+                title: this.title,
+                description: this.description,
+                dateRange: this.dateRange,
+                period: this.period,
+                holds: this.holds,
+                extras: this.extras,
+                tags: this.tags,
+                priceDay: this.priceDay,
+                pricePeriod: this.pricePeriod,
+                radioDay: this.radioDay,
+            };
         },
     },
 });

@@ -60,6 +60,6 @@ import TagInput from "./TagInput.vue";
 const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(value) {
-    console.log(value);
+    console.log(store.getMerchantData);
 }
 </script>
