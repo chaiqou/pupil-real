@@ -19,7 +19,7 @@
         />
         <MerchantErrorMessage name="description" />
         <MerchantLabel label="Active Range" />
-        <Datepicker v-model="store.dateRange" range />
+        <Datepicker v-model="store.dateRange" range name="dateRange" />
         <MerchantLabel label="Period Length" />
         <Field
             v-model="store.period"
@@ -28,16 +28,12 @@
             rules="required|numeric|min:1|max:31"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
-        <MerchantRadioGroup rules="required" name="day" />
+        <MerchantErrorMessage name="period" />
+        <MerchantRadioGroup name="day" />
         <MerchantLabel label="Holds" />
-        <Datepicker v-model="store.holds" range rules="required" name="holds" />
+        <Datepicker v-model="store.holds" range name="holds" />
         <MerchantLabel label="Extras" />
-        <Datepicker
-            v-model="store.extras"
-            range
-            rules="required"
-            name="extras"
-        />
+        <Datepicker v-model="store.extras" range name="extras" />
         <MerchantLabel label="Claimables" />
         <Multiselect
             class="mt-8"
@@ -49,7 +45,6 @@
             :searchable="true"
             :options="mealOptions"
             @change="updateSelectedMeal"
-            rules="required"
             name="claimables"
         />
         <MerchantLabel label="Price/Day" />
@@ -82,7 +77,6 @@
 <script setup>
 import { Form, Field } from "vee-validate";
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
-
 import MerchantRadioGroup from "./MerchantRadioGroup.vue";
 import MerchantLabel from "./MerchantLabel.vue";
 import Multiselect from "@vueform/multiselect";
