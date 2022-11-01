@@ -4,6 +4,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import "@/config/vee-validate/rules";
 
 import DashboardNavigation from "./components/DashboardNavigation.vue";
 import DashboardNavigationMobile from "./components/DashboardNavigationMobile.vue";
