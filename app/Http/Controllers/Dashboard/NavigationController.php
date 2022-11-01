@@ -18,7 +18,7 @@ class NavigationController extends Controller
         $user = Auth::user();
         $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
-        $twoFa = false;
+        $twoFa = 0;
         if($user->hasRole('admin'))
         {
             $role = 'admin';
@@ -49,7 +49,7 @@ class NavigationController extends Controller
 
         if(auth()->user()->hasRole('2fa'))
         {
-            $twoFa = true;
+            $twoFa = 1;
         }
 
             return view($currentTab, [

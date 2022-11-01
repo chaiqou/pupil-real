@@ -18,6 +18,7 @@ import Dashboard from './components/parent/Dashboard.vue';
 import DashboardTransactions from './components/parent/DashboardTransactions.vue';
 import Calendar from './components/merchants/Calendar.vue';
 import TwoFactorAuthModal from "./components/parent/TwoFactorAuthModal.vue";
+import ChangePasswordModal from "./components/parent/ChangePasswordModal.vue";
 
 
 const pinia = createPinia()
@@ -39,6 +40,7 @@ app.component('dashboard', Dashboard);
 app.component('dashboard-transactions', DashboardTransactions);
 app.component('calendar', Calendar);
 app.component('two-factor-auth-modal', TwoFactorAuthModal);
+app.component('change-password-modal', ChangePasswordModal);
 
 
 app.use(pinia)

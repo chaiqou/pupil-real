@@ -35,7 +35,7 @@ class SettingController extends Controller
         {
             $user->removeRole('2fa');
             $user->update([
-                'is_verified' => false
+                'is_verified' => 0
             ]);
         } else {
             $user->assignRole('2fa');
