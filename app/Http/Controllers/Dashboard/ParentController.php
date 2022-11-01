@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Requests\Parent\ConfirmStudentCreationRequest;
 use App\Http\Requests\Parent\CreateStudentRequest;
 use App\Http\Requests\Parent\TransactionRequest;
 use App\Http\Resources\TransactionResource;
@@ -39,7 +40,7 @@ class ParentController extends Controller
     public function submitStudent(CreateStudentRequest $request): RedirectResponse
     {
        $user = auth()->user();
-       Student::create([
+      $student =  Student::create([
            'user_id' => $user->id,
            'school_id' => $user->school_id,
            'first_name' => $request->first_name,
@@ -54,7 +55,7 @@ class ParentController extends Controller
            ]
        ]);
 
-        return redirect()->route('parent.create-student-verify', ['user_id' => auth()->user()->id]);
+        return redirect()->route('parent.create-student-verify', ['student_id' => $student->id]);
     }
 
     public function verifyStudentCreation(): view
@@ -62,6 +63,20 @@ class ParentController extends Controller
         return view('parent.create-student-verify', [
             'user_id' => auth()->user()->id
         ]);
+    }
+
+    public function submitStudentCreation(ConfirmStudentCreationRequest $request): RedirectResponse|JsonResponse
+    {
+           if($request->value === 'confirm')
+           {
+               return redirect()->route('parents.dashboard');
+           }
+           if($request->value === 'cancel')
+           {
+               Student::where('id', request()->student_id)->first()->delete();
+               return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
+           }
+           return response()->json(['error' => 'Wrong request'], 404);
     }
 
         public function getTransactions(TransactionRequest $request): ResourceCollection

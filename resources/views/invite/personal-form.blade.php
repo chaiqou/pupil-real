@@ -393,7 +393,7 @@
 
         </div>
     </div>
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script src="{{asset('js/sal.js')}}"></script>
     <script>
         sal({
             threshold: 0,

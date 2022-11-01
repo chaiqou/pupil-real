@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Dashboard\NavigationController;
 use App\Http\Controllers\Dashboard\ParentController;
+use App\Http\Controllers\Dashboard\SettingController;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
     Route::get('/school/students', [NavigationController::class, 'school'])->name('school.students');
     Route::get('/parent/settings/{student_id}', [NavigationController::class, 'parent'])->name('parent.settings');
+    Route::post('/parent/settings/{student_id}', [SettingController::class, 'update'])->name('parent.settings_submit');
     Route::get('/parent/create-student/{user_id}', [ParentController::class, 'createStudent'])->name('parent.create-student');
     Route::post('/parent/create-student/{user_id}', [ParentController::class, 'submitStudent'])->name('parent.create-student_submit');
-    Route::get('/parent/create-student/verify/{user_id}', [ParentController::class, 'verifyStudentCreation'])->name('parent.create-student-verify');
+    Route::get('/parent/create-student/verify/{student_id}', [ParentController::class, 'verifyStudentCreation'])->name('parent.create-student-verify');
+    Route::post('/parent/create-student-verify/{student_id}', [ParentController::class, 'submitStudentCreation'])->name('parent.create-student-verify_submit');
 });
 
 

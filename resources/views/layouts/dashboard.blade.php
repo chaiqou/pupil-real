@@ -49,3 +49,10 @@
 
 </html>
 <script src="{{ mix('js/app.js') }}"></script>
+<script src="<?php echo asset('js/sal.js') ?>"></script>
+<script>
+    sal({
+        threshold: 0,
+        once: true,
+    });
+</script>

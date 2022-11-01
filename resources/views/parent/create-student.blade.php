@@ -55,7 +55,13 @@
         @enderror
         <form id="form" method="POST" action="{{route('parent.create-student_submit', ['user_id' => $user_id])}}" class="mt-8 space-y-6 w-full">
             @csrf
+
+
             <div class="bg-white p-8">
+
+
+
+
                 <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
                     <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
