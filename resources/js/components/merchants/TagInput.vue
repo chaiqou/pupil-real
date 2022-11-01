@@ -1,14 +1,15 @@
 <template>
-    <div class="w-96 text-base h-12">
+    <div class="w-96 text-base mt-24 h-12">
         <div
             v-for="(tag, index) in store.tags"
             :key="tag"
-            class="flex justify-between px-4 h-8 mr-2 bg-[#eee] mt-2 leading-8"
+            class="flex justify-between px-4 h-8 mr-2 mb-12 bg-[#eee] leading-8"
         >
             {{ tag }}
             <span @click="removeTag(index)" class="cursor-pointer">x</span>
         </div>
         <Field
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             type="text"
             name="tagInput"
             @keydown="addTag"
