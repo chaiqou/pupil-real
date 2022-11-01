@@ -1,8 +1,7 @@
 <template>
-
     <div class="px-8 py-3 bg-white rounded-md w-[15rem]">
-        <p>2FA authorization</p>
-        <button @click="showHideChangePassword()" class="p-2 mt-4 bg-green-400 rounded-md">Change password</button>
+        <p>Change password</p>
+        <button @click="showHideChangePassword()" class="p-2 mt-4 bg-green-400 rounded-md">Change</button>
     </div>
 
     <TransitionRoot as="template" :show="this.isChangePasswordVisible">
