@@ -1,5 +1,5 @@
 <template>
-    <p class="mt-2 text-sm text-red-500">
+    <p class="mt-2 text-sm text-red-500 whitespace-nowrap">
         <ErrorMessage :name="name" />
     </p>
 </template>
