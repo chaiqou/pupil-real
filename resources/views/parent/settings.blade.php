@@ -342,38 +342,41 @@
             </div>
         </form>
 
-        <div id="app" class="md:flex md:w-[35rem] md:justify-between">
-            <div class="sm:mb-10">
-                <two-factor-auth-modal :two-fa="{{$twoFa}}">
-                    <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
-                        @csrf
-                        <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
-                    </form>
-                </two-factor-auth-modal>
-            </div>
+      <div>
+          <div class="md:flex md:w-[35rem] md:justify-between">
+              <div class="sm:mb-10">
+                  <two-factor-auth-modal :two-fa="{{$twoFa}}">
+                      <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
+                          @csrf
+                          <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
+                      </form>
+                  </two-factor-auth-modal>
+              </div>
 
-            <change-password-modal>
-                <form method="POST" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
-                    @csrf
-                    <div class="flex flex-col justify-around h-[10rem]">
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                            <div class="mt-1">
-                                <input type="password" name="password" id="password" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            </div>
-                        </div>
+              <change-password-modal>
+                  <form method="POST" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
+                      @csrf
+                      <div class="flex flex-col justify-around h-[10rem]">
+                          <div>
+                              <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                              <div class="mt-1">
+                                  <input type="password" name="password" id="password" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                              </div>
+                          </div>
 
-                        <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repeat password</label>
-                            <div class="mt-1">
-                                <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            </div>
-                        </div>
-                    </div>
-                    <button class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
-                </form>
-            </change-password-modal>
-        </div>
+                          <div>
+                              <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repeat password</label>
+                              <div class="mt-1">
+                                  <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                              </div>
+                          </div>
+                      </div>
+                      <button class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
+                  </form>
+              </change-password-modal>
+          </div>
+          <parent-students class="mt-10 border-2 border-gray-200" :user-id="{{$user->id}}" :student="{{$student}}"></parent-students>
+      </div>
     </div>
 </div>
 @endsection

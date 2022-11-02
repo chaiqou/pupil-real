@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\school;
+namespace App\Http\Resources\School;
 
 use Carbon\Traits\Date;
 use Illuminate\Http\Resources\Json\JsonResource;

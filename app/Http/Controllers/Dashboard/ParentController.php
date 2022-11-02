@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Requests\Parent\ConfirmStudentCreationRequest;
 use App\Http\Requests\Parent\CreateStudentRequest;
 use App\Http\Requests\Parent\TransactionRequest;
+use App\Http\Requests\Parent\StudentRequest;
+use App\Http\Resources\School\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
 use App\Models\Transaction;
@@ -103,6 +105,15 @@ class ParentController extends Controller
     {
         $transactions = Transaction::where('student_id', $request->student_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
         return TransactionResource::collection($transactions);
+    }
+
+    public function getStudents(StudentRequest $request): ResourceCollection|JsonResponse
+    {
+        if(auth()->user()->hasRole('parent')) {
+            $students = Student::where('user_id', $request->user_id)->get();
+            return StudentResource::collection($students);
+        }
+        return response()->json(['error' => 'To get this information you should be role of parent and be authorized.']);
     }
 
 }
