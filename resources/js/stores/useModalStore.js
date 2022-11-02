@@ -7,6 +7,7 @@ export const useModalStore = defineStore("modal", {
             isMobileSwitchAccountVisible: false,
             isTwoFactorVisible: false,
             isChangePasswordVisible: false,
+            isStudentEditVisible: false,
         };
     },
     actions: {
@@ -21,6 +22,9 @@ export const useModalStore = defineStore("modal", {
         },
         showHideChangePassword() {
             this.isChangePasswordVisible = !this.isChangePasswordVisible;
-        }
+        },
+        showHideStudentEdit() {
+            this.isStudentEditVisible = !this.isStudentEditVisible;
+        },
     },
 });

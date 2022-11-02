@@ -20,6 +20,7 @@ import Calendar from './components/merchants/Calendar.vue';
 import TwoFactorAuthModal from "./components/parent/TwoFactorAuthModal.vue";
 import ChangePasswordModal from "./components/parent/ChangePasswordModal.vue";
 import ParentStudents from './components/parent/Students.vue';
+import ParentStudentEditModal from './components/parent/StudentsEditModal.vue'
 
 
 const pinia = createPinia()
@@ -43,6 +44,7 @@ app.component('calendar', Calendar);
 app.component('two-factor-auth-modal', TwoFactorAuthModal);
 app.component('change-password-modal', ChangePasswordModal);
 app.component('parent-students', ParentStudents);
+app.component('parent-student-edit-modal', ParentStudentEditModal)
 
 
 app.use(pinia)

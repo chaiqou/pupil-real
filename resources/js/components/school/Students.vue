@@ -28,7 +28,7 @@
         </tbody>
     </table>
 
-    <school-students-slide-over/>
+    <school-students-slide-over></school-students-slide-over>
 
 </template>
 

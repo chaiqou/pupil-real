@@ -32,7 +32,7 @@
         </tbody>
     </table>
 
-<parent-transaction-slide-over />
+<parent-transaction-slide-over></parent-transaction-slide-over>
 </template>
 
 <script>

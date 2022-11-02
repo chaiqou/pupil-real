@@ -1,5 +1,5 @@
 <template>
-    <table  class="min-w-full divide-y divide-gray-300">
+    <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Last name</th>
@@ -24,8 +24,8 @@
                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.street_address}} </td>
                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.zip}} </td>
                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                   <button @click="showHideSlideOver(); currentStudentDetails(student.id)" class="text-indigo-600 hover:text-indigo-900"
-                   >Details</button
+                   <button @click="showHideStudentEdit(); currentStudentEdit(student.id)" class="text-indigo-600 hover:text-indigo-900"
+                   >Edit</button
                    >
                </td>
 
@@ -33,18 +33,19 @@
         <tr v-if="!this.isStudentsLoaded" v-for="n in 7">
             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div>  </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
         </tr>
         </tbody>
     </table>
 
-<!--    <parent-students-slide-over/>-->
-
 </template>
 
 <script>
-import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../../stores/useStudentStore";
+import { useStudentStore } from "../../stores/useStudentStore";
+import { useModalStore } from "../../stores/useModalStore";
+import { mapActions, mapWritableState } from "pinia";
+
 export default {
     props: {
         student: {
@@ -60,7 +61,8 @@ export default {
         ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"]),
     },
     methods: {
-        ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
+        ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentEdit"]),
+        ...mapActions(useModalStore, ["showHideStudentEdit"]),
         handleGetStudentRequest() {
                 fetch(`/api/parent/students`, {
                     method: 'post',
