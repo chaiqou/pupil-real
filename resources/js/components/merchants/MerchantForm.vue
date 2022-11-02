@@ -21,7 +21,10 @@
         />
         <MerchantErrorMessage name="description" />
         <MerchantLabel label="Active Range" />
-        <Datepicker v-model="store.dateRange" range name="dateRange" />
+        <Field v-model="store.dateRange" name="dateRange">
+            <Datepicker v-model="store.dateRange" range />
+            <MerchantErrorMessage name="dateRange" />
+        </Field>
         <MerchantLabel label="Period Length" />
         <Field
             v-model="store.period"
@@ -30,24 +33,32 @@
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <MerchantErrorMessage name="period" />
-        <MerchantRadioGroup name="day" />
+        <MerchantRadioGroup />
         <MerchantLabel label="Holds" />
-        <Datepicker v-model="store.holds" range name="holds" />
+        <Field v-model="store.holds" name="holds">
+            <Datepicker v-model="store.holds" range />
+            <MerchantErrorMessage name="holds" />
+        </Field>
         <MerchantLabel label="Extras" />
-        <Datepicker v-model="store.extras" range name="extras" />
+        <Field v-model="store.extras" name="extras">
+            <Datepicker v-model="store.extras" range />
+            <MerchantErrorMessage name="extras" />
+        </Field>
         <MerchantLabel label="Claimables" />
-        <Multiselect
-            class="mt-8"
-            v-model="store.tags"
-            mode="tags"
-            :limit="10"
-            :max="4"
-            :close-on-select="false"
-            :searchable="true"
-            :options="mealOptions"
-            @change="updateSelectedMeal"
-            name="claimables"
-        />
+        <Field v-model="store.tags" name="claimables">
+            <Multiselect
+                class="mt-8"
+                mode="tags"
+                :limit="10"
+                :max="4"
+                :close-on-select="false"
+                :searchable="true"
+                :options="mealOptions"
+                @change="updateSelectedMeal"
+                v-model="store.tags"
+            />
+            <MerchantErrorMessage name="claimables" />
+        </Field>
         <MerchantLabel label="Price/Day" />
         <Field
             v-model="store.priceDay"
@@ -80,17 +91,9 @@ import MerchantRadioGroup from "./MerchantRadioGroup.vue";
 import MerchantLabel from "./MerchantLabel.vue";
 import Multiselect from "@vueform/multiselect";
 import MerchantErrorMessage from "./MerchantErrorMessage.vue";
-import { object, string, mixed } from "yup";
+import { object, string, number, date, array } from "yup";
 
 const store = useMerchantFormStore();
-
-const schema = object({
-    title: string().required(),
-    description: string().required(),
-    period: string().required().nullable(),
-    priceDay: string().required("Price/Day is required.").nullable(),
-    pricePeriod: string().required("Price/Period is required.").nullable(),
-});
 
 function onSubmitMerchantForm(value) {
     console.log(store.getMerchantData.dateRange);
@@ -99,6 +102,19 @@ function onSubmitMerchantForm(value) {
 function updateSelectedMeal(value) {
     console.log(value);
 }
+
+const schema = object({
+    title: string().required("Title is required"),
+    description: string().required("Description is required"),
+    dateRange: date().nullable().typeError("Invalid Date"),
+    period: number().required("Period is required").nullable(),
+    radioDay: string().required(),
+    holds: date().nullable().typeError("Invalid Date"),
+    extras: date().nullable().typeError("Invalid Date"),
+    claimables: array().min(1).required("Claimables is required"),
+    priceDay: number().required("Price/Day is required").nullable(),
+    pricePeriod: number().required("Price/Period is required").nullable(),
+});
 
 const mealOptions = [
     "Breakfast",
