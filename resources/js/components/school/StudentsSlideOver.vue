@@ -71,7 +71,7 @@
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { useStudentStore } from "../stores/useStudentStore";
+import { useStudentStore } from "../../stores/useStudentStore";
 import {mapActions, mapWritableState} from "pinia";
 
 export default {

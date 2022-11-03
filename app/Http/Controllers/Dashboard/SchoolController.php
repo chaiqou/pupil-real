@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\School\StudentRequest;
 use App\Http\Requests\School\TransactionRequest;
-use App\Http\Resources\school\StudentResource;
+use App\Http\Resources\School\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
 use App\Models\Transaction;

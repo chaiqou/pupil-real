@@ -14,7 +14,6 @@
             <nav aria-label="Progress">
                 <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
                     <li class="relative md:flex md:flex-1">
-                        <!-- Completed Step -->
                         <div class="group flex w-full items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
@@ -26,7 +25,6 @@
                     </li>
 
                     <li class="relative md:flex md:flex-1">
-                        <!-- Current Step -->
                         <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                 <span class="text-gray-500">02</span>
@@ -37,7 +35,6 @@
                     </li>
 
                     <li class="relative md:flex md:flex-1">
-                        <!-- Upcoming Step -->
                         <div class="group flex items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
@@ -118,7 +115,7 @@
             </form>
         </div>
     </div>
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script src="{{asset('js/sal.js')}}"></script>
     <script>
         sal({
             threshold: 0,

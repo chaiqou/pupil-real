@@ -13,6 +13,10 @@ class Student extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'user_information' => 'array'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -15,6 +15,9 @@ export const useStudentStore = defineStore("student", {
         },
         currentStudentDetails(id) {
             this.student = this.students.find(item => item.id === id)
+        },
+        currentStudentEdit(id) {
+            this.student = this.students.find(item => item.id === id)
         }
     }
 });

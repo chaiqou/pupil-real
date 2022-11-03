@@ -29,3 +29,4 @@ Route::post('/school/students', [SchoolController::class, 'getStudents'])->name(
 Route::post('/parent/week-spending', [ParentController::class, 'getLastWeekTransactionsSpending'])->name('parent.week-spending_api')->middleware('auth');
 Route::post('/parent/month-spending', [ParentController::class, 'getLastMonthTransactionsSpending'])->name('parent.month-spending_api')->middleware('auth');
 Route::post('/parent/last-transactions', [ParentController::class, 'getLastFiveTransactions'])->name('parent.last-transactions_api')->middleware('auth');
+Route::post('/parent/students', [ParentController::class, 'getStudents'])->name('parent.students_api')->middleware('auth');

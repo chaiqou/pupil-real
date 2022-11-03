@@ -28,13 +28,13 @@
         </tbody>
     </table>
 
-    <students-slide-over/>
+    <school-students-slide-over></school-students-slide-over>
 
 </template>
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../stores/useStudentStore";
+import {useStudentStore} from "../../stores/useStudentStore";
 export default {
     props: {
         student: {

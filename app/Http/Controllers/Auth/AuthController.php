@@ -29,8 +29,8 @@ class AuthController extends Controller
                 return auth()->user()->sendTwoFactorCode();
 			}
 
-            if (auth()->user()->finished_onboarding === 1) {
-				auth()->user()->update(['finished_onboarding' => 2]);
+            if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0) {
+				return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
 			}
 
 			if (auth()->user()->finished_onboarding === 0){
