@@ -1,5 +1,5 @@
 <template>
-    <table  class="min-w-full divide-y divide-gray-300">
+    <table  class="w-[11rem] md:w-[50.13rem] divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
@@ -17,9 +17,6 @@
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_date}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.merchant.merchant_nick}} </td>
             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <button @click="showHideSlideOver(); currentTransactionDetails(transaction.id)" class="text-indigo-600 hover:text-indigo-900"
-                >Details</button
-                >
             </td>
         </tr>
         <tr v-if="!this.isTransactionsLoaded" v-for="n in 7">
@@ -31,47 +28,42 @@
         </tr>
         </tbody>
     </table>
-
-<parent-transaction-slide-over />
 </template>
 
 <script>
-import {mapActions, mapWritableState} from "pinia";
-import {useTransactionStore} from "../../stores/useTransactionStore";
 export default {
+    data() {
+        return {
+            transactions: [],
+            isTransactionsLoaded: false,
+        }
+    },
+
     props: {
-        student: {
-            type: Object,
-            required: true,
-        },
         studentId: {
             type: Number,
             required: true,
-        },
-    },
-    computed: {
-        ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"])
+        }
     },
     methods: {
-        ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
-        handleGetNotificationRequest() {
-                fetch(`/api/parent/transactions`, {
-                    method: 'post',
-                    body: JSON.stringify({student_id: this.studentId}),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        this.transactions = res.data
-                    })
-                    .finally(() => this.isTransactionsLoaded = true)
-        }
 
+        handleGetLastFiveTransactions() {
+            fetch(`/api/parent/last-transactions`, {
+                method: 'post',
+                body: JSON.stringify({student_id: this.studentId}),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(res => res.json())
+                .then(res => {
+                    this.transactions = res.data;
+                })
+                .finally(() => this.isTransactionsLoaded = true)
+        },
     },
     created() {
-        this.handleGetNotificationRequest()
-    },
+        this.handleGetLastFiveTransactions();
+    }
 }
 </script>

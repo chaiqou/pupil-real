@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 
 </head>
@@ -15,7 +13,7 @@
     <div id="app">
         <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
             <dashboard-navigation-mobile :role="{{ json_encode($role) }}" :current="{{ json_encode($current) }}"
-                                         :navigation="{{ json_encode($navigation) }}" :students="{{json_encode($students)}}" :student="{{json_encode($student)}}"/>
+                                         :navigation="{{ json_encode($navigation) }}" :students="{{json_encode($students)}}" :student="{{json_encode($student)}}"></dashboard-navigation-mobile>
         </div>
         <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
             <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
@@ -25,10 +23,10 @@
                             alt="Your Company" />
                     </div>
                     <dashboard-navigation :current="{{ json_encode($current) }}"
-                        :navigation="{{ json_encode($navigation) }}" />
+                        :navigation="{{ json_encode($navigation) }}" ></dashboard-navigation>
                 </div>
                 <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
-                    <switch-account :role="{{ json_encode($role) }}" :student="{{ json_encode($student)}}" :students="{{json_encode($students)}}"/>
+                    <switch-account :role="{{ json_encode($role) }}" :student="{{ json_encode($student)}}" :students="{{json_encode($students)}}"></switch-account>
                 </div>
             </div>
         </div>
@@ -37,7 +35,7 @@
                 <div class="flex items-center flex-row-reverse justify-between">
                     <img class="h-8 w-auto mr-5" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
                         alt="Your Company" />
-                    <navigation-menu-button />
+                    <navigation-menu-button ></navigation-menu-button>
                 </div>
 
             </div>

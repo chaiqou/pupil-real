@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Traits\Date;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource

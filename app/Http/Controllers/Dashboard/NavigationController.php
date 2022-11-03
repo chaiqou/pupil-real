@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Requests\School\StudentRequest;
-use App\Http\Resources\StudentResource;
-use App\Http\Resources\TransactionResource;
+use App\Http\Controllers\Controller;
 use App\Models\Student;
-use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class NavigationController extends Controller
 {
@@ -102,7 +98,7 @@ class NavigationController extends Controller
                 'role' => $role,
                 'students' => $students,
                 'student' => $user,
-                'schoolId' => $user->id,
+                'schoolId' => $user->school_id,
             ])->with(['page', 'Dashboard']);
 
     }

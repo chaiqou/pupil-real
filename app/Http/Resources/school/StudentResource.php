@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\school;
 
+use Carbon\Traits\Date;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentResource extends JsonResource

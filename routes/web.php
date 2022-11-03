@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\NavigationController;
-use App\Http\Controllers\SchoolController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Dashboard\ParentController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\Dashboard\NavigationController;
+use App\Http\Controllers\Dashboard\ParentController;
+use App\Http\Controllers\InviteController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['guest'])->group(function () {

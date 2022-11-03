@@ -10,8 +10,10 @@ export const useTransactionStore = defineStore("transaction", {
         };
     },
     actions: {
-        showHideSlideOver(id) {
+        showHideSlideOver() {
             this.isSlideOverOpen = !this.isSlideOverOpen;
+        },
+        currentTransactionDetails(id) {
             this.transaction = this.transactions.find(item => item.id === id)
         }
     }
