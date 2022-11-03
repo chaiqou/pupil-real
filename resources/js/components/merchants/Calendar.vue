@@ -36,6 +36,8 @@
                                     : 'bg-gray-50 text-gray-400',
                                 dayIdx === 0 && 'rounded-tl-lg',
                                 dayIdx === 6 && 'rounded-tr-lg',
+                                dayIdx === 0 &&
+                                    calculateStartOfDay[getDay(day)],
                                 dayIdx === month.days.length - 7 &&
                                     'rounded-bl-lg',
                                 dayIdx === month.days.length - 1 &&
@@ -72,6 +74,7 @@ import {
     isSameMonth,
     eachMonthOfInterval,
     add,
+    getDay,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 
@@ -106,4 +109,14 @@ const monthsDays = [
 ];
 
 console.log(monthsDays);
+
+const calculateStartOfDay = [
+    "",
+    "col-start-2",
+    "col-start-3",
+    "col-start-4",
+    "col-start-5",
+    "col-start-6",
+    "col-start-7",
+];
 </script>
