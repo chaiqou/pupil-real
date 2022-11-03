@@ -1,13 +1,13 @@
 <template>
     <div class="invisible lg:visible w-full">
-        <div class="bg-inhrtit">
+        <div class="bg-inherit">
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-8 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-3"
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
             >
                 <section
-                    v-for="month in months"
+                    v-for="month in monthsDays"
                     :key="month.name"
-                    class="text-center border-[1px] border-gray-200 rounded-md"
+                    class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
                         {{ month.name }}
@@ -15,26 +15,28 @@
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
                     >
+                        <div>S</div>
                         <div>M</div>
                         <div>T</div>
                         <div>W</div>
                         <div>T</div>
                         <div>F</div>
                         <div>S</div>
-                        <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-white text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            v-for="day in month.days"
-                            :key="day"
+                            v-for="(day, dayIdx) in month.days"
+                            :key="day.date"
                             type="button"
                             :class="[
-                                selectedDay === day
-                                    ? 'bg-indigo-600 text-white'
-                                    : 'bg-white text-gray-900',
-                                'bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10',
+                                isSameMonth(day, today)
+                                    ? 'bg-white text-gray-900'
+                                    : 'bg-white text-gray-600',
+                                dayIdx === 0 &&
+                                    calculateStartOfDay[getDay(day)],
+                                'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
                             <time
@@ -44,8 +46,7 @@
                                         'bg-indigo-600 font-semibold text-white',
                                     'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                                 ]"
-                            >
-                                {{ format(day, "d") }}</time
+                                >{{ format(day, "d") }}</time
                             >
                         </button>
                     </div>
@@ -56,18 +57,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import {
     startOfToday,
     format,
     eachDayOfInterval,
     startOfMonth,
     endOfMonth,
+    endOfWeek,
     isToday,
-    add,
+    isSameMonth,
     eachMonthOfInterval,
-    parse,
+    add,
+    getDay,
 } from "date-fns";
+import { ref, defineProps } from "vue";
 
 const props = defineProps({
     months: {
@@ -77,23 +80,33 @@ const props = defineProps({
 });
 
 const today = startOfToday();
-const selectedDay = ref(today);
-const currentMonthPlusFiveMonth = ref(
+
+const currentMonthWithOtherMonths = ref(
     eachMonthOfInterval({
         start: today,
         end: add(today, { months: props.months }),
     })
 );
 
-const months = [
-    ...currentMonthPlusFiveMonth.value.map((month) => ({
+const monthsDays = [
+    ...currentMonthWithOtherMonths.value.map((month) => ({
         name: format(month, "MMM yyyy"),
         days: [
             ...eachDayOfInterval({
                 start: startOfMonth(month),
-                end: endOfMonth(month),
+                end: endOfWeek(endOfMonth(month)),
             }),
         ],
     })),
+];
+
+const calculateStartOfDay = [
+    "",
+    "col-start-2",
+    "col-start-3",
+    "col-start-4",
+    "col-start-5",
+    "col-start-6",
+    "col-start-7",
 ];
 </script>
