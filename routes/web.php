@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/parent/create-student-verify/{student_id}', [ParentController::class, 'submitStudentCreation'])->name('parent.create-student-verify_submit');
     Route::post('/parent/two-fa/{user_id}', [SettingController::class, 'changeTwoFa'])->name('parent.two-fa');
     Route::post('/parent/update-password/{user_id}', [SettingController::class, 'updatePassword'])->name('parent.update-password');
+    Route::get('/school/lunch-management', [NavigationController::class, 'school'])->name('school.lunch-management');
 });
 
 
