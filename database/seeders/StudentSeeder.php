@@ -25,6 +25,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 3,
 		]);
@@ -38,6 +45,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 3,
 		]);
@@ -51,6 +65,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 1,
 		]);
@@ -64,6 +85,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 1,
 		]);
@@ -77,6 +105,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 2,
 		]);
@@ -90,6 +125,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
 			'school_id'               => 1,
 			'user_id'                 => 2,
 		]);
@@ -103,6 +145,13 @@ class StudentSeeder extends Seeder
                 'balance' => 0,
                 'balance_history' => [],
             ]),
+            'user_information'        => [
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ],
             'school_id'               => 1,
             'user_id'                 => 4,
         ]);
