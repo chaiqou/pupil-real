@@ -46,6 +46,5 @@ app.component('change-password-modal', ChangePasswordModal);
 app.component('parent-students', ParentStudents);
 app.component('parent-student-edit-modal', ParentStudentEditModal)
 
-
 app.use(pinia)
 app.mount('#app')
