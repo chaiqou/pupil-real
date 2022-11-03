@@ -1,0 +1,151 @@
+<template>
+    <Form
+        class="mt-[4.2rem] w-96"
+        :validation-schema="schema"
+        @submit="onSubmitMerchantForm"
+    >
+        <MerchantLabel label="Title" />
+        <Field
+            v-model="store.title"
+            name="title"
+            type="text"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        <MerchantErrorMessage name="title" />
+        <MerchantLabel label="Description" />
+        <Field
+            v-model="store.description"
+            name="description"
+            type="text"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        <MerchantErrorMessage name="description" />
+        <MerchantLabel label="Active Range" />
+        <Field v-model="store.dateRange" name="dateRange">
+            <Datepicker v-model="store.dateRange" range />
+            <MerchantErrorMessage name="dateRange" />
+        </Field>
+        <MerchantLabel label="Period Length" />
+        <Field
+            v-model="store.period"
+            name="period"
+            type="number"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        <MerchantErrorMessage name="period" />
+        <MerchantRadioGroup />
+        <MerchantLabel label="Holds" />
+        <Field v-model="store.holds" name="holds">
+            <Datepicker v-model="store.holds" range />
+            <MerchantErrorMessage name="holds" />
+        </Field>
+        <MerchantLabel label="Extras" />
+        <Field v-model="store.extras" name="extras">
+            <Datepicker v-model="store.extras" range />
+            <MerchantErrorMessage name="extras" />
+        </Field>
+        <MerchantLabel label="Claimables" />
+        <Field v-model="store.tags" name="claimables">
+            <Multiselect
+                class="mt-8"
+                mode="tags"
+                :limit="10"
+                :max="4"
+                :close-on-select="false"
+                :searchable="true"
+                :options="mealOptions"
+                @change="updateSelectedMeal"
+                v-model="store.tags"
+            />
+            <MerchantErrorMessage name="claimables" />
+        </Field>
+        <MerchantLabel label="Price/Day" />
+        <Field
+            v-model="store.priceDay"
+            name="priceDay"
+            type="number"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        <MerchantErrorMessage name="priceDay" />
+        <MerchantLabel label="Price/Period" />
+        <Field
+            v-model="store.pricePeriod"
+            name="pricePeriod"
+            type="number"
+            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+        <MerchantErrorMessage name="pricePeriod" />
+        <button
+            type="submit"
+            class="inline-flex mt-4 w-full text-center items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+            Save Period
+        </button>
+    </Form>
+</template>
+
+<script setup>
+import { Form, Field } from "vee-validate";
+import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
+import MerchantRadioGroup from "./MerchantRadioGroup.vue";
+import MerchantLabel from "./MerchantLabel.vue";
+import Multiselect from "@vueform/multiselect";
+import MerchantErrorMessage from "./MerchantErrorMessage.vue";
+import { object, string, number, date, array } from "yup";
+
+const store = useMerchantFormStore();
+
+function onSubmitMerchantForm(value) {
+    console.log(store.getMerchantData.dateRange);
+}
+
+function updateSelectedMeal(value) {
+    console.log(value);
+}
+
+const schema = object({
+    title: string().required("Title is required"),
+    description: string().required("Description is required"),
+    dateRange: date().nullable().typeError("Invalid Date"),
+    period: number().required("Period is required").nullable(),
+    radioDay: number().required("Pick on of the week day").nullable(),
+    holds: date().nullable().typeError("Invalid Date"),
+    extras: date().nullable().typeError("Invalid Date"),
+    claimables: array().min(1).required("Claimables is required"),
+    priceDay: number().required("Price/Day is required").nullable(),
+    pricePeriod: number().required("Price/Period is required").nullable(),
+});
+
+const mealOptions = [
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Snack",
+    "Dessert",
+    "Drink",
+    "Appetizer",
+    "Salad",
+    "Bread",
+    "Cereal",
+    "Soup",
+    "Beverage",
+    "Sauce",
+    "Marinade",
+    "Fingerfood",
+    "Salsa",
+    "Dip",
+];
+</script>
+
+<style src="@vueform/multiselect/themes/default.css" />
+<style>
+body {
+    --ms-bg: transparent;
+    --ms-tag-bg: #6c757d;
+    --ms-border-color: #6c757d;
+}
+
+.multiselect-tags-search {
+    background-color: inherit;
+}
+</style>

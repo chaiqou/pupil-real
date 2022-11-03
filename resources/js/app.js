@@ -22,10 +22,8 @@ import ChangePasswordModal from "./components/parent/ChangePasswordModal.vue";
 import ParentStudents from './components/parent/Students.vue';
 import ParentStudentEditModal from './components/parent/StudentsEditModal.vue'
 
-
 const pinia = createPinia()
 const app = createApp({})
-
 
 app.component('dashboard-navigation', DashboardNavigation)
 app.component('dashboard-navigation-mobile', DashboardNavigationMobile)
