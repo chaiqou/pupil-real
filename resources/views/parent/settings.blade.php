@@ -341,16 +341,14 @@
         </form>
 
       <div>
-          <div class="md:flex md:w-[35rem] md:justify-between">
-              <div class="sm:mb-10">
+
                   <two-factor-auth-modal :two-fa="{{$twoFa}}">
                       <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
                           @csrf
                           <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
                       </form>
                   </two-factor-auth-modal>
-              </div>
-          </div>
+
 
           <change-password-modal>
               <form method="POST" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
@@ -374,7 +372,7 @@
               </form>
           </change-password-modal>
 
-          <div class="m-3 my-10">
+          <div class="m-3 mb-10 mt-5">
               <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
           </div>
        <h1 class="px-3">Student management</h1>

@@ -1,8 +1,7 @@
 <template>
 
-    <div class="px-8 py-3 bg-white rounded-md w-[15rem]">
-        <p>2FA authorization</p>
-        <button @click="showHideTwoFactor()" :class="this.twoFa === 0 ? 'p-2 mt-4 bg-green-400 rounded-md hover:bg-green-500' : 'p-2 mt-4 bg-red-400 rounded-md hover:bg-red-500'">{{this.twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
+    <div class="m-3 rounded-md text-white">
+        <button @click="showHideTwoFactor()" :class="this.twoFa === 0 ? 'p-2.5 bg-green-400 rounded-md hover:bg-green-500' : 'p-2.5 bg-red-400 rounded-md hover:bg-red-500'">{{this.twoFa === 0 ? 'Activate 2FA' : 'Deactivate 2FA'}}</button>
     </div>
 
     <TransitionRoot as="template" :show="this.isTwoFactorVisible">
