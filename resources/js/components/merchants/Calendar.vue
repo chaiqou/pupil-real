@@ -94,8 +94,6 @@ const currentMonthWithOtherMonths = ref(
     })
 );
 
-console.log(currentMonthWithOtherMonths.value);
-
 const monthsDays = [
     ...currentMonthWithOtherMonths.value.map((month) => ({
         name: format(month, "MMM yyyy"),
@@ -107,8 +105,6 @@ const monthsDays = [
         ],
     })),
 ];
-
-console.log(monthsDays);
 
 const calculateStartOfDay = [
     "",
