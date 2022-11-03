@@ -29,14 +29,12 @@ class UserSeeder extends Seeder
 			'summary_frequency'       => 1,
 			'finished_onboarding'     => 1,
 			'user_information'        => json_encode([
-				$faker->randomElement(
-					[
-						'Nikoloz',
-						'Levente',
-						'Luka',
-					]
-				),
-			]),
+				'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ]),
 			'email'                   => 'klevente@pupilpay.hu',
 			'password'                => bcrypt('pupilpay'),
 		])->assignRole('parent');
@@ -48,15 +46,13 @@ class UserSeeder extends Seeder
 			'billingo_id'             => 1,
 			'summary_frequency'       => 1,
 			'finished_onboarding'     => 1,
-			'user_information'        => json_encode([
-				$faker->randomElement(
-					[
-						'Nikoloz',
-						'Levente',
-						'Luka',
-					]
-				),
-			]),
+            'user_information'        => json_encode([
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ]),
 			'email'                   => 'jackrestler@gmail.com',
 			'password'                => bcrypt('adminadmin'),
 		])->assignRole('parent');
@@ -68,15 +64,13 @@ class UserSeeder extends Seeder
 			'billingo_id'             => 1,
 			'summary_frequency'       => 1,
 			'finished_onboarding'     => 1,
-			'user_information'        => json_encode([
-				$faker->randomElement(
-					[
-						'Nikoloz',
-						'Levente',
-						'Luka',
-					]
-				),
-			]),
+            'user_information'        => json_encode([
+                'country' => 'HU',
+                'state'  => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ]),
 			'email'                   => 'lomtadzenikusha@gmail.com',
 			'password'                => bcrypt('adminadmin'),
 		])->assignRole('parent');
