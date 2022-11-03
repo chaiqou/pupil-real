@@ -1,13 +1,13 @@
 <template>
-    <div class="invisible lg:visible w-full">
-        <div class="bg-inhrtit">
+    <div>
+        <div class="bg-white">
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-8 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-3"
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
             >
                 <section
                     v-for="month in months"
                     :key="month.name"
-                    class="text-center border-[1px] border-gray-200 rounded-md"
+                    class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
                         {{ month.name }}
@@ -15,26 +15,32 @@
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
                     >
+                        <div>S</div>
                         <div>M</div>
                         <div>T</div>
                         <div>W</div>
                         <div>T</div>
                         <div>F</div>
                         <div>S</div>
-                        <div>S</div>
                     </div>
                     <div
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            v-for="day in month.days"
-                            :key="day"
+                            v-for="(day, dayIdx) in newDays"
+                            :key="day.date"
                             type="button"
                             :class="[
-                                selectedDay === day
-                                    ? 'bg-indigo-600 text-white'
-                                    : 'bg-white text-gray-900',
-                                'bg-white text-gray-900 py-1.5 hover:bg-gray-100 focus:z-10',
+                                isSameMonth(day, today)
+                                    ? 'bg-white text-gray-900'
+                                    : 'bg-gray-50 text-gray-400',
+                                dayIdx === 0 && 'rounded-tl-lg',
+                                dayIdx === 6 && 'rounded-tr-lg',
+                                dayIdx === month.days.length - 7 &&
+                                    'rounded-bl-lg',
+                                dayIdx === month.days.length - 1 &&
+                                    'rounded-br-lg',
+                                'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
                             <time
@@ -44,8 +50,7 @@
                                         'bg-indigo-600 font-semibold text-white',
                                     'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                                 ]"
-                            >
-                                {{ format(day, "d") }}</time
+                                >{{ format(day, "d") }}</time
                             >
                         </button>
                     </div>
@@ -56,44 +61,71 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import {
     startOfToday,
     format,
     eachDayOfInterval,
     startOfMonth,
     endOfMonth,
+    endOfWeek,
     isToday,
-    add,
-    eachMonthOfInterval,
-    parse,
+    isSameMonth,
 } from "date-fns";
 
-const props = defineProps({
-    months: {
-        type: Number,
-        required: true,
-    },
+const today = startOfToday();
+
+const newDays = eachDayOfInterval({
+    start: startOfMonth(today),
+    end: endOfWeek(endOfMonth(today)),
 });
 
-const today = startOfToday();
-const selectedDay = ref(today);
-const currentMonthPlusFiveMonth = ref(
-    eachMonthOfInterval({
-        start: today,
-        end: add(today, { months: props.months }),
-    })
-);
-
 const months = [
-    ...currentMonthPlusFiveMonth.value.map((month) => ({
-        name: format(month, "MMM yyyy"),
+    {
+        name: format(today, "MMM yyyy"),
         days: [
-            ...eachDayOfInterval({
-                start: startOfMonth(month),
-                end: endOfMonth(month),
-            }),
+            { date: "2021-12-27" },
+            { date: "2021-12-28" },
+            { date: "2021-12-29" },
+            { date: "2021-12-30" },
+            { date: "2021-12-31" },
+            { date: "2022-01-01", isCurrentMonth: true },
+            { date: "2022-01-02", isCurrentMonth: true },
+            { date: "2022-01-03", isCurrentMonth: true },
+            { date: "2022-01-04", isCurrentMonth: true },
+            { date: "2022-01-05", isCurrentMonth: true },
+            { date: "2022-01-06", isCurrentMonth: true },
+            { date: "2022-01-07", isCurrentMonth: true },
+            { date: "2022-01-08", isCurrentMonth: true },
+            { date: "2022-01-09", isCurrentMonth: true },
+            { date: "2022-01-10", isCurrentMonth: true },
+            { date: "2022-01-11", isCurrentMonth: true },
+            { date: "2022-01-12", isCurrentMonth: true, isToday: true },
+            { date: "2022-01-13", isCurrentMonth: true },
+            { date: "2022-01-14", isCurrentMonth: true },
+            { date: "2022-01-15", isCurrentMonth: true },
+            { date: "2022-01-16", isCurrentMonth: true },
+            { date: "2022-01-17", isCurrentMonth: true },
+            { date: "2022-01-18", isCurrentMonth: true },
+            { date: "2022-01-19", isCurrentMonth: true },
+            { date: "2022-01-20", isCurrentMonth: true },
+            { date: "2022-01-21", isCurrentMonth: true },
+            { date: "2022-01-22", isCurrentMonth: true },
+            { date: "2022-01-23", isCurrentMonth: true },
+            { date: "2022-01-24", isCurrentMonth: true },
+            { date: "2022-01-25", isCurrentMonth: true },
+            { date: "2022-01-26", isCurrentMonth: true },
+            { date: "2022-01-27", isCurrentMonth: true },
+            { date: "2022-01-28", isCurrentMonth: true },
+            { date: "2022-01-29", isCurrentMonth: true },
+            { date: "2022-01-30", isCurrentMonth: true },
+            { date: "2022-01-31", isCurrentMonth: true },
+            { date: "2022-02-01" },
+            { date: "2022-02-02" },
+            { date: "2022-02-03" },
+            { date: "2022-02-04" },
+            { date: "2022-02-05" },
+            { date: "2022-02-06" },
         ],
-    })),
+    },
 ];
 </script>
