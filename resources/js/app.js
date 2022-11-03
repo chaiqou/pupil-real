@@ -22,6 +22,8 @@ import ChangePasswordModal from "./components/parent/ChangePasswordModal.vue";
 import ParentStudents from "./components/parent/Students.vue";
 import ParentStudentEditModal from "./components/parent/StudentsEditModal.vue";
 import MerchantForm from "./components/merchants/MerchantForm.vue";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -45,6 +47,7 @@ app.component("change-password-modal", ChangePasswordModal);
 app.component("parent-students", ParentStudents);
 app.component("parent-student-edit-modal", ParentStudentEditModal);
 app.component("merchant-form", MerchantForm);
+app.component("Datepicker", Datepicker);
 
 app.use(pinia);
 app.mount("#app");
