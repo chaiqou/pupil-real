@@ -1,5 +1,5 @@
 <template>
-    <table :class="!this.isChangePasswordVisible ? (!this.isTwoFactorVisible ? 'min-w-full divide-y divide-gray-300' :  'hidden md:block min-w-full divide-y divide-gray-300') : 'hidden md:block min-w-full divide-y divide-gray-300'">
+    <table :class="!this.isChangePasswordVisible ? (!this.isTwoFactorVisible ? (!this.isStudentEditVisible ? 'min-w-full divide-y divide-gray-300' : 'hidden md:block min-w-block divide-y divide-gray-300')  :  'hidden md:block min-w-full divide-y divide-gray-300') : 'hidden md:block min-w-full divide-y divide-gray-300'">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Last name</th>
@@ -63,7 +63,7 @@ export default {
     },
     computed: {
         ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"]),
-        ...mapWritableState(useModalStore, ["isChangePasswordVisible", "isTwoFactorVisible"]),
+        ...mapWritableState(useModalStore, ["isChangePasswordVisible", "isTwoFactorVisible", "isStudentEditVisible"]),
     },
     methods: {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentEdit"]),
