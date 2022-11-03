@@ -2,7 +2,7 @@
     <div class="m-3 text-white rounded-md">
         <button @click="showHideChangePassword()" class="p-2.5 bg-green-400 rounded-md hover:bg-green-500">Change Password</button>
     </div>
-    
+
     <TransitionRoot as="template" :show="this.isChangePasswordVisible">
         <Dialog as="div" class="relative z-10" @close="this.isChangePasswordVisible = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">

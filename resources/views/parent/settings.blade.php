@@ -339,7 +339,6 @@
                 </div>
             </div>
         </form>
-
       <div>
 
                   <two-factor-auth-modal :two-fa="{{$twoFa}}">
