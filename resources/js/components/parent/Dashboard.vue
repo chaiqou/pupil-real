@@ -31,7 +31,7 @@
            <div>
                <h1 class="text-xl my-5 p-5">Last transactions</h1>
                <div class="border-[1px] border-gray-200 rounded-md w-fit">
-                   <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+                   <parent-dashboard-transactions :student-id="this.studentId"></parent-dashboard-transactions>
                </div>
            </div>
        </div>

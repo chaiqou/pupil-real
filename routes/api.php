@@ -25,3 +25,5 @@ Route::post('/parent/month-spending', [ParentController::class, 'getLastMonthTra
 Route::post('/parent/last-transactions', [ParentController::class, 'getLastFiveTransactions'])->name('parent.last-transactions_api')->middleware('auth');
 Route::post('/parent/students', [ParentController::class, 'getStudents'])->name('parent.students_api')->middleware('auth');
 Route::post('/parent/update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api')->middleware('auth');
+Route::post('/school/dashboard-students', [SchoolController::class, 'getDashboardStudents'])->name('school.dashboard-students')->middleware('auth');
+Route::post('/school/last-transactions', [SchoolController::class, 'getLastFiveTransactions'])->name('school.last-transactions_api')->middleware('auth');
