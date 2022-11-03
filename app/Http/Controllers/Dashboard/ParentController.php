@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Requests\Parent\ConfirmStudentCreationRequest;
-use App\Http\Requests\Parent\CreateStudentRequest;
+use App\Http\Requests\Parent\StoreStudentRequest;
 use App\Http\Requests\Parent\TransactionRequest;
-use App\Http\Requests\Parent\StudentRequest;
+use App\Http\Requests\Parent\GetStudentRequest;
 use App\Http\Resources\School\StudentResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Student;
@@ -39,7 +39,7 @@ class ParentController extends Controller
         ]);
     }
 
-    public function submitStudent(CreateStudentRequest $request): RedirectResponse
+    public function storeStudent(StoreStudentRequest $request): RedirectResponse
     {
        $user = auth()->user();
       $student =  Student::create([
@@ -107,7 +107,7 @@ class ParentController extends Controller
         return TransactionResource::collection($transactions);
     }
 
-    public function getStudents(StudentRequest $request): ResourceCollection|JsonResponse
+    public function getStudents(GetStudentRequest $request): ResourceCollection|JsonResponse
     {
         if(auth()->user()->hasRole('parent')) {
             $students = Student::where('user_id', $request->user_id)->get();
