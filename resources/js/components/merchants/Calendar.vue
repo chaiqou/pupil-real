@@ -5,7 +5,7 @@
                 class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
             >
                 <section
-                    v-for="month in months"
+                    v-for="month in monthsDays"
                     :key="month.name"
                     class="text-center"
                 >
@@ -27,7 +27,7 @@
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            v-for="(day, dayIdx) in newDays"
+                            v-for="(day, dayIdx) in month.days"
                             :key="day.date"
                             type="button"
                             :class="[
@@ -70,62 +70,40 @@ import {
     endOfWeek,
     isToday,
     isSameMonth,
+    eachMonthOfInterval,
+    add,
 } from "date-fns";
+import { ref, defineProps } from "vue";
+
+const props = defineProps({
+    months: {
+        type: Number,
+        required: true,
+    },
+});
 
 const today = startOfToday();
 
-const newDays = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: endOfWeek(endOfMonth(today)),
-});
+const currentMonthWithOtherMonths = ref(
+    eachMonthOfInterval({
+        start: today,
+        end: add(today, { months: props.months }),
+    })
+);
 
-const months = [
-    {
-        name: format(today, "MMM yyyy"),
+console.log(currentMonthWithOtherMonths.value);
+
+const monthsDays = [
+    ...currentMonthWithOtherMonths.value.map((month) => ({
+        name: format(month, "MMM yyyy"),
         days: [
-            { date: "2021-12-27" },
-            { date: "2021-12-28" },
-            { date: "2021-12-29" },
-            { date: "2021-12-30" },
-            { date: "2021-12-31" },
-            { date: "2022-01-01", isCurrentMonth: true },
-            { date: "2022-01-02", isCurrentMonth: true },
-            { date: "2022-01-03", isCurrentMonth: true },
-            { date: "2022-01-04", isCurrentMonth: true },
-            { date: "2022-01-05", isCurrentMonth: true },
-            { date: "2022-01-06", isCurrentMonth: true },
-            { date: "2022-01-07", isCurrentMonth: true },
-            { date: "2022-01-08", isCurrentMonth: true },
-            { date: "2022-01-09", isCurrentMonth: true },
-            { date: "2022-01-10", isCurrentMonth: true },
-            { date: "2022-01-11", isCurrentMonth: true },
-            { date: "2022-01-12", isCurrentMonth: true, isToday: true },
-            { date: "2022-01-13", isCurrentMonth: true },
-            { date: "2022-01-14", isCurrentMonth: true },
-            { date: "2022-01-15", isCurrentMonth: true },
-            { date: "2022-01-16", isCurrentMonth: true },
-            { date: "2022-01-17", isCurrentMonth: true },
-            { date: "2022-01-18", isCurrentMonth: true },
-            { date: "2022-01-19", isCurrentMonth: true },
-            { date: "2022-01-20", isCurrentMonth: true },
-            { date: "2022-01-21", isCurrentMonth: true },
-            { date: "2022-01-22", isCurrentMonth: true },
-            { date: "2022-01-23", isCurrentMonth: true },
-            { date: "2022-01-24", isCurrentMonth: true },
-            { date: "2022-01-25", isCurrentMonth: true },
-            { date: "2022-01-26", isCurrentMonth: true },
-            { date: "2022-01-27", isCurrentMonth: true },
-            { date: "2022-01-28", isCurrentMonth: true },
-            { date: "2022-01-29", isCurrentMonth: true },
-            { date: "2022-01-30", isCurrentMonth: true },
-            { date: "2022-01-31", isCurrentMonth: true },
-            { date: "2022-02-01" },
-            { date: "2022-02-02" },
-            { date: "2022-02-03" },
-            { date: "2022-02-04" },
-            { date: "2022-02-05" },
-            { date: "2022-02-06" },
+            ...eachDayOfInterval({
+                start: startOfMonth(month),
+                end: endOfWeek(endOfMonth(month)),
+            }),
         ],
-    },
+    })),
 ];
+
+console.log(monthsDays);
 </script>
