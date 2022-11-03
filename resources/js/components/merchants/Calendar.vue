@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="bg-white">
+    <div class="invisible lg:visible w-full">
+        <div class="bg-inherit">
             <div
                 class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
             >
@@ -24,7 +24,7 @@
                         <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-white text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
@@ -33,15 +33,9 @@
                             :class="[
                                 isSameMonth(day, today)
                                     ? 'bg-white text-gray-900'
-                                    : 'bg-gray-50 text-gray-400',
-                                dayIdx === 0 && 'rounded-tl-lg',
-                                dayIdx === 6 && 'rounded-tr-lg',
+                                    : 'bg-white text-gray-600',
                                 dayIdx === 0 &&
                                     calculateStartOfDay[getDay(day)],
-                                dayIdx === month.days.length - 7 &&
-                                    'rounded-bl-lg',
-                                dayIdx === month.days.length - 1 &&
-                                    'rounded-br-lg',
                                 'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
