@@ -26,6 +26,8 @@ import MerchantForm from "./components/merchants/MerchantForm.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import SchoolDashboardStudents from './components/school/DashboardStudents.vue';
 import "@vuepic/vue-datepicker/dist/main.css";
+import "../js/config/axios/index";
+import "../js/config/vee-validate/index";
 
 const pinia = createPinia();
 const app = createApp({});

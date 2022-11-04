@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Dashboard\ParentController;
 use App\Http\Controllers\Dashboard\SchoolController;
 use App\Http\Controllers\Dashboard\SettingController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::post('/parent/students', [ParentController::class, 'getStudents'])->name(
 Route::post('/parent/update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api')->middleware('auth');
 Route::post('/school/dashboard-students', [SchoolController::class, 'getDashboardStudents'])->name('school.dashboard-students')->middleware('auth');
 Route::post('/school/last-transactions', [SchoolController::class, 'getLastFiveTransactions'])->name('school.last-transactions_api')->middleware('auth');
+
+Route::apiResource('lunch', LunchController::class);

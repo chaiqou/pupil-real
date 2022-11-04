@@ -131,7 +131,6 @@ export default {
             let navigation = this.navigation.find((col => col.name.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.') ===
              cleanedCurrent.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.')));
             navigation.current = true;
-            console.log(cleanedCurrent,navigation)
         },
     },
     created() {
