@@ -140,7 +140,6 @@
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required"
                                                     type="text"
                                                     v-model="
                                                         this.student.middle_name

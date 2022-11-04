@@ -13,16 +13,15 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-        <tr v-if="this.isStudentsLoaded" v-for="student in students" :key="student.id">
-
-               <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6">{{student.last_name}}</td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.first_name}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.middle_name}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.country}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.state}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.city}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.street_address}} </td>
-               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user_information.zip}} </td>
+        <tr v-if="this.isStudentsLoaded && !this.isStudentEditVisible" v-for="student in students" :key="student.id">
+               <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6 truncate ... max-w-[7rem]">{{student.last_name}}</td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.first_name}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.middle_name}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.user_information.country}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.user_information.state}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.user_information.city}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.user_information.street_address}} </td>
+               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 truncate ... max-w-[7rem]"> {{student.user_information.zip}} </td>
                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                    <button @click="showHideStudentEdit(); currentStudentEdit(student.id)" class="text-indigo-600 hover:text-indigo-900"
                    >Edit</button
@@ -30,15 +29,15 @@
                </td>
 
         </tr>
-        <tr v-if="!this.isStudentsLoaded" v-for="n in 7">
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
+        <tr v-if="this.isStudentEditVisible || !this.isStudentsLoaded" v-for="n in 7">
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 w-[7rem] bg-slate-300 rounded animate-pulse"></div></td>
         </tr>
         </tbody>
     </table>
@@ -80,7 +79,11 @@ export default {
                     .then(res => {
                         this.students = res.data
                     })
-                    .finally(() => this.isStudentsLoaded = true)
+                    .finally(() => {
+                        setTimeout(() => {
+                            this.isStudentsLoaded = true
+                        }, 1500)
+                    })
         },
     },
     mounted() {

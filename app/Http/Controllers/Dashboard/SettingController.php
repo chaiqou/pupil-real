@@ -64,11 +64,13 @@ class SettingController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'middle_name' => $request->middle_name,
-            'country' => $request->country,
-            'city' => $request->city,
-            'state' => $request->state,
-            'street_address' => $request->street_address,
-            'zip' => $request->zip,
+            'user_information' => [
+                'country' => $request->country,
+                'city' => $request->city,
+                'state' => $request->state,
+                'street_address' => $request->street_address,
+                'zip' => $request->zip,
+            ]
         ]);
 
         return response()->json(['success' => 'Student updated successfully']);
