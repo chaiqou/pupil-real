@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('lunches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('merchant_id')->constrained();
-            $table->timestamp('range_start');
-            $table->timestamp('range_end');
+            $table->string('title');
+            $table->text('description');
+            $table->json('active_range');
             $table->integer('period_length');
-            $table->string('claims');
-            $table->json('price_day');
-            $table->json('information');
+            $table->json('claimables');
             $table->json('holds');
             $table->json('extras');
             $table->json('available_days');
+            $table->integer('price_day');
+            $table->integer('price_period');
             $table->timestamps();
         });
     }
