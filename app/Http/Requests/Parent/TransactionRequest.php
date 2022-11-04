@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_id' => 'required|integer'
+            'student_id' => 'required|integer',
         ];
     }
 }

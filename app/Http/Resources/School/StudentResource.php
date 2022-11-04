@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\School;
 
-use Carbon\Traits\Date;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentResource extends JsonResource
@@ -21,9 +20,9 @@ class StudentResource extends JsonResource
             'last_name' => $this->last_name,
             'middle_name' => $this->middle_name,
             'card_number' => $this->card_number,
-            'user_information'  =>  $this->user_information,
-            'balances'  => $this->balances,
-            'user'  => $this->user,
+            'user_information' => $this->user_information,
+            'balances' => $this->balances,
+            'user' => $this->user,
         ];
     }
 }

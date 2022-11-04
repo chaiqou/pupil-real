@@ -9,24 +9,25 @@ use Illuminate\Queue\SerializesModels;
 
 class TwoFactorAuthenticationMail extends Mailable implements ShouldQueue
 {
-	use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-	/**
-	 * Create a new message instance.
-	 *
-	 * @return void
-	 */
-	public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year)
-	{
-	}
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year)
+    {
+    }
 
-	/**
-	 * Build the message.
-	 *
-	 * @return $this
-	 */
-	public function build()
-	{
-		return $this->view('mail.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
-	}
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mail.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
+    }
 }

@@ -10,19 +10,17 @@ use App\Http\Controllers\Dashboard\SettingController;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
-	Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');
-	Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordMail'])->name('forgot.request');
-	Route::get('/mail-sent', [ForgotPasswordController::class, 'forgotRedirect'])->name('forgot.redirect');
-	Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
-	Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordMail'])->name('forgot.request');
+    Route::get('/mail-sent', [ForgotPasswordController::class, 'forgotRedirect'])->name('forgot.redirect');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
 
-
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/parent/dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
     Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'parent'])->name('parent.dashboard');
@@ -44,7 +42,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/school/lunch-management', [NavigationController::class, 'school'])->name('school.lunch-management');
 });
 
-
 Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
 Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
 
@@ -56,5 +53,3 @@ Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPerson
 
 Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
 Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
-
-

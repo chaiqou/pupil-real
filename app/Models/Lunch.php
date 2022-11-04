@@ -12,8 +12,8 @@ class Lunch extends Model
 
     protected $guarded = ['id'];
 
-   public function merchant(): BelongsTo
-   {
-       return $this->belongsTo(Merchant::class);
-   }
+    public function merchant(): BelongsTo
+    {
+        return $this->belongsTo(Merchant::class);
+    }
 }

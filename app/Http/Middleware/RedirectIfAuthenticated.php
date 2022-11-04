@@ -9,39 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-	 * @param string|null ...$guards
-	 *
-	 * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-	 */
-	public function handle(Request $request, Closure $next, ...$guards)
-	{
-		$guards = empty($guards) ? [null] : $guards;
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param  string|null  ...$guards
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next, ...$guards)
+    {
+        $guards = empty($guards) ? [null] : $guards;
 
-		foreach ($guards as $guard)
-		{
-            if (Auth::guard($guard)->check() && auth()->user()->hasRole('admin'))
-            {
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check() && auth()->user()->hasRole('admin')) {
                 return redirect(RouteServiceProvider::ADMIN);
-            }
-            elseif (Auth::guard($guard)->check() && auth()->user()->hasRole('user'))
-            {
+            } elseif (Auth::guard($guard)->check() && auth()->user()->hasRole('user')) {
                 return redirect(RouteServiceProvider::HOME);
-            }
-            elseif(Auth::guard($guard)->check() && auth()->user()->hasRole('parent'))
-            {
+            } elseif (Auth::guard($guard)->check() && auth()->user()->hasRole('parent')) {
                 return redirect(RouteServiceProvider::PARENT);
-            }
-            elseif(Auth::guard($guard)->check() && auth()->user()->hasRole('school'))
-            {
+            } elseif (Auth::guard($guard)->check() && auth()->user()->hasRole('school')) {
                 return redirect(RouteServiceProvider::SCHOOL);
             }
- }
+        }
 
-		return $next($request);
-	}
+        return $next($request);
+    }
 }

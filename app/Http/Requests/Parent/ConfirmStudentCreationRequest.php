@@ -24,7 +24,7 @@ class ConfirmStudentCreationRequest extends FormRequest
     public function rules()
     {
         return [
-            'value' => 'required|string'
+            'value' => 'required|string',
         ];
     }
 }
