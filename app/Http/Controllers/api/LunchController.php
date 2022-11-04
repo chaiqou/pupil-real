@@ -18,7 +18,10 @@ class LunchController extends Controller
 
     public function store(Request $request)
     {
-        //
+        return response()->json([
+            'message' => 'Lunch created successfully',
+            'lunch' => new LunchResource($request->all())
+        ], 201);
     }
 
 
