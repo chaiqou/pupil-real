@@ -20,17 +20,17 @@ class LunchController extends Controller
         $validate = $request->validated();
 
         $lunch = Lunch::create([
-            'merchant_id' => auth()->user()->id(),
+            'merchant_id' => auth()->user()->id,
             'title' => $validate['title'],
             'description' => $validate['description'],
-            'active_range' => $validate['active_range'],
-            'period_length' => $validate['period_length'],
-            'claimables' => $validate['claimables'],
+            'active_range' => $validate['dateRange'],
+            'period_length' => $validate['period'],
+            'claimables' => $validate['radioDay'],
             'holds' => $validate['holds'],
             'extras' => $validate['extras'],
-            'available_days' => $validate['available_days'],
-            'price_day' => $validate['price_day'],
-            'price_period' => $validate['price_period'],
+            'available_days' => 3,
+            'price_day' => $validate['priceDay'],
+            'price_period' => $validate['pricePeriod'],
         ]);
 
         return new LunchResource($lunch);
