@@ -24,7 +24,17 @@ class LunchRequest extends FormRequest
     public function rules()
     {
         return [
-
-        ];
+              'title' => 'required',
+              'description' => 'required',
+              'dateRange' => 'required',
+              'extras' => 'required',
+              'holds' => 'required',
+              'period' => 'required',
+              'priceDay' => 'required',
+              'pricePeriod' => 'required',
+              'radioDay' => 'required',
+              'tags' => 'required',
+              'merchant_id' => ['exists:merchants,id'],
+  ];
     }
 }
