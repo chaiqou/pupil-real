@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RadioGroup class="mt-2">
+        <RadioGroup v-model="store.radioDay" class="mt-2">
             <RadioGroupLabel class="sr-only">
                 Choose a day option
             </RadioGroupLabel>
@@ -13,7 +13,6 @@
                         :value="option.fullName"
                         :disabled="!option.validOption"
                         v-slot="{ active, checked }"
-                        v-model="store.radioDay"
                     >
                         <div
                             :class="[

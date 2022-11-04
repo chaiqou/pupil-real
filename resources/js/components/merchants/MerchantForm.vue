@@ -96,7 +96,7 @@ import { object, string, number, date, array } from "yup";
 const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(value) {
-    console.log(store.getMerchantData.dateRange);
+    console.log(store.getMerchantData);
 }
 
 function updateSelectedMeal(value) {
@@ -108,7 +108,7 @@ const schema = object({
     description: string().required("Description is required"),
     dateRange: date().nullable().typeError("Invalid Date"),
     period: number().required("Period is required").nullable(),
-    radioDay: number().required("Pick on of the week day").nullable(),
+    radioDay: string().required("Pick on of the week day").nullable(),
     holds: date().nullable().typeError("Invalid Date"),
     extras: date().nullable().typeError("Invalid Date"),
     claimables: array().min(1).required("Claimables is required"),
