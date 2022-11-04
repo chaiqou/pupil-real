@@ -377,8 +377,8 @@
        <h1 class="px-3">Student management</h1>
       <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
        <div class="mt-10 border-2 border-gray-200 w-fit rounded-md">
-           <parent-students :user-id="{{$user->id}}" :student="{{$student}}"></parent-students>
-           <parent-student-edit-modal :student="{{$student}}"></parent-student-edit-modal>
+           <parent-students :user-id="{{$user->id}}"></parent-students>
+           <parent-student-edit-modal></parent-student-edit-modal>
        </div>
    </div>
       </div>
