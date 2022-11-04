@@ -6,13 +6,13 @@ use BrowserDetect;
 
 trait BrowserNameAndDevice
 {
-	public function getBrowserName(): string
-	{
-		return BrowserDetect::browserName();
-	}
+    public function getBrowserName(): string
+    {
+        return BrowserDetect::browserName();
+    }
 
-	public function getDeviceName(): string
-	{
-		return  BrowserDetect::deviceFamily() . ' ' . BrowserDetect::deviceModel();
-	}
+    public function getDeviceName(): string
+    {
+        return  BrowserDetect::deviceFamily().' '.BrowserDetect::deviceModel();
+    }
 }

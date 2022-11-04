@@ -339,7 +339,6 @@
                 </div>
             </div>
         </form>
-
       <div>
 
                   <two-factor-auth-modal :two-fa="{{$twoFa}}">
@@ -351,7 +350,7 @@
 
 
           <change-password-modal>
-              <form method="POST" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
+              <form method="POST" class="flex justify-center flex-col items-center" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
                   @csrf
                   <div class="flex flex-col justify-around h-[10rem]">
                       <div>
@@ -368,7 +367,7 @@
                           </div>
                       </div>
                   </div>
-                  <button class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
+                  <button class="inline-flex mt-4 w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
               </form>
           </change-password-modal>
 

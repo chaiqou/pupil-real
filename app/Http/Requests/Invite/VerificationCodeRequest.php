@@ -31,7 +31,7 @@ class VerificationCodeRequest extends FormRequest
     public function messages()
     {
         return [
-            'code_each.*.required'    => 'Please fill all fields',
+            'code_each.*.required' => 'Please fill all fields',
         ];
     }
 }

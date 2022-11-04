@@ -12,7 +12,6 @@ class VerificationCode extends Model
 
     protected $guarded = ['id'];
 
-
     public function invite(): BelongsTo
     {
         return $this->belongsTo(Invite::class);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Traits\Date;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource
@@ -16,14 +15,14 @@ class TransactionResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'id' => $this->id,
-          'transaction_type' => $this->transaction_type,
-          'amount' => $this->amount,
-          'transaction_date' => $this->transaction_date,
-          'merchant' => $this->merchant,
-          'student'  =>  $this->student,
-          'pending'  => $this->pending,
-          'comment'  => $this->comment,
+            'id' => $this->id,
+            'transaction_type' => $this->transaction_type,
+            'amount' => $this->amount,
+            'transaction_date' => $this->transaction_date,
+            'merchant' => $this->merchant,
+            'student' => $this->student,
+            'pending' => $this->pending,
+            'comment' => $this->comment,
         ];
     }
 }

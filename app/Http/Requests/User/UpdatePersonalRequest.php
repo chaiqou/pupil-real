@@ -3,7 +3,6 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class UpdatePersonalRequest extends FormRequest
 {
@@ -25,13 +24,13 @@ class UpdatePersonalRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_name'      => 'required',
-            'first_name'     => 'required',
-            'country'        => 'required',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'country' => 'required',
             'street_address' => 'required',
-            'city'           => 'required',
-            'state'          => 'required',
-            'zip'            => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
         ];
     }
 }

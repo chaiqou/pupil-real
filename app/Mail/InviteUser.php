@@ -8,24 +8,25 @@ use Illuminate\Queue\SerializesModels;
 
 class InviteUser extends Mailable
 {
-	use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-	/**
-	 * Create a new message instance.
-	 *
-	 * @return void
-	 */
-	public function __construct(public $invite)
-	{
-	}
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct(public $invite)
+    {
+    }
 
-	/**
-	 * Build the message.
-	 *
-	 * @return $this
-	 */
-	public function build()
-	{
-		return $this->view('mail.invite-user')->subject('Invitation to PupilPay');
-	}
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mail.invite-user')->subject('Invitation to PupilPay');
+    }
 }

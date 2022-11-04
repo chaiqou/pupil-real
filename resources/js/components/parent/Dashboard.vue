@@ -1,5 +1,5 @@
 <template>
-    <div class="md:overflow-hidden">
+    <div>
        <div>
            <h1 class="mt-5 text-xl p-5">Spendings</h1>
            <dl v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -24,18 +24,13 @@
                </div>
            </dl>
 
-
-
-
-
            <div>
                <h1 class="text-xl my-5 p-5">Last transactions</h1>
                <div class="border-[1px] border-gray-200 rounded-md w-fit">
-                   <dashboard-transactions :student-id="this.studentId"></dashboard-transactions>
+                   <parent-dashboard-transactions :student-id="this.studentId"></parent-dashboard-transactions>
                </div>
            </div>
        </div>
-
 
             <div>
                 <div class="w-[20rem] mt-5">
@@ -45,15 +40,7 @@
                         <calendar :months="0"></calendar>
                     </div>
             </div>
-
     </div>
-
-
-
-
-
-
-
 
 </template>
 

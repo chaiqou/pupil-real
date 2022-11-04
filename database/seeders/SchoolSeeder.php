@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Faker\Factory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SchoolSeeder extends Seeder
@@ -18,16 +17,14 @@ class SchoolSeeder extends Seeder
     {
         $faker = Factory::create();
 
-
-
         $school = User::create([
-            'first_name'              => 'School',
-            'last_name'               => 'School',
-            'school_id'               => 1,
-            'billingo_id'             => 1,
-            'summary_frequency'       => 1,
-            'finished_onboarding'     => 1,
-            'user_information'        => json_encode([
+            'first_name' => 'School',
+            'last_name' => 'School',
+            'school_id' => 1,
+            'billingo_id' => 1,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
                 $faker->randomElement(
                     [
                         'Nikoloz',
@@ -36,8 +33,8 @@ class SchoolSeeder extends Seeder
                     ]
                 ),
             ]),
-            'email'                   => 'info+school@pupilpay.hu',
-            'password'                => bcrypt('pupilpay'),
+            'email' => 'info+school@pupilpay.hu',
+            'password' => bcrypt('pupilpay'),
         ])->assignRole('school');
     }
 }

@@ -10,12 +10,10 @@ use Illuminate\Http\Request;
 
 class LunchController extends Controller
 {
-
     public function index()
     {
         //
     }
-
 
     public function store(LunchRequest $request)
     {
@@ -38,18 +36,15 @@ class LunchController extends Controller
         return new LunchResource($lunch);
     }
 
-
     public function show(Lunch $lunch)
     {
         //
     }
 
-
     public function update(Request $request, Lunch $lunch)
     {
         //
     }
-
 
     public function destroy(Lunch $lunch)
     {
