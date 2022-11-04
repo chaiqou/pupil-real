@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use Illuminate\Http\Request;
 
