@@ -1,11 +1,15 @@
 <template>
     <div>
-        <RadioGroup class="mt-2">
+        <RadioGroup v-model="store.radioDay" class="mt-2">
             <RadioGroupLabel class="sr-only">
                 Choose a day option
             </RadioGroupLabel>
             <div class="grid grid-cols-3 gap-2 sm:grid-cols-6">
-                <Field name="radioDay" v-model="store.radioDay">
+                <Field
+                    name="radioDay"
+                    rules="required"
+                    v-model="store.radioDay"
+                >
                     <RadioGroupOption
                         as="template"
                         v-for="option in dayOptions"
@@ -13,7 +17,6 @@
                         :value="option.fullName"
                         :disabled="!option.validOption"
                         v-slot="{ active, checked }"
-                        v-model="store.radioDay"
                     >
                         <div
                             :class="[

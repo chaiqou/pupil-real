@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Dashboard\ParentController;
 use App\Http\Controllers\Dashboard\SchoolController;
 use App\Http\Controllers\Dashboard\SettingController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,6 @@ Route::post('/parent/month-spending', [ParentController::class, 'getLastMonthTra
 Route::post('/parent/last-transactions', [ParentController::class, 'getLastFiveTransactions'])->name('parent.last-transactions_api')->middleware('auth');
 Route::post('/parent/students', [ParentController::class, 'getStudents'])->name('parent.students_api')->middleware('auth');
 Route::post('/parent/update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api')->middleware('auth');
+
+
+Route::apiResource('lunch', LunchController::class);
