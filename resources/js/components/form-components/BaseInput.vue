@@ -4,6 +4,9 @@
             >{{ label }}
         </label>
         <input
+            @input="handleChange"
+            @change="handleChange"
+            @blur="handleChange"
             v-model="value"
             type="text"
             :placeholder="placeholder"
@@ -42,5 +45,5 @@ function required(value) {
 }
 
 const nameRef = toRef(props, "name");
-const { errorMessage, value } = useField(nameRef, required);
+const { handleChange, errorMessage, value } = useField(nameRef, required);
 </script>

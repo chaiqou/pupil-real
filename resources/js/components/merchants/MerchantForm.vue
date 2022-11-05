@@ -9,15 +9,12 @@
 </template>
 
 <script setup>
-import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 import axios from "../../config/axios/index";
 import BaseInput from "../form-components/BaseInput";
 
-const store = useMerchantFormStore();
-
 function onSubmitMerchantForm(value) {
     axios
-        .post("lunch", store.getMerchantData)
+        .post("lunch", "testdata")
         .then((response) => {
             console.log(response);
         })
