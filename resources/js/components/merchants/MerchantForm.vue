@@ -97,11 +97,19 @@ import MerchantRadioGroup from "./MerchantRadioGroup.vue";
 import MerchantLabel from "./MerchantLabel.vue";
 import Multiselect from "@vueform/multiselect";
 import MerchantErrorMessage from "./MerchantErrorMessage.vue";
+import axios from "../../config/axios/index";
 
 const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(value) {
-    console.log(store.getMerchantData);
+    axios
+        .post("lunch", store.getMerchantData)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 
 function updateSelectedMeal(value) {

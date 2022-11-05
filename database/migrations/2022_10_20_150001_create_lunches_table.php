@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
@@ -16,15 +16,17 @@ return new class extends Migration
         Schema::create('lunches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('merchant_id')->constrained();
-            $table->timestamp('range_start');
-            $table->timestamp('range_end');
-            $table->integer('period_length');
-            $table->string('claims');
-            $table->json('price_day');
-            $table->json('information');
+            $table->string('title');
+            $table->text('description');
+            $table->string('period_length');
+            $table->string('claimables');
+            $table->json('active_range');
+            $table->json('tags');
             $table->json('holds');
             $table->json('extras');
-            $table->json('available_days');
+            $table->string('available_days');
+            $table->string('price_day');
+            $table->string('price_period');
             $table->timestamps();
         });
     }

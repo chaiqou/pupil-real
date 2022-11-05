@@ -14,7 +14,7 @@ class Student extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'user_information' => 'array'
+        'user_information' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -31,5 +31,4 @@ class Student extends Model
     {
         return $this->hasMany(Transaction::class);
     }
-
 }

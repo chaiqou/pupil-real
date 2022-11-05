@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Dashboard\ParentController;
 use App\Http\Controllers\Dashboard\SchoolController;
 use App\Http\Controllers\Dashboard\SettingController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
