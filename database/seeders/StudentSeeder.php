@@ -133,25 +133,5 @@ class StudentSeeder extends Seeder
             'school_id' => 1,
             'user_id' => 2,
         ]);
-
-        $student_for_school = Student::create([
-            'first_name' => 'Luka',
-            'last_name' => 'Ramishvili',
-            'card_number' => 123456789,
-            'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
-            'user_information' => [
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random str.15',
-                'zip' => '99212',
-            ],
-            'school_id' => 1,
-            'user_id' => 4,
-        ]);
     }
 }
