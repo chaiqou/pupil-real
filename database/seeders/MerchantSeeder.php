@@ -22,5 +22,23 @@ class MerchantSeeder extends Seeder
             ]),
             'merchant_nick' => 'Cafeteria',
         ]);
+
+        $merchant_for_nikoloz = Merchant::create([
+            'user_id' => 2,
+            'billingo_api_key' => '1234546789',
+            'company_details' => json_encode([
+                'company_name' => 'Levente',
+            ]),
+            'merchant_nick' => 'Cafeteria',
+        ]);
+
+        $merchant_for_luka = Merchant::create([
+            'user_id' => 3,
+            'billingo_api_key' => '12345s6789',
+            'company_details' => json_encode([
+                'company_name' => 'Levente',
+            ]),
+            'merchant_nick' => 'Cafeteria',
+        ]);
     }
 }
