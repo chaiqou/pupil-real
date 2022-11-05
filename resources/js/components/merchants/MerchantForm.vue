@@ -1,11 +1,17 @@
 <template>
-    <BaseInput name="title" label="Title" />
+    <div class="mt-[4.2rem] w-96">
+        <BaseInput name="title" label="Title" />
+        <BaseInput name="description" label="Description" />
+        <BaseInput name="period_length" label="Period Length" />
+        <BaseInput name="price_day" label="Price per day" />
+        <BaseInput name="price_period" label="Price per period" />
+    </div>
 </template>
 
 <script setup>
 import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 import axios from "../../config/axios/index";
-import BaseInput from "../form-components/BaseInput.vue";
+import BaseInput from "../form-components/BaseInput";
 
 const store = useMerchantFormStore();
 

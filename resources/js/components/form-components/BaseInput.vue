@@ -6,6 +6,7 @@
         <input
             v-model="value"
             type="text"
+            :placeholder="placeholder"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <span class="mt-2 text-sm text-red-500 whitespace-nowrap">{{
@@ -26,6 +27,10 @@ const props = defineProps({
     label: {
         type: String,
         required: true,
+    },
+    placeholder: {
+        type: String,
+        required: false,
     },
 });
 
