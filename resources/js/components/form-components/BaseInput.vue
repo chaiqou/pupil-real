@@ -1,5 +1,8 @@
 <template>
     <div>
+        <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+            >{{ label }}
+        </label>
         <input
             v-model="value"
             type="text"
@@ -14,13 +17,19 @@
 <script setup>
 import { useField } from "vee-validate";
 import { defineProps, toRef } from "vue";
+
 const props = defineProps({
     name: {
         type: String,
         required: true,
     },
+    label: {
+        type: String,
+        required: true,
+    },
 });
-function isRequired(value) {
+
+function required(value) {
     if (value && value.trim()) {
         return true;
     }
@@ -28,5 +37,5 @@ function isRequired(value) {
 }
 
 const nameRef = toRef(props, "name");
-const { errorMessage, value } = useField(nameRef, isRequired);
+const { errorMessage, value } = useField(nameRef, required);
 </script>

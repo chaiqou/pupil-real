@@ -1,5 +1,5 @@
 <template>
-    <BaseInput name="title" />
+    <BaseInput name="title" label="Title" />
 </template>
 
 <script setup>
