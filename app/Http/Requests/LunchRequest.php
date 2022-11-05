@@ -26,15 +26,14 @@ class LunchRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'dateRange' => 'required',
+            'active_range' => 'required',
             'extras' => 'required',
             'holds' => 'required',
-            'period' => 'required',
-            'priceDay' => 'required',
-            'pricePeriod' => 'required',
-            'radioDay' => 'required',
+            'period_length' => 'required',
+            'price_day' => 'required',
+            'price_period' => 'required',
             'tags' => 'required',
-            'merchant_id' => ['exists:merchants,id'],
+            'claimables' => 'required',
         ];
     }
 }

@@ -12,6 +12,13 @@ class Lunch extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'active_range' => 'array',
+        'tags' => 'array',
+        'holds' => 'array',
+        'extras' => 'array',
+    ];
+
     public function merchant(): BelongsTo
     {
         return $this->belongsTo(Merchant::class);

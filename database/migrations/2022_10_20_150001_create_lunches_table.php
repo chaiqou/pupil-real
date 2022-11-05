@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -17,14 +18,15 @@ return new class () extends Migration {
             $table->foreignId('merchant_id')->constrained();
             $table->string('title');
             $table->text('description');
-            $table->string('active_range');
-            $table->integer('period_length');
+            $table->string('period_length');
             $table->string('claimables');
-            $table->string('holds');
-            $table->string('extras');
+            $table->json('active_range');
+            $table->json('tags');
+            $table->json('holds');
+            $table->json('extras');
             $table->string('available_days');
-            $table->integer('price_day');
-            $table->integer('price_period');
+            $table->string('price_day');
+            $table->string('price_period');
             $table->timestamps();
         });
     }

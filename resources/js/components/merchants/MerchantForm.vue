@@ -102,7 +102,6 @@ import axios from "../../config/axios/index";
 const store = useMerchantFormStore();
 
 function onSubmitMerchantForm(value) {
-    console.log(store.getMerchantData);
     axios
         .post("lunch", store.getMerchantData)
         .then((response) => {
