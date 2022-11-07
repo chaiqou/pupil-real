@@ -14,9 +14,9 @@ class Lunch extends Model
 
     protected $casts = [
         'active_range' => 'array',
-        'tags' => 'array',
         'holds' => 'array',
         'extras' => 'array',
+        'claimables' => 'array',
     ];
 
     public function merchant(): BelongsTo
