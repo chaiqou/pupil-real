@@ -36,12 +36,6 @@ class ResetPasswordController extends Controller
         ]);
         DB::transaction(function () use ($request) {
             if ($this->checkIfTokenExists($request)) {
-
-
-//                User::where('token', $request->token)->update([
-//                    'password' => bcrypt($request->password),
-//                ]);
-
                $passwordResetUser = DB::table('password_resets')->where('token', $request->token)->first();
                User::where('email', $passwordResetUser->email)->update([
                    'password' => bcrypt($request->password),
