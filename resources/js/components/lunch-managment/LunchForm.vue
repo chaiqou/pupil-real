@@ -2,6 +2,7 @@
     <div class="mt-[4.2rem] w-96">
         <BaseInput name="title" label="Title" />
         <BaseInput name="description" label="Description" />
+        <RangeDatepicker name="active_range" label="Active range" />
         <BaseInput name="period_length" label="Period Length" />
         <BaseInput name="price_day" label="Price per day" />
         <BaseInput name="price_period" label="Price per period" />
@@ -11,6 +12,7 @@
 <script setup>
 import axios from "../../config/axios/index";
 import BaseInput from "../form-components/BaseInput";
+import RangeDatepicker from "../form-components/RangeDatepicker.vue";
 
 function onSubmitMerchantForm(value) {
     axios
