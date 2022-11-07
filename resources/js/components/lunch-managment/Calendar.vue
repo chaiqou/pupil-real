@@ -33,6 +33,9 @@
                             :class="[
                                 isSameMonth(day, today)
                                     ? 'bg-white text-gray-900'
+                                    : 'bg-gray-50 text-gray-400',
+                                isSameMonth(day, today)
+                                    ? 'bg-white text-gray-900'
                                     : 'bg-white text-gray-600',
                                 dayIdx === 0 &&
                                     calculateStartOfDay[getDay(day)],
