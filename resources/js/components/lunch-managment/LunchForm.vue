@@ -4,6 +4,8 @@
         <BaseInput name="description" label="Description" />
         <RangeDatepicker name="active_range" label="Active range" />
         <BaseInput name="period_length" label="Period Length" />
+        <RangeDatepicker name="holds" label="Holds" />
+        <RangeDatepicker name="extras" label="Extras" />
         <BaseInput name="price_day" label="Price per day" />
         <BaseInput name="price_period" label="Price per period" />
     </div>
