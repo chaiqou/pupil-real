@@ -1,15 +1,18 @@
 <template>
     <div class="mt-[4.2rem] w-96">
-        <BaseInput name="title" label="Title" />
-        <BaseInput name="description" label="Description" />
-        <RangeDatepicker name="active_range" label="Active range" />
-        <BaseInput name="period_length" label="Period Length" />
-        <LunchMultiselect name="claimables" label="Claimables" />
-        <RangeDatepicker name="holds" label="Holds" />
-        <RangeDatepicker name="extras" label="Extras" />
-        <BaseWeekdaysRadio name="tags" label="Tags" />
-        <BaseInput name="price_day" label="Price per day" />
-        <BaseInput name="price_period" label="Price per period" />
+        <form @submit.prevent="onSubmit">
+            <BaseInput name="title" label="Title" />
+            <BaseInput name="description" label="Description" />
+            <RangeDatepicker name="active_range" label="Active range" />
+            <BaseInput name="period_length" label="Period Length" />
+            <LunchMultiselect name="claimables" label="Claimables" />
+            <RangeDatepicker name="holds" label="Holds" />
+            <RangeDatepicker name="extras" label="Extras" />
+            <BaseWeekdaysRadio name="tags" label="Tags" />
+            <BaseInput name="price_day" label="Price per day" />
+            <BaseInput name="price_period" label="Price per period" />
+            <Button text="Save Lunch" />
+        </form>
     </div>
 </template>
 
@@ -19,8 +22,11 @@ import BaseInput from "../form-components/BaseInput";
 import RangeDatepicker from "../form-components/RangeDatepicker.vue";
 import LunchMultiselect from "./LunchMultiselect.vue";
 import BaseWeekdaysRadio from "../form-components/BaseWeekdaysRadio.vue";
+import Button from "../ui/Button.vue";
+import { useForm } from "vee-validate";
+const { handleSubmit } = useForm();
 
-function onSubmitMerchantForm(value) {
+const onSubmit = handleSubmit((values) => {
     axios
         .post("lunch", "testdata")
         .then((response) => {
@@ -29,5 +35,5 @@ function onSubmitMerchantForm(value) {
         .catch((error) => {
             console.log(error);
         });
-}
+});
 </script>
