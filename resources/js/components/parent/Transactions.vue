@@ -1,4 +1,6 @@
 <template>
+    <div @scroll="handleGetNotificationRequest()" class="overflow-hidden h-[17.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
@@ -31,8 +33,8 @@
         </tr>
         </tbody>
     </table>
-
-<parent-transaction-slide-over></parent-transaction-slide-over>
+        <parent-transaction-slide-over></parent-transaction-slide-over>
+    </div>
 </template>
 
 <script>
@@ -64,10 +66,26 @@ export default {
                 })
                     .then(res => res.json())
                     .then(res => {
-                        this.transactions = res.data
+                        this.transactions.push(...res.data)
                     })
                     .finally(() => this.isTransactionsLoaded = true)
-        }
+        },
+
+        scroll() {
+            window.onscroll = () => {
+                let bottomOfWindow =
+                    Math.max(
+                        window.pageYOffset,
+                        document.documentElement.scrollTop,
+                        document.body.scrollTop
+                    ) +
+                    window.innerHeight ===
+                    document.documentElement.offsetHeight;
+                if (bottomOfWindow) {
+                    this.handleGetNotificationRequest();
+                }
+            };
+        },
 
     },
     created() {
