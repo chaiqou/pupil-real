@@ -19,9 +19,9 @@ return new class() extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('period_length');
-            $table->string('claimables');
+            $table->string('tags');
             $table->json('active_range');
-            $table->json('tags');
+            $table->json('claimables');
             $table->json('holds');
             $table->json('extras');
             $table->string('available_days');
