@@ -7,6 +7,7 @@
         <LunchMultiselect name="claimables" label="Claimables" />
         <RangeDatepicker name="holds" label="Holds" />
         <RangeDatepicker name="extras" label="Extras" />
+        <BaseWeekdaysRadio name="tags" label="Tags" />
         <BaseInput name="price_day" label="Price per day" />
         <BaseInput name="price_period" label="Price per period" />
     </div>
@@ -17,6 +18,7 @@ import axios from "../../config/axios/index";
 import BaseInput from "../form-components/BaseInput";
 import RangeDatepicker from "../form-components/RangeDatepicker.vue";
 import LunchMultiselect from "./LunchMultiselect.vue";
+import BaseWeekdaysRadio from "../form-components/BaseWeekdaysRadio.vue";
 
 function onSubmitMerchantForm(value) {
     axios
