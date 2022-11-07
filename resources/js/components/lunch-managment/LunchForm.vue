@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-[4.2rem] w-96">
+    <div class="height-[100vh] mt-[4.2rem] w-screen md:w-96">
         <form @submit.prevent="onSubmit">
             <BaseInput name="title" label="Title" />
             <BaseInput name="description" label="Description" />
