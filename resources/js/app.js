@@ -25,6 +25,8 @@ import SchoolDashboardTransactions from './components/school/DashboardTransactio
 import MerchantForm from "./components/merchants/MerchantForm.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import SchoolDashboardStudents from './components/school/DashboardStudents.vue';
+import ParentStudentsMobile from './components/parent/StudentsMobile.vue';
+
 import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
@@ -54,6 +56,7 @@ app.component("merchant-form", MerchantForm);
 app.component("Datepicker", Datepicker);
 app.component('school-dashboard-students', SchoolDashboardStudents);
 app.component("school-dashboard-transactions", SchoolDashboardTransactions);
+app.component('parent-students-mobile', ParentStudentsMobile);
 
 app.use(pinia);
 app.mount("#app");

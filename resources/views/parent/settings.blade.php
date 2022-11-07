@@ -340,7 +340,7 @@
             </div>
         </form>
       <div>
-
+          <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
                   <two-factor-auth-modal :two-fa="{{$twoFa}}">
                       <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
                           @csrf
@@ -370,17 +370,36 @@
                   <button class="inline-flex mt-4 w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
               </form>
           </change-password-modal>
+<div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
 
-          <div class="m-3 mb-10 mt-5">
-              <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
-          </div>
-       <h1 class="px-3">Student management</h1>
-      <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
-       <div class="mt-10 border-2 border-gray-200 w-fit rounded-md">
-           <parent-students :user-id="{{$user->id}}"></parent-students>
-           <parent-student-edit-modal></parent-student-edit-modal>
-       </div>
+<div>
+    <h1 class="px-3">Student management</h1>
+    <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
+    <div class="-my-2 -mx-4 hidden md:block sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <parent-students :user-id="{{$user->id}}" :student="{{$student}}"></parent-students>
+                <parent-student-edit-modal></parent-student-edit-modal>
+            </div>
+            <div class="m-3 mb-10 mt-10 flex justify-end">
+                <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="md:hidden block -my-2 -mx-4 overflow-x-scroll overflow-y-scroll sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <parent-students-mobile :user-id="{{$user->id}}" :student="{{$student}}"></parent-students-mobile>
+                <parent-student-edit-modal></parent-student-edit-modal>
+            </div>
+        </div>
+    </div>
+    <div class="m-3 mb-10 mt-10 md:hidden block">
+        <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+    </div>
    </div>
+
       </div>
     </div>
 </div>
