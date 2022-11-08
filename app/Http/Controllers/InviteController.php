@@ -142,7 +142,7 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
         $user->assignRole('parent');
-        $input_summary = (int) ($request->input('code_each.1').''.$request->input('code_each.2').''.$request->input('code_each.3').''.$request->input('code_each.4').''.$request->input('code_each.5').''.$request->input('code_each.6'));
+        $input_summary = implode('', $request->input('code_each.*'));
         $verification_code = VerificationCode::where('invite_id', $invite->id)->first();
         Log::info($input_summary);
         Log::info($verification_code->code);
