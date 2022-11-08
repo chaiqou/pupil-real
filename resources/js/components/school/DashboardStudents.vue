@@ -60,9 +60,7 @@ export default {
     methods: {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
         handleGetStudentRequest() {
-            fetch(`/api/school/dashboard-students`, {
-                method: 'post',
-                body: JSON.stringify({school_id: this.schoolId}),
+            fetch(`/api/school/${this.schoolId}/dashboard-students`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

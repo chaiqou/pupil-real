@@ -17,15 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/parent/transactions', [ParentController::class, 'getTransactions'])->name('parent.transactions_api')->middleware('auth');
-Route::post('/school/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api')->middleware('auth');
-Route::post('/school/students', [SchoolController::class, 'getStudents'])->name('school.students_api')->middleware('auth');
-Route::post('/parent/week-spending', [ParentController::class, 'getLastWeekTransactionsSpending'])->name('parent.week-spending_api')->middleware('auth');
-Route::post('/parent/month-spending', [ParentController::class, 'getLastMonthTransactionsSpending'])->name('parent.month-spending_api')->middleware('auth');
-Route::post('/parent/last-transactions', [ParentController::class, 'getLastFiveTransactions'])->name('parent.last-transactions_api')->middleware('auth');
-Route::post('/parent/students', [ParentController::class, 'getStudents'])->name('parent.students_api')->middleware('auth');
-Route::post('/parent/update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api')->middleware('auth');
-Route::post('/school/dashboard-students', [SchoolController::class, 'getDashboardStudents'])->name('school.dashboard-students')->middleware('auth');
-Route::post('/school/last-transactions', [SchoolController::class, 'getLastFiveTransactions'])->name('school.last-transactions_api')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('/school/')->group(function() {
+         Route::controller(SchoolController::class)->group(function () {
+            Route::get('{school_id}/dashboard-students', [SchoolController::class, 'getDashboardStudents'])->name('school.dashboard-students');
+            Route::get('{school_id}/last-transactions', [SchoolController::class, 'getLastFiveTransactions'])->name('school.last-transactions_api');
+            Route::get('{school_id}/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api');
+            Route::get('{school_id}/students', [SchoolController::class, 'getStudents'])->name('school.students_api');
+        });
+    });
+
+    Route::prefix('/parent/')->group(function() {
+      Route::post('update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api');
+        Route::controller(ParentController::class)->group(function () {
+           Route::get('{student_id}/week-spending','getLastWeekTransactionsSpending')->name('parent.week-spending_api');
+           Route::get('{student_id}/month-spending','getLastMonthTransactionsSpending')->name('parent.month-spending_api');
+           Route::get('{student_id}/last-transactions','getLastFiveTransactions')->name('parent.last-transactions_api');
+           Route::get('{user_id}/students','getStudents')->name('parent.students_api');
+           Route::get('{student_id}/transactions','getTransactions')->name('parent.transactions_api');
+       });
+    });
+});
 
 Route::apiResource('lunch', LunchController::class);

@@ -47,9 +47,7 @@ export default {
     },
     methods: {
         handleGetLastFiveTransactions() {
-            fetch(`/api/school/last-transactions`, {
-                method: 'post',
-                body: JSON.stringify({school_id: this.schoolId}),
+            fetch(`/api/school/${this.schoolId}/last-transactions`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

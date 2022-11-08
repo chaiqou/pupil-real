@@ -11,11 +11,12 @@ use App\Models\Merchant;
 use App\Models\Student;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SchoolController extends Controller
 {
-    public function getTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function getTransactions(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
             $transactions = Transaction::where('merchant_id', $request->school_id)->with('merchant', 'student')->paginate(6);
@@ -26,7 +27,7 @@ class SchoolController extends Controller
         return response()->json(['error' => 'To get this information you should be role of school and be authorized.']);
     }
 
-    public function getStudents(StudentRequest $request): ResourceCollection|JsonResponse
+    public function getStudents(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
             $students = Student::where('school_id', $request->school_id)->with('user')->paginate(6);
@@ -37,7 +38,7 @@ class SchoolController extends Controller
         return response()->json(['error' => 'To get this information you should be role of school and be authorized.']);
     }
 
-    public function getDashboardStudents(StudentRequest $request): ResourceCollection|JsonResponse
+    public function getDashboardStudents(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
             $merchant = Merchant::where('user_id', $request->school_id)->first();
@@ -49,7 +50,7 @@ class SchoolController extends Controller
         return response()->json(['error' => 'To get this information you shoulb be role of school and be authorized.']);
     }
 
-    public function getLastFiveTransactions(TransactionRequest $request): ResourceCollection|JsonResponse
+    public function getLastFiveTransactions(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
             $transactions = Transaction::where('merchant_id', $request->school_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();

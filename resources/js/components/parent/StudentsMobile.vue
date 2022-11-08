@@ -68,9 +68,7 @@ export default {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentEdit"]),
         ...mapActions(useModalStore, ["showHideStudentEdit"]),
         handleGetStudentRequest() {
-                fetch(`/api/parent/students`, {
-                    method: 'post',
-                    body: JSON.stringify({user_id: this.userId}),
+                fetch(`/api/parent/${this.userId}/students`, {
                     headers: {
                         'Content-Type': 'application/json',
                     }
