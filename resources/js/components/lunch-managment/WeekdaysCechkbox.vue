@@ -1,0 +1,59 @@
+<template>
+    <div>
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Monday"
+            rules="required"
+        />
+        Monday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Tuesday"
+            rules="required"
+        />
+        Tuesday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Wednesday"
+            rules="required"
+        />
+        Wednesday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Thuersday"
+            rules="required"
+        />
+        Thuersday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Friday"
+            rules="required"
+        />
+        Friday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Saturday"
+            rules="required"
+        />
+        Saturday
+        <Field
+            name="weekdays"
+            type="checkbox"
+            value="Sunday"
+            rules="required"
+        />
+        Sunday
+
+        <ErrorMessage name="weekdays" />
+    </div>
+</template>
+
+<script setup>
+import { Field, ErrorMessage } from "vee-validate";
+</script>
