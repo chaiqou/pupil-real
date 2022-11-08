@@ -51,6 +51,7 @@ class SettingController extends Controller
             ]);
         } else {
             $user->assignRole('2fa');
+            $user->sendTwoFactorCode();
         }
 
         return redirect()->back();
