@@ -53,8 +53,6 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
-
     Route::prefix('/school/')->group(function () {
         Route::controller(NavigationController::class)->group(function () {
             Route::get('lunch-management','school')->name('school.lunch-management');
@@ -64,19 +62,20 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+
+    Route::controller(InviteController::class)->group(function () {
+        Route::get('/send-invite','index')->name('invite.user');
+        Route::post('/send-invite','sendInvite')->name('send.invite');
+
+        Route::get('/setup-account/{uniqueID}','setupAccount')->name('setup.account');
+        Route::post('/setup-account/{uniqueID}','submitSetupAccount')->name('setup.account_submit');
+
+        Route::get('/personal-form/{uniqueID}','personalForm')->name('personal.form');
+        Route::post('/personal-form/{uniqueID}','submitPersonalForm')->name('personal.form_submit');
+
+        Route::get('/verify-email/{uniqueID}','verifyEmail')->name('verify.email');
+        Route::post('/verify-email/{uniqueID}','submitVerifyEmail')->name('verify.email_submit');
+    });
 });
 
 
-Route::controller(InviteController::class)->group(function () {
-    Route::get('/send-invite','index')->name('invite.user');
-    Route::post('/send-invite','sendInvite')->name('send.invite');
-
-    Route::get('/setup-account/{uniqueID}','setupAccount')->name('setup.account');
-    Route::post('/setup-account/{uniqueID}','submitSetupAccount')->name('setup.account_submit');
-
-    Route::get('/personal-form/{uniqueID}','personalForm')->name('personal.form');
-    Route::post('/personal-form/{uniqueID}','submitPersonalForm')->name('personal.form_submit');
-
-    Route::get('/verify-email/{uniqueID}','verifyEmail')->name('verify.email');
-    Route::post('/verify-email/{uniqueID}','submitVerifyEmail')->name('verify.email_submit');
-});
