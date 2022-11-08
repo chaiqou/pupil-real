@@ -1,4 +1,6 @@
 <template>
+    <div @scroll="onScroll" class="overflow-hidden h-[21.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
@@ -33,12 +35,19 @@
     </table>
 
 <school-transaction-slide-over></school-transaction-slide-over>
+    </div>
 </template>
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
 import {useTransactionStore} from "../../stores/useTransactionStore";
 export default {
+    data() {
+        return {
+            currentPage: 1,
+            lastPage: 2,
+        }
+    },
     props: {
         student: {
             type: Object,
@@ -54,7 +63,7 @@ export default {
     },
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
-        handleGetNotificationRequest() {
+        handleGetTransactionsRequest() {
                 fetch(`/api/school/transactions`, {
                     method: 'post',
                     body: JSON.stringify({school_id: this.schoolId}),
@@ -64,14 +73,23 @@ export default {
                 })
                     .then(res => res.json())
                     .then(res => {
-                        this.transactions = res.data
+                        this.currentPage++;
+                        this.lastPage = res.meta.last_page;
+                        this.transactions.push(...res.data)
                     })
                     .finally(() => this.isTransactionsLoaded = true)
-        }
+        },
+
+        onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
+            if (scrollTop + clientHeight >= scrollHeight) {
+                if(this.currentPage > this.lastPage) {return}
+                this.handleGetStudentRequest();
+            }
+        },
 
     },
     created() {
-        this.handleGetNotificationRequest()
+        this.handleGetTransactionsRequest()
     },
 }
 </script>

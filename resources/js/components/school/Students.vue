@@ -1,5 +1,7 @@
 <template>
-    <table  class="min-w-full divide-y divide-gray-300">
+    <div @scroll="onScroll" class="overflow-hidden h-[21.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+
+    <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Full name</th>
@@ -29,13 +31,19 @@
     </table>
 
     <school-students-slide-over></school-students-slide-over>
-
+    </div>
 </template>
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
 import {useStudentStore} from "../../stores/useStudentStore";
 export default {
+    data() {
+        return {
+         currentPage: 1,
+         lastPage: 2,
+        }
+    },
     props: {
         student: {
             type: Object,
@@ -61,12 +69,20 @@ export default {
                 })
                     .then(res => res.json())
                     .then(res => {
-                        this.students = res.data
+                        this.currentPage++;
+                        this.lastPage = res.meta.last_page;
+                        this.students.push(...res.data)
                     })
                     .finally(() => this.isStudentsLoaded = true)
         },
+        onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
+            if (scrollTop + clientHeight >= scrollHeight) {
+                if(this.currentPage > this.lastPage) {return}
+                this.handleGetStudentRequest();
+            }
+        },
     },
-    mounted() {
+    created() {
         this.handleGetStudentRequest()
     },
 }

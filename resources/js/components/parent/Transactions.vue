@@ -1,5 +1,5 @@
 <template>
-    <div @scroll="handleGetNotificationRequest()" class="overflow-hidden h-[17.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <div @scroll="onScroll" class="overflow-hidden h-[21.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
 
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
@@ -41,6 +41,12 @@
 import {mapActions, mapWritableState} from "pinia";
 import {useTransactionStore} from "../../stores/useTransactionStore";
 export default {
+    data() {
+        return {
+         currentPage:1,
+         lastPage: 2,
+        }
+    },
     props: {
         student: {
             type: Object,
@@ -52,44 +58,37 @@ export default {
         },
     },
     computed: {
-        ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"])
+        ...mapWritableState(useTransactionStore, ["isTransactionsLoaded", "isSlideOverOpen", "transactions"]),
     },
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
-        handleGetNotificationRequest() {
-                fetch(`/api/parent/transactions`, {
-                    method: 'post',
-                    body: JSON.stringify({student_id: this.studentId}),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        this.transactions.push(...res.data)
-                    })
-                    .finally(() => this.isTransactionsLoaded = true)
+        handleGetTransactionsRequest() {
+                   fetch(`/api/parent/transactions?page=${this.currentPage}`, {
+                       method: 'post',
+                       body: JSON.stringify({student_id: this.studentId}),
+                       headers: {
+                           'Content-Type': 'application/json',
+                       }
+                   })
+                       .then(res => res.json())
+                       .then(res => {
+                           this.currentPage++;
+                           this.lastPage = res.meta.last_page;
+                           this.transactions.push(...res.data)
+                       })
+                       .finally(() => this.isTransactionsLoaded = true)
+        },
+        onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
+            if (scrollTop + clientHeight >= scrollHeight) {
+                if(this.currentPage > this.lastPage) {return}
+                this.handleGetTransactionsRequest();
+            }
         },
 
-        scroll() {
-            window.onscroll = () => {
-                let bottomOfWindow =
-                    Math.max(
-                        window.pageYOffset,
-                        document.documentElement.scrollTop,
-                        document.body.scrollTop
-                    ) +
-                    window.innerHeight ===
-                    document.documentElement.offsetHeight;
-                if (bottomOfWindow) {
-                    this.handleGetNotificationRequest();
-                }
-            };
-        },
 
     },
     created() {
-        this.handleGetNotificationRequest()
+        this.handleGetTransactionsRequest();
     },
 }
 </script>

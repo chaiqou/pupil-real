@@ -83,7 +83,6 @@ class ParentController extends Controller
         public function getTransactions(TransactionRequest $request): ResourceCollection
         {
             $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->paginate(6);
-
             return TransactionResource::collection($transactions);
         }
 
