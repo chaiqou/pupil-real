@@ -13,43 +13,70 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
-    Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot.form');
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordMail'])->name('forgot.request');
-    Route::get('/mail-sent', [ForgotPasswordController::class, 'forgotRedirect'])->name('forgot.redirect');
+    Route::controller(ForgotPasswordController::class)->group(function () {
+        Route::get('/mail-sent','forgotRedirect')->name('forgot.redirect');
+        Route::get('/forgot-password','forgotPasswordForm')->name('forgot.form');
+        Route::post('/forgot-password','sendForgotPasswordMail')->name('forgot.request');
+    });
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
     Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/parent/dashboard', [ParentController::class, 'parentDashboard'])->name('parents.dashboard');
-    Route::get('/parent/dashboard/{student_id}', [NavigationController::class, 'parent'])->name('parent.dashboard');
-    Route::get('/two-factor-authentication', [TwoFactorAuthenticationController::class, 'form'])->name('2fa.form');
-    Route::post('/submit-two-factor-authentication', [TwoFactorAuthenticationController::class, 'verify'])->name('2fa.submit');
-    Route::post('/resend-two-factor-authentication', [TwoFactorAuthenticationController::class, 'resend'])->name('2fa.resend');
-    Route::get('/parent/transactions/{student_id}', [NavigationController::class, 'parent'])->name('parent.transactions');
-    Route::get('/school/dashboard', [NavigationController::class, 'school'])->name('school.dashboard');
-    Route::get('/school/transactions', [NavigationController::class, 'school'])->name('school.transactions');
-    Route::get('/school/students', [NavigationController::class, 'school'])->name('school.students');
-    Route::get('/parent/settings/{student_id}', [NavigationController::class, 'parent'])->name('parent.settings');
-    Route::post('/parent/settings/{student_id}', [SettingController::class, 'updatePersonal'])->name('parent.settings_submit');
-    Route::get('/parent/create-student/{user_id}', [ParentController::class, 'createStudent'])->name('parent.create-student');
-    Route::post('/parent/create-student/{user_id}', [ParentController::class, 'storeStudent'])->name('parent.create-student_submit');
-    Route::get('/parent/create-student/verify/{student_id}', [ParentController::class, 'verifyStudentCreation'])->name('parent.create-student-verify');
-    Route::post('/parent/create-student-verify/{student_id}', [ParentController::class, 'submitStudentCreation'])->name('parent.create-student-verify_submit');
-    Route::post('/parent/two-fa/{user_id}', [SettingController::class, 'changeTwoFa'])->name('parent.two-fa');
-    Route::post('/parent/update-password/{user_id}', [SettingController::class, 'updatePassword'])->name('parent.update-password');
-    Route::get('/school/lunch-management', [NavigationController::class, 'school'])->name('school.lunch-management');
+
+    Route::controller(TwoFactorAuthenticationController::class)->group(function () {
+        Route::get('/two-factor-authentication','form')->name('2fa.form');
+        Route::post('/submit-two-factor-authentication','verify')->name('2fa.submit');
+        Route::post('/resend-two-factor-authentication','resend')->name('2fa.resend');
+    });
+
+    Route::prefix('/parent/')->group(function () {
+        Route::controller(ParentController::class)->group(function () {
+            Route::get('create-student/{user_id}','createStudent')->name('parent.create-student');
+            Route::post('create-student/{user_id}','storeStudent')->name('parent.create-student_submit');
+            Route::get('create-student/verify/{student_id}','verifyStudentCreation')->name('parent.create-student-verify');
+            Route::post('create-student-verify/{student_id}','submitStudentCreation')->name('parent.create-student-verify_submit');
+            Route::get('dashboard','parentDashboard')->name('parents.dashboard');
+        });
+
+        Route::controller(SettingController::class)->group(function () {
+            Route::post('two-fa/{user_id}','changeTwoFa')->name('parent.two-fa');
+            Route::post('update-password/{user_id}','updatePassword')->name('parent.update-password');
+            Route::post('settings/{student_id}','updatePersonal')->name('parent.settings_submit');
+        });
+
+        Route::controller(NavigationController::class)->group(function () {
+            Route::get('settings/{student_id}','parent')->name('parent.settings');
+            Route::get('transactions/{student_id}','parent')->name('parent.transactions');
+            Route::get('dashboard/{student_id}','parent')->name('parent.dashboard');
+        });
+    });
+
+
+
+    Route::prefix('/school/')->group(function () {
+        Route::controller(NavigationController::class)->group(function () {
+            Route::get('lunch-management','school')->name('school.lunch-management');
+            Route::get('students','school')->name('school.students');
+            Route::get('transactions','school')->name('school.transactions');
+            Route::get('dashboard','school')->name('school.dashboard');
+        });
+    });
+
 });
 
-Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
-Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
 
-Route::get('/setup-account/{uniqueID}', [InviteController::class, 'setupAccount'])->name('setup.account');
-Route::post('/setup-account/{uniqueID}', [InviteController::class, 'submitSetupAccount'])->name('setup.account_submit');
+Route::controller(InviteController::class)->group(function () {
+    Route::get('/send-invite','index')->name('invite.user');
+    Route::post('/send-invite','sendInvite')->name('send.invite');
 
-Route::get('/personal-form/{uniqueID}', [InviteController::class, 'personalForm'])->name('personal.form');
-Route::post('/personal-form/{uniqueID}', [InviteController::class, 'submitPersonalForm'])->name('personal.form_submit');
+    Route::get('/setup-account/{uniqueID}','setupAccount')->name('setup.account');
+    Route::post('/setup-account/{uniqueID}','submitSetupAccount')->name('setup.account_submit');
 
-Route::get('/verify-email/{uniqueID}', [InviteController::class, 'verifyEmail'])->name('verify.email');
-Route::post('/verify-email/{uniqueID}', [InviteController::class, 'submitVerifyEmail'])->name('verify.email_submit');
+    Route::get('/personal-form/{uniqueID}','personalForm')->name('personal.form');
+    Route::post('/personal-form/{uniqueID}','submitPersonalForm')->name('personal.form_submit');
+
+    Route::get('/verify-email/{uniqueID}','verifyEmail')->name('verify.email');
+    Route::post('/verify-email/{uniqueID}','submitVerifyEmail')->name('verify.email_submit');
+});
