@@ -63,9 +63,7 @@ export default {
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
         handleGetTransactionsRequest() {
-                   fetch(`/api/parent/transactions?page=${this.currentPage}`, {
-                       method: 'post',
-                       body: JSON.stringify({student_id: this.studentId}),
+                   fetch(`/api/parent/${this.studentId}/transactions?page=${this.currentPage}`, {
                        headers: {
                            'Content-Type': 'application/json',
                        }

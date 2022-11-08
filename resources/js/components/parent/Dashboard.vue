@@ -68,9 +68,7 @@ export default {
     },
     methods: {
         handleGetLastWeekSpending() {
-            fetch(`/api/parent/week-spending`, {
-                method: 'post',
-                body: JSON.stringify({student_id: this.studentId}),
+            fetch(`/api/parent/${this.studentId}/week-spending`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -86,9 +84,7 @@ export default {
         },
 
         handleGetLastMonthSpending() {
-            fetch(`/api/parent/month-spending`, {
-                method: 'post',
-                body: JSON.stringify({student_id: this.studentId}),
+            fetch(`/api/parent/${this.studentId}/month-spending`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
