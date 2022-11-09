@@ -72,6 +72,7 @@ import {
     eachMonthOfInterval,
     add,
     getDay,
+    startOfWeek,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 
@@ -96,7 +97,7 @@ const monthsDays = [
         name: format(month, "MMM yyyy"),
         days: [
             ...eachDayOfInterval({
-                start: startOfMonth(month),
+                start: startOfWeek(startOfMonth(month)),
                 end: endOfWeek(endOfMonth(month)),
             }),
         ],
