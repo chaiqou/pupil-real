@@ -31,11 +31,12 @@
                             :key="day.date"
                             type="button"
                             :class="[
-                                isSameMonth(day, today) &&
-                                month.name === monthFullNames[today.getMonth()]
+                                month.name !==
+                                    getMonthByIndex(day.getMonth()) &&
+                                month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-50 text-gray-400',
-                                isSameMonth(day, today)
+                                month.name !== getMonthByIndex(day.getMonth())
                                     ? 'bg-white text-gray-900'
                                     : 'bg-white text-gray-600',
                                 dayIdx === 0 &&
@@ -69,7 +70,6 @@ import {
     endOfMonth,
     endOfWeek,
     isToday,
-    isSameMonth,
     eachMonthOfInterval,
     add,
     getDay,
@@ -105,6 +105,19 @@ const monthsDays = [
         ],
     })),
 ];
+
+// Get Month full name by index , for example if we pass 1 we will get February
+
+const getMonthByIndex = function (index) {
+    const date = new Date();
+    date.setDate(1);
+    date.setMonth(index - 1);
+
+    const locale = "en-us";
+    const month = date.toLocaleString(locale, { month: "long" });
+
+    return month;
+};
 
 const monthFullNames = [
     "January",
