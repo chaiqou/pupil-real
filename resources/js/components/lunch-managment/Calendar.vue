@@ -10,7 +10,7 @@
                     class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
-                        {{ month.name }}
+                        {{ month.name }} {{ month.year }}
                     </h2>
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
@@ -96,6 +96,7 @@ const currentMonthWithOtherMonths = ref(
 const monthsDays = [
     ...currentMonthWithOtherMonths.value.map((month) => ({
         name: format(month, "MMMM"),
+        year: format(month, "yyyy"),
         days: [
             ...eachDayOfInterval({
                 start: startOfWeek(startOfMonth(month)),
