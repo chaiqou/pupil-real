@@ -31,7 +31,8 @@
                             :key="day.date"
                             type="button"
                             :class="[
-                                isSameMonth(day, today)
+                                isSameMonth(day, today) &&
+                                month.name === monthFullNames[today.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-50 text-gray-400',
                                 isSameMonth(day, today)
@@ -94,7 +95,7 @@ const currentMonthWithOtherMonths = ref(
 
 const monthsDays = [
     ...currentMonthWithOtherMonths.value.map((month) => ({
-        name: format(month, "MMM yyyy"),
+        name: format(month, "MMMM"),
         days: [
             ...eachDayOfInterval({
                 start: startOfWeek(startOfMonth(month)),
@@ -102,6 +103,21 @@ const monthsDays = [
             }),
         ],
     })),
+];
+
+const monthFullNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ];
 
 const calculateStartOfDay = [
