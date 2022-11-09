@@ -8,7 +8,6 @@ import DashboardNavigationMobile from "./components/DashboardNavigationMobile.vu
 import NavigationMenuButton from "./components/NavigationMenuButton.vue";
 import SwitchAccount from "./components/SwitchAccount.vue";
 import SchoolTransactions from "./components/school/Transactions.vue";
-import SchoolTransactionSlideOver from "./components/school/TransactionSlideOver.vue";
 import ParentTransactions from "./components/parent/Transactions.vue";
 import SchoolStudents from "./components/school/Students.vue";
 import SchoolStudentsSlideOver from "./components/school/StudentsSlideOver.vue";
@@ -37,7 +36,6 @@ app.component("dashboard-navigation-mobile", DashboardNavigationMobile);
 app.component("navigation-menu-button", NavigationMenuButton);
 app.component("switch-account", SwitchAccount);
 app.component("school-transactions", SchoolTransactions);
-app.component("school-transaction-slide-over", SchoolTransactionSlideOver);
 app.component("parent-transactions", ParentTransactions);
 app.component("school-students", SchoolStudents);
 app.component("school-students-slide-over", SchoolStudentsSlideOver);

@@ -11,6 +11,11 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
+        <tr v-if="this.isTransactionsLoaded && !this.transactions.length">
+            <td class="bg-white" colspan="5">
+                <TransactionsNotFound role="school"></TransactionsNotFound>
+            </td>
+        </tr>
         <tr v-if="this.isTransactionsLoaded && this.transactions.length" v-for="transaction in transactions" :key="transaction.id">
             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{transaction.student.first_name}}</td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.amount}} </td>
@@ -29,12 +34,6 @@
         </tr>
         </tbody>
     </table>
-    </div>
-    <div v-if="this.isTransactionsLoaded && !this.transactions.length">
-        <TransactionsNotFound role="school"></TransactionsNotFound>
-    </div>
-
-    <div  v-if="this.isTransactionsLoaded && !this.transactions.length" class="mt-10 shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     </div>
 </template>
 
