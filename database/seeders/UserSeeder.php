@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'jackrestler@gmail.com',
             'password' => bcrypt('adminadmin'),
-        ])->assignRole('parent');
+        ])->assignRole('school');
 
         $nikoloz = User::create([
             'first_name' => 'nika',

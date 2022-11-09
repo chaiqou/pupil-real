@@ -1,4 +1,5 @@
 <template>
+    <div  class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
@@ -28,7 +29,7 @@
         </tr>
         </tbody>
     </table>
-
+    </div>
     <div v-if="this.isTransactionsLoaded && !this.transactions.length">
         <TransactionsNotFound role="school"></TransactionsNotFound>
     </div>
