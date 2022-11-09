@@ -1,6 +1,5 @@
 <template>
-    <div @scroll="onScroll" class="overflow-hidden h-[21.4rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-
+    <div @scroll="onScroll" :class="this.isTransactionsLoaded && !this.transactions ? 'overflow-hidden max-h-[19.65rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg' : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'">
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
@@ -11,8 +10,13 @@
             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Merchant</th>
         </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
-        <tr v-if="this.isTransactionsLoaded" v-for="transaction in transactions" :key="transaction.id">
+        <tbody class="divide-y divide-gray-200">
+        <tr v-if="this.isTransactionsLoaded && !this.transactions.length">
+            <td class="bg-white" colspan="5">
+                <TransactionsNotFound role="school"></TransactionsNotFound>
+            </td>
+        </tr>
+        <tr v-if="this.isTransactionsLoaded && this.transactions.length" v-for="transaction in transactions" :key="transaction.id">
             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{transaction.student.first_name}}</td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.amount}} </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{transaction.transaction_type}} </td>
@@ -33,15 +37,20 @@
         </tr>
         </tbody>
     </table>
-
-<school-transaction-slide-over></school-transaction-slide-over>
+<transaction-slide-over></transaction-slide-over>
     </div>
 </template>
 
 <script>
+import TransactionsNotFound from "../not-found/TransactionsNotFound";
 import {mapActions, mapWritableState} from "pinia";
 import {useTransactionStore} from "../../stores/useTransactionStore";
+import TransactionSlideOver from "./TransactionSlideOver";
 export default {
+    components: {
+        TransactionsNotFound,
+        TransactionSlideOver,
+    },
     data() {
         return {
             currentPage: 1,
