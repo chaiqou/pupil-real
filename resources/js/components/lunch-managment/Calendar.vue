@@ -74,6 +74,7 @@ import {
     add,
     getDay,
     startOfWeek,
+    addDays,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 
@@ -118,6 +119,17 @@ const getMonthByIndex = function (index) {
 
     return month;
 };
+
+// i added days to the end of month to make all month equals to 42 length for design purpose
+
+monthsDays.forEach((month) => {
+    month.days.filter((day) => {
+        if (month.days.length < 42) {
+            let lastElement = month.days[month.days.length - 1];
+            month.days.push(addDays(lastElement, 1));
+        }
+    });
+});
 
 const monthFullNames = [
     "January",
