@@ -10,7 +10,7 @@
                     class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
-                        {{ month.name }}
+                        {{ month.name }} {{ month.year }}
                     </h2>
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
@@ -31,10 +31,12 @@
                             :key="day.date"
                             type="button"
                             :class="[
-                                isSameMonth(day, today)
+                                month.name !==
+                                    getMonthByIndex(day.getMonth()) &&
+                                month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-50 text-gray-400',
-                                isSameMonth(day, today)
+                                month.name !== getMonthByIndex(day.getMonth())
                                     ? 'bg-white text-gray-900'
                                     : 'bg-white text-gray-600',
                                 dayIdx === 0 &&
@@ -68,10 +70,10 @@ import {
     endOfMonth,
     endOfWeek,
     isToday,
-    isSameMonth,
     eachMonthOfInterval,
     add,
     getDay,
+    startOfWeek,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 
@@ -93,14 +95,43 @@ const currentMonthWithOtherMonths = ref(
 
 const monthsDays = [
     ...currentMonthWithOtherMonths.value.map((month) => ({
-        name: format(month, "MMM yyyy"),
+        name: format(month, "MMMM"),
+        year: format(month, "yyyy"),
         days: [
             ...eachDayOfInterval({
-                start: startOfMonth(month),
+                start: startOfWeek(startOfMonth(month)),
                 end: endOfWeek(endOfMonth(month)),
             }),
         ],
     })),
+];
+
+// Get Month full name by index , for example if we pass 1 we will get February
+
+const getMonthByIndex = function (index) {
+    const date = new Date();
+    date.setDate(1);
+    date.setMonth(index - 1);
+
+    const locale = "en-us";
+    const month = date.toLocaleString(locale, { month: "long" });
+
+    return month;
+};
+
+const monthFullNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ];
 
 const calculateStartOfDay = [

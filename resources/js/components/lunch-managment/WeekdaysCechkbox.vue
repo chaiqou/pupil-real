@@ -4,7 +4,7 @@
             >Weekdays
         </label>
     </div>
-    <div class="lg:flex xl:space-x-6 justify-center">
+    <div class="lg:flex xl:space-x-9 space-y-2 md:space-y-0 justify-center">
         <ul v-for="day in dayOptions">
             <li>
                 <Field
@@ -17,7 +17,7 @@
                 />
                 <label
                     :for="day.fullName"
-                    class="flex items-center text-left text-md font-semibold px-5 py-5 xl:w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 hover:text-gray-600 peer-checked:text-white hover:bg-gray-50"
+                    class="flex items-center text-left text-md font-semibold px-3 py-2 xl:w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-indigo-500 hover:text-gray-600 peer-checked:text-white hover:bg-gray-50"
                 >
                     {{ day.name }}
                 </label>
