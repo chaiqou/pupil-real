@@ -15,12 +15,12 @@
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
                     >
-                        <div>S</div>
                         <div>M</div>
                         <div>T</div>
                         <div>W</div>
                         <div>T</div>
                         <div>F</div>
+                        <div>S</div>
                         <div>S</div>
                     </div>
                     <div
@@ -101,7 +101,7 @@ const monthsDays = [
         year: format(month, "yyyy"),
         days: [
             ...eachDayOfInterval({
-                start: startOfWeek(startOfMonth(month)),
+                start: startOfWeek(startOfMonth(month), { weekStartsOn: 1 }),
                 end: endOfWeek(endOfMonth(month)),
             }),
         ],
