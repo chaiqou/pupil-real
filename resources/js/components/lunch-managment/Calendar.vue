@@ -2,7 +2,7 @@
     <div class="invisible lg:visible w-full">
         <div class="bg-inherit">
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
+                class="mx-auto xl:w-[100vh] grid grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8"
             >
                 <section
                     v-for="month in monthsDays"
@@ -10,7 +10,7 @@
                     class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
-                        {{ month.name }}{{ month.year }}
+                        {{ month.name }} {{ month.year }}
                     </h2>
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
