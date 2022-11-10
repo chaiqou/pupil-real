@@ -4,6 +4,7 @@ use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Dashboard\ParentController;
 use App\Http\Controllers\Dashboard\SchoolController;
 use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,14 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::prefix('/school/')->group(function() {
          Route::controller(SchoolController::class)->group(function () {
-            Route::get('{school_id}/dashboard-students', [SchoolController::class, 'getDashboardStudents'])->name('school.dashboard-students');
-            Route::get('{school_id}/last-transactions', [SchoolController::class, 'getLastFiveTransactions'])->name('school.last-transactions_api');
-            Route::get('{school_id}/transactions', [SchoolController::class, 'getTransactions'])->name('school.transactions_api');
-            Route::get('{school_id}/students', [SchoolController::class, 'getStudents'])->name('school.students_api');
+            Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
+            Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
+            Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
+            Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
         });
+        Route::get('{school_id}/invites', [InviteController::class, 'getInvites'])->name('school.invites_api');
     });
 
     Route::prefix('/parent/')->group(function() {

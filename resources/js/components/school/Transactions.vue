@@ -1,5 +1,5 @@
 <template>
-    <div @scroll="onScroll" :class="this.isTransactionsLoaded && !this.transactions ? 'overflow-hidden max-h-[19.65rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg' : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'">
+    <div @scroll="onScroll" :class="this.isTransactionsLoaded && this.transactions ? 'overflow-hidden max-h-[19rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg' : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'">
     <table  class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
         <tr>
@@ -73,7 +73,7 @@ export default {
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
         handleGetTransactionsRequest() {
-                fetch(`/api/school/${this.schoolId}/transactions`, {
+                fetch(`/api/school/${this.schoolId}/transactions?page=${this.currentPage}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     }

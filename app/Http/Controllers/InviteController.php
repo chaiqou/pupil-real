@@ -6,12 +6,15 @@ use App\Http\Requests\Invite\InviteRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
+use App\Http\Resources\School\InviteResource;
 use App\Mail\InviteUser;
 use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -20,10 +23,6 @@ use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-    public function index(): View
-    {
-        return view('invite.user-invite');
-    }
 
     public static function continueOnboarding($user)
     {
@@ -44,6 +43,7 @@ class InviteController extends Controller
         $invite = Invite::create([
             'uniqueID' => Str::random(32),
             'email' => $request->email,
+            'school_id' => auth()->user()->school_id,
         ]);
         Mail::to($invite->email)->send(new InviteUser($invite));
         $invite->update(['state' => 1]);
@@ -154,5 +154,13 @@ class InviteController extends Controller
         }
 
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
+    }
+
+
+
+    public function getInvites(Request $request): ResourceCollection
+    {
+         $invites = Invite::where('school_id', $request->school_id)->paginate(5);
+         return InviteResource::collection($invites);
     }
 }

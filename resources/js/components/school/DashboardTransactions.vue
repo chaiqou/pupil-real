@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         handleGetLastFiveTransactions() {
-            fetch(`/api/school/${this.schoolId}/last-transactions`, {
+            fetch(`/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

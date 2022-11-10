@@ -53,18 +53,20 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::prefix('/school/')->group(function () {
-        Route::controller(NavigationController::class)->group(function () {
-            Route::get('lunch-management','school')->name('school.lunch-management');
-            Route::get('students','school')->name('school.students');
-            Route::get('transactions','school')->name('school.transactions');
-            Route::get('dashboard','school')->name('school.dashboard');
-        });
-    });
+
+       Route::prefix('/school/')->group(function () {
+           Route::controller(NavigationController::class)->group(function () {
+               Route::get('lunch-management','school')->name('school.lunch-management');
+               Route::get('students','school')->name('school.students');
+               Route::get('transactions','school')->name('school.transactions');
+               Route::get('dashboard','school')->name('school.dashboard');
+               Route::get('invite', 'school')->name('school.invite');
+           });
+       });
 
 
-    Route::get('/send-invite', [InviteController::class, 'index'])->name('invite.user');
-    Route::post('/send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
+
+       Route::post('send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
 
 });
 
