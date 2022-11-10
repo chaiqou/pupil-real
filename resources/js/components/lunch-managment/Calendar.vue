@@ -124,7 +124,7 @@ const getMonthByIndex = function (index) {
 // i added days to the end of month to make all month equals to 42 length for design purpose
 
 monthsDays.forEach((month) => {
-    month.days.filter((day) => {
+    month.days.filter(() => {
         if (month.days.length < 42) {
             let lastElement = month.days[month.days.length - 1];
             month.days.push(addDays(lastElement, 1));
@@ -145,15 +145,5 @@ const monthFullNames = [
     "October",
     "November",
     "December",
-];
-
-const calculateStartOfDay = [
-    "",
-    "col-start-2",
-    "col-start-3",
-    "col-start-4",
-    "col-start-5",
-    "col-start-6",
-    "col-start-7",
 ];
 </script>
