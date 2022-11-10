@@ -10,7 +10,7 @@
                     class="text-center"
                 >
                     <h2 class="font-semibold text-gray-900">
-                        {{ month.name }} {{ month.year }}
+                        {{ month.name }}{{ month.year }}
                     </h2>
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
@@ -24,7 +24,7 @@
                         <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-white text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
@@ -36,11 +36,12 @@
                                 month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-50 text-gray-400',
-                                month.name !== getMonthByIndex(day.getMonth())
-                                    ? 'bg-white text-gray-900'
-                                    : 'bg-white text-gray-600',
-                                dayIdx === 0 &&
-                                    calculateStartOfDay[getDay(day)],
+                                dayIdx === 0 && 'rounded-tl-lg',
+                                dayIdx === 6 && 'rounded-tr-lg',
+                                dayIdx === month.days.length - 7 &&
+                                    'rounded-bl-lg',
+                                dayIdx === month.days.length - 1 &&
+                                    'rounded-br-lg',
                                 'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
@@ -51,8 +52,9 @@
                                         'bg-indigo-600 font-semibold text-white',
                                     'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                                 ]"
-                                >{{ format(day, "d") }}</time
                             >
+                                {{ format(day, "d") }}
+                            </time>
                         </button>
                     </div>
                 </section>
@@ -72,7 +74,6 @@ import {
     isToday,
     eachMonthOfInterval,
     add,
-    getDay,
     startOfWeek,
     addDays,
 } from "date-fns";
