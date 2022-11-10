@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         handleGetInvitesRequest() {
-                fetch(`/api/school/${this.schoolId}/invites`, {
+                fetch(`/api/school/${this.schoolId}/invites?page=${this.currentPage}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     }
@@ -67,6 +67,10 @@ export default {
                         this.currentPage++;
                         this.lastPage = res.meta.last_page;
                         this.invites.push(...res.data)
+                        this.invites.map((item) => {
+                           item.created_at = item.created_at.substring(0,16).replaceAll('T', ' ');
+                           item.updated_at = item.updated_at.substring(0,16).replaceAll('T', ' ');
+                       })
                     })
                     .finally(() => this.isInvitesLoaded = true)
         },
