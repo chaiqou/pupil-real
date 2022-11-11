@@ -2,7 +2,7 @@
     <div class="invisible lg:visible w-full">
         <div class="bg-inherit">
             <div
-                class="mx-auto xl:w-[100vh] grid grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8"
+                class="mx-auto 2xl:w-[100vh] grid grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none 2xl:grid-cols-2 xl:px-8"
             >
                 <section
                     v-for="month in monthsDays"
