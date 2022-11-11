@@ -1,6 +1,9 @@
 <template>
     <div class="mt-20">
         <form @submit.prevent="onSubmit">
+            <p class="mb-2 text-center text-xl font-black">
+                Create new lunch plan
+            </p>
             <BaseInput name="title" label="Title" />
             <BaseInput name="description" label="Description" />
             <RangeDatepicker name="active_range" label="Active range" />
