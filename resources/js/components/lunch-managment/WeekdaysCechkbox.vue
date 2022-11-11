@@ -1,10 +1,6 @@
 <template>
-    <div class="flex items-center justify-between">
-        <label class="text-md flex font-bold text-gray-600 whitespace-normal"
-            >Weekdays
-        </label>
-    </div>
-    <div class="lg:flex xl:space-x-9 space-y-2 md:space-y-0 justify-center">
+    <label class="text-md font-bold text-gray-600">Weekdays</label>
+    <div class="grid grid-cols-3 gap-3 sm:grid-cols-6 text-center">
         <ul v-for="day in dayOptions">
             <li>
                 <Field
@@ -24,7 +20,7 @@
             </li>
         </ul>
     </div>
-    <span class="mt-2 text-sm text-red-500 whitespace-nowrap">
+    <span class="mt-2 text-sm text-red-500">
         <ErrorMessage name="weekdays" />
     </span>
 </template>

@@ -8,6 +8,7 @@
             <LunchMultiselect name="claimables" label="Claimables" />
             <RangeDatepicker name="holds" label="Holds" />
             <RangeDatepicker name="extras" label="Extras" />
+            <WeekdaysChechkbox name="tags" />
             <BaseInput name="price_day" label="Price per day" />
             <BaseInput name="price_period" label="Price per period" />
             <Button text="Save Lunch" />
