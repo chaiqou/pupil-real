@@ -1,7 +1,7 @@
 <template>
-    <div class="invisible lg:visible bg-inherit">
+    <div class="invisible sm:visible bg-inherit">
         <div
-            class="mx-auto grid max-w-3xl 2xl:w-[100vh] grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-3"
+            class="mx-auto grid max-w-3xl 2xl:w-[100vh] grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none md:grid-cols-2 xl:grid-cols-3 xl:px-8 2xl:grid-cols-3"
         >
             <section
                 v-for="month in monthsDays"

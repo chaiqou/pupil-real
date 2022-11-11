@@ -1,5 +1,5 @@
 <template>
-    <div class="height-[100vh] mt-[4.2rem] w-screen md:w-96">
+    <div class="mt-20">
         <form @submit.prevent="onSubmit">
             <BaseInput name="title" label="Title" />
             <BaseInput name="description" label="Description" />
@@ -8,7 +8,6 @@
             <LunchMultiselect name="claimables" label="Claimables" />
             <RangeDatepicker name="holds" label="Holds" />
             <RangeDatepicker name="extras" label="Extras" />
-            <WeekdaysChechkbox name="tags" />
             <BaseInput name="price_day" label="Price per day" />
             <BaseInput name="price_period" label="Price per period" />
             <Button text="Save Lunch" />
