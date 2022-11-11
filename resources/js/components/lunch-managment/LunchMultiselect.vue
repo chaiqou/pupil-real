@@ -7,7 +7,7 @@
             class="mt-8"
             mode="tags"
             :limit="10"
-            :max="4"
+            :max="10"
             :close-on-select="false"
             :searchable="true"
             :options="mealOptions"
