@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sm:mt-20 min-w-[30vw]">
         <form @submit.prevent="onSubmit">
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
