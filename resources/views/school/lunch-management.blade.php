@@ -1,7 +1,12 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="flex px-12">
-    <calendar class="hidden lg:flex" :months={{ 11 }}></calendar>
-    <lunch-form class="w-screen mt-20  pb-8"></lunch-form>
-</div>
+<main class="flex">
+    <div class="py-6">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-6">
+      <div class="py-4 flex">
+        <calendar class="hidden lg:flex" :months={{ 11 }}></calendar>
+        </div>
+      </div>
+    </div>
+</main>
 @endsection
