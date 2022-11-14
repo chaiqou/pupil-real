@@ -1,38 +1,21 @@
 <template>
-<!--    <div>-->
-<!--        <label class="text-md flex font-bold text-gray-600 whitespace-normal"-->
-<!--        >{{ label }}-->
-<!--        </label>-->
-<!--        <Multiselect-->
-<!--            class="mt-8"-->
-<!--            mode="tags"-->
-<!--            :createOption="true"-->
-<!--            :searchable="true"-->
-<!--            v-model="this.value"-->
-<!--            :addOptionOn="['enter', 'space', 'tab', ';', ',']"-->
-<!--            :options="emails"-->
-<!--            @paste="show(value)"-->
-<!--        />-->
-<!--        <span class="mt-2 text-sm text-red-500 whitespace-nowrap">{{-->
-<!--                errorMessage-->
-<!--            }}</span>-->
-
-<!--        <button @click="send(value)" class="text-center m-10 text-white rounded-md bg-green-500 px-6 py-2">Send invites</button>-->
-<!--    </div>-->
    <ValidationForm>
+       <div
+           v-for="(email, index) in emails"
+           :key="email"
+           class="flex"
+       >
+           <div class="grid grid-cols-2">
+               <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
+                   <p>{{ email }}</p>
+                   <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
+               </div>
+           </div>
+       </div>
        <div
            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
        >
-           <div
-               v-for="(email, index) in emails"
-               :key="email"
-               class="flex"
-           >
-               <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
-                   <p>{{ email }}</p>
-                   <span class="ml-1.5" @click="removeTag(index)">x</span>
-               </div>
-           </div>
+
            <Field v-slot="{ resetField, field }" name="genres">
                <input
                    class=" outline-0 w-full m-1.5 placeholder-white"
