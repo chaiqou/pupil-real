@@ -1,5 +1,5 @@
 <template>
-   <ValidationForm>
+   <ValidationForm id="form">
        <div
            v-for="(email, index) in emails"
            :key="email"
@@ -12,13 +12,14 @@
                </div>
            </div>
        </div>
+       <label :for="this.name">{{this.label}}</label>
        <div
            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
        >
 
-           <Field v-slot="{ resetField, field }" name="genres">
+           <Field v-slot="{ resetField, field }" :name="this.name">
                <input
-                   class=" outline-0 w-full m-1.5 placeholder-white"
+                   class="outline-0 w-full m-1.5 placeholder-white"
                    v-bind="field"
                    @keydown.enter="resetField()"
                    @keydown="addTag"
@@ -93,7 +94,6 @@ export default {
                            this.emails = this.emails.concat(this.emailsPaste);
                            event.target.value = "";
                        },50)
-
             },
         removeTag(index) {
             this.emails.splice(index, 1);
@@ -105,6 +105,14 @@ export default {
         },
      },
 }
+
+function resetOnPaste() {
+    setTimeout(() => {
+        document.getElementById("form").reset();
+    },5)
+}
+
+window.addEventListener("paste", resetOnPaste)
 
 //
 // const props = defineProps({
