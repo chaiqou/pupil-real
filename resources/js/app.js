@@ -21,8 +21,9 @@ import ParentStudentEditModal from "./components/parent/StudentsEditModal.vue";
 import SchoolDashboardTransactions from "./components/school/DashboardTransactions.vue";
 import LunchForm from "./components/lunch-managment/LunchForm.vue";
 import Datepicker from "@vuepic/vue-datepicker";
-import SchoolDashboardStudents from './components/school/DashboardStudents.vue';
-import ParentStudentsMobile from './components/parent/StudentsMobile.vue';
+import SchoolDashboardStudents from "./components/school/DashboardStudents.vue";
+import ParentStudentsMobile from "./components/parent/StudentsMobile.vue";
+import ExtrasAndHolds from "./components/lunch-managment/ExtrasAndHolds";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
@@ -50,7 +51,8 @@ app.component("lunch-form", LunchForm);
 app.component("Datepicker", Datepicker);
 app.component("school-dashboard-students", SchoolDashboardStudents);
 app.component("school-dashboard-transactions", SchoolDashboardTransactions);
-app.component('parent-students-mobile', ParentStudentsMobile);
+app.component("parent-students-mobile", ParentStudentsMobile);
+app.component("extras-and-holds", ExtrasAndHolds);
 
 app.use(pinia);
 app.mount("#app");
