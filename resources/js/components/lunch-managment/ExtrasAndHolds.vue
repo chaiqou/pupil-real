@@ -93,6 +93,7 @@
                 >
                     Add holds
                 </button>
+                <Datepicker v-if="toggleDatePicker" range />
                 <button
                     @click="showDatePickerOnClick"
                     class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -109,4 +110,9 @@ import { ref } from "vue";
 
 const holds = ref([]);
 const extras = ref([]);
+const toggleDatePicker = ref(true);
+
+const showDatePickerOnClick = () => {
+    toggleDatePicker.value = !toggleDatePicker.value;
+};
 </script>
