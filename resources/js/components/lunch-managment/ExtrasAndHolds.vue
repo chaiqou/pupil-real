@@ -5,7 +5,7 @@
         <div class="rounded-md bg-inherit p-8">
             <div class="mt-6 flow-root">
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
-                    <li v-for="(extra, extraIdx) in extrasArray" class="py-4">
+                    <li v-for="(extra, extraIdx) in extrasData" class="py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -21,7 +21,7 @@
                                     Extra period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ extra.date }}
+                                    {{ extra }}
                                 </p>
                             </div>
                             <div>
@@ -36,7 +36,7 @@
                         </div>
                     </li>
 
-                    <li v-for="(holds, holdIdx) in holdsArray" class="py-4">
+                    <li v-for="(holds, holdIdx) in holdsData" class="py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -52,7 +52,7 @@
                                     Hold period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ holds.date }}
+                                    {{ holds }}
                                 </p>
                             </div>
                             <div>
@@ -114,38 +114,14 @@ const showDatePickerOnClickExtras = () => {
     toggleDatePickerExtras.value = !toggleDatePickerExtras.value;
 };
 
-const holdsData = ref([]);
-const extrasData = ref([]);
-
-const extrasArray = ref([
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-]);
-
-const holdsArray = ref([
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-    {
-        date: "2022.11.20.-2022.11.20.",
-    },
-]);
+const holdsData = ref(["2021-08-01", "2021-08-02", "2021-08-03"]);
+const extrasData = ref(["2021-08-04", "2021-08-05", "2021-08-06"]);
 
 const removeExtra = (extraIdx) => {
-    extrasArray.value.splice(extraIdx, 1);
+    extrasData.value.splice(extraIdx, 1);
 };
 
 const removeHold = (holdIdx) => {
-    holdsArray.value.splice(holdIdx, 1);
+    holdsData.value.splice(holdIdx, 1);
 };
 </script>
