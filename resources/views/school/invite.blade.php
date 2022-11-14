@@ -1,13 +1,5 @@
 @extends('layouts.dashboard')
 @section('content')
-{{--    <div>--}}
-{{--        <form method="POST" action="{{route('send.invite')}}">--}}
-{{--            @csrf--}}
-{{--            <input name="email" type="text"/>--}}
-{{--        </form>--}}
-{{--    </div>--}}
-
-
             <invites-header></invites-header>
     <div class="mx-3 md:mx-7 mt-8 flex flex-col">
     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
