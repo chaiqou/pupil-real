@@ -30,7 +30,7 @@
            >
                <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
                    <p>{{ email }}</p>
-                   <button class="ml-1.5" @click="removeTag(index)">x</button>
+                   <span class="ml-1.5" @click="removeTag(index)">x</span>
                </div>
            </div>
            <Field v-slot="{ resetField, field }" name="genres">
@@ -40,6 +40,8 @@
                    @keydown.enter="resetField()"
                    @keydown="addTag"
                    @keydown.delete="removeLastTag"
+                   @paste="pasteTags"
+                   v-model="this.inputValue"
                />
            </Field>
        </div>
@@ -47,6 +49,7 @@
            Be careful !
        </p>
        <p class="text-red-500">{{ error }}</p>
+       {{this.inputValue}}
    </ValidationForm>
 </template>
 
@@ -64,6 +67,8 @@ export default {
         return {
             emails: [],
             error: "",
+            inputValue: "",
+            emailsPaste: [],
         }
     },
     props: {
@@ -98,6 +103,15 @@ export default {
                 }
             }
         },
+        pasteTags(event) {
+                       setTimeout(() => {
+                               this.emailsPaste =
+                                   this.inputValue.replaceAll(",", "").split(" ");
+                           this.emails = this.emails.concat(this.emailsPaste);
+                           event.target.value = "";
+                       },50)
+
+            },
         removeTag(index) {
             this.emails.splice(index, 1);
         },
@@ -106,7 +120,7 @@ export default {
                 this.removeTag(this.emails.length - 1);
             }
         },
-    }
+     },
 }
 
 //
