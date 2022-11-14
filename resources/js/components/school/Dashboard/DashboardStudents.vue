@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import StudentsNotFound from "../not-found/StudentsNotFound";
+import StudentsNotFound from "../../not-found/StudentsNotFound";
 import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../../stores/useStudentStore";
+import {useStudentStore} from "../../../stores/useStudentStore";
 
 export default {
     components: {

@@ -34,8 +34,8 @@
 
 <script>
 import {mapWritableState} from "pinia";
-import { useInviteStore } from "../../stores/useInviteStore";
-import InvitesNotFound from "../not-found/InvitesNotFound"
+import { useInviteStore } from "../../../stores/useInviteStore";
+import InvitesNotFound from "../../not-found/InvitesNotFound"
 export default {
     components: {
         InvitesNotFound,

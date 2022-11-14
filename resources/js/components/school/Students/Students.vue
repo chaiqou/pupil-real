@@ -37,8 +37,8 @@
 
 <script>
 import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../../stores/useStudentStore";
-import StudentsNotFound from "../not-found/StudentsNotFound";
+import {useStudentStore} from "../../../stores/useStudentStore";
+import StudentsNotFound from "../../not-found/StudentsNotFound";
 export default {
     components: {
         StudentsNotFound,

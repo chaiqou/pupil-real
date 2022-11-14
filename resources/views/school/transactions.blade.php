@@ -4,7 +4,7 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-xl font-semibold text-gray-900">My transactions</h1>
-                <p class="mt-2 text-sm text-gray-700">A list of all the transactions in your account including your name, transaction amount/type/date and merchant nickname.</p>
+                <p class="mt-2 text-sm text-gray-700">A list of all the transactions depend to your school, including students name, transaction amount/type/date and merchant nickname.</p>
             </div>
         </div>
         <div class="mt-8 flex flex-col">
