@@ -87,15 +87,16 @@
                 </ul>
             </div>
             <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
+                <Datepicker v-if="toggleDatePickerHolds" range />
                 <button
-                    @click="showDatePickerOnClick"
+                    @click="showDatePickerOnClickHolds"
                     class="appearance-0 flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                 >
                     Add holds
                 </button>
-                <Datepicker v-if="toggleDatePicker" range />
+                <Datepicker v-if="toggleDatePickerExtras" range />
                 <button
-                    @click="showDatePickerOnClick"
+                    @click="showDatePickerOnClickExtras"
                     class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                 >
                     Add extra
@@ -110,9 +111,14 @@ import { ref } from "vue";
 
 const holds = ref([]);
 const extras = ref([]);
-const toggleDatePicker = ref(true);
+const toggleDatePickerHolds = ref(false);
+const toggleDatePickerExtras = ref(false);
 
-const showDatePickerOnClick = () => {
-    toggleDatePicker.value = !toggleDatePicker.value;
+const showDatePickerOnClickHolds = () => {
+    toggleDatePickerHolds.value = !toggleDatePickerHolds.value;
+};
+
+const showDatePickerOnClickExtras = () => {
+    toggleDatePickerExtras.value = !toggleDatePickerExtras.value;
 };
 </script>
