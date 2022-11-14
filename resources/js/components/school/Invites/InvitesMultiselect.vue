@@ -1,11 +1,7 @@
 <template>
    <ValidationForm id="form">
-       <div
-           v-for="(email, index) in emails"
-           :key="email"
-           class="flex"
-       >
-           <div class="grid grid-cols-2">
+       <div class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3">
+           <div v-for="(email, index) in emails" :key="index">
                <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
                    <p>{{ email }}</p>
                    <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
