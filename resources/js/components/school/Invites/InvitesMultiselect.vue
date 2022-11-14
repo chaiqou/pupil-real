@@ -103,65 +103,17 @@ export default {
                 this.removeTag(this.emails.length - 1);
             }
         },
+        resetOnPaste() {
+            setTimeout(() => {
+                document.getElementById("form").reset();
+            },5)
+        }
      },
+    created() {
+        window.addEventListener("paste", this.resetOnPaste)
+    },
 }
 
-function resetOnPaste() {
-    setTimeout(() => {
-        document.getElementById("form").reset();
-    },5)
-}
-
-window.addEventListener("paste", resetOnPaste)
-
-//
-// const props = defineProps({
-//     name: {
-//         type: String,
-//         required: true,
-//     },
-//     label: {
-//         type: String,
-//         required: true,
-//     },
-// });
-//
-// function updateSelectedMeal() {
-//     console.log(value, '1');
-// }
-//
-//
-// function send(value) {
-//     console.log(value, 'values');
-// }
-//
-// const emails = [
-//     'hi'
-// ];
-//
-// function required(value) {
-//     if (value) {
-//         return true;
-//     }
-//     return "This field is required";
-// }
-//
-// const nameRef = toRef(props, "name");
-// const { errorMessage, value } = useField(nameRef, required);
-//
-// function addTags(value) {
-//     value.split(',').map((item) => {
-//         emails.push({
-//             name: item.trim(),
-//         });
-//     });
-// }
-//
-//
-// function hello(value) {
-//     let clipboard= window.event.clipboardData.getData('text');
-//     emails.push(value)
-// }
 </script>
 
 <style src="@vueform/multiselect/themes/default.css" />
