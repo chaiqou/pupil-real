@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
+        class="flex max-h-screen flex-col justify-center overflow-hidden bg-inherit"
     >
         <div class="rounded-md bg-inherit p-8">
             <div class="mt-6 flow-root">
@@ -26,6 +26,8 @@
                             </div>
                             <div>
                                 <button
+                                    type="button"
+                                    @click="removeExtra(extraIdx)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -55,6 +57,8 @@
                             </div>
                             <div>
                                 <button
+                                    type="button"
+                                    @click="removeHold(holdIdx)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -110,6 +114,9 @@ const showDatePickerOnClickExtras = () => {
     toggleDatePickerExtras.value = !toggleDatePickerExtras.value;
 };
 
+const holdsData = ref([]);
+const extrasData = ref([]);
+
 const extrasArray = ref([
     {
         date: "2022.11.20.-2022.11.20.",
@@ -134,6 +141,11 @@ const holdsArray = ref([
     },
 ]);
 
-const holdsData = ref([]);
-const extrasData = ref([]);
+const removeExtra = (extraIdx) => {
+    extrasArray.value.splice(extraIdx, 1);
+};
+
+const removeHold = (holdIdx) => {
+    holdsArray.value.splice(holdIdx, 1);
+};
 </script>
