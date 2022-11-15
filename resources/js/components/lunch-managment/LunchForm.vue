@@ -14,7 +14,7 @@
             <WeekdaysChechkbox name="tags" />
             <BaseInput name="price_day" label="Price per day" />
             <BaseInput name="price_period" label="Price per period" />
-            <ExtrasAndHolds />
+            <ExtrasAndHolds holds="holds" extras="extras" />
             <Button text="Save Lunch" />
         </form>
     </div>
