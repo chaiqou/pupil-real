@@ -40,13 +40,17 @@ class InviteController extends Controller
 
     public function sendInvite(InviteRequest $request): RedirectResponse
     {
-        $invite = Invite::create([
-            'uniqueID' => Str::random(32),
-            'email' => $request->email,
-            'school_id' => auth()->user()->school_id,
-        ]);
-        Mail::to($invite->email)->send(new InviteUser($invite));
-        $invite->update(['state' => 1]);
+        $emails = $request->emails;
+        foreach($emails as $email)
+        {
+            $invite = Invite::create([
+                'uniqueID' => Str::random(32),
+                'email' => $email,
+                'school_id' => auth()->user()->school_id,
+            ]);
+            Mail::to($email)->send(new InviteUser($invite));
+            $invite->update(['state' => 1]);
+        }
 
         return redirect()->back();
     }

@@ -50,8 +50,8 @@
                                     />
                                 </button>
                             </div>
-                            <div class="mb-[20rem]">
-                              <invites-multiselect name="invite" label="Invite users"></invites-multiselect>
+                            <div>
+                              <invites-multiselect></invites-multiselect>
                             </div>
                         </DialogPanel>
                     </TransitionChild>

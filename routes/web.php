@@ -64,10 +64,6 @@ Route::middleware(['auth'])->group(function () {
            });
        });
 
-
-
-       Route::post('send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
-
 });
 
 Route::controller(InviteController::class)->group(function () {

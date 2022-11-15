@@ -1,19 +1,18 @@
 <template>
-   <ValidationForm id="form">
-       <div class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3">
+   <ValidationForm id="form" @submit="onSubmit()">
+       <div class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
            <div v-for="(email, index) in emails" :key="index">
                <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
-                   <p>{{ email }}</p>
+                   <p class="max-w-[7rem] truncate ... hover:max-w-full">{{ email }}</p>
                    <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
                </div>
            </div>
        </div>
-       <label :for="this.name">{{this.label}}</label>
+       <label for="emails">Invite users by their email address.</label>
        <div
            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
        >
-
-           <Field v-slot="{ resetField, field }" :name="this.name">
+           <Field v-slot="{ resetField, field }" name="emails">
                <input
                    class="outline-0 w-full m-1.5 placeholder-white"
                    v-bind="field"
@@ -26,10 +25,12 @@
            </Field>
        </div>
        <p class="text-gray-400 text-[10px]">
-           Be careful !
+           Be careful, dont send invite on wrong email.
        </p>
        <p class="text-red-500">{{ error }}</p>
-       {{this.inputValue}}
+      <div>
+          <button type="submit" class="bg-green-500 rounded-md text-white px-5 py-2 w-full mt-10">Send</button>
+      </div>
    </ValidationForm>
 </template>
 
@@ -51,15 +52,14 @@ export default {
             emailsPaste: [],
         }
     },
-    props: {
-        name: {
-            type: String,
-            required: true,
+    computed: {
+        data(state) {
+            const formData = new FormData();
+            for (var i = 0; i < this.emails.length; i++) {
+                formData.append("emails[" + i + "]", this.emails[i]);
+            }
+            return formData;
         },
-        label: {
-            type: String,
-            required: true,
-        }
     },
     methods: {
         addTag(event) {
@@ -87,6 +87,7 @@ export default {
                        setTimeout(() => {
                                this.emailsPaste =
                                    this.inputValue.replaceAll(",", "").split(" ");
+                               if(this.emails.includes(this.emailsPaste)) {return}
                            this.emails = this.emails.concat(this.emailsPaste);
                            event.target.value = "";
                        },50)
@@ -103,7 +104,21 @@ export default {
             setTimeout(() => {
                 document.getElementById("form").reset();
             },5)
-        }
+        },
+        onSubmit() {
+            axios
+                .post("/api/send-invite", this.data, {
+                    headers: {
+                        "Content-Type": "multipart/form-formData",
+                    },
+                })
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
      },
     created() {
         window.addEventListener("paste", this.resetOnPaste)

@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::post('send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
+
     Route::prefix('/school/')->group(function() {
          Route::controller(SchoolController::class)->group(function () {
             Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
