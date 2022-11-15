@@ -4,10 +4,11 @@
             >{{ label }}
         </label>
         <input
-            @input="handleChange"
+            :name="name"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
             @change="handleChange"
             @blur="handleChange"
-            v-model="value"
             :type="type"
             :placeholder="placeholder"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -39,6 +40,10 @@ const props = defineProps({
         type: String,
         required: false,
         default: "text",
+    },
+    modelValue: {
+        type: [String, Number],
+        default: "",
     },
 });
 
