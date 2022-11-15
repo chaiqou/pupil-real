@@ -7,6 +7,7 @@
                     name="weekdays"
                     type="checkbox"
                     :value="day.fullName"
+                    v-model="store.tags"
                     rules="required"
                     :id="day.fullName"
                     class="hidden peer"
@@ -27,6 +28,9 @@
 
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
+const store = useLunchFormStore();
 
 const dayOptions = [
     { name: "M", fullName: "monday", validOption: true },
