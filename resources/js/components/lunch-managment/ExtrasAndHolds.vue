@@ -98,6 +98,7 @@
 </template>
 
 <script setup>
+import { execArgv } from "process";
 import { ref } from "vue";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
@@ -114,13 +115,17 @@ const props = defineProps({
 });
 
 const toggleDatePickerExtras = ref(false);
-const extrasData = ref(["2021-08-04", "2021-08-05", "2021-08-06"]);
+const extrasData = ref([]);
 
 const showDatePickerOnClickExtras = () => {
     toggleDatePickerExtras.value = !toggleDatePickerExtras.value;
 };
 const removeExtra = (extraIdx) => {
     extrasData.value.splice(extraIdx, 1);
+};
+const addExtra = () => {
+    extrasData.value.push(extrasData.value);
+    extrasData.value = [];
 };
 
 const toggleDatePickerHolds = ref(false);
@@ -131,5 +136,9 @@ const showDatePickerOnClickHolds = () => {
 };
 const removeHold = (holdIdx) => {
     holdsData.value.splice(holdIdx, 1);
+};
+const addHold = () => {
+    holdsData.value.push(holdsData.value);
+    holdsData.value = [];
 };
 </script>
