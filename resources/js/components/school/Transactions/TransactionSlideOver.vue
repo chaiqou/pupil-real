@@ -11,7 +11,7 @@
                                 <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                                     <div class="px-4 sm:px-6">
                                         <div class="flex items-start justify-between">
-                                            <DialogTitle class="text-lg font-medium text-gray-900">Student #{{this.student.id}} Details</DialogTitle>
+                                            <DialogTitle class="text-lg font-medium text-gray-900">Transaction #{{this.transaction.id}} Details</DialogTitle>
                                             <div class="ml-3 flex h-7 items-center">
                                                 <button @click="showHideSlideOver()" type="button" class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                                     <span class="sr-only">Close panel</span>
@@ -24,37 +24,42 @@
                                         <!-- Replace with your content -->
                                         <div class="flex">
                                             <p class="font-bold">First name: </p>
-                                            <p class="ml-3">{{this.student.first_name}}</p>
+                                            <p class="ml-3">{{this.transaction.student.first_name}}</p>
                                         </div>
 
                                         <div class="flex">
                                             <p class="font-bold">Last name: </p>
-                                            <p class="ml-3">{{this.student.last_name}}</p>
+                                            <p class="ml-3">{{this.transaction.student.last_name}}</p>
                                         </div>
 
                                         <div class="flex">
-                                            <p class="font-bold">Middle name: </p>
-                                            <p class="ml-3">{{this.student.middle_name || 'Not given'}}</p>
+                                            <p class="font-bold">Amount: </p>
+                                            <p class="ml-3">{{this.transaction.amount}}</p>
                                         </div>
 
                                         <div class="flex">
-                                            <p class="font-bold">Card number: </p>
-                                            <p class="ml-3">{{this.student.card_number}}</p>
+                                            <p class="font-bold">Transaction type: </p>
+                                            <p class="ml-3">{{this.transaction.transaction_type}}</p>
                                         </div>
 
                                         <div class="flex">
-                                            <p class="font-bold">User information: </p>
-                                            <p class="ml-3">{{this.student.user_information}}</p>
+                                            <p class="font-bold">Transaction date: </p>
+                                            <p class="ml-3">{{this.transaction.transaction_date}}</p>
                                         </div>
 
                                         <div class="flex">
-                                            <p class="font-bold">Balances: </p>
-                                            <p class="ml-3">{{this.student.balances}}</p>
+                                            <p class="font-bold">Merchant Nickname: </p>
+                                            <p class="ml-3">{{this.transaction.merchant.merchant_nick}}</p>
                                         </div>
 
                                         <div class="flex">
-                                            <p class="font-bold">Parent: </p>
-                                            <p class="ml-3">{{this.student.user}}</p>
+                                            <p class="font-bold">Pending: </p>
+                                            <p class="ml-3">{{this.transaction.pending}}</p>
+                                        </div>
+
+                                        <div class="flex">
+                                            <p class="font-bold">Comment: </p>
+                                            <p class="ml-3">{{this.transaction.comment}}</p>
                                         </div>
                                         <!-- /End replace -->
                                     </div>
@@ -71,7 +76,7 @@
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-import { useStudentStore } from "../../stores/useStudentStore";
+import { useTransactionStore} from "../../../stores/useTransactionStore";
 import {mapActions, mapWritableState} from "pinia";
 
 export default {
@@ -84,10 +89,10 @@ export default {
         XMarkIcon,
     },
     computed: {
-        ...mapWritableState(useStudentStore, ["isSlideOverOpen", "student"]),
+        ...mapWritableState(useTransactionStore, ["isSlideOverOpen", "transaction"]),
     },
     methods: {
-        ...mapActions(useStudentStore, ["showHideSlideOver"]),
+        ...mapActions(useTransactionStore, ["showHideSlideOver"]),
     },
 };
 </script>

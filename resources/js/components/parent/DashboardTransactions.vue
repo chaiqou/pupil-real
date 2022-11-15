@@ -55,16 +55,10 @@ export default {
         }
     },
     methods: {
-
         handleGetLastFiveTransactions() {
-            fetch(`/api/parent/${this.studentId}/last-transactions`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(res => res.json())
+            axios.get(`/api/parent/${this.studentId}/last-transactions`)
                 .then(res => {
-                    this.transactions = res.data;
+                    this.transactions = res.data.data;
                 })
                 .finally(() => this.isTransactionsLoaded = true)
         },

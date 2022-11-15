@@ -1176,9 +1176,7 @@ export default {
     methods: {
         ...mapActions(useModalStore, ["showHideStudentEdit"]),
         submit() {
-            fetch(`/api/parent/update-student`, {
-                method: "post",
-                body: JSON.stringify({
+            axios.post(`/api/parent/update-student`, {
                     student_id: this.student.id,
                     first_name: this.student.first_name,
                     last_name: this.student.last_name,
@@ -1189,11 +1187,8 @@ export default {
                     street_address:
                         this.student.user_information.street_address,
                     zip: this.student.user_information.zip,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).finally(() => {
+                })
+            .finally(() => {
                 this.isStudentEditVisible = false;
             });
         },

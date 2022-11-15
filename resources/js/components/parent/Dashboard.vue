@@ -68,14 +68,9 @@ export default {
     },
     methods: {
         handleGetLastWeekSpending() {
-            fetch(`/api/parent/${this.studentId}/week-spending`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(res => res.json())
+            axios.get(`/api/parent/${this.studentId}/week-spending`)
                 .then(res => {
-                    this.weekSpending = res.data
+                    this.weekSpending = res.data.data
                     this.weekSumAmount = this.weekSpending.reduce((a,b) => {
                         return a + b.amount
                     }, 0)
@@ -84,14 +79,9 @@ export default {
         },
 
         handleGetLastMonthSpending() {
-            fetch(`/api/parent/${this.studentId}/month-spending`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(res => res.json())
+            axios.get(`/api/parent/${this.studentId}/month-spending`)
                 .then(res => {
-                    this.monthSpending = res.data
+                    this.monthSpending = res.data.data
                     this.monthSumAmount = this.monthSpending.reduce((a,b) => {
                         return a + b.amount
                     }, 0)
