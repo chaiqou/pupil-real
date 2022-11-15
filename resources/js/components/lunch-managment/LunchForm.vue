@@ -10,15 +10,23 @@
                 name="description"
                 label="Description"
             />
-            <RangeDatepicker name="active_range" label="Active range" />
+            <RangeDatepicker
+                v-model="store.active_range"
+                name="active_range"
+                label="Active range"
+            />
             <BaseInput
                 v-model="store.period_length"
                 name="period_length"
                 label="Period Length"
             />
             <LunchMultiselect name="claimables" label="Claimables" />
-            <RangeDatepicker name="holds" label="Holds" />
-            <RangeDatepicker name="extras" label="Extras" />
+            <RangeDatepicker v-model="store.holds" name="holds" label="Holds" />
+            <RangeDatepicker
+                v-model="store.extras"
+                name="extras"
+                label="Extras"
+            />
             <WeekdaysChechkbox name="tags" />
             <BaseInput
                 v-model="store.price_day"
