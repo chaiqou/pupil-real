@@ -21,12 +21,14 @@
                         <img class="h-8 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg" alt="Your Company" />
                     </div>
                     <nav class="mt-5 space-y-1 px-2">
-                        <a v-for="item in navigation" :key="item" :href="item.href" :class="item.current ? 'group flex items-center rounded-md bg-gray-300 px-2 py-2 text-base font-medium text-gray-900' : 'group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-900'">
-                          <div class="w-5 mr-3">
-                                <component :is="item.icon"/>
-                            </div>
-                            {{item.name}}
-                        </a>
+                        <span  v-for="item in navigation" :key="item" >
+            <a v-if="!item.hidden" :href="item.href" :class="item.current ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900' : 'group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'">
+                <div class="w-5 mr-3" >
+                    <component :is="item.icon"></component>
+                </div>
+                {{item.name}}
+            </a>
+        </span>
 
                     </nav>
                 </div>
