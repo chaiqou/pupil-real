@@ -14,7 +14,7 @@
             <WeekdaysChechkbox name="tags" />
             <BaseInput name="price_day" label="Price per day" />
             <BaseInput name="price_period" label="Price per period" />
-            <extras-and-holds></extras-and-holds>
+            <ExtrasAndHolds />
             <Button text="Save Lunch" />
         </form>
     </div>
@@ -26,8 +26,10 @@ import BaseInput from "../form-components/BaseInput";
 import RangeDatepicker from "../form-components/RangeDatepicker.vue";
 import LunchMultiselect from "./LunchMultiselect.vue";
 import WeekdaysChechkbox from "./WeekdaysCechkbox.vue";
+import ExtrasAndHolds from "./ExtrasAndHolds.vue";
 import Button from "../ui/Button.vue";
 import { useForm } from "vee-validate";
+
 const { handleSubmit } = useForm();
 
 const onSubmit = handleSubmit((values) => {
