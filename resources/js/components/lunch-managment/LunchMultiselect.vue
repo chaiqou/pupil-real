@@ -14,9 +14,11 @@
             :options="mealOptions"
             @change="updateSelectedMeal"
         />
-        <span class="mt-2 text-sm text-red-500 whitespace-nowrap">{{
-            errorMessage
-        }}</span>
+        <span
+            v-if="store.claimables.length === 0"
+            class="mt-2 text-sm text-red-500 whitespace-nowrap"
+            >This field is required</span
+        >
     </div>
 </template>
 
