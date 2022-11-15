@@ -59,25 +59,14 @@ const { handleSubmit } = useForm();
 const store = useLunchFormStore();
 
 const onSubmit = handleSubmit((values) => {
-    // axios
-    //     .post("lunch", {
-    //         title: values.title,
-    //         description: values.description,
-    //         active_range: values.active_range,
-    //         period_length: values.period_length,
-    //         claimables: values.claimables,
-    //         holds: values.holds,
-    //         extras: values.extras,
-    //         tags: values.tags,
-    //         price_day: values.price_day,
-    //         price_period: values.price_period,
-    //     })
-    //     .then((response) => {
-    //         console.log(response);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
+    axios
+        .post("lunch", store.getLunchFormData)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     console.log(store.getLunchFormData);
 });
 </script>
