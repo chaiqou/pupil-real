@@ -68,14 +68,9 @@ export default {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentEdit"]),
         ...mapActions(useModalStore, ["showHideStudentEdit"]),
         handleGetStudentRequest() {
-                fetch(`/api/parent/${this.userId}/students`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(res => res.json())
+                axios.get(`/api/parent/${this.userId}/students`)
                     .then(res => {
-                        this.students = res.data
+                        this.students = res.data.data
                     })
                     .finally(() => {
                         setTimeout(() => {

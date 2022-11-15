@@ -68,16 +68,11 @@ export default {
     methods: {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
         handleGetStudentRequest() {
-            fetch(`/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(res => res.json())
+            axios.get(`/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`)
                 .then(res => {
                     this.currentPage++;
-                    this.lastPage = res.meta.last_page;
-                    this.students.push(...res.data)
+                    this.lastPage = res.data.meta.last_page;
+                    this.students.push(...res.data.data)
                 })
                 .finally(() => this.isStudentsLoaded = true)
         },

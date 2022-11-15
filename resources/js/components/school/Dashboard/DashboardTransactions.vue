@@ -58,14 +58,9 @@ export default {
     },
     methods: {
         handleGetLastFiveTransactions() {
-            fetch(`/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(res => res.json())
+            axios.get(`/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`)
                 .then(res => {
-                    this.transactions = res.data;
+                    this.transactions = res.data.data;
                 })
                 .finally(() => this.isTransactionsLoaded = true)
         },

@@ -57,16 +57,11 @@ export default {
     },
     methods: {
         handleGetInvitesRequest() {
-                fetch(`/api/school/${this.schoolId}/invites?page=${this.currentPage}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                    .then(res => res.json())
+            axios.get(`/api/school/${this.schoolId}/invites?page=${this.currentPage}`)
                     .then(res => {
                         this.currentPage++;
-                        this.lastPage = res.meta.last_page;
-                        this.invites.push(...res.data)
+                        this.lastPage = res.data.meta.last_page;
+                        this.invites.push(...res.data.data)
                         this.invites.map((item) => {
                            item.created_at = item.created_at.substring(0,16).replaceAll('T', ' ');
                            item.updated_at = item.updated_at.substring(0,16).replaceAll('T', ' ');

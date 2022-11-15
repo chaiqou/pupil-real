@@ -75,16 +75,11 @@ export default {
     methods: {
         ...mapActions(useTransactionStore, ["showHideSlideOver", "currentTransactionDetails"]),
         handleGetTransactionsRequest() {
-                   fetch(`/api/parent/${this.studentId}/transactions?page=${this.currentPage}`, {
-                       headers: {
-                           'Content-Type': 'application/json',
-                       }
-                   })
-                       .then(res => res.json())
+                   axios.get(`/api/parent/${this.studentId}/transactions?page=${this.currentPage}`)
                        .then(res => {
                            this.currentPage++;
-                           this.lastPage = res.meta.last_page;
-                           this.transactions.push(...res.data)
+                           this.lastPage = res.data.meta.last_page;
+                           this.transactions.push(...res.data.data)
                        })
                        .finally(() => this.isTransactionsLoaded = true)
         },
