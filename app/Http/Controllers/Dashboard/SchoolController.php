@@ -19,7 +19,7 @@ class SchoolController extends Controller
     public function getTransactions(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
-            $transactions = Transaction::where('merchant_id', $request->school_id)->with('merchant', 'student')->paginate(6);
+            $transactions = Transaction::where('merchant_id', $request->school_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
 
             return TransactionResource::collection($transactions);
         }
@@ -30,7 +30,7 @@ class SchoolController extends Controller
     public function getStudents(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('school')) {
-            $students = Student::where('school_id', $request->school_id)->with('user')->paginate(6);
+            $students = Student::where('school_id', $request->school_id)->with('user')->latest('created_at')->paginate(6);
 
             return StudentResource::collection($students);
         }
@@ -42,7 +42,7 @@ class SchoolController extends Controller
     {
         if (auth()->user()->hasRole('school')) {
             $merchant = Merchant::where('user_id', $request->school_id)->first();
-            $students = Student::where('school_id', $merchant->id)->with('user')->paginate(6);
+            $students = Student::where('school_id', $merchant->id)->with('user')->latest('created_at')->paginate(6);
 
             return StudentResource::collection($students);
         }

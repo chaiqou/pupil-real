@@ -83,7 +83,7 @@ class ParentController extends Controller
 
         public function getTransactions(Request $request): ResourceCollection
         {
-            $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->paginate(6);
+            $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
             return TransactionResource::collection($transactions);
         }
 
@@ -113,7 +113,7 @@ class ParentController extends Controller
     public function getStudents(Request $request): ResourceCollection|JsonResponse
     {
         if (auth()->user()->hasRole('parent')) {
-            $students = Student::where('user_id', $request->user_id)->get();
+            $students = Student::where('user_id', $request->user_id)->latest('created_at')->get();
 
             return StudentResource::collection($students);
         }

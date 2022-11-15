@@ -164,7 +164,7 @@ class InviteController extends Controller
 
     public function getInvites(Request $request): ResourceCollection
     {
-         $invites = Invite::where('school_id', $request->school_id)->paginate(5);
+         $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
          return InviteResource::collection($invites);
     }
 }

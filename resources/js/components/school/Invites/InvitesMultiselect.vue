@@ -27,7 +27,7 @@
        <p class="text-gray-400 text-[10px]">
            Be careful, dont send invite on wrong email.
        </p>
-       <p class="text-red-500">{{ error }}</p>
+       <p v-if="this.isSent" class="text-green-500">All emails send successfully!</p>
       <div>
           <button type="submit" class="bg-green-500 rounded-md text-white px-5 py-2 w-full mt-10">Send</button>
       </div>
@@ -50,10 +50,11 @@ export default {
             error: "",
             inputValue: "",
             emailsPaste: [],
+            isSent: false,
         }
     },
     computed: {
-        data(state) {
+        emailData() {
             const formData = new FormData();
             for (var i = 0; i < this.emails.length; i++) {
                 formData.append("emails[" + i + "]", this.emails[i]);
@@ -107,17 +108,21 @@ export default {
         },
         onSubmit() {
             axios
-                .post("/api/send-invite", this.data, {
+                .post("/api/send-invite", this.emailData, {
                     headers: {
                         "Content-Type": "multipart/form-formData",
                     },
                 })
-                .then((res) => {
-                    console.log(res);
+                .then(() => {
+                    this.emails = [];
+                    this.isSent = true;
                 })
                 .catch((error) => {
                     console.log(error);
-                });
+                })
+                .finally(() => setTimeout(() => {
+                    this.isSent = false;
+                }, 5000));
         },
      },
     created() {
@@ -133,9 +138,5 @@ body {
     --ms-bg: transparent;
     --ms-tag-bg: #6c757d;
     --ms-border-color: #6c757d;
-}
-
-.multiselect-tags-search {
-    background-color: inherit;
 }
 </style>
