@@ -1,7 +1,7 @@
 <template>
    <ValidationForm id="form" @submit="onSubmit()">
        <div  class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
-               <div v-for="(element, index) in newEmailsArray" :key="index">
+               <div v-for="(element, index) in mainEmailsArray" :key="index">
                    <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
                        <p :class="element.exists === true ?  'text-red-900 max-w-[7rem] truncate ... hover:max-w-full' : 'max-w-[7rem]'">{{element.email}}</p>
                        <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
@@ -54,7 +54,7 @@ export default {
             emailsPaste: [],
             isSent: false,
             existedInviteEmails: [],
-            newEmailsArray: [],
+            mainEmailsArray: [],
         }
     },
     computed: {
@@ -98,17 +98,24 @@ export default {
                        setTimeout(() => {
                                this.emailsPaste =
                                    this.inputValue.replaceAll(",", "").split(" ");
-                               if(this.emails.includes(this.emailsPaste)) {return}
+                               if(this.mainEmailsArray.includes(this.emailsPaste)) {return}
                            this.emails = this.emails.concat(this.emailsPaste);
+
+                           this.mainEmailsArray = this.emails.reduce((element, current) => {
+                               const includesEmail = this.existedInviteEmails.includes(current);
+                               const newValue = { email: current, exists: includesEmail };
+                               return [...element, newValue];
+                           }, []);
+
                            event.target.value = "";
                        },50)
             },
         removeTag(index) {
-            this.emails.splice(index, 1);
+            this.mainEmailsArray.splice(index, 1);
         },
         removeLastTag(event) {
             if (event.target.value.length === 0) {
-                this.removeTag(this.emails.length - 1);
+                this.removeTag(this.mainEmailsArray.length - 1);
             }
         },
         resetOnPaste() {
