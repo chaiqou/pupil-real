@@ -21,7 +21,7 @@
                                     Extra period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ extra }}
+                                    {{ `${extra[0]} - ${extra[1]}` }}
                                 </p>
                             </div>
                             <div>
@@ -51,7 +51,7 @@
                                     Hold period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ hold }}
+                                    {{ `${hold[0]} - ${hold[1]}` }}
                                 </p>
                             </div>
                             <div>
