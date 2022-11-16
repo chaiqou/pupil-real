@@ -4,7 +4,7 @@
                <div v-for="(element, index) in mainEmailsArray" :key="index">
                    <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
                        <p :class="element.exists === true ?  'text-red-900 max-w-[7rem] truncate ... hover:max-w-full' : 'max-w-[7rem]'">{{element.email}}</p>
-                       <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
+                       <span class="ml-1.5 cursor-pointer" @click="removeTag(index); removeTagForMain(index)">x</span>
                    </div>
                </div>
            </div>
@@ -16,7 +16,7 @@
                <input
                    class="outline-0 w-full m-1.5 placeholder-white"
                    v-bind="field"
-                   @keydown.enter="resetField(); this.calculate;"
+                   @keydown.enter="resetField();"
                    @keydown="addTag"
                    @keydown.delete="removeLastTag"
                    @paste="pasteTags"
@@ -55,6 +55,7 @@ export default {
             isSent: false,
             existedInviteEmails: [],
             mainEmailsArray: [],
+            emailSender: []
         }
     },
     computed: {
@@ -85,7 +86,7 @@ export default {
                         this.emails.push(
                             emailTag[0] + emailTag.slice(1).split(" ")[0]
                         );
-                    this.newEmailsArray = this.emails.reduce((element, current) => {
+                    this.mainEmailsArray = this.emails.reduce((element, current) => {
                         const includesEmail = this.existedInviteEmails.includes(current);
                         const newValue = { email: current, exists: includesEmail };
                         return [...element, newValue];
@@ -111,11 +112,15 @@ export default {
                        },50)
             },
         removeTag(index) {
+            this.emails.splice(index, 1);
+        },
+        removeTagForMain(index) {
             this.mainEmailsArray.splice(index, 1);
         },
         removeLastTag(event) {
             if (event.target.value.length === 0) {
-                this.removeTag(this.mainEmailsArray.length - 1);
+                this.removeTagForMain(this.mainEmailsArray.length - 1);
+                this.removeTag(this.emails.length - 1);
             }
         },
         resetOnPaste() {
@@ -132,7 +137,9 @@ export default {
                 })
                 .then(() => {
                     this.emails = [];
+                    this.mainEmailsArray = [];
                     this.isSent = true;
+                    this.handleGetInvitesRequest();
                 })
                 .catch((error) => {
                     console.log(error);
