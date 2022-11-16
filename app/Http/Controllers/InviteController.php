@@ -12,6 +12,7 @@ use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -166,5 +167,15 @@ class InviteController extends Controller
     {
          $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
          return InviteResource::collection($invites);
+    }
+    public function getEmails(Request $request): JsonResponse
+    {
+        $invites = Invite::where('school_id', $request->school_id)->get();
+        $emails = [];
+
+        foreach($invites as $invite){
+            array_push($emails, $invite->email);
+        }
+        return response()->json($emails);
     }
 }

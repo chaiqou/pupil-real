@@ -1,13 +1,13 @@
 <template>
    <ValidationForm id="form" @submit="onSubmit()">
-       <div class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
-           <div v-for="(email, index) in emails" :key="index">
-               <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
-                   <p class="max-w-[7rem] truncate ... hover:max-w-full">{{ email }}</p>
-                   <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
+       <div  class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
+               <div v-for="(element, index) in newEmailsArray" :key="index">
+                   <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
+                       <p :class="element.exists === true ?  'text-red-900 max-w-[7rem] truncate ... hover:max-w-full' : 'max-w-[7rem]'">{{element.email}}</p>
+                       <span class="ml-1.5 cursor-pointer" @click="removeTag(index)">x</span>
+                   </div>
                </div>
            </div>
-       </div>
        <label for="emails">Invite users by their email address.</label>
        <div
            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
@@ -16,7 +16,7 @@
                <input
                    class="outline-0 w-full m-1.5 placeholder-white"
                    v-bind="field"
-                   @keydown.enter="resetField()"
+                   @keydown.enter="resetField(); this.calculate;"
                    @keydown="addTag"
                    @keydown.delete="removeLastTag"
                    @paste="pasteTags"
@@ -37,6 +37,8 @@
 <script>
 
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+import { useInviteStore } from "../../../stores/useInviteStore";
+import { mapWritableState } from "pinia";
 
 export default {
     components: {
@@ -51,6 +53,8 @@ export default {
             inputValue: "",
             emailsPaste: [],
             isSent: false,
+            existedInviteEmails: [],
+            newEmailsArray: [],
         }
     },
     computed: {
@@ -61,6 +65,7 @@ export default {
             }
             return formData;
         },
+        ...mapWritableState(useInviteStore, ["invite_from"]),
     },
     methods: {
         addTag(event) {
@@ -80,6 +85,11 @@ export default {
                         this.emails.push(
                             emailTag[0] + emailTag.slice(1).split(" ")[0]
                         );
+                    this.newEmailsArray = this.emails.reduce((element, current) => {
+                        const includesEmail = this.existedInviteEmails.includes(current);
+                        const newValue = { email: current, exists: includesEmail };
+                        return [...element, newValue];
+                    }, []);
                     event.target.value = "";
                 }
             }
@@ -124,9 +134,18 @@ export default {
                     this.isSent = false;
                 }, 5000));
         },
+        handleGetInvitesRequest() {
+            axios.get(`/api/${this.invite_from}/invites`)
+                .then((res) => {
+                    this.existedInviteEmails = res.data;
+                    console.log(this.existedInviteEmails);
+                })
+                .catch((err) => console.log(err))
+        }
      },
     created() {
         window.addEventListener("paste", this.resetOnPaste)
+        this.handleGetInvitesRequest();
     },
 }
 

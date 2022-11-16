@@ -49,3 +49,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::apiResource('lunch', LunchController::class);
+Route::get("/{school_id}/invites", [InviteController::class, 'getEmails'])->name('invites.get-emails');

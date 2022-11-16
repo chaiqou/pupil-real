@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-        <invite-user-modal ></invite-user-modal>
+        <invite-user-modal></invite-user-modal>
 </template>
 
 <script>

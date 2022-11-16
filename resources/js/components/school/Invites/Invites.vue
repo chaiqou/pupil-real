@@ -53,7 +53,7 @@ export default {
         },
     },
     computed: {
-        ...mapWritableState(useInviteStore, ["isInvitesLoaded",  "invites"]),
+        ...mapWritableState(useInviteStore, ["isInvitesLoaded",  "invites", "invite_from"]),
     },
     methods: {
         handleGetInvitesRequest() {
@@ -67,7 +67,10 @@ export default {
                            item.updated_at = item.updated_at.substring(0,16).replaceAll('T', ' ');
                        })
                     })
-                    .finally(() => this.isInvitesLoaded = true)
+                    .finally(() => {
+                        this.isInvitesLoaded = true;
+                        this.invite_from = this.schoolId;
+                    })
         },
         onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
             if (scrollTop + clientHeight >= scrollHeight) {
