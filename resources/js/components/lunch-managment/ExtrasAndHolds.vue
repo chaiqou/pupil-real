@@ -5,7 +5,7 @@
         <div class="rounded-md bg-inherit p-8">
             <div class="mt-6 flow-root">
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
-                    <li v-for="(extra, extraIdx) in extrasData" class="py-4">
+                    <li v-for="(extra, extraIdx) in store.extras" class="py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -21,7 +21,7 @@
                                     Extra period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ format(extra, "yyyy-MM-dd") }}
+                                    {{ extra }}
                                 </p>
                             </div>
                             <div>
@@ -69,7 +69,11 @@
             </div>
         </div>
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
-            <Datepicker range v-model="extrasData">
+            <Datepicker
+                @update:modelValue="handleExtrasDate"
+                range
+                v-model="extrasData"
+            >
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -96,6 +100,9 @@ import { ref } from "vue";
 import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
+const store = useLunchFormStore();
 
 const props = defineProps({
     extras: {
@@ -108,10 +115,15 @@ const props = defineProps({
     },
 });
 
-const extrasData = ref([]);
+const extrasData = ref();
 
 const removeExtra = (extraIdx) => {
     extrasData.value.splice(extraIdx, 1);
+};
+
+const handleExtrasDate = (modelData) => {
+    store.extras.push(modelData);
+    console.log(store.extras);
 };
 
 const holdsData = ref([new Date()]);
