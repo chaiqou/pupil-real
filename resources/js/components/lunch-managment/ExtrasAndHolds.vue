@@ -21,7 +21,7 @@
                                     Extra period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ extra }}
+                                    {{ format(extra, "yyyy") }}
                                 </p>
                             </div>
                             <div>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </li>
-                    <li v-for="(holds, holdIdx) in holdsData" class="py-4">
+                    <li v-for="(hold, holdIdx) in holdsData" class="py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -51,7 +51,7 @@
                                     Hold period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ holds }}
+                                    {{ format(hold, "yyyy-MM-dd") }}
                                 </p>
                             </div>
                             <div>
@@ -98,8 +98,8 @@
 </template>
 
 <script setup>
-import { execArgv } from "process";
 import { ref } from "vue";
+import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 
@@ -124,12 +124,12 @@ const removeExtra = (extraIdx) => {
     extrasData.value.splice(extraIdx, 1);
 };
 const addExtra = () => {
-    extrasData.value.push(extrasData.value);
+    extrasData.value.push(format(extrasData.value, "yyyy-MM-dd"));
     extrasData.value = [];
 };
 
 const toggleDatePickerHolds = ref(false);
-const holdsData = ref(["2021-08-01", "2021-08-02", "2021-08-03"]);
+const holdsData = ref([new Date()]);
 
 const showDatePickerOnClickHolds = () => {
     toggleDatePickerHolds.value = !toggleDatePickerHolds.value;
@@ -138,7 +138,7 @@ const removeHold = (holdIdx) => {
     holdsData.value.splice(holdIdx, 1);
 };
 const addHold = () => {
-    holdsData.value.push(holdsData.value);
+    holdsData.value.push(format(holdsData.value, "yyyy-MM-dd"));
     holdsData.value = [];
 };
 </script>
