@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </li>
-                    <li v-for="(hold, holdIdx) in holdsData" class="py-4">
+                    <li v-for="(hold, holdIdx) in store.holds" class="py-4">
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -51,7 +51,7 @@
                                     Hold period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ format(hold, "yyyy-MM-dd") }}
+                                    {{ hold }}
                                 </p>
                             </div>
                             <div>
@@ -69,11 +69,7 @@
             </div>
         </div>
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
-            <Datepicker
-                @update:modelValue="handleExtrasDate"
-                range
-                v-model="extrasData"
-            >
+            <Datepicker @update:modelValue="handleExtrasDate" range>
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -82,7 +78,7 @@
                     </p>
                 </template>
             </Datepicker>
-            <Datepicker range v-model="holdsData">
+            <Datepicker @update:modelValue="handleHoldsDate" range>
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -96,7 +92,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
@@ -115,10 +110,10 @@ const props = defineProps({
     },
 });
 
-const extrasData = ref();
+// Extras
 
 const removeExtra = (extraIdx) => {
-    extrasData.value.splice(extraIdx, 1);
+    store.extras.splice(extraIdx, 1);
 };
 
 const handleExtrasDate = (modelData) => {
@@ -126,9 +121,14 @@ const handleExtrasDate = (modelData) => {
     console.log(store.extras);
 };
 
-const holdsData = ref([new Date()]);
+// Holds
 
 const removeHold = (holdIdx) => {
-    holdsData.value.splice(holdIdx, 1);
+    store.holds.splice(holdIdx, 1);
+};
+
+const handleHoldsDate = (modelData) => {
+    store.holds.push(modelData);
+    console.log(store.holds);
 };
 </script>
