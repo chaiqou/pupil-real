@@ -117,8 +117,10 @@ const removeExtra = (extraIdx) => {
 };
 
 const handleExtrasDate = (modelData) => {
-    store.extras.push(modelData);
-    console.log(store.extras);
+    store.extras.push([
+        format(modelData[0], "yyyy-MM-dd"),
+        format(modelData[1], "yyyy-MM-dd"),
+    ]);
 };
 
 // Holds
@@ -128,7 +130,9 @@ const removeHold = (holdIdx) => {
 };
 
 const handleHoldsDate = (modelData) => {
-    store.holds.push(modelData);
-    console.log(store.holds);
+    store.holds.push([
+        format(modelData[0], "yyyy-MM-dd"),
+        format(modelData[1], "yyyy-MM-dd"),
+    ]);
 };
 </script>
