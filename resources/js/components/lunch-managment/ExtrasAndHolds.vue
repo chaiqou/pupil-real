@@ -21,7 +21,7 @@
                                     Extra period
                                 </p>
                                 <p class="truncate text-sm text-gray-500">
-                                    {{ format(extra, "yyyy") }}
+                                    {{ format(extra, "yyyy-MM-dd") }}
                                 </p>
                             </div>
                             <div>
@@ -69,30 +69,24 @@
             </div>
         </div>
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
-            <Datepicker
-                v-model="extrasData"
-                v-if="toggleDatePickerExtras"
-                range
-            />
-            <button
-                type="button"
-                @click="showDatePickerOnClickExtras"
-                class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-            >
-                Add extra
-            </button>
-            <Datepicker
-                v-if="toggleDatePickerHolds"
-                v-model="holdsData"
-                range
-            />
-            <button
-                type="button"
-                @click="showDatePickerOnClickHolds"
-                class="appearance-0 flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-            >
-                Add holds
-            </button>
+            <Datepicker range v-model="extrasData">
+                <template #trigger>
+                    <p
+                        class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                    >
+                        Add extra
+                    </p>
+                </template>
+            </Datepicker>
+            <Datepicker range v-model="holdsData">
+                <template #trigger>
+                    <p
+                        class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                    >
+                        Add holds
+                    </p>
+                </template>
+            </Datepicker>
         </div>
     </div>
 </template>
@@ -114,31 +108,15 @@ const props = defineProps({
     },
 });
 
-const toggleDatePickerExtras = ref(false);
 const extrasData = ref([]);
 
-const showDatePickerOnClickExtras = () => {
-    toggleDatePickerExtras.value = !toggleDatePickerExtras.value;
-};
 const removeExtra = (extraIdx) => {
     extrasData.value.splice(extraIdx, 1);
 };
-const addExtra = () => {
-    extrasData.value.push(format(extrasData.value, "yyyy-MM-dd"));
-    extrasData.value = [];
-};
 
-const toggleDatePickerHolds = ref(false);
 const holdsData = ref([new Date()]);
 
-const showDatePickerOnClickHolds = () => {
-    toggleDatePickerHolds.value = !toggleDatePickerHolds.value;
-};
 const removeHold = (holdIdx) => {
     holdsData.value.splice(holdIdx, 1);
-};
-const addHold = () => {
-    holdsData.value.push(format(holdsData.value, "yyyy-MM-dd"));
-    holdsData.value = [];
 };
 </script>
