@@ -21,12 +21,6 @@
                 label="Period Length"
             />
             <LunchMultiselect name="claimables" label="Claimables" />
-            <RangeDatepicker v-model="store.holds" name="holds" label="Holds" />
-            <RangeDatepicker
-                v-model="store.extras"
-                name="extras"
-                label="Extras"
-            />
             <WeekdaysChechkbox name="tags" />
             <BaseInput
                 v-model="store.price_day"
@@ -67,6 +61,5 @@ const onSubmit = handleSubmit((values) => {
         .catch((error) => {
             console.log(error);
         });
-    console.log(store.getLunchFormData);
 });
 </script>

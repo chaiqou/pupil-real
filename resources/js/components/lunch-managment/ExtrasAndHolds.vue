@@ -2,7 +2,10 @@
     <div
         class="flex max-h-screen flex-col justify-center overflow-hidden bg-inherit"
     >
-        <div class="rounded-md bg-inherit p-8">
+        <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+            >Extras and Holds
+        </label>
+        <div class="rounded-md bg-inherit">
             <div class="mt-6 flow-root">
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
                     <li v-for="(extra, extraIdx) in store.extras" class="py-4">
