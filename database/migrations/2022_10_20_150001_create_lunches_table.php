@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('period_length');
-            $table->string('tags');
+            $table->json('tags');
             $table->json('active_range');
             $table->json('claimables');
             $table->json('holds');

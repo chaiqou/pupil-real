@@ -4,26 +4,24 @@
             >{{ label }}
         </label>
         <Multiselect
-            class="mt-8"
+            v-model="store.claimables"
             mode="tags"
             :limit="10"
-            :max="4"
+            :max="10"
+            required
             :close-on-select="false"
             :searchable="true"
             :options="mealOptions"
             @change="updateSelectedMeal"
-            v-model="value"
         />
-        <span class="mt-2 text-sm text-red-500 whitespace-nowrap">{{
-            errorMessage
-        }}</span>
     </div>
 </template>
 
 <script setup>
 import Multiselect from "@vueform/multiselect";
-import { useField } from "vee-validate";
-import { defineProps, toRef } from "vue";
+import { defineProps } from "vue";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+const store = useLunchFormStore();
 
 const props = defineProps({
     name: {
@@ -37,7 +35,11 @@ const props = defineProps({
 });
 
 function updateSelectedMeal(value) {
-    console.log(value);
+    if (value.length <= 0) {
+        store.claimables = [];
+    } else {
+        store.claimables = value;
+    }
 }
 
 const mealOptions = [
@@ -59,16 +61,6 @@ const mealOptions = [
     "Salsa",
     "Dip",
 ];
-
-function required(value) {
-    if (value) {
-        return true;
-    }
-    return "This field is required";
-}
-
-const nameRef = toRef(props, "name");
-const { errorMessage, value } = useField(nameRef, required);
 </script>
 
 <style src="@vueform/multiselect/themes/default.css" />
