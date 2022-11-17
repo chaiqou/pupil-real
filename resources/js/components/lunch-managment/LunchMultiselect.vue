@@ -8,17 +8,12 @@
             mode="tags"
             :limit="10"
             :max="10"
-            rules="required"
+            required
             :close-on-select="false"
             :searchable="true"
             :options="mealOptions"
             @change="updateSelectedMeal"
         />
-        <span
-            v-if="store.claimables.length === 0"
-            class="mt-2 text-sm text-red-500 whitespace-nowrap"
-            >This field is required</span
-        >
     </div>
 </template>
 
@@ -40,7 +35,11 @@ const props = defineProps({
 });
 
 function updateSelectedMeal(value) {
-    console.log(value);
+    if (value.length <= 0) {
+        store.claimables = [];
+    } else {
+        store.claimables = value;
+    }
 }
 
 const mealOptions = [
