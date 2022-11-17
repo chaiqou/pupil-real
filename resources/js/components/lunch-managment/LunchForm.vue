@@ -15,6 +15,7 @@
                 name="active_range"
                 label="Active range"
             />
+            <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
                 v-model="store.period_length"
                 name="period_length"
@@ -32,7 +33,6 @@
                 name="price_period"
                 label="Price per period"
             />
-            <ExtrasAndHolds holds="holds" extras="extras" />
             <Button text="Save Lunch" />
         </form>
     </div>

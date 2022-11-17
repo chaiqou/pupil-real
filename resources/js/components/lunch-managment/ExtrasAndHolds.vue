@@ -2,7 +2,8 @@
     <div
         class="flex max-h-screen flex-col justify-center overflow-hidden bg-inherit"
     >
-        <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+        <label
+            class="text-md flex mt-2 font-bold text-gray-600 whitespace-normal"
             >Extras and Holds
         </label>
         <div class="rounded-md bg-inherit">
