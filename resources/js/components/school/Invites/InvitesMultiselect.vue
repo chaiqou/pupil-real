@@ -59,7 +59,9 @@ export default {
             isSuccessfullySent: null,
             existedInviteEmails: [],
             mainEmailsArray: [],
-            emailSender: []
+            emailSender: [],
+            currentPage: 1,
+            lastPage: 2,
         }
     },
     computed: {
@@ -70,7 +72,7 @@ export default {
             }
             return formData;
         },
-        ...mapWritableState(useInviteStore, ["invite_from"]),
+        ...mapWritableState(useInviteStore, ["invite_from", "invites"]),
         disabledCalculator() {
             if(this.isSent) {
                 return true;
@@ -166,6 +168,7 @@ export default {
                     this.emails = [];
                     this.isSuccessfullySent = 'yes';
                     this.handleGetInvitesRequest();
+                    this.handleUpdateInvitesTableRequest();
                 })
                 .catch((error) => {
                     this.isSuccessfullySent = 'no'
@@ -175,6 +178,21 @@ export default {
                     this.isSent = false;
                     this.isSuccessfullySent = null;
                 }, 5000));
+        },
+        handleUpdateInvitesTableRequest() {
+            axios.get(`/api/school/${this.invite_from}/invites?page=${this.currentPage}`)
+                .then(res => {
+                    this.currentPage++;
+                    this.lastPage = res.data.meta.last_page;
+                    this.invites = res.data.data;
+                    this.invites.map((item) => {
+                        item.created_at = item.created_at.substring(0,16).replaceAll('T', ' ');
+                        item.updated_at = item.updated_at.substring(0,16).replaceAll('T', ' ');
+                    })
+                })
+                .finally(() => {
+                    this.invite_from = this.schoolId;
+                })
         },
         handleGetInvitesRequest() {
             axios.get(`/api/${this.invite_from}/invites`)

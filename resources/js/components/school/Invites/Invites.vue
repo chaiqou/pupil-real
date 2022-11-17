@@ -69,7 +69,6 @@ export default {
                     })
                     .finally(() => {
                         this.isInvitesLoaded = true;
-                        this.invite_from = this.schoolId;
                     })
         },
         onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
@@ -80,6 +79,7 @@ export default {
         },
     },
     created() {
+        this.invite_from = this.schoolId;
         this.handleGetInvitesRequest()
     },
 }
