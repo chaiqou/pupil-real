@@ -2,8 +2,9 @@
    <ValidationForm id="form" @submit="onSubmit()">
        <div  class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
                <div v-for="(element, index) in mainEmailsArray" :key="index">
-                   <div class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1">
-                       <p :class="element.exists === true ?  'text-red-900 max-w-[7rem] truncate ... hover:max-w-full' : 'max-w-[7rem]'">{{element.email}}</p>
+                   <div :class="element.exists ? 'flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 flex items-center animate-bounce' : 'flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 flex items-center'">
+                       <exclamation-triangle-icon v-if="element.exists" class="text-yellow-500 mr-1.5 w-5 h-5"></exclamation-triangle-icon>
+                       <p :class="element.exists ? 'text-red-500 font-bold max-w-[7rem] truncate ... hover:max-w-full' : 'max-w-[7rem] truncate ... hover:max-w-full'">{{element.email}}</p>
                        <span class="ml-1.5 cursor-pointer" @click="removeTag(index); removeTagForMain(index)">x</span>
                    </div>
                </div>
@@ -27,9 +28,9 @@
        <p class="text-gray-400 text-[10px]">
            Be careful, dont send invite on wrong email.
        </p>
-       <p v-if="this.isSent" class="text-green-500">All emails send successfully!</p>
+       <p v-if="this.isSent" :class="this.isSuccessfullySent === 'no' ? 'text-red-500' : 'text-green-500'">{{this.axiosResponseGenerator}}</p>
       <div>
-          <button type="submit" class="bg-green-500 rounded-md text-white px-5 py-2 w-full mt-10">Send</button>
+          <button :disabled="disabledCalculator" type="submit" class="bg-green-500 rounded-md text-white px-5 py-2 w-full mt-10">Send</button>
       </div>
    </ValidationForm>
 </template>
@@ -39,12 +40,14 @@
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import { useInviteStore } from "../../../stores/useInviteStore";
 import { mapWritableState } from "pinia";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 
 export default {
     components: {
         ValidationForm,
         Field,
-        ErrorMessage
+        ErrorMessage,
+        ExclamationTriangleIcon,
     },
     data() {
         return {
@@ -53,6 +56,7 @@ export default {
             inputValue: "",
             emailsPaste: [],
             isSent: false,
+            isSuccessfullySent: null,
             existedInviteEmails: [],
             mainEmailsArray: [],
             emailSender: []
@@ -67,6 +71,26 @@ export default {
             return formData;
         },
         ...mapWritableState(useInviteStore, ["invite_from"]),
+        disabledCalculator() {
+            if(this.isSent) {
+                return true;
+            } else if(this.emails.length === 0) {
+                return true;
+            } else {
+              const checkIfExists = this.mainEmailsArray.find((element) => element.exists === true)
+                return !!checkIfExists;
+            }
+        },
+          axiosResponseGenerator() {
+            const text = this.isSuccessfullySent;
+            if(text === 'pending') {
+                return 'Please wait, we are sending invites.'
+            } else if(text === 'yes') {
+                return 'Invites send successfully!'
+            } else if(text === 'no') {
+                return 'Could not send invites at the moment, please try again later, or text to support.'
+            }
+          }
     },
     methods: {
         addTag(event) {
@@ -129,6 +153,9 @@ export default {
             },5)
         },
         onSubmit() {
+            this.isSent = true;
+            this.mainEmailsArray = [];
+            this.isSuccessfullySent = 'pending';
             axios
                 .post("/api/send-invite", this.emailData, {
                     headers: {
@@ -137,15 +164,16 @@ export default {
                 })
                 .then(() => {
                     this.emails = [];
-                    this.mainEmailsArray = [];
-                    this.isSent = true;
+                    this.isSuccessfullySent = 'yes';
                     this.handleGetInvitesRequest();
                 })
                 .catch((error) => {
+                    this.isSuccessfullySent = 'no'
                     console.log(error);
                 })
                 .finally(() => setTimeout(() => {
                     this.isSent = false;
+                    this.isSuccessfullySent = null;
                 }, 5000));
         },
         handleGetInvitesRequest() {
