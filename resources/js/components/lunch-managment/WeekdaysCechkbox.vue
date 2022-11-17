@@ -1,6 +1,6 @@
 <template>
     <label class="text-md font-bold text-gray-600">Weekdays</label>
-    <div class="grid grid-cols-3 gap-3 sm:grid-cols-6 text-center">
+    <div class="grid grid-cols-3 gap-3 sm:grid-cols-7 text-center">
         <ul v-for="day in dayOptions">
             <li>
                 <Field
