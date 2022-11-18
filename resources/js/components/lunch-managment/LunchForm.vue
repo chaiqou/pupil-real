@@ -52,11 +52,11 @@ import { useLunchFormStore } from "../../stores/useLunchFormStore";
 const { handleSubmit } = useForm();
 const store = useLunchFormStore();
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit((values, { resetForm }) => {
     axios
         .post("lunch", store.getLunchFormData)
         .then((response) => {
-            console.log(response);
+            resetForm();
         })
         .catch((error) => {
             console.log(error);
