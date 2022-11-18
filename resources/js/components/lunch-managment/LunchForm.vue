@@ -20,6 +20,7 @@
                 v-model="store.period_length"
                 name="period_length"
                 label="Period Length"
+                type="number"
             />
             <LunchMultiselect name="claimables" label="Claimables" />
             <WeekdaysChechkbox name="tags" />
@@ -27,11 +28,13 @@
                 v-model="store.price_day"
                 name="price_day"
                 label="Price per day"
+                type="number"
             />
             <BaseInput
                 v-model="store.price_period"
                 name="price_period"
                 label="Price per period"
+                type="number"
             />
             <Button text="Save Lunch" />
         </form>
