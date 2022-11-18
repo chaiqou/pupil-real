@@ -168,13 +168,25 @@ class InviteController extends Controller
          $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
          return InviteResource::collection($invites);
     }
-    public function getEmails(Request $request): JsonResponse
+    public function getInviteEmails(Request $request): JsonResponse
     {
         $invites = Invite::where('school_id', $request->school_id)->get();
         $emails = [];
 
-        foreach($invites as $invite){
+        foreach($invites as $invite)
+        {
             array_push($emails, $invite->email);
+        }
+        return response()->json($emails);
+    }
+    public function getUserEmails(Request $request): JsonResponse
+    {
+        $users = User::where('school_id', $request->school_id)->get();
+        $emails = [];
+
+        foreach($users as $user)
+        {
+            array_push($emails, $user->email);
         }
         return response()->json($emails);
     }

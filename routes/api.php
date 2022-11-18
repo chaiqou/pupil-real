@@ -49,4 +49,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::apiResource('lunch', LunchController::class);
-Route::get("/{school_id}/invites", [InviteController::class, 'getEmails'])->name('invites.get-emails');
+Route::get("/{school_id}/invite-emails", [InviteController::class, 'getInviteEmails'])->name('invites.get-emails');
+Route::get("/{school_id}/user-emails", [InviteController::class, 'getUserEmails'])->name('invites.get-emails');
