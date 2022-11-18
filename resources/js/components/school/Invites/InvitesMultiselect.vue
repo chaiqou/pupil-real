@@ -1,10 +1,10 @@
 <template>
 
-    <div class="flex items-center text-center justify-center mb-5 text-xl" v-if="this.showInviteError || this.showEmailError">
-        <p>{{errorShowing}}</p>
+    <div class="flex items-center text-center justify-center text-xl" v-if="this.showInviteError || this.showEmailError">
+        <p class="absolute mt-5">{{errorShowing}}</p>
     </div>
    <ValidationForm id="form" @submit="onSubmit()">
-       <div  class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5">
+       <div  class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5 mt-12">
                <div v-for="(element, index) in mainEmailsArray" :key="index">
                    <div @mouseover="this.showInviteError = true" @mouseleave="this.showInviteError = false" v-if="element.existsInInvites && !element.existsInUsers" class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 flex items-center">
                        <exclamation-triangle-icon  class="text-yellow-500 mr-1.5 w-5 h-5"></exclamation-triangle-icon>
@@ -16,7 +16,7 @@
                        <p class="text-yellow-500 max-w-[7rem] truncate ... hover:max-w-full">{{element.email}}</p>
                        <span class="ml-1.5 cursor-pointer text-gray-500" @click="removeTag(index); removeTagForMain(index); this.showEmailError = false">x</span>
                    </div>
-                   <div v-if="!element.existsInInvites && !element.existsInUsers" class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-black rounded-md p-1 flex items-center">
+                   <div v-if="!element.existsInInvites && !element.existsInUsers" class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 flex items-center">
                        <p class="max-w-[7rem] truncate ... hover:max-w-full">{{element.email}}</p>
                        <span class="ml-1.5 cursor-pointer" @click="removeTag(index); removeTagForMain(index)">x</span>
                    </div>
@@ -127,7 +127,7 @@ export default {
     },
     methods: {
         addTag(event) {
-            const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+            const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
             if (event.code === "Comma" || event.code === "Enter") {
                 event.preventDefault();
