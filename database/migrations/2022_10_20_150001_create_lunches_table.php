@@ -22,8 +22,8 @@ return new class() extends Migration
             $table->json('tags');
             $table->json('active_range');
             $table->json('claimables');
-            $table->json('holds');
-            $table->json('extras');
+            $table->json('holds')->nullable();
+            $table->json('extras')->nullable();
             $table->string('available_days');
             $table->string('price_day');
             $table->string('price_period');

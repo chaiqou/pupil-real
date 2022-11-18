@@ -20,18 +20,37 @@
                 v-model="store.period_length"
                 name="period_length"
                 label="Period Length"
+                type="number"
             />
-            <LunchMultiselect name="claimables" label="Claimables" />
+            <label
+                class="text-md flex font-bold text-gray-600 whitespace-normal"
+                >Claimables
+            </label>
+            <Multiselect
+                v-model="store.claimables"
+                mode="tags"
+                name="claimables"
+                :limit="10"
+                :max="10"
+                ref="multiselectRef"
+                required
+                :close-on-select="false"
+                :searchable="true"
+                :options="multiselectOptions"
+                @change="updateSelectedMeal"
+            />
             <WeekdaysChechkbox name="tags" />
             <BaseInput
                 v-model="store.price_day"
                 name="price_day"
                 label="Price per day"
+                type="number"
             />
             <BaseInput
                 v-model="store.price_period"
                 name="price_period"
                 label="Price per period"
+                type="number"
             />
             <Button text="Save Lunch" />
         </form>
@@ -39,27 +58,52 @@
 </template>
 
 <script setup>
+import { useForm } from "vee-validate";
+import { ref } from "vue";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
 import axios from "../../config/axios/index";
 import BaseInput from "../form-components/BaseInput";
 import RangeDatepicker from "../form-components/RangeDatepicker.vue";
-import LunchMultiselect from "./LunchMultiselect.vue";
+import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "./WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "./ExtrasAndHolds.vue";
 import Button from "../ui/Button.vue";
-import { useForm } from "vee-validate";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
 
-const { handleSubmit } = useForm();
 const store = useLunchFormStore();
+const { handleSubmit } = useForm();
 
-const onSubmit = handleSubmit((values) => {
+const multiselectRef = ref(null);
+
+const onSubmit = handleSubmit((values, { resetForm }) => {
     axios
         .post("lunch", store.getLunchFormData)
-        .then((response) => {
-            console.log(response);
+        .then(() => {
+            resetForm();
+            multiselectRef.value.clear();
         })
         .catch((error) => {
             console.log(error);
         });
 });
+
+const multiselectOptions = [
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Snack",
+    "Dessert",
+    "Drink",
+    "Appetizer",
+    "Salad",
+    "Bread",
+    "Cereal",
+    "Soup",
+    "Beverage",
+    "Sauce",
+    "Marinade",
+    "Fingerfood",
+    "Salsa",
+    "Dip",
+];
 </script>
