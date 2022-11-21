@@ -108,8 +108,12 @@ export default {
             }
             return formData;
         },
-        ...mapWritableState(useInviteStore, ["invite_from", "invites"]),
+        ...mapWritableState(useInviteStore, ["invites", "chosenSchool"]),
         disabledCalculator() {
+            if(!this.chosenSchool.length)
+            {
+                return true
+            }
             if(this.isSent) {
                 return true;
             } else if(this.emails.length === 0) {
@@ -200,13 +204,14 @@ export default {
             this.mainEmailsArray = [];
             this.isSuccessfullySent = 'pending';
             axios
-                .post("/api/send-invite", this.emailData, {
+                .post(`/api/admin/${this.chosenSchool}/send-invite`, this.emailData, {
                     headers: {
                         "Content-Type": "multipart/form-formData",
                     },
                 })
                 .then(() => {
                     this.emails = [];
+                    this.chosenSchool = [];
                     this.isSuccessfullySent = 'yes';
                     this.handleGetInviteEmailsRequest();
                     this.handleGetUserEmailsRequest();
@@ -214,6 +219,8 @@ export default {
                 })
                 .catch((error) => {
                     this.isSuccessfullySent = 'no'
+                    this.emails = [];
+                    this.chosenSchool = [];
                     console.log(error);
                 })
                 .finally(() => setTimeout(() => {

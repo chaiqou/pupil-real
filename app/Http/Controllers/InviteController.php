@@ -39,7 +39,7 @@ class InviteController extends Controller
         return route('personal.form', ['uniqueID' => $invite->uniqueID]);
     }
 
-    public function sendInvite(InviteRequest $request): RedirectResponse
+    public function sendInvite(InviteRequest $request): JsonResponse
     {
         $emails = $request->emails;
         foreach($emails as $email)
@@ -53,7 +53,7 @@ class InviteController extends Controller
             $invite->update(['state' => 1]);
         }
 
-        return redirect()->back();
+        return response()->json('Invite(s) sent!');
     }
 
     public function setupAccount($uniqueID): View

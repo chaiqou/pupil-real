@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invites', 'index')->name('admin.invites_api');
                 Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
                 Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
+                Route::post('{schoolId}/send-invite', [AdminInviteController::class, 'store'])->name('admin_send-invite_api');
             });
         });
     });

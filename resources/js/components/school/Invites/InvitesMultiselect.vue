@@ -214,6 +214,7 @@ export default {
                 })
                 .catch((error) => {
                     this.isSuccessfullySent = 'no'
+                    this.emails = [];
                     console.log(error);
                 })
                 .finally(() => setTimeout(() => {
