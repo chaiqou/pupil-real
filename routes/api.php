@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Dashboard\ParentController;
 use App\Http\Controllers\Dashboard\SchoolController;
+use App\Http\Controllers\Admin\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Dashboard\SettingController;
 use App\Http\Controllers\InviteController;
+use App\Http\Controllers\Admin\InviteController as AdminInviteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +36,23 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('/admin/')->group(function () {
+            Route::controller(AdminStudentController::class)->group(function () {
+                Route::get('students', 'index')->name('admin.students_api');
+            });
+            Route::controller(AdminSchoolController::class)->group(function () {
+                Route::get('schools', 'index')->name('admin.schools_api');
+            });
+            Route::controller(AdminInviteController::class)->group(function () {
+                Route::get('invites', 'index')->name('admin.invites_api');
+                Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
+                Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
+            });
+        });
+    });
+
     Route::group(['middleware' => ['role:school']], function () {
         Route::post('send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
         Route::prefix('/school/')->group(function() {
@@ -49,5 +69,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::apiResource('lunch', LunchController::class);
-Route::get("/{school_id}/invite-emails", [InviteController::class, 'getInviteEmails'])->name('invites.get-emails');
-Route::get("/{school_id}/user-emails", [InviteController::class, 'getUserEmails'])->name('invites.get-emails');
+Route::get("/{school_id}/invite-emails", [InviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
+Route::get("/{school_id}/user-emails", [InviteController::class, 'getUserEmails'])->name('school_invites.get-emails');

@@ -19,7 +19,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
-            if (auth()->user()->hasRole(['2fa', 'school'])) {
+            if (auth()->user()->hasRole(['2fa', 'school', 'admin'])) {
                 return auth()->user()->sendTwoFactorCode();
             }
 

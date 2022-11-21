@@ -7,6 +7,8 @@ export const useInviteStore = defineStore("invite", {
             invites: [],
             invite: [],
             invite_from: [],
+            schools: [],
+            chosenSchool: "",
         };
     },
 });

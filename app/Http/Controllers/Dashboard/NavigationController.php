@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -100,6 +102,41 @@ class NavigationController extends Controller
             'students' => $students,
             'student' => $user,
             'schoolId' => $user->school_id,
+        ])->with(['page', 'Dashboard']);
+    }
+
+
+    public function admin(): View|RedirectResponse
+    {
+        $navigation = [];
+        $role = '';
+        $user = Auth::user();
+        $students = $user->students->all();
+        if ($user->hasRole('admin')) {
+            $role = 'admin';
+            $navigation =
+                [
+                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
+                    ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/admin/students', 'current' => false],
+                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true]
+                ];
+        }
+        $currentTab = request()->route()->getName();
+
+//        if (auth()->user()->hasRole('2fa') && auth()->user()->is_verified === 0) {
+//            return redirect()->route('2fa.form');
+//        }
+//
+//        if (auth()->user()->hasRole('2fa')) {
+//            $twoFa = 1;
+//        }
+        return view($currentTab, [
+            'current' => $currentTab,
+            'navigation' => $navigation,
+            'students' => $students,
+            'student' => $user,
+            'role' => $role,
+            'user' => $user,
         ])->with(['page', 'Dashboard']);
     }
 }

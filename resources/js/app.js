@@ -10,7 +10,6 @@ import SwitchAccount from "./components/SwitchAccount.vue";
 import SchoolTransactions from "./components/school/Transactions/Transactions.vue";
 import ParentTransactions from "./components/parent/Transactions.vue";
 import SchoolStudents from "./components/school/Students/Students.vue";
-import SchoolStudentsSlideOver from "./components/school/Students/StudentsSlideOver.vue";
 import ParentDashboard from "./components/parent/Dashboard.vue";
 import ParentDashboardTransactions from "./components/parent/DashboardTransactions.vue";
 import Calendar from "./components/lunch-managment/Calendar.vue";
@@ -23,9 +22,11 @@ import LunchForm from "./components/lunch-managment/LunchForm.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import SchoolDashboardStudents from './components/school/Dashboard/DashboardStudents.vue';
 import ParentStudentsMobile from './components/parent/StudentsMobile.vue';
-import Invites from './components/school/Invites/Invites.vue';
-import InvitesHeader from './components/school/Invites/InvitesHeader.vue';
-
+import SchoolInvites from './components/school/Invites/Invites.vue';
+import SchoolInvitesHeader from './components/school/Invites/InvitesHeader.vue';
+import AdminStudents from './components/admin/Students/Students.vue';
+import AdminInvites from './components/admin/Invites/Invites.vue'
+import AdminInvitesHeader from './components/admin/Invites/InvitesHeader.vue'
 import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
@@ -40,7 +41,6 @@ app.component("switch-account", SwitchAccount);
 app.component("school-transactions", SchoolTransactions);
 app.component("parent-transactions", ParentTransactions);
 app.component("school-students", SchoolStudents);
-app.component("school-students-slide-over", SchoolStudentsSlideOver);
 app.component("parent-dashboard", ParentDashboard);
 app.component("parent-dashboard-transactions", ParentDashboardTransactions);
 app.component("calendar", Calendar);
@@ -53,8 +53,11 @@ app.component("Datepicker", Datepicker);
 app.component("school-dashboard-students", SchoolDashboardStudents);
 app.component("school-dashboard-transactions", SchoolDashboardTransactions);
 app.component('parent-students-mobile', ParentStudentsMobile);
-app.component('invites', Invites);
-app.component('invites-header', InvitesHeader);
+app.component('school-invites', SchoolInvites);
+app.component('school-invites-header', SchoolInvitesHeader);
+app.component('admin-students', AdminStudents);
+app.component('admin-invites', AdminInvites);
+app.component('admin-invites-header', AdminInvitesHeader);
 
 app.use(pinia);
 app.mount("#app");

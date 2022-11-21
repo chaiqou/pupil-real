@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Invite;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,6 +25,7 @@ class InviteRequest extends FormRequest
     {
         return [
             'emails.*' => ['required', 'email'],
+            'school_id' => ['required'],
         ];
     }
 }

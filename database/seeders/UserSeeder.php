@@ -73,5 +73,23 @@ class UserSeeder extends Seeder
             'email' => 'lomtadzenikusha@gmail.com',
             'password' => bcrypt('adminadmin'),
         ])->assignRole('school');
+
+        $admin = User::create([
+            'first_name' => 'AdminF',
+            'last_name' => 'AdminL',
+            'school_id' => 1,
+            'billingo_id' => 1,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
+                'country' => 'HU',
+                'state' => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random btr.33',
+                'zip' => '9',
+            ]),
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('adminadmin'),
+        ])->assignRole('admin');
     }
 }

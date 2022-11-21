@@ -1,5 +1,5 @@
 <template>
-
+    <InvitesSchoolMultiselect name="school" label="Select school"></InvitesSchoolMultiselect>
     <div class="flex items-center text-center justify-center text-xl" v-if="this.showInviteError || this.showEmailError">
         <p class="absolute mt-5">{{errorShowing}}</p>
     </div>
@@ -57,12 +57,11 @@
 </template>
 
 <script>
-
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import { useInviteStore } from "../../../stores/useInviteStore";
 import { mapWritableState } from "pinia";
 import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
-
+import InvitesSchoolMultiselect from './InvitesSchoolMultiselect'
 export default {
     components: {
         ValidationForm,
@@ -70,6 +69,7 @@ export default {
         ErrorMessage,
         ExclamationTriangleIcon,
         CheckIcon,
+        InvitesSchoolMultiselect
     },
     data() {
         return {
@@ -222,7 +222,7 @@ export default {
                 }, 5000));
         },
         handleUpdateInvitesTableRequest() {
-            axios.get(`/api/school/${this.invite_from}/invites?page=${this.currentPage}`)
+            axios.get(`/api/admin/invites?page=${this.currentPage}`)
                 .then(res => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;
@@ -237,7 +237,7 @@ export default {
                 })
         },
         handleGetInviteEmailsRequest() {
-            axios.get(`/api/${this.invite_from}/invite-emails`)
+            axios.get(`/api/admin/invite-emails`)
                 .then((res) => {
                     this.existedInviteEmails = res.data;
                     console.log(this.existedInviteEmails);
@@ -245,7 +245,7 @@ export default {
                 .catch((err) => console.log(err))
         },
         handleGetUserEmailsRequest() {
-            axios.get(`/api/${this.invite_from}/user-emails`)
+            axios.get(`/api/admin/user-emails`)
                 .then((res) => {
                     this.existedUserEmails = res.data;
                     console.log(this.existedUserEmails);

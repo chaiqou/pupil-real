@@ -31,6 +31,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/resend-two-factor-authentication','resend')->name('2fa.resend');
     });
 
+
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('/admin/')->group(function () {
+            Route::controller(NavigationController::class)->group(function () {
+                Route::get('dashboard','admin')->name('admin.dashboard');
+                Route::get('students','admin')->name('admin.students');
+                Route::get('invite', 'admin')->name('admin.invite');
+            });
+        });
+    });
+
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
             Route::controller(ParentController::class)->group(function () {

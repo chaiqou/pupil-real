@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Invite\InviteRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
+use App\Http\Requests\School\InviteRequest;
 use App\Http\Resources\School\InviteResource;
 use App\Mail\InviteUser;
 use App\Mail\OnboardingVerification;
