@@ -59,7 +59,6 @@ export default {
         add(value) {
            this.value = value
             this.chosenSchool = this.value;
-           console.log(this.chosenSchool);
         },
      },
     created() {

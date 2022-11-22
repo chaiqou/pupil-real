@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\School;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
@@ -37,23 +38,6 @@ class InviteController extends Controller
         }
         //If the invite is not state 4 (Aka before the personal form, but after the user has already been created)
         return route('personal.form', ['uniqueID' => $invite->uniqueID]);
-    }
-
-    public function sendInvite(InviteRequest $request): JsonResponse
-    {
-        $emails = $request->emails;
-        foreach($emails as $email)
-        {
-            $invite = Invite::create([
-                'uniqueID' => Str::random(32),
-                'email' => $email,
-                'school_id' => auth()->user()->school_id,
-            ]);
-            Mail::to($email)->send(new InviteUser($invite));
-            $invite->update(['state' => 1]);
-        }
-
-        return response()->json('Invite(s) sent!');
     }
 
     public function setupAccount($uniqueID): View
@@ -159,35 +143,5 @@ class InviteController extends Controller
         }
 
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
-    }
-
-
-
-    public function getInvites(Request $request): ResourceCollection
-    {
-         $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
-         return InviteResource::collection($invites);
-    }
-    public function getInviteEmails(Request $request): JsonResponse
-    {
-        $invites = Invite::where('school_id', $request->school_id)->get();
-        $emails = [];
-
-        foreach($invites as $invite)
-        {
-            array_push($emails, $invite->email);
-        }
-        return response()->json($emails);
-    }
-    public function getUserEmails(Request $request): JsonResponse
-    {
-        $users = User::where('school_id', $request->school_id)->get();
-        $emails = [];
-
-        foreach($users as $user)
-        {
-            array_push($emails, $user->email);
-        }
-        return response()->json($emails);
     }
 }

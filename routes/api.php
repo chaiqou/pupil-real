@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\StudentController as AdminStudentController;
+use App\Http\Controllers\Admin\Api\InviteController as AdminInviteController;
+use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
+use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\api\LunchController;
-use App\Http\Controllers\Dashboard\ParentController;
-use App\Http\Controllers\Dashboard\SchoolController;
-use App\Http\Controllers\Admin\SchoolController as AdminSchoolController;
-use App\Http\Controllers\Dashboard\SettingController;
-use App\Http\Controllers\InviteController;
-use App\Http\Controllers\Admin\InviteController as AdminInviteController;
+use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
+use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
+use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
+use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
+use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +28,13 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
             Route::post('update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api');
-            Route::controller(ParentController::class)->group(function () {
+            Route::controller(ParentStudentController::class)->group(function () {
+                Route::get('{user_id}/students', 'getStudents')->name('parent.students_api');
+            });
+            Route::controller(ParentTransactionController::class)->group(function () {
                 Route::get('{student_id}/week-spending', 'getLastWeekTransactionsSpending')->name('parent.week-spending_api');
                 Route::get('{student_id}/month-spending', 'getLastMonthTransactionsSpending')->name('parent.month-spending_api');
                 Route::get('{student_id}/last-transactions', 'getLastFiveTransactions')->name('parent.last-transactions_api');
-                Route::get('{user_id}/students', 'getStudents')->name('parent.students_api');
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
         });
@@ -55,20 +59,27 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:school']], function () {
-        Route::post('send-invite', [InviteController::class, 'sendInvite'])->name('send.invite');
+        Route::post('send-invite', [SchoolInviteController::class, 'sendInvite'])->name('send.invite');
         Route::prefix('/school/')->group(function() {
-            Route::controller(SchoolController::class)->group(function () {
+            Route::controller(SchoolStudentController::class)->group(function () {
                 Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
-                Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
-                Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
                 Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
             });
-            Route::get('{school_id}/invites', [InviteController::class, 'getInvites'])->name('school.invites_api');
+            Route::controller(SchoolTransactionController::class)->group(function () {
+                Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
+                Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
+            });
+            Route::get('{school_id}/invites', [SchoolInviteController::class, 'index'])->name('school.invites_api');
         });
     });
+
+
+        Route::group(['middleware' => ['role:school']], function () {
+            Route::get("/{school_id}/invite-emails", [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
+            Route::get("/{school_id}/user-emails", [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
+        });
 
 });
 
 Route::apiResource('lunch', LunchController::class);
-Route::get("/{school_id}/invite-emails", [InviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
-Route::get("/{school_id}/user-emails", [InviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
+

@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import { useStudentStore } from "../../stores/useStudentStore";
-import { useModalStore } from "../../stores/useModalStore";
+import { useStudentStore } from "../../../stores/useStudentStore";
+import { useModalStore } from "../../../stores/useModalStore";
 import { mapActions, mapWritableState } from "pinia";
 export default {
     props: {
