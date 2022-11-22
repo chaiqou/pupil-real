@@ -19,7 +19,7 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-import { useInviteStore } from '../../../stores/useInviteStore'
+import { useInviteStore } from '@/stores/useInviteStore'
 import {mapWritableState} from "pinia";
 
 export default {

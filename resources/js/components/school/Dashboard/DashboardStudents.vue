@@ -103,7 +103,7 @@
 <script>
 import StudentsNotFound from "@/components/not-found/StudentsNotFound.vue";
 import { mapActions, mapWritableState } from "pinia";
-import { useStudentStore } from "../../../stores/useStudentStore";
+import { useStudentStore } from "@/stores/useStudentStore";
 import StudentsSlideOver from "@/components/school/Students/StudentsSlideOver.vue";
 export default {
     components: {

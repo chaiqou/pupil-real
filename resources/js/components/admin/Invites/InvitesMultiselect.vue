@@ -149,7 +149,7 @@
 
 <script>
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
-import { useInviteStore } from "../../../stores/useInviteStore";
+import { useInviteStore } from "@/stores/useInviteStore";
 import { mapWritableState } from "pinia";
 import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import InvitesSchoolMultiselect from "@/components/admin/Invites/InvitesSchoolMultiselect.vue";

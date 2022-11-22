@@ -158,7 +158,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { useTransactionStore } from "../../../stores/useTransactionStore";
+import { useTransactionStore } from "@/stores/useTransactionStore";
 import { mapActions, mapWritableState } from "pinia";
 
 export default {

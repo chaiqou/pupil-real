@@ -144,7 +144,7 @@
 
 <script>
 import { mapActions, mapWritableState } from "pinia";
-import { useTransactionStore } from "../../../stores/useTransactionStore";
+import { useTransactionStore } from "@/stores/useTransactionStore";
 import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
 import TransactionSlideOver from "@/components/parent/Transactions/TransactionSlideOver.vue";
 

@@ -34,7 +34,7 @@
 
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 

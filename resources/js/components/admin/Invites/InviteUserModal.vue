@@ -71,7 +71,7 @@ import {
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
-import { useModalStore } from "../../../stores/useModalStore";
+import { useModalStore } from "@/stores/useModalStore";
 import InvitesMultiselect from "@/components/admin/Invites/InvitesMultiselect.vue";
 export default {
     components: {

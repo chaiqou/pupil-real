@@ -145,7 +145,7 @@
 import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
 import TransactionSlideOver from "@/components/school/Transactions/TransactionSlideOver.vue";
 import { mapActions, mapWritableState } from "pinia";
-import { useTransactionStore } from "../../../stores/useTransactionStore";
+import { useTransactionStore } from "@/stores/useTransactionStore";
 
 export default {
     components: {

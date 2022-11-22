@@ -105,7 +105,7 @@
 
 <script>
 import { mapWritableState } from "pinia";
-import { useInviteStore } from "../../../stores/useInviteStore";
+import { useInviteStore } from "@/stores/useInviteStore";
 import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
 export default {
     components: {

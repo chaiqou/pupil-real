@@ -1152,8 +1152,8 @@ import {
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
-import { useStudentStore } from "../../../stores/useStudentStore";
-import { useModalStore } from "../../../stores/useModalStore";
+import { useStudentStore } from "@/stores/useStudentStore";
+import { useModalStore } from "@/stores/useModalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
@@ -1176,7 +1176,8 @@ export default {
     methods: {
         ...mapActions(useModalStore, ["showHideStudentEdit"]),
         submit() {
-            axios.post(`/api/parent/update-student`, {
+            axios
+                .post(`/api/parent/update-student`, {
                     student_id: this.student.id,
                     first_name: this.student.first_name,
                     last_name: this.student.last_name,
@@ -1188,9 +1189,9 @@ export default {
                         this.student.user_information.street_address,
                     zip: this.student.user_information.zip,
                 })
-            .finally(() => {
-                this.isStudentEditVisible = false;
-            });
+                .finally(() => {
+                    this.isStudentEditVisible = false;
+                });
         },
     },
 };

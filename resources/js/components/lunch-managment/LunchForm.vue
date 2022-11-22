@@ -63,7 +63,7 @@
 <script setup>
 import { useForm } from "vee-validate";
 import { ref } from "vue";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 import axios from "../../config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { useModalStore } from "../../../stores/useModalStore";
+import { useModalStore } from "@/stores/useModalStore";
 import { mapWritableState, mapActions } from "pinia";
 import InviteUserModal from "@/components/admin/Invites/InviteUserModal.vue";
 
