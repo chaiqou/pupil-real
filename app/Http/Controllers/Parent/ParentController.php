@@ -4,18 +4,9 @@ namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\ConfirmStudentCreationRequest;
-use App\Http\Requests\Parent\GetStudentRequest;
 use App\Http\Requests\Parent\StoreStudentRequest;
-use App\Http\Requests\Parent\TransactionRequest;
-use App\Http\Resources\School\StudentResource;
-use App\Http\Resources\TransactionResource;
 use App\Models\Student;
-use App\Models\Transaction;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 

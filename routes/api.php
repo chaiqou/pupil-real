@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
@@ -39,7 +38,6 @@ Route::middleware(['auth'])->group(function () {
             });
         });
     });
-
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/admin/')->group(function () {
@@ -60,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:school']], function () {
         Route::post('send-invite', [SchoolInviteController::class, 'sendInvite'])->name('send.invite');
-        Route::prefix('/school/')->group(function() {
+        Route::prefix('/school/')->group(function () {
             Route::controller(SchoolStudentController::class)->group(function () {
                 Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
                 Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
@@ -73,13 +71,10 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
-        Route::group(['middleware' => ['role:school']], function () {
-            Route::get("/{school_id}/invite-emails", [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
-            Route::get("/{school_id}/user-emails", [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
-        });
-
+    Route::group(['middleware' => ['role:school']], function () {
+        Route::get('/{school_id}/invite-emails', [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
+        Route::get('/{school_id}/user-emails', [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
+    });
 });
 
 Route::apiResource('lunch', LunchController::class);
-

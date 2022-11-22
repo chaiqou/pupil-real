@@ -14,6 +14,7 @@ class TransactionController extends Controller
     public function getTransactions(Request $request): ResourceCollection
     {
         $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
+
         return TransactionResource::collection($transactions);
     }
 
@@ -21,6 +22,7 @@ class TransactionController extends Controller
     {
         $date = Carbon::now()->subWeeks();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
+
         return TransactionResource::collection($transactions);
     }
 
@@ -28,12 +30,14 @@ class TransactionController extends Controller
     {
         $date = Carbon::now()->subMonths();
         $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
+
         return TransactionResource::collection($transactions);
     }
 
     public function getLastFiveTransactions(Request $request): ResourceCollection
     {
         $transactions = Transaction::where('student_id', $request->student_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
+
         return TransactionResource::collection($transactions);
     }
 }

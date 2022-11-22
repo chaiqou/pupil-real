@@ -12,6 +12,7 @@ class StudentController extends Controller
     public function index(): ResourceCollection
     {
         $students = Student::with('user')->latest('created_at')->paginate(6);
+
         return StudentResource::collection($students);
     }
 }
