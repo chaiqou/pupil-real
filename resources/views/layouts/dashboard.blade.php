@@ -48,7 +48,7 @@
 </body>
 
 </html>
-<script src="{{ mix('js/app.js') }}"></script>
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <script src="<?php echo asset('js/sal.js') ?>"></script>
 <script>
     sal({
