@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../../../stores/useStudentStore";
+import { mapActions, mapWritableState } from "pinia";
+import { useStudentStore } from '../../../stores/useStudentStore'
 import StudentsNotFound from "../../not-found/StudentsNotFound";
 import StudentsSlideOver from "./StudentsSlideOver";
 export default {
     components: {
         StudentsNotFound,
-        StudentsSlideOver,
+        StudentsSlideOver
     },
     data() {
         return {
@@ -51,23 +51,13 @@ export default {
          lastPage: 2,
         }
     },
-    props: {
-        student: {
-            type: Object,
-            required: true,
-        },
-        schoolId: {
-            type: Number,
-            required: true,
-        },
-    },
     computed: {
         ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"]),
     },
     methods: {
         ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
         handleGetStudentRequest() {
-                axios.get(`/api/school/${this.schoolId}/students?page=${this.currentPage}`)
+                axios.get(`/api/admin/students?page=${this.currentPage}`)
                     .then(res => {
                         this.currentPage++;
                         this.lastPage = res.data.meta.last_page;

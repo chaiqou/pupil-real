@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\InviteController;
+use App\Http\Controllers\School\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +19,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
-            if (auth()->user()->hasRole(['2fa', 'school'])) {
+            if (auth()->user()->hasRole(['2fa', 'school', 'admin'])) {
                 return auth()->user()->sendTwoFactorCode();
             }
 

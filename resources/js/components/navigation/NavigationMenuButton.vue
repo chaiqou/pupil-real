@@ -10,7 +10,7 @@
 
 <script>
 import {  mapActions } from 'pinia'
-import {useModalStore} from "../stores/useModalStore";
+import {useModalStore} from "../../stores/useModalStore";
 export default {
     methods: {
         ...mapActions(useModalStore, ["showHideNavbar"])

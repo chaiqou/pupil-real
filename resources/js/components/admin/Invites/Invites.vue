@@ -35,6 +35,7 @@
 <script>
 import {mapWritableState} from "pinia";
 import { useInviteStore } from "../../../stores/useInviteStore";
+
 import InvitesNotFound from "../../not-found/InvitesNotFound"
 export default {
     components: {
@@ -46,18 +47,12 @@ export default {
          lastPage: 2,
         }
     },
-    props: {
-        schoolId: {
-            type: Number,
-            required: true,
-        },
-    },
     computed: {
-        ...mapWritableState(useInviteStore, ["isInvitesLoaded",  "invites", "invite_from"]),
+        ...mapWritableState(useInviteStore, ["isInvitesLoaded",  "invites"]),
     },
     methods: {
         handleGetInvitesRequest() {
-            axios.get(`/api/school/${this.schoolId}/invites?page=${this.currentPage}`)
+            axios.get(`/api/admin/invites?page=${this.currentPage}`)
                     .then(res => {
                         this.currentPage++;
                         this.lastPage = res.data.meta.last_page;
@@ -79,7 +74,6 @@ export default {
         },
     },
     created() {
-        this.invite_from = this.schoolId;
         this.handleGetInvitesRequest()
     },
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\ConfirmStudentCreationRequest;
@@ -60,14 +60,7 @@ class ParentController extends Controller
         return redirect()->route('parent.create-student-verify', ['student_id' => $student->id]);
     }
 
-    public function verifyStudentCreation(): view
-    {
-        return view('parent.create-student-verify', [
-            'user_id' => auth()->user()->id,
-        ]);
-    }
-
-    public function submitStudentCreation(ConfirmStudentCreationRequest $request): RedirectResponse|JsonResponse
+    public function submitStudentCreation(ConfirmStudentCreationRequest $request): RedirectResponse
     {
         if ($request->value === 'confirm') {
             return redirect()->route('parents.dashboard');
@@ -78,38 +71,13 @@ class ParentController extends Controller
             return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
         }
 
-        return response()->json(['error' => 'Wrong request'], 404);
+        return redirect()->back();
     }
 
-        public function getTransactions(Request $request): ResourceCollection
-        {
-            $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
-            return TransactionResource::collection($transactions);
-        }
-
-    public function getLastWeekTransactionsSpending(Request $request): ResourceCollection
+    public function verifyStudentCreation(): view
     {
-        $date = Carbon::now()->subWeeks();
-        $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
-        return TransactionResource::collection($transactions);
-    }
-
-    public function getLastMonthTransactionsSpending(Request $request): ResourceCollection
-    {
-        $date = Carbon::now()->subMonths();
-        $transactions = Transaction::where('student_id', $request->student_id)->where('transaction_date', '>=', $date)->with('merchant', 'student')->get();
-        return TransactionResource::collection($transactions);
-    }
-
-    public function getLastFiveTransactions(Request $request): ResourceCollection
-    {
-        $transactions = Transaction::where('student_id', $request->student_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
-        return TransactionResource::collection($transactions);
-    }
-
-    public function getStudents(Request $request): ResourceCollection|JsonResponse
-    {
-            $students = Student::where('user_id', $request->user_id)->latest('created_at')->get();
-            return StudentResource::collection($students);
+        return view('parent.create-student-verify', [
+            'user_id' => auth()->user()->id,
+        ]);
     }
 }

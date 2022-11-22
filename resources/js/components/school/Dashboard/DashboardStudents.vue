@@ -33,7 +33,7 @@
         </tbody>
     </table>
 
-    <school-students-slide-over></school-students-slide-over>
+    <students-slide-over></students-slide-over>
     </div>
 </template>
 
@@ -41,10 +41,11 @@
 import StudentsNotFound from "../../not-found/StudentsNotFound";
 import {mapActions, mapWritableState} from "pinia";
 import {useStudentStore} from "../../../stores/useStudentStore";
-
+import StudentsSlideOver from "../Students/StudentsSlideOver";
 export default {
     components: {
             StudentsNotFound,
+            StudentsSlideOver
     },
     data() {
         return {

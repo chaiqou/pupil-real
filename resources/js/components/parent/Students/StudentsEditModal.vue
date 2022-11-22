@@ -1152,8 +1152,8 @@ import {
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
-import { useStudentStore } from "../../stores/useStudentStore";
-import { useModalStore } from "../../stores/useModalStore";
+import { useStudentStore } from "../../../stores/useStudentStore";
+import { useModalStore } from "../../../stores/useModalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {

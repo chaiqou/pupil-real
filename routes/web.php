@@ -5,9 +5,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Dashboard\NavigationController;
-use App\Http\Controllers\Dashboard\ParentController;
-use App\Http\Controllers\Dashboard\SettingController;
-use App\Http\Controllers\InviteController;
+use App\Http\Controllers\Parent\ParentController;
+use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\School\InviteController as SchoolInviteController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
@@ -29,6 +29,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/two-factor-authentication','form')->name('2fa.form');
         Route::post('/submit-two-factor-authentication','verify')->name('2fa.submit');
         Route::post('/resend-two-factor-authentication','resend')->name('2fa.resend');
+    });
+
+
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('/admin/')->group(function () {
+            Route::controller(NavigationController::class)->group(function () {
+                Route::get('dashboard','admin')->name('admin.dashboard');
+                Route::get('students','admin')->name('admin.students');
+                Route::get('invite', 'admin')->name('admin.invite');
+            });
+        });
     });
 
     Route::group(['middleware' => ['role:parent']], function () {
@@ -69,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::controller(InviteController::class)->group(function () {
+Route::controller(SchoolInviteController::class)->group(function () {
     Route::get('/setup-account/{uniqueID}','setupAccount')->name('setup.account');
     Route::post('/setup-account/{uniqueID}','submitSetupAccount')->name('setup.account_submit');
 
