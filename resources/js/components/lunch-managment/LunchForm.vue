@@ -34,10 +34,13 @@
                 :max="10"
                 ref="multiselectRef"
                 required
+                autocomplete
+                appendNewOption
+                searchable
+                :createOption="true"
                 :close-on-select="false"
                 :searchable="true"
                 :options="multiselectOptions"
-                @change="updateSelectedMeal"
             />
             <WeekdaysChechkbox name="tags" />
             <BaseInput
@@ -107,3 +110,15 @@ const multiselectOptions = [
     "Dip",
 ];
 </script>
+
+<style src="@vueform/multiselect/themes/default.css" />
+<style>
+body {
+    --ms-bg: transparent;
+    --ms-tag-bg: #6c757d;
+    --ms-border-color: #6c757d;
+}
+.multiselect-tags-search {
+    background-color: inherit;
+}
+</style>
