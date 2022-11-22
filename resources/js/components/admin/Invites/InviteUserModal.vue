@@ -51,7 +51,7 @@
                                 </button>
                             </div>
                             <div>
-                              <invites-multiselect></invites-multiselect>
+                                <invites-multiselect></invites-multiselect>
                             </div>
                         </DialogPanel>
                     </TransitionChild>
@@ -72,7 +72,7 @@ import {
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { useModalStore } from "../../../stores/useModalStore";
-import InvitesMultiselect from './InvitesMultiselect'
+import InvitesMultiselect from "@/components/admin/Invites/InvitesMultiselect.vue";
 export default {
     components: {
         Dialog,
@@ -89,6 +89,6 @@ export default {
     },
     methods: {
         ...mapActions(useModalStore, ["showHideInviteUser"]),
-    }
+    },
 };
 </script>

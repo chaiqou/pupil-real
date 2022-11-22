@@ -66,12 +66,12 @@ import { ref } from "vue";
 import { useLunchFormStore } from "../../stores/useLunchFormStore";
 
 import axios from "../../config/axios/index";
-import BaseInput from "../form-components/BaseInput";
-import RangeDatepicker from "../form-components/RangeDatepicker.vue";
+import BaseInput from "@/components/form-components/BaseInput.vue";
+import RangeDatepicker from "@/components/form-components/RangeDatepicker.vue";
 import Multiselect from "@vueform/multiselect";
-import WeekdaysChechkbox from "./WeekdaysCechkbox.vue";
-import ExtrasAndHolds from "./ExtrasAndHolds.vue";
-import Button from "../ui/Button.vue";
+import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
+import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
+import Button from "@/components/ui/Button.vue";
 
 const store = useLunchFormStore();
 const { handleSubmit } = useForm();

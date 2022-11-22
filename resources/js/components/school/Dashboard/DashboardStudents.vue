@@ -1,57 +1,120 @@
 <template>
-    <div @scroll="onScroll" :class="this.isStudentsLoaded && this.students ? 'overflow-hidden max-h-[19rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg' : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'">
-    <table class="min-w-full divide-y divide-gray-300">
-        <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Full name</th>
-            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Card number</th>
-            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Parent email</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
-        <tr v-if="this.isStudentsLoaded && !this.students.length">
-            <td class="bg-white" colspan="4">
-                <StudentsNotFound role="school"></StudentsNotFound>
-            </td>
-        </tr>
-        <tr v-if="this.isStudentsLoaded && this.students.length" v-for="student in students" :key="student.id">
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{student.first_name + ' ' + student.last_name}}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.card_number}} </td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{student.user.email}} </td>
-            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <button @click="showHideSlideOver(); currentStudentDetails(student.id)" class="text-indigo-600 hover:text-indigo-900"
-                >Details</button
+    <div
+        @scroll="onScroll"
+        :class="
+            this.isStudentsLoaded && this.students
+                ? 'overflow-hidden max-h-[19rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+                : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+        "
+    >
+        <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th
+                        scope="col"
+                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >
+                        Full name
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                        Card number
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                        Parent email
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+                <tr v-if="this.isStudentsLoaded && !this.students.length">
+                    <td class="bg-white" colspan="4">
+                        <StudentsNotFound role="school"></StudentsNotFound>
+                    </td>
+                </tr>
+                <tr
+                    v-if="this.isStudentsLoaded && this.students.length"
+                    v-for="student in students"
+                    :key="student.id"
                 >
-            </td>
+                    <td
+                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                    >
+                        {{ student.first_name + " " + student.last_name }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        {{ student.card_number }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        {{ student.user.email }}
+                    </td>
+                    <td
+                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                    >
+                        <button
+                            @click="
+                                showHideSlideOver();
+                                currentStudentDetails(student.id);
+                            "
+                            class="text-indigo-600 hover:text-indigo-900"
+                        >
+                            Details
+                        </button>
+                    </td>
+                </tr>
+                <tr v-if="!this.isStudentsLoaded" v-for="n in 7">
+                    <td
+                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        </tr>
-        <tr v-if="!this.isStudentsLoaded" v-for="n in 7">
-            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div></td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><div class="h-2 bg-slate-300 rounded animate-pulse"></div>  </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <students-slide-over></students-slide-over>
+        <students-slide-over></students-slide-over>
     </div>
 </template>
 
 <script>
-import StudentsNotFound from "../../not-found/StudentsNotFound";
-import {mapActions, mapWritableState} from "pinia";
-import {useStudentStore} from "../../../stores/useStudentStore";
-import StudentsSlideOver from "../Students/StudentsSlideOver";
+import StudentsNotFound from "@/components/not-found/StudentsNotFound.vue";
+import { mapActions, mapWritableState } from "pinia";
+import { useStudentStore } from "../../../stores/useStudentStore";
+import StudentsSlideOver from "@/components/school/Students/StudentsSlideOver.vue";
 export default {
     components: {
-            StudentsNotFound,
-            StudentsSlideOver
+        StudentsNotFound,
+        StudentsSlideOver,
     },
     data() {
         return {
-         currentPage: 1,
-         lastPage: 2,
-        }
+            currentPage: 1,
+            lastPage: 2,
+        };
     },
     props: {
         student: {
@@ -64,28 +127,40 @@ export default {
         },
     },
     computed: {
-        ...mapWritableState(useStudentStore, ["isStudentsLoaded", "isSlideOverOpen", "students"]),
+        ...mapWritableState(useStudentStore, [
+            "isStudentsLoaded",
+            "isSlideOverOpen",
+            "students",
+        ]),
     },
     methods: {
-        ...mapActions(useStudentStore, ["showHideSlideOver", "currentStudentDetails"]),
+        ...mapActions(useStudentStore, [
+            "showHideSlideOver",
+            "currentStudentDetails",
+        ]),
         handleGetStudentRequest() {
-            axios.get(`/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`)
-                .then(res => {
+            axios
+                .get(
+                    `/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`
+                )
+                .then((res) => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;
-                    this.students.push(...res.data.data)
+                    this.students.push(...res.data.data);
                 })
-                .finally(() => this.isStudentsLoaded = true)
+                .finally(() => (this.isStudentsLoaded = true));
         },
-        onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
+        onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
             if (scrollTop + clientHeight >= scrollHeight) {
-                if(this.currentPage > this.lastPage) {return}
+                if (this.currentPage > this.lastPage) {
+                    return;
+                }
                 this.handleGetStudentRequest();
             }
         },
     },
     created() {
-        this.handleGetStudentRequest()
+        this.handleGetStudentRequest();
     },
-}
+};
 </script>
