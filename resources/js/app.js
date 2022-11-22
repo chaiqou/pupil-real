@@ -1,4 +1,4 @@
-require("./bootstrap");
+import "./bootstrap";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -20,13 +20,13 @@ import ParentStudentEditModal from "./components/parent/Students/StudentsEditMod
 import SchoolDashboardTransactions from "./components/school/Dashboard/DashboardTransactions.vue";
 import LunchForm from "./components/lunch-managment/LunchForm.vue";
 import Datepicker from "@vuepic/vue-datepicker";
-import SchoolDashboardStudents from './components/school/Dashboard/DashboardStudents.vue';
-import ParentStudentsMobile from './components/parent/Students/StudentsMobile.vue';
-import SchoolInvites from './components/school/Invites/Invites.vue';
-import SchoolInvitesHeader from './components/school/Invites/InvitesHeader.vue';
-import AdminStudents from './components/admin/Students/Students.vue';
-import AdminInvites from './components/admin/Invites/Invites.vue'
-import AdminInvitesHeader from './components/admin/Invites/InvitesHeader.vue'
+import SchoolDashboardStudents from "./components/school/Dashboard/DashboardStudents.vue";
+import ParentStudentsMobile from "./components/parent/Students/StudentsMobile.vue";
+import SchoolInvites from "./components/school/Invites/Invites.vue";
+import SchoolInvitesHeader from "./components/school/Invites/InvitesHeader.vue";
+import AdminStudents from "./components/admin/Students/Students.vue";
+import AdminInvites from "./components/admin/Invites/Invites.vue";
+import AdminInvitesHeader from "./components/admin/Invites/InvitesHeader.vue";
 import Invites from "./components/school/Invites/Invites.vue";
 import InvitesHeader from "./components/school/Invites/InvitesHeader.vue";
 import ExtrasAndHolds from "./components/lunch-managment/ExtrasAndHolds";
@@ -55,12 +55,12 @@ app.component("lunch-form", LunchForm);
 app.component("Datepicker", Datepicker);
 app.component("school-dashboard-students", SchoolDashboardStudents);
 app.component("school-dashboard-transactions", SchoolDashboardTransactions);
-app.component('parent-students-mobile', ParentStudentsMobile);
-app.component('school-invites', SchoolInvites);
-app.component('school-invites-header', SchoolInvitesHeader);
-app.component('admin-students', AdminStudents);
-app.component('admin-invites', AdminInvites);
-app.component('admin-invites-header', AdminInvitesHeader);
+app.component("parent-students-mobile", ParentStudentsMobile);
+app.component("school-invites", SchoolInvites);
+app.component("school-invites-header", SchoolInvitesHeader);
+app.component("admin-students", AdminStudents);
+app.component("admin-invites", AdminInvites);
+app.component("admin-invites-header", AdminInvitesHeader);
 app.component("extras-and-holds", ExtrasAndHolds);
 app.component("invites", Invites);
 app.component("invites-header", InvitesHeader);
