@@ -38,7 +38,6 @@
                 appendNewOption
                 searchable
                 :createOption="true"
-                placeholder="Select minimum 1 claimable and maximum 10 claimables"
                 :close-on-select="false"
                 :searchable="true"
                 :options="multiselectOptions"
