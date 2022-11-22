@@ -19,6 +19,7 @@ class InviteController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $invites = Invite::latest('created_at')->paginate(5);
+
         return InviteResource::collection($invites);
     }
 
@@ -27,30 +28,29 @@ class InviteController extends Controller
         $invites = Invite::all();
         $emails = [];
 
-        foreach($invites as $invite)
-        {
+        foreach ($invites as $invite) {
             array_push($emails, $invite->email);
         }
+
         return response()->json($emails);
     }
+
     public function getUserEmails(): JsonResponse
     {
         $users = User::all();
         $emails = [];
 
-        foreach($users as $user)
-        {
+        foreach ($users as $user) {
             array_push($emails, $user->email);
         }
+
         return response()->json($emails);
     }
-
 
     public function store(InviteRequest $request): JsonResponse
     {
         $emails = $request->emails;
-        foreach($emails as $email)
-        {
+        foreach ($emails as $email) {
             $invite = Invite::create([
                 'uniqueID' => Str::random(32),
                 'email' => $email,

@@ -14,12 +14,14 @@ class TransactionController extends Controller
     public function getTransactions(Request $request): ResourceCollection|JsonResponse
     {
         $transactions = Transaction::where('merchant_id', $request->school_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
+
         return TransactionResource::collection($transactions);
     }
 
     public function getLastFiveTransactions(Request $request): ResourceCollection|JsonResponse
     {
         $transactions = Transaction::where('merchant_id', $request->school_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
+
         return TransactionResource::collection($transactions);
     }
 }

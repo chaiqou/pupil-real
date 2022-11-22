@@ -52,4 +52,4 @@
 </body>
 
 </html>
-<script src="{{ mix('js/app.js') }}"></script>
+@vite(['resources/css/app.css', 'resources/js/app.js'])

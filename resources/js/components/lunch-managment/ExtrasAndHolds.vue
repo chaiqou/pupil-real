@@ -99,7 +99,7 @@
 import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 

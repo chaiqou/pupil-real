@@ -6,26 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
-use App\Http\Requests\School\InviteRequest;
-use App\Http\Resources\School\InviteResource;
-use App\Mail\InviteUser;
 use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-
     public static function continueOnboarding($user)
     {
         //Get the invite

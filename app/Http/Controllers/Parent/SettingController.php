@@ -70,7 +70,7 @@ class SettingController extends Controller
                 'state' => $request->state,
                 'street_address' => $request->street_address,
                 'zip' => $request->zip,
-            ]
+            ],
         ]);
 
         return response()->json(['success' => 'Student updated successfully']);

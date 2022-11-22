@@ -16,40 +16,41 @@ use Illuminate\Support\Str;
 
 class InviteController extends Controller
 {
-
     public function index(Request $request): ResourceCollection
     {
         $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
+
         return InviteResource::collection($invites);
     }
+
     public function getInviteEmails(Request $request): JsonResponse
     {
         $invites = Invite::where('school_id', $request->school_id)->get();
         $emails = [];
 
-        foreach($invites as $invite)
-        {
+        foreach ($invites as $invite) {
             array_push($emails, $invite->email);
         }
+
         return response()->json($emails);
     }
+
     public function getUserEmails(Request $request): JsonResponse
     {
         $users = User::where('school_id', $request->school_id)->get();
         $emails = [];
 
-        foreach($users as $user)
-        {
+        foreach ($users as $user) {
             array_push($emails, $user->email);
         }
+
         return response()->json($emails);
     }
 
     public function sendInvite(InviteRequest $request): JsonResponse
     {
         $emails = $request->emails;
-        foreach($emails as $email)
-        {
+        foreach ($emails as $email) {
             $invite = Invite::create([
                 'uniqueID' => Str::random(32),
                 'email' => $email,

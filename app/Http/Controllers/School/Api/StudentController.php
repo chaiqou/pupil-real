@@ -15,6 +15,7 @@ class StudentController extends Controller
     public function getStudents(Request $request): ResourceCollection|JsonResponse
     {
         $students = Student::where('school_id', $request->school_id)->with('user')->latest('created_at')->paginate(6);
+
         return StudentResource::collection($students);
     }
 
@@ -22,6 +23,7 @@ class StudentController extends Controller
     {
         $merchant = Merchant::where('user_id', $request->school_id)->first();
         $students = Student::where('school_id', $merchant->id)->with('user')->latest('created_at')->paginate(6);
+
         return StudentResource::collection($students);
     }
 }

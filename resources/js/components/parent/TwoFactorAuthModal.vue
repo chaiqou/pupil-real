@@ -40,7 +40,7 @@
 <script>
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
-import { useModalStore } from "../../stores/useModalStore";
+import { useModalStore } from "@/stores/useModalStore";
 import { mapActions, mapWritableState } from "pinia";
 
 export default {
