@@ -1,8 +1,10 @@
 <template>
-    <div class="invisible lg:visible w-full">
-        <div class="bg-inherit">
+    <div>
+        <div
+            class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
+        >
             <div
-                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4"
+                class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
             >
                 <section
                     v-for="month in monthsDays"
@@ -15,16 +17,16 @@
                     <div
                         class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500"
                     >
-                        <div>S</div>
                         <div>M</div>
                         <div>T</div>
                         <div>W</div>
                         <div>T</div>
                         <div>F</div>
                         <div>S</div>
+                        <div>S</div>
                     </div>
                     <div
-                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-white text-sm shadow ring-1 ring-gray-200"
+                        class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
@@ -36,11 +38,12 @@
                                 month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-50 text-gray-400',
-                                month.name !== getMonthByIndex(day.getMonth())
-                                    ? 'bg-white text-gray-900'
-                                    : 'bg-white text-gray-600',
-                                dayIdx === 0 &&
-                                    calculateStartOfDay[getDay(day)],
+                                dayIdx === 0 && 'rounded-tl-lg',
+                                dayIdx === 6 && 'rounded-tr-lg',
+                                dayIdx === month.days.length - 7 &&
+                                    'rounded-bl-lg',
+                                dayIdx === month.days.length - 1 &&
+                                    'rounded-br-lg',
                                 'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
@@ -51,8 +54,9 @@
                                         'bg-indigo-600 font-semibold text-white',
                                     'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                                 ]"
-                                >{{ format(day, "d") }}</time
                             >
+                                {{ format(day, "d") }}
+                            </time>
                         </button>
                     </div>
                 </section>
@@ -72,8 +76,8 @@ import {
     isToday,
     eachMonthOfInterval,
     add,
-    getDay,
     startOfWeek,
+    addDays,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 
@@ -99,7 +103,7 @@ const monthsDays = [
         year: format(month, "yyyy"),
         days: [
             ...eachDayOfInterval({
-                start: startOfWeek(startOfMonth(month)),
+                start: startOfWeek(startOfMonth(month), { weekStartsOn: 1 }),
                 end: endOfWeek(endOfMonth(month)),
             }),
         ],
@@ -119,6 +123,17 @@ const getMonthByIndex = function (index) {
     return month;
 };
 
+// i added days to the end of month to make all month equals to 42 length for design purpose
+
+monthsDays.forEach((month) => {
+    month.days.filter(() => {
+        if (month.days.length < 42) {
+            let lastElement = month.days[month.days.length - 1];
+            month.days.push(addDays(lastElement, 1));
+        }
+    });
+});
+
 const monthFullNames = [
     "January",
     "February",
@@ -132,15 +147,5 @@ const monthFullNames = [
     "October",
     "November",
     "December",
-];
-
-const calculateStartOfDay = [
-    "",
-    "col-start-2",
-    "col-start-3",
-    "col-start-4",
-    "col-start-5",
-    "col-start-6",
-    "col-start-7",
 ];
 </script>

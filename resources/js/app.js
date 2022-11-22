@@ -27,6 +27,9 @@ import SchoolInvitesHeader from './components/school/Invites/InvitesHeader.vue';
 import AdminStudents from './components/admin/Students/Students.vue';
 import AdminInvites from './components/admin/Invites/Invites.vue'
 import AdminInvitesHeader from './components/admin/Invites/InvitesHeader.vue'
+import Invites from "./components/school/Invites/Invites.vue";
+import InvitesHeader from "./components/school/Invites/InvitesHeader.vue";
+import ExtrasAndHolds from "./components/lunch-managment/ExtrasAndHolds";
 import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
@@ -58,6 +61,9 @@ app.component('school-invites-header', SchoolInvitesHeader);
 app.component('admin-students', AdminStudents);
 app.component('admin-invites', AdminInvites);
 app.component('admin-invites-header', AdminInvitesHeader);
+app.component("extras-and-holds", ExtrasAndHolds);
+app.component("invites", Invites);
+app.component("invites-header", InvitesHeader);
 
 app.use(pinia);
 app.mount("#app");
