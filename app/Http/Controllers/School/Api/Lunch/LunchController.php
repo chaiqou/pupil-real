@@ -1,19 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\School\Api\Lunch;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
-use Illuminate\Http\Request;
 
 class LunchController extends Controller
 {
-    public function index()
-    {
-    }
-
     public function store(LunchRequest $request)
     {
         $validate = $request->validated();
@@ -34,17 +29,5 @@ class LunchController extends Controller
         ]);
 
         return new LunchResource($lunch);
-    }
-
-    public function show(Lunch $lunch)
-    {
-    }
-
-    public function update(Request $request, Lunch $lunch)
-    {
-    }
-
-    public function destroy(Lunch $lunch)
-    {
     }
 }
