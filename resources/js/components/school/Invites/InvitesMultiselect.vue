@@ -316,7 +316,7 @@ export default {
             this.mainEmailsArray = [];
             this.isSuccessfullySent = "pending";
             axios
-                .post("/api/send-invite", this.emailData, {
+                .post("/api/school/send-invite", this.emailData, {
                     headers: {
                         "Content-Type": "multipart/form-formData",
                     },
