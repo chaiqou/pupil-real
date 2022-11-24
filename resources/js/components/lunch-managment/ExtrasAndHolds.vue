@@ -73,7 +73,12 @@
             </div>
         </div>
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
-            <Datepicker @update:modelValue="handleExtrasDate" range>
+            <Datepicker
+                closeOnScroll
+                :minDate="new Date()"
+                @update:modelValue="handleExtrasDate"
+                range
+            >
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -82,7 +87,12 @@
                     </p>
                 </template>
             </Datepicker>
-            <Datepicker @update:modelValue="handleHoldsDate" range>
+            <Datepicker
+                closeOnScroll
+                :minDate="new Date()"
+                @update:modelValue="handleHoldsDate"
+                range
+            >
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"

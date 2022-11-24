@@ -65,7 +65,7 @@ import { useForm } from "vee-validate";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
-import axios from "@/components/config/axios/index";
+import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import RangeDatepicker from "@/components/form-components/RangeDatepicker.vue";
 import Multiselect from "@vueform/multiselect";

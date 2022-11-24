@@ -87,7 +87,7 @@ export const useLunchFormStore = defineStore("lunch", {
             this.holds = full_dates;
         },
 
-        async formatExtrasDate() {
+        async formatHoldsDate() {
             let formatted_holds = [];
 
             for (let i = 0; i < this.holds.length; i++) {
