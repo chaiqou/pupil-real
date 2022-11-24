@@ -28,6 +28,7 @@ export const useLunchFormStore = defineStore("lunch", {
             }
             this.active_range = full_dates;
         },
+
         async formatActiveRangeDate() {
             let active_range = [];
 
@@ -38,6 +39,64 @@ export const useLunchFormStore = defineStore("lunch", {
             }
 
             this.active_range = active_range;
+        },
+
+        getMiddleDatesForExtras() {
+            let full_dates = [];
+            let startDate = "";
+            let endDate = "";
+
+            this.extras.map((extra) => {
+                startDate = new Date(extra[0]);
+                endDate = new Date(extra[1]);
+            });
+
+            while (startDate <= endDate) {
+                full_dates.push(new Date(startDate));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+            this.extras = full_dates;
+        },
+
+        async formatExtrasDate() {
+            let formatted_extras = [];
+
+            for (let i = 0; i < this.extras.length; i++) {
+                formatted_extras.push(
+                    format(new Date(this.extras[i]), "yyyy-MM-dd")
+                );
+            }
+
+            this.extras = formatted_extras;
+        },
+
+        getMiddleDatesForHolds() {
+            let full_dates = [];
+            let startDate = "";
+            let endDate = "";
+
+            this.holds.map((hold) => {
+                startDate = new Date(hold[0]);
+                endDate = new Date(hold[1]);
+            });
+
+            while (startDate <= endDate) {
+                full_dates.push(new Date(startDate));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+            this.holds = full_dates;
+        },
+
+        async formatExtrasDate() {
+            let formatted_holds = [];
+
+            for (let i = 0; i < this.holds.length; i++) {
+                formatted_holds.push(
+                    format(new Date(this.holds[i]), "yyyy-MM-dd")
+                );
+            }
+
+            this.holds = formatted_holds;
         },
     },
     getters: {

@@ -65,7 +65,7 @@ import { useForm } from "vee-validate";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
-import axios from "../../config/axios/index";
+import axios from "@/components/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import RangeDatepicker from "@/components/form-components/RangeDatepicker.vue";
 import Multiselect from "@vueform/multiselect";
@@ -79,8 +79,14 @@ const { handleSubmit } = useForm();
 const multiselectRef = ref(null);
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
+    // format dates and get dates from start to end
+
     store.getMiddleDatesForActiveRange();
     store.formatActiveRangeDate();
+    store.getMiddleDatesForExtras();
+    store.formatExtrasDate();
+    store.getMiddleDatesForHolds();
+    store.formatHoldsDate();
 
     axios
         .post("lunch", store.getLunchFormData)
@@ -91,6 +97,9 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
         .catch((error) => {
             console.log(error);
         });
+
+    store.extras = [];
+    store.holds = [];
 });
 
 const multiselectOptions = [
