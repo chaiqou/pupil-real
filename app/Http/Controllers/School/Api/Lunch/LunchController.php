@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
+use Carbon\Carbon;
 
 class LunchController extends Controller
 {
     public function store(LunchRequest $request)
     {
         $validate = $request->validated();
+
+        $activeRange = collect($validate['active_range']);
+        $tags = collect($validate['tags']);
+
+        $onlyMathcedDays = $activeRange->filter(function ($date) use ($tags) {
+            $carbonDate = Carbon::createFromFormat('Y-m-d', $date);
+
+            return $tags->search($carbonDate->dayName);
+        });
 
         $lunch = Lunch::create([
             'merchant_id' => auth()->user()->id,

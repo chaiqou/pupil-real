@@ -39,12 +39,12 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 const store = useLunchFormStore();
 
 const dayOptions = [
-    { name: "M", fullName: "monday", validOption: true },
-    { name: "T", fullName: "tuesday", validOption: true },
-    { name: "W", fullName: "wednesday", validOption: true },
-    { name: "T", fullName: "thursday", validOption: true },
-    { name: "F", fullName: "friday", validOption: true },
-    { name: "S", fullName: "saturday", validOption: true },
-    { name: "S", fullName: "sunday", validOption: true },
+    { name: "M", fullName: "Monday", validOption: true },
+    { name: "T", fullName: "Tuesday", validOption: true },
+    { name: "W", fullName: "Wednesday", validOption: true },
+    { name: "T", fullName: "Thursday", validOption: true },
+    { name: "F", fullName: "Friday", validOption: true },
+    { name: "S", fullName: "Saturday", validOption: true },
+    { name: "S", fullName: "Sunday", validOption: true },
 ];
 </script>
