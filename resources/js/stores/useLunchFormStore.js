@@ -46,16 +46,18 @@ export const useLunchFormStore = defineStore("lunch", {
             let startDate = "";
             let endDate = "";
 
-            this.extras.map((extra) => {
-                startDate = new Date(extra[0]);
-                endDate = new Date(extra[1]);
-            });
+            if (this.extras.length > 0) {
+                this.extras.map((extra) => {
+                    startDate = new Date(extra[0]);
+                    endDate = new Date(extra[1]);
+                });
 
-            while (startDate <= endDate) {
-                full_dates.push(new Date(startDate));
-                startDate.setDate(startDate.getDate() + 1);
+                while (startDate <= endDate) {
+                    full_dates.push(new Date(startDate));
+                    startDate.setDate(startDate.getDate() + 1);
+                }
+                this.extras = full_dates;
             }
-            this.extras = full_dates;
         },
 
         async formatExtrasDate() {
@@ -75,16 +77,18 @@ export const useLunchFormStore = defineStore("lunch", {
             let startDate = "";
             let endDate = "";
 
-            this.holds.map((hold) => {
-                startDate = new Date(hold[0]);
-                endDate = new Date(hold[1]);
-            });
+            if (this.holds.length > 0) {
+                this.holds.map((hold) => {
+                    startDate = new Date(hold[0]);
+                    endDate = new Date(hold[1]);
+                });
 
-            while (startDate <= endDate) {
-                full_dates.push(new Date(startDate));
-                startDate.setDate(startDate.getDate() + 1);
+                while (startDate <= endDate) {
+                    full_dates.push(new Date(startDate));
+                    startDate.setDate(startDate.getDate() + 1);
+                }
+                this.holds = full_dates;
             }
-            this.holds = full_dates;
         },
 
         async formatHoldsDate() {
