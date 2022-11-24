@@ -40,7 +40,7 @@
 <script>
 import { useModalStore } from "@/stores/useModalStore";
 import { mapWritableState, mapActions } from "pinia";
-import InviteUserModal from "@/components/admin/Invites/InviteUserModal.vue";
+import InviteUserModal from "@/components/school/Invites/InviteUserModal.vue";
 
 export default {
     components: {

@@ -57,7 +57,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role:school']], function () {
-        Route::post('send-invite', [SchoolInviteController::class, 'sendInvite'])->name('send.invite');
         Route::prefix('/school/')->group(function () {
             Route::controller(SchoolStudentController::class)->group(function () {
                 Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
@@ -67,13 +66,13 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
                 Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
             });
-            Route::get('{school_id}/invites', [SchoolInviteController::class, 'index'])->name('school.invites_api');
+            Route::controller(SchoolInviteController::class)->group(function () {
+                Route::get('{school_id}/invites', 'index')->name('school.invites_api');
+                Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invites.get-emails');
+                Route::get('{school_id}/user-emails',  'getUserEmails')->name('school_invites.get-emails');
+                Route::post('send-invite',  'sendInvite')->name('send.invite');
+            });
         });
-    });
-
-    Route::group(['middleware' => ['role:school']], function () {
-        Route::get('/{school_id}/invite-emails', [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
-        Route::get('/{school_id}/user-emails', [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
     });
 });
 
