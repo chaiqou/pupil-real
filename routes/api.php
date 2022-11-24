@@ -68,12 +68,13 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
             });
             Route::get('{school_id}/invites', [SchoolInviteController::class, 'index'])->name('school.invites_api');
+            Route::get('{school_id}/invite-emails', [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
+            Route::get('{school_id}/user-emails', [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
         });
     });
 
     Route::group(['middleware' => ['role:school']], function () {
-        Route::get('/{school_id}/invite-emails', [SchoolInviteController::class, 'getInviteEmails'])->name('school_invites.get-emails');
-        Route::get('/{school_id}/user-emails', [SchoolInviteController::class, 'getUserEmails'])->name('school_invites.get-emails');
+
     });
 });
 
