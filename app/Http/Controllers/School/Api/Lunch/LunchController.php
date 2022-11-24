@@ -17,7 +17,7 @@ class LunchController extends Controller
         $activeRange = collect($validate['active_range']);
         $tags = collect($validate['tags']);
 
-        $onlyMathcedDays = $activeRange->filter(function ($date) use ($tags) {
+        $onlyMatchedDays = $activeRange->filter(function ($date) use ($tags) {
             $carbonDate = Carbon::createFromFormat('Y-m-d', $date);
 
             return $tags->search($carbonDate->dayName);
