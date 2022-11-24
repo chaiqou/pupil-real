@@ -119,6 +119,13 @@
                             class="h-2 bg-slate-300 rounded animate-pulse"
                         ></div>
                     </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
                 </tr>
             </tbody>
         </table>
