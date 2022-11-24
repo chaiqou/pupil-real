@@ -16,6 +16,19 @@ export const useLunchFormStore = defineStore("lunch", {
             price_period: "",
         };
     },
+    actions: {
+        async loopThroughActiveRange() {
+            let active_range = [];
+
+            for (let i = 0; i < this.active_range.length; i++) {
+                active_range.push(
+                    format(new Date(this.active_range[i]), "yyyy-MM-dd")
+                );
+            }
+
+            this.active_range = active_range;
+        },
+    },
     getters: {
         getLunchFormData() {
             return {

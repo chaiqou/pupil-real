@@ -79,6 +79,8 @@ const { handleSubmit } = useForm();
 const multiselectRef = ref(null);
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
+    store.loopThroughActiveRange();
+
     axios
         .post("lunch", store.getLunchFormData)
         .then(() => {
