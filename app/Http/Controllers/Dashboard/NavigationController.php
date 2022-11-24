@@ -83,7 +83,7 @@ class NavigationController extends Controller
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
-                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true],
+                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                 ];
             $role = 'school';
         }
@@ -116,18 +116,11 @@ class NavigationController extends Controller
                 [
                     ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/admin/students', 'current' => false],
-                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true],
+                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                 ];
         }
         $currentTab = request()->route()->getName();
 
-//        if (auth()->user()->hasRole('2fa') && auth()->user()->is_verified === 0) {
-//            return redirect()->route('2fa.form');
-//        }
-//
-//        if (auth()->user()->hasRole('2fa')) {
-//            $twoFa = 1;
-//        }
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,
