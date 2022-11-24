@@ -3,33 +3,21 @@
         @scroll="onScroll"
         :class="
             this.isStudentsLoaded && this.students
-                ? 'overflow-hidden overflow-y-scroll max-h-[19rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+                ? 'overflow-hidden overflow-y-scroll max-h-[17.5rem] md:max-h-[19.3rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
                 : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
         "
     >
         <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th
-                        scope="col"
-                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
-                        Full name
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                        Card number
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                        Parent email
-                    </th>
-                </tr>
-            </thead>
+                <thead class="bg-gray-50">
+<tr>
+    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">Full name</th>
+    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Card number</th>
+    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Parent email</th>
+    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+        <span class="sr-only">Details</span>
+    </th>
+</tr>
+                </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
                 <tr v-if="this.isStudentsLoaded && !this.students.length">
                     <td class="bg-white" colspan="4">
@@ -73,6 +61,13 @@
                 <tr v-if="!this.isStudentsLoaded" v-for="n in 7">
                     <td
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                     >
                         <div
                             class="h-2 bg-slate-300 rounded animate-pulse"
