@@ -77,6 +77,7 @@
                 closeOnScroll
                 :minDate="new Date()"
                 @update:modelValue="handleExtrasDate"
+                :disabledDates="disabledExtrasDays"
                 range
             >
                 <template #trigger>
@@ -90,6 +91,7 @@
             <Datepicker
                 closeOnScroll
                 :minDate="new Date()"
+                :disabledDates="disabledHoldDays"
                 @update:modelValue="handleHoldsDate"
                 range
             >
@@ -110,6 +112,7 @@ import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { ref, computed, onUpdated } from "vue";
 
 const store = useLunchFormStore();
 
@@ -130,11 +133,16 @@ const removeExtra = (extraIdx) => {
     store.extras.splice(extraIdx, 1);
 };
 
+const disabledDaysForHolds = ref([]);
+const disabledDaysForExtras = ref([]);
+
 const handleExtrasDate = (modelData) => {
     store.extras.push([
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
     ]);
+
+    disabledDaysForHolds.value = modelData;
 };
 
 // Holds
@@ -148,5 +156,15 @@ const handleHoldsDate = (modelData) => {
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
     ]);
+
+    disabledDaysForExtras.value = modelData;
 };
+
+const disabledHoldDays = computed(() => {
+    return [disabledDaysForHolds.value[0], disabledDaysForHolds.value[1]];
+});
+
+const disabledExtrasDays = computed(() => {
+    return [disabledDaysForExtras.value[0], disabledDaysForExtras.value[1]];
+});
 </script>
