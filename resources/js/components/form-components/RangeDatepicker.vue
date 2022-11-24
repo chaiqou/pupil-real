@@ -4,7 +4,7 @@
             >{{ label }}
         </label>
         <Datepicker
-            multiDates
+            range
             closeOnScroll
             :minDate="new Date()"
             :name="name"

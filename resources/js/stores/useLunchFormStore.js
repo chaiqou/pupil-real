@@ -17,7 +17,18 @@ export const useLunchFormStore = defineStore("lunch", {
         };
     },
     actions: {
-        async loopThroughActiveRange() {
+        getMiddleDatesForActiveRange() {
+            let full_dates = [];
+            let startDate = new Date(this.active_range[0]);
+            let endDate = new Date(this.active_range[1]);
+
+            while (startDate <= endDate) {
+                full_dates.push(new Date(startDate));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+            this.active_range = full_dates;
+        },
+        async formatActiveRangeDate() {
             let active_range = [];
 
             for (let i = 0; i < this.active_range.length; i++) {
