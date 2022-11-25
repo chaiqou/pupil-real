@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
-use Barryvdh\Debugbar\Twig\Extension\Dump;
 use Carbon\Carbon;
 
 class LunchController extends Controller
@@ -38,7 +37,6 @@ class LunchController extends Controller
                 }
             });
         }
-        dump($onlyMatchedDays);
 
         // if extras is not empty , then we need to add the days that fall on the extras
         if ($extras->count() > 0) {
@@ -48,8 +46,6 @@ class LunchController extends Controller
                 }
             });
         }
-
-        dump($onlyMatchedDays);
 
         $lunch = Lunch::create([
             'merchant_id' => auth()->user()->id,

@@ -77,6 +77,7 @@
                 closeOnScroll
                 @update:modelValue="handleExtrasDate"
                 :disabledDates="disabledExtrasDays"
+                :minDate="new Date()"
                 range
             >
                 <template #trigger>
@@ -89,6 +90,7 @@
             </Datepicker>
             <Datepicker
                 closeOnScroll
+                :minDate="new Date()"
                 :disabledDates="disabledHoldDays"
                 @update:modelValue="handleHoldsDate"
                 range
