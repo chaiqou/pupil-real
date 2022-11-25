@@ -115,6 +115,16 @@ export const useLunchFormStore = defineStore("lunch", {
                 });
             }
         },
+
+        addExtras() {
+            if (this.extras.length > 0) {
+                this.extras.map((extra) => {
+                    if (!this.active_range.includes(extra)) {
+                        this.active_range.push(extra);
+                    }
+                });
+            }
+        },
     },
     getters: {
         getLunchFormData() {
