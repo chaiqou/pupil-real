@@ -8,7 +8,6 @@ use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use Carbon\Carbon;
 
-
 class LunchController extends Controller
 {
     public function store(LunchRequest $request)
@@ -19,15 +18,25 @@ class LunchController extends Controller
         $holds = collect($validate['holds']);
         $extras = collect($validate['extras']);
 
-
-        $onlyMatchedDays =  $activeRange->map(function ($date) use ($tags) {
-            if($tags->contains(Carbon::parse($date)->shortDayName)){
+        //  selected days that fall on the active range
+        $onlyMatchedDays = $activeRange->map(function ($date) use ($tags) {
+            if ($tags->contains(Carbon::parse($date)->shortDayName)) {
                 return $date;
             }
         })->reject(function ($date) {
-            	return empty($date);
+            return empty($date);
         });
 
+        // if holds is not empty, then we need to remove the days that fall on the holds
+        if ($holds->count() > 0) {
+            $holds->map(function ($hold, $key) use ($onlyMatchedDays) {
+                if ($onlyMatchedDays->contains($hold)) {
+                    $searchAppropiateHoldId = $onlyMatchedDays->search($hold);
+                    $removedHolds = $onlyMatchedDays->forget($searchAppropiateHoldId);
+                    $onlyMatchedDays = $removedHolds;
+                }
+            });
+        }
 
         $lunch = Lunch::create([
             'merchant_id' => auth()->user()->id,
