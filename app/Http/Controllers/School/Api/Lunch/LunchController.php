@@ -7,7 +7,7 @@ use App\Http\Requests\LunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use Carbon\Carbon;
-use Illuminate\Testing\Fluent\Concerns\Interaction;
+
 
 class LunchController extends Controller
 {
@@ -15,8 +15,6 @@ class LunchController extends Controller
     {
         $validate = $request->validated();
         $activeRange = collect($validate['active_range']);
-        $extras= collect($validate['extras']);
-        $holds = collect($validate['holds']);
         $tags = collect($validate['tags']);
 
            $onlyMatchedDays = $activeRange->filter(function ($date) use ($tags) {
@@ -35,7 +33,7 @@ class LunchController extends Controller
             'holds' => $validate['holds'] ?? null,
             'extras' => $validate['extras'] ?? null,
             'tags' => $validate['tags'],
-            'available_days' => 3,
+            'available_days' => $onlyMatchedDays->toArray(),
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
         ]);

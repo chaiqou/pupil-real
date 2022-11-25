@@ -18,15 +18,15 @@ return new class() extends Migration
             $table->foreignId('merchant_id')->constrained();
             $table->string('title');
             $table->text('description');
-            $table->string('period_length');
+            $table->integer('period_length');
             $table->json('tags');
             $table->json('active_range');
             $table->json('claimables');
             $table->json('holds')->nullable();
             $table->json('extras')->nullable();
-            $table->string('available_days');
-            $table->string('price_day');
-            $table->string('price_period');
+            $table->json('available_days');
+            $table->integer('price_day');
+            $table->integer('price_period');
             $table->timestamps();
         });
     }

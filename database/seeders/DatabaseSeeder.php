@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call(StudentSeeder::class);
         $this->call(MerchantSeeder::class);
         $this->call(TransactionSeeder::class);
-        $this->call(WeekdaySeeder::class);
     }
 }
