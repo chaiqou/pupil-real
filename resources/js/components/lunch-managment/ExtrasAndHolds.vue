@@ -142,7 +142,9 @@ const handleExtrasDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
-    disabledDaysForHolds.value = modelData;
+    store.getDatesInRange(modelData[0], modelData[1]).forEach((data) => {
+        disabledDaysForHolds.value.push(data);
+    });
 };
 
 // Holds
@@ -157,14 +159,16 @@ const handleHoldsDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
-    disabledDaysForExtras.value = modelData;
+    store.getDatesInRange(modelData[0], modelData[1]).forEach((date) => {
+        disabledDaysForExtras.value.push(date);
+    });
 };
 
 const disabledHoldDays = computed(() => {
-    return [disabledDaysForHolds.value[0], disabledDaysForHolds.value[1]];
+    return [...disabledDaysForHolds.value];
 });
 
 const disabledExtrasDays = computed(() => {
-    return [disabledDaysForExtras.value[0], disabledDaysForExtras.value[1]];
+    return [...disabledDaysForExtras.value];
 });
 </script>

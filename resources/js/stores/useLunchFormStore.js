@@ -102,6 +102,19 @@ export const useLunchFormStore = defineStore("lunch", {
 
             this.holds = formatted_holds;
         },
+
+        getDatesInRange(startDate, endDate) {
+            const date = new Date(startDate.getTime());
+
+            const dates = [];
+
+            while (date <= endDate) {
+                dates.push(new Date(date));
+                date.setDate(date.getDate() + 1);
+            }
+
+            return dates;
+        },
     },
     getters: {
         getLunchFormData() {
