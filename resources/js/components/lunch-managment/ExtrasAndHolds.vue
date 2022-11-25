@@ -91,7 +91,7 @@
             <Datepicker
                 closeOnScroll
                 :minDate="new Date()"
-                :disabledDates="disabledHoldDays"
+                :disabledDates="disableHoldsDays"
                 @update:modelValue="handleHoldsDate"
                 range
             >
@@ -161,7 +161,7 @@ const handleHoldsDate = (modelData) => {
     });
 };
 
-const disabledHoldDays = computed(() => {
+const disableHoldsDays = computed(() => {
     return [...store.disabledDaysForHolds];
 });
 

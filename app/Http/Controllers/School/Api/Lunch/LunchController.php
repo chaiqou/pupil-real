@@ -47,6 +47,9 @@ class LunchController extends Controller
             });
         }
 
+        $sortedMatchedDays = $onlyMatchedDays->sort();
+
+
         $lunch = Lunch::create([
             'merchant_id' => auth()->user()->id,
             'title' => $validate['title'],
@@ -57,7 +60,7 @@ class LunchController extends Controller
             'holds' => $validate['holds'] ?? null,
             'extras' => $validate['extras'] ?? null,
             'weekdays' => $validate['weekdays'],
-            'available_days' => $onlyMatchedDays->toArray(),
+            'available_days' => $sortedMatchedDays->toArray(),
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
         ]);
