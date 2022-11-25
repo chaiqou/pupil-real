@@ -64,8 +64,6 @@ class InviteController extends Controller
 
     public function personalForm(): View
     {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
-
         return view('invite.personal-form', [
             'uniqueID' => request()->uniqueID,
         ]);
