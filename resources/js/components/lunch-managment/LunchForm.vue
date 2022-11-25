@@ -100,6 +100,8 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 
     store.extras = [];
     store.holds = [];
+    store.disabledDaysForExtras = [];
+    store.disabledDaysForHolds = [];
 });
 
 const multiselectOptions = [
