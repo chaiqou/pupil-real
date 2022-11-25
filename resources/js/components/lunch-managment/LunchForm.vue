@@ -87,6 +87,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
     store.formatExtrasDate();
     store.getMiddleDatesForHolds();
     store.formatHoldsDate();
+    store.extractHolds();
 
     axios
         .post("lunch", store.getLunchFormData)
