@@ -8,7 +8,7 @@
                         name="weekdays"
                         type="checkbox"
                         :value="day.fullName"
-                        v-model="store.tags"
+                        v-model="store.weekdays"
                         rules="required"
                         :id="day.fullName"
                         class="hidden peer"

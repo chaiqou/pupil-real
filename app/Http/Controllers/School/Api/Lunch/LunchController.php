@@ -14,13 +14,13 @@ class LunchController extends Controller
     {
         $validate = $request->validated();
         $activeRange = collect($validate['active_range']);
-        $tags = collect($validate['tags']);
+        $weekdays = collect($validate['weekdays']);
         $holds = collect($validate['holds']);
         $extras = collect($validate['extras']);
 
         //  selected days that fall on the active range
-        $onlyMatchedDays = $activeRange->map(function ($date) use ($tags) {
-            if ($tags->contains(Carbon::parse($date)->shortDayName)) {
+        $onlyMatchedDays = $activeRange->map(function ($date) use ($weekdays) {
+            if ($weekdays->contains(Carbon::parse($date)->shortDayName)) {
                 return $date;
             }
         })->reject(function ($date) {
@@ -56,7 +56,7 @@ class LunchController extends Controller
             'claimables' => $validate['claimables'],
             'holds' => $validate['holds'] ?? null,
             'extras' => $validate['extras'] ?? null,
-            'tags' => $validate['tags'],
+            'weekdays' => $validate['weekdays'],
             'available_days' => $onlyMatchedDays->toArray(),
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],

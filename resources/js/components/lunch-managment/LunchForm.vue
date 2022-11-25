@@ -42,7 +42,7 @@
                 :searchable="true"
                 :options="multiselectOptions"
             />
-            <WeekdaysChechkbox name="tags" />
+            <WeekdaysChechkbox name="weekdays" />
             <BaseInput
                 v-model="store.price_day"
                 name="price_day"
