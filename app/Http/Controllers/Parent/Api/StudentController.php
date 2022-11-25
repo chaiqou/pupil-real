@@ -11,10 +11,17 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class StudentController extends Controller
 {
-    public function getStudents(Request $request): ResourceCollection|JsonResponse
+    public function get(Request $request): ResourceCollection
     {
         $students = Student::where('user_id', $request->user_id)->latest('created_at')->get();
 
         return StudentResource::collection($students);
+    }
+
+    public function show(Request $request): StudentResource
+    {
+        $student = Student::where('id', $request->student_id)->first();
+
+        return new StudentResource($student);
     }
 }

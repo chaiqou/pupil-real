@@ -376,31 +376,34 @@
     <h1 class="px-3">Student management</h1>
     <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
     <div class="-my-2 -mx-4 hidden md:block sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <parent-students :user-id="{{$user->id}}" :student="{{$student}}"></parent-students>
-                <parent-student-edit-modal></parent-student-edit-modal>
-            </div>
-            <div class="m-3 mb-10 mt-10 flex justify-end">
-                <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
-            </div>
+    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <parent-students :user-id="{{$user->id}}"></parent-students>
+        </div>
+        <div class="m-3 mb-10 mt-10 flex justify-end">
+            <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
         </div>
     </div>
+</div>
 
-    <div class="md:hidden block -my-2 -mx-4 overflow-x-scroll overflow-y-scroll sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <parent-students-mobile :user-id="{{$user->id}}" :student="{{$student}}"></parent-students-mobile>
-                <parent-student-edit-modal></parent-student-edit-modal>
-            </div>
-        </div>
-    </div>
-    <div class="m-3 mb-10 mt-10 md:hidden block">
-        <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
-    </div>
-   </div>
-
+          <div class="md:hidden block -my-2 -mx-4 overflow-x-scroll overflow-y-scroll md:overflow-hidden sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                  <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                      <parent-students-mobile :user-id="{{$user->id}}"></parent-students-mobile>
+                  </div>
+              </div>
+          </div>
+          <div class="m-3 mb-10 mt-10 md:hidden block">
+              <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+          </div>
       </div>
+
+
+
+
+
+
+    </div>
     </div>
 </div>
 @endsection

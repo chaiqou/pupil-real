@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\UpdateStudentRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdatePersonalRequest;
+use App\Http\Resources\Parent\StudentResource;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SettingController extends Controller
 {
@@ -57,7 +60,7 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
-    public function updateStudent(UpdateStudentRequest $request): JsonResponse
+    public function updateStudent(UpdateStudentRequest $request): ResourceCollection
     {
         $student = Student::where('id', $request->student_id)->first();
         $student->update([
@@ -72,7 +75,8 @@ class SettingController extends Controller
                 'zip' => $request->zip,
             ],
         ]);
-
-        return response()->json(['success' => 'Student updated successfully']);
+        $parent = User::where('id', $student->user_id)->first();
+        $students = Student::where('user_id', $parent->id)->latest('created_at')->get();
+        return StudentResource::collection($students);
     }
 }

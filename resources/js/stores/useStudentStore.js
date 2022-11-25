@@ -7,6 +7,8 @@ export const useStudentStore = defineStore("student", {
             isSlideOverOpen: false,
             students: [],
             student: [],
+            studentId: null,
+            studentForEdit: [],
         };
     },
     actions: {
@@ -17,7 +19,7 @@ export const useStudentStore = defineStore("student", {
             this.student = this.students.find(item => item.id === id)
         },
         currentStudentEdit(id) {
-            this.student = this.students.find(item => item.id === id)
-        }
+            this.studentId = id;
+        },
     }
 });

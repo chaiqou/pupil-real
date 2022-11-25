@@ -7,7 +7,7 @@ use App\Models\User;
 
 class SchoolController extends Controller
 {
-    public function index()
+    public function get()
     {
         $schools = User::role('school')->get();
         $schoolsArray = [];

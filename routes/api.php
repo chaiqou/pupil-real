@@ -28,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/parent/')->group(function () {
             Route::post('update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api');
             Route::controller(ParentStudentController::class)->group(function () {
-                Route::get('{user_id}/students', 'getStudents')->name('parent.students_api');
+                Route::get('{user_id}/students', 'get')->name('parent.students_api');
+                Route::get('student/{student_id}', 'show')->name('parent.student_api');
             });
             Route::controller(ParentTransactionController::class)->group(function () {
                 Route::get('{student_id}/week-spending', 'getLastWeekTransactionsSpending')->name('parent.week-spending_api');
@@ -42,13 +43,13 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/admin/')->group(function () {
             Route::controller(AdminStudentController::class)->group(function () {
-                Route::get('students', 'index')->name('admin.students_api');
+                Route::get('students', 'get')->name('admin.students_api');
             });
             Route::controller(AdminSchoolController::class)->group(function () {
-                Route::get('schools', 'index')->name('admin.schools_api');
+                Route::get('schools', 'get')->name('admin.schools_api');
             });
             Route::controller(AdminInviteController::class)->group(function () {
-                Route::get('invites', 'index')->name('admin.invites_api');
+                Route::get('invites', 'get')->name('admin.invites_api');
                 Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
                 Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
                 Route::post('{schoolId}/send-invite', [AdminInviteController::class, 'store'])->name('admin_send-invite_api');
@@ -67,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
             });
             Route::controller(SchoolInviteController::class)->group(function () {
-                Route::get('{school_id}/invites', 'index')->name('school.invites_api');
+                Route::get('{school_id}/invites', 'get')->name('school.invites_api');
                 Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invites.get-emails');
                 Route::get('{school_id}/user-emails',  'getUserEmails')->name('school_invites.get-emails');
                 Route::post('send-invite',  'sendInvite')->name('send.invite');
