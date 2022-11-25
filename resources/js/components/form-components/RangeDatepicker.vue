@@ -6,7 +6,6 @@
         <Datepicker
             range
             closeOnScroll
-            :minDate="new Date()"
             :name="name"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"

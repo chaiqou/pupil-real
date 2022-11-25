@@ -16,12 +16,18 @@ class LunchController extends Controller
         $validate = $request->validated();
         $activeRange = collect($validate['active_range']);
         $tags = collect($validate['tags']);
+        $holds = collect($validate['holds']);
+        $extras = collect($validate['extras']);
 
-           $onlyMatchedDays = $activeRange->filter(function ($date) use ($tags) {
-            $carbonDate = Carbon::createFromFormat('Y-m-d', $date);
 
-            return $tags->search($carbonDate->dayName);
+        $onlyMatchedDays =  $activeRange->map(function ($date) use ($tags) {
+            if($tags->contains(Carbon::parse($date)->shortDayName)){
+                return $date;
+            }
+        })->reject(function ($date) {
+            	return empty($date);
         });
+
 
         $lunch = Lunch::create([
             'merchant_id' => auth()->user()->id,

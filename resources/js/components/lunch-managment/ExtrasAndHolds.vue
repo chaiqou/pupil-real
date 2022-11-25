@@ -75,7 +75,6 @@
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
             <Datepicker
                 closeOnScroll
-                :minDate="new Date()"
                 @update:modelValue="handleExtrasDate"
                 :disabledDates="disabledExtrasDays"
                 range
@@ -90,7 +89,6 @@
             </Datepicker>
             <Datepicker
                 closeOnScroll
-                :minDate="new Date()"
                 :disabledDates="disabledHoldDays"
                 @update:modelValue="handleHoldsDate"
                 range
