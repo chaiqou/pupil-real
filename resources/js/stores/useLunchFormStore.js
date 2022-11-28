@@ -31,18 +31,6 @@ export const useLunchFormStore = defineStore("lunch", {
             this.active_range = full_dates;
         },
 
-        async formatActiveRangeDate() {
-            let active_range = [];
-
-            for (let i = 0; i < this.active_range.length; i++) {
-                active_range.push(
-                    format(new Date(this.active_range[i]), "yyyy-MM-dd")
-                );
-            }
-
-            this.active_range = active_range;
-        },
-
         getMiddleDatesForExtras() {
             let full_dates = [];
             let startDate = "";
@@ -60,18 +48,6 @@ export const useLunchFormStore = defineStore("lunch", {
                 }
                 this.extras = full_dates;
             }
-        },
-
-        async formatExtrasDate() {
-            let formatted_extras = [];
-
-            for (let i = 0; i < this.extras.length; i++) {
-                formatted_extras.push(
-                    format(new Date(this.extras[i]), "yyyy-MM-dd")
-                );
-            }
-
-            this.extras = formatted_extras;
         },
 
         getMiddleDatesForHolds() {
@@ -93,16 +69,26 @@ export const useLunchFormStore = defineStore("lunch", {
             }
         },
 
-        async formatHoldsDate() {
-            let formatted_holds = [];
+        // Formatting date for human readable code
 
-            for (let i = 0; i < this.holds.length; i++) {
-                formatted_holds.push(
-                    format(new Date(this.holds[i]), "yyyy-MM-dd")
-                );
+        formatDateForHumans(date) {
+            let formatedDate = [];
+
+            for (let i = 0; i < date.length; i++) {
+                formatedDate.push(format(new Date(date[i]), "yyyy-MM-dd"));
             }
 
-            this.holds = formatted_holds;
+            if (date === this.active_range) {
+                this.active_range = formatedDate;
+            }
+
+            if (date === this.extras) {
+                this.extras = formatedDate;
+            }
+
+            if (date === this.holds) {
+                this.holds = formatedDate;
+            }
         },
 
         getDatesInRange(startDate, endDate) {
@@ -116,29 +102,6 @@ export const useLunchFormStore = defineStore("lunch", {
             }
 
             return dates;
-        },
-
-        extractHolds() {
-            if (this.holds.length > 0) {
-                this.holds.map((hold) => {
-                    if (this.active_range.includes(hold)) {
-                        this.active_range.splice(
-                            this.active_range.indexOf(hold),
-                            1
-                        );
-                    }
-                });
-            }
-        },
-
-        addExtras() {
-            if (this.extras.length > 0) {
-                this.extras.map((extra) => {
-                    if (!this.active_range.includes(extra)) {
-                        this.active_range.push(extra);
-                    }
-                });
-            }
         },
     },
     getters: {
@@ -158,11 +121,11 @@ export const useLunchFormStore = defineStore("lunch", {
         },
         getCalculatedActiveRange() {
             this.getMiddleDatesForActiveRange();
-            this.formatActiveRangeDate();
+            this.formatDateForHumans(this.active_range);
             this.getMiddleDatesForExtras();
-            this.formatExtrasDate();
+            this.formatDateForHumans(this.extras);
             this.getMiddleDatesForHolds();
-            this.formatHoldsDate();
+            this.formatDateForHumans(this.holds);
         },
     },
 });
