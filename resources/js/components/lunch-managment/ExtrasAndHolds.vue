@@ -79,6 +79,7 @@
                 :disabledDates="disabledExtrasDays"
                 :maxDate="addYears(new Date(), 1)"
                 :minDate="new Date()"
+                :enableTimePicker="false"
                 range
             >
                 <template #trigger>
@@ -95,6 +96,7 @@
                 :disabledDates="disableHoldsDays"
                 :maxDate="addYears(new Date(), 1)"
                 @update:modelValue="handleHoldsDate"
+                :enableTimePicker="false"
                 range
             >
                 <template #trigger>
