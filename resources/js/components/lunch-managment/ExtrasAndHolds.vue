@@ -162,10 +162,10 @@ const handleHoldsDate = (modelData) => {
 };
 
 const disableHoldsDays = computed(() => {
-    return [...store.disabledDaysForHolds];
+    return [...store.disabledDaysForHolds, ...store.disabledDaysForExtras];
 });
 
 const disabledExtrasDays = computed(() => {
-    return [...store.disabledDaysForExtras];
+    return [...store.disabledDaysForExtras, ...store.disabledDaysForHolds];
 });
 </script>
