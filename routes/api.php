@@ -39,7 +39,6 @@ Route::middleware(['auth'])->group(function () {
             });
         });
     });
-
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/admin/')->group(function () {
             Route::controller(AdminStudentController::class)->group(function () {
@@ -70,8 +69,8 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(SchoolInviteController::class)->group(function () {
                 Route::get('{school_id}/invites', 'get')->name('school.invites_api');
                 Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invites.get-emails');
-                Route::get('{school_id}/user-emails',  'getUserEmails')->name('school_invites.get-emails');
-                Route::post('send-invite',  'sendInvite')->name('send.invite');
+                Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_invites.get-emails');
+                Route::post('send-invite', 'sendInvite')->name('send.invite');
             });
         });
     });

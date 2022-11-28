@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fobidden | PupilPay</title>
+    <title>Page not exist | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
