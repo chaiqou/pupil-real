@@ -62,6 +62,11 @@
                             >
                                 {{ format(day, "d") }}
                             </time>
+                            <div v-if="ifDaysMatch(day)">
+                                <div
+                                    class="w-1 h-1 mx-auto mt-1 rounded-full bg-sky-600"
+                                ></div>
+                            </div>
                         </button>
                     </div>
                 </section>
@@ -85,6 +90,9 @@ import {
     addDays,
 } from "date-fns";
 import { ref, defineProps } from "vue";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
+const store = useLunchFormStore();
 
 const props = defineProps({
     months: {
@@ -94,6 +102,10 @@ const props = defineProps({
 });
 
 const today = startOfToday();
+
+const ifDaysMatch = (day) => {
+    return store.active_range.some((data) => data == format(day, "yyyy-MM-dd"));
+};
 
 const currentMonthWithOtherMonths = ref(
     eachMonthOfInterval({

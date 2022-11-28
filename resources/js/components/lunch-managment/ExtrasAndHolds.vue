@@ -143,6 +143,8 @@ const handleExtrasDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
+    store.getCalculatedActiveRange;
+
     store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
         store.disabledDaysForHolds.push(data);
     });
@@ -163,6 +165,8 @@ const handleHoldsDate = (modelData) => {
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
     ]);
+
+    store.getCalculatedActiveRange;
 
     store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
         store.disabledDaysForExtras.push(date);
