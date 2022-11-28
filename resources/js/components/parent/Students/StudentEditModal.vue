@@ -181,7 +181,7 @@
                                                         id="country"
                                                         name="country"
                                                         autocomplete="country-name"
-                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                        class="block w-full px-4 py-1.5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     >
                                                         <option value="AF">
                                                             Afghanistan

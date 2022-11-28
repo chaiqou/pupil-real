@@ -47,7 +47,7 @@
                     <div class="sm:col-span-3">
                         <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
                         <div class="mt-1">
-                            <select id="country" value="{{$userInfo->country}}" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            <select id="country" value="{{$userInfo->country}}" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 px-4 py-1.5 focus:ring-indigo-500 sm:text-sm">
                                 <option value="AF">Afghanistan</option>
                                 <option value="AX">Aland Islands</option>
                                 <option value="AL">Albania</option>
@@ -397,11 +397,6 @@
               <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
           </div>
       </div>
-
-
-
-
-
 
     </div>
     </div>
