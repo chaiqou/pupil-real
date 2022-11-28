@@ -48,5 +48,5 @@ function required(value) {
 }
 
 const nameRef = toRef(props, "name");
-const { handleChange, errorMessage, value } = useField(nameRef, required);
+const { errorMessage, value } = useField(nameRef, required);
 </script>

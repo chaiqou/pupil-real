@@ -114,7 +114,8 @@ import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { ref, computed } from "vue";
+import { computed } from "vue";
+import { addYears } from "date-fns";
 
 const store = useLunchFormStore();
 
@@ -146,6 +147,10 @@ const handleExtrasDate = (modelData) => {
     });
 };
 
+const disabledExtrasDays = computed(() => {
+    return [...store.disabledDaysForExtras, ...store.disabledDaysForHolds];
+});
+
 // Holds
 
 const removeHold = (holdIdx) => {
@@ -165,9 +170,5 @@ const handleHoldsDate = (modelData) => {
 
 const disableHoldsDays = computed(() => {
     return [...store.disabledDaysForHolds, ...store.disabledDaysForExtras];
-});
-
-const disabledExtrasDays = computed(() => {
-    return [...store.disabledDaysForExtras, ...store.disabledDaysForHolds];
 });
 </script>
