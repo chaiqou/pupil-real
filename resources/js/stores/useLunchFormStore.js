@@ -35,21 +35,19 @@ export const useLunchFormStore = defineStore("lunch", {
                     startDate.setDate(startDate.getDate() + 1);
                 }
 
-                if (state === this.extras) {
-                    this.extras = dates;
-                }
-
-                if (state === this.holds) {
-                    this.holds = dates;
-                }
-
-                if (state === this.active_range) {
-                    this.active_range = dates;
+                switch (state) {
+                    case this.active_range:
+                        this.active_range = dates;
+                        break;
+                    case this.extras:
+                        this.extras = dates;
+                        break;
+                    case this.holds:
+                        this.holds = dates;
+                        break;
                 }
             }
         },
-
-        // Formatting date for human readable code
 
         formatDateForHumans(date) {
             let formatedDate = [];
@@ -58,16 +56,16 @@ export const useLunchFormStore = defineStore("lunch", {
                 formatedDate.push(format(new Date(date[i]), "yyyy-MM-dd"));
             }
 
-            if (date === this.active_range) {
-                this.active_range = formatedDate;
-            }
-
-            if (date === this.extras) {
-                this.extras = formatedDate;
-            }
-
-            if (date === this.holds) {
-                this.holds = formatedDate;
+            switch (date) {
+                case this.active_range:
+                    this.active_range = formatedDate;
+                    break;
+                case this.extras:
+                    this.extras = formatedDate;
+                    break;
+                case this.holds:
+                    this.holds = formatedDate;
+                    break;
             }
         },
 
