@@ -15,6 +15,7 @@
                 name="active_range"
                 label="Active range"
             />
+            <WeekdaysChechkbox name="weekdays" />
             <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
                 v-model="store.period_length"
@@ -42,7 +43,6 @@
                 :searchable="true"
                 :options="multiselectOptions"
             />
-            <WeekdaysChechkbox name="weekdays" />
             <BaseInput
                 v-model="store.price_day"
                 name="price_day"
