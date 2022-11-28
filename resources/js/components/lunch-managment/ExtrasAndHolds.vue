@@ -77,6 +77,7 @@
                 closeOnScroll
                 @update:modelValue="handleExtrasDate"
                 :disabledDates="disabledExtrasDays"
+                :maxDate="addYears(new Date(), 1)"
                 :minDate="new Date()"
                 range
             >
@@ -92,6 +93,7 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :disabledDates="disableHoldsDays"
+                :maxDate="addYears(new Date(), 1)"
                 @update:modelValue="handleHoldsDate"
                 range
             >
