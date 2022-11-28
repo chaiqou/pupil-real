@@ -76,7 +76,7 @@
                 </div>
             </div>
             @enderror
-            <form id="form" method="POST" action="{{route('verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
+            <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
                 @csrf
                 <div class="-space-y-px rounded-md shadow-md p-4">
                     <div class="row-start-2 grid grid-cols-6">
@@ -135,6 +135,9 @@
                     sc = document.getElementById("sc-6");
                     sc.value = pastedText.substring(5, 6);
                 }, 300);
+                setTimeout(function() {
+                    document.inviteTwoFaForm.submit();
+                }, 1500)
             }
         });
         function resetValue(i) {

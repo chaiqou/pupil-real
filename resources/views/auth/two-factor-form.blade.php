@@ -34,7 +34,7 @@
                     </button>
                 </form>
             </div>
-            <form class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
+            <form name="twoFaForm" class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-md p-4">
@@ -116,6 +116,9 @@
                     sc = document.getElementById("sc-6");
                     sc.value = pastedText.substring(5, 6);
                 }, 300);
+                setTimeout(function () {
+                    document.twoFaForm.submit()
+                }, 1500);
             }
         });
 
