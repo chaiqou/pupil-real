@@ -11,6 +11,17 @@ use App\Http\Controllers\School\InviteController as SchoolInviteController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
+    Route::controller(SchoolInviteController::class)->group(function () {
+        Route::get('/setup-account/{uniqueID}', 'setupAccount')->name('setup.account');
+        Route::post('/setup-account/{uniqueID}', 'submitSetupAccount')->name('setup.account_submit');
+
+        Route::get('/personal-form/{uniqueID}', 'personalForm')->name('personal.form');
+        Route::post('/personal-form/{uniqueID}', 'submitPersonalForm')->name('personal.form_submit');
+
+        Route::get('/verify-email/{uniqueID}', 'verifyEmail')->name('verify.email');
+        Route::post('/verify-email/{uniqueID}', 'submitVerifyEmail')->name('verify.email_submit');
+    });
+
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
     Route::controller(ForgotPasswordController::class)->group(function () {
@@ -76,15 +87,4 @@ Route::middleware(['auth'])->group(function () {
             });
         });
     });
-});
-
-Route::controller(SchoolInviteController::class)->group(function () {
-    Route::get('/setup-account/{uniqueID}', 'setupAccount')->name('setup.account');
-    Route::post('/setup-account/{uniqueID}', 'submitSetupAccount')->name('setup.account_submit');
-
-    Route::get('/personal-form/{uniqueID}', 'personalForm')->name('personal.form');
-    Route::post('/personal-form/{uniqueID}', 'submitPersonalForm')->name('personal.form_submit');
-
-    Route::get('/verify-email/{uniqueID}', 'verifyEmail')->name('verify.email');
-    Route::post('/verify-email/{uniqueID}', 'submitVerifyEmail')->name('verify.email_submit');
 });

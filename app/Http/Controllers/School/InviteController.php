@@ -58,7 +58,6 @@ class InviteController extends Controller
             'email' => $user->email,
             'state' => 3,
         ]);
-
         return redirect()->route('personal.form', ['uniqueID' => request()->uniqueID]);
     }
 
