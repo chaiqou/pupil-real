@@ -88,6 +88,8 @@ import {
     add,
     startOfWeek,
     addDays,
+    isSameDay,
+    parseISO,
 } from "date-fns";
 import { ref, defineProps } from "vue";
 import { useLunchFormStore } from "../../stores/useLunchFormStore";
@@ -104,7 +106,7 @@ const props = defineProps({
 const today = startOfToday();
 
 const ifDaysMatch = (day) => {
-    return store.active_range.some((data) => data == format(day, "yyyy-MM-dd"));
+    return store.active_range.some((data) => isSameDay(parseISO(data), day));
 };
 
 const currentMonthWithOtherMonths = ref(
