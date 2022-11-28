@@ -51,7 +51,10 @@
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
                                     isToday(day) &&
-                                        'bg-indigo-600 font-semibold text-white',
+                                        [getMonthByIndex(day.getMonth()) &&
+                                month.name === monthFullNames[day.getMonth()]
+                                    ? 'bg-indigo-600 font-semibold text-white'
+                                    : 'bg-indigo-400 text-gray-50'],
                                     'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                                 ]"
                             >
