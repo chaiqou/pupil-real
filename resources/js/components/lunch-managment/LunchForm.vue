@@ -93,7 +93,12 @@ const handleActiveDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
-    store.getCalculatedActiveRange;
+    store.markedDays.push([
+        format(modelData[0], "yyyy-MM-dd"),
+        format(modelData[1], "yyyy-MM-dd"),
+    ]);
+
+    store.getMarkedDays;
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {

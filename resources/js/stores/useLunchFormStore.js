@@ -16,6 +16,7 @@ export const useLunchFormStore = defineStore("lunch", {
             price_period: "",
             disabledDaysForHolds: [],
             disabledDaysForExtras: [],
+            markedDays: [],
         };
     },
     actions: {
@@ -45,6 +46,9 @@ export const useLunchFormStore = defineStore("lunch", {
                     case this.holds:
                         this.holds = dates;
                         break;
+                    case this.markedDays:
+                        this.markedDays = dates;
+                        break;
                 }
             }
         },
@@ -66,6 +70,9 @@ export const useLunchFormStore = defineStore("lunch", {
                 case this.holds:
                     this.holds = formatedDate;
                     break;
+                case this.markedDays:
+                    this.markedDays = formatedDate;
+                    break;
             }
         },
 
@@ -81,6 +88,22 @@ export const useLunchFormStore = defineStore("lunch", {
 
             return dates;
         },
+
+        // addExtrasToActiveRange() {
+        //     this.extras.map((extra) => {
+        //         console.log(extra);
+        //         if (!this.active_range.includes(extra)) {
+        //             this.active_range.push(extra);
+        //             console.log(this.active_range);
+        //         }
+        //     });
+        // },
+
+        // removeHoldsFromActiveRange() {
+        //     this.active_range = this.active_range.filter(
+        //         (date) => !this.holds.includes(date)
+        //     );
+        // },
     },
     getters: {
         getLunchFormData() {
@@ -104,6 +127,11 @@ export const useLunchFormStore = defineStore("lunch", {
             this.formatDateForHumans(this.extras);
             this.middleRangeDates(this.holds);
             this.formatDateForHumans(this.holds);
+        },
+
+        getMarkedDays() {
+            this.middleRangeDates(this.markedDays);
+            this.formatDateForHumans(this.markedDays);
         },
     },
 });
