@@ -112,12 +112,11 @@
 </template>
 
 <script setup>
-import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { computed } from "vue";
-import { addYears } from "date-fns";
+import { addYears, format } from "date-fns";
 
 const store = useLunchFormStore();
 
@@ -144,7 +143,7 @@ const handleExtrasDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
-    store.getDatesInRange(modelData[0], modelData[1]).forEach((data) => {
+    store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
         store.disabledDaysForHolds.push(data);
     });
 };
@@ -165,7 +164,7 @@ const handleHoldsDate = (modelData) => {
         format(modelData[1], "yyyy-MM-dd"),
     ]);
 
-    store.getDatesInRange(modelData[0], modelData[1]).forEach((date) => {
+    store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
         store.disabledDaysForExtras.push(date);
     });
 };

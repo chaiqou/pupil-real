@@ -10,10 +10,18 @@
                 name="description"
                 label="Description"
             />
-            <RangeDatepicker
-                v-model="store.active_range"
-                name="active_range"
-                label="Active range"
+            <label
+                class="text-md flex font-bold text-gray-600 whitespace-normal"
+                >Active Range
+            </label>
+            <Datepicker
+                closeOnScroll
+                :minDate="new Date()"
+                :maxDate="addYears(new Date(), 1)"
+                @update:modelValue="handleActiveDate"
+                :enableTimePicker="false"
+                v-model="activeRange"
+                range
             />
             <WeekdaysChechkbox name="weekdays" />
             <ExtrasAndHolds holds="holds" extras="extras" />
@@ -62,12 +70,12 @@
 
 <script setup>
 import { useForm } from "vee-validate";
+import { addYears, format } from "date-fns";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
-import RangeDatepicker from "@/components/form-components/RangeDatepicker.vue";
 import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
@@ -77,10 +85,16 @@ const store = useLunchFormStore();
 const { handleSubmit } = useForm();
 
 const multiselectRef = ref(null);
+const activeRange = ref(null);
+
+const handleActiveDate = (modelData) => {
+    store.active_range.push([
+        format(modelData[0], "yyyy-MM-dd"),
+        format(modelData[1], "yyyy-MM-dd"),
+    ]);
+};
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
-    // format dates and get dates from start to end
-
     store.getCalculatedActiveRange;
 
     axios

@@ -19,53 +19,33 @@ export const useLunchFormStore = defineStore("lunch", {
         };
     },
     actions: {
-        getMiddleDatesForActiveRange() {
-            let full_dates = [];
-            let startDate = new Date(this.active_range[0]);
-            let endDate = new Date(this.active_range[1]);
-
-            while (startDate <= endDate) {
-                full_dates.push(new Date(startDate));
-                startDate.setDate(startDate.getDate() + 1);
-            }
-            this.active_range = full_dates;
-        },
-
-        getMiddleDatesForExtras() {
-            let full_dates = [];
+        async middleRangeDates(state) {
+            let dates = [];
             let startDate = "";
             let endDate = "";
 
-            if (this.extras.length > 0) {
-                this.extras.map((extra) => {
+            if (state.length > 0) {
+                state.map((extra) => {
                     startDate = new Date(extra[0]);
                     endDate = new Date(extra[1]);
                 });
 
                 while (startDate <= endDate) {
-                    full_dates.push(new Date(startDate));
+                    dates.push(new Date(startDate));
                     startDate.setDate(startDate.getDate() + 1);
                 }
-                this.extras = full_dates;
-            }
-        },
 
-        getMiddleDatesForHolds() {
-            let full_dates = [];
-            let startDate = "";
-            let endDate = "";
-
-            if (this.holds.length > 0) {
-                this.holds.map((hold) => {
-                    startDate = new Date(hold[0]);
-                    endDate = new Date(hold[1]);
-                });
-
-                while (startDate <= endDate) {
-                    full_dates.push(new Date(startDate));
-                    startDate.setDate(startDate.getDate() + 1);
+                if (state === this.extras) {
+                    this.extras = dates;
                 }
-                this.holds = full_dates;
+
+                if (state === this.holds) {
+                    this.holds = dates;
+                }
+
+                if (state === this.active_range) {
+                    this.active_range = dates;
+                }
             }
         },
 
@@ -91,7 +71,7 @@ export const useLunchFormStore = defineStore("lunch", {
             }
         },
 
-        getDatesInRange(startDate, endDate) {
+        disabledDaysDate(startDate, endDate) {
             const date = new Date(startDate.getTime());
 
             const dates = [];
@@ -120,11 +100,11 @@ export const useLunchFormStore = defineStore("lunch", {
             };
         },
         getCalculatedActiveRange() {
-            this.getMiddleDatesForActiveRange();
+            this.middleRangeDates(this.active_range);
             this.formatDateForHumans(this.active_range);
-            this.getMiddleDatesForExtras();
+            this.middleRangeDates(this.extras);
             this.formatDateForHumans(this.extras);
-            this.getMiddleDatesForHolds();
+            this.middleRangeDates(this.holds);
             this.formatDateForHumans(this.holds);
         },
     },
