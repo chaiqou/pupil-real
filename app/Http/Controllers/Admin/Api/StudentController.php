@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class StudentController extends Controller
 {
-    public function index(): ResourceCollection
+    public function get(): ResourceCollection
     {
         $students = Student::with('user')->latest('created_at')->paginate(6);
 

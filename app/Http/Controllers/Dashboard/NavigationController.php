@@ -20,13 +20,6 @@ class NavigationController extends Controller
         $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
         $twoFa = 0;
-        if ($user->hasRole('admin')) {
-            $role = 'admin';
-            $navigation =
-                [
-                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
-                ];
-        }
         if ($user->hasRole('parent')) {
             $role = 'parent';
             $navigation =

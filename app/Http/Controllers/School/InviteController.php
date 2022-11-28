@@ -37,7 +37,8 @@ class InviteController extends Controller
         // Check if the invite exists
         $invite = Invite::where('uniqueID', $uniqueID)->first();
         if (! $invite) {
-            return view('invite.invalid-invite');
+            return view('auth.redirect-template')
+                ->with(['header' => 'Invalid', 'description' => 'Your request is either missing, using an invalid or expired token.', 'title' => 'Invalid', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
         $invite->update(['state' => 2]);
 
@@ -58,14 +59,11 @@ class InviteController extends Controller
             'email' => $user->email,
             'state' => 3,
         ]);
-
         return redirect()->route('personal.form', ['uniqueID' => request()->uniqueID]);
     }
 
     public function personalForm(): View
     {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
-
         return view('invite.personal-form', [
             'uniqueID' => request()->uniqueID,
         ]);

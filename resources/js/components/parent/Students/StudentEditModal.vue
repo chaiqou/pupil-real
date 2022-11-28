@@ -1,9 +1,9 @@
 <template>
-    <TransitionRoot as="template" :show="this.isStudentEditVisible">
+    <TransitionRoot v-if="this.isRequestEndSuccessfully" as="template" :show="this.isStudentEditVisible">
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isStudentEditVisible = false"
+            @close="this.isStudentEditVisible = false; this.studentId = null;"
         >
             <TransitionChild
                 as="template"
@@ -41,7 +41,7 @@
                                 <button
                                     type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isStudentEditVisible = false"
+                                    @click="this.isStudentEditVisible = false; this.studentId = null"
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon
@@ -52,7 +52,7 @@
                             </div>
                             <Form
                                 id="form"
-                                @submit="submit"
+                                @submit="onSubmit(); this.studentId = null"
                                 class="mt-8 space-y-6 w-full"
                             >
                                 <div class="bg-white p-8">
@@ -82,7 +82,7 @@
                                                     type="text"
                                                     required
                                                     v-model="
-                                                        this.student.last_name
+                                                        this.studentForEdit.last_name
                                                     "
                                                     name="last_name"
                                                     id="last_name"
@@ -111,7 +111,7 @@
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.student.first_name
+                                                        this.studentForEdit.first_name
                                                     "
                                                     required
                                                     name="first_name"
@@ -142,7 +142,7 @@
                                                 <Field
                                                     type="text"
                                                     v-model="
-                                                        this.student.middle_name
+                                                        this.studentForEdit.middle_name
                                                     "
                                                     name="middle_name"
                                                     id="middle_name"
@@ -167,21 +167,21 @@
                                                     rules="required"
                                                     name="country"
                                                     v-model="
-                                                        this.student
+                                                        this.studentForEdit
                                                             .user_information
                                                             .country
                                                     "
                                                 >
                                                     <select
                                                         v-model="
-                                                            this.student
+                                                            this.studentForEdit
                                                                 .user_information
                                                                 .country
                                                         "
                                                         id="country"
                                                         name="country"
                                                         autocomplete="country-name"
-                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                        class="block w-full px-4 py-1.5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     >
                                                         <option value="AF">
                                                             Afghanistan
@@ -999,7 +999,7 @@
                                                 <Field
                                                     rules="required"
                                                     v-model="
-                                                        this.student
+                                                        this.studentForEdit
                                                             .user_information
                                                             .street_address
                                                     "
@@ -1034,7 +1034,7 @@
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.student
+                                                        this.studentForEdit
                                                             .user_information
                                                             .city
                                                     "
@@ -1067,7 +1067,7 @@
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.student
+                                                        this.studentForEdit
                                                             .user_information
                                                             .state
                                                     "
@@ -1100,7 +1100,7 @@
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.student
+                                                        this.studentForEdit
                                                             .user_information
                                                             .zip
                                                     "
@@ -1157,6 +1157,11 @@ import { useModalStore } from "@/stores/useModalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
+    data() {
+        return {
+            isRequestEndSuccessfully: false,
+        }
+    },
     components: {
         Dialog,
         DialogPanel,
@@ -1170,29 +1175,42 @@ export default {
         ErrorMessage,
     },
     computed: {
-        ...mapWritableState(useStudentStore, ["student"]),
+        ...mapWritableState(useStudentStore, ["studentForEdit", "studentId", "students"]),
         ...mapWritableState(useModalStore, ["isStudentEditVisible"]),
     },
     methods: {
         ...mapActions(useModalStore, ["showHideStudentEdit"]),
-        submit() {
+        onSubmit() {
             axios
                 .post(`/api/parent/update-student`, {
-                    student_id: this.student.id,
-                    first_name: this.student.first_name,
-                    last_name: this.student.last_name,
-                    middle_name: this.student.middle_name,
-                    country: this.student.user_information.country,
-                    city: this.student.user_information.city,
-                    state: this.student.user_information.state,
+                    student_id: this.studentForEdit.id,
+                    first_name: this.studentForEdit.first_name,
+                    last_name: this.studentForEdit.last_name,
+                    middle_name: this.studentForEdit.middle_name,
+                    country: this.studentForEdit.user_information.country,
+                    city: this.studentForEdit.user_information.city,
+                    state: this.studentForEdit.user_information.state,
                     street_address:
-                        this.student.user_information.street_address,
-                    zip: this.student.user_information.zip,
+                        this.studentForEdit.user_information.street_address,
+                    zip: this.studentForEdit.user_information.zip,
+                })
+                .then((res) => {
+                    this.students = res.data.data;
                 })
                 .finally(() => {
                     this.isStudentEditVisible = false;
                 });
         },
+        handleGetStudentRequest() {
+            axios.get(`/api/parent/student/${this.studentId}`)
+                .then((res) => {
+                    this.studentForEdit = res.data.data;
+                    this.isRequestEndSuccessfully = true;
+                });
+        }
     },
+    created() {
+         this.handleGetStudentRequest();
+    }
 };
 </script>

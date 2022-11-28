@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class InviteController extends Controller
 {
-    public function index(Request $request): ResourceCollection
+    public function get(Request $request): ResourceCollection
     {
         $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
 
