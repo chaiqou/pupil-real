@@ -156,5 +156,13 @@ export const useLunchFormStore = defineStore("lunch", {
                 price_period: this.price_period,
             };
         },
+        getCalculatedActiveRange() {
+            this.getMiddleDatesForActiveRange();
+            this.formatActiveRangeDate();
+            this.getMiddleDatesForExtras();
+            this.formatExtrasDate();
+            this.getMiddleDatesForHolds();
+            this.formatHoldsDate();
+        },
     },
 });

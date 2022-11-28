@@ -81,12 +81,7 @@ const multiselectRef = ref(null);
 const onSubmit = handleSubmit((values, { resetForm }) => {
     // format dates and get dates from start to end
 
-    store.getMiddleDatesForActiveRange();
-    store.formatActiveRangeDate();
-    store.getMiddleDatesForExtras();
-    store.formatExtrasDate();
-    store.getMiddleDatesForHolds();
-    store.formatHoldsDate();
+    store.getCalculatedActiveRange;
 
     axios
         .post("lunch", store.getLunchFormData)
