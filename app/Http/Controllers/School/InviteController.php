@@ -37,7 +37,8 @@ class InviteController extends Controller
         // Check if the invite exists
         $invite = Invite::where('uniqueID', $uniqueID)->first();
         if (! $invite) {
-            return view('invite.invalid-invite');
+            return view('auth.redirect-template')
+                ->with(['header' => 'Invalid', 'description' => 'Your request is either missing, using an invalid or expired token.', 'title' => 'Invalid', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
         $invite->update(['state' => 2]);
 
