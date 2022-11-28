@@ -89,21 +89,23 @@ export const useLunchFormStore = defineStore("lunch", {
             return dates;
         },
 
-        // addExtrasToActiveRange() {
-        //     this.extras.map((extra) => {
-        //         console.log(extra);
-        //         if (!this.active_range.includes(extra)) {
-        //             this.active_range.push(extra);
-        //             console.log(this.active_range);
-        //         }
-        //     });
-        // },
+        addExtrasToMarkedDays() {
+            this.getMarkedDays;
+            console.log("1", this.markedDays);
+            let days = [];
+            this.extras.map((extra) => {
+                if (!this.markedDays.includes(extra)) {
+                    this.markedDays.push(...extra);
+                    console.log("2", this.markedDays);
+                }
+            });
+        },
 
-        // removeHoldsFromActiveRange() {
-        //     this.active_range = this.active_range.filter(
-        //         (date) => !this.holds.includes(date)
-        //     );
-        // },
+        removeHoldsFromMarkedDays() {
+            this.markedDays = this.markedDays.filter(
+                (date) => !this.holds.includes(date)
+            );
+        },
     },
     getters: {
         getLunchFormData() {
