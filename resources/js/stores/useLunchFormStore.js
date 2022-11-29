@@ -20,7 +20,7 @@ export const useLunchFormStore = defineStore("lunch", {
         };
     },
     actions: {
-        async middleRangeDates(state) {
+        async middleRangeDates(name, state) {
             let dates = [];
             let startDate = "";
             let endDate = "";
@@ -36,41 +36,41 @@ export const useLunchFormStore = defineStore("lunch", {
                     startDate.setDate(startDate.getDate() + 1);
                 }
 
-                switch (state) {
-                    case this.active_range:
+                switch (name) {
+                    case "active_range":
                         this.active_range = dates;
                         break;
-                    case this.extras:
+                    case "extras":
                         this.extras = dates;
                         break;
-                    case this.holds:
+                    case "holds":
                         this.holds = dates;
                         break;
-                    case this.markedDays:
+                    case "marked_days":
                         this.markedDays = dates;
                         break;
                 }
             }
         },
 
-        formatDateForHumans(date) {
+        formatDateForHumans(name, date) {
             let formatedDate = [];
 
             for (let i = 0; i < date.length; i++) {
                 formatedDate.push(format(new Date(date[i]), "yyyy-MM-dd"));
             }
 
-            switch (date) {
-                case this.active_range:
+            switch (name) {
+                case "active_range":
                     this.active_range = formatedDate;
                     break;
-                case this.extras:
+                case "extras":
                     this.extras = formatedDate;
                     break;
-                case this.holds:
+                case "holds":
                     this.holds = formatedDate;
                     break;
-                case this.markedDays:
+                case "marked_days":
                     this.markedDays = formatedDate;
                     break;
             }
@@ -123,17 +123,17 @@ export const useLunchFormStore = defineStore("lunch", {
             };
         },
         getCalculatedActiveRange() {
-            this.middleRangeDates(this.active_range);
-            this.formatDateForHumans(this.active_range);
-            this.middleRangeDates(this.extras);
-            this.formatDateForHumans(this.extras);
-            this.middleRangeDates(this.holds);
-            this.formatDateForHumans(this.holds);
+            this.middleRangeDates("active_range", this.active_range);
+            this.formatDateForHumans("active_range", this.active_range);
+            this.middleRangeDates("extras", this.extras);
+            this.formatDateForHumans("extras", this.extras);
+            this.middleRangeDates("holds", this.holds);
+            this.formatDateForHumans("holds", this.holds);
         },
 
         getMarkedDays() {
-            this.middleRangeDates(this.markedDays);
-            this.formatDateForHumans(this.markedDays);
+            this.middleRangeDates("marked_days", this.markedDays);
+            this.formatDateForHumans("marked_days", this.markedDays);
         },
     },
 });
