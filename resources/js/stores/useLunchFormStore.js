@@ -18,6 +18,7 @@ export const useLunchFormStore = defineStore("lunch", {
             disabledDaysForExtras: [],
             markedDays: [],
             addExtras: [],
+            removeHolds: [],
         };
     },
     actions: {
@@ -51,15 +52,15 @@ export const useLunchFormStore = defineStore("lunch", {
                         this.markedDays = [...dates];
                         break;
                     case "add_extras":
-                        this.formatDateForHumans(
-                            "middle_marked_day_ranges",
-                            dates
-                        );
+                        this.formatDateForHumans("add_extras", dates);
                         this.markedDays = [
                             ...this.markedDays,
                             ...this.addExtras,
                         ];
                         break;
+
+                    case "remove_holds":
+                        this.formatDateForHumans("remove_holds", dates);
                 }
             }
         },
@@ -85,10 +86,10 @@ export const useLunchFormStore = defineStore("lunch", {
                     this.markedDays = formatedDate;
                     break;
                 case "add_extras":
-                    this.markedDays = formatedDate;
-                    break;
-                default:
                     this.addExtras = formatedDate;
+                    break;
+                case "remove_holds":
+                    this.removeHolds = formatedDate;
                     break;
             }
         },
@@ -115,10 +116,14 @@ export const useLunchFormStore = defineStore("lunch", {
         },
 
         removeHoldsFromMarkedDays() {
-            this.markedDays = this.markedDays.filter(
-                (date) => !this.holds.includes(date),
-                console.log("remove", this.markedDays)
-            );
+            this.middleRangeDates("remove_holds", this.holds);
+            let daysToDelete = new Set(this.removeHolds);
+
+            const removedDaysArray = this.markedDays.filter((day) => {
+                return !daysToDelete.has(day);
+            });
+
+            this.markedDays = removedDaysArray;
         },
     },
     getters: {
