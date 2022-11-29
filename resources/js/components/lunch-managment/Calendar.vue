@@ -50,8 +50,14 @@
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
-                                    ifDaysMatch(day) &&
-                                        'bg-indigo-600 text-white font-semibold',
+                                    ifDaysMatch(day) && [
+                                        getMonthByIndex(day.getMonth()) &&
+                                        month.name ===
+                                            monthFullNames[day.getMonth()]
+                                            ? 'bg-indigo-600 text-white font-semibold'
+                                            : 'bg-indigo-400 text-gray-50',
+                                    ],
+
                                     isToday(day) && [
                                         getMonthByIndex(day.getMonth()) &&
                                         month.name ===
