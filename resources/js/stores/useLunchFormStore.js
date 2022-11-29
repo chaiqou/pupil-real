@@ -47,10 +47,11 @@ export const useLunchFormStore = defineStore("lunch", {
                         this.holds = dates;
                         break;
                     case "marked_days":
-                        this.markedDays = dates;
+                        this.markedDays = [...dates];
                         break;
                     case "add_extras":
-                        this.markedDays.push(...dates);
+                        this.markedDays = [...this.markedDays, ...dates];
+                        break;
                 }
             }
         },
@@ -94,19 +95,14 @@ export const useLunchFormStore = defineStore("lunch", {
         },
 
         addExtrasToMarkedDays() {
-            this.getMarkedDays;
             this.middleRangeDates("add_extras", this.extras);
             this.formatDateForHumans("add_extras", this.markedDays);
-            this.extras.map((extra) => {
-                if (!this.markedDays.includes(extra)) {
-                    this.markedDays.push(...extra);
-                }
-            });
         },
 
         removeHoldsFromMarkedDays() {
             this.markedDays = this.markedDays.filter(
-                (date) => !this.holds.includes(date)
+                (date) => !this.holds.includes(date),
+                console.log("remove", this.markedDays)
             );
         },
     },

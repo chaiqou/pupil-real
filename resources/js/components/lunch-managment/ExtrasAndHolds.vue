@@ -169,6 +169,8 @@ const handleHoldsDate = (modelData) => {
     store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
         store.disabledDaysForExtras.push(date);
     });
+
+    store.removeHoldsFromMarkedDays();
 };
 
 const disableHoldsDays = computed(() => {
