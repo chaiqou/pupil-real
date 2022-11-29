@@ -97,11 +97,9 @@ export const useLunchFormStore = defineStore("lunch", {
             this.getMarkedDays;
             this.middleRangeDates("add_extras", this.extras);
             this.formatDateForHumans("add_extras", this.markedDays);
-            console.log(this.markedDays);
             this.extras.map((extra) => {
                 if (!this.markedDays.includes(extra)) {
                     this.markedDays.push(...extra);
-                    console.log("marked_days", this.markedDays);
                 }
             });
         },
