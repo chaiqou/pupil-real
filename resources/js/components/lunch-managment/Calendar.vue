@@ -50,6 +50,8 @@
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
+                                    ifDaysMatch(day) &&
+                                        'bg-indigo-600 text-white font-semibold',
                                     isToday(day) && [
                                         getMonthByIndex(day.getMonth()) &&
                                         month.name ===
@@ -62,11 +64,6 @@
                             >
                                 {{ format(day, "d") }}
                             </time>
-                            <div v-if="ifDaysMatch(day)">
-                                <div
-                                    class="w-1 h-1 mx-auto mt-1 rounded-full bg-sky-600"
-                                ></div>
-                            </div>
                         </button>
                     </div>
                 </section>
