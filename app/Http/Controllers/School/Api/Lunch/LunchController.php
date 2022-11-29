@@ -20,7 +20,7 @@ class LunchController extends Controller
 
         //  selected days that fall on the active range
         $onlyMatchedDays = $activeRange->map(function ($date) use ($weekdays) {
-            if ($weekdays->contains(Carbon::parse($date)->shortDayName)) {
+            if ($weekdays->contains(Carbon::parse($date)->dayName)) {
                 return $date;
             }
         })->reject(function ($date) {

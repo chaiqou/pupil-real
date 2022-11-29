@@ -109,7 +109,9 @@ const props = defineProps({
 const today = startOfToday();
 
 const ifDaysMatch = (day) => {
-    return store.markedDays.some((data) => isSameDay(parseISO(data), day));
+    return store.matchedWithWeekdays.some((data) =>
+        isSameDay(parseISO(data), day)
+    );
 };
 
 const currentMonthWithOtherMonths = ref(
