@@ -17,6 +17,7 @@ export const useLunchFormStore = defineStore("lunch", {
             disabledDaysForHolds: [],
             disabledDaysForExtras: [],
             markedDays: [],
+            addExtras: [],
         };
     },
     actions: {
@@ -50,7 +51,14 @@ export const useLunchFormStore = defineStore("lunch", {
                         this.markedDays = [...dates];
                         break;
                     case "add_extras":
-                        this.markedDays = [...this.markedDays, ...dates];
+                        this.formatDateForHumans(
+                            "middle_marked_day_ranges",
+                            dates
+                        );
+                        this.markedDays = [
+                            ...this.markedDays,
+                            ...this.addExtras,
+                        ];
                         break;
                 }
             }
@@ -78,6 +86,10 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "add_extras":
                     this.markedDays = formatedDate;
+                    break;
+                default:
+                    this.addExtras = formatedDate;
+                    break;
             }
         },
 
@@ -96,7 +108,10 @@ export const useLunchFormStore = defineStore("lunch", {
 
         addExtrasToMarkedDays() {
             this.middleRangeDates("add_extras", this.extras);
-            this.formatDateForHumans("add_extras", this.markedDays);
+            let deUnique = this.markedDays.concat(this.addExtras);
+            let uniqueValues = new Set(deUnique);
+            deUnique = Array.from(uniqueValues);
+            this.markedDays = deUnique;
         },
 
         removeHoldsFromMarkedDays() {
