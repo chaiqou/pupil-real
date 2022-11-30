@@ -259,8 +259,6 @@ export default {
                         []
                     );
                     event.target.value = "";
-
-                    console.log(this.mainEmailsArray, "main");
                 }
             }
         },
@@ -292,7 +290,6 @@ export default {
 
                 event.target.value = "";
             }, 50);
-            console.log(this.mainEmailsArray, "mainEmailsArray");
         },
         removeTag(index) {
             this.emails.splice(index, 1);
@@ -331,7 +328,6 @@ export default {
                 .catch((error) => {
                     this.isSuccessfullySent = "no";
                     this.emails = [];
-                    console.log(error);
                 })
                 .finally(() =>
                     setTimeout(() => {
@@ -367,7 +363,6 @@ export default {
                 .get(`/api/${this.invite_from}/invite-emails`)
                 .then((res) => {
                     this.existedInviteEmails = res.data;
-                    console.log(this.existedInviteEmails);
                 })
                 .catch((err) => console.log(err));
         },
@@ -376,7 +371,6 @@ export default {
                 .get(`/api/${this.invite_from}/user-emails`)
                 .then((res) => {
                     this.existedUserEmails = res.data;
-                    console.log(this.existedUserEmails);
                 })
                 .catch((err) => console.log(err));
         },

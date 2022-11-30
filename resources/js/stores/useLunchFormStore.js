@@ -138,8 +138,6 @@ export const useLunchFormStore = defineStore("lunch", {
                 let days = format(new Date(day), "EEEE");
                 return this.weekdays.includes(days);
             });
-
-            console.log(this.matchedWeekdays);
         },
 
         removeWeekdaysMatch() {
