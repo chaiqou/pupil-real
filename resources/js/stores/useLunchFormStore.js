@@ -118,7 +118,7 @@ export const useLunchFormStore = defineStore("lunch", {
             let uniqueValues = new Set(deUnique);
             deUnique = Array.from(uniqueValues);
             this.markedDays = deUnique;
-            this.weekdaysMatch();
+            this.matchedWeekdays = deUnique;
         },
 
         removeHoldsFromMarkedDays() {
@@ -130,7 +130,7 @@ export const useLunchFormStore = defineStore("lunch", {
             });
 
             this.markedDays = removedDaysArray;
-            this.removeWeekdaysMatch();
+            this.matchedWeekdays = removedDaysArray;
         },
 
         weekdaysMatch() {
