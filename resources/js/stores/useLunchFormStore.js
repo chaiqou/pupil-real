@@ -121,10 +121,13 @@ export const useLunchFormStore = defineStore("lunch", {
 
         addActiveRangeBasedWeekdays() {
             this.middleRangeDates("add_active_range", this.active_range);
-            this.markedDays = this.addActiveRange.filter((day) => {
-                let days = format(new Date(day), "EEEE");
-                return this.weekdays.includes(days);
-            });
+            const filteredBasedOnWeekdays = this.addActiveRange.filter(
+                (day) => {
+                    let days = format(new Date(day), "EEEE");
+                    return this.weekdays.includes(days);
+                }
+            );
+            this.markedDays = [...this.markedDays, ...filteredBasedOnWeekdays];
         },
 
         // add Extras to marked days
