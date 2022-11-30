@@ -101,6 +101,7 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "add_active_range":
                     this.addActiveRange = formatedDate;
+                    break;
             }
         },
 
@@ -108,7 +109,6 @@ export const useLunchFormStore = defineStore("lunch", {
 
         disabledDaysDate(startDate, endDate) {
             const date = new Date(startDate.getTime());
-
             const dates = [];
 
             while (date <= endDate) {
@@ -117,6 +117,21 @@ export const useLunchFormStore = defineStore("lunch", {
             }
 
             return dates;
+        },
+
+        removeDaysFromMarkedDays(state) {
+            let dates = [];
+            let startDate = new Date(state[0]);
+            let endDate = new Date(state[1]);
+
+            while (startDate <= endDate) {
+                dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+
+            let result = this.markedDays.filter((x) => !dates.includes(x));
+
+            this.markedDays = result;
         },
     },
     getters: {

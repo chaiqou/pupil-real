@@ -31,7 +31,7 @@
                             <div>
                                 <button
                                     type="button"
-                                    @click="removeExtra(extraIdx)"
+                                    @click="removeExtra(extraIdx, extra)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -133,8 +133,10 @@ const props = defineProps({
 
 // Extras
 
-const removeExtra = (extraIdx) => {
+const removeExtra = (extraIdx, extra) => {
     store.extras.splice(extraIdx, 1);
+
+    store.removeDaysFromMarkedDays(extra);
 
     store.disabledDaysForExtras = [];
     store.disabledDaysForHolds = [];
