@@ -4,7 +4,7 @@
         label="Select school"
     ></InvitesSchoolMultiselect>
     <div
-        class="flex items-center text-center justify-center text-xl"
+        class="flex items-center text-center justify-center text-sm"
         v-if="this.showInviteError || this.showEmailError"
     >
         <p class="absolute mt-10">{{ errorShowing }}</p>
@@ -80,7 +80,9 @@
                 </div>
             </div>
         </div>
-        <label for="emails">Invite users by their email address.</label>
+        <div :class="this.mainEmailsArray.length ? 'text-sm' : 'mt-10'">
+            <label for="emails">Email addresses</label>
+        </div>
         <div
             class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-1.5"
         >
@@ -192,9 +194,9 @@ export default {
         },
         errorShowing() {
             if (this.showInviteError) {
-                return "This email already has a pending invite";
+                return "This email is already has a pending invite";
             } else if (this.showEmailError) {
-                return "This email already signed up";
+                return "This email is already signed up";
             }
             return "";
         },

@@ -50,6 +50,11 @@
                                     />
                                 </button>
                             </div>
+                            <div
+                                class="absolute top-0 left-0  hidden pt-4 pl-4 sm:block"
+                            >
+                                <p>Invite users by their email address.</p>
+                            </div>
                             <div>
                                 <invites-multiselect></invites-multiselect>
                             </div>
