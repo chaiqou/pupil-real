@@ -82,11 +82,11 @@
         </div>
         <label for="emails">Invite users by their email address.</label>
         <div
-            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
+            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-1.5"
         >
             <Field v-slot="{ resetField, field }" name="emails">
                 <input
-                    class="outline-0 w-full m-1.5 placeholder-white"
+                    class="outline-0 w-full my-1.5 placeholder-white"
                     v-bind="field"
                     @keydown.enter="resetField()"
                     @keydown="addTag"
