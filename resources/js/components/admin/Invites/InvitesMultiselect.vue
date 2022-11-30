@@ -7,11 +7,11 @@
         class="flex items-center text-center justify-center text-xl"
         v-if="this.showInviteError || this.showEmailError"
     >
-        <p class="absolute mt-5">{{ errorShowing }}</p>
+        <p class="absolute mt-10">{{ errorShowing }}</p>
     </div>
     <ValidationForm id="form" @submit="onSubmit()">
         <div
-            class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5 mt-12"
+            :class="this.mainEmailsArray.length ? 'grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5 pt-12' : 'mb-5'"
         >
             <div v-for="(element, index) in mainEmailsArray" :key="index">
                 <div
