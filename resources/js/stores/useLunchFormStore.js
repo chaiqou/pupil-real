@@ -114,6 +114,7 @@ export const useLunchFormStore = defineStore("lunch", {
             let uniqueValues = new Set(deUnique);
             deUnique = Array.from(uniqueValues);
             this.markedDays = deUnique;
+            this.filterWeekdaysIfMarkedDaysMatch();
         },
 
         removeHoldsFromMarkedDays() {
