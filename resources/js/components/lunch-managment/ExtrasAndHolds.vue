@@ -150,7 +150,7 @@ const handleExtrasDate = (modelData) => {
         store.disabledDaysForHolds.push(data);
     });
 
-    store.addExtrasToMarkedDays();
+    store.addExtrasToMarkedDays;
 };
 
 const disabledExtrasDays = computed(() => {
@@ -176,7 +176,7 @@ const handleHoldsDate = (modelData) => {
         store.disabledDaysForExtras.push(date);
     });
 
-    store.removeHoldsFromMarkedDays();
+    store.removeHoldsFromMarkedDays;
 };
 
 const disableHoldsDays = computed(() => {

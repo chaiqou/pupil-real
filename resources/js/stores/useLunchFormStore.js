@@ -118,6 +118,37 @@ export const useLunchFormStore = defineStore("lunch", {
 
             return dates;
         },
+    },
+    getters: {
+        getLunchFormData() {
+            return {
+                title: this.title,
+                description: this.description,
+                period_length: this.period_length,
+                weekdays: this.weekdays,
+                active_range: this.active_range,
+                claimables: this.claimables,
+                holds: this.holds,
+                extras: this.extras,
+                price_day: this.price_day,
+                price_period: this.price_period,
+            };
+        },
+        getCalculatedActiveRange() {
+            this.middleRangeDates("active_range", this.active_range);
+            this.formatDateForHumans("active_range", this.active_range);
+            this.middleRangeDates("extras", this.extras);
+            this.formatDateForHumans("extras", this.extras);
+            this.middleRangeDates("holds", this.holds);
+            this.formatDateForHumans("holds", this.holds);
+        },
+
+        getMarkedDays() {
+            this.middleRangeDates("marked_days", this.markedDays);
+            this.formatDateForHumans("marked_days", this.markedDays);
+        },
+
+        // add active range days to marked days based on the weekdays
 
         addActiveRangeBasedWeekdays() {
             this.middleRangeDates("add_active_range", this.active_range);
@@ -152,35 +183,6 @@ export const useLunchFormStore = defineStore("lunch", {
             });
 
             this.markedDays = removedDaysArray;
-        },
-    },
-    getters: {
-        getLunchFormData() {
-            return {
-                title: this.title,
-                description: this.description,
-                period_length: this.period_length,
-                weekdays: this.weekdays,
-                active_range: this.active_range,
-                claimables: this.claimables,
-                holds: this.holds,
-                extras: this.extras,
-                price_day: this.price_day,
-                price_period: this.price_period,
-            };
-        },
-        getCalculatedActiveRange() {
-            this.middleRangeDates("active_range", this.active_range);
-            this.formatDateForHumans("active_range", this.active_range);
-            this.middleRangeDates("extras", this.extras);
-            this.formatDateForHumans("extras", this.extras);
-            this.middleRangeDates("holds", this.holds);
-            this.formatDateForHumans("holds", this.holds);
-        },
-
-        getMarkedDays() {
-            this.middleRangeDates("marked_days", this.markedDays);
-            this.formatDateForHumans("marked_days", this.markedDays);
         },
     },
 });

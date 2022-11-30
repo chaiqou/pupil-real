@@ -38,7 +38,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { onUpdated } from "vue";
 
 onUpdated(() => {
-    store.addActiveRangeBasedWeekdays();
+    store.addActiveRangeBasedWeekdays;
 });
 
 const store = useLunchFormStore();
