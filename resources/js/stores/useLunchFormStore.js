@@ -16,13 +16,15 @@ export const useLunchFormStore = defineStore("lunch", {
             price_period: "",
             disabledDaysForHolds: [],
             disabledDaysForExtras: [],
-            markedDays: [],
             addExtras: [],
             removeHolds: [],
-            matchedWeekdays: [],
+            addActiveRange: [],
+            markedDays: [],
         };
     },
     actions: {
+        // whith this method we can find start and end date of the period
+
         async middleRangeDates(name, state) {
             let dates = [];
             let startDate = "";
@@ -52,6 +54,12 @@ export const useLunchFormStore = defineStore("lunch", {
                     case "marked_days":
                         this.markedDays = [...dates];
                         break;
+                    case "remove_holds":
+                        this.formatDateForHumans("remove_holds", dates);
+                        break;
+                    case "add_active_range":
+                        this.formatDateForHumans("add_active_range", dates);
+                        break;
                     case "add_extras":
                         this.formatDateForHumans("add_extras", dates);
                         this.markedDays = [
@@ -59,14 +67,11 @@ export const useLunchFormStore = defineStore("lunch", {
                             ...this.addExtras,
                         ];
                         break;
-
-                    case "remove_holds":
-                        this.formatDateForHumans("remove_holds", dates);
-                    case "matched_weekdays":
-                        this.formatDateForHumans("matched_weekdays", dates);
                 }
             }
         },
+
+        // Format date for humans e.g  2021-05-01
 
         formatDateForHumans(name, date) {
             let formatedDate = [];
@@ -94,10 +99,12 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "remove_holds":
                     this.removeHolds = formatedDate;
                     break;
-                case "matched_weekdays":
-                    this.removeHolds = formatedDate;
+                case "add_active_range":
+                    this.addActiveRange = formatedDate;
             }
         },
+
+        // disabled days for holds and extras
 
         disabledDaysDate(startDate, endDate) {
             const date = new Date(startDate.getTime());
@@ -112,14 +119,26 @@ export const useLunchFormStore = defineStore("lunch", {
             return dates;
         },
 
+        addActiveRangeBasedWeekdays() {
+            this.middleRangeDates("add_active_range", this.active_range);
+            this.markedDays = this.addActiveRange.filter((day) => {
+                let days = format(new Date(day), "EEEE");
+                return this.weekdays.includes(days);
+            });
+        },
+
+        // add Extras to marked days
+
         addExtrasToMarkedDays() {
             this.middleRangeDates("add_extras", this.extras);
             let deUnique = this.markedDays.concat(this.addExtras);
             let uniqueValues = new Set(deUnique);
             deUnique = Array.from(uniqueValues);
+
             this.markedDays = deUnique;
-            this.matchedWeekdays = deUnique;
         },
+
+        // remove holds from marked days
 
         removeHoldsFromMarkedDays() {
             this.middleRangeDates("remove_holds", this.holds);
@@ -130,25 +149,6 @@ export const useLunchFormStore = defineStore("lunch", {
             });
 
             this.markedDays = removedDaysArray;
-            this.matchedWeekdays = removedDaysArray;
-        },
-
-        weekdaysMatch() {
-            this.matchedWeekdays = this.markedDays.filter((day) => {
-                let days = format(new Date(day), "EEEE");
-                return this.weekdays.includes(days);
-            });
-        },
-
-        removeWeekdaysMatch() {
-            this.middleRangeDates("matched_weekdays", this.holds);
-            let daysToDelete = new Set(this.removeHolds);
-
-            const removedDaysArray = this.matchedWeekdays.filter((day) => {
-                return !daysToDelete.has(day);
-            });
-
-            this.matchedWeekdays = removedDaysArray;
         },
     },
     getters: {
@@ -178,7 +178,6 @@ export const useLunchFormStore = defineStore("lunch", {
         getMarkedDays() {
             this.middleRangeDates("marked_days", this.markedDays);
             this.formatDateForHumans("marked_days", this.markedDays);
-            this.weekdaysMatch();
         },
     },
 });
