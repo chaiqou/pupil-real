@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\School\InviteController;
+use App\Http\Controllers\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;

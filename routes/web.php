@@ -5,13 +5,13 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Dashboard\NavigationController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
-use App\Http\Controllers\School\InviteController as SchoolInviteController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
-    Route::controller(SchoolInviteController::class)->group(function () {
+    Route::controller(InviteController::class)->group(function () {
         Route::get('/setup-account/{uniqueID}', 'setupAccount')->name('setup.account');
         Route::post('/setup-account/{uniqueID}', 'submitSetupAccount')->name('setup.account_submit');
 
