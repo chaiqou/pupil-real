@@ -178,6 +178,7 @@ export const useLunchFormStore = defineStore("lunch", {
         getMarkedDays() {
             this.middleRangeDates("marked_days", this.markedDays);
             this.formatDateForHumans("marked_days", this.markedDays);
+            this.weekdaysMatch();
         },
     },
 });
