@@ -109,9 +109,9 @@
 
             if (inputOne && inputTwo && inputThree && inputFour && inputFive && inputSix)
             {
-                setTimeout(function() {
+               window.onInputTimeout = setTimeout(function() {
                     document.twoFaForm.submit();
-                }, 1500)
+                }, 2000)
             }
         }
 
@@ -134,14 +134,16 @@
                     sc = document.getElementById("sc-6");
                     sc.value = pastedText.substring(5, 6);
                 }, 300);
-                setTimeout(function () {
-                    document.twoFaForm.submit()
-                }, 1500);
+                window.onPasteTimeout = setTimeout(function () {
+                   document.twoFaForm.submit()
+                }, 2300);
             }
         });
 
         function resetValue(i) {
             //Reset sc-n if it equals or is higher than i
+            clearTimeout(window.onInputTimeout);
+            clearTimeout(window.onPasteTimeout);
             for (let j = i; j <= 6; j++) {
                 document.getElementById("sc-" + j).value = "";
             }
@@ -160,6 +162,8 @@
 
         function stepBack(evtobj, i) {
             //If sender pressed backspace, reset sc-i and focus on sc-i-1
+            clearTimeout(window.onInputTimeout);
+            clearTimeout(window.onPasteTimeout);
             if (evtobj.keyCode === 8) {
                 document.getElementById('sc-' + i).value = ''
                 document.getElementById('sc-' + (i - 1)).focus()

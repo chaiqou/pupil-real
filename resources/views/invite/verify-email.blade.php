@@ -117,7 +117,7 @@
             document.getElementById("sc-1").focus();
         };
 
-   //Check if input lengths is true, so we can start auto submit
+            //Check if input lengths is true, so we can start auto submit
       function checkInputLengths() {
           const inputOne = document.getElementById('sc-1').value.length;
           const inputTwo = document.getElementById('sc-2').value.length;
@@ -128,9 +128,9 @@
 
           if (inputOne && inputTwo && inputThree && inputFour && inputFive && inputSix)
           {
-              setTimeout(function() {
+           window.onInputTimeout = setTimeout(function() {
                   document.inviteTwoFaForm.submit();
-              }, 1500)
+              }, 2000)
           }
       }
 
@@ -153,13 +153,15 @@
                     sc = document.getElementById("sc-6");
                     sc.value = pastedText.substring(5, 6);
                 }, 300);
-                setTimeout(function() {
+               window.onPasteTimeout = setTimeout(function() {
                     document.inviteTwoFaForm.submit();
-                }, 1500)
+                }, 2300)
             }
         });
         function resetValue(i) {
             //Reset sc-n if it equals or is higher than i
+            clearTimeout(window.onInputTimeout);
+            clearTimeout(window.onPasteTimeout);
             for (let j = i; j <= 6; j++) {
                 document.getElementById("sc-" + j).value = "";
             }
@@ -176,6 +178,8 @@
         }
         function stepBack(evtobj, i) {
             //If sender pressed backspace, reset sc-i and focus on sc-i-1
+            clearTimeout(window.onPasteTimeout);
+            clearTimeout(window.onInputTimeout);
             if (evtobj.keyCode === 8) {
                 document.getElementById('sc-' + i).value = ''
                 document.getElementById('sc-' + (i - 1)).focus()
