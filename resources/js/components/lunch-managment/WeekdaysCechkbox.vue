@@ -35,6 +35,12 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { computed, onUpdated } from "vue";
+
+onUpdated(() => {
+    console.log(store.weekdays);
+    store.filterWeekdaysIfMarkedDaysMatch();
+});
 
 const store = useLunchFormStore();
 

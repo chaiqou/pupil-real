@@ -19,7 +19,7 @@ export const useLunchFormStore = defineStore("lunch", {
             markedDays: [],
             addExtras: [],
             removeHolds: [],
-            matchedWithWeekdays: [],
+            matchedWeekdays: [],
         };
     },
     actions: {
@@ -126,6 +126,15 @@ export const useLunchFormStore = defineStore("lunch", {
 
             this.markedDays = removedDaysArray;
         },
+
+        filterWeekdaysIfMarkedDaysMatch() {
+            this.matchedWeekdays = this.markedDays.filter((day) => {
+                let days = format(new Date(day), "EEEE");
+                return this.weekdays.includes(days);
+            });
+
+            console.log(this.matchedWeekdays);
+        },
     },
     getters: {
         getLunchFormData() {
@@ -154,7 +163,6 @@ export const useLunchFormStore = defineStore("lunch", {
         getMarkedDays() {
             this.middleRangeDates("marked_days", this.markedDays);
             this.formatDateForHumans("marked_days", this.markedDays);
-            this.filterOnlyMatchedWeekdays();
         },
     },
 });
