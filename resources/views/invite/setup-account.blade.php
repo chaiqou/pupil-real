@@ -10,7 +10,7 @@
 
 <body class="h-full">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8" data-sal="slide-up" data-sal-duration="500" data-sal-delay="200">
+        <div class="w-full max-w-md space-y-8 flex items-center justify-center flex-col" data-sal="slide-up" data-sal-duration="500" data-sal-delay="200">
             <nav aria-label="Progress">
                 <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
                     <li class="relative md:flex md:flex-1">
@@ -78,6 +78,7 @@
                 </div>
             </div>
             @enderror
+        <div class="w-full">
             <form id="form" method="POST" action="{{route('setup.account_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
@@ -113,6 +114,7 @@
                     </button>
                 </div>
             </form>
+        </div>
         </div>
     </div>
     <script src="{{asset('js/sal.js')}}"></script>

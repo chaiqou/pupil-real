@@ -60,13 +60,6 @@ class NavigationController extends Controller
         $role = '';
         $user = auth()->user();
         $students = $user->students->all();
-        if ($user->hasRole('admin')) {
-            $navigation =
-                [
-                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '#', 'current' => true],
-                ];
-            $role = 'admin';
-        }
         if ($user->hasRole('school')) {
             $navigation =
                 [
@@ -113,7 +106,9 @@ class NavigationController extends Controller
                 ];
         }
         $currentTab = request()->route()->getName();
-
+        if (auth()->user()->is_verified === 0) {
+            return redirect()->route('2fa.form');
+        }
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,

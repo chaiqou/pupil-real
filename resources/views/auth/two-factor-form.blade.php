@@ -42,32 +42,32 @@
                         <input onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)"
                             id="sc-1"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="1" maxlength="1" name="two_factor_token[0]" required></input>
+                            placeholder="1" maxlength="1" name="two_factor_token[0]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)"
                             id="sc-2"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="2" maxlength="1" name="two_factor_token[1]" required></input>
+                            placeholder="2" maxlength="1" name="two_factor_token[1]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(3)" onkeydown="stepBack(event, 3)" onclick="resetValue(3)"
                             id="sc-3"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="3" maxlength="1" name="two_factor_token[2]" required></input>
+                            placeholder="3" maxlength="1" name="two_factor_token[2]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(4)" onkeydown="stepBack(event, 4)" onclick="resetValue(4)"
                             id="sc-4"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="4" maxlength="1" name="two_factor_token[3]" required></input>
+                            placeholder="4" maxlength="1" name="two_factor_token[3]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(5)" onkeydown="stepBack(event, 5)" onclick="resetValue(5)"
                             id="sc-5"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="5" maxlength="1" name="two_factor_token[4]" required></input>
+                            placeholder="5" maxlength="1" name="two_factor_token[4]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(6)" onkeydown="stepBack(event, 6)" onclick="resetValue(6)"
                             id="sc-6"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="6" maxlength="1" name="two_factor_token[5]" required></input>
+                            placeholder="6" maxlength="1" name="two_factor_token[5]" oninput="checkInputLengths()" required/>
                     </div>
                 </div>
 
                 <div>
-                    <x-alerts.error type="error" />
+                    <x-alerts.error type="error" ></x-alerts.error>
                     <button type="submit"
                         class="group relative mt-4 flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -97,11 +97,29 @@
         window.onload = function() {
             document.getElementById("sc-1").focus();
         };
+
+        //Check if input lengths is true, so we can start auto submit
+        function checkInputLengths() {
+            const inputOne = document.getElementById('sc-1').value.length;
+            const inputTwo = document.getElementById('sc-2').value.length;
+            const inputThree = document.getElementById('sc-3').value.length;
+            const inputFour = document.getElementById('sc-4').value.length;
+            const inputFive = document.getElementById('sc-5').value.length;
+            const inputSix = document.getElementById('sc-6').value.length;
+
+            if (inputOne && inputTwo && inputThree && inputFour && inputFive && inputSix)
+            {
+                setTimeout(function() {
+                    document.twoFaForm.submit();
+                }, 1500)
+            }
+        }
+
         //Listen to paste event
         document.addEventListener('paste', function(e) {
             var pastedText = e.clipboardData.getData('text/plain');
             //wait a second, then paste it
-            if (pastedText.length == 6) {
+            if (pastedText.length === 6) {
                 setTimeout(function() {
                     var sc = document.getElementById("sc-1");
                     sc.value = pastedText.substring(0, 1);
@@ -130,10 +148,10 @@
         }
 
         function stepForward(i) {
-            if (document.getElementById('sc-' + i).value.length != 1) {
+            if (document.getElementById('sc-' + i).value.length !== 1) {
                 document.getElementById('sc-' + i).value = ''
             } else {
-                if (i != 6) {
+                if (i !== 6) {
                     document.getElementById('sc-' + i).value = document.getElementById('sc-' + i).value.toUpperCase()
                     document.getElementById('sc-' + (i + 1)).focus()
                 }
@@ -142,7 +160,7 @@
 
         function stepBack(evtobj, i) {
             //If sender pressed backspace, reset sc-i and focus on sc-i-1
-            if (evtobj.keyCode == 8) {
+            if (evtobj.keyCode === 8) {
                 document.getElementById('sc-' + i).value = ''
                 document.getElementById('sc-' + (i - 1)).focus()
             }

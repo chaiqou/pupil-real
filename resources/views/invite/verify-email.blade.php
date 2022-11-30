@@ -10,7 +10,7 @@
 
 <body class="h-full">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+        <div class="w-full max-w-md space-y-8 flex items-center justify-center flex-col" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
             <nav aria-label="Progress">
                 <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
                     <li class="relative md:flex md:flex-1">
@@ -55,7 +55,7 @@
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Verify your email</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Enter the
-                    <span href="#" class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
+                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
                     verification code sent to {{ $email }}.
                 </p>
                 <p class="mt-2 text-center text-xs text-gray-600">
@@ -76,20 +76,21 @@
                 </div>
             </div>
             @enderror
-            <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
-                @csrf
-                <div class="-space-y-px rounded-md shadow-md p-4">
-                    <div class="row-start-2 grid grid-cols-6">
-                        <input type="text" onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)" id="sc-1" name="code_each[1]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="1" value=""></input>
-                        <input type="text" onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)" id="sc-2" name="code_each[2]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="2" value=""></input>
-                        <input type="text" onkeyup="stepForward(3)" onkeydown="stepBack(event, 3)" onclick="resetValue(3)" id="sc-3" name="code_each[3]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="3" value=""></input>
-                        <input type="text" onkeyup="stepForward(4)" onkeydown="stepBack(event, 4)" onclick="resetValue(4)" id="sc-4" name="code_each[4]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="4" value=""></input>
-                        <input type="text" onkeyup="stepForward(5)" onkeydown="stepBack(event, 5)" onclick="resetValue(5)" id="sc-5" name="code_each[5]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="5" value=""></input>
-                        <input type="text" onkeyup="stepForward(6)" onkeydown="stepBack(event, 6)" onclick="resetValue(6)" id="sc-6" name="code_each[6]"  class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="6" value=""></input>
+            <div class="w-full">
+                <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
+                    @csrf
+                    <div class="-space-y-px rounded-md shadow-md p-4">
+                        <div class="row-start-2 grid grid-cols-6">
+                            <input type="text" onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)" id="sc-1" name="code_each[1]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="1" value=""/>
+                            <input type="text" onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)" id="sc-2" name="code_each[2]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="2" value=""/>
+                            <input type="text" onkeyup="stepForward(3)" onkeydown="stepBack(event, 3)" onclick="resetValue(3)" id="sc-3" name="code_each[3]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="3" value=""/>
+                            <input type="text" onkeyup="stepForward(4)" onkeydown="stepBack(event, 4)" onclick="resetValue(4)" id="sc-4" name="code_each[4]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="4" value=""/>
+                            <input type="text" onkeyup="stepForward(5)" onkeydown="stepBack(event, 5)" onclick="resetValue(5)" id="sc-5" name="code_each[5]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="5" value=""/>
+                            <input type="text" onkeyup="stepForward(6)" onkeydown="stepBack(event, 6)" onclick="resetValue(6)" id="sc-6" name="code_each[6]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="6" value=""/>
+                        </div>
                     </div>
-                </div>
-                <div>
-          <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <div>
+                        <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <!-- Heroicon name: mini/identification -->
               <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -97,12 +98,11 @@
               </svg>
 
             </span>
-            Verify
-          </button>
-        </div>
-            </form>
-
-
+                            Verify
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <script src="{{asset('js/sal.js')}}"></script>
@@ -116,11 +116,29 @@
         window.onload = function() {
             document.getElementById("sc-1").focus();
         };
+
+   //Check if input lengths is true, so we can start auto submit
+      function checkInputLengths() {
+          const inputOne = document.getElementById('sc-1').value.length;
+          const inputTwo = document.getElementById('sc-2').value.length;
+          const inputThree = document.getElementById('sc-3').value.length;
+          const inputFour = document.getElementById('sc-4').value.length;
+          const inputFive = document.getElementById('sc-5').value.length;
+          const inputSix = document.getElementById('sc-6').value.length;
+
+          if (inputOne && inputTwo && inputThree && inputFour && inputFive && inputSix)
+          {
+              setTimeout(function() {
+                  document.inviteTwoFaForm.submit();
+              }, 1500)
+          }
+      }
+
         //Listen to paste event
         document.addEventListener('paste', function(e) {
             var pastedText = e.clipboardData.getData('text/plain');
             //wait a second, then paste it
-            if (pastedText.length == 6) {
+            if (pastedText.length === 6) {
                 setTimeout(function() {
                     var sc = document.getElementById("sc-1");
                     sc.value = pastedText.substring(0, 1);
@@ -147,10 +165,10 @@
             }
         }
         function stepForward(i) {
-            if (document.getElementById('sc-' + i).value.length != 1) {
+            if (document.getElementById('sc-' + i).value.length !== 1) {
                 document.getElementById('sc-' + i).value = ''
             } else {
-                if (i != 6) {
+                if (i !== 6) {
                     document.getElementById('sc-' + i).value = document.getElementById('sc-' + i).value.toUpperCase()
                     document.getElementById('sc-' + (i + 1)).focus()
                 }
@@ -158,7 +176,7 @@
         }
         function stepBack(evtobj, i) {
             //If sender pressed backspace, reset sc-i and focus on sc-i-1
-            if (evtobj.keyCode == 8) {
+            if (evtobj.keyCode === 8) {
                 document.getElementById('sc-' + i).value = ''
                 document.getElementById('sc-' + (i - 1)).focus()
             }
