@@ -62,6 +62,8 @@ export const useLunchFormStore = defineStore("lunch", {
 
                     case "remove_holds":
                         this.formatDateForHumans("remove_holds", dates);
+                    case "matched_weekdays":
+                        this.formatDateForHumans("matched_weekdays", dates);
                 }
             }
         },
@@ -92,6 +94,8 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "remove_holds":
                     this.removeHolds = formatedDate;
                     break;
+                case "matched_weekdays":
+                    this.removeHolds = formatedDate;
             }
         },
 
@@ -114,7 +118,7 @@ export const useLunchFormStore = defineStore("lunch", {
             let uniqueValues = new Set(deUnique);
             deUnique = Array.from(uniqueValues);
             this.markedDays = deUnique;
-            this.filterWeekdaysIfMarkedDaysMatch();
+            this.weekdaysMatch();
         },
 
         removeHoldsFromMarkedDays() {
@@ -126,15 +130,27 @@ export const useLunchFormStore = defineStore("lunch", {
             });
 
             this.markedDays = removedDaysArray;
+            this.removeWeekdaysMatch();
         },
 
-        filterWeekdaysIfMarkedDaysMatch() {
+        weekdaysMatch() {
             this.matchedWeekdays = this.markedDays.filter((day) => {
                 let days = format(new Date(day), "EEEE");
                 return this.weekdays.includes(days);
             });
 
             console.log(this.matchedWeekdays);
+        },
+
+        removeWeekdaysMatch() {
+            this.middleRangeDates("matched_weekdays", this.holds);
+            let daysToDelete = new Set(this.removeHolds);
+
+            const removedDaysArray = this.matchedWeekdays.filter((day) => {
+                return !daysToDelete.has(day);
+            });
+
+            this.matchedWeekdays = removedDaysArray;
         },
     },
     getters: {

@@ -35,11 +35,10 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { computed, onUpdated } from "vue";
+import { onUpdated } from "vue";
 
 onUpdated(() => {
-    console.log(store.weekdays);
-    store.filterWeekdaysIfMarkedDaysMatch();
+    store.weekdaysMatch();
 });
 
 const store = useLunchFormStore();
