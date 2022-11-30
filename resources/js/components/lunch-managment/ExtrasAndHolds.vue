@@ -137,6 +137,7 @@ const removeExtra = (extraIdx) => {
     store.extras.splice(extraIdx, 1);
 
     store.disabledDaysForExtras = [];
+    store.disabledDaysForHolds = [];
 };
 
 const handleExtrasDate = (modelData) => {
@@ -161,6 +162,7 @@ const disabledExtrasDays = computed(() => {
 const removeHold = (holdIdx) => {
     store.holds.splice(holdIdx, 1);
 
+    store.disabledDaysForExtras = [];
     store.disabledDaysForHolds = [];
 };
 
