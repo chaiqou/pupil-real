@@ -11,9 +11,9 @@
     </div>
     <ValidationForm id="form" @submit="onSubmit()">
         <div :class="this.mainEmailsArray.length ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col' : 'mb-5 hidden'">
-            <p class="ml-3">Sending invites to:</p>
+            <p class="ml-7 text-sm">Sending invites to:</p>
             <div
-                class="flex flex-wrap pt-5 pl-5"
+                class="flex flex-wrap pl-5"
             >
                 <div v-for="(element, index) in mainEmailsArray" :key="index">
                     <div
