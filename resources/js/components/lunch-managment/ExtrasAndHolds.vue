@@ -140,7 +140,6 @@ const removeExtra = (extraIdx, extra) => {
 
     store.removeDaysFromMarkedDays(extra);
 
-    store.disabledDaysForExtras = [];
     store.disabledDaysForHolds = [];
 };
 
@@ -169,7 +168,6 @@ const removeHold = (holdIdx, hold) => {
     store.addDaysToMarkedDays(hold);
 
     store.disabledDaysForExtras = [];
-    store.disabledDaysForHolds = [];
 };
 
 const handleHoldsDate = (modelData) => {
