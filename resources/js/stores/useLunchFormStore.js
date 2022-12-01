@@ -133,15 +133,9 @@ export const useLunchFormStore = defineStore("lunch", {
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            this.middleRangeDates("active_range", this.active_range);
-            this.formatDateForHumans("active_range", this.active_range);
-
             let result = this.markedDays.filter((x) => !dates.includes(x));
-            let filteredDays = [...this.active_range, ...result];
-            let uniqueValues = new Set(filteredDays);
-            let deUnique = Array.from(uniqueValues);
 
-            this.markedDays = deUnique;
+            this.markedDays = result;
         },
 
         addDaysToMarkedDays(state) {
