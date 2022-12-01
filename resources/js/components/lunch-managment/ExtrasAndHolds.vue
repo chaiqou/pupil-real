@@ -140,6 +140,7 @@ const removeExtra = (extraIdx, extra) => {
 
     store.removeDaysFromMarkedDays(extra);
 
+    store.addExtras = [];
     store.disabledDaysForHolds = [];
 };
 
