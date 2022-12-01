@@ -18,6 +18,7 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
+                :partialRange="false"
                 @update:modelValue="handleActiveDate"
                 :enableTimePicker="false"
                 v-model="activeRange"

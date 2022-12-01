@@ -78,6 +78,7 @@
                 @update:modelValue="handleExtrasDate"
                 :disabledDates="disabledExtrasDays"
                 :maxDate="addYears(new Date(), 1)"
+                :partialRange="false"
                 :minDate="new Date()"
                 :enableTimePicker="false"
                 range
@@ -94,6 +95,7 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :disabledDates="disableHoldsDays"
+                :partialRange="false"
                 :maxDate="addYears(new Date(), 1)"
                 @update:modelValue="handleHoldsDate"
                 :enableTimePicker="false"
