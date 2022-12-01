@@ -148,7 +148,11 @@ export const useLunchFormStore = defineStore("lunch", {
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            this.markedDays = [...this.markedDays, ...dates];
+            if (
+                JSON.stringify(this.active_range[0]) === JSON.stringify(state)
+            ) {
+                this.markedDays = [...this.markedDays, ...dates];
+            }
         },
     },
     getters: {
