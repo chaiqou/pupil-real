@@ -133,6 +133,19 @@ export const useLunchFormStore = defineStore("lunch", {
 
             this.markedDays = result;
         },
+
+        addDaysToMarkedDays(state) {
+            let dates = [];
+            let startDate = new Date(state[0]);
+            let endDate = new Date(state[1]);
+
+            while (startDate <= endDate) {
+                dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+
+            this.markedDays = [...this.markedDays, ...dates];
+        },
     },
     getters: {
         getLunchFormData() {

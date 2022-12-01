@@ -61,7 +61,7 @@
                             <div>
                                 <button
                                     type="button"
-                                    @click="removeHold(holdIdx)"
+                                    @click="removeHold(holdIdx, hold)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -163,8 +163,10 @@ const disabledExtrasDays = computed(() => {
 
 // Holds
 
-const removeHold = (holdIdx) => {
+const removeHold = (holdIdx, hold) => {
     store.holds.splice(holdIdx, 1);
+
+    store.addDaysToMarkedDays(hold);
 
     store.disabledDaysForExtras = [];
     store.disabledDaysForHolds = [];
