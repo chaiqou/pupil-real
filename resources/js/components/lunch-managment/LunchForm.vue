@@ -91,10 +91,11 @@ const activeRange = ref(null);
 
 const handleActiveDate = (modelData) => {
     if (modelData) {
-        store.active_from = format(modelData[0], "yyyy-MM-dd");
-        store.active_to = format(modelData[1], "yyyy-MM-dd");
+        store.active_range.push([
+            format(modelData[0], "yyyy-MM-dd"),
+            format(modelData[1], "yyyy-MM-dd"),
+        ]);
     }
-
     store.addActiveRangeBasedWeekdays;
 };
 
