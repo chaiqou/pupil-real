@@ -96,7 +96,7 @@ const handleActiveDate = (modelData) => {
             format(modelData[1], "yyyy-MM-dd"),
         ]);
     }
-    store.addActiveRangeBasedWeekdays;
+    store.addActiveRangeBasedWeekdays(modelData);
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
@@ -121,6 +121,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 const clearDatepicker = () => {
     store.removeDaysFromMarkedDays(store.active_range[0]);
     store.active_range = [];
+    store.addActiveRange = [];
 };
 
 const multiselectOptions = [

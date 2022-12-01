@@ -146,6 +146,27 @@ export const useLunchFormStore = defineStore("lunch", {
 
             this.markedDays = [...this.markedDays, ...dates];
         },
+
+        addActiveRangeBasedWeekdays() {
+            this.middleRangeDates("add_active_range", this.active_range);
+            // console.log("this.active_range", this.active_range);
+            // console.log("this.addActiveRange", this.addActiveRange);
+
+            const filteredBasedOnWeekdays = this.addActiveRange.filter(
+                (day) => {
+                    let days = format(new Date(day), "EEEE");
+                    return this.weekdays.includes(days);
+                }
+            );
+
+            console.log("filteredBasedOnWeekdays", filteredBasedOnWeekdays);
+
+            let deUnique = this.markedDays.concat(filteredBasedOnWeekdays);
+            let uniqueValues = new Set(deUnique);
+            deUnique = Array.from(uniqueValues);
+
+            this.markedDays = [...this.markedDays, ...deUnique];
+        },
     },
     getters: {
         getLunchFormData() {
@@ -174,25 +195,6 @@ export const useLunchFormStore = defineStore("lunch", {
         getMarkedDays() {
             this.middleRangeDates("marked_days", this.markedDays);
             this.formatDateForHumans("marked_days", this.markedDays);
-        },
-
-        // add active range days to marked days based on the weekdays
-
-        addActiveRangeBasedWeekdays() {
-            this.middleRangeDates("add_active_range", this.active_range);
-
-            const filteredBasedOnWeekdays = this.addActiveRange.filter(
-                (day) => {
-                    let days = format(new Date(day), "EEEE");
-                    return this.weekdays.includes(days);
-                }
-            );
-
-            let deUnique = this.markedDays.concat(filteredBasedOnWeekdays);
-            let uniqueValues = new Set(deUnique);
-            deUnique = Array.from(uniqueValues);
-
-            this.markedDays = deUnique;
         },
 
         // add Extras to marked days

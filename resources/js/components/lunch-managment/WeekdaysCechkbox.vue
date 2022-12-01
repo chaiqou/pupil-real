@@ -8,10 +8,11 @@
                         name="weekdays"
                         type="checkbox"
                         :value="day.fullName"
-                        v-model="store.weekdays"
+                        @input="handleWeekdays(day)"
                         rules="required"
                         :id="day.fullName"
                         class="hidden peer"
+                        v-model="store.weekdays"
                     />
                     <label
                         :for="day.fullName"
@@ -37,6 +38,12 @@ import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
+
+const handleWeekdays = (day) => {
+    console.log("shesrulda", day);
+    console.log("weekdays", store.weekdays);
+    store.addActiveRangeBasedWeekdays();
+};
 
 const dayOptions = [
     { name: "M", fullName: "Monday", validOption: true },
