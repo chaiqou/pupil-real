@@ -22,6 +22,7 @@ export const useLunchFormStore = defineStore("lunch", {
             toggle_based_weekdays: [],
         };
     },
+
     actions: {
         // whith this method we can find start and end date of the period
 
@@ -147,6 +148,7 @@ export const useLunchFormStore = defineStore("lunch", {
             }
         },
     },
+
     getters: {
         getLunchFormData() {
             return {
@@ -162,7 +164,7 @@ export const useLunchFormStore = defineStore("lunch", {
                 price_period: this.price_period,
             };
         },
-        getCalculatedActiveRange() {
+        getFullLengthOfDays() {
             this.findMiddleRangeDates("active_range", this.active_range);
             this.formatDateForHumans("active_range", this.active_range);
             this.findMiddleRangeDates("extras", this.extras);

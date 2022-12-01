@@ -99,7 +99,7 @@ const handleActiveDate = (modelData) => {
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
-    store.getCalculatedActiveRange;
+    store.getFullLengthOfDays;
 
     axios
         .post("lunch", store.getLunchFormData)
