@@ -14,6 +14,9 @@ class ParentController extends Controller
 {
     public function parentDashboard(): RedirectResponse|View
     {
+        if (auth()->user()->is_verified === 0) {
+            return redirect()->route('2fa.form');
+        }
         if (Auth::user()->hasRole('parent') && Auth::user()->students->count() > 1) {
             return view('layouts.select-students', ['students' => Auth::user()->students->all()]);
         } elseif (Auth::user()->hasRole('parent') && Auth::user()->students->count() === 1) {

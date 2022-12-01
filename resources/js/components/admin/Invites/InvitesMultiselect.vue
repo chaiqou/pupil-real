@@ -4,89 +4,95 @@
         label="Select school"
     ></InvitesSchoolMultiselect>
     <div
-        class="flex items-center text-center justify-center text-xl"
+        class="flex items-center text-center text-red-500 justify-center text-sm"
         v-if="this.showInviteError || this.showEmailError"
     >
-        <p class="absolute mt-5">{{ errorShowing }}</p>
+        <p class="absolute mt-16">{{ errorShowing }}</p>
     </div>
     <ValidationForm id="form" @submit="onSubmit()">
-        <div
-            class="grid grid-cols-2 md:grid-cols-3 place-items-center gap-x-2 gap-y-3 mb-5 mt-12"
-        >
-            <div v-for="(element, index) in mainEmailsArray" :key="index">
-                <div
-                    @mouseover="this.showInviteError = true"
-                    @mouseleave="this.showInviteError = false"
-                    v-if="element.existsInInvites && !element.existsInUsers"
-                    class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 flex items-center"
-                >
-                    <exclamation-triangle-icon
-                        class="text-yellow-500 mr-1.5 w-5 h-5"
-                    ></exclamation-triangle-icon>
-                    <p
-                        class="text-yellow-500 max-w-[5rem] truncate ... hover:max-w-full"
+        <div :class="this.mainEmailsArray.length ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col' : 'mb-5 hidden'">
+            <p class="ml-7 text-sm">Sending invites to:</p>
+            <div
+                class="flex flex-wrap pl-5"
+            >
+                <div v-for="(element, index) in mainEmailsArray" :key="index">
+                    <div
+                        @mouseover="this.showInviteError = true"
+                        @mouseleave="this.showInviteError = false"
+                        v-if="element.existsInInvites && !element.existsInUsers"
+                        class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
                     >
-                        {{ element.email }}
-                    </p>
-                    <span
-                        class="ml-1.5 cursor-pointer text-gray-500"
-                        @click="
+                        <exclamation-triangle-icon
+                            class="text-yellow-500 mr-1.5 w-5 h-5"
+                        ></exclamation-triangle-icon>
+                        <p
+                            class="text-yellow-500"
+                        >
+                            {{ element.email }}
+                        </p>
+                        <span
+                            class="ml-1.5 cursor-pointer text-gray-500"
+                            @click="
                             removeTag(index);
                             removeTagForMain(index);
                             this.showInviteError = false;
                         "
                         >x</span
+                        >
+                    </div>
+                    <div
+                        @mouseover="this.showEmailError = true"
+                        @mouseleave="this.showEmailError = false"
+                        v-if="!element.existsInInvites && element.existsInUsers"
+                        class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
                     >
-                </div>
-                <div
-                    @mouseover="this.showEmailError = true"
-                    @mouseleave="this.showEmailError = false"
-                    v-if="!element.existsInInvites && element.existsInUsers"
-                    class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 flex items-center"
-                >
-                    <exclamation-triangle-icon
-                        class="text-yellow-500 mr-1.5 w-5 h-5"
-                    ></exclamation-triangle-icon>
-                    <p
-                        class="text-yellow-500 max-w-[5rem] truncate ... hover:max-w-full"
-                    >
-                        {{ element.email }}
-                    </p>
-                    <span
-                        class="ml-1.5 cursor-pointer text-gray-500"
-                        @click="
+                        <exclamation-triangle-icon
+                            class="text-yellow-500 mr-1.5 w-5 h-5"
+                        ></exclamation-triangle-icon>
+                        <p
+                            class="text-yellow-500"
+                        >
+                            {{ element.email }}
+                        </p>
+                        <span
+                            class="ml-1.5 cursor-pointer text-gray-500"
+                            @click="
                             removeTag(index);
                             removeTagForMain(index);
                             this.showEmailError = false;
                         "
                         >x</span
+                        >
+                    </div>
+                    <div
+                        v-if="!element.existsInInvites && !element.existsInUsers"
+                        class="flex bg-[#6C757D] border-2 max-w-fit mr-3 text-sm justify-between text-white rounded-md p-1 m-1.5 flex items-center"
                     >
-                </div>
-                <div
-                    v-if="!element.existsInInvites && !element.existsInUsers"
-                    class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 flex items-center"
-                >
-                    <p class="max-w-[7rem] truncate ... hover:max-w-full">
-                        {{ element.email }}
-                    </p>
-                    <span
-                        class="ml-1.5 cursor-pointer"
-                        @click="
+                        <p class="max-w-fit">
+                            {{ element.email }}
+                        </p>
+                        <span
+                            class="ml-1.5 cursor-pointer"
+                            @click="
                             removeTag(index);
                             removeTagForMain(index);
                         "
                         >x</span
-                    >
+                        >
+                    </div>
                 </div>
             </div>
         </div>
-        <label for="emails">Invite users by their email address.</label>
+
+        <div :class="this.mainEmailsArray.length ? 'text-sm' : 'mt-10'">
+            <label for="emails">Email addresses</label>
+        </div>
         <div
-            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-4"
+            class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-1.5"
         >
             <Field v-slot="{ resetField, field }" name="emails">
                 <input
-                    class="outline-0 w-full m-1.5 placeholder-white"
+                    class="outline-0 w-full my-1.5 placeholder-white"
                     v-bind="field"
                     @keydown.enter="resetField()"
                     @keydown="addTag"
@@ -192,9 +198,9 @@ export default {
         },
         errorShowing() {
             if (this.showInviteError) {
-                return "This email already has a pending invite";
+                return "This email is already has a pending invite";
             } else if (this.showEmailError) {
-                return "This email already signed up";
+                return "This email is already signed up";
             }
             return "";
         },

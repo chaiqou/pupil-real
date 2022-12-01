@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+        <label class="text-md mt-10 flex font-bold text-gray-600 whitespace-normal"
             >{{ this.label }}
         </label>
         <Multiselect

@@ -18,6 +18,10 @@ class TwoFactorAuthentication
     {
         if ($request->user()->hasRole(['2fa', 'school']) && $request->user()->is_verified === 0) {
             return redirect('two-factor-authentication');
+        } elseif ($request->user()->hasRole(['2fa', 'admin']) && $request->user()->is_verified === 0) {
+            return redirect('two-factor-authentication');
+        } elseif ($request->user()->hasRole(['2fa', 'parent']) && $request->user()->is_verified === 0) {
+            return redirect('two-factor-authentication');
         }
 
         return $next($request);
