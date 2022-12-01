@@ -140,8 +140,8 @@ const removeExtra = (extraIdx, extra) => {
 
     store.removeDaysFromMarkedDays(extra);
 
-    store.addExtras = [];
-    store.disabledDaysForHolds = [];
+    store.add_marked_extras = [];
+    store.disabled_extra_days = [];
 };
 
 const handleExtrasDate = (modelData) => {
@@ -151,14 +151,14 @@ const handleExtrasDate = (modelData) => {
     ]);
 
     store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
-        store.disabledDaysForHolds.push(data);
+        store.disabled_extra_days.push(data);
     });
 
     store.addExtrasToMarkedDays;
 };
 
 const disabledExtrasDays = computed(() => {
-    return [...store.disabledDaysForExtras, ...store.disabledDaysForHolds];
+    return [...store.disabled_hold_days, ...store.disabled_extra_days];
 });
 
 // Holds
@@ -168,7 +168,7 @@ const removeHold = (holdIdx, hold) => {
 
     store.addDaysToMarkedDays(hold);
 
-    store.disabledDaysForExtras = [];
+    store.disabled_hold_days = [];
 };
 
 const handleHoldsDate = (modelData) => {
@@ -178,13 +178,13 @@ const handleHoldsDate = (modelData) => {
     ]);
 
     store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
-        store.disabledDaysForExtras.push(date);
+        store.disabled_hold_days.push(date);
     });
 
     store.removeHoldsFromMarkedDays;
 };
 
 const disableHoldsDays = computed(() => {
-    return [...store.disabledDaysForHolds, ...store.disabledDaysForExtras];
+    return [...store.disabled_extra_days, ...store.disabled_hold_days];
 });
 </script>

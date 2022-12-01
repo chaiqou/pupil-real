@@ -113,8 +113,8 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 
     store.extras = [];
     store.holds = [];
-    store.disabledDaysForExtras = [];
-    store.disabledDaysForHolds = [];
+    store.disabled_hold_days = [];
+    store.disabled_extra_days = [];
 });
 
 const clearDatepicker = () => {

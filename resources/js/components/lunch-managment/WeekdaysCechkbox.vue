@@ -41,33 +41,33 @@ import { format } from "date-fns";
 const store = useLunchFormStore();
 
 const toggleWeekdays = (day) => {
-    store.middleRangeDates("toggle_based_weekdays", store.active_range);
+    store.findMiddleRangeDates("toggle_based_weekdays", store.active_range);
 
     store.toggle_based_weekdays.map((date) => {
         if (
             date.getDay() === day.index &&
             store.weekdays.includes(day.fullName)
         ) {
-            store.markedDays.push(format(new Date(date), "yyyy-MM-dd"));
+            store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
         } else if (
             date.getDay() === day.index &&
             !store.weekdays.includes(day.fullName)
         ) {
-            let filteredDays = store.markedDays.filter(
+            let filteredDays = store.marked_days.filter(
                 (item) => item !== format(new Date(date), "yyyy-MM-dd")
             );
-            store.markedDays = [...filteredDays, ...store.addExtras];
+            store.marked_days = [...filteredDays, ...store.add_marked_extras];
         }
     });
 };
 
 const dayOptions = [
-    { name: "M", fullName: "Monday", validOption: true, index: 1 },
-    { name: "T", fullName: "Tuesday", validOption: true, index: 2 },
-    { name: "W", fullName: "Wednesday", validOption: true, index: 3 },
-    { name: "T", fullName: "Thursday", validOption: true, index: 4 },
-    { name: "F", fullName: "Friday", validOption: true, index: 5 },
-    { name: "S", fullName: "Saturday", validOption: true, index: 6 },
-    { name: "S", fullName: "Sunday", validOption: true, index: 0 },
+    { name: "M", fullName: "Monday", index: 1 },
+    { name: "T", fullName: "Tuesday", index: 2 },
+    { name: "W", fullName: "Wednesday", index: 3 },
+    { name: "T", fullName: "Thursday", index: 4 },
+    { name: "F", fullName: "Friday", index: 5 },
+    { name: "S", fullName: "Saturday", index: 6 },
+    { name: "S", fullName: "Sunday", index: 0 },
 ];
 </script>
