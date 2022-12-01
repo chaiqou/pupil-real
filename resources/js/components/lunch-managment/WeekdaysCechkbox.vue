@@ -35,11 +35,6 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { onUpdated } from "vue";
-
-onUpdated(() => {
-    store.addActiveRangeBasedWeekdays;
-});
 
 const store = useLunchFormStore();
 
