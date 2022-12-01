@@ -167,13 +167,19 @@ export const useLunchFormStore = defineStore("lunch", {
 
         addActiveRangeBasedWeekdays() {
             this.middleRangeDates("add_active_range", this.active_range);
+
             const filteredBasedOnWeekdays = this.addActiveRange.filter(
                 (day) => {
                     let days = format(new Date(day), "EEEE");
                     return this.weekdays.includes(days);
                 }
             );
-            this.markedDays = [...this.markedDays, ...filteredBasedOnWeekdays];
+
+            let deUnique = this.markedDays.concat(filteredBasedOnWeekdays);
+            let uniqueValues = new Set(deUnique);
+            deUnique = Array.from(uniqueValues);
+
+            this.markedDays = deUnique;
         },
 
         // add Extras to marked days
