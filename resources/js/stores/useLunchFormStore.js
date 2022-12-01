@@ -14,12 +14,10 @@ export const useLunchFormStore = defineStore("lunch", {
             extras: [],
             price_day: "",
             price_period: "",
-
             disabledDaysForHolds: [],
             disabledDaysForExtras: [],
             addExtras: [],
             removeHolds: [],
-            addActiveRange: [],
             markedDays: [],
             toggle_based_weekdays: [],
         };
@@ -58,9 +56,6 @@ export const useLunchFormStore = defineStore("lunch", {
                         break;
                     case "remove_holds":
                         this.formatDateForHumans("remove_holds", dates);
-                        break;
-                    case "add_active_range":
-                        this.formatDateForHumans("add_active_range", dates);
                         break;
                     case "add_extras":
                         this.formatDateForHumans("add_extras", dates);
@@ -102,9 +97,6 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "remove_holds":
                     this.removeHolds = formatedDate;
-                    break;
-                case "add_active_range":
-                    this.addActiveRange = formatedDate;
                     break;
             }
         },

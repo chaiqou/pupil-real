@@ -120,7 +120,6 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 const clearDatepicker = () => {
     store.removeDaysFromMarkedDays(store.active_range[0]);
     store.active_range = [];
-    store.addActiveRange = [];
 };
 
 const multiselectOptions = [
