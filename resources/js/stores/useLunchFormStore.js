@@ -14,12 +14,14 @@ export const useLunchFormStore = defineStore("lunch", {
             extras: [],
             price_day: "",
             price_period: "",
+
             disabledDaysForHolds: [],
             disabledDaysForExtras: [],
             addExtras: [],
             removeHolds: [],
             addActiveRange: [],
             markedDays: [],
+            toggle_based_weekdays: [],
         };
     },
     actions: {
@@ -67,6 +69,8 @@ export const useLunchFormStore = defineStore("lunch", {
                             ...this.addExtras,
                         ];
                         break;
+                    case "toggle_based_weekdays":
+                        this.toggle_based_weekdays = dates;
                 }
             }
         },
@@ -145,27 +149,6 @@ export const useLunchFormStore = defineStore("lunch", {
             }
 
             this.markedDays = [...this.markedDays, ...dates];
-        },
-
-        addActiveRangeBasedWeekdays() {
-            this.middleRangeDates("add_active_range", this.active_range);
-            // console.log("this.active_range", this.active_range);
-            // console.log("this.addActiveRange", this.addActiveRange);
-
-            const filteredBasedOnWeekdays = this.addActiveRange.filter(
-                (day) => {
-                    let days = format(new Date(day), "EEEE");
-                    return this.weekdays.includes(days);
-                }
-            );
-
-            console.log("filteredBasedOnWeekdays", filteredBasedOnWeekdays);
-
-            let deUnique = this.markedDays.concat(filteredBasedOnWeekdays);
-            let uniqueValues = new Set(deUnique);
-            deUnique = Array.from(uniqueValues);
-
-            this.markedDays = [...this.markedDays, ...deUnique];
         },
     },
     getters: {

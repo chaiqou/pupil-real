@@ -96,7 +96,6 @@ const handleActiveDate = (modelData) => {
             format(modelData[1], "yyyy-MM-dd"),
         ]);
     }
-    store.addActiveRangeBasedWeekdays(modelData);
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {

@@ -8,7 +8,7 @@
                         name="weekdays"
                         type="checkbox"
                         :value="day.fullName"
-                        @input="handleWeekdays(day)"
+                        @input="toggleWeekdays(day)"
                         rules="required"
                         :id="day.fullName"
                         class="hidden peer"
@@ -36,22 +36,37 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { format } from "date-fns";
 
 const store = useLunchFormStore();
 
-const handleWeekdays = (day) => {
-    console.log("shesrulda", day);
-    console.log("weekdays", store.weekdays);
-    store.addActiveRangeBasedWeekdays();
+const toggleWeekdays = (day) => {
+    store.middleRangeDates("toggle_based_weekdays", store.active_range);
+
+    store.toggle_based_weekdays.map((date) => {
+        if (
+            date.getDay() === day.index &&
+            store.weekdays.includes(day.fullName)
+        ) {
+            store.markedDays.push(format(new Date(date), "yyyy-MM-dd"));
+        } else if (
+            date.getDay() === day.index &&
+            !store.weekdays.includes(day.fullName)
+        ) {
+            store.markedDays = store.markedDays.filter(
+                (item) => item !== format(new Date(date), "yyyy-MM-dd")
+            );
+        }
+    });
 };
 
 const dayOptions = [
-    { name: "M", fullName: "Monday", validOption: true },
-    { name: "T", fullName: "Tuesday", validOption: true },
-    { name: "W", fullName: "Wednesday", validOption: true },
-    { name: "T", fullName: "Thursday", validOption: true },
-    { name: "F", fullName: "Friday", validOption: true },
-    { name: "S", fullName: "Saturday", validOption: true },
-    { name: "S", fullName: "Sunday", validOption: true },
+    { name: "M", fullName: "Monday", validOption: true, index: 1 },
+    { name: "T", fullName: "Tuesday", validOption: true, index: 2 },
+    { name: "W", fullName: "Wednesday", validOption: true, index: 3 },
+    { name: "T", fullName: "Thursday", validOption: true, index: 4 },
+    { name: "F", fullName: "Friday", validOption: true, index: 5 },
+    { name: "S", fullName: "Saturday", validOption: true, index: 6 },
+    { name: "S", fullName: "Sunday", validOption: true, index: 0 },
 ];
 </script>
