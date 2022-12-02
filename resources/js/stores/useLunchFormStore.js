@@ -99,11 +99,6 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "remove_holds":
                     this.remove_marked_holds = formatedDate;
                     break;
-                case "disabled_extra_days":
-                    this.disabled_extra_days = formatedDate;
-                    break;
-                case "disabled_hold_days":
-                    this.disabled_hold_days = formatedDate;
             }
         },
 

@@ -84,7 +84,7 @@
                 :partialRange="false"
                 :minDate="new Date()"
                 :enableTimePicker="false"
-                :no-disabled-range="true"
+                no-disabled-range
                 range
             >
                 <template #trigger>
@@ -106,7 +106,7 @@
                 :maxDate="addYears(new Date(), 1)"
                 @update:modelValue="handleHoldsDate"
                 :enableTimePicker="false"
-                :no-disabled-range="true"
+                no-disabled-range
                 range
             >
                 <template #trigger>
@@ -125,7 +125,6 @@
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { computed } from "vue";
 import { addYears, format } from "date-fns";
 
 const store = useLunchFormStore();
@@ -145,7 +144,6 @@ const props = defineProps({
 
 const removeExtra = (extraIdx, extra) => {
     store.extras.splice(extraIdx, 1);
-    store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
 
     let dates = [];
     let startDate = new Date(extra[0]);
@@ -184,7 +182,6 @@ const handleExtrasDate = (modelData) => {
 
 const removeHold = (holdIdx, hold) => {
     store.holds.splice(holdIdx, 1);
-    store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
 
     let dates = [];
     let startDate = new Date(hold[0]);
