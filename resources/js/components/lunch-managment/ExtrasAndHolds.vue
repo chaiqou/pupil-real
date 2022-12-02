@@ -180,10 +180,22 @@ const disabledExtrasDays = computed(() => {
 
 const removeHold = (holdIdx, hold) => {
     store.holds.splice(holdIdx, 1);
+    store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
 
-    store.addDaysToMarkedDays(hold);
+    let dates = [];
+    let startDate = new Date(hold[0]);
+    let endDate = new Date(hold[1]);
 
-    store.disabled_hold_days = [];
+    while (startDate <= endDate) {
+        dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    store.marked_days = [...store.marked_days, ...dates];
+
+    store.disabled_hold_days = store.disabled_hold_days.filter(
+        (date) => !dates.includes(date)
+    );
 };
 
 const handleHoldsDate = (modelData) => {

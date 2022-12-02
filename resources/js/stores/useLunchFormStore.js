@@ -101,6 +101,9 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "disabled_extra_days":
                     this.disabled_extra_days = formatedDate;
+                    break;
+                case "disabled_hold_days":
+                    this.disabled_hold_days = formatedDate;
             }
         },
 
@@ -150,23 +153,6 @@ export const useLunchFormStore = defineStore("lunch", {
             let concatArrays = [...filteredMarkedDays, ...sameValues];
 
             this.marked_days = concatArrays;
-        },
-
-        addDaysToMarkedDays(state) {
-            let dates = [];
-            let startDate = new Date(state[0]);
-            let endDate = new Date(state[1]);
-
-            while (startDate <= endDate) {
-                dates.push(format(new Date(startDate), "yyyy-MM-dd"));
-                startDate.setDate(startDate.getDate() + 1);
-            }
-
-            if (
-                JSON.stringify(this.active_range[0]) === JSON.stringify(state)
-            ) {
-                this.marked_days = [...this.marked_days, ...dates];
-            }
         },
     },
 
