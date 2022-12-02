@@ -137,11 +137,26 @@ const props = defineProps({
 
 const removeExtra = (extraIdx, extra) => {
     store.extras.splice(extraIdx, 1);
+    store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
+
+    let dates = [];
+    let startDate = new Date(extra[0]);
+    let endDate = new Date(extra[1]);
+
+    while (startDate <= endDate) {
+        dates.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    let formattedDates = dates.map((date) => format(date, "yyyy-MM-dd"));
+
+    store.disabled_extra_days = store.disabled_extra_days.filter(
+        (date) => !formattedDates.includes(date)
+    );
 
     store.removeDaysFromMarkedDays(extra);
 
     store.add_marked_extras = [];
-    store.disabled_extra_days = [];
 };
 
 const handleExtrasDate = (modelData) => {

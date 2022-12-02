@@ -63,6 +63,7 @@ export const useLunchFormStore = defineStore("lunch", {
                         break;
                     case "toggle_based_weekdays":
                         this.toggle_based_weekdays = dates;
+                        break;
                 }
             }
         },
@@ -98,6 +99,8 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "remove_holds":
                     this.remove_marked_holds = formatedDate;
                     break;
+                case "disabled_extra_days":
+                    this.disabled_extra_days = formatedDate;
             }
         },
 
