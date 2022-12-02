@@ -133,6 +133,9 @@ const clearDatepicker = () => {
     store.marked_days = difference;
 
     store.active_range = [];
+    store.toggle_based_weekdays = [];
+    store.disabled_hold_days = [];
+    store.holds = [];
 };
 
 const multiselectOptions = [
