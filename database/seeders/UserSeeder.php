@@ -16,8 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        School::create();
-
         $faker = Factory::create();
 
         $levente = User::create([
