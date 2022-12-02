@@ -126,9 +126,28 @@ export const useLunchFormStore = defineStore("lunch", {
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            let result = this.marked_days.filter((x) => !dates.includes(x));
+            let formatedDate = [];
 
-            this.marked_days = result;
+            for (let i = 0; i < this.toggle_based_weekdays.length; i++) {
+                formatedDate.push(
+                    format(
+                        new Date(this.toggle_based_weekdays[i]),
+                        "yyyy-MM-dd"
+                    )
+                );
+            }
+
+            let filteredMarkedDays = this.marked_days.filter(
+                (x) => !dates.includes(x)
+            );
+
+            const sameValues = formatedDate.filter(
+                (value) => !filteredMarkedDays.includes(value)
+            );
+
+            let concatArrays = [...filteredMarkedDays, ...sameValues];
+
+            this.marked_days = concatArrays;
         },
 
         addDaysToMarkedDays(state) {
