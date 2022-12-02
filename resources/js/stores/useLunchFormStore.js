@@ -122,19 +122,21 @@ export const useLunchFormStore = defineStore("lunch", {
         },
 
         removeDaysFromMarkedDays(state) {
-            let dates = [];
+            let removed_range_days = [];
             let startDate = new Date(state[0]);
             let endDate = new Date(state[1]);
 
             while (startDate <= endDate) {
-                dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+                removed_range_days.push(
+                    format(new Date(startDate), "yyyy-MM-dd")
+                );
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            let formatedDate = [];
+            let active_range_days = [];
 
             for (let i = 0; i < this.toggle_based_weekdays.length; i++) {
-                formatedDate.push(
+                active_range_days.push(
                     format(
                         new Date(this.toggle_based_weekdays[i]),
                         "yyyy-MM-dd"
@@ -142,17 +144,17 @@ export const useLunchFormStore = defineStore("lunch", {
                 );
             }
 
-            let filteredMarkedDays = this.marked_days.filter(
-                (x) => !dates.includes(x)
+            let intersection = active_range_days.filter((day) =>
+                removed_range_days.includes(day)
             );
 
-            const sameValues = formatedDate.filter(
-                (value) => !filteredMarkedDays.includes(value)
-            );
+            let marked_days = this.marked_days.filter((day) => {
+                return !removed_range_days.includes(day);
+            });
 
-            let concatArrays = [...filteredMarkedDays, ...sameValues];
+            marked_days = [...marked_days, ...intersection];
 
-            this.marked_days = concatArrays;
+            this.marked_days = marked_days;
         },
     },
 
