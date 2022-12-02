@@ -189,11 +189,21 @@ export const useLunchFormStore = defineStore("lunch", {
 
         addExtrasToMarkedDays() {
             this.findMiddleRangeDates("add_extras", this.extras);
-            let deUnique = this.marked_days.concat(this.add_marked_extras);
+            let deUnique = this.add_marked_extras;
             let uniqueValues = new Set(deUnique);
             deUnique = Array.from(uniqueValues);
 
-            this.marked_days = deUnique;
+            this.remove_marked_holds.map((hold) => {
+                if (deUnique.includes(hold)) {
+                    deUnique.splice(deUnique.indexOf(hold), 1);
+                }
+            });
+
+            deUnique.map((extra) => {
+                if (!this.marked_days.includes(extra)) {
+                    this.marked_days.push(extra);
+                }
+            });
         },
 
         // remove holds from marked days
@@ -201,6 +211,12 @@ export const useLunchFormStore = defineStore("lunch", {
         removeHoldsFromMarkedDays() {
             this.findMiddleRangeDates("remove_holds", this.holds);
             let daysToDelete = new Set(this.remove_marked_holds);
+
+            this.add_marked_extras.map((extra) => {
+                if (daysToDelete.has(extra)) {
+                    daysToDelete.delete(extra);
+                }
+            });
 
             const removedDaysArray = this.marked_days.filter((day) => {
                 return !daysToDelete.has(day);
