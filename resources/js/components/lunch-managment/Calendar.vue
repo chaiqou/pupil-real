@@ -50,12 +50,29 @@
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
-                                    isToday(day) &&
-                                        'bg-indigo-600 font-semibold text-white',
-                                    'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
+                                    isToday(day) && [
+                                        getMonthByIndex(day.getMonth()) &&
+                                        month.name ===
+                                            monthFullNames[day.getMonth()]
+                                            ? 'bg-indigo-600 font-semibold text-white h-full w-full border-b-1 border-indigo-600 aspect-auto'
+                                            : 'bg-indigo-400 text-gray-50  h-full w-full border-b-1 border-indigo-600 aspect-auto',
+                                    ],
+                                    'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
                                 ]"
                             >
-                                {{ format(day, "d") }}
+                                <div class="flex-col">
+                                    <h1>
+                                        {{ format(day, "d") }}
+                                    </h1>
+                                    <div
+                                        v-if="ifDaysMatch(day) && isToday(day)"
+                                        class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                                    ></div>
+                                    <div
+                                        v-if="ifDaysMatch(day) && !isToday(day)"
+                                        class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
+                                    ></div>
+                                </div>
                             </time>
                         </button>
                     </div>
@@ -78,8 +95,13 @@ import {
     add,
     startOfWeek,
     addDays,
+    isSameDay,
+    parseISO,
 } from "date-fns";
 import { ref, defineProps } from "vue";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
+const store = useLunchFormStore();
 
 const props = defineProps({
     months: {
@@ -89,6 +111,10 @@ const props = defineProps({
 });
 
 const today = startOfToday();
+
+const ifDaysMatch = (day) => {
+    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
+};
 
 const currentMonthWithOtherMonths = ref(
     eachMonthOfInterval({
