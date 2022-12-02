@@ -144,17 +144,11 @@ export const useLunchFormStore = defineStore("lunch", {
                 );
             }
 
-            let intersection = active_range_days.filter((day) =>
-                removed_range_days.includes(day)
-            );
-
             let marked_days = this.marked_days.filter((day) => {
                 return !removed_range_days.includes(day);
             });
 
-            marked_days = [...marked_days, ...intersection];
-
-            this.marked_days = marked_days;
+            this.marked_days = [...marked_days];
         },
     },
 
