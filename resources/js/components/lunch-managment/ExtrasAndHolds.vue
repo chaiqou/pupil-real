@@ -76,11 +76,15 @@
             <Datepicker
                 closeOnScroll
                 @update:modelValue="handleExtrasDate"
-                :disabledDates="disabledExtrasDays"
+                :disabledDates="[
+                    ...store.disabled_hold_days,
+                    ...store.disabled_extra_days,
+                ]"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
                 :minDate="new Date()"
                 :enableTimePicker="false"
+                :no-disabled-range="true"
                 range
             >
                 <template #trigger>
@@ -94,11 +98,15 @@
             <Datepicker
                 closeOnScroll
                 :minDate="new Date()"
-                :disabledDates="disableHoldsDays"
+                :disabledDates="[
+                    ...store.disabled_hold_days,
+                    ...store.disabled_extra_days,
+                ]"
                 :partialRange="false"
                 :maxDate="addYears(new Date(), 1)"
                 @update:modelValue="handleHoldsDate"
                 :enableTimePicker="false"
+                :no-disabled-range="true"
                 range
             >
                 <template #trigger>
@@ -172,10 +180,6 @@ const handleExtrasDate = (modelData) => {
     store.addExtrasToMarkedDays;
 };
 
-const disabledExtrasDays = computed(() => {
-    return [...store.disabled_hold_days, ...store.disabled_extra_days];
-});
-
 // Holds
 
 const removeHold = (holdIdx, hold) => {
@@ -210,8 +214,4 @@ const handleHoldsDate = (modelData) => {
 
     store.removeHoldsFromMarkedDays;
 };
-
-const disableHoldsDays = computed(() => {
-    return [...store.disabled_extra_days, ...store.disabled_hold_days];
-});
 </script>
