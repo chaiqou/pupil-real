@@ -118,7 +118,20 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 });
 
 const clearDatepicker = () => {
-    store.removeDaysFromMarkedDays(store.active_range[0]);
+    store.findMiddleRangeDates("active_range", store.active_range);
+    store.formatDateForHumans("active_range", store.active_range);
+    store.findMiddleRangeDates("add_extras", store.extras);
+
+    let filteredMarkedDays = store.active_range.filter(
+        (x) => !store.add_marked_extras.includes(x)
+    );
+
+    let difference = store.marked_days.filter(
+        (x) => !filteredMarkedDays.includes(x)
+    );
+
+    store.marked_days = difference;
+
     store.active_range = [];
 };
 

@@ -60,10 +60,6 @@ export const useLunchFormStore = defineStore("lunch", {
                         break;
                     case "add_extras":
                         this.formatDateForHumans("add_extras", dates);
-                        this.marked_days = [
-                            ...this.marked_days,
-                            ...this.add_marked_extras,
-                        ];
                         break;
                     case "toggle_based_weekdays":
                         this.toggle_based_weekdays = dates;
@@ -94,7 +90,10 @@ export const useLunchFormStore = defineStore("lunch", {
                     this.marked_days = formatedDate;
                     break;
                 case "add_extras":
-                    this.add_marked_extras = formatedDate;
+                    this.add_marked_extras = [
+                        ...this.add_marked_extras,
+                        ...formatedDate,
+                    ];
                     break;
                 case "remove_holds":
                     this.remove_marked_holds = formatedDate;
