@@ -46,7 +46,19 @@
                             href="tel:+1-202-555-0170"
                             class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
-                            <span class="ml-3">94 available days left</span>
+                            <span class="ml-3"
+                                >{{
+                                    intervalToDuration({
+                                        start: new Date(
+                                            lunch.active_range.at(0)
+                                        ),
+                                        end: new Date(
+                                            lunch.active_range.at(-1)
+                                        ),
+                                    }).days
+                                }}
+                                days left</span
+                            >
                         </a>
                     </div>
                 </div>
@@ -68,6 +80,10 @@
 
 <script setup>
 import { onMounted, reactive } from "vue";
+import { intervalToDuration } from "date-fns";
+import { useLunchFormStore } from "../../stores/useLunchFormStore";
+
+const store = useLunchFormStore();
 
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
