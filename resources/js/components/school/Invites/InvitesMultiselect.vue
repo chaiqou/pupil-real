@@ -123,7 +123,7 @@
             </Field>
         </div>
         <p class="text-gray-400 text-[10px]">
-            Be careful, dont send invite on wrong email.
+            Be careful, dont send invite to wrong email.
         </p>
         <p
             v-if="this.isSent"
