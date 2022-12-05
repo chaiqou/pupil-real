@@ -70,6 +70,7 @@ class NavigationController extends Controller
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
+                    ['name' => 'Add Lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false , 'hidden' => true, 'parentPage' => 'Lunch management'],
                 ];
             $role = 'school';
         }
