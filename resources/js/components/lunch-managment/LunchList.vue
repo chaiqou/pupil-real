@@ -1,6 +1,7 @@
 <template>
     <div
-        class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
+        v-if="lunches.length !== 0"
+        class="relative flex min-h-screen flex-col px-4 justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
         <ul
             role="list"
@@ -57,14 +58,12 @@
                     </div>
                 </div>
             </li>
-
-            <!-- More people... -->
         </ul>
     </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, reactive } from "vue";
 
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
@@ -72,5 +71,5 @@ onMounted(() => {
     });
 });
 
-const lunches = [];
+const lunches = reactive([]);
 </script>

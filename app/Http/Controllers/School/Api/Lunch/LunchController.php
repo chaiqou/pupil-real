@@ -15,7 +15,8 @@ class LunchController extends Controller
 
     public function index (): AnonymousResourceCollection
     {
-        $lunches = Lunch::where('merchant_id', auth()->user()->id)->get();
+        $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
+
 
         return LunchResource::collection($lunches);
     }
