@@ -76,4 +76,4 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::apiResource('lunch', LunchController::class);
+Route::apiResource('school/lunch', LunchController::class);

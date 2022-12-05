@@ -2,15 +2,26 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LunchRequest;
-use App\Http\Resources\LunchResource;
-use App\Models\Lunch;
 use Carbon\Carbon;
+use App\Models\Lunch;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\LunchRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\LunchResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LunchController extends Controller
 {
-    public function store(LunchRequest $request)
+
+    public function index (): AnonymousResourceCollection
+    {
+        $lunches = Lunch::where('merchant_id', auth()->user()->id)->get();
+
+        return LunchResource::collection($lunches);
+    }
+
+
+    public function store(LunchRequest $request): JsonResponse
     {
         $validate = $request->validated();
         $activeRange = collect($validate['active_range']);
@@ -64,6 +75,6 @@ class LunchController extends Controller
             'price_period' => $validate['price_period'],
         ]);
 
-        return new LunchResource($lunch);
+       return response()->json(['success' => 'Lunch created successfully'], 201);
     }
 }
