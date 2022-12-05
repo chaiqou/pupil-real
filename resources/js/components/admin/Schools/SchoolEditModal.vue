@@ -165,9 +165,7 @@
                                                 <Field
                                                     rules="required"
                                                     v-model="
-                                                        this.school
-                                                            .details
-                                                            .street_address
+                                                        this.street_address
                                                     "
                                                     type="text"
                                                     name="address"
@@ -196,12 +194,10 @@
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required|email"
+                                                    rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.school
-                                                            .details
-                                                            .email
+                                                        this.email
                                                     "
                                                     name="email"
                                                     id="email"
@@ -232,9 +228,7 @@
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.school
-                                                            .details
-                                                            .contact_person
+                                                        this.contact_person
                                                     "
                                                     name="contact"
                                                     id="contact"
@@ -265,9 +259,7 @@
                                                     rules="required"
                                                     type="number"
                                                     v-model="
-                                                        this.school
-                                                            .details
-                                                            .phone_number
+                                                        this.phone_number
                                                     "
                                                     name="phone_number"
                                                     id="phone_number"
@@ -358,6 +350,10 @@ export default {
     data() {
         return {
             isRequestEndSuccessfully: false,
+            email: "",
+            street_address: "",
+            phone_number: "",
+            contact_person: "",
         }
     },
     components: {
@@ -380,19 +376,23 @@ export default {
         ...mapActions(useModalStore, ["showHideSchoolEdit"]),
         onSubmit() {
             axios
-                .post(`/api/admin/update-school`, {
+                .post(`/api/admin/update`, {
                     school_id: this.school.id,
                     short_name: this.school.short_name,
                     full_name: this.school.full_name,
                     long_name: this.school.long_name,
-                    email: this.school.details.email,
-                    contact_person: this.school.details.contact_person,
-                    phone_number: this.school.details.phone_number,
-                    street_address: this.school.details.street_address,
+                    email: this.email,
+                    contact_person: this.contact_person,
+                    phone_number: this.phone_number,
+                    street_address: this.street_address,
                     school_code: this.school.school_code,
                 })
                 .then((res) => {
                     this.schools = res.data.data;
+                    this.email = "";
+                    this.contact_person = "";
+                    this.phone_number = "";
+                    this.street_address = "";
                 })
                 .finally(() => {
                     this.isSchoolEditVisible = false;
@@ -402,8 +402,12 @@ export default {
             axios.get(`/api/admin/school/${this.schoolId}`)
                 .then((res) => {
                     this.school = res.data.data;
-                    this.isRequestEndSuccessfully = true;
-                });
+                    this.email = this.school.details.email;
+                    this.contact_person = this.school.details.contact_person;
+                    this.phone_number = this.school.details.phone_number;
+                    this.street_address = this.school.details.street_address;
+                })
+                .finally(() => this.isRequestEndSuccessfully = true);
         }
     },
     created() {

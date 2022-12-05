@@ -19,7 +19,7 @@ class SchoolResource extends JsonResource
             'short_name' => $this->short_name,
             'full_name' => $this->full_name,
             'long_name' => $this->long_name,
-            'details' => $this->details,
+            'details' => json_decode($this->details),
             'school_code' => $this->school_code,
         ];
     }

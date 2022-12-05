@@ -52,6 +52,7 @@ class SchoolController extends Controller
             'details' => [
                 'street_address' => $request->street_address,
                 'email' => $request->email,
+                'contact_person' => $request->contact_person,
                 'phone_number' => $request->phone_number,
                 'mobile_number' => $request->mobile_number,
                 'extension' => $request->extension,
