@@ -102,7 +102,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
     store.getFullLengthOfDays;
 
     axios
-        .post("lunch", store.getLunchFormData)
+        .post("/school/lunch", store.getLunchFormData)
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
