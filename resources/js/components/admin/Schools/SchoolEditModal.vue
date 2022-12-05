@@ -194,7 +194,7 @@
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required"
+                                                    rules="required|email"
                                                     type="text"
                                                     v-model="
                                                         this.email
@@ -211,7 +211,7 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        email field is required
+                                                        email field is required in email format
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -256,7 +256,7 @@
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required"
+                                                    rules="required|phone"
                                                     type="number"
                                                     v-model="
                                                         this.phone_number
@@ -287,7 +287,7 @@
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required"
+                                                    rules="required|min-words-3"
                                                     v-model="
                                                         this.school
                                                             .school_code

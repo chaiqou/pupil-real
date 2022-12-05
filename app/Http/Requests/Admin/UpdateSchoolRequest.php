@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Rules\MinThreeWord;
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSchoolRequest extends FormRequest
@@ -29,8 +31,8 @@ class UpdateSchoolRequest extends FormRequest
             'long_name' => 'required',
             'street_address' => 'required',
             'email' => 'required|email',
-            'phone_number' => 'required',
-            'school_code' => 'required|string|min:3'
+            'phone_number' => ['required', new PhoneNumber()],
+            'school_code' => ['required', new MinThreeWord()]
         ];
     }
 }
