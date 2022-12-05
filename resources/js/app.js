@@ -61,9 +61,15 @@ app.component("admin-invites-header", AdminInvitesHeader);
 app.component("extras-and-holds", ExtrasAndHolds);
 app.component("parent-students-mobile", ParentStudentsMobile);
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.component("lunch-list", LunchList);
 =======
 app.component("admin-schools", AdminSchools);
 >>>>>>> ca7b3e15980cb0c04dfc0b55ae90d82db946f2a9
+=======
+app.component("lunch-list", LunchList);
+app.component("admin-schools", AdminSchools);
+
+>>>>>>> 883df3f6615db1682a3c76bc5fbd4a5a59878aa3
 app.use(pinia);
 app.mount("#app");
