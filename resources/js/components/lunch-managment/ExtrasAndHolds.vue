@@ -156,6 +156,8 @@ const removeExtra = (extraIdx, extra) => {
 
     let formattedDates = dates.map((date) => format(date, "yyyy-MM-dd"));
 
+    store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
+
     store.disabled_extra_days = store.disabled_extra_days.filter(
         (date) => !formattedDates.includes(date)
     );
@@ -193,6 +195,8 @@ const removeHold = (holdIdx, hold) => {
     }
 
     store.marked_days = [...store.marked_days, ...dates];
+
+    store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
 
     store.disabled_hold_days = store.disabled_hold_days.filter(
         (date) => !dates.includes(date)
