@@ -1,79 +1,76 @@
 <template>
-    <ul
-        role="list"
-        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    <div
+        class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
-        <li
-            v-for="person in people"
-            :key="person.email"
-            class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+        <ul
+            role="list"
+            class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-            <div class="flex w-full items-center justify-between space-x-6 p-6">
-                <div class="flex-1 truncate">
-                    <div class="flex items-center space-x-3">
-                        <h3 class="truncate text-sm font-medium text-gray-900">
-                            {{ person.name }}
-                        </h3>
-                        <span
-                            class="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800"
-                            >{{ person.role }}</span
-                        >
+            <li
+                v-for="lunch in lunches"
+                class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+            >
+                <div
+                    class="flex w-full items-center justify-between space-x-6 p-6"
+                >
+                    <div class="flex-1 truncate">
+                        <div class="flex items-center space-x-3">
+                            <h3
+                                class="truncate text-sm font-medium text-gray-900"
+                            >
+                                {{ lunch.title }}
+                            </h3>
+                        </div>
+                        <p class="mt-1 truncate text-sm text-gray-500">
+                            {{ lunch.description }}
+                        </p>
                     </div>
-                    <p class="mt-1 truncate text-sm text-gray-500">
-                        {{ person.title }}
-                    </p>
                 </div>
-                <img
-                    class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-                    :src="person.imageUrl"
-                    alt=""
-                />
-            </div>
-            <div>
                 <div class="-mt-px flex divide-x divide-gray-200">
                     <div class="flex w-0 flex-1">
                         <a
-                            :href="`mailto:${person.email}`"
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
-                            <EnvelopeIcon
-                                class="h-5 w-5 text-gray-400"
-                                aria-hidden="true"
-                            />
-                            <span class="ml-3">Email</span>
+                            <span class="ml-3">{{
+                                lunch.active_range[0]
+                            }}</span>
                         </a>
                     </div>
                     <div class="-ml-px flex w-0 flex-1">
                         <a
-                            :href="`tel:${person.telephone}`"
+                            href="tel:+1-202-555-0170"
                             class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
-                            <PhoneIcon
-                                class="h-5 w-5 text-gray-400"
-                                aria-hidden="true"
-                            />
-                            <span class="ml-3">Call</span>
+                            <span class="ml-3">94 available days left</span>
                         </a>
                     </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+                <div>
+                    <div class="-mt-px flex divide-x divide-gray-200">
+                        <div class="flex w-0 flex-1">
+                            <a
+                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                            >
+                                Manage
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- More people... -->
+        </ul>
+    </div>
 </template>
 
 <script setup>
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/20/solid";
+import { onMounted } from "vue";
 
-const people = [
-    {
-        name: "Jane Cooper",
-        title: "Regional Paradigm Technician",
-        role: "Admin",
-        email: "janecooper@example.com",
-        telephone: "+1-202-555-0170",
-        imageUrl:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    },
-    // More people...
-];
+onMounted(() => {
+    axios.get("/api/school/lunch").then((response) => {
+        lunches.push(...response.data.data);
+    });
+});
+
+const lunches = [];
 </script>
