@@ -10,8 +10,9 @@
             :limit="-1"
             valueProp="id"
             placeholder="Select one"
-            track-by="id"
+            track-by="name"
             label="name"
+            :searchable="true"
             @change="add"
         ></Multiselect>
     </div>
@@ -49,9 +50,10 @@ export default {
         handleGetSchoolsRequest()
         {
                axios
-       .get('/api/admin/schools')
+       .get('/api/admin/schools-for-invites')
        .then((res) => {
            this.schools = res.data
+          console.log(this.schools);
        })
        .catch((err) => console.log(err))
         },

@@ -22,7 +22,7 @@ class TwoFactorAuthenticationController extends Controller
         if ($two_factor_integer == auth()->user()->two_factor_token && auth()->user()->hasRole('parent')) {
             auth()->user()->update(['is_verified' => true]);
 
-            return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
+            return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
         }
 
         if ($two_factor_integer == auth()->user()->two_factor_token && auth()->user()->hasRole('school')) {
