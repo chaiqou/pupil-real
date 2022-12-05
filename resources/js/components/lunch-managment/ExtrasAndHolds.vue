@@ -177,7 +177,24 @@ const handleExtrasDate = (modelData) => {
         store.disabled_extra_days.push(data);
     });
 
-    store.addExtrasToMarkedDays;
+    // add extras to marked days
+
+    store.findMiddleRangeDates("add_extras", store.extras);
+    let deUnique = store.add_marked_extras;
+    let uniqueValues = new Set(deUnique);
+    deUnique = Array.from(uniqueValues);
+
+    store.remove_marked_holds.map((hold) => {
+        if (deUnique.includes(hold)) {
+            deUnique.splice(deUnique.indexOf(hold), 1);
+        }
+    });
+
+    deUnique.map((extra) => {
+        if (!store.marked_days.includes(extra)) {
+            store.marked_days.push(extra);
+        }
+    });
 };
 
 // Holds
@@ -213,6 +230,21 @@ const handleHoldsDate = (modelData) => {
         store.disabled_hold_days.push(date);
     });
 
-    store.removeHoldsFromMarkedDays;
+    // Remove holds from marked days
+
+    store.findMiddleRangeDates("remove_holds", store.holds);
+    let daysToDelete = new Set(store.remove_marked_holds);
+
+    store.add_marked_extras.map((extra) => {
+        if (daysToDelete.has(extra)) {
+            daysToDelete.delete(extra);
+        }
+    });
+
+    const removedDaysArray = store.marked_days.filter((day) => {
+        return !daysToDelete.has(day);
+    });
+
+    store.marked_days = removedDaysArray;
 };
 </script>

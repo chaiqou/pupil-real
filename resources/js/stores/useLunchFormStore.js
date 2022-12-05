@@ -52,9 +52,6 @@ export const useLunchFormStore = defineStore("lunch", {
                     case "holds":
                         this.holds = dates;
                         break;
-                    case "marked_days":
-                        this.marked_days = [...dates];
-                        break;
                     case "remove_holds":
                         this.formatDateForHumans("remove_holds", dates);
                         break;
@@ -86,9 +83,6 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "holds":
                     this.holds = formatedDate;
-                    break;
-                case "marked_days":
-                    this.marked_days = formatedDate;
                     break;
                 case "add_extras":
                     this.add_marked_extras = [
@@ -174,51 +168,6 @@ export const useLunchFormStore = defineStore("lunch", {
             this.formatDateForHumans("extras", this.extras);
             this.findMiddleRangeDates("holds", this.holds);
             this.formatDateForHumans("holds", this.holds);
-        },
-
-        getMarkedDays() {
-            this.findMiddleRangeDates("marked_days", this.marked_days);
-            this.formatDateForHumans("marked_days", this.marked_days);
-        },
-
-        // add Extras to marked days
-
-        addExtrasToMarkedDays() {
-            this.findMiddleRangeDates("add_extras", this.extras);
-            let deUnique = this.add_marked_extras;
-            let uniqueValues = new Set(deUnique);
-            deUnique = Array.from(uniqueValues);
-
-            this.remove_marked_holds.map((hold) => {
-                if (deUnique.includes(hold)) {
-                    deUnique.splice(deUnique.indexOf(hold), 1);
-                }
-            });
-
-            deUnique.map((extra) => {
-                if (!this.marked_days.includes(extra)) {
-                    this.marked_days.push(extra);
-                }
-            });
-        },
-
-        // remove holds from marked days
-
-        removeHoldsFromMarkedDays() {
-            this.findMiddleRangeDates("remove_holds", this.holds);
-            let daysToDelete = new Set(this.remove_marked_holds);
-
-            this.add_marked_extras.map((extra) => {
-                if (daysToDelete.has(extra)) {
-                    daysToDelete.delete(extra);
-                }
-            });
-
-            const removedDaysArray = this.marked_days.filter((day) => {
-                return !daysToDelete.has(day);
-            });
-
-            this.marked_days = removedDaysArray;
         },
     },
 });
