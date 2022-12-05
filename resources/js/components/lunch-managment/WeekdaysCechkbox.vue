@@ -46,7 +46,8 @@ const toggleWeekdays = (day) => {
     store.toggle_based_weekdays.map((date) => {
         if (
             date.getDay() === day.index &&
-            store.weekdays.includes(day.fullName)
+            store.weekdays.includes(day.fullName) &&
+            store.holds.length === 0
         ) {
             store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
         } else if (
