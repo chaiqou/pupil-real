@@ -225,7 +225,7 @@
                                             <label
                                                 for="contact"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Contact person name</label
+                                                >Contact person</label
                                             >
                                             <div class="mt-1">
                                                 <Field
@@ -234,7 +234,7 @@
                                                     v-model="
                                                         this.school
                                                             .details
-                                                            .contact
+                                                            .contact_person
                                                     "
                                                     name="contact"
                                                     id="contact"
@@ -286,6 +286,39 @@
                                                 </ErrorMessage>
                                             </div>
                                         </div>
+
+                                        <div class="sm:col-span-6">
+                                            <label
+                                                for="school-code"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >School code</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    rules="required"
+                                                    v-model="
+                                                        this.school
+                                                            .school_code
+                                                    "
+                                                    type="text"
+                                                    name="school_code"
+                                                    id="school_code"
+                                                    autocomplete="school-code"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="school_code"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        school code is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="pt-5">
                                         <div class="flex justify-end">
@@ -347,17 +380,16 @@ export default {
         ...mapActions(useModalStore, ["showHideSchoolEdit"]),
         onSubmit() {
             axios
-                .post(`/api/parent/update-student`, {
-                    student_id: this.studentForEdit.id,
-                    first_name: this.studentForEdit.first_name,
-                    last_name: this.studentForEdit.last_name,
-                    middle_name: this.studentForEdit.middle_name,
-                    country: this.studentForEdit.user_information.country,
-                    city: this.studentForEdit.user_information.city,
-                    state: this.studentForEdit.user_information.state,
-                    street_address:
-                        this.studentForEdit.user_information.street_address,
-                    zip: this.studentForEdit.user_information.zip,
+                .post(`/api/admin/update-school`, {
+                    school_id: this.school.id,
+                    short_name: this.school.short_name,
+                    full_name: this.school.full_name,
+                    long_name: this.school.long_name,
+                    email: this.school.details.email,
+                    contact_person: this.school.details.contact_person,
+                    phone_number: this.school.details.phone_number,
+                    street_address: this.school.details.street_address,
+                    school_code: this.school.school_code,
                 })
                 .then((res) => {
                     this.schools = res.data.data;
@@ -367,7 +399,7 @@ export default {
                 });
         },
         handleGetSchoolRequest() {
-            axios.get(`/api/parent/school/${this.studentId}`)
+            axios.get(`/api/admin/school/${this.schoolId}`)
                 .then((res) => {
                     this.school = res.data.data;
                     this.isRequestEndSuccessfully = true;

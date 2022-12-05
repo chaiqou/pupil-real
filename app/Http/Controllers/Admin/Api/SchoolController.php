@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateSchoolRequest;
 use App\Http\Resources\School\SchoolResource;
 use App\Http\Resources\School\StudentResource;
 use App\Models\School;
@@ -39,5 +40,25 @@ class SchoolController extends Controller
         $school = School::where('id', $request->school_id)->first();
 
         return new SchoolResource($school);
+    }
+
+    public function update(UpdateSchoolRequest $request): ResourceCollection
+    {
+        $school = School::where('id', $request->school_id)->first();
+        $school->update([
+            'short_name' => $request->short_name,
+            'full_name' => $request->full_name,
+            'long_name' => $request->long_name,
+            'details' => [
+                'street_address' => $request->street_address,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'mobile_number' => $request->mobile_number,
+                'extension' => $request->extension,
+            ],
+            'school_code' => $request->school_code,
+        ]);
+        $schools = School::latest('created_at')->get();
+        return SchoolResource::collection($schools);
     }
 }

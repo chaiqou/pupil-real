@@ -19,7 +19,14 @@ class SchoolSeeder extends Seeder
            'short_name' => 'Oxford',
            'full_name' => 'University Of Oxford',
            'long_name' => 'Masters and Scholars of the University of Oxford',
-           'details' => json_encode([]),
+           'details' => json_encode([
+               'street_address' => '',
+               'email' => '',
+               'contact_person' => '',
+               'phone_number' => '',
+               'mobile_number' => '',
+               'extension' => '',
+           ]),
            'school_code' => 'BEW935',
         ]);
 
@@ -27,7 +34,14 @@ class SchoolSeeder extends Seeder
             'short_name' => 'Harvard',
             'full_name' => 'Harvard University',
             'long_name' => 'Long name for Harvard University',
-            'details' => json_encode([]),
+            'details' => json_encode([
+                'street_address' => '',
+                'email' => '',
+                'contact_person' => '',
+                'phone_number' => '',
+                'mobile_number' => '',
+                'extension' => '',
+            ]),
             'school_code' => 'OIP',
         ]);
     }

@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(AdminSchoolController::class)->group(function () {
                 Route::get('schools-for-invites', 'getSchoolsForInvite')->name('admin.schools-invites_api');
                 Route::get('schools', 'index')->name('admin.schools_api');
+                Route::get('school/{school_id}', 'show')->name('admin.school.show_api');
             });
             Route::controller(AdminInviteController::class)->group(function () {
                 Route::get('invites', 'get')->name('admin.invites_api');
