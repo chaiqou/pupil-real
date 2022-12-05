@@ -33,7 +33,11 @@
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3">{{
-                                lunch.active_range[0]
+                                lunch.active_range.at(0)
+                            }}</span>
+                            <span class="ml-3">-</span>
+                            <span class="ml-3">{{
+                                lunch.active_range.at(-1)
                             }}</span>
                         </a>
                     </div>
