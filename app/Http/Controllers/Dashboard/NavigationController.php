@@ -103,7 +103,8 @@ class NavigationController extends Controller
                     ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/admin/students', 'current' => false],
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
-                ];
+                    ['name' => 'Schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false]
+                    ];
         }
         $currentTab = request()->route()->getName();
         if (auth()->user()->is_verified === 0) {
