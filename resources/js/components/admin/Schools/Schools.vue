@@ -10,13 +10,16 @@
         <table class="min-w-full divide-y divide-gray-300 border-separate" style="border-spacing: 0">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">Short name</th>
+                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Short name</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Full name</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Long name</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Details</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">School code</th>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
                         <span class="sr-only">Edit</span>
+                    </th>
+                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
+                        <span class="sr-only">Merchants</span>
                     </th>
                 </tr>
             </thead>
@@ -32,22 +35,22 @@
                     :key="school.id"
                 >
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                        class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
                     >
                         {{ school.short_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[5rem] truncate ..."
                     >
                         {{ school.full_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[10rem] truncate ..."
                     >
                         {{ school.long_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 truncate ... max-w-[15rem]"
                     >
                         {{ school.details }}
                     </td>
@@ -57,7 +60,7 @@
                         {{ school.school_code }}
                     </td>
                     <td
-                        class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                        class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
                     >
                         <button
                             @click="
@@ -69,10 +72,26 @@
                             Edit
                         </button>
                     </td>
+                    <td
+                        class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium pl-2 pr-6"
+                    >
+                        <a href="/admin/school/1/merchants"
+                            class="text-white hover:text-gray-100 hover:bg-green-400 px-2 py-1.5 rounded-md bg-green-500"
+                        >
+                            Merchants
+                        </a>
+                    </td>
                 </tr>
                 <tr v-if="!this.isSchoolsLoaded" v-for="n in 7">
                     <td
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                    <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                     >
                         <div
                             class="h-2 bg-slate-300 rounded animate-pulse"
