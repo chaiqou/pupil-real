@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-2">
+                                        <div class="sm:col-span-3">
                                             <label
                                                 for="email"
                                                 class="block text-sm font-medium text-gray-700"
@@ -217,7 +217,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-2">
+                                        <div class="sm:col-span-3">
                                             <label
                                                 for="contact"
                                                 class="block text-sm font-medium text-gray-700"
@@ -278,6 +278,67 @@
                                                 </ErrorMessage>
                                             </div>
                                         </div>
+
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="mobile-number"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >Mobile number</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    type="number"
+                                                    v-model="
+                                                        this.mobile_number
+                                                    "
+                                                    name="mobile_number"
+                                                    id="mobile_number"
+                                                    autocomplete="mobile-number"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="mobile_number"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        mobile number is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="extension"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >Extension</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    type="number"
+                                                    v-model="
+                                                        this.extension
+                                                    "
+                                                    name="extension"
+                                                    id="extension"
+                                                    autocomplete="extension"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="extension"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        extension is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
 
                                         <div class="sm:col-span-6">
                                             <label
@@ -353,6 +414,8 @@ export default {
             email: "",
             street_address: "",
             phone_number: "",
+            mobile_number: "",
+            extension: "",
             contact_person: "",
         }
     },
@@ -384,6 +447,8 @@ export default {
                     email: this.email,
                     contact_person: this.contact_person,
                     phone_number: this.phone_number,
+                    mobile_number: this.mobile_number,
+                    extension: this.extension,
                     street_address: this.street_address,
                     school_code: this.school.school_code,
                 })
@@ -392,6 +457,8 @@ export default {
                     this.email = "";
                     this.contact_person = "";
                     this.phone_number = "";
+                    this.mobile_number = "";
+                    this.extension = "";
                     this.street_address = "";
                 })
                 .finally(() => {
@@ -405,6 +472,8 @@ export default {
                     this.email = this.school.details.email;
                     this.contact_person = this.school.details.contact_person;
                     this.phone_number = this.school.details.phone_number;
+                    this.mobile_number = this.school.details.mobile_number;
+                    this.extension = this.school.details.extension;
                     this.street_address = this.school.details.street_address;
                 })
                 .finally(() => this.isRequestEndSuccessfully = true);
