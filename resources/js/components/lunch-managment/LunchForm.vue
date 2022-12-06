@@ -90,11 +90,8 @@ const multiselectRef = ref(null);
 const activeRange = ref(null);
 
 const handleActiveDate = (modelData) => {
-    if (modelData) {
-        store.active_range.push([
-            format(modelData[0], "yyyy-MM-dd"),
-            format(modelData[1], "yyyy-MM-dd"),
-        ]);
+    for (let i = 0; i < modelData.length; i++) {
+        store.active_range.push(modelData[i]);
     }
 
     const eachDay = eachDayOfInterval({
@@ -150,7 +147,6 @@ const clearDatepicker = () => {
     store.marked_days = difference;
 
     store.active_range = [];
-    store.toggle_based_weekdays = [];
     store.disabled_hold_days = [];
     store.holds = [];
 };

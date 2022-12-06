@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { format } from "date-fns";
+import { format, eachDayOfInterval } from "date-fns";
 
 export const useLunchFormStore = defineStore("lunch", {
     state: () => {
@@ -19,7 +19,6 @@ export const useLunchFormStore = defineStore("lunch", {
             add_marked_extras: [],
             remove_marked_holds: [],
             marked_days: [],
-            toggle_based_weekdays: [],
         };
     },
 
@@ -57,9 +56,6 @@ export const useLunchFormStore = defineStore("lunch", {
                         break;
                     case "add_extras":
                         this.formatDateForHumans("add_extras", dates);
-                        break;
-                    case "toggle_based_weekdays":
-                        this.toggle_based_weekdays = dates;
                         break;
                 }
             }
@@ -125,17 +121,6 @@ export const useLunchFormStore = defineStore("lunch", {
                     format(new Date(startDate), "yyyy-MM-dd")
                 );
                 startDate.setDate(startDate.getDate() + 1);
-            }
-
-            let active_range_days = [];
-
-            for (let i = 0; i < this.toggle_based_weekdays.length; i++) {
-                active_range_days.push(
-                    format(
-                        new Date(this.toggle_based_weekdays[i]),
-                        "yyyy-MM-dd"
-                    )
-                );
             }
 
             let marked_days = this.marked_days.filter((day) => {
