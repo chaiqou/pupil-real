@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { format, eachDayOfInterval } from "date-fns";
+import { format, eachDayOfInterval, parseISO } from "date-fns";
 
 export const useLunchFormStore = defineStore("lunch", {
     state: () => {
@@ -19,6 +19,7 @@ export const useLunchFormStore = defineStore("lunch", {
             add_marked_extras: [],
             remove_marked_holds: [],
             marked_days: [],
+            each_active_range_day: [],
         };
     },
 
@@ -94,6 +95,8 @@ export const useLunchFormStore = defineStore("lunch", {
                     break;
                 case "disabled_hold_days":
                     this.disabled_hold_days = formatedDate;
+                case "each_active_range_day":
+                    this.each_active_range_day = formatedDate;
             }
         },
 
@@ -123,11 +126,33 @@ export const useLunchFormStore = defineStore("lunch", {
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            let marked_days = this.marked_days.filter((day) => {
-                return !removed_range_days.includes(day);
+            let eachDay = eachDayOfInterval({
+                start: this.active_range[0],
+                end: this.active_range[1],
             });
 
-            this.marked_days = [...marked_days];
+            this.formatDateForHumans("each_active_range_day", eachDay);
+
+            let parsedMarkedDays = this.marked_days.map((day) => {
+                return parseISO(day);
+            });
+
+            let marked_days = parsedMarkedDays.filter((day) => {
+                return !eachDay.includes(day);
+            });
+
+            this.marked_days = [];
+
+            marked_days.map((day) => {
+                if (
+                    this.weekdays.includes(format(day, "EEEE")) &&
+                    this.each_active_range_day.includes(
+                        format(day, "yyyy-MM-dd")
+                    )
+                ) {
+                    this.marked_days.push(format(day, "yyyy-MM-dd"));
+                }
+            });
         },
     },
 
