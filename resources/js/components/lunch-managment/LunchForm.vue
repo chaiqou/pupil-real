@@ -72,7 +72,7 @@
 
 <script setup>
 import { useForm } from "vee-validate";
-import { addYears, format } from "date-fns";
+import { addYears, format, eachDayOfInterval } from "date-fns";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
@@ -96,6 +96,23 @@ const handleActiveDate = (modelData) => {
             format(modelData[1], "yyyy-MM-dd"),
         ]);
     }
+
+    const eachDay = eachDayOfInterval({
+        start: modelData[0],
+        end: modelData[1],
+    });
+
+    // if weekdays are selected and matched with each day of active range then add them to store
+
+    eachDay.map((day) => {
+        if (store.weekdays) {
+            store.weekdays.map((weekday) => {
+                if (weekday === format(day, "EEEE")) {
+                    store.marked_days.push(format(day, "yyyy-MM-dd"));
+                }
+            });
+        }
+    });
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
