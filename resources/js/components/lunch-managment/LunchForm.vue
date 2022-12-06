@@ -22,7 +22,7 @@
                 @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
                 v-model="activeRange"
-                @cleared="clearDatepicker"
+                :clearable="false"
                 range
             />
             <WeekdaysChechkbox name="weekdays" />
@@ -149,26 +149,6 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
     store.disabled_hold_days = [];
     store.disabled_extra_days = [];
 });
-
-const clearDatepicker = () => {
-    store.findMiddleRangeDates("active_range", store.active_range);
-    store.formatDateForHumans("active_range", store.active_range);
-    store.findMiddleRangeDates("add_extras", store.extras);
-
-    let filteredMarkedDays = store.active_range.filter(
-        (x) => !store.add_marked_extras.includes(x)
-    );
-
-    let difference = store.marked_days.filter(
-        (x) => !filteredMarkedDays.includes(x)
-    );
-
-    store.marked_days = difference;
-
-    store.active_range = [];
-    store.disabled_hold_days = [];
-    store.holds = [];
-};
 
 const multiselectOptions = [
     "Breakfast",
