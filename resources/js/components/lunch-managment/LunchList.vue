@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="lunches.length !== 0"
-        class="relative flex min-h-screen flex-col px-4 justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
+        class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
         <ul
             role="list"
@@ -33,17 +33,13 @@
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3">{{
-                                lunch.active_range.at(0)
-                            }}</span>
-                            <span class="ml-3">-</span>
-                            <span class="ml-3">{{
-                                lunch.active_range.at(-1)
+                                `${lunch.active_range.at(0)} -
+                                ${lunch.active_range.at(-1)}`
                             }}</span>
                         </a>
                     </div>
                     <div class="-ml-px flex w-0 flex-1">
                         <a
-                            href="tel:+1-202-555-0170"
                             class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3"
@@ -57,7 +53,7 @@
                                         ),
                                     }).days
                                 }}
-                                days left</span
+                                available days left</span
                             >
                         </a>
                     </div>
@@ -81,9 +77,6 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import { intervalToDuration } from "date-fns";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
-
-const store = useLunchFormStore();
 
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
