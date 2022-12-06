@@ -30,8 +30,12 @@ class UpdateSchoolRequest extends FormRequest
             'full_name' => 'required',
             'long_name' => 'required',
             'street_address' => 'required',
+            'country' => 'required',
+            'zip' => 'required',
             'email' => 'required|email',
             'phone_number' => ['required', new PhoneNumber()],
+            'mobile_number' => '',
+            'extension' => '',
             'school_code' => ['required', new MinThreeWord()]
         ];
     }

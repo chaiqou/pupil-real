@@ -7,6 +7,7 @@ export const useSchoolStore = defineStore("school", {
             schools: [],
             school: [],
             schoolId: null,
+            countrySelect: "",
         };
     },
     actions: {

@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Admin\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateSchoolRequest;
 use App\Http\Resources\School\SchoolResource;
-use App\Http\Resources\School\StudentResource;
 use App\Models\School;
-use App\Models\Student;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -51,6 +48,8 @@ class SchoolController extends Controller
             'long_name' => $request->long_name,
             'details' => [
                 'street_address' => $request->street_address,
+                'country' => $request->country,
+                'zip' => $request->zip,
                 'email' => $request->email,
                 'contact_person' => $request->contact_person,
                 'phone_number' => $request->phone_number,

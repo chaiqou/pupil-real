@@ -1,9 +1,9 @@
 <template>
-    <TransitionRoot v-if="this.isRequestEndSuccessfully" as="template" :show="this.isSchoolEditVisible">
+    <TransitionRoot v-if="this.isRequestEndSuccessfully" as="template" :show="this.isMerchantEditVisible">
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isSchoolEditVisible = false; this.schoolId = null;"
+            @close="this.isMerchantEditVisible = false; this.schoolId = null;"
         >
             <TransitionChild
                 as="template"
@@ -41,7 +41,7 @@
                                 <button
                                     type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isSchoolEditVisible = false; this.schoolId = null"
+                                    @click="this.isMerchantEditVisible = false; this.schoolId = null"
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon
@@ -155,10 +155,7 @@
                                                 ></ErrorMessage>
                                             </div>
                                         </div>
-
-
-                                 <CountriesSelect></CountriesSelect>
-                                        <div class="sm:col-span-4">
+                                        <div class="sm:col-span-6">
                                             <label
                                                 for="address"
                                                 class="block text-sm font-medium text-gray-700"
@@ -178,37 +175,6 @@
                                                 />
                                                 <ErrorMessage
                                                     name="address"
-                                                    class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        this field is required
-                                                    </p>
-                                                </ErrorMessage>
-                                            </div>
-                                        </div>
-
-                                        <div class="sm:col-span-2">
-                                            <label
-                                                for="zip"
-                                                class="block text-sm font-medium text-gray-700"
-                                            >ZIP</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    rules="required"
-                                                    v-model="
-                                                        this.zip
-                                                    "
-                                                    type="text"
-                                                    name="zip"
-                                                    id="zip"
-                                                    autocomplete="zip"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="zip"
                                                     class="text-red-500 text-sm"
                                                 >
                                                     <p
@@ -437,10 +403,9 @@ import {
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
-import { useSchoolStore } from "@/stores/useSchoolStore";
+import { useMerchantStore } from "@/stores/useMerchantStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/ui/CountriesSelect.vue"
 
 export default {
     data() {
@@ -452,7 +417,6 @@ export default {
             mobile_number: "",
             extension: "",
             contact_person: "",
-            zip: "",
         }
     },
     components: {
@@ -466,14 +430,13 @@ export default {
         Form,
         Field,
         ErrorMessage,
-        CountriesSelect,
     },
     computed: {
-        ...mapWritableState(useSchoolStore, ["school", "schoolId", "schools", "countrySelect"]),
-        ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
+        ...mapWritableState(useMerchantStore, ["merchant", "merchantId", "merchants"]),
+        ...mapWritableState(useModalStore, ["isMerchantEditVisible"]),
     },
     methods: {
-        ...mapActions(useModalStore, ["showHideSchoolEdit"]),
+        ...mapActions(useModalStore, ["showHideMerchantEdit"]),
         onSubmit() {
             axios
                 .post(`/api/admin/update`, {
@@ -487,8 +450,6 @@ export default {
                     mobile_number: this.mobile_number,
                     extension: this.extension,
                     street_address: this.street_address,
-                    country: this.countrySelect,
-                    zip: this.zip,
                     school_code: this.school.school_code,
                 })
                 .then((res) => {
@@ -499,15 +460,13 @@ export default {
                     this.mobile_number = "";
                     this.extension = "";
                     this.street_address = "";
-                    this.countrySelect = "";
-                    this.zip = "";
                 })
                 .finally(() => {
                     this.isSchoolEditVisible = false;
                 });
         },
         handleGetSchoolRequest() {
-            axios.get(`/api/admin/school/${this.schoolId}`)
+            axios.get(`/api/admin/merchant/${this.merchantId}`)
                 .then((res) => {
                     this.school = res.data.data;
                     this.email = this.school.details.email;
@@ -516,8 +475,6 @@ export default {
                     this.mobile_number = this.school.details.mobile_number;
                     this.extension = this.school.details.extension;
                     this.street_address = this.school.details.street_address;
-                    this.countrySelect = this.school.details.country;
-                    this.zip = this.school.details.zip;
                 })
                 .finally(() => this.isRequestEndSuccessfully = true);
         }

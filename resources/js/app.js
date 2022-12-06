@@ -31,7 +31,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
 import AdminSchools from "@/components/admin/Schools/Schools.vue";
-
+import AdminMerchants from "@/components/admin/Merchants/Merchants.vue";
 const pinia = createPinia();
 const app = createApp({});
 
@@ -60,5 +60,6 @@ app.component("admin-invites-header", AdminInvitesHeader);
 app.component("extras-and-holds", ExtrasAndHolds);
 app.component("parent-students-mobile", ParentStudentsMobile);
 app.component("admin-schools", AdminSchools);
+app.component("admin-merchants", AdminMerchants);
 app.use(pinia);
 app.mount("#app");
