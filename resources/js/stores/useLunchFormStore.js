@@ -155,29 +155,4 @@ export const useLunchFormStore = defineStore("lunch", {
             });
         },
     },
-
-    getters: {
-        getLunchFormData() {
-            return {
-                title: this.title,
-                description: this.description,
-                period_length: this.period_length,
-                weekdays: this.weekdays,
-                active_range: this.active_range,
-                claimables: this.claimables,
-                holds: this.holds,
-                extras: this.extras,
-                price_day: this.price_day,
-                price_period: this.price_period,
-            };
-        },
-        getFullLengthOfDays() {
-            this.findMiddleRangeDates("active_range", this.active_range);
-            this.formatDateForHumans("active_range", this.active_range);
-            this.findMiddleRangeDates("extras", this.extras);
-            this.formatDateForHumans("extras", this.extras);
-            this.findMiddleRangeDates("holds", this.holds);
-            this.formatDateForHumans("holds", this.holds);
-        },
-    },
 });

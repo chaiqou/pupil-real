@@ -132,10 +132,22 @@ const addActiveRange = (modelData) => {
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
-    store.getFullLengthOfDays;
-
     axios
-        .post("/school/lunch", store.getLunchFormData)
+        .post("/school/lunch", {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: [
+                format(store.active_range[0], "yyyy-MM-dd"),
+                format(store.active_range[1], "yyyy-MM-dd"),
+            ],
+            claimables: store.claimables,
+            holds: store.holds,
+            extras: store.extras,
+            price_day: store.price_day,
+            price_period: store.price_period,
+        })
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
