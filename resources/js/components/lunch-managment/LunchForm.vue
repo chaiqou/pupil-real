@@ -19,7 +19,7 @@
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
-                @update:modelValue="handleActiveDate"
+                @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
                 v-model="activeRange"
                 @cleared="clearDatepicker"
@@ -89,9 +89,11 @@ const { handleSubmit } = useForm();
 const multiselectRef = ref(null);
 const activeRange = ref(null);
 
-const handleActiveDate = (modelData) => {
-    for (let i = 0; i < modelData.length; i++) {
-        store.active_range.push(modelData[i]);
+const addActiveRange = (modelData) => {
+    if (store.active_range.length < 2) {
+        store.active_range.push(...modelData);
+    } else {
+        store.active_range.splice(0, 2, ...modelData);
     }
 
     const eachDay = eachDayOfInterval({
@@ -99,8 +101,25 @@ const handleActiveDate = (modelData) => {
         end: modelData[1],
     });
 
-    // if weekdays are selected and matched with each day of active range then add them to store
+    // format each day to YYYY-MM-DD'
 
+    let formatedDate = [];
+
+    for (let i = 0; i < eachDay.length; i++) {
+        formatedDate.push(format(new Date(eachDay[i]), "yyyy-MM-dd"));
+    }
+
+    // if marked days doesnot contain any of the days in the range, remove all marked days
+
+    if (store.marked_days.length > 0) {
+        for (let i = 0; i < store.marked_days.length; i++) {
+            if (!formatedDate.includes(store.marked_days[i])) {
+                store.marked_days.splice(0, store.marked_days.length);
+            }
+        }
+    }
+
+    // if weekdays are selected and matched with each day of active range then add them to store
     eachDay.map((day) => {
         if (store.weekdays) {
             store.weekdays.map((weekday) => {
