@@ -32,6 +32,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
 import AdminSchools from "@/components/admin/Schools/Schools.vue";
+import ParentLunchList from "@/components/parent/lunch-management/ParentLunchList.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -62,6 +63,7 @@ app.component("extras-and-holds", ExtrasAndHolds);
 app.component("parent-students-mobile", ParentStudentsMobile);
 app.component("lunch-list", LunchList);
 app.component("admin-schools", AdminSchools);
+app.component("parent-lunch-list", ParentLunchList);
 
 app.use(pinia);
 app.mount("#app");

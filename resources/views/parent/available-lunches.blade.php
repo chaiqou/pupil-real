@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-<h1>lunches</h1>
+<parent-lunch-list></parent-lunch-list>
 @endsection
