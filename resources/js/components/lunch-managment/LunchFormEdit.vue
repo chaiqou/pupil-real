@@ -1,12 +1,12 @@
 <template>
-    <div class="sm:mt-20 min-w-[30vw] xl:px-4">
+    <div class="sm:mt-20 w-1/3 px-20 float-right">
         <form @submit.prevent="onSubmit">
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
-            <BaseInput v-model="store.title" name="title" label="Title" />
+            <BaseInput v-model="lunches.title" name="title" label="Title" />
             <BaseInput
-                v-model="store.description"
+                v-model="lunches.description"
                 name="description"
                 label="Description"
             />
@@ -21,14 +21,14 @@
                 :partialRange="false"
                 @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
-                v-model="activeRange"
+                v-model="lunches.active_range"
                 :clearable="false"
                 range
             />
             <WeekdaysChechkbox name="weekdays" />
             <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
-                v-model="store.period_length"
+                v-model="lunches.period_length"
                 name="period_length"
                 label="Period Length"
                 type="number"
@@ -38,7 +38,7 @@
                 >Claimables
             </label>
             <Multiselect
-                v-model="store.claimables"
+                v-model="lunches.claimables"
                 mode="tags"
                 name="claimables"
                 :limit="10"
@@ -54,13 +54,13 @@
                 :options="multiselectOptions"
             />
             <BaseInput
-                v-model="store.price_day"
+                v-model="lunches.price_day"
                 name="price_day"
                 label="Price per day"
                 type="number"
             />
             <BaseInput
-                v-model="store.price_period"
+                v-model="lunches.price_period"
                 name="price_period"
                 label="Price per period"
                 type="number"
@@ -72,7 +72,7 @@
 
 <script setup>
 import { addYears, format, eachDayOfInterval } from "date-fns";
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 import axios from "@/config/axios/index";
@@ -88,14 +88,12 @@ const id = parseInt(route.params.id);
 const store = useLunchFormStore();
 
 const multiselectRef = ref(null);
-const activeRange = ref(null);
-const lunches = reactive([]);
+const lunches = ref("");
 const errors = ref([]);
 
 onMounted(() => {
     axios.get("/school/lunch/" + id).then((response) => {
-        // lunches.push(...response.data.data);
-        console.log(response.data.data);
+        lunches.value = response.data.data;
     });
 });
 
