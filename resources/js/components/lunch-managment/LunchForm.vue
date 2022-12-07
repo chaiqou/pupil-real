@@ -19,10 +19,10 @@
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
-                @update:modelValue="handleActiveDate"
+                @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
                 v-model="activeRange"
-                @cleared="clearDatepicker"
+                :clearable="false"
                 range
             />
             <WeekdaysChechkbox name="weekdays" />
@@ -72,7 +72,7 @@
 
 <script setup>
 import { useForm } from "vee-validate";
-import { addYears, format } from "date-fns";
+import { addYears, format, eachDayOfInterval } from "date-fns";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
@@ -89,20 +89,65 @@ const { handleSubmit } = useForm();
 const multiselectRef = ref(null);
 const activeRange = ref(null);
 
-const handleActiveDate = (modelData) => {
-    if (modelData) {
-        store.active_range.push([
-            format(modelData[0], "yyyy-MM-dd"),
-            format(modelData[1], "yyyy-MM-dd"),
-        ]);
+const addActiveRange = (modelData) => {
+    if (store.active_range.length < 2) {
+        store.active_range.push(...modelData);
+    } else {
+        store.active_range.splice(0, 2, ...modelData);
     }
+
+    const eachDay = eachDayOfInterval({
+        start: modelData[0],
+        end: modelData[1],
+    });
+
+    // format each day to YYYY-MM-DD'
+
+    let formatedDate = [];
+
+    for (let i = 0; i < eachDay.length; i++) {
+        formatedDate.push(format(new Date(eachDay[i]), "yyyy-MM-dd"));
+    }
+
+    // if marked days doesnot contain any of the days in the range, remove all marked days
+
+    if (store.marked_days.length > 0) {
+        for (let i = 0; i < store.marked_days.length; i++) {
+            if (!formatedDate.includes(store.marked_days[i])) {
+                store.marked_days.splice(0, store.marked_days.length);
+            }
+        }
+    }
+
+    // if weekdays are selected and matched with each day of active range then add them to store
+    eachDay.map((day) => {
+        if (store.weekdays) {
+            store.weekdays.map((weekday) => {
+                if (weekday === format(day, "EEEE")) {
+                    store.marked_days.push(format(day, "yyyy-MM-dd"));
+                }
+            });
+        }
+    });
 };
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
-    store.getFullLengthOfDays;
-
     axios
-        .post("lunch", store.getLunchFormData)
+        .post("/school/lunch", {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: [
+                format(store.active_range[0], "yyyy-MM-dd"),
+                format(store.active_range[1], "yyyy-MM-dd"),
+            ],
+            claimables: store.claimables,
+            holds: store.holds,
+            extras: store.extras,
+            price_day: store.price_day,
+            price_period: store.price_period,
+        })
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
@@ -116,27 +161,6 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
     store.disabled_hold_days = [];
     store.disabled_extra_days = [];
 });
-
-const clearDatepicker = () => {
-    store.findMiddleRangeDates("active_range", store.active_range);
-    store.formatDateForHumans("active_range", store.active_range);
-    store.findMiddleRangeDates("add_extras", store.extras);
-
-    let filteredMarkedDays = store.active_range.filter(
-        (x) => !store.add_marked_extras.includes(x)
-    );
-
-    let difference = store.marked_days.filter(
-        (x) => !filteredMarkedDays.includes(x)
-    );
-
-    store.marked_days = difference;
-
-    store.active_range = [];
-    store.toggle_based_weekdays = [];
-    store.disabled_hold_days = [];
-    store.holds = [];
-};
 
 const multiselectOptions = [
     "Breakfast",

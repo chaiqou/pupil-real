@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { format } from "date-fns";
+import { format, eachDayOfInterval, parseISO } from "date-fns";
 
 export const useLunchFormStore = defineStore("lunch", {
     state: () => {
@@ -19,7 +19,7 @@ export const useLunchFormStore = defineStore("lunch", {
             add_marked_extras: [],
             remove_marked_holds: [],
             marked_days: [],
-            toggle_based_weekdays: [],
+            each_active_range_day: [],
         };
     },
 
@@ -52,17 +52,11 @@ export const useLunchFormStore = defineStore("lunch", {
                     case "holds":
                         this.holds = dates;
                         break;
-                    case "marked_days":
-                        this.marked_days = [...dates];
-                        break;
                     case "remove_holds":
                         this.formatDateForHumans("remove_holds", dates);
                         break;
                     case "add_extras":
                         this.formatDateForHumans("add_extras", dates);
-                        break;
-                    case "toggle_based_weekdays":
-                        this.toggle_based_weekdays = dates;
                         break;
                 }
             }
@@ -87,9 +81,6 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "holds":
                     this.holds = formatedDate;
                     break;
-                case "marked_days":
-                    this.marked_days = formatedDate;
-                    break;
                 case "add_extras":
                     this.add_marked_extras = [
                         ...this.add_marked_extras,
@@ -99,6 +90,13 @@ export const useLunchFormStore = defineStore("lunch", {
                 case "remove_holds":
                     this.remove_marked_holds = formatedDate;
                     break;
+                case "disabled_extra_days":
+                    this.disabled_extra_days = formatedDate;
+                    break;
+                case "disabled_hold_days":
+                    this.disabled_hold_days = formatedDate;
+                case "each_active_range_day":
+                    this.each_active_range_day = formatedDate;
             }
         },
 
@@ -128,92 +126,33 @@ export const useLunchFormStore = defineStore("lunch", {
                 startDate.setDate(startDate.getDate() + 1);
             }
 
-            let active_range_days = [];
+            let eachDay = eachDayOfInterval({
+                start: this.active_range[0],
+                end: this.active_range[1],
+            });
 
-            for (let i = 0; i < this.toggle_based_weekdays.length; i++) {
-                active_range_days.push(
-                    format(
-                        new Date(this.toggle_based_weekdays[i]),
-                        "yyyy-MM-dd"
+            this.formatDateForHumans("each_active_range_day", eachDay);
+
+            let parsedMarkedDays = this.marked_days.map((day) => {
+                return parseISO(day);
+            });
+
+            let marked_days = parsedMarkedDays.filter((day) => {
+                return !eachDay.includes(day);
+            });
+
+            this.marked_days = [];
+
+            marked_days.map((day) => {
+                if (
+                    this.weekdays.includes(format(day, "EEEE")) &&
+                    this.each_active_range_day.includes(
+                        format(day, "yyyy-MM-dd")
                     )
-                );
-            }
-
-            let marked_days = this.marked_days.filter((day) => {
-                return !removed_range_days.includes(day);
-            });
-
-            this.marked_days = [...marked_days];
-        },
-    },
-
-    getters: {
-        getLunchFormData() {
-            return {
-                title: this.title,
-                description: this.description,
-                period_length: this.period_length,
-                weekdays: this.weekdays,
-                active_range: this.active_range,
-                claimables: this.claimables,
-                holds: this.holds,
-                extras: this.extras,
-                price_day: this.price_day,
-                price_period: this.price_period,
-            };
-        },
-        getFullLengthOfDays() {
-            this.findMiddleRangeDates("active_range", this.active_range);
-            this.formatDateForHumans("active_range", this.active_range);
-            this.findMiddleRangeDates("extras", this.extras);
-            this.formatDateForHumans("extras", this.extras);
-            this.findMiddleRangeDates("holds", this.holds);
-            this.formatDateForHumans("holds", this.holds);
-        },
-
-        getMarkedDays() {
-            this.findMiddleRangeDates("marked_days", this.marked_days);
-            this.formatDateForHumans("marked_days", this.marked_days);
-        },
-
-        // add Extras to marked days
-
-        addExtrasToMarkedDays() {
-            this.findMiddleRangeDates("add_extras", this.extras);
-            let deUnique = this.add_marked_extras;
-            let uniqueValues = new Set(deUnique);
-            deUnique = Array.from(uniqueValues);
-
-            this.remove_marked_holds.map((hold) => {
-                if (deUnique.includes(hold)) {
-                    deUnique.splice(deUnique.indexOf(hold), 1);
+                ) {
+                    this.marked_days.push(format(day, "yyyy-MM-dd"));
                 }
             });
-
-            deUnique.map((extra) => {
-                if (!this.marked_days.includes(extra)) {
-                    this.marked_days.push(extra);
-                }
-            });
-        },
-
-        // remove holds from marked days
-
-        removeHoldsFromMarkedDays() {
-            this.findMiddleRangeDates("remove_holds", this.holds);
-            let daysToDelete = new Set(this.remove_marked_holds);
-
-            this.add_marked_extras.map((extra) => {
-                if (daysToDelete.has(extra)) {
-                    daysToDelete.delete(extra);
-                }
-            });
-
-            const removedDaysArray = this.marked_days.filter((day) => {
-                return !daysToDelete.has(day);
-            });
-
-            this.marked_days = removedDaysArray;
         },
     },
 });

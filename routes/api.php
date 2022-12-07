@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{student_id}/last-transactions', 'getLastFiveTransactions')->name('parent.last-transactions_api');
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
+           Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -79,4 +80,5 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::apiResource('lunch', LunchController::class);
+Route::apiResource('school/lunch', LunchController::class);
+

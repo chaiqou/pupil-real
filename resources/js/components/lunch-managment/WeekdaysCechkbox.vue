@@ -36,17 +36,21 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format } from "date-fns";
+import { format, eachDayOfInterval } from "date-fns";
 
 const store = useLunchFormStore();
 
 const toggleWeekdays = (day) => {
-    store.findMiddleRangeDates("toggle_based_weekdays", store.active_range);
+    const eachDay = eachDayOfInterval({
+        start: store.active_range[0],
+        end: store.active_range[1],
+    });
 
-    store.toggle_based_weekdays.map((date) => {
+    eachDay.map((date) => {
         if (
             date.getDay() === day.index &&
-            store.weekdays.includes(day.fullName)
+            store.weekdays.includes(day.fullName) &&
+            store.holds.length === 0
         ) {
             store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
         } else if (
