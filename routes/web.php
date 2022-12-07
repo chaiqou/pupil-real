@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('create-student/verify/{student_id}', 'verifyStudentCreation')->name('parent.create-student-verify');
                 Route::post('create-student-verify/{student_id}', 'submitStudentCreation')->name('parent.create-student-verify_submit');
                 Route::get('dashboard', 'parentDashboard')->name('parents.dashboard');
+                Route::get('available-lunches', 'availableLunches')->name('parents.available-lunches');
             });
 
             Route::controller(SettingController::class)->group(function () {

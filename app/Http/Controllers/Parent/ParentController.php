@@ -74,4 +74,8 @@ class ParentController extends Controller
             'user_id' => auth()->user()->id,
         ]);
     }
+
+    public function availableLunches(){
+        return view('parent.available-lunches');
+    }
 }
