@@ -78,4 +78,5 @@ class LunchController extends Controller
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
     }
+
 }

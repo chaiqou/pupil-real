@@ -78,7 +78,7 @@ import { onMounted, reactive } from "vue";
 import { intervalToDuration } from "date-fns";
 
 onMounted(() => {
-    axios.get("/api/parent/lunch").then((response) => {
+    axios.get("/api/parent/available-lunches").then((response) => {
         lunches.push(...response.data.data);
     });
 });
