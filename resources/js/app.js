@@ -33,6 +33,8 @@ import "../js/config/axios/index";
 import "../js/config/vee-validate/index";
 import AdminSchools from "@/components/admin/Schools/Schools.vue";
 import ParentLunchList from "@/components/parent/lunch-management/ParentLunchList.vue";
+import router from "../js/router/index";
+import LunchFormEdit from "@/components/lunch-managment/LunchFormEdit.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -64,6 +66,8 @@ app.component("parent-students-mobile", ParentStudentsMobile);
 app.component("lunch-list", LunchList);
 app.component("admin-schools", AdminSchools);
 app.component("parent-lunch-list", ParentLunchList);
+app.component("lunch-form-edit", LunchFormEdit);
 
 app.use(pinia);
+app.use(router);
 app.mount("#app");

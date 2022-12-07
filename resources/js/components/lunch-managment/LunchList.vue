@@ -70,11 +70,14 @@
                 <div>
                     <div class="-mt-px flex divide-x divide-gray-200">
                         <div class="flex w-0 flex-1">
-                            <a
+                            <router-link
+                                :to="{
+                                    name: 'lunches.edit',
+                                    params: { id: lunch.id },
+                                }"
                                 class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                                >Manage</router-link
                             >
-                                Manage
-                            </a>
                         </div>
                     </div>
                 </div>
