@@ -5,6 +5,7 @@ import { useStudentStore } from "@/stores/useStudentStore";
 import { useMerchantStore } from "@/stores/useMerchantStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { useSchoolStore } from "@/stores/useSchoolStore";
+import { useGlobalStore } from "@/stores/useGlobalStore"
 const store = createPinia({
     useModalStore,
     useTransactionStore,
@@ -12,6 +13,7 @@ const store = createPinia({
     useMerchantStore,
     useLunchFormStore,
     useSchoolStore,
+    useGlobalStore,
 });
 
 export default store;

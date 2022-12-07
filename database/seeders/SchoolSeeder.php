@@ -22,6 +22,8 @@ class SchoolSeeder extends Seeder
            'details' => json_encode([
                'street_address' => null,
                'country' => null,
+               'city' => 'ExampleCity1',
+               'state' => 'ExampleState1',
                'zip' => null,
                'email' => null,
                'contact_person' => null,
@@ -39,6 +41,8 @@ class SchoolSeeder extends Seeder
             'details' => json_encode([
                 'street_address' => null,
                 'country' => null,
+                'city' => 'ExampleCity2',
+                'state' => 'ExampleState2',
                 'zip' => null,
                 'email' => null,
                 'contact_person' => null,

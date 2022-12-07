@@ -40,17 +40,17 @@
                         {{ school.short_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[5rem] truncate ..."
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         {{ school.full_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[10rem] truncate ..."
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         {{ school.long_name }}
                     </td>
                     <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 truncate ... max-w-[15rem]"
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         <p>
                            Street Address: {{school.details.street_address}}; Country: {{school.details.country}}; ZIP: {{school.details.zip}};

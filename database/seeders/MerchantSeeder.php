@@ -22,8 +22,12 @@ class MerchantSeeder extends Seeder
             'activated' => true,
             'company_details' => json_encode([
                 'company_name' => 'Merki',
-                'street_address' => '',
-                'VAT' => ''
+                'street_address' => null,
+                'VAT' => null,
+                'country' => null,
+                'city' => 'ExampleCity2',
+                'state' => 'ExampleState2',
+                'zip' => null,
             ]),
             'merchant_nick' => 'Cafeteria',
         ]);
@@ -36,8 +40,12 @@ class MerchantSeeder extends Seeder
             'activated' => false,
             'company_details' => json_encode([
                 'company_name' => 'Bondealis',
-                'street_address' => '',
-                'VAT' => ''
+                'street_address' => null,
+                'VAT' => null,
+                'country' => null,
+                'city' => 'ExampleCity2',
+                'state' => 'ExampleState2',
+                'zip' => null,
             ]),
             'merchant_nick' => 'Will Stone',
         ]);

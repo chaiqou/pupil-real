@@ -156,9 +156,9 @@
                                             </div>
                                         </div>
 
-
                                  <CountriesSelect></CountriesSelect>
-                                        <div class="sm:col-span-4">
+
+                                        <div class="sm:col-span-6">
                                             <label
                                                 for="address"
                                                 class="block text-sm font-medium text-gray-700"
@@ -184,6 +184,67 @@
                                                         class="text-red-500 text-sm"
                                                     >
                                                         this field is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="city"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >City</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    rules="required"
+                                                    v-model="
+                                                        this.city
+                                                    "
+                                                    type="text"
+                                                    name="city"
+                                                    id="city"
+                                                    autocomplete="city"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="city"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        city field is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="state"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >state</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    v-model="
+                                                        this.state
+                                                    "
+                                                    type="text"
+                                                    name="state"
+                                                    id="state"
+                                                    autocomplete="state"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="state"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        state field is required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -439,6 +500,7 @@ import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { useSchoolStore } from "@/stores/useSchoolStore";
 import { useModalStore } from "@/stores/useModalStore";
+import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import CountriesSelect from "@/components/ui/CountriesSelect.vue"
 
@@ -453,6 +515,8 @@ export default {
             extension: "",
             contact_person: "",
             zip: "",
+            city: "",
+            state: "",
         }
     },
     components: {
@@ -469,7 +533,8 @@ export default {
         CountriesSelect,
     },
     computed: {
-        ...mapWritableState(useSchoolStore, ["school", "schoolId", "schools", "countrySelect"]),
+        ...mapWritableState(useSchoolStore, ["school", "schoolId", "schools"]),
+        ...mapWritableState(useGlobalStore, ["countrySelect"]),
         ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
     },
     methods: {
@@ -489,18 +554,13 @@ export default {
                     street_address: this.street_address,
                     country: this.countrySelect,
                     zip: this.zip,
+                    city: this.city,
+                    state: this.state,
                     school_code: this.school.school_code,
                 })
                 .then((res) => {
                     this.schools = res.data.data;
-                    this.email = "";
-                    this.contact_person = "";
-                    this.phone_number = "";
-                    this.mobile_number = "";
-                    this.extension = "";
-                    this.street_address = "";
                     this.countrySelect = "";
-                    this.zip = "";
                 })
                 .finally(() => {
                     this.isSchoolEditVisible = false;
@@ -518,6 +578,8 @@ export default {
                     this.street_address = this.school.details.street_address;
                     this.countrySelect = this.school.details.country;
                     this.zip = this.school.details.zip;
+                    this.city = this.school.details.city;
+                    this.state = this.school.details.state;
                 })
                 .finally(() => this.isRequestEndSuccessfully = true);
         }

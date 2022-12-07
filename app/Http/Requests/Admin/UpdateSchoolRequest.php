@@ -31,6 +31,8 @@ class UpdateSchoolRequest extends FormRequest
             'long_name' => 'required',
             'street_address' => 'required',
             'country' => 'required',
+            'city' => 'required',
+            'state' => '',
             'zip' => 'required',
             'email' => 'required|email',
             'phone_number' => ['required', new PhoneNumber()],

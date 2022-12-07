@@ -3,7 +3,7 @@
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isMerchantEditVisible = false; this.schoolId = null;"
+            @close="this.isMerchantEditVisible = false; this.merchantId = null;"
         >
             <TransitionChild
                 as="template"
@@ -41,7 +41,7 @@
                                 <button
                                     type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isMerchantEditVisible = false; this.schoolId = null"
+                                    @click="this.isMerchantEditVisible = false; this.merchantId = null"
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon
@@ -52,7 +52,7 @@
                             </div>
                             <Form
                                 id="form"
-                                @submit="onSubmit(); this.schoolId = null"
+                                @submit="onSubmit(); this.merchantId = null"
                                 class="mt-8 space-y-6 w-full"
                             >
                                 <div class="bg-white p-8">
@@ -70,11 +70,11 @@
                                     <div
                                         class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6"
                                     >
-                                        <div class="sm:col-span-2">
+                                        <div class="sm:col-span-3">
                                             <label
-                                                for="short-name"
+                                                for="merchant-nick"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Short name</label
+                                                >Company Nick</label
                                             >
                                             <div class="mt-1">
                                                 <Field
@@ -82,84 +82,96 @@
                                                     type="text"
                                                     required
                                                     v-model="
-                                                        this.school.short_name
+                                                        this.merchant.merchant_nick
                                                     "
-                                                    name="short_name"
-                                                    id="short_name"
-                                                    autocomplete="school-short-name"
+                                                    name="nickname"
+                                                    id="nickname"
+                                                    autocomplete="nickname"
                                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 />
-                                                <ErrorMessage name="short_name">
+                                                <ErrorMessage name="nickname">
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        short name field is
+                                                        nickname field is
                                                         required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-2">
+                                        <div class="sm:col-span-3">
                                             <label
-                                                for="full-name"
+                                                for="company-name"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Full name</label
+                                            >Company name</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    rules="required"
+                                                    v-model="
+                                                        this.company_name
+                                                    "
+                                                    type="text"
+                                                    name="company_name"
+                                                    id="company_name"
+                                                    autocomplete="company-name"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="company_name"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        this field is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="sm:col-span-6">
+                                            <label
+                                                for="company-legal-name"
+                                                class="block text-sm font-medium text-gray-700"
+                                                >Company legal name</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
                                                     type="text"
                                                     v-model="
-                                                        this.school.full_name
+                                                        this.merchant.company_legal_name
                                                     "
                                                     required
-                                                    name="first_name"
-                                                    id="first_name"
-                                                    autocomplete="school-full-name"
+                                                    name="company_legal_name"
+                                                    id="company_legal_name"
+                                                    autocomplete="company-legal-name"
                                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 />
                                                 <ErrorMessage
-                                                    name="full_name"
+                                                    name="company_legal_name"
                                                     class="text-red-500 text-sm"
                                                 >
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        full name field is
+                                                        this field is
                                                         required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
                                         </div>
-                                        <div class="sm:col-span-2">
-                                            <label
-                                                for="long-name"
-                                                class="block text-sm font-medium text-gray-700"
-                                                >Long name</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    type="text"
-                                                    v-model="
-                                                        this.school.long_name
-                                                    "
-                                                    name="long_name"
-                                                    id="long_name"
-                                                    autocomplete="school-long-name"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="long_name"
-                                                    class="text-red-500 text-sm"
-                                                ></ErrorMessage>
-                                            </div>
-                                        </div>
+
+                                        <CountriesSelect></CountriesSelect>
+
                                         <div class="sm:col-span-6">
                                             <label
                                                 for="address"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Address</label
+                                            >Address</label
                                             >
                                             <div class="mt-1">
                                                 <Field
@@ -186,57 +198,87 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-3">
+                                        <div class="sm:col-span-2">
                                             <label
-                                                for="email"
+                                                for="city"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Email</label
+                                            >City</label
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required|email"
-                                                    type="text"
+                                                    rules="required"
                                                     v-model="
-                                                        this.email
+                                                        this.city
                                                     "
-                                                    name="email"
-                                                    id="email"
-                                                    autocomplete="school-email"
+                                                    type="text"
+                                                    name="city"
+                                                    id="city"
+                                                    autocomplete="city"
                                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 />
                                                 <ErrorMessage
-                                                    name="email"
+                                                    name="city"
                                                     class="text-red-500 text-sm"
                                                 >
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        email field is required in email format
+                                                        city field is required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-3">
+                                        <div class="sm:col-span-2">
                                             <label
-                                                for="contact"
+                                                for="state"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Contact person</label
+                                            >state</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    v-model="
+                                                        this.state
+                                                    "
+                                                    type="text"
+                                                    name="state"
+                                                    id="state"
+                                                    autocomplete="state"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="state"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        state field is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="zip"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >ZIP</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
-                                                    type="text"
                                                     v-model="
-                                                        this.contact_person
+                                                        this.zip
                                                     "
-                                                    name="contact"
-                                                    id="contact"
-                                                    autocomplete="contact"
+                                                    type="text"
+                                                    name="zip"
+                                                    id="zip"
+                                                    autocomplete="zip"
                                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 />
                                                 <ErrorMessage
-                                                    name="contact"
+                                                    name="zip"
                                                     class="text-red-500 text-sm"
                                                 >
                                                     <p
@@ -248,127 +290,52 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-2">
+                                        <div class="sm:col-span-3">
                                             <label
-                                                for="phone-number"
+                                                for="VAT"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >Phone number</label
+                                            >VAT</label
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    rules="required|phone"
-                                                    type="number"
-                                                    v-model="
-                                                        this.phone_number
-                                                    "
-                                                    name="phone_number"
-                                                    id="phone_number"
-                                                    autocomplete="phone-number"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="phone_number"
-                                                    class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        phone number is required
-                                                    </p>
-                                                </ErrorMessage>
-                                            </div>
-                                        </div>
-
-                                        <div class="sm:col-span-2">
-                                            <label
-                                                for="mobile-number"
-                                                class="block text-sm font-medium text-gray-700"
-                                            >Mobile number</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    type="number"
-                                                    v-model="
-                                                        this.mobile_number
-                                                    "
-                                                    name="mobile_number"
-                                                    id="mobile_number"
-                                                    autocomplete="mobile-number"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="mobile_number"
-                                                    class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        mobile number is required
-                                                    </p>
-                                                </ErrorMessage>
-                                            </div>
-                                        </div>
-
-                                        <div class="sm:col-span-2">
-                                            <label
-                                                for="extension"
-                                                class="block text-sm font-medium text-gray-700"
-                                            >Extension</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    type="number"
-                                                    v-model="
-                                                        this.extension
-                                                    "
-                                                    name="extension"
-                                                    id="extension"
-                                                    autocomplete="extension"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="extension"
-                                                    class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        extension is required
-                                                    </p>
-                                                </ErrorMessage>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="sm:col-span-6">
-                                            <label
-                                                for="school-code"
-                                                class="block text-sm font-medium text-gray-700"
-                                            >School code</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    rules="required|min-words-3"
-                                                    v-model="
-                                                        this.school
-                                                            .school_code
-                                                    "
                                                     type="text"
-                                                    name="school_code"
-                                                    id="school_code"
-                                                    autocomplete="school-code"
+                                                    v-model="
+                                                        this.VAT
+                                                    "
+                                                    name="VAT"
+                                                    id="VAT"
+                                                    autocomplete="VAT"
                                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 />
                                                 <ErrorMessage
-                                                    name="school_code"
+                                                    name="VAT"
                                                     class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        school code is required
+                                                ></ErrorMessage>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex  flex-col  sm:col-span-4">
+                                         <div class="border-y-[1px] border-gray-300 pb-2 pt-2">
+                                             <div class="flex">
+                                                 <h1 class="mr-3">Merchant Status:</h1>
+                                                 <p :class="this.merchant.activated ? 'text-green-500' : 'text-red-500'">{{this.merchant.activated ? 'Activate' : 'Inactive'}}</p>
+                                             </div>
+                                             <p @click="showHideConfirmation" :class="this.merchant.activated ? 'text-white max-w-fit cursor-pointer mt-4 px-3 py-2 rounded-md bg-red-500 hover:bg-red-600 hover:text-gray-200' : 'text-white max-w-fit cursor-pointer mt-4 px-3 py-2 rounded-md bg-green-500 hover:bg-green-600 hover:text-gray-200'">{{this.merchant.activated ? 'Deactivate' : 'Activate'}}</p>
+                                         </div>
+                                            <div v-if="isConfirmationVisible">
+                                                <div class="h-3 w-3 origin-bottom-left rotate-45 bg-gray-300 transform ml-5 absolute z-30"></div>
+                                                <div class="mt-3 w-fit z-20 absolute z-20 rounded-md border-[1px] border-gray-400">
+                                                    <p class="px-3 py-2 bg-gray-300 rounded-t-md">
+                                                        Are you sure?
                                                     </p>
-                                                </ErrorMessage>
+                                                    <div class="border-b-[1px] border-gray-400 rounded-md">
+                                                    </div>
+
+                                                    <div class="flex justify-around my-1.5 w-48">
+                                                        <p :class="this.merchant.activated ? 'cursor-pointer bg-red-500 text-white px-3 py-2 w-fit rounded-md hover:bg-red-600 hover:text-gray-200' : 'cursor-pointer bg-green-500 text-white px-3 py-2 w-fit rounded-md hover:bg-green-600 hover:text-gray-200'">{{this.merchant.activated ? 'Deactivate' : 'Activate'}}</p>
+                                                        <p class="cursor-pointer bg-gray-200 hover:bg-gray-300 text-bg-gray-400 px-3 py-2 w-fit rounded-md">Cancel</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -405,18 +372,22 @@ import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { useMerchantStore } from "@/stores/useMerchantStore";
 import { useModalStore } from "@/stores/useModalStore";
+import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import CountriesSelect from "@/components/ui/CountriesSelect.vue";
 
 export default {
     data() {
         return {
             isRequestEndSuccessfully: false,
-            email: "",
+            VAT: "",
             street_address: "",
-            phone_number: "",
-            mobile_number: "",
-            extension: "",
-            contact_person: "",
+            company_name: "",
+            country: "",
+            city: "",
+            state: "",
+            zip: "",
+            isConfirmationVisible: false,
         }
     },
     components: {
@@ -430,12 +401,17 @@ export default {
         Form,
         Field,
         ErrorMessage,
+        CountriesSelect,
     },
     computed: {
         ...mapWritableState(useMerchantStore, ["merchant", "merchantId", "merchants"]),
+        ...mapWritableState(useGlobalStore, ["countrySelect"]),
         ...mapWritableState(useModalStore, ["isMerchantEditVisible"]),
     },
     methods: {
+        showHideConfirmation() {
+          this.isConfirmationVisible = !this.isConfirmationVisible;
+        },
         ...mapActions(useModalStore, ["showHideMerchantEdit"]),
         onSubmit() {
             axios
@@ -453,13 +429,8 @@ export default {
                     school_code: this.school.school_code,
                 })
                 .then((res) => {
-                    this.schools = res.data.data;
-                    this.email = "";
-                    this.contact_person = "";
-                    this.phone_number = "";
-                    this.mobile_number = "";
-                    this.extension = "";
-                    this.street_address = "";
+                    this.merchants = res.data.data;
+                    this.countrySelect = "";
                 })
                 .finally(() => {
                     this.isSchoolEditVisible = false;
@@ -468,13 +439,14 @@ export default {
         handleGetSchoolRequest() {
             axios.get(`/api/admin/merchant/${this.merchantId}`)
                 .then((res) => {
-                    this.school = res.data.data;
-                    this.email = this.school.details.email;
-                    this.contact_person = this.school.details.contact_person;
-                    this.phone_number = this.school.details.phone_number;
-                    this.mobile_number = this.school.details.mobile_number;
-                    this.extension = this.school.details.extension;
-                    this.street_address = this.school.details.street_address;
+                    this.merchant = res.data.data;
+                    this.VAT = this.merchant.company_details.VAT;
+                    this.company_name = this.merchant.company_details.company_name;
+                    this.street_address = this.merchant.company_details.street_address;
+                    this.countrySelect = this.merchant.company_details.country;
+                    this.zip = this.merchant.company_details.zip;
+                    this.city = this.merchant.company_details.city;
+                    this.state = this.merchant.company_details.state;
                 })
                 .finally(() => this.isRequestEndSuccessfully = true);
         }

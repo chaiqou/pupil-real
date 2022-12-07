@@ -10,16 +10,12 @@
         <table class="min-w-full divide-y divide-gray-300 border-separate" style="border-spacing: 0">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Short name</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Full name</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Long name</th>
+                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Nickname</th>
+                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Company legal name</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Details</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">School code</th>
+                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Activated</th>
                     <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
                         <span class="sr-only">Edit</span>
-                    </th>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
-                        <span class="sr-only">Merchants</span>
                     </th>
                 </tr>
             </thead>
@@ -31,55 +27,41 @@
                 </tr>
                 <tr
                     v-if="this.isMerchantsLoaded && this.merchants.length"
-                    v-for="school in merchants"
-                    :key="school.id"
+                    v-for="merchant in merchants"
+                    :key="merchant.id"
                 >
                     <td
                         class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
                     >
-                        {{ school.short_name }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[5rem] truncate ..."
-                    >
-                        {{ school.full_name }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 max-w-[10rem] truncate ..."
-                    >
-                        {{ school.long_name }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 truncate ... max-w-[15rem]"
-                    >
-                        {{ school.details }}
+                        {{ merchant.merchant_nick }}
                     </td>
                     <td
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
-                        {{ school.school_code }}
+                        {{ merchant.company_legal_name }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                    >
+                        {{ merchant.company_details }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                    >
+                        {{ merchant.activated }}
                     </td>
                     <td
                         class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
                     >
                         <button
                             @click="
-                                showHideSchoolEdit();
-                                currentMerchantEdit(school.id);
+                                showHideMerchantEdit();
+                                currentMerchantEdit(merchant.id);
                             "
-                            class="text-indigo-600 hover:text-indigo-900"
+                            class="text-indigo-600 hover:text-indigo-900 pr-6"
                         >
                             Edit
                         </button>
-                    </td>
-                    <td
-                        class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium pl-2 pr-6"
-                    >
-                        <a href="/admin/school/1/merchants"
-                            class="text-white hover:text-gray-100 hover:bg-green-400 px-2 py-1.5 rounded-md bg-green-500"
-                        >
-                            Merchants
-                        </a>
                     </td>
                 </tr>
                 <tr v-if="!this.isMerchantsLoaded" v-for="n in 7">
@@ -118,37 +100,23 @@
                             class="h-2 bg-slate-300 rounded animate-pulse"
                         ></div>
                     </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <school-edit-modal v-if="this.merchantId"></school-edit-modal>
+    <merchant-edit-modal v-if="this.merchantId"></merchant-edit-modal>
 </template>
 
 <script>
 import { mapActions, mapWritableState } from "pinia";
 import { useMerchantStore } from "@/stores/useMerchantStore";
 import MerchantsNotFound from "@/components/not-found/MerchantsNotFound.vue";
-import SchoolEditModal from "@/components/admin/Schools/SchoolEditModal.vue";
+import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
 import { useModalStore } from "@/stores/useModalStore";
 export default {
     components: {
         MerchantsNotFound,
-        SchoolEditModal,
+        MerchantEditModal,
     },
     data() {
         return {
@@ -175,7 +143,7 @@ export default {
     },
     methods: {
         ...mapActions(useModalStore, [
-           "showHideSchoolEdit"
+           "showHideMerchantEdit"
         ]),
         ...mapActions(useMerchantStore, [
             "currentMerchantEdit"

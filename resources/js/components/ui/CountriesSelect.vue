@@ -828,14 +828,14 @@
 <script>
 import {Field,ErrorMessage} from "vee-validate";
 import {mapWritableState} from "pinia";
-import { useSchoolStore } from '@/stores/useSchoolStore';
+import { useGlobalStore } from "@/stores/useGlobalStore";
 export default {
     components: {
         ErrorMessage,
         Field,
     },
     computed: {
-        ...mapWritableState(useSchoolStore, ["countrySelect"]),
+        ...mapWritableState(useGlobalStore, ["countrySelect"]),
     }
 }
 </script>
