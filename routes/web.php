@@ -61,7 +61,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('create-student/verify/{student_id}', 'verifyStudentCreation')->name('parent.create-student-verify');
                 Route::post('create-student-verify/{student_id}', 'submitStudentCreation')->name('parent.create-student-verify_submit');
                 Route::get('dashboard', 'parentDashboard')->name('parents.dashboard');
-                Route::get('available-lunches', 'availableLunches')->name('parents.available-lunches');
             });
 
             Route::controller(SettingController::class)->group(function () {
@@ -74,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('settings/{student_id}', 'parent')->name('parent.settings');
                 Route::get('transactions/{student_id}', 'parent')->name('parent.transactions');
                 Route::get('dashboard/{student_id}', 'parent')->name('parent.dashboard');
+                Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
             });
         });
     });

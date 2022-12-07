@@ -75,7 +75,5 @@ class ParentController extends Controller
         ]);
     }
 
-    public function availableLunches(){
-        return view('parent.available-lunches');
-    }
+
 }
