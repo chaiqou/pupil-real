@@ -202,6 +202,7 @@
                 >Claimables
             </label>
             <Multiselect
+                :value="lunches.claimables"
                 v-model="lunches.claimables"
                 mode="tags"
                 name="claimables"
@@ -216,6 +217,7 @@
                 :close-on-select="false"
                 :searchable="true"
                 :options="multiselectOptions"
+                selectAll
             />
             <BaseInput
                 v-model="lunches.price_day"
