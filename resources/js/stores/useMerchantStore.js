@@ -7,6 +7,7 @@ export const useMerchantStore = defineStore("merchant", {
             merchants: [],
             merchant: [],
             merchantId: null,
+            inviteEmail: "",
         };
     },
     actions: {

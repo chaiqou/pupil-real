@@ -16,7 +16,7 @@ defineRule("numeric", numeric);
 defineRule("email", (value) => {
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regexEmail.test(value)) {
-        return ;
+        return 'Please write correct email';
     }
     return true;
 });

@@ -34,6 +34,7 @@ import "../js/config/vee-validate/index";
 import AdminSchools from "@/components/admin/Schools/Schools.vue";
 import AdminMerchants from "@/components/admin/Merchants/Merchants.vue";
 import ParentLunchList from "@/components/parent/lunch-management/ParentLunchList.vue";
+import AdminMerchantsHeader from "@/components/admin/Merchants/MerchantsHeader.vue"
 const pinia = createPinia();
 const app = createApp({});
 
@@ -65,5 +66,6 @@ app.component("lunch-list", LunchList);
 app.component("admin-schools", AdminSchools);
 app.component("admin-merchants", AdminMerchants);
 app.component("parent-lunch-list", ParentLunchList);
+app.component("admin-merchants-header", AdminMerchantsHeader);
 app.use(pinia);
 app.mount("#app");
