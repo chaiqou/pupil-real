@@ -1,6 +1,6 @@
 <template>
     <div class="sm:mt-20 min-w-[30vw] xl:px-4">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="updateLunch(lunches.id)">
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
@@ -273,33 +273,26 @@ onMounted(() => {
 
 // Update lunch part
 
-const updateLunch = async (id) => {
-    try {
-        await axios.put("/api/school/lunch/" + id, {
-            title: store.title,
-            description: store.description,
-            period_length: store.period_length,
-            weekdays: store.weekdays,
-            active_range: [
-                format(store.active_range[0], "yyyy-MM-dd"),
-                format(store.active_range[1], "yyyy-MM-dd"),
-            ],
-            claimables: store.claimables,
-            price_day: store.price_day,
-            price_period: store.price_period,
-            extras: store.extras,
-            holds: store.holds,
-        });
+const updateLunch = async (lunch) => {
+    console.log(lunches.value);
+    console.log(lunch);
+    await axios.put("/school/lunch/" + lunch, {
+        title: lunches.value.title,
+        description: lunches.value.description,
+        period_length: lunches.value.period_length,
+        weekdays: lunches.value.weekdays,
+        active_range: lunches.value.active_range,
+        claimables: lunches.value.claimables,
+        price_day: lunches.value.price_day,
+        price_period: lunches.value.price_period,
+        extras: lunches.value.extras,
+        holds: lunches.value.holds,
+    });
 
-        store.extras = [];
-        store.holds = [];
-        store.disabled_hold_days = [];
-        store.disabled_extra_days = [];
-    } catch (e) {
-        if (e.response.status === 422) {
-            errors.value = e.response.data.errors;
-        }
-    }
+    store.extras = [];
+    store.holds = [];
+    store.disabled_hold_days = [];
+    store.disabled_extra_days = [];
 };
 
 // Extras part
