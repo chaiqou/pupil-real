@@ -1,17 +1,17 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
-import LunchFormEdit from "../components/lunch-managment/LunchFormEdit.vue";
+import LunchEditPage from "@/components/lunch-managment/LunchEditPage.vue";
 
 const routes = [
     {
         path: "/school/:id/edit",
         name: "lunches.edit",
-        component: LunchFormEdit,
+        component: LunchEditPage,
         props: true,
     },
 ];
 
 export default createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 });
