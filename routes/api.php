@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\Api\InviteController as AdminInviteController;
+use App\Http\Controllers\Admin\Api\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
@@ -47,9 +49,15 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::controller(AdminSchoolController::class)->group(function () {
                 Route::get('schools-for-invites', 'getSchoolsForInvite')->name('admin.schools-invites_api');
-                Route::get('schools', 'index')->name('admin.schools_api');
+                Route::get('schools', 'index')->name('admin.schools-index_api');
                 Route::get('school/{school_id}', 'show')->name('admin.school-show_api');
-                Route::post('update', 'update')->name('admin.school-update_api');
+                Route::put('school', 'update')->name('admin.school-update_api');
+            });
+            Route::controller(AdminMerchantController::class)->group(function () {
+                Route::get('school/{school_id}/merchants', 'index')->name('admin.merchants-index_api');
+                Route::get('merchant/{merchant_id}', 'show')->name('admin.merchant-show_api');
+                Route::put('merchant', 'update')->name('admin.merchant-update_api');
+                Route::put('merchant-status', 'updateStatus')->name('admin.merchant-update-status_api');
             });
             Route::controller(AdminInviteController::class)->group(function () {
                 Route::get('invites', 'get')->name('admin.invites_api');

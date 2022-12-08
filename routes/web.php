@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('students', 'admin')->name('admin.students');
                 Route::get('invite', 'admin')->name('admin.invite');
                 Route::get('schools', 'admin')->name('admin.schools');
+                Route::get('school/{school_id}/merchants', 'admin')->name('admin.merchants');
             });
         });
     });
