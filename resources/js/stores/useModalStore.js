@@ -10,6 +10,7 @@ export const useModalStore = defineStore("modal", {
             isStudentEditVisible: false,
             isInviteUserVisible: false,
             isSchoolEditVisible: false,
+            isMerchantEditVisible: false,
         };
     },
     actions: {
@@ -33,6 +34,9 @@ export const useModalStore = defineStore("modal", {
         },
         showHideSchoolEdit() {
             this.isSchoolEditVisible = !this.isSchoolEditVisible;
+        },
+        showHideMerchantEdit() {
+            this.isMerchantEditVisible = !this.isMerchantEditVisible;
         }
     },
 });

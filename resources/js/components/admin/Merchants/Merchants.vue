@@ -2,7 +2,7 @@
     <div
         @scroll="onScroll"
         :class="
-            this.isSchoolsLoaded && this.schools
+            this.isMerchantsLoaded && this.merchants
                 ? 'overflow-hidden overflow-y-scroll max-h-[17.5rem] md:max-h-[19.3rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
                 : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
         "
@@ -10,97 +10,63 @@
         <table class="min-w-full divide-y divide-gray-300 border-separate" style="border-spacing: 0">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Short name</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Full name</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Long name</th>
+                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Nickname</th>
+                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Company legal name</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Details</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">School code</th>
+                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Activated</th>
                     <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
                         <span class="sr-only">Edit</span>
-                    </th>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
-                        <span class="sr-only">Merchants</span>
                     </th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-                <tr v-if="this.isSchoolsLoaded && !this.schools.length">
+                <tr v-if="this.isMerchantsLoaded && !this.merchants.length">
                     <td class="bg-white" colspan="8">
-                        <SchoolsNotFound></SchoolsNotFound>
+                        <MerchantsNotFound></MerchantsNotFound>
                     </td>
                 </tr>
                 <tr
-                    v-if="this.isSchoolsLoaded && this.schools.length"
-                    v-for="school in schools"
-                    :key="school.id"
+                    v-if="this.isMerchantsLoaded && this.merchants.length"
+                    v-for="merchant in merchants"
+                    :key="merchant.id"
                 >
                     <td
                         class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
                     >
-                        {{ school.short_name }}
+                        {{ merchant.merchant_nick }}
                     </td>
                     <td
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
-                        {{ school.full_name }}
+                        {{ merchant.company_legal_name }}
                     </td>
                     <td
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
-                        {{ school.long_name }}
+                        {{ merchant.company_details }}
                     </td>
                     <td
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
-                        <p>
-                           Street Address: {{school.details.street_address}}; Country: {{school.details.country}}; ZIP: {{school.details.zip}};
-                        </p>
-                    </td>
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                    >
-                        {{ school.school_code }}
+                        {{ merchant.activated }}
                     </td>
                     <td
                         class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
                     >
                         <button
                             @click="
-                                showHideSchoolEdit();
-                                currentSchoolEdit(school.id);
+                                showHideMerchantEdit();
+                                currentMerchantEdit(merchant.id);
                             "
-                            class="text-indigo-600 hover:text-indigo-900"
+                            class="text-indigo-600 hover:text-indigo-900 pr-6"
                         >
                             Edit
                         </button>
                     </td>
-                    <td
-                        class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium pl-2 pr-6"
-                    >
-                        <a :href="'/admin/school/'+school.id+'/merchants'"
-                            class="text-white hover:text-gray-100 hover:bg-green-400 px-2 py-1.5 rounded-md bg-green-500"
-                        >
-                            Merchants
-                        </a>
-                    </td>
                 </tr>
-                <tr v-if="!this.isSchoolsLoaded" v-for="n in 7">
+                <tr v-if="!this.isMerchantsLoaded" v-for="n in 7">
                     <td
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                     >
                         <div
                             class="h-2 bg-slate-300 rounded animate-pulse"
@@ -138,19 +104,19 @@
             </tbody>
         </table>
     </div>
-    <school-edit-modal v-if="this.schoolId"></school-edit-modal>
+    <merchant-edit-modal v-if="this.merchantId" :schoolId="this.schoolId"></merchant-edit-modal>
 </template>
 
 <script>
 import { mapActions, mapWritableState } from "pinia";
-import { useSchoolStore } from "@/stores/useSchoolStore";
-import SchoolsNotFound from "@/components/not-found/SchoolsNotFound.vue";
-import SchoolEditModal from "@/components/admin/Schools/SchoolEditModal.vue";
+import { useMerchantStore } from "@/stores/useMerchantStore";
+import MerchantsNotFound from "@/components/not-found/MerchantsNotFound.vue";
+import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
 import { useModalStore } from "@/stores/useModalStore";
 export default {
     components: {
-        SchoolsNotFound,
-        SchoolEditModal,
+        MerchantsNotFound,
+        MerchantEditModal,
     },
     data() {
         return {
@@ -158,11 +124,17 @@ export default {
             lastPage: 2,
         };
     },
+    props: {
+        schoolId: {
+            type: Number,
+            required: true
+        }
+    },
     computed: {
-        ...mapWritableState(useSchoolStore, [
-            "isSchoolsLoaded",
-            "schools",
-            "schoolId",
+        ...mapWritableState(useMerchantStore, [
+            "isMerchantsLoaded",
+            "merchants",
+            "merchantId",
         ]),
 
         ...mapWritableState(useModalStore, [
@@ -171,32 +143,33 @@ export default {
     },
     methods: {
         ...mapActions(useModalStore, [
-           "showHideSchoolEdit"
+           "showHideMerchantEdit"
         ]),
-        ...mapActions(useSchoolStore, [
-            "currentSchoolEdit"
+        ...mapActions(useMerchantStore, [
+            "currentMerchantEdit"
         ]),
-        handleGetSchoolsRequest() {
+        handleGetMerchantsRequest() {
             axios
-                .get(`/api/admin/schools?page=${this.currentPage}`)
+                .get(`/api/admin/school/${this.schoolId}/merchants/?page=${this.currentPage}`)
                 .then((res) => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;
-                    this.schools.push(...res.data.data);
+                    this.merchants.push(...res.data.data);
+                    console.log(res)
                 })
-                .finally(() => (this.isSchoolsLoaded = true));
+                .finally(() => (this.isMerchantsLoaded = true));
         },
         onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
             if (scrollTop + clientHeight >= scrollHeight) {
                 if (this.currentPage > this.lastPage) {
                     return;
                 }
-                this.handleGetSchoolsRequest();
+                this.handleGetMerchantsRequest();
             }
         },
     },
     created() {
-        this.handleGetSchoolsRequest();
+        this.handleGetMerchantsRequest();
     },
 };
 </script>

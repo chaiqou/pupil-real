@@ -15,8 +15,11 @@ return new class() extends Migration
     {
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
-            $table->string('merchant_nick')->default('Cafeteria');
+            $table->string('merchant_nick');
+            $table->string('company_legal_name');
+            $table->boolean('activated');
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('school_id')->constrained();
             $table->string('billingo_api_key');
             $table->boolean('has_balance')->default(false);
             $table->boolean('has_lunch')->default(false);
