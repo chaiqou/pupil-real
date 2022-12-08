@@ -1,5 +1,7 @@
 <template>
+    <router-view v-if="componentRendered"></router-view>
     <div
+        v-if="!componentRendered"
         class="relative flex px-4 flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
         <ul
@@ -71,6 +73,7 @@
                     <div class="-mt-px flex divide-x divide-gray-200">
                         <div class="flex w-0 flex-1">
                             <router-link
+                                @click="componentRendered = true"
                                 :to="{
                                     name: 'lunches.edit',
                                     params: { id: lunch.id },
@@ -87,8 +90,10 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { intervalToDuration } from "date-fns";
+
+const componentRendered = ref(false);
 
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {

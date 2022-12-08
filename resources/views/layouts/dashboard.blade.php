@@ -11,7 +11,6 @@
 
 <body class="h-full">
     <div id="app">
-        <router-view></router-view>
         <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
             <dashboard-navigation-mobile :role="{{ json_encode($role) }}" :current="{{ json_encode($current) }}"
                                          :navigation="{{ json_encode($navigation) }}" :students="{{json_encode($students)}}" :student="{{json_encode($student)}}"></dashboard-navigation-mobile>
