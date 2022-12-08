@@ -1,12 +1,12 @@
 <template>
-    <div class="sm:mt-20 min-w-[30vw] xl:px-4">
-        <form @submit.prevent="updateLunch(lunches.id)">
+    <div v-if="store.title.length !== 0" class="sm:mt-20 min-w-[30vw] xl:px-4">
+        <form @submit.prevent="updateLunch(store.lunch_id)">
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
-            <BaseInput v-model="lunches.title" name="title" label="Title" />
+            <BaseInput v-model="store.title" name="title" label="Title" />
             <BaseInput
-                v-model="lunches.description"
+                v-model="store.description"
                 name="description"
                 label="Description"
             />
@@ -18,12 +18,11 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
-                :partialRange="false"
+                range
                 @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
-                v-model="lunches.active_range"
+                v-model="store.active_range"
                 :clearable="false"
-                range
             />
             <div>
                 <label class="text-md font-bold text-gray-600">Weekdays</label>
@@ -38,7 +37,7 @@
                                 rules="required"
                                 :id="day.fullName"
                                 class="hidden peer"
-                                v-model="lunches.weekdays"
+                                v-model="store.weekdays"
                             />
                             <label
                                 :for="day.fullName"
@@ -68,7 +67,7 @@
                     <div class="mt-6 flow-root">
                         <ul role="list" class="-my-5 divide-y divide-gray-200">
                             <li
-                                v-for="(extra, extraIdx) in lunches.extras"
+                                v-for="(extra, extraIdx) in store.extras"
                                 class="py-4"
                             >
                                 <div class="flex items-center space-x-4">
@@ -105,7 +104,7 @@
                                 </div>
                             </li>
                             <li
-                                v-for="(hold, holdIdx) in lunches.holds"
+                                v-for="(hold, holdIdx) in store.holds"
                                 class="py-4"
                             >
                                 <div class="flex items-center space-x-4">
@@ -151,12 +150,11 @@
                             ...store.disabled_extra_days,
                         ]"
                         :maxDate="addYears(new Date(), 1)"
-                        :partialRange="true"
+                        range
                         :minDate="new Date()"
                         :enableTimePicker="false"
                         no-disabled-range
-                        range
-                        v-model="lunches.extras"
+                        v-model="store.extras"
                     >
                         <template #trigger>
                             <p
@@ -173,13 +171,12 @@
                             ...store.disabled_hold_days,
                             ...store.disabled_extra_days,
                         ]"
-                        :partialRange="true"
+                        range
                         :maxDate="addYears(new Date(), 1)"
                         @update:modelValue="handleHoldsDate"
                         :enableTimePicker="false"
                         no-disabled-range
-                        range
-                        v-model="lunches.holds"
+                        v-model="store.holds"
                     >
                         <template #trigger>
                             <p
@@ -192,7 +189,7 @@
                 </div>
             </div>
             <BaseInput
-                v-model="lunches.period_length"
+                v-model="store.period_length"
                 name="period_length"
                 label="Period Length"
                 type="number"
@@ -202,8 +199,8 @@
                 >Claimables
             </label>
             <Multiselect
-                :value="lunches.claimables"
-                v-model="lunches.claimables"
+                :value="store.claimables"
+                v-model="store.claimables"
                 mode="tags"
                 name="claimables"
                 :limit="10"
@@ -220,13 +217,13 @@
                 selectAll
             />
             <BaseInput
-                v-model="lunches.price_day"
+                v-model="store.price_day"
                 name="price_day"
                 label="Price per day"
                 type="number"
             />
             <BaseInput
-                v-model="lunches.price_period"
+                v-model="store.price_period"
                 name="price_period"
                 label="Price per period"
                 type="number"
@@ -259,7 +256,6 @@ const route = useRoute();
 
 const multiselectRef = ref(null);
 const lunches = ref("");
-const errors = ref([]);
 
 // Fetch appropriate lunch from API
 
@@ -267,26 +263,37 @@ const id = parseInt(route.params.id);
 
 onMounted(() => {
     axios.get("/school/lunch/" + id).then((response) => {
-        lunches.value = response.data.data;
+        store.title = response.data.data.title;
+        store.description = response.data.data.description;
+        store.period_length = response.data.data.period_length;
+        store.weekdays = response.data.data.weekdays;
+        store.active_range = response.data.data.active_range;
+        store.claimables = response.data.data.claimables;
+        store.price_day = response.data.data.price_day;
+        store.price_period = response.data.data.price_period;
+        store.extras = response.data.data.extras;
+        store.holds = response.data.data.holds;
+        store.lunch_id = response.data.data.id;
     });
 });
 
 // Update lunch part
 
 const updateLunch = async (lunch) => {
-    console.log(lunches.value);
-    console.log(lunch);
     await axios.put("/school/lunch/" + lunch, {
-        title: lunches.value.title,
-        description: lunches.value.description,
-        period_length: lunches.value.period_length,
-        weekdays: lunches.value.weekdays,
-        active_range: lunches.value.active_range,
-        claimables: lunches.value.claimables,
-        price_day: lunches.value.price_day,
-        price_period: lunches.value.price_period,
-        extras: lunches.value.extras,
-        holds: lunches.value.holds,
+        title: store.title,
+        description: store.description,
+        period_length: store.period_length,
+        weekdays: store.weekdays,
+        active_range: [
+            format(store.active_range[0], "yyyy-MM-dd"),
+            format(store.active_range[1], "yyyy-MM-dd"),
+        ],
+        claimables: store.claimables,
+        price_day: store.price_day,
+        price_period: store.price_period,
+        extras: store.extras,
+        holds: store.holds,
     });
 
     store.extras = [];
