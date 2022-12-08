@@ -240,20 +240,69 @@
 import { addYears, format, eachDayOfInterval } from "date-fns";
 import { ref, onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { useRoute } from "vue-router";
+import { Field, ErrorMessage } from "vee-validate";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
-import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
-import { useRoute } from "vue-router";
-import { Field, ErrorMessage } from "vee-validate";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 
-const store = useLunchFormStore();
+// Composables
 
-// Extras
+const store = useLunchFormStore();
+const route = useRoute();
+
+// Data
+
+const multiselectRef = ref(null);
+const lunches = ref("");
+const errors = ref([]);
+
+// Fetch appropriate lunch from API
+
+const id = parseInt(route.params.id);
+
+onMounted(() => {
+    axios.get("/school/lunch/" + id).then((response) => {
+        lunches.value = response.data.data;
+    });
+});
+
+// Update lunch part
+
+const updateLunch = async (id) => {
+    try {
+        await axios.put("/api/school/lunch/" + id, {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: [
+                format(store.active_range[0], "yyyy-MM-dd"),
+                format(store.active_range[1], "yyyy-MM-dd"),
+            ],
+            claimables: store.claimables,
+            price_day: store.price_day,
+            price_period: store.price_period,
+            extras: store.extras,
+            holds: store.holds,
+        });
+
+        store.extras = [];
+        store.holds = [];
+        store.disabled_hold_days = [];
+        store.disabled_extra_days = [];
+    } catch (e) {
+        if (e.response.status === 422) {
+            errors.value = e.response.data.errors;
+        }
+    }
+};
+
+// Extras part
 
 const removeExtra = (extraIdx, extra) => {
     store.extras.splice(extraIdx, 1);
@@ -310,7 +359,7 @@ const handleExtrasDate = (modelData) => {
     });
 };
 
-// Holds
+// Holds Part
 
 const removeHold = (holdIdx, hold) => {
     store.holds.splice(holdIdx, 1);
@@ -362,6 +411,8 @@ const handleHoldsDate = (modelData) => {
     store.marked_days = removedDaysArray;
 };
 
+// Weekdays part
+
 const toggleWeekdays = (day) => {
     const eachDay = eachDayOfInterval({
         start: store.active_range[0],
@@ -396,48 +447,8 @@ const dayOptions = [
     { name: "S", fullName: "Saturday", index: 6 },
     { name: "S", fullName: "Sunday", index: 0 },
 ];
-const route = useRoute();
-const id = parseInt(route.params.id);
 
-const multiselectRef = ref(null);
-const lunches = ref("");
-const errors = ref([]);
-
-onMounted(() => {
-    axios.get("/school/lunch/" + id).then((response) => {
-        console.log(response.data.data);
-        lunches.value = response.data.data;
-    });
-});
-
-const updateLunch = async (id) => {
-    try {
-        await axios.put("/api/school/lunch/" + id, {
-            title: store.title,
-            description: store.description,
-            period_length: store.period_length,
-            weekdays: store.weekdays,
-            active_range: [
-                format(store.active_range[0], "yyyy-MM-dd"),
-                format(store.active_range[1], "yyyy-MM-dd"),
-            ],
-            claimables: store.claimables,
-            price_day: store.price_day,
-            price_period: store.price_period,
-            extras: store.extras,
-            holds: store.holds,
-        });
-
-        store.extras = [];
-        store.holds = [];
-        store.disabled_hold_days = [];
-        store.disabled_extra_days = [];
-    } catch (e) {
-        if (e.response.status === 422) {
-            errors.value = e.response.data.errors;
-        }
-    }
-};
+// Active range part
 
 const addActiveRange = (modelData) => {
     if (store.active_range.length < 2) {
@@ -480,6 +491,8 @@ const addActiveRange = (modelData) => {
         }
     });
 };
+
+// Multiselect options and styles
 
 const multiselectOptions = [
     "Breakfast",
