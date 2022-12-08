@@ -18,10 +18,10 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
+                :partial-range="false"
                 range
                 @update:modelValue="addActiveRange"
                 :enableTimePicker="false"
-                v-model="store.active_range"
                 :clearable="false"
             />
             <div>
@@ -151,10 +151,10 @@
                         ]"
                         :maxDate="addYears(new Date(), 1)"
                         range
+                        :partial-range="false"
                         :minDate="new Date()"
                         :enableTimePicker="false"
                         no-disabled-range
-                        v-model="store.extras"
                     >
                         <template #trigger>
                             <p
@@ -171,6 +171,7 @@
                             ...store.disabled_hold_days,
                             ...store.disabled_extra_days,
                         ]"
+                        :partial-range="false"
                         range
                         :maxDate="addYears(new Date(), 1)"
                         @update:modelValue="handleHoldsDate"
