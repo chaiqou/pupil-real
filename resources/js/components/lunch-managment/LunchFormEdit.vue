@@ -1,5 +1,5 @@
 <template>
-    <div v-if="store.title.length !== 0" class="sm:mt-20 min-w-[30vw] xl:px-4">
+    <div class="sm:mt-20 min-w-[30vw] xl:px-4">
         <form @submit.prevent="updateLunch(store.lunch_id)">
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
@@ -237,7 +237,7 @@ import { addYears, format, eachDayOfInterval } from "date-fns";
 import { ref, onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { useRoute } from "vue-router";
-import { Field, ErrorMessage } from "vee-validate";
+import { Field, ErrorMessage, useForm } from "vee-validate";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
@@ -250,11 +250,11 @@ import HoldsIcon from "../icons/HoldsIcon.vue";
 
 const store = useLunchFormStore();
 const route = useRoute();
+const { handleSubmit } = useForm();
 
 // Data
 
 const multiselectRef = ref(null);
-const lunches = ref("");
 
 // Fetch appropriate lunch from API
 
@@ -278,28 +278,29 @@ onMounted(() => {
 
 // Update lunch part
 
-const updateLunch = async (lunch) => {
-    await axios.put("/school/lunch/" + lunch, {
-        title: store.title,
-        description: store.description,
-        period_length: store.period_length,
-        weekdays: store.weekdays,
-        active_range: [
-            format(store.active_range[0], "yyyy-MM-dd"),
-            format(store.active_range[1], "yyyy-MM-dd"),
-        ],
-        claimables: store.claimables,
-        price_day: store.price_day,
-        price_period: store.price_period,
-        extras: store.extras,
-        holds: store.holds,
-    });
-
-    store.extras = [];
-    store.holds = [];
-    store.disabled_hold_days = [];
-    store.disabled_extra_days = [];
-};
+const updateLunch = handleSubmit((lunch, { resetForm }) => {
+    console.log(lunch);
+    axios
+        .put("/school/lunch/" + store.lunch_id, {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: store.active_range,
+            claimables: store.claimables,
+            price_day: store.price_day,
+            price_period: store.price_period,
+            extras: store.extras,
+            holds: store.holds,
+        })
+        .then((response) => {
+            resetForm();
+            store.extras = [];
+            store.holds = [];
+            store.disabled_hold_days = [];
+            store.disabled_extra_days = [];
+        });
+});
 
 // Extras part
 
