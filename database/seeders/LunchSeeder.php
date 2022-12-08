@@ -24,7 +24,7 @@ class LunchSeeder extends Seeder
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],
-            'tags' => [
+            'weekdays' => [
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],
@@ -52,7 +52,7 @@ class LunchSeeder extends Seeder
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],
-            'tags' => [
+            'weekdays' => [
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],
@@ -80,7 +80,7 @@ class LunchSeeder extends Seeder
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],
-            'tags' => [
+            'weekdays' => [
                 'start' => '2021-10-20',
                 'end' => '2021-10-20',
             ],

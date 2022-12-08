@@ -74,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('settings/{student_id}', 'parent')->name('parent.settings');
                 Route::get('transactions/{student_id}', 'parent')->name('parent.transactions');
                 Route::get('dashboard/{student_id}', 'parent')->name('parent.dashboard');
+                Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
             });
         });
     });
@@ -82,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/school/')->group(function () {
             Route::controller(NavigationController::class)->group(function () {
                 Route::get('lunch-management', 'school')->name('school.lunch-management');
+                Route::get('add-lunch', 'school')->name('school.add-lunch');
                 Route::get('students', 'school')->name('school.students');
                 Route::get('transactions', 'school')->name('school.transactions');
                 Route::get('dashboard', 'school')->name('school.dashboard');

@@ -31,7 +31,7 @@
                             <div>
                                 <button
                                     type="button"
-                                    @click="removeExtra(extraIdx)"
+                                    @click="removeExtra(extraIdx, extra)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -61,7 +61,7 @@
                             <div>
                                 <button
                                     type="button"
-                                    @click="removeHold(holdIdx)"
+                                    @click="removeHold(holdIdx, hold)"
                                     class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                                 >
                                     Remove
@@ -73,7 +73,20 @@
             </div>
         </div>
         <div class="mt-6 grid grid-cols-2 grid-rows-1 space-x-2">
-            <Datepicker @update:modelValue="handleExtrasDate" range>
+            <Datepicker
+                closeOnScroll
+                @update:modelValue="handleExtrasDate"
+                :disabledDates="[
+                    ...store.disabled_hold_days,
+                    ...store.disabled_extra_days,
+                ]"
+                :maxDate="addYears(new Date(), 1)"
+                :partialRange="false"
+                :minDate="new Date()"
+                :enableTimePicker="false"
+                no-disabled-range
+                range
+            >
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -82,7 +95,20 @@
                     </p>
                 </template>
             </Datepicker>
-            <Datepicker @update:modelValue="handleHoldsDate" range>
+            <Datepicker
+                closeOnScroll
+                :minDate="new Date()"
+                :disabledDates="[
+                    ...store.disabled_hold_days,
+                    ...store.disabled_extra_days,
+                ]"
+                :partialRange="false"
+                :maxDate="addYears(new Date(), 1)"
+                @update:modelValue="handleHoldsDate"
+                :enableTimePicker="false"
+                no-disabled-range
+                range
+            >
                 <template #trigger>
                     <p
                         class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -96,10 +122,10 @@
 </template>
 
 <script setup>
-import { format } from "date-fns";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { addYears, format } from "date-fns";
 
 const store = useLunchFormStore();
 
@@ -116,8 +142,29 @@ const props = defineProps({
 
 // Extras
 
-const removeExtra = (extraIdx) => {
+const removeExtra = (extraIdx, extra) => {
     store.extras.splice(extraIdx, 1);
+
+    let dates = [];
+    let startDate = new Date(extra[0]);
+    let endDate = new Date(extra[1]);
+
+    while (startDate <= endDate) {
+        dates.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    let formattedDates = dates.map((date) => format(date, "yyyy-MM-dd"));
+
+    store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
+
+    store.disabled_extra_days = store.disabled_extra_days.filter(
+        (date) => !formattedDates.includes(date)
+    );
+
+    store.removeDaysFromMarkedDays(extra);
+
+    store.add_marked_extras = [];
 };
 
 const handleExtrasDate = (modelData) => {
@@ -125,12 +172,52 @@ const handleExtrasDate = (modelData) => {
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
     ]);
+
+    store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
+        store.disabled_extra_days.push(data);
+    });
+
+    // add extras to marked days
+
+    store.findMiddleRangeDates("add_extras", store.extras);
+    let deUnique = store.add_marked_extras;
+    let uniqueValues = new Set(deUnique);
+    deUnique = Array.from(uniqueValues);
+
+    store.remove_marked_holds.map((hold) => {
+        if (deUnique.includes(hold)) {
+            deUnique.splice(deUnique.indexOf(hold), 1);
+        }
+    });
+
+    deUnique.map((extra) => {
+        if (!store.marked_days.includes(extra)) {
+            store.marked_days.push(extra);
+        }
+    });
 };
 
 // Holds
 
-const removeHold = (holdIdx) => {
+const removeHold = (holdIdx, hold) => {
     store.holds.splice(holdIdx, 1);
+
+    let dates = [];
+    let startDate = new Date(hold[0]);
+    let endDate = new Date(hold[1]);
+
+    while (startDate <= endDate) {
+        dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    store.marked_days = [...store.marked_days, ...dates];
+
+    store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
+
+    store.disabled_hold_days = store.disabled_hold_days.filter(
+        (date) => !dates.includes(date)
+    );
 };
 
 const handleHoldsDate = (modelData) => {
@@ -138,5 +225,26 @@ const handleHoldsDate = (modelData) => {
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
     ]);
+
+    store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
+        store.disabled_hold_days.push(date);
+    });
+
+    // Remove holds from marked days
+
+    store.findMiddleRangeDates("remove_holds", store.holds);
+    let daysToDelete = new Set(store.remove_marked_holds);
+
+    store.add_marked_extras.map((extra) => {
+        if (daysToDelete.has(extra)) {
+            daysToDelete.delete(extra);
+        }
+    });
+
+    const removedDaysArray = store.marked_days.filter((day) => {
+        return !daysToDelete.has(day);
+    });
+
+    store.marked_days = removedDaysArray;
 };
 </script>

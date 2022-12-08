@@ -14,6 +14,13 @@ class LunchResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'merchant_id' => $this->merchant_id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'active_range' => $this->active_range,
+            'available_days' => $this->available_days,
+        ];
     }
 }

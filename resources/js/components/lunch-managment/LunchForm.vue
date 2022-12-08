@@ -10,11 +10,22 @@
                 name="description"
                 label="Description"
             />
-            <RangeDatepicker
-                v-model="store.active_range"
-                name="active_range"
-                label="Active range"
+            <label
+                class="text-md flex font-bold text-gray-600 whitespace-normal"
+                >Active Range
+            </label>
+            <Datepicker
+                closeOnScroll
+                :minDate="new Date()"
+                :maxDate="addYears(new Date(), 1)"
+                :partialRange="false"
+                @update:modelValue="addActiveRange"
+                :enableTimePicker="false"
+                v-model="activeRange"
+                :clearable="false"
+                range
             />
+            <WeekdaysChechkbox name="weekdays" />
             <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
                 v-model="store.period_length"
@@ -42,7 +53,6 @@
                 :searchable="true"
                 :options="multiselectOptions"
             />
-            <WeekdaysChechkbox name="tags" />
             <BaseInput
                 v-model="store.price_day"
                 name="price_day"
@@ -62,12 +72,12 @@
 
 <script setup>
 import { useForm } from "vee-validate";
+import { addYears, format, eachDayOfInterval } from "date-fns";
 import { ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
-import axios from "../../config/axios/index";
+import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
-import RangeDatepicker from "@/components/form-components/RangeDatepicker.vue";
 import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
@@ -77,10 +87,67 @@ const store = useLunchFormStore();
 const { handleSubmit } = useForm();
 
 const multiselectRef = ref(null);
+const activeRange = ref(null);
+
+const addActiveRange = (modelData) => {
+    if (store.active_range.length < 2) {
+        store.active_range.push(...modelData);
+    } else {
+        store.active_range.splice(0, 2, ...modelData);
+    }
+
+    const eachDay = eachDayOfInterval({
+        start: modelData[0],
+        end: modelData[1],
+    });
+
+    // format each day to YYYY-MM-DD'
+
+    let formatedDate = [];
+
+    for (let i = 0; i < eachDay.length; i++) {
+        formatedDate.push(format(new Date(eachDay[i]), "yyyy-MM-dd"));
+    }
+
+    // if marked days doesnot contain any of the days in the range, remove all marked days
+
+    if (store.marked_days.length > 0) {
+        for (let i = 0; i < store.marked_days.length; i++) {
+            if (!formatedDate.includes(store.marked_days[i])) {
+                store.marked_days.splice(0, store.marked_days.length);
+            }
+        }
+    }
+
+    // if weekdays are selected and matched with each day of active range then add them to store
+    eachDay.map((day) => {
+        if (store.weekdays) {
+            store.weekdays.map((weekday) => {
+                if (weekday === format(day, "EEEE")) {
+                    store.marked_days.push(format(day, "yyyy-MM-dd"));
+                }
+            });
+        }
+    });
+};
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
     axios
-        .post("lunch", store.getLunchFormData)
+        .post("/school/lunch", {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: [
+                format(store.active_range[0], "yyyy-MM-dd"),
+                format(store.active_range[1], "yyyy-MM-dd"),
+            ],
+            claimables: store.claimables,
+            holds: store.holds,
+            extras: store.extras,
+            price_day: store.price_day,
+            price_period: store.price_period,
+        })
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
@@ -88,6 +155,11 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
         .catch((error) => {
             console.log(error);
         });
+
+    store.extras = [];
+    store.holds = [];
+    store.disabled_hold_days = [];
+    store.disabled_extra_days = [];
 });
 
 const multiselectOptions = [

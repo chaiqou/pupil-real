@@ -4,12 +4,12 @@ use App\Http\Controllers\Admin\Api\InviteController as AdminInviteController;
 use App\Http\Controllers\Admin\Api\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
-
 use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
+use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{student_id}/last-transactions', 'getLastFiveTransactions')->name('parent.last-transactions_api');
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
+           Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -87,4 +88,5 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::apiResource('lunch', LunchController::class);
+Route::apiResource('school/lunch', LunchController::class);
+
