@@ -176,7 +176,6 @@
                         @update:modelValue="handleHoldsDate"
                         :enableTimePicker="false"
                         no-disabled-range
-                        v-model="store.holds"
                     >
                         <template #trigger>
                             <p
@@ -383,7 +382,6 @@ const removeHold = (holdIdx, hold) => {
 };
 
 const handleHoldsDate = (modelData) => {
-    console.log(modelData);
     store.holds.push([
         format(modelData[0], "yyyy-MM-dd"),
         format(modelData[1], "yyyy-MM-dd"),
