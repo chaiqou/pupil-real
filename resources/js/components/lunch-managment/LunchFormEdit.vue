@@ -18,9 +18,10 @@
                 closeOnScroll
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
-                :partial-range="false"
+                :partial-range="true"
                 range
                 @update:modelValue="addActiveRange"
+                v-model="store.active_range"
                 :enableTimePicker="false"
                 :clearable="false"
             />
@@ -234,7 +235,7 @@
 </template>
 
 <script setup>
-import { addYears, format, eachDayOfInterval } from "date-fns";
+import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
 import { ref, onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { useRoute } from "vue-router";
@@ -414,16 +415,19 @@ const handleHoldsDate = (modelData) => {
 // Weekdays part
 
 const toggleWeekdays = (day) => {
-    const eachDay = eachDayOfInterval({
-        start: store.active_range[0],
-        end: store.active_range[1],
-    });
+    let eachDay = [];
+
+    if (store.active_range !== null) {
+        eachDay = eachDayOfInterval({
+            start: parseISO(store.active_range[0]),
+            end: parseISO(store.active_range[1]),
+        });
+    }
 
     eachDay.map((date) => {
         if (
             date.getDay() === day.index &&
-            store.weekdays.includes(day.fullName) &&
-            store.holds.length === 0
+            store.weekdays.includes(day.fullName)
         ) {
             store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
         } else if (
