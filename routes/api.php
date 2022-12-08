@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\Api\InviteController as AdminInviteController;
 use App\Http\Controllers\Admin\Api\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
-use App\Http\Controllers\api\LunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
