@@ -541,7 +541,7 @@ export default {
         ...mapActions(useModalStore, ["showHideSchoolEdit"]),
         onSubmit() {
             axios
-                .post(`/api/admin/update`, {
+                .put(`/api/admin/school`, {
                     school_id: this.school.id,
                     short_name: this.school.short_name,
                     full_name: this.school.full_name,
@@ -562,6 +562,7 @@ export default {
                     this.schools = res.data.data;
                     this.countrySelect = "";
                 })
+               .catch((err) => console.log(err))
                 .finally(() => {
                     this.isSchoolEditVisible = false;
                 });

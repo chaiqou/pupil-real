@@ -36,6 +36,6 @@ class PhoneNumber implements Rule
      */
     public function message()
     {
-        return response()->json(['message' => 'Please use valid phone number']);
+        return 'Please use valid phone number';
     }
 }

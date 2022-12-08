@@ -60,7 +60,7 @@ class SchoolController extends Controller
             ],
             'school_code' => $request->school_code,
         ]);
-        $schools = School::latest('created_at')->get();
+        $schools = School::latest('created_at')->paginate(5);
         return SchoolResource::collection($schools);
     }
 }

@@ -36,6 +36,6 @@ class MinThreeWord implements Rule
      */
     public function message()
     {
-        return response()->json(['message' => 'Please enter at least 3 words']);
+        return 'Please enter at least 3 words';
     }
 }

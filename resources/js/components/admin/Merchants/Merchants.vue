@@ -104,7 +104,7 @@
             </tbody>
         </table>
     </div>
-    <merchant-edit-modal v-if="this.merchantId"></merchant-edit-modal>
+    <merchant-edit-modal v-if="this.merchantId" :schoolId="this.schoolId"></merchant-edit-modal>
 </template>
 
 <script>
