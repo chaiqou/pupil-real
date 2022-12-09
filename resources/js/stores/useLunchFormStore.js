@@ -21,6 +21,7 @@ export const useLunchFormStore = defineStore("lunch", {
             marked_days: [],
             each_active_range_day: [],
             lunch_id: "",
+            lunches: [],
         };
     },
 

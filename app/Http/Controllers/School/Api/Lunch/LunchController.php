@@ -91,7 +91,9 @@ class LunchController extends Controller
 
     $lunch->update($validatedData);
 
-    return response()->json(['message' => 'Lunch updated successfully.'], 200);
+    $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
+
+    return LunchResource::collection($lunches);
 }
 
 }

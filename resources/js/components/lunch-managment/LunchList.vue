@@ -10,15 +10,15 @@
             <a
                 class="relative block w-full rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-400 focus:outline-none"
                 href="http://127.0.0.1:8000/school/add-lunch"
-                v-if="lunches.length < 9"
-                :class="[lunches.length === 0 ? 'h-68' : 'h-48']"
+                v-if="store.lunches.length < 9"
+                :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
                 <span class="mt-2 block text-sm font-medium text-gray-900"
                     >Add Lunch</span
                 >
             </a>
             <li
-                v-for="lunch in lunches"
+                v-for="lunch in store.lunches"
                 class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
             >
                 <div
@@ -91,14 +91,14 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import { intervalToDuration } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const componentRendered = ref(false);
+const store = useLunchFormStore();
 
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
-        lunches.push(...response.data.data);
+        store.lunches.push(...response.data.data);
     });
 });
-
-const lunches = reactive([]);
 </script>

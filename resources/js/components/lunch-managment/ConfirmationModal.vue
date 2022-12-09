@@ -141,13 +141,14 @@ const saveWithShifting = () => {
             extras: store.extras,
             holds: store.holds,
         })
-        .then(() => {
-            router.go(-1);
+        .then((response) => {
             store.extras = [];
             store.holds = [];
             store.disabled_hold_days = [];
             store.disabled_extra_days = [];
             open.value = false;
+            store.lunches = response.data.data;
+            window.location.href = "/school/lunch-management#/";
         });
 };
 
