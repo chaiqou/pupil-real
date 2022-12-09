@@ -230,6 +230,7 @@
                 type="number"
             />
             <Button text="Save Lunch" />
+            <ConfirmationModal v-if="isOpen" />
         </form>
     </div>
 </template>
@@ -247,6 +248,7 @@ import Multiselect from "@vueform/multiselect";
 import Button from "@/components/ui/Button.vue";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
+import ConfirmationModal from "../lunch-managment/ConfirmationModal.vue";
 
 // Composables
 
@@ -257,6 +259,7 @@ const { handleSubmit } = useForm();
 // Data
 
 const multiselectRef = ref(null);
+const isOpen = ref(true);
 
 // Fetch appropriate lunch from API
 
