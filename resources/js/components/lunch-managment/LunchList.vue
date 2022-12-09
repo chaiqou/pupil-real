@@ -1,7 +1,6 @@
 <template>
-    <router-view v-if="componentRendered"></router-view>
+    <router-view></router-view>
     <div
-        v-if="!componentRendered"
         class="relative flex px-4 flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
         <ul
