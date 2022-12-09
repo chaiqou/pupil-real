@@ -7,7 +7,7 @@
                         All Invites
                     </h1>
                     <p class="mt-2 text-sm text-gray-700">
-                        A list of all invites depend to your school including
+                        A list of all user invites including
                         their email, invite state and send date/update date.
                     </p>
                 </div>

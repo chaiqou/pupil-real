@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\Api\InviteController as AdminInviteController;
-use App\Http\Controllers\Admin\Api\MerchantController as AdminMerchantController;
+use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInviteController;
+use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
@@ -38,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{student_id}/last-transactions', 'getLastFiveTransactions')->name('parent.last-transactions_api');
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
-           Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
+            Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -62,7 +63,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invites', 'get')->name('admin.invites_api');
                 Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
                 Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
-                Route::post('{schoolId}/send-invite', [AdminInviteController::class, 'store'])->name('admin_send-invite_api');
+                Route::post('{schoolId}/send-invite', 'store')->name('admin_send-invite_api');
+            });
+            Route::controller(AdminMerchantInviteController::class)->group(function () {
+                Route::get('merchant-invites', 'get')->name('admin.merchant-invites-get_api');
+                Route::post('school/{schoolId}/merchant/send-invite', 'store')->name('admin_merchant-send-invite_api');
             });
         });
     });
@@ -88,4 +93,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::apiResource('school/lunch', LunchController::class);
-

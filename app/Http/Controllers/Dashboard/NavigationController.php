@@ -107,6 +107,7 @@ class NavigationController extends Controller
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                     ['name' => 'Schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false],
                     ['name' => 'Merchants', 'icon' => 'nothing', 'href' => '/admin/school/{school_id}/merchants', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
+                    ['name' => 'Merchant Invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
                     ];
         }
         $currentTab = request()->route()->getName();
