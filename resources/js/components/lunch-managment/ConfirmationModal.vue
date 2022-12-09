@@ -77,14 +77,13 @@
                                 <button
                                     type="button"
                                     class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="open = false"
+                                    @click="saveWithoutShifting(store.lunch_id)"
                                 >
                                     Save without shifting
                                 </button>
                                 <button
-                                    type="button"
                                     class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                    @click="open = false"
+                                    @click="saveWithShifting(store.lunch_id)"
                                 >
                                     Save with shifting
                                 </button>
@@ -106,6 +105,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useForm } from "vee-validate";
 import {
     Dialog,
     DialogPanel,
@@ -114,6 +114,59 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const open = ref(true);
+const store = useLunchFormStore();
+const { handleSubmit } = useForm();
+
+const saveWithShifting = handleSubmit((lunch, { resetForm }) => {
+    axios
+        .put("/api/school/lunch/" + store.lunch_id, {
+            title: store.title,
+            description: store.description,
+            period_length: store.period_length,
+            weekdays: store.weekdays,
+            active_range: store.active_range,
+            claimables: store.claimables,
+            price_day: store.price_day,
+            price_period: store.price_period,
+            extras: store.extras,
+            holds: store.holds,
+        })
+        .then(() => {
+            resetForm();
+            store.extras = [];
+            store.holds = [];
+            store.disabled_hold_days = [];
+            store.disabled_extra_days = [];
+            open.value = false;
+        });
+});
+
+const saveWithoutShifting = handleSubmit((lunch, { resetForm }) => {
+    axios
+        .get("/api/school/lunch/" + store.lunch_id)
+        .then((response) => {
+            store.title = response.data.data.title;
+            store.description = response.data.data.description;
+            store.period_length = response.data.data.period_length;
+            store.weekdays = response.data.data.weekdays;
+            store.active_range = response.data.data.active_range;
+            store.claimables = response.data.data.claimables;
+            store.price_day = response.data.data.price_day;
+            store.price_period = response.data.data.price_period;
+            store.extras = response.data.data.extras;
+            store.holds = response.data.data.holds;
+            store.lunch_id = response.data.data.id;
+        })
+        .then(() => {
+            resetForm();
+            store.extras = [];
+            store.holds = [];
+            store.disabled_hold_days = [];
+            store.disabled_extra_days = [];
+            open.value = false;
+        });
+});
 </script>

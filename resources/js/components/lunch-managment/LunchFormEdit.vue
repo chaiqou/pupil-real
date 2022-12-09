@@ -1,6 +1,6 @@
 <template>
     <div class="sm:mt-20 min-w-[30vw] xl:px-4">
-        <form @submit.prevent="updateLunch(store.lunch_id)">
+        <form>
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
@@ -229,7 +229,7 @@
                 label="Price per period"
                 type="number"
             />
-            <Button text="Save Lunch" />
+            <Button @click="isOpen = !isOpen" type="button" text="Save Lunch" />
             <ConfirmationModal v-if="isOpen" />
         </form>
     </div>
@@ -259,7 +259,7 @@ const { handleSubmit } = useForm();
 // Data
 
 const multiselectRef = ref(null);
-const isOpen = ref(true);
+const isOpen = ref(false);
 
 // Fetch appropriate lunch from API
 
@@ -284,7 +284,6 @@ onMounted(() => {
 // Update lunch part
 
 const updateLunch = handleSubmit((lunch, { resetForm }) => {
-    console.log(lunch);
     axios
         .put("/school/lunch/" + store.lunch_id, {
             title: store.title,
