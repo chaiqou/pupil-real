@@ -1,5 +1,4 @@
 <template>
-    <router-view></router-view>
     <div
         class="relative flex px-4 flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
     >
@@ -71,15 +70,9 @@
                 <div>
                     <div class="-mt-px flex divide-x divide-gray-200">
                         <div class="flex w-0 flex-1">
-                            <router-link
-                                @click="componentRendered = true"
-                                :to="{
-                                    name: 'lunches.edit',
-                                    params: { id: lunch.id },
-                                }"
-                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
-                                >Manage</router-link
-                            >
+                            <button @click="currentLunchEditId(lunch.id)">
+                                Manage
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -89,11 +82,10 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted } from "vue";
 import { intervalToDuration } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
-const componentRendered = ref(false);
 const store = useLunchFormStore();
 
 onMounted(() => {
@@ -101,4 +93,9 @@ onMounted(() => {
         store.lunches.push(...response.data.data);
     });
 });
+
+const currentLunchEditId = (id) => {
+    localStorage.setItem("lunchId", id);
+    window.location.href = "/school/lunch-management/" + id + "/edit";
+};
 </script>

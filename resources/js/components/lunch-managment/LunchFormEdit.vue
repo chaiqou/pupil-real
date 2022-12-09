@@ -253,8 +253,6 @@ import ConfirmationModal from "../lunch-managment/ConfirmationModal.vue";
 // Composables
 
 const store = useLunchFormStore();
-const route = useRoute();
-const { handleSubmit } = useForm();
 
 // Data
 
@@ -263,46 +261,22 @@ const isOpen = ref(false);
 
 // Fetch appropriate lunch from API
 
-const id = parseInt(route.params.id);
-
 onMounted(() => {
-    axios.get("/school/lunch/" + id).then((response) => {
-        store.title = response.data.data.title;
-        store.description = response.data.data.description;
-        store.period_length = response.data.data.period_length;
-        store.weekdays = response.data.data.weekdays;
-        store.active_range = response.data.data.active_range;
-        store.claimables = response.data.data.claimables;
-        store.price_day = response.data.data.price_day;
-        store.price_period = response.data.data.price_period;
-        store.extras = response.data.data.extras;
-        store.holds = response.data.data.holds;
-        store.lunch_id = response.data.data.id;
-    });
-});
-
-// Update lunch part
-
-const updateLunch = handleSubmit((lunch, { resetForm }) => {
     axios
-        .put("/school/lunch/" + store.lunch_id, {
-            title: store.title,
-            description: store.description,
-            period_length: store.period_length,
-            weekdays: store.weekdays,
-            active_range: store.active_range,
-            claimables: store.claimables,
-            price_day: store.price_day,
-            price_period: store.price_period,
-            extras: store.extras,
-            holds: store.holds,
-        })
+        .get("/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            resetForm();
-            store.extras = [];
-            store.holds = [];
-            store.disabled_hold_days = [];
-            store.disabled_extra_days = [];
+            console.log(window.location.href);
+            store.title = response.data.data.title;
+            store.description = response.data.data.description;
+            store.period_length = response.data.data.period_length;
+            store.weekdays = response.data.data.weekdays;
+            store.active_range = response.data.data.active_range;
+            store.claimables = response.data.data.claimables;
+            store.price_day = response.data.data.price_day;
+            store.price_period = response.data.data.price_period;
+            store.extras = response.data.data.extras;
+            store.holds = response.data.data.holds;
+            store.lunch_id = response.data.data.id;
         });
 });
 
