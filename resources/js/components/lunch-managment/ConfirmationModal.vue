@@ -148,7 +148,7 @@ const saveWithShifting = () => {
             store.disabled_extra_days = [];
             open.value = false;
             store.lunches = response.data.data;
-            window.location.href = "/school/lunch-management#/";
+            window.location.href = "/school/lunch-management/";
         });
 };
 
@@ -171,12 +171,12 @@ const saveWithoutShifting = () => {
             store.lunch_id = response.data.data.id;
         })
         .then(() => {
-            router.go(-1);
             store.extras = [];
             store.holds = [];
             store.disabled_hold_days = [];
             store.disabled_extra_days = [];
             open.value = false;
+            window.location.href = "/school/lunch-management/";
         });
 };
 </script>
