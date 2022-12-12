@@ -65,6 +65,11 @@
                 label="Price per period"
                 type="number"
             />
+            <label
+                class="text-md flex font-bold text-gray-600 whitespace-normal"
+                >Buffer time
+            </label>
+            <Datepicker v-model="store.time_picker" time-picker />
             <Button text="Save Lunch" />
         </form>
     </div>
