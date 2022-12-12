@@ -75,6 +75,7 @@ class LunchController extends Controller
             'available_days' => $sortedMatchedDays->values()->all(),
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
+            'time_picker' => $validate['time_picker'],
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);

@@ -16,6 +16,7 @@
             </label>
             <Datepicker
                 closeOnScroll
+                required
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
@@ -69,7 +70,12 @@
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
                 >Buffer time
             </label>
-            <Datepicker v-model="store.time_picker" time-picker />
+            <Datepicker
+                required
+                closeOnScroll
+                v-model="store.time_picker"
+                time-picker
+            />
             <Button text="Save Lunch" />
         </form>
     </div>
@@ -152,6 +158,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             extras: store.extras,
             price_day: store.price_day,
             price_period: store.price_period,
+            time_picker: store.time_picker,
         })
         .then(() => {
             resetForm();
