@@ -159,6 +159,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             price_day: store.price_day,
             price_period: store.price_period,
             time_picker: store.time_picker,
+            available_days: store.marked_days,
         })
         .then(() => {
             resetForm();
