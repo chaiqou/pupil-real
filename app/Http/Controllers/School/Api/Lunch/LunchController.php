@@ -4,6 +4,7 @@ namespace App\Http\Controllers\School\Api\Lunch;
 
 use Carbon\Carbon;
 use App\Models\Lunch;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LunchRequest;
 use App\Http\Controllers\Controller;
@@ -78,5 +79,21 @@ class LunchController extends Controller
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
     }
+
+    public function show(Lunch $lunch): LunchResource
+    {
+        return new LunchResource($lunch);
+    }
+
+    public function update(LunchRequest $request, Lunch $lunch)
+{
+    $validatedData = $request->validated();
+
+    $lunch->update($validatedData);
+
+    $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
+
+    return LunchResource::collection($lunches);
+}
 
 }

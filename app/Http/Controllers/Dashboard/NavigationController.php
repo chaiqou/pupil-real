@@ -61,6 +61,9 @@ class NavigationController extends Controller
         $role = '';
         $user = auth()->user();
         $students = $user->students->all();
+        $lunchId = request()->lunch_id;
+
+
         if ($user->hasRole('school')) {
             $navigation =
                 [
@@ -72,6 +75,7 @@ class NavigationController extends Controller
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                     ['name' => 'Add Lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false , 'hidden' => true, 'parentPage' => 'Lunch management'],
+                    ['name' => 'Lunch management edit', 'icon' => 'nothing', 'href' => '/school/lunch-management/{lunch_id}/edit', 'current' => false, 'hidden' => true, 'parentPage' => 'Lunch management']
                 ];
             $role = 'school';
         }
@@ -89,6 +93,7 @@ class NavigationController extends Controller
             'students' => $students,
             'student' => $user,
             'schoolId' => $user->school_id,
+            'lunchId' => $lunchId,
         ])->with(['page', 'Dashboard']);
     }
 

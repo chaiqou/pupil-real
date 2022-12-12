@@ -48,7 +48,7 @@ const props = defineProps({
 });
 
 function required(value) {
-    if (value && value.trim()) {
+    if (value) {
         return true;
     }
     return "This field is required";

@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('transactions', 'school')->name('school.transactions');
                 Route::get('dashboard', 'school')->name('school.dashboard');
                 Route::get('invite', 'school')->name('school.invite');
+                Route::get('lunch-management/{lunch_id}/edit', 'school')->name('school.lunch-management-edit');
             });
         });
     });

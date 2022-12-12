@@ -21,6 +21,13 @@ class LunchResource extends JsonResource
             'description' => $this->description,
             'active_range' => $this->active_range,
             'available_days' => $this->available_days,
+            'period_length' => $this->period_length,
+            'holds' => $this->holds,
+            'extras' => $this->extras,
+            'weekdays' => $this->weekdays,
+            'price_day' => $this->price_day,
+            'price_period' => $this->price_period,
+            'claimables' => $this->claimables,
         ];
     }
 }
