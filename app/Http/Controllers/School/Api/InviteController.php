@@ -4,7 +4,7 @@ namespace App\Http\Controllers\School\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\School\InviteRequest;
-use App\Http\Resources\School\InviteResource;
+use App\Http\Resources\InviteResource;
 use App\Mail\InviteUser;
 use App\Models\Invite;
 use App\Models\User;

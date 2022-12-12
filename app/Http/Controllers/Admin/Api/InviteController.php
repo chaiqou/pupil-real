@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\School\InviteRequest;
-use App\Http\Resources\School\InviteResource;
+use App\Http\Resources\InviteResource;
 use App\Mail\InviteUser;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -18,7 +17,7 @@ class InviteController extends Controller
 {
     public function get(): ResourceCollection
     {
-        $invites = Invite::latest('created_at')->paginate(5);
+        $invites = Invite::with('school')->latest('created_at')->paginate(5);
 
         return InviteResource::collection($invites);
     }
@@ -47,7 +46,7 @@ class InviteController extends Controller
         return response()->json($emails);
     }
 
-    public function store(InviteRequest $request): JsonResponse
+    public function store(InviteRequest $request): JsonResponse|ResourceCollection
     {
         $emails = $request->emails;
         foreach ($emails as $email) {
@@ -59,7 +58,8 @@ class InviteController extends Controller
             Mail::to($email)->send(new InviteUser($invite));
             $invite->update(['state' => 1]);
         }
+        $invites = Invite::with('school')->latest('created_at')->paginate(5);
 
-        return response()->json('Invite(s) sent to chosen school!');
+        return InviteResource::collection($invites);
     }
 }

@@ -71,7 +71,7 @@ export default {
 
 </script>
 
-<style src="@vueform/multiselect/themes/default.css" />
+<style src="../../../../node_modules/@vueform/multiselect/themes/default.css" />
 <style>
 body {
     --ms-bg: transparent;

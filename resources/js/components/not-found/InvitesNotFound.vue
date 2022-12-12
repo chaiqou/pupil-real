@@ -1,8 +1,8 @@
 <template>
     <div class="flex justify-center flex-col items-center w-full py-10">
         <ListBulletIcon class="w-10 h-10"></ListBulletIcon>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No invites.</h3>
-        <p class="mt-1 text-sm text-gray-500" v-if="this.role === 'school'">
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No invites for merchants at the moment.</h3>
+        <p class="mt-1 text-sm text-gray-500" v-if="role === 'school'">
             No invites at the moment.
         </p>
     </div>
@@ -17,7 +17,7 @@ export default {
     props: {
         role: {
             type: String,
-            required: true,
+            required: false,
         },
     },
 };

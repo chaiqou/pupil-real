@@ -3,7 +3,7 @@
         :type="type"
         class="flex w-full justify-center mt-4 rounded-md px-4 py-2 text-base font-medium text-white"
     >
-        <p class="text-center">{{ text }}</p>
+        <p class="text-center"> <slot></slot> {{ text }}</p>
     </button>
 </template>
 

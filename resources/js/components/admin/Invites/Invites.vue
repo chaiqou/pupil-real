@@ -12,6 +12,7 @@
             <tr>
                 <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">Email</th>
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">State</th>
+                <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">School Code</th>
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Send date</th>
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Update date</th>
             </tr>
@@ -36,6 +37,11 @@
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         {{ invite.state }}
+                    </td>
+                    <td
+                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                    >
+                        {{ invite.school.school_code }}
                     </td>
                     <td
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
@@ -65,6 +71,13 @@
                     </td>
                     <td
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
+                    <td
+                        class="whitespace-nowrap  px-3 py-4 text-sm text-gray-500"
                     >
                         <div
                             class="h-2 bg-slate-300 rounded animate-pulse"

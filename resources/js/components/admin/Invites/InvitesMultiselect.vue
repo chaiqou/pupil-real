@@ -158,7 +158,7 @@ import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import { useInviteStore } from "@/stores/useInviteStore";
 import { mapWritableState } from "pinia";
 import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
-import InvitesSchoolMultiselect from "@/components/admin/Invites/InvitesSchoolMultiselect.vue";
+import InvitesSchoolMultiselect from "@/components/admin/InvitesSchoolMultiselect.vue";
 export default {
     components: {
         ValidationForm,
@@ -336,32 +336,11 @@ export default {
                         },
                     }
                 )
-                .then(() => {
+                .then((res) => {
                     this.emails = [];
-                    this.chosenSchool = [];
                     this.isSuccessfullySent = "yes";
                     this.handleGetInviteEmailsRequest();
                     this.handleGetUserEmailsRequest();
-                    this.handleUpdateInvitesTableRequest();
-                })
-                .catch((error) => {
-                    this.isSuccessfullySent = "no";
-                    this.emails = [];
-                    this.chosenSchool = [];
-                })
-                .finally(() =>
-                    setTimeout(() => {
-                        this.isSent = false;
-                        this.isSuccessfullySent = null;
-                    }, 5000)
-                );
-        },
-        handleUpdateInvitesTableRequest() {
-            axios
-                .get(`/api/admin/invites?page=${this.currentPage}`)
-                .then((res) => {
-                    this.currentPage++;
-                    this.lastPage = res.data.meta.last_page;
                     this.invites = res.data.data;
                     this.invites.map((item) => {
                         item.created_at = item.created_at
@@ -372,9 +351,16 @@ export default {
                             .replaceAll("T", " ");
                     });
                 })
-                .finally(() => {
-                    this.invite_from = this.schoolId;
-                });
+                .catch(() => {
+                    this.isSuccessfullySent = "no";
+                    this.emails = [];
+                })
+                .finally(() =>
+                    setTimeout(() => {
+                        this.isSent = false;
+                        this.isSuccessfullySent = null;
+                    }, 5000)
+                );
         },
         handleGetInviteEmailsRequest() {
             axios
