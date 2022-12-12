@@ -8,7 +8,7 @@
         >
             <a
                 class="relative block w-full rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-400 focus:outline-none"
-                href="http://127.0.0.1:8000/school/add-lunch"
+                href="/school/add-lunch"
                 v-if="store.lunches.length < 9"
                 :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
