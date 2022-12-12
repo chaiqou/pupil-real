@@ -35,7 +35,7 @@ class LunchRequest extends FormRequest
             'weekdays' => 'required',
             'claimables' => 'required',
             'time_picker' => 'required',
-            'available_days' => 'required',
+            'available_days' => 'array',
         ];
     }
 }
