@@ -82,7 +82,7 @@
                       <div style="font-size: 16px">
                         <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">You have been invited to PupilPay!</h1>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                          replace.school_short is using PupilPay to handle in-school payments, and lunch!<br>
+                          {{$invite->school->short_name}} is using PupilPay to handle in-school payments, and lunch!<br>
                           Use the button below to set up your account and get started:
                         </p>
                         <table align="center" style="margin: 30px auto; width: 100%; text-align: center" cellpadding="0" cellspacing="0" role="presentation">
