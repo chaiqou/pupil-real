@@ -53,14 +53,10 @@
                         >
                             <span class="ml-3"
                                 >{{
-                                    intervalToDuration({
-                                        start: new Date(
-                                            lunch.active_range.at(0)
-                                        ),
-                                        end: new Date(
-                                            lunch.active_range.at(-1)
-                                        ),
-                                    }).days
+                                    differenceInCalendarDays(
+                                        new Date(lunch.active_range.at(-1)),
+                                        new Date()
+                                    )
                                 }}
                                 available days left</span
                             >
@@ -71,7 +67,7 @@
                     <div class="-mt-px flex divide-x divide-gray-200">
                         <div class="flex w-0 flex-1">
                             <button
-                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-lg border border-transparent py-4 hover:text-white text-sm font-medium text-gray-700 focus:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-b-lg border border-transparent py-4 hover:text-white text-sm font-medium text-gray-700 focus:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 @click="currentLunchEditId(lunch.id)"
                             >
                                 Manage
@@ -105,7 +101,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { intervalToDuration } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
