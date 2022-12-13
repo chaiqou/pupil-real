@@ -27,19 +27,26 @@ class LunchController extends Controller
     {
         $validate = $request->validated();
         $bufferTime = (int) $validate['buffer_time'];
-
+        $periodLength = (int) $validate['period_length'];
         $currentTime = Carbon::now();
-
-        $periodEnd = $currentTime->addHours($bufferTime);
+        $periodEnd = $currentTime->addHours($periodLength);
 
 
         if ($periodEnd->gt($currentTime->endOfDay())) {
-            $firstAvailableDate = $currentTime->tomorrow();
+            // If the current time is before noon, the first available date is tomorrow
+            if ($currentTime->lt($currentTime->noon())) {
+                $firstAvailableDate = $currentTime->tomorrow();
+            } else {
+                // Otherwise, the first available date is the day after tomorrow
+                $firstAvailableDate = $currentTime->tomorrow()->tomorrow();
+            }
+            $bufferTime = $firstAvailableDate->diffInHours($currentTime);
         } else {
             $firstAvailableDate = $currentTime;
+            $bufferTime = 0;
         }
 
-        dump($firstAvailableDate->toDateString());
+        dump($firstAvailableDate->toDateTimeString());
 
 
        Lunch::create([
