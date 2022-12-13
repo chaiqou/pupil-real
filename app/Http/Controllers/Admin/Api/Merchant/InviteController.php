@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Api\Merchant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InviteMerchantRequest;
 use App\Http\Resources\Admin\MerchantInviteResource;
-use App\Mail\InviteMerchant;
-use App\Models\MerchantInvite;
+use App\Mail\InviteMerchantMail;
+use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -17,14 +17,14 @@ class InviteController extends Controller
 {
     public function get(): ResourceCollection
     {
-        $invites = MerchantInvite::with('school')->latest()->paginate(5);
+        $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
 
         return MerchantInviteResource::collection($invites);
     }
 
     public function store(InviteMerchantRequest $request): ResourceCollection|JsonResponse
     {
-        $existsInInvites = MerchantInvite::where('email', $request->email)->first();
+        $existsInInvites = Invite::where('email', $request->email)->first();
         $existsInUsers = User::where('email', $request->email)->first();
         if (isset($existsInInvites)) {
             return response()->json(['message'=>'Invite for this email exists'], 404);
@@ -33,14 +33,15 @@ class InviteController extends Controller
             return response()->json(['message'=>'User with this email exists'], 404);
         }
 
-        $invite = MerchantInvite::create([
+        $invite = Invite::create([
             'uniqueID' => Str::random(32),
             'email' => $request->email,
             'school_id' => request('schoolId'),
+            'role' => 'merchant'
         ]);
-        Mail::to($invite->email)->send(new InviteMerchant($invite));
+        Mail::to($invite->email)->send(new InviteMerchantMail($invite));
         $invite->update(['state' => 1]);
-        $invites = MerchantInvite::with('school')->latest()->paginate(5);
+        $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
         return MerchantInviteResource::collection($invites);
     }
 }

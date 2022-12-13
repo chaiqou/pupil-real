@@ -5,11 +5,9 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InviteMerchant extends Mailable
+class InviteUserMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -18,14 +16,7 @@ class InviteMerchant extends Mailable
      *
      * @return void
      */
-    use Queueable;
-    use SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(public $invite)
     {
     }
@@ -37,6 +28,6 @@ class InviteMerchant extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.invite-merchant')->subject('Invitation to PupilPay');
+        return $this->view('mail.invite-user')->subject('Invitation to PupilPay');
     }
 }

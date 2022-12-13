@@ -19,6 +19,7 @@ return new class() extends Migration
             $table->string('email')->unique();
             $table->foreignID('school_id')->constrained()->cascadeOnDelete();
             $table->integer('state')->default(0);
+            $table->string('role');
             $table->timestamps();
         });
     }

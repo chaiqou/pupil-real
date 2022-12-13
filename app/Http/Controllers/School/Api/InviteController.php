@@ -5,7 +5,7 @@ namespace App\Http\Controllers\School\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\School\InviteRequest;
 use App\Http\Resources\InviteResource;
-use App\Mail\InviteUser;
+use App\Mail\InviteUserMail;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +18,7 @@ class InviteController extends Controller
 {
     public function get(Request $request): ResourceCollection
     {
-        $invites = Invite::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
+        $invites = Invite::where('school_id', $request->school_id)->where('role', 'parent')->latest('created_at')->paginate(5);
 
         return InviteResource::collection($invites);
     }
@@ -55,8 +55,9 @@ class InviteController extends Controller
                 'uniqueID' => Str::random(32),
                 'email' => $email,
                 'school_id' => auth()->user()->school_id,
+                'role' => 'parent',
             ]);
-            Mail::to($email)->send(new InviteUser($invite));
+            Mail::to($email)->send(new InviteUserMail($invite));
             $invite->update(['state' => 1]);
         }
 

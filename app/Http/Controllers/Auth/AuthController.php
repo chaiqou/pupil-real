@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\InviteController;
+use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
@@ -23,13 +24,15 @@ class AuthController extends Controller
                 return auth()->user()->sendTwoFactorCode();
             }
 
-            if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0) {
+            if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0 && auth()->user()->hasRole('parent')) {
                 return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
             }
 
-            if (auth()->user()->finished_onboarding === 0) {
+            if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
                 $route = InviteController::continueOnboarding(auth()->user());
-
+                return redirect($route);
+            } elseif (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
+                $route = MerchantInviteController::continueOnboarding(auth()->user());
                 return redirect($route);
             }
 
