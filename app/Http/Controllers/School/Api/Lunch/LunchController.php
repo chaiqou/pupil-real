@@ -26,7 +26,7 @@ class LunchController extends Controller
     public function store(LunchRequest $request): JsonResponse
     {
         $validate = $request->validated();
-        $bufferTime = collect($validate['time_picker']);
+        $bufferTime = collect($validate['buffer_time']);
         $periodLength = (int) $validate['period_length'];
 
         $currentTime = Carbon::now();
@@ -56,7 +56,7 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
-            'time_picker' => $validate['time_picker'],
+            'buffer_time' => $validate['buffer_time'],
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);

@@ -10,6 +10,8 @@
             @change="handleChange"
             @blur="handleChange"
             :type="type"
+            :min="min"
+            :max="max"
             :placeholder="placeholder"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
@@ -40,6 +42,14 @@ const props = defineProps({
         type: String,
         required: false,
         default: "text",
+    },
+    min: {
+        type: [Number, String],
+        required: false,
+    },
+    max: {
+        type: [Number, String],
+        required: false,
     },
     modelValue: {
         type: [String, Number, Array],

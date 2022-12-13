@@ -34,7 +34,7 @@ class LunchRequest extends FormRequest
             'price_period' => 'required',
             'weekdays' => 'required',
             'claimables' => 'required',
-            'time_picker' => 'required',
+            'buffer_time' => 'required',
             'available_days' => 'array',
         ];
     }
