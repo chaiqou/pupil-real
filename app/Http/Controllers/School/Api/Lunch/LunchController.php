@@ -26,21 +26,20 @@ class LunchController extends Controller
     public function store(LunchRequest $request): JsonResponse
     {
         $validate = $request->validated();
-        $bufferTime = collect($validate['buffer_time']);
-        $periodLength = (int) $validate['period_length'];
+        $bufferTime = (int) $validate['buffer_time'];
 
         $currentTime = Carbon::now();
 
-        $firstDate = $currentTime->addHours($periodLength)->addMinutes($bufferTime->first());
+        $periodEnd = $currentTime->addHours($bufferTime);
 
 
-        if ($currentTime < $firstDate) {
-
-            dump('enough buffer time left');
+        if ($periodEnd->gt($currentTime->endOfDay())) {
+            $firstAvailableDate = $currentTime->tomorrow();
         } else {
-
-            dump('not enough buffer time left');
+            $firstAvailableDate = $currentTime;
         }
+
+        dump($firstAvailableDate->toDateString());
 
 
        Lunch::create([
