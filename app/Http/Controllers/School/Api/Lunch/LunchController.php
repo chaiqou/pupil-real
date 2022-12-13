@@ -62,7 +62,7 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
-            'buffer_time' => $validate['buffer_time'],
+            'buffer_time' => $firstAvailableDate->toDateString(),
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
