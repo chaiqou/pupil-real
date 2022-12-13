@@ -2,6 +2,8 @@ import "./bootstrap";
 import "../css/app.css";
 import { createApp } from "vue/dist/vue.esm-bundler";
 import { createPinia } from "pinia";
+import { ZiggyVue } from "/vendor/tightenco/ziggy/dist/vue.es.js";
+import { Ziggy } from "./ziggy";
 
 import DashboardNavigation from "@/components/navigation/DashboardNavigation.vue";
 import DashboardNavigationMobile from "@/components/navigation/DashboardNavigationMobile.vue";
@@ -74,4 +76,5 @@ app.component("lunch-edit-page", LunchEditPage);
 app.component("confirmation-modal", ConfirmationModal);
 
 app.use(pinia);
+app.use(ZiggyVue, Ziggy);
 app.mount("#app");

@@ -8,8 +8,8 @@
         >
             <a
                 class="relative block w-full rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-400 focus:outline-none"
-                href="/school/add-lunch"
-                v-if="store.lunches.length < 9"
+                :href="route('school.add-lunch')"
+                v-if="store.lunches.length < 32"
                 :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
                 <span class="mt-2 block text-sm font-medium text-gray-900"
