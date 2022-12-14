@@ -8,13 +8,13 @@
                 v-model="store.title"
                 name="Title"
                 label="Title"
-                rules="required|min|max"
+                rules="required|min:3|max:100"
             />
             <BaseInput
                 v-model="store.description"
                 name="Description"
                 label="Description"
-                rules="required|min|max"
+                rules="required|min:3|max:100"
             />
             <label
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
