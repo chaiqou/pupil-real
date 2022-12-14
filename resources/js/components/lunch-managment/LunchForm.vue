@@ -163,9 +163,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
-        })
-        .catch((error) => {
-            console.log(error);
+            window.location.href = "/school/dashboard/";
         });
 
     store.extras = [];
