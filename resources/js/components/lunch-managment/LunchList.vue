@@ -44,11 +44,11 @@
                             <span class="ml-3">{{
                                 `${format(
                                     parseISO(lunch.active_range.at(0)),
-                                    "MMM dd"
+                                    "yyyy MMM dd"
                                 )} -
                                 ${format(
                                     parseISO(lunch.active_range.at(-1)),
-                                    "MMM dd"
+                                    "yyyy MMM dd"
                                 )}`
                             }}</span>
                         </a>

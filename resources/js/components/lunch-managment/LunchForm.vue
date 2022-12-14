@@ -168,8 +168,8 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             multiselectRef.value.clear();
             childrenToast.value.showToaster("Lunch created successfully");
             setTimeout(() => {
-                window.location.href = "/school/dashboard/";
-            }, 3000);
+                window.location.href = "/school/lunch-management/";
+            }, 1500);
         });
 
     store.extras = [];

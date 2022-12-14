@@ -265,7 +265,6 @@ onMounted(() => {
     axios
         .get("/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            console.log(window.location.href);
             store.title = response.data.data.title;
             store.description = response.data.data.description;
             store.period_length = response.data.data.period_length;
