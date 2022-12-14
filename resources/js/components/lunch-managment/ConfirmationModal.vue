@@ -129,7 +129,7 @@ const router = useRouter();
 
 const saveWithShifting = () => {
     axios
-        .put("/api/school/lunch/" + store.lunch_id, {
+        .put("/api/school/lunch/" + localStorage.getItem("lunchId"), {
             title: store.title,
             description: store.description,
             period_length: store.period_length,
@@ -156,7 +156,7 @@ const saveWithShifting = () => {
 
 const saveWithoutShifting = () => {
     axios
-        .get("/api/school/lunch/" + store.lunch_id)
+        .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
             store.title = response.data.data.title;
             store.description = response.data.data.description;

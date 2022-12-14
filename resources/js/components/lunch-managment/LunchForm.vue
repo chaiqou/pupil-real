@@ -16,6 +16,7 @@
             </label>
             <Datepicker
                 closeOnScroll
+                required
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
@@ -67,6 +68,7 @@
             />
             <Button text="Save Lunch" />
         </form>
+        <Toast ref="childrenToast" />
     </div>
 </template>
 
@@ -82,12 +84,14 @@ import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
+import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 const { handleSubmit } = useForm();
 
 const multiselectRef = ref(null);
 const activeRange = ref(null);
+const childrenToast = ref();
 
 const addActiveRange = (modelData) => {
     if (store.active_range.length < 2) {
@@ -147,13 +151,15 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             extras: store.extras,
             price_day: store.price_day,
             price_period: store.price_period,
+            available_days: store.marked_days,
         })
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
-        })
-        .catch((error) => {
-            console.log(error);
+            childrenToast.value.showToaster("Lunch created successfully");
+            setTimeout(() => {
+                window.location.href = "/school/lunch-management/";
+            }, 1500);
         });
 
     store.extras = [];

@@ -8,8 +8,8 @@
         >
             <a
                 class="relative block w-full rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-400 focus:outline-none"
-                href="/school/add-lunch"
-                v-if="store.lunches.length < 9"
+                :href="route('school.add-lunch')"
+                v-if="store.lunches.length < 32"
                 :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
                 <span class="mt-2 block text-sm font-medium text-gray-900"
@@ -42,27 +42,29 @@
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3">{{
-                                `${lunch.active_range.at(0)} -
-                                ${lunch.active_range.at(-1)}`
+                                `${format(
+                                    parseISO(lunch.active_range.at(0)),
+                                    "yyyy MMM dd"
+                                )} -
+                                ${format(
+                                    parseISO(lunch.active_range.at(-1)),
+                                    "yyyy MMM dd"
+                                )}`
                             }}</span>
                         </a>
                     </div>
                     <div class="-ml-px flex w-0 flex-1">
                         <a
-                            class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                            class="relative flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3"
                                 >{{
-                                    intervalToDuration({
-                                        start: new Date(
-                                            lunch.active_range.at(0)
-                                        ),
-                                        end: new Date(
-                                            lunch.active_range.at(-1)
-                                        ),
-                                    }).days
+                                    differenceInCalendarDays(
+                                        new Date(lunch.active_range.at(-1)),
+                                        new Date()
+                                    )
                                 }}
-                                available days left</span
+                                days left</span
                             >
                         </a>
                     </div>
@@ -71,7 +73,7 @@
                     <div class="-mt-px flex divide-x divide-gray-200">
                         <div class="flex w-0 flex-1">
                             <button
-                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-lg border border-transparent py-4 hover:text-white text-sm font-medium text-gray-700 focus:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-b-lg border border-transparent py-4 hover:text-white text-sm font-medium text-gray-700 focus:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 @click="currentLunchEditId(lunch.id)"
                             >
                                 Manage
@@ -105,7 +107,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { intervalToDuration } from "date-fns";
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
