@@ -26,30 +26,8 @@ class LunchController extends Controller
     public function store(LunchRequest $request): JsonResponse
     {
         $validate = $request->validated();
-        $bufferTime = (int) $validate['buffer_time'];
-        $periodLength = (int) $validate['period_length'];
-        $currentTime = Carbon::now();
-        $periodEnd = $currentTime->addHours($periodLength);
 
-
-        if ($periodEnd->gt($currentTime->endOfDay())) {
-            // If the current time is before noon, the first available date is tomorrow
-            if ($currentTime->lt($currentTime->noon())) {
-                $firstAvailableDate = $currentTime->tomorrow();
-            } else {
-                // Otherwise, the first available date is the day after tomorrow
-                $firstAvailableDate = $currentTime->tomorrow()->tomorrow();
-            }
-            $bufferTime = $firstAvailableDate->diffInHours($currentTime);
-        } else {
-            $firstAvailableDate = $currentTime;
-            $bufferTime = 0;
-        }
-
-        dump($firstAvailableDate->toDateTimeString());
-
-
-       Lunch::create([
+        Lunch::create([
             'merchant_id' => auth()->user()->id,
             'title' => $validate['title'],
             'description' => $validate['description'],
@@ -62,7 +40,6 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
-            'buffer_time' => $firstAvailableDate->toDateString(),
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
