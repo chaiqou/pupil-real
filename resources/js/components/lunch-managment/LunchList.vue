@@ -42,14 +42,20 @@
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3">{{
-                                `${lunch.active_range.at(0)} -
-                                ${lunch.active_range.at(-1)}`
+                                `${format(
+                                    parseISO(lunch.active_range.at(0)),
+                                    "MMM dd"
+                                )} -
+                                ${format(
+                                    parseISO(lunch.active_range.at(-1)),
+                                    "MMM dd"
+                                )}`
                             }}</span>
                         </a>
                     </div>
                     <div class="-ml-px flex w-0 flex-1">
                         <a
-                            class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                            class="relative flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
                             <span class="ml-3"
                                 >{{
@@ -58,7 +64,7 @@
                                         new Date()
                                     )
                                 }}
-                                available days left</span
+                                days left</span
                             >
                         </a>
                     </div>
@@ -101,7 +107,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
