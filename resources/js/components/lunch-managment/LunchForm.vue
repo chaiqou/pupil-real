@@ -4,11 +4,17 @@
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
-            <BaseInput v-model="store.title" name="title" label="Title" />
+            <BaseInput
+                v-model="store.title"
+                name="Title"
+                label="Title"
+                rules="required|min|max"
+            />
             <BaseInput
                 v-model="store.description"
-                name="description"
+                name="Description"
                 label="Description"
+                rules="required|min|max"
             />
             <label
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
@@ -30,9 +36,10 @@
             <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
                 v-model="store.period_length"
-                name="period_length"
+                name="Period Length"
                 label="Period Length"
                 type="number"
+                rules="required"
             />
             <label
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
@@ -56,15 +63,17 @@
             />
             <BaseInput
                 v-model="store.price_day"
-                name="price_day"
+                name="Price per day"
                 label="Price per day"
                 type="number"
+                rules="required"
             />
             <BaseInput
                 v-model="store.price_period"
-                name="price_period"
+                name="Price per period"
                 label="Price per period"
                 type="number"
+                rules="required"
             />
             <Button text="Save Lunch" />
         </form>
