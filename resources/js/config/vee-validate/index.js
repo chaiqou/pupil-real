@@ -6,6 +6,27 @@ configure({
     validateOnInput: true,
 });
 
+defineRule("required", (value) => {
+    if (!value || !value.length) {
+        return "This field is required!";
+    }
+    return true;
+});
+
+defineRule("min", (value) => {
+    if (value.length < 3) {
+        return "The minimum length of this field is 3 characters!";
+    }
+    return true;
+});
+
+defineRule("max", (value) => {
+    if (value.length > 100) {
+        return "The maximum length of this field is 100 characters!";
+    }
+    return true;
+});
+
 defineRule("email", (value) => {
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regexEmail.test(value)) {
