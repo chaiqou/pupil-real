@@ -77,6 +77,7 @@
             />
             <Button text="Save Lunch" />
         </form>
+        <Toast ref="childrenToast" />
     </div>
 </template>
 
@@ -92,12 +93,14 @@ import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
+import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 const { handleSubmit } = useForm();
 
 const multiselectRef = ref(null);
 const activeRange = ref(null);
+const childrenToast = ref();
 
 const addActiveRange = (modelData) => {
     if (store.active_range.length < 2) {
@@ -163,7 +166,10 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
-            window.location.href = "/school/dashboard/";
+            childrenToast.value.showToaster("Lunch created successfully");
+            setTimeout(() => {
+                window.location.href = "/school/dashboard/";
+            }, 3000);
         });
 
     store.extras = [];
