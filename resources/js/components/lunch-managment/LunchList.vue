@@ -41,15 +41,12 @@
                         <a
                             class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
                         >
-                            <span class="ml-3">{{
+                            <span class="whitespace-pre-line">{{
                                 `${format(
                                     parseISO(lunch.active_range.at(0)),
                                     "yyyy MMM dd"
-                                )} -
-                                ${format(
-                                    parseISO(lunch.active_range.at(-1)),
-                                    "yyyy MMM dd"
-                                )}`
+                                )}
+ ${format(parseISO(lunch.active_range.at(-1)), "yyyy MMM dd")}`
                             }}</span>
                         </a>
                     </div>
