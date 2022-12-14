@@ -12,6 +12,7 @@
             />
             <BaseInput
                 v-model="store.description"
+                inputType="textarea"
                 name="Description"
                 label="Description"
                 rules="required|min:3|max:100"

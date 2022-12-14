@@ -11,6 +11,7 @@
             :min="min"
             :max="max"
             :placeholder="placeholder"
+            :as="inputType"
             v-bind="$attrs"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
@@ -49,6 +50,11 @@ const props = defineProps({
     max: {
         type: [Number, String],
         required: false,
+    },
+    inputType: {
+        type: String,
+        required: false,
+        default: "input",
     },
     modelValue: {
         type: [String, Number, Array],
