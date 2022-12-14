@@ -30,6 +30,12 @@ Route::middleware(['guest'])->group(function () {
         Route::get('/merchant-personal-form/{uniqueID}', 'personalForm')->name('merchant-personal.form');
         Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
 
+        Route::get('/merchant-company-details/{uniqueID}', 'companyDetails')->name('merchant-company.details');
+        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
+
+        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo-verify');
+        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
+
         Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
     });

@@ -74,7 +74,7 @@
                                             <label
                                                 for="merchant-nick"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >Company Nick</label
+                                            >Merchant Nick</label
                                             >
                                             <div class="mt-1">
                                                 <Field
@@ -93,7 +93,7 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        nickname field is
+                                                        this field is
                                                         required
                                                     </p>
                                                 </ErrorMessage>

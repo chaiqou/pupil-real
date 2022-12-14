@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Admin\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Invite\CompanyDetailRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
 use App\Mail\OnboardingVerification;
 use App\Models\Invite;
-use App\Models\MerchantInvite;
+use App\Models\Merchant;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
@@ -100,9 +102,62 @@ class InviteController extends Controller
         ]);
         $invite->update(['state' => 4]);
 
-        return redirect()->route('merchant-verify.email', [
+        return redirect()->route('merchant-company.details', [
             'uniqueID' => request()->uniqueID,
         ]);
+    }
+
+    public function companyDetails(): View
+    {
+        return view('invite.merchant.company-details', [
+            'uniqueID' => request()->uniqueID,
+        ]);
+    }
+
+    public function submitCompanyDetails(CompanyDetailRequest $request): RedirectResponse
+    {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
+        $user = User::where('email', $invite->email)->first();
+        Merchant::where('user_id', $user->id)->delete();
+        Merchant::create([
+            'merchant_nick' => $request->merchant_nick,
+            'company_legal_name' => $request->company_legal_name,
+            'user_id' => $user->id,
+            'school_id' => $invite->school_id,
+            'billingo_api_key' => null,
+            'private_key' => null,
+            'public_key' => null,
+            'company_details' => json_encode([
+                'country' => $request->country,
+                'street_address' => $request->street_address,
+                'company_name' => $request->company_name,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip' => (int) $request->zip,
+                'VAT' => $request->VAT,
+            ]),
+        ]);
+        $invite->update(['state' => 5]);
+
+        return redirect()->route('merchant-billingo-verify', [
+            'uniqueID' => request()->uniqueID,
+        ]);
+    }
+
+    public function billingoVerify(): View
+    {
+        return view('invite.merchant.billingo-verify', [
+            'uniqueID' => request()->uniqueID,
+        ]);
+    }
+
+    public function submitBillingoVerify(): View
+    {
+        $auth = Http::withHeaders([
+            'X-API-KEY' => 'aff49ffc-74a6-11ed-878b-0254eb6072a0'
+      ])->get('https://api.billingo.hu/v3/utils/time')->json();
+
+        dd($auth);
     }
 
     public function verifyEmail(): View
