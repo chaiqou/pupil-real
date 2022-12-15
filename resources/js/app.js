@@ -37,6 +37,7 @@ import ParentLunchList from "@/components/parent/lunch-management/ParentLunchLis
 import LunchFormEdit from "@/components/lunch-managment/LunchFormEdit.vue";
 import LunchEditPage from "@/components/lunch-managment/LunchEditPage.vue";
 import ConfirmationModal from "@/components/lunch-managment/ConfirmationModal.vue";
+import ParentLunchDetails from "@/components/parent/lunch-management/parentLunchDetails.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -72,6 +73,7 @@ app.component("parent-lunch-list", ParentLunchList);
 app.component("lunch-form-edit", LunchFormEdit);
 app.component("lunch-edit-page", LunchEditPage);
 app.component("confirmation-modal", ConfirmationModal);
+app.component("parent-lunch-details", ParentLunchDetails);
 
 app.use(pinia);
 app.mount("#app");
