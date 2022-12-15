@@ -102,6 +102,6 @@ onMounted(() => {
 
 const currentLunchEditId = (id) => {
     localStorage.setItem("lunchId", id);
-    window.location.href = "/parent/lunch-management/" + id + "lunch-details";
+    window.location.href = "/parent/lunch-details/" + id;
 };
 </script>
