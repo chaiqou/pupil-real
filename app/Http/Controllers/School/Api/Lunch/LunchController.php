@@ -28,7 +28,7 @@ class LunchController extends Controller
         $validate = $request->validated();
 
         Lunch::create([
-            'merchant_id' => auth()->user()->id,
+            'merchant_id' => 2,
             'title' => $validate['title'],
             'description' => $validate['description'],
             'active_range' => $validate['active_range'],
