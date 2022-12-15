@@ -8,7 +8,7 @@
         >
             <a
                 class="mt-4 rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-500 focus:outline-none"
-                :href="route('school.add-lunch')"
+                href="school/add-lunch"
                 v-if="store.lunches.length < 32"
                 :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
