@@ -91,7 +91,13 @@
             <div class="w-full">
                 <form id="form" method="POST" action="{{route('merchant-billingo-verify_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                     @csrf
-                    <button type="submit">Submit</button>
+                    <div>
+                        <label for="api-key" class="block text-sm font-medium text-gray-700">Billingo key</label>
+                        <div class="mt-1">
+                            <input type="text" value="{{old('api_key')}}" name="api_key" id="api_key" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-green-500 text-white px-3 py-2 w-full rounded-md hover:bg-green-600">Submit</button>
                 </form>
 
             </div>

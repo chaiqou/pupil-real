@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Invite\BillingoVerificationRequest;
 use App\Http\Requests\Invite\CompanyDetailRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
@@ -151,13 +152,30 @@ class InviteController extends Controller
         ]);
     }
 
-    public function submitBillingoVerify(): View
+    public function submitBillingoVerify(BillingoVerificationRequest $request): RedirectResponse
     {
-        $auth = Http::withHeaders([
-            'X-API-KEY' => 'aff49ffc-74a6-11ed-878b-0254eb6072a0'
-      ])->get('https://api.billingo.hu/v3/utils/time')->json();
+        $requestBillingo = Http::withHeaders([
+            'X-API-KEY' => $request->api_key
+      ])->get('https://api.billingo.hu/v3/utils/time');
 
-        dd($auth);
+        if ($requestBillingo->status() === 401) {
+            return redirect()->back()->withErrors('Sorry, but you provided wrong API key');
+        }
+        if ($requestBillingo->status() === 402) {
+            return redirect()->back()->withErrors('Sorry, but you dont have an active billingo subscription');
+        }
+        if ($requestBillingo->status() === 500) {
+            return redirect()->back()->withErrors('Sorry, but something happened from billingo side');
+        }
+        if ($requestBillingo->status() === 200) {
+            $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+            $user = User::where('email', $invite->email)->first();
+            $merchant = Merchant::where('user_id', $user->id)->first();
+            $merchant->update(['billingo_api_key' => $request->api_key]);
+            return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
+        } else {
+            return redirect()->back()->withErrors('Sorry, but something occurred from pupilpay side');
+        }
     }
 
     public function verifyEmail(): View
@@ -195,10 +213,8 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
-
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
-
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }
