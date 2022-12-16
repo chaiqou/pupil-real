@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
-use Carbon\Carbon;
 use App\Models\Lunch;
-use App\Models\School;
 use App\Models\Merchant;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LunchRequest;
 use App\Http\Controllers\Controller;
@@ -44,6 +41,7 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
+            'buffer_time' => $validate['buffer_time'],
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
