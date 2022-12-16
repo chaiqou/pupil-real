@@ -13,24 +13,39 @@ defineRule("required", (value) => {
     return true;
 });
 
-defineRule("min", (value) => {
-    if (value.length < 3) {
-        return "The minimum length of this field is 3 characters!";
+defineRule("min", (value, [limit]) => {
+    if (value.length < limit) {
+        return `The minimum length of this field is ${limit} characters!`;
     }
     return true;
 });
 
-defineRule("max", (value) => {
-    if (value.length > 100) {
-        return "The maximum length of this field is 100 characters!";
+defineRule("max", (value, [limit]) => {
+    if (value.length > limit) {
+        return `The maximum length of this field is ${limit} characters!`;
     }
+    return true;
+});
+
+defineRule("minNumber", (value, [limit]) => {
+    if (+value < limit) {
+        return `The minimum value of this field is ${limit}`;
+    }
+    return true;
+});
+
+defineRule("maxNumber", (value, [limit]) => {
+    if (+value > limit) {
+        return `The maximim value of this field is ${limit}`;
+    }
+
     return true;
 });
 
 defineRule("email", (value) => {
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regexEmail.test(value)) {
-        return 'Please write correct email';
+        return "Please write correct email";
     }
     return true;
 });

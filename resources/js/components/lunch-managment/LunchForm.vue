@@ -76,6 +76,14 @@
                 type="number"
                 rules="required"
             />
+            <BaseInput
+                v-model.number="store.buffer_time"
+                name="buffer_time"
+                label="Buffer time"
+                type="number"
+                rules="required|minNumber:1|maxNumber:72"
+                placeholder="from 1 to 72 hours"
+            />
             <Button text="Save Lunch" />
         </form>
         <Toast ref="childrenToast" />
@@ -162,6 +170,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             price_day: store.price_day,
             price_period: store.price_period,
             available_days: store.marked_days,
+            buffer_time: store.buffer_time,
         })
         .then(() => {
             resetForm();
@@ -169,7 +178,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             childrenToast.value.showToaster("Lunch created successfully");
             setTimeout(() => {
                 window.location.href = "/school/lunch-management/";
-            }, 1500);
+            }, 1000);
         });
 
     store.extras = [];
