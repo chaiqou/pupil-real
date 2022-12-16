@@ -13,30 +13,30 @@ defineRule("required", (value) => {
     return true;
 });
 
-defineRule("min", (value) => {
-    if (value.length < 3) {
-        return "The minimum length of this field is 3 characters!";
+defineRule("min", (value, [limit]) => {
+    if (value.length < limit) {
+        return `The minimum length of this field is ${limit} characters!`;
     }
     return true;
 });
 
-defineRule("max", (value) => {
-    if (value.length > 100) {
-        return "The maximum length of this field is 100 characters!";
+defineRule("max", (value, [limit]) => {
+    if (value.length > limit) {
+        return `The maximum length of this field is ${limit} characters!`;
     }
     return true;
 });
 
-defineRule("minimum_number", (value) => {
-    if (value < 1) {
-        return "The minimum value of this field is 1";
+defineRule("minimum_number", (value, [limit]) => {
+    if (value < limit) {
+        return `The minimum value of this field is ${limit}`;
     }
     return true;
 });
 
-defineRule("maximum_number", (value) => {
-    if (value > 72) {
-        return "The maximim value of this field is 72";
+defineRule("maximum_number", (value, [limit]) => {
+    if (value > limit) {
+        return `The maximim value of this field is ${limit}`;
     }
 
     return true;
