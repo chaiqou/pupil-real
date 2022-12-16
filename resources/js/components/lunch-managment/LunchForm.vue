@@ -77,11 +77,11 @@
                 rules="required"
             />
             <BaseInput
-                v-model="store.buffer_time"
+                v-model.number="store.buffer_time"
                 name="buffer_time"
                 label="Buffer time"
                 type="number"
-                rules="minimum_number|maximum_number"
+                rules="required|minNumber:1|maxNumber:72"
                 placeholder="from 1 to 72 hours"
             />
             <Button text="Save Lunch" />

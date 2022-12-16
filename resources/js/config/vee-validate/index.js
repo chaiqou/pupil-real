@@ -27,15 +27,15 @@ defineRule("max", (value, [limit]) => {
     return true;
 });
 
-defineRule("minimum_number", (value, [limit]) => {
-    if (value < limit) {
+defineRule("minNumber", (value, [limit]) => {
+    if (+value < limit) {
         return `The minimum value of this field is ${limit}`;
     }
     return true;
 });
 
-defineRule("maximum_number", (value, [limit]) => {
-    if (value > limit) {
+defineRule("maxNumber", (value, [limit]) => {
+    if (+value > limit) {
         return `The maximim value of this field is ${limit}`;
     }
 
