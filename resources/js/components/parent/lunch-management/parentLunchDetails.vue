@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="min-w-[30vw] xl:px-4">
         <div>
             <h3 class="text-lg font-medium mt-20 leading-6 text-gray-900">
                 Lunch Information
@@ -134,23 +134,51 @@
                     </dd>
                 </div>
             </dl>
+            <Datepicker
+                closeOnScroll
+                v-model="datepickerValue"
+                :maxDate="addYears(new Date(), 1)"
+                :partialRange="true"
+                :minDate="new Date()"
+                :enableTimePicker="false"
+                no-disabled-range
+                :clearable="false"
+                range
+            />
+            <button
+                class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
+            >
+                <p v-if="datepickerValue.length > 0" class="text-center">
+                    {{
+                        "Order starting " +
+                        format(datepickerValue[0], "yyyy MMMM dd")
+                    }}
+                </p>
+                <p v-else class="text-center">
+                    {{ "Order starting at buffer time" }}
+                </p>
+            </button>
         </div>
     </div>
 </template>
-
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, onUpdated } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, addYears } from "date-fns";
 
 const store = useLunchFormStore();
+const datepickerValue = ref([]);
 
-onMounted(() => {
-    axios
-        .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
-        .then((response) => {
-            store.lunches.push(response.data.data);
-            store.marked_days.push(...response.data.data.available_days);
-        });
-});
+onUpdated(() => {
+    console.log(datepickerValue.value.length);
+    console.log(datepickerValue.value);
+}),
+    onMounted(() => {
+        axios
+            .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
+            .then((response) => {
+                store.lunches.push(response.data.data);
+                store.marked_days.push(...response.data.data.available_days);
+            });
+    });
 </script>
