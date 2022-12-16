@@ -149,9 +149,8 @@ onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            console.log(response);
-            console.log(localStorage.getItem("lunchId"));
             store.lunches.push(response.data.data);
+            store.marked_days.push(...response.data.data.available_days);
         });
 });
 </script>
