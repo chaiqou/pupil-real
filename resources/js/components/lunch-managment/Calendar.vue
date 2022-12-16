@@ -98,7 +98,7 @@ import {
     isSameDay,
     parseISO,
 } from "date-fns";
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted, onBeforeMount } from "vue";
 import { useLunchFormStore } from "../../stores/useLunchFormStore";
 
 const store = useLunchFormStore();
@@ -108,6 +108,23 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+});
+
+onBeforeMount(() => {
+    const targetPath = `/school/lunch-management/${localStorage.getItem(
+        "lunchId"
+    )}/edit`;
+    const currentPath = window.location.pathname;
+
+    if (currentPath == targetPath) {
+        axios.get("/api/school/lunch").then((response) => {
+            response.data.data.map((data) => {
+                if (localStorage.getItem("lunchId") == data.id) {
+                    store.marked_days.push(...data.available_days);
+                }
+            });
+        });
+    }
 });
 
 const today = startOfToday();

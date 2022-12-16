@@ -20,6 +20,7 @@ class NavigationController extends Controller
         $user = Auth::user();
         $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
+        $lunchId = request()->lunch_id;
         $twoFa = 0;
         if ($user->hasRole('parent')) {
             $role = 'parent';
@@ -30,6 +31,7 @@ class NavigationController extends Controller
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/parent/knowledge-base/'.$student->id, 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                     ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
+                    ['name' => 'Lunch Details', 'icon' => 'none' , 'href' => '/parent/lunch-details/'.$lunchId, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches']
                 ];
         }
 
@@ -53,6 +55,7 @@ class NavigationController extends Controller
             'user' => $user,
             'userInfo' => $userInfo,
             'twoFa' => $twoFa,
+            'lunchId' => $lunchId,
         ])->with(['page', 'Dashboard']);
     }
 
@@ -62,6 +65,9 @@ class NavigationController extends Controller
         $role = '';
         $user = auth()->user();
         $students = $user->students->all();
+        $lunchId = request()->lunch_id;
+
+
         if ($user->hasRole('school')) {
             $navigation =
                 [
@@ -73,6 +79,7 @@ class NavigationController extends Controller
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                     ['name' => 'Add Lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false , 'hidden' => true, 'parentPage' => 'Lunch management'],
+                    ['name' => 'Lunch management edit', 'icon' => 'nothing', 'href' => '/school/lunch-management/{lunch_id}/edit', 'current' => false, 'hidden' => true, 'parentPage' => 'Lunch management']
                 ];
             $role = 'school';
         }
@@ -90,6 +97,7 @@ class NavigationController extends Controller
             'students' => $students,
             'student' => $user,
             'schoolId' => $user->school_id,
+            'lunchId' => $lunchId,
         ])->with(['page', 'Dashboard']);
     }
 

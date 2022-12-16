@@ -20,6 +20,8 @@ export const useLunchFormStore = defineStore("lunch", {
             remove_marked_holds: [],
             marked_days: [],
             each_active_range_day: [],
+            lunches: [],
+            currentLunchEditId: "",
         };
     },
 

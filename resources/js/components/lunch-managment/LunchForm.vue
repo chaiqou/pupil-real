@@ -4,11 +4,18 @@
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
             </p>
-            <BaseInput v-model="store.title" name="title" label="Title" />
+            <BaseInput
+                v-model="store.title"
+                name="Title"
+                label="Title"
+                rules="required|min:3|max:100"
+            />
             <BaseInput
                 v-model="store.description"
-                name="description"
+                inputType="textarea"
+                name="Description"
                 label="Description"
+                rules="required|min:3|max:100"
             />
             <label
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
@@ -16,6 +23,7 @@
             </label>
             <Datepicker
                 closeOnScroll
+                required
                 :minDate="new Date()"
                 :maxDate="addYears(new Date(), 1)"
                 :partialRange="false"
@@ -29,9 +37,10 @@
             <ExtrasAndHolds holds="holds" extras="extras" />
             <BaseInput
                 v-model="store.period_length"
-                name="period_length"
+                name="Period Length"
                 label="Period Length"
                 type="number"
+                rules="required"
             />
             <label
                 class="text-md flex font-bold text-gray-600 whitespace-normal"
@@ -55,18 +64,21 @@
             />
             <BaseInput
                 v-model="store.price_day"
-                name="price_day"
+                name="Price per day"
                 label="Price per day"
                 type="number"
+                rules="required"
             />
             <BaseInput
                 v-model="store.price_period"
-                name="price_period"
+                name="Price per period"
                 label="Price per period"
                 type="number"
+                rules="required"
             />
             <Button text="Save Lunch" />
         </form>
+        <Toast ref="childrenToast" />
     </div>
 </template>
 
@@ -82,12 +94,14 @@ import Multiselect from "@vueform/multiselect";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
+import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 const { handleSubmit } = useForm();
 
 const multiselectRef = ref(null);
 const activeRange = ref(null);
+const childrenToast = ref();
 
 const addActiveRange = (modelData) => {
     if (store.active_range.length < 2) {
@@ -147,13 +161,15 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             extras: store.extras,
             price_day: store.price_day,
             price_period: store.price_period,
+            available_days: store.marked_days,
         })
         .then(() => {
             resetForm();
             multiselectRef.value.clear();
-        })
-        .catch((error) => {
-            console.log(error);
+            childrenToast.value.showToaster("Lunch created successfully");
+            setTimeout(() => {
+                window.location.href = "/school/lunch-management/";
+            }, 1500);
         });
 
     store.extras = [];
