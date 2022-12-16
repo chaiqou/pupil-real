@@ -11,6 +11,8 @@ export const useModalStore = defineStore("modal", {
             isInviteUserVisible: false,
             isSchoolEditVisible: false,
             isMerchantEditVisible: false,
+            isInviteMerchantVisible: false,
+            isCreateSchoolVisible: false,
         };
     },
     actions: {
@@ -19,6 +21,9 @@ export const useModalStore = defineStore("modal", {
         },
         showHideMobileSwitchAccount() {
             this.isMobileSwitchAccountVisible = !this.isMobileSwitchAccountVisible;
+        },
+        showHideSchoolCreate(){
+          this.isCreateSchoolVisible = !this.isCreateSchoolVisible;
         },
         showHideTwoFactor() {
             this.isTwoFactorVisible = !this.isTwoFactorVisible;
@@ -37,6 +42,9 @@ export const useModalStore = defineStore("modal", {
         },
         showHideMerchantEdit() {
             this.isMerchantEditVisible = !this.isMerchantEditVisible;
+        },
+        showHideInviteMerchant() {
+            this.isInviteMerchantVisible = !this.isInviteMerchantVisible;
         }
     },
 });

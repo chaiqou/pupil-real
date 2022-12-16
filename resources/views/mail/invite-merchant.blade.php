@@ -82,7 +82,7 @@
                       <div style="font-size: 16px">
                         <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">You have been invited to PupilPay!</h1>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                          {{$invite->school->short_name}} is using PupilPay to handle in-school payments, and lunch!<br>
+                            {{$invite->school->short_name}} is using PupilPay to handle in-school payments, and lunch!<br>
                           Use the button below to set up your account and get started:
                         </p>
                         <table align="center" style="margin: 30px auto; width: 100%; text-align: center" cellpadding="0" cellspacing="0" role="presentation">
@@ -91,7 +91,7 @@
                               <table style="width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td align="center" style="font-size: 16px">
-                                    <a href="{{route('parent-setup.account', ['uniqueID' => $invite->uniqueID])}}" target="_blank" style="display: inline-block; color: #fff; text-decoration-line: none; background-color: #3869D4; border-color: #3869d4; border-style: solid; border-width: 10px 18px; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16)">Set up account</a>
+                                    <a href="{{route('merchant-setup.account', ['uniqueID' => $invite->uniqueID])}}" target="_blank" style="display: inline-block; color: #fff; text-decoration-line: none; background-color: #3869D4; border-color: #3869d4; border-style: solid; border-width: 10px 18px; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16)">Set up account</a>
                                   </td>
                                 </tr>
                               </table>
@@ -112,7 +112,7 @@
                           <tr>
                             <td>
                               <p style="margin-top: 6px; margin-bottom: 5px; font-size: 12px; line-height: 24px; color: #51545E">If you're having trouble with the button above, try opening, or copy and paste the URL below into your web browser.</p>
-                              <p style="margin-top: 6px; margin-bottom: 5px; font-size: 12px; line-height: 24px; color: #51545E"><a target="_blank" href="{{route('parent-setup.account', ['uniqueID' => $invite->uniqueID])}}" style="color: #3869D4">{{route('parent-setup.account', ['uniqueID' => $invite->uniqueID])}}</a></p>
+                              <p style="margin-top: 6px; margin-bottom: 5px; font-size: 12px; line-height: 24px; color: #51545E"><a target="_blank" href="{{route('merchant-setup.account', ['uniqueID' => $invite->uniqueID])}}" style="color: #3869D4">{{route('merchant-setup.account', ['uniqueID' => $invite->uniqueID])}}</a></p>
                             </td>
                           </tr>
                         </table>

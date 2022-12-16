@@ -29,16 +29,35 @@
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                 <span class="text-gray-500">02</span>
                             </span>
-                            <span class="ml-4 text-sm font-medium text-gray-500">Personal Form</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">Personal information</span>
                         </div>
+                    </li>
 
+                    <li class="relative md:flex md:flex-1">
+                        <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                <span class="text-gray-500">03</span>
+                            </span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">Company details</span>
+                        </div>
                     </li>
 
                     <li class="relative md:flex md:flex-1">
                         <div class="group flex items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
-                                    <span class="text-gray-500">03</span>
+                                    <span class="text-gray-500">04</span>
+                                </span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">Verify Billingo</span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
+                        <div class="group flex items-center">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                    <span class="text-gray-500">05</span>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
                             </span>
@@ -79,7 +98,7 @@
             </div>
             @enderror
         <div class="w-full">
-            <form id="form" method="POST" action="{{route('setup.account_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
+            <form id="form" method="POST" action="{{route('merchant-setup.account_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">

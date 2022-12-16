@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->string('full_name');
             $table->string('long_name');
             $table->json('details');
-            $table->string('school_code');
+            $table->string('school_code')->unique();
             $table->timestamps();
         });
     }

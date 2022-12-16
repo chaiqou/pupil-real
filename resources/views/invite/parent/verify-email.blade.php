@@ -77,7 +77,7 @@
             </div>
             @enderror
             <div class="w-full">
-                <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
+                <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('parent-verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
                     @csrf
                     <div class="-space-y-px rounded-md shadow-md p-4">
                         <div class="row-start-2 grid grid-cols-6">

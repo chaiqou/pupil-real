@@ -1,25 +1,43 @@
 <?php
 
+use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Dashboard\NavigationController;
-use App\Http\Controllers\InviteController;
+use App\Http\Controllers\InviteController as UserInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
-    Route::controller(InviteController::class)->group(function () {
-        Route::get('/setup-account/{uniqueID}', 'setupAccount')->name('setup.account');
-        Route::post('/setup-account/{uniqueID}', 'submitSetupAccount')->name('setup.account_submit');
+    Route::controller(UserInviteController::class)->group(function () {
+        Route::get('/parent-setup-account/{uniqueID}', 'setupAccount')->name('parent-setup.account');
+        Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
 
-        Route::get('/personal-form/{uniqueID}', 'personalForm')->name('personal.form');
-        Route::post('/personal-form/{uniqueID}', 'submitPersonalForm')->name('personal.form_submit');
+        Route::get('/parent-personal-form/{uniqueID}', 'personalForm')->name('parent-personal.form');
+        Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
 
-        Route::get('/verify-email/{uniqueID}', 'verifyEmail')->name('verify.email');
-        Route::post('/verify-email/{uniqueID}', 'submitVerifyEmail')->name('verify.email_submit');
+        Route::get('/parent-verify-email/{uniqueID}', 'verifyEmail')->name('parent-verify.email');
+        Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
+    });
+
+    Route::controller(MerchantInviteController::class)->group(function () {
+        Route::get('/merchant-setup-account/{uniqueID}', 'setupAccount')->name('merchant-setup.account');
+        Route::post('/merchant-setup-account/{uniqueID}', 'submitSetupAccount')->name('merchant-setup.account_submit');
+
+        Route::get('/merchant-personal-form/{uniqueID}', 'personalForm')->name('merchant-personal.form');
+        Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
+
+        Route::get('/merchant-company-details/{uniqueID}', 'companyDetails')->name('merchant-company.details');
+        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
+
+        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo-verify');
+        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
+
+        Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
+        Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
     });
 
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
@@ -50,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invite', 'admin')->name('admin.invite');
                 Route::get('schools', 'admin')->name('admin.schools');
                 Route::get('school/{school_id}/merchants', 'admin')->name('admin.merchants');
+                Route::get('/school/{school_id}/merchant-invites', 'admin')->name('admin.merchant-invites');
             });
         });
     });

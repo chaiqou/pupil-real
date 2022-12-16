@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\School;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InviteResource extends JsonResource
+class MerchantInviteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,12 @@ class InviteResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'state' => $this->state,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ];
+        'id' => $this->id,
+        'email' => $this->email,
+        'state' => $this->state,
+        'school' => json_decode($this->school),
+        'created_at' => $this->created_at,
+        'updated_at' => $this->updated_at,
+    ];
     }
 }

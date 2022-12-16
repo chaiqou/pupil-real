@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -115,13 +116,14 @@ class NavigationController extends Controller
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
                     ['name' => 'Schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false],
                     ['name' => 'Merchants', 'icon' => 'nothing', 'href' => '/admin/school/{school_id}/merchants', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
+                    ['name' => 'Merchant Invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
                     ];
         }
         $currentTab = request()->route()->getName();
         if (auth()->user()->is_verified === 0) {
             return redirect()->route('2fa.form');
         }
-        $schoolIdForMerchants = request()->school_id;
+        $school = School::where('id', request()->school_id)->first();
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,
@@ -129,7 +131,7 @@ class NavigationController extends Controller
             'student' => $user,
             'role' => $role,
             'user' => $user,
-            'schoolId' => $schoolIdForMerchants,
+            'school' => $school,
         ])->with(['page', 'Dashboard']);
     }
 }

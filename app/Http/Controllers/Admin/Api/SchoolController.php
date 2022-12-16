@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreSchoolRequest;
 use App\Http\Requests\Admin\UpdateSchoolRequest;
 use App\Http\Resources\School\SchoolResource;
 use App\Models\School;
@@ -58,6 +59,29 @@ class SchoolController extends Controller
                 'mobile_number' => $request->mobile_number,
                 'extension' => $request->extension,
             ],
+            'school_code' => $request->school_code,
+        ]);
+        $schools = School::latest('created_at')->paginate(5);
+        return SchoolResource::collection($schools);
+    }
+    public function store(StoreSchoolRequest $request): ResourceCollection
+    {
+        School::create([
+            'short_name' => $request->short_name,
+            'full_name' => $request->full_name,
+            'long_name' => $request->long_name,
+            'details' => json_encode([
+                'street_address' => $request->street_address,
+                'country' => $request->country,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip' => $request->zip,
+                'email' => $request->email,
+                'contact_person' => $request->contact_person,
+                'phone_number' => $request->phone_number,
+                'mobile_number' => $request->mobile_number,
+                'extension' => $request->extension,
+            ]),
             'school_code' => $request->school_code,
         ]);
         $schools = School::latest('created_at')->paginate(5);

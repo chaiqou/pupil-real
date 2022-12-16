@@ -4,15 +4,15 @@
             <div class="sm:flex-auto flex items-end justify-between">
                 <div>
                     <h1 class="text-xl font-semibold text-gray-900">
-                        All Invites
+                        All Merchant Invites belonging to school #{{this.school.short_name}}
                     </h1>
                     <p class="mt-2 text-sm text-gray-700">
-                        A list of all user invites including
+                        A list of all merchant invites including
                         their email, invite state and send date/update date.
                     </p>
                 </div>
                 <span
-                    @click="showHideInviteUser()"
+                    @click="showHideInviteMerchant()"
                     class="cursor-pointer hidden bg-green-500 hover:bg-green-600 rounded-md text-white px-4 py-2 md:flex items-center"
                 >
                     <svg
@@ -29,28 +29,34 @@
                             d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                         />
                     </svg>
-                    <p class="ml-1.5">Invite people</p>
+                    <p class="ml-1.5">Invite new merchant</p>
                 </span>
             </div>
         </div>
     </div>
-    <invite-user-modal></invite-user-modal>
+    <invite-merchant-modal :school-id="this.school.id"></invite-merchant-modal>
 </template>
 
 <script>
 import { useModalStore } from "@/stores/useModalStore";
 import { mapWritableState, mapActions } from "pinia";
-import InviteUserModal from "@/components/admin/Invites/InviteUserModal.vue";
+import InviteMerchantModal from "@/components/admin/Merchants/Invite/InviteMerchantModal.vue";
 
 export default {
     components: {
-        InviteUserModal,
+        InviteMerchantModal,
+    },
+    props: {
+      school: {
+          required:true,
+          type: Object,
+      },
     },
     computed: {
-        ...mapWritableState(useModalStore, ["isInviteUserVisible"]),
+        ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
     },
     methods: {
-        ...mapActions(useModalStore, ["showHideInviteUser"]),
+        ...mapActions(useModalStore, ["showHideInviteMerchant"]),
     },
 };
 </script>

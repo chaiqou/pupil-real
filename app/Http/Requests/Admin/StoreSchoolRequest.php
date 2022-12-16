@@ -6,7 +6,7 @@ use App\Rules\MinThreeWord;
 use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSchoolRequest extends FormRequest
+class StoreSchoolRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,6 @@ class UpdateSchoolRequest extends FormRequest
     public function rules()
     {
         return [
-            'school_id' => 'required',
             'short_name' => 'required',
             'full_name' => 'required',
             'long_name' => 'required',
@@ -42,5 +41,4 @@ class UpdateSchoolRequest extends FormRequest
             'school_code' => ['required', new MinThreeWord()]
         ];
     }
-
 }
