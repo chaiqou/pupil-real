@@ -159,13 +159,13 @@ class InviteController extends Controller
       ])->get('https://api.billingo.hu/v3/utils/time');
 
         if ($requestBillingo->status() === 401) {
-            return redirect()->back()->withErrors('Sorry, but you provided wrong API key');
+            return redirect()->back()->withErrors('You provided wrong API key');
         }
         if ($requestBillingo->status() === 402) {
-            return redirect()->back()->withErrors('Sorry, but you dont have an active billingo subscription');
+            return redirect()->back()->withErrors("You dont have an active Billingo's subscription");
         }
         if ($requestBillingo->status() === 500) {
-            return redirect()->back()->withErrors('Sorry, but something happened from billingo side');
+            return redirect()->back()->withErrors("Something went wrong at Billingo's side");
         }
         if ($requestBillingo->status() === 200) {
             $invite = Invite::where('uniqueID', request()->uniqueID)->first();
@@ -174,7 +174,7 @@ class InviteController extends Controller
             $merchant->update(['billingo_api_key' => $request->api_key]);
             return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
         } else {
-            return redirect()->back()->withErrors('Sorry, but something occurred from pupilpay side');
+            return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
         }
     }
 

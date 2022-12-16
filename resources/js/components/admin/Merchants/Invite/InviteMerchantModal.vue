@@ -34,10 +34,6 @@
                         <DialogPanel
                             class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
                         >
-                            <InvitesSchoolMultiselect
-                                name="school"
-                                label="Select school"
-                            ></InvitesSchoolMultiselect>
                             <div
                                 class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block"
                             >
@@ -121,7 +117,6 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue";
-import InvitesSchoolMultiselect from "@/components/admin/InvitesSchoolMultiselect.vue";
 import { ExclamationTriangleIcon, XMarkIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { useModalStore } from "@/stores/useModalStore";
@@ -140,7 +135,6 @@ export default {
         ValidationForm,
         Field,
         ErrorMessage,
-        InvitesSchoolMultiselect,
         CheckIcon,
     },
     data() {
@@ -151,10 +145,16 @@ export default {
             backResponse: "",
         }
     },
+    props: {
+        schoolId: {
+            required: true,
+            type: Number,
+        }
+    },
     computed: {
         ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
         ...mapWritableState(useMerchantStore, ["inviteEmail"]),
-        ...mapWritableState(useInviteStore, ["chosenSchool", "invites"]),
+        ...mapWritableState(useInviteStore, ["invites"]),
         buttonTextGenerator() {
             return this.isSuccessfullySent === "pending"
                 ? "Sending..."
@@ -189,7 +189,7 @@ export default {
             this.backResponse = "";
             axios
                 .post(
-                    `/api/admin/school/${this.chosenSchool}/merchant/send-invite`,
+                    `/api/admin/school/${this.schoolId}/merchant/send-invite`,
                     {
                         email: this.email,
                     }
@@ -197,6 +197,14 @@ export default {
                 .then((res) => {
                     this.isSuccessfullySent = "yes";
                     this.invites = res.data.data;
+                    this.invites.map((item) => {
+                        item.created_at = item.created_at
+                            .substring(0, 16)
+                            .replaceAll("T", " ");
+                        item.updated_at = item.updated_at
+                            .substring(0, 16)
+                            .replaceAll("T", " ");
+                    });
                 })
                 .catch((err) => {
                     this.isSuccessfullySent = "no";

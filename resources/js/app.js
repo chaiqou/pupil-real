@@ -37,6 +37,7 @@ import ParentLunchList from "@/components/parent/lunch-management/ParentLunchLis
 import AdminMerchantsHeader from "@/components/admin/Merchants/MerchantsHeader.vue"
 import AdminMerchantInvitesHeader from "@/components/admin/Merchants/Invite/MerchantInvitesHeader.vue";
 import AdminMerchantInvites from "@/components/admin/Merchants/Invite/MerchantInvites.vue";
+import AdminSchoolsHeader from "@/components/admin/Schools/SchoolsHeader.vue";
 const pinia = createPinia();
 const app = createApp({});
 
@@ -71,5 +72,6 @@ app.component("parent-lunch-list", ParentLunchList);
 app.component("admin-merchants-header", AdminMerchantsHeader);
 app.component("admin-merchant-invites-header", AdminMerchantInvitesHeader);
 app.component("admin-merchant-invites", AdminMerchantInvites);
+app.component("admin-schools-header", AdminSchoolsHeader);
 app.use(pinia);
 app.mount("#app");
