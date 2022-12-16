@@ -135,6 +135,8 @@
                 </div>
             </dl>
             <Datepicker
+                multi-dates
+                multi-dates-limit="1"
                 closeOnScroll
                 v-model="datepickerValue"
                 :maxDate="addYears(new Date(), 1)"
@@ -143,7 +145,6 @@
                 :enableTimePicker="false"
                 no-disabled-range
                 :clearable="false"
-                range
             />
             <button
                 class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
