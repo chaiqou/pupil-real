@@ -41,12 +41,17 @@
                         {{ lunch.period_length }}
                     </dd>
                 </div>
-                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                    <dt class="text-sm font-medium text-gray-500">Weekdays</dt>
+                <div
+                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
+                >
+                    <dt class="text-sm font-medium space-x-12 text-gray-500">
+                        Weekdays
+                    </dt>
                     <dd
-                        class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                        v-for="weekdays in lunch.weekdays"
+                        class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 md:block"
                     >
-                        {{ lunch.weekdays }}
+                        {{ weekdays }}
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -56,17 +61,26 @@
                     <dd
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ lunch.active_range }}
+                        {{
+                            `${format(
+                                parseISO(lunch.active_range.at(0)),
+                                "yyyy MMM dd"
+                            )} -
+ ${format(parseISO(lunch.active_range.at(-1)), "yyyy MMM dd")}`
+                        }}
                     </dd>
                 </div>
-                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                <div
+                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
+                >
                     <dt class="text-sm font-medium text-gray-500">
                         Claimables
                     </dt>
                     <dd
+                        v-for="claimables in lunch.claimables"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ lunch.claimables }}
+                        {{ claimables }}
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -74,7 +88,8 @@
                     <dd
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ lunch.holds }}
+                        <span v-if="lunch.holds.length >= 0"></span>
+                        <span v-else>{{ lunch.holds }}</span>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -82,17 +97,21 @@
                     <dd
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ lunch.extras }}
+                        <span v-if="lunch.extras.length >= 0"></span>
+                        <span v-else>{{ lunch.extras }}</span>
                     </dd>
                 </div>
-                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                <div
+                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
+                >
                     <dt class="text-sm font-medium text-gray-500">
                         Available days
                     </dt>
                     <dd
+                        v-for="available_days in lunch.available_days"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ lunch.available_days }}
+                        {{ available_days }}
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -121,6 +140,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { format, parseISO } from "date-fns";
 
 const store = useLunchFormStore();
 
