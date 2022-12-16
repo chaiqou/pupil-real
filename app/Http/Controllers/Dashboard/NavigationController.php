@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -114,7 +115,7 @@ class NavigationController extends Controller
         if (auth()->user()->is_verified === 0) {
             return redirect()->route('2fa.form');
         }
-        $schoolIdForMerchants = request()->school_id;
+        $school = School::where('id', request()->school_id)->first();
         return view($currentTab, [
             'current' => $currentTab,
             'navigation' => $navigation,
@@ -122,7 +123,7 @@ class NavigationController extends Controller
             'student' => $user,
             'role' => $role,
             'user' => $user,
-            'schoolId' => $schoolIdForMerchants,
+            'school' => $school,
         ])->with(['page', 'Dashboard']);
     }
 }

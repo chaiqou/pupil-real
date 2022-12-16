@@ -115,6 +115,12 @@ export default {
             lastPage: 2,
         };
     },
+    props: {
+      school: {
+          type: Object,
+          required: true,
+      }
+    },
     computed: {
         ...mapWritableState(useMerchantStore, [
             "isMerchantsLoaded",
@@ -136,7 +142,7 @@ export default {
         ]),
         handleGetMerchantInvitesRequest() {
             axios
-                .get(`/api/admin/merchant-invites/?page=${this.currentPage}`)
+                .get(`/api/admin/school/${this.school.id}/merchant-invites/?page=${this.currentPage}`)
                 .then((res) => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;

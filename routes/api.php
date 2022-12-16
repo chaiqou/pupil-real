@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('{schoolId}/send-invite', 'store')->name('admin_send-invite_api');
             });
             Route::controller(AdminMerchantInviteController::class)->group(function () {
-                Route::get('merchant-invites', 'get')->name('admin.merchant-invites-get_api');
+                Route::get('/school/{school_id}/merchant-invites', 'get')->name('admin.merchant-invites-get_api');
                 Route::post('school/{schoolId}/merchant/send-invite', 'store')->name('admin_merchant-send-invite_api');
             });
         });

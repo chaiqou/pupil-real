@@ -4,7 +4,7 @@
             <div class="sm:flex-auto flex items-end justify-between">
                 <div>
                     <h1 class="text-xl font-semibold text-gray-900">
-                        All Merchant Invites belonging to school #{{this.schoolId}}
+                        All Merchant Invites belonging to school #{{this.school.short_name}}
                     </h1>
                     <p class="mt-2 text-sm text-gray-700">
                         A list of all merchant invites including
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <invite-merchant-modal :school-id="this.schoolId"></invite-merchant-modal>
+    <invite-merchant-modal :school-id="this.school.id"></invite-merchant-modal>
 </template>
 
 <script>
@@ -47,10 +47,10 @@ export default {
         InviteMerchantModal,
     },
     props: {
-      schoolId: {
+      school: {
           required:true,
-          type: Number,
-      }
+          type: Object,
+      },
     },
     computed: {
         ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),

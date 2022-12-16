@@ -125,8 +125,8 @@ export default {
         };
     },
     props: {
-        schoolId: {
-            type: Number,
+        school: {
+            type: Object,
             required: true
         }
     },
@@ -150,7 +150,7 @@ export default {
         ]),
         handleGetMerchantsRequest() {
             axios
-                .get(`/api/admin/school/${this.schoolId}/merchants/?page=${this.currentPage}`)
+                .get(`/api/admin/school/${this.school.id}/merchants/?page=${this.currentPage}`)
                 .then((res) => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;

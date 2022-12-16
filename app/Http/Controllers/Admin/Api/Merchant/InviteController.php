@@ -17,7 +17,7 @@ class InviteController extends Controller
 {
     public function get(): ResourceCollection
     {
-        $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
+        $invites = Invite::with('school')->where('role', 'merchant')->where('school_id', request()->school_id)->latest()->paginate(5);
 
         return MerchantInviteResource::collection($invites);
     }
