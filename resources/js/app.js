@@ -2,8 +2,6 @@ import "./bootstrap";
 import "../css/app.css";
 import { createApp } from "vue/dist/vue.esm-bundler";
 import { createPinia } from "pinia";
-import { ZiggyVue } from "/vendor/tightenco/ziggy/dist/vue.es.js";
-import { Ziggy } from "./ziggy";
 
 import DashboardNavigation from "@/components/navigation/DashboardNavigation.vue";
 import DashboardNavigationMobile from "@/components/navigation/DashboardNavigationMobile.vue";
@@ -39,6 +37,7 @@ import ParentLunchList from "@/components/parent/lunch-management/ParentLunchLis
 import LunchFormEdit from "@/components/lunch-managment/LunchFormEdit.vue";
 import LunchEditPage from "@/components/lunch-managment/LunchEditPage.vue";
 import ConfirmationModal from "@/components/lunch-managment/ConfirmationModal.vue";
+import ParentLunchDetails from "@/components/parent/lunch-management/parentLunchDetails.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -74,7 +73,7 @@ app.component("parent-lunch-list", ParentLunchList);
 app.component("lunch-form-edit", LunchFormEdit);
 app.component("lunch-edit-page", LunchEditPage);
 app.component("confirmation-modal", ConfirmationModal);
+app.component("parent-lunch-details", ParentLunchDetails);
 
 app.use(pinia);
-app.use(ZiggyVue, Ziggy);
 app.mount("#app");

@@ -7,12 +7,12 @@
             class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
             <a
-                class="relative block w-full rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-400 focus:outline-none"
-                :href="route('school.add-lunch')"
+                class="mt-4 rounded-lg border-4 border-dashed border-gray-300 p-14 text-center hover:border-gray-500 focus:outline-none"
+                href="school/add-lunch"
                 v-if="store.lunches.length < 32"
                 :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
             >
-                <span class="mt-2 block text-sm font-medium text-gray-900"
+                <span class="mt-6 block text-md font-medium text-gray-900"
                     >Add Lunch</span
                 >
             </a>

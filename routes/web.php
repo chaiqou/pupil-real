@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('transactions/{student_id}', 'parent')->name('parent.transactions');
                 Route::get('dashboard/{student_id}', 'parent')->name('parent.dashboard');
                 Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
+                Route::get('lunch-details/{lunch_id}', 'parent')->name('parent.lunch-details');
             });
         });
     });
