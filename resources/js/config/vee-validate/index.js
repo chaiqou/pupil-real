@@ -27,10 +27,25 @@ defineRule("max", (value) => {
     return true;
 });
 
+defineRule("minimum_number", (value) => {
+    if (value < 1) {
+        return "The minimum value of this field is 1";
+    }
+    return true;
+});
+
+defineRule("maximum_number", (value) => {
+    if (value > 72) {
+        return "The maximim value of this field is 72";
+    }
+
+    return true;
+});
+
 defineRule("email", (value) => {
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regexEmail.test(value)) {
-        return 'Please write correct email';
+        return "Please write correct email";
     }
     return true;
 });

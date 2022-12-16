@@ -22,6 +22,7 @@ export const useLunchFormStore = defineStore("lunch", {
             each_active_range_day: [],
             lunches: [],
             currentLunchEditId: "",
+            buffer_time: "",
         };
     },
 
