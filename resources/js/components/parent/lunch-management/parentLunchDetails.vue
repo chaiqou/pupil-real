@@ -41,17 +41,14 @@
                         {{ lunch.period_length }}
                     </dd>
                 </div>
-                <div
-                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
-                >
-                    <dt class="text-sm font-medium space-x-12 text-gray-500">
-                        Weekdays
-                    </dt>
+                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                    <dt class="text-sm font-medium text-gray-500">Weekdays</dt>
                     <dd
-                        v-for="weekdays in lunch.weekdays"
-                        class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 md:block"
+                        class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ weekdays }}
+                        <div class="flex" v-for="weekdays in lunch.weekdays">
+                            {{ weekdays }}
+                        </div>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -70,17 +67,19 @@
                         }}
                     </dd>
                 </div>
-                <div
-                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
-                >
+                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">
                         Claimables
                     </dt>
                     <dd
-                        v-for="claimables in lunch.claimables"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ claimables }}
+                        <div
+                            class="flex"
+                            v-for="claimables in lunch.claimables"
+                        >
+                            {{ claimables }}
+                        </div>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -101,17 +100,19 @@
                         <span v-else>{{ lunch.extras }}</span>
                     </dd>
                 </div>
-                <div
-                    class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 md:flex"
-                >
+                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">
                         Available days
                     </dt>
                     <dd
-                        v-for="available_days in lunch.available_days"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        {{ available_days }}
+                        <div
+                            class="flex"
+                            v-for="available_days in lunch.available_days"
+                        >
+                            {{ available_days }}
+                        </div>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
