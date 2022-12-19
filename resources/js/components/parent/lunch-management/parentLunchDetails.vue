@@ -191,10 +191,14 @@ watch(bufferDays, (newValue) => {
         .filter((date) => isAfter(date, firstPossibleDay.value))
         .sort((a, b) => a - b);
 
-    // Remove from filteredDates period length days
-    availableDatesForStartOrdering.value = filteredDates.value.splice(
-        periodLength.value
-    );
+    if (filteredDates.value.length < periodLength) {
+        // Remove from filteredDates period length days
+        availableDatesForStartOrdering.value = filteredDates.value.splice(
+            periodLength.value
+        );
+    } else {
+        availableDatesForStartOrdering.value = filteredDates.value;
+    }
 
     // on load firstDay will be  available dates first day
     firstDay.value = availableDatesForStartOrdering.value[0];
