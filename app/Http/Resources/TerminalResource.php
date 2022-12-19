@@ -20,7 +20,6 @@ class TerminalResource extends JsonResource
         'serial_number' => $this->serial_number,
         'note' => $this->note,
         'public_key' => $this->public_key,
-        'private_key' => $this->private_key,
     ];
     }
 }

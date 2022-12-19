@@ -14,7 +14,6 @@
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Serial number</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Note</th>
                     <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Public key</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Private key</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
@@ -47,11 +46,6 @@
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         {{ terminal.public_key }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                    >
-                        {{ terminal.private_key }}
                     </td>
                 </tr>
                 <tr v-if="!this.isTerminalsLoaded" v-for="n in 7">
@@ -120,7 +114,7 @@ export default {
         ]),
     },
     methods: {
-        handleGetInvitesRequest() {
+        handleGetTerminalsRequest() {
             axios
                 .get(
                     `/api/school/${this.merchantIdByUser}/terminals?page=${this.currentPage}`
@@ -139,12 +133,12 @@ export default {
                 if (this.currentPage > this.lastPage) {
                     return;
                 }
-                this.handleGetInvitesRequest();
+                this.handleGetTerminalsRequest();
             }
         },
     },
     created() {
-        this.handleGetInvitesRequest();
+        this.handleGetTerminalsRequest();
     },
 };
 </script>

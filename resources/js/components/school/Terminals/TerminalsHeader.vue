@@ -24,15 +24,18 @@
         </div>
     </div>
     <terminal-create-modal></terminal-create-modal>
+    <qr-code-modal></qr-code-modal>
 </template>
 
 <script>
 import { useModalStore } from "@/stores/useModalStore";
 import { mapWritableState, mapActions } from "pinia";
 import TerminalCreateModal from "@/components/school/Terminals/TerminalCreateModal.vue";
+import QrCodeModal from "@/components/school/Terminals/QrCodeModal.vue";
 
 export default {
     components: {
+        QrCodeModal,
         TerminalCreateModal,
     },
     computed: {

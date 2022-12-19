@@ -1,9 +1,9 @@
 <template>
-    <TransitionRoot as="template" :show="this.isTerminalCreateVisible">
+    <TransitionRoot as="template" :show="this.isQrCodeVisible">
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isTerminalCreateVisible = false"
+            @close="this.isQrCodeVisible = false"
         >
             <TransitionChild
                 as="template"
@@ -35,27 +35,9 @@
                         <DialogPanel
                             class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
                         >
-                            <div
-                                class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block"
-                            >
-                                <button
-                                    type="button"
-                                    class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isTerminalCreateVisible = false"
-                                >
-                                    <span class="sr-only">Close</span>
-                                    <XMarkIcon
-                                        class="h-6 w-6"
-                                        aria-hidden="true"
-                                    />
-                                </button>
+                            <div class="flex justify-center items-center">
+                                <qrcode-vue :value="this.QRKeys" :size="300"></qrcode-vue>
                             </div>
-                            <div
-                                class="absolute top-0 left-0  hidden pt-4 pl-4 sm:block"
-                            >
-                                <p>Create a new terminal.</p>
-                            </div>
-                              <button @click="onSubmit()" class="mt-10 px-3 py-2 text-white bg-green-500 rounded-md w-full hover:bg-green-600">Create</button>
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -72,8 +54,9 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue";
+import QrcodeVue from "qrcode.vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapWritableState } from "pinia";
+import { mapWritableState } from "pinia";
 import { useModalStore } from "@/stores/useModalStore";
 import { useTerminalStore } from "@/stores/useTerminalStore";
 export default {
@@ -85,30 +68,11 @@ export default {
         TransitionRoot,
         ExclamationTriangleIcon,
         XMarkIcon,
-    },
-    data() {
-        return {
-      asd: ""
-        }
+        QrcodeVue,
     },
     computed: {
-        ...mapWritableState(useModalStore, ["isTerminalCreateVisible", "isQrCodeVisible", "isTerminalCreateVisible"]),
+        ...mapWritableState(useModalStore, ["isQrCodeVisible"]),
         ...mapWritableState(useTerminalStore, ["QRKeys"]),
-    },
-    methods: {
-        ...mapActions(useModalStore, ["showHideTerminalCreate"]),
-        onSubmit() {
-            axios.post('/api/school/terminal', {
-                public_key: "public_key",
-                private_key: "private_key",
-            })
-                .then((res) => {
-                this.isTerminalCreateVisible = false;
-                this.isQrCodeVisible = true;
-                this.QRKeys = JSON.stringify(res.data);
-                })
-                .catch((err) => console.log(err));
-        }
     },
 };
 </script>

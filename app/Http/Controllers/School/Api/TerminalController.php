@@ -17,16 +17,21 @@ class TerminalController extends Controller
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $public_key = $request->user()->createToken($request->public_key);
         $private_key = $request->user()->createToken($request->private_key);
-        Terminal::create([
+
+        $publicKeyToUpper = strtoupper($public_key->plainTextToken);
+        $privateKeyToUpper = strtoupper($private_key->plainTextToken);
+        $terminal = Terminal::create([
             'name' => '123',
             'serial_number' => '123123',
             'note' => 'Some note',
             'merchant_id' => $merchant->id,
             'user_id' => auth()->user()->id,
-            'public_key' => $public_key->plainTextToken,
-            'private_key' => $private_key->plainTextToken,
+            'public_key' => str_replace("|", "-", $publicKeyToUpper),
+            'private_key' => str_replace("|", "-", $privateKeyToUpper),
         ]);
-        return ['token' => $public_key->plainTextToken];
+
+        $keys = ["publicKey" => $terminal->public_key, "privateKey" => $terminal->private_key];
+        return json_encode($keys);
     }
 
     public function get(Request $request): ResourceCollection

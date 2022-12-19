@@ -6,6 +6,7 @@ export const useTerminalStore = defineStore("terminal", {
             isTerminalsLoaded: false,
             terminals: [],
             terminal: [],
+            QRKeys: null,
         };
     },
 });
