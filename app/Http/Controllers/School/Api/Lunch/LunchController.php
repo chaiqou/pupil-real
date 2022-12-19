@@ -38,12 +38,9 @@ class LunchController extends Controller
             }
         }
 
-        // dump($availableDays);
-        // dump(count($availableDays) - $periodLength);
 
         $availableDays = array_slice($availableDays, 0, count($availableDays) - $periodLength);
 
-        // dump($availableDays);
 
         return $availableDays;
     }
