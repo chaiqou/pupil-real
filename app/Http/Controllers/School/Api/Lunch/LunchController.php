@@ -38,12 +38,14 @@ class LunchController extends Controller
             }
         }
 
-        dump($availableDays);
-        dump(count($availableDays) - $periodLength);
+        // dump($availableDays);
+        // dump(count($availableDays) - $periodLength);
 
         $availableDays = array_slice($availableDays, 0, count($availableDays) - $periodLength);
 
-        dump($availableDays);
+        // dump($availableDays);
+
+        return $availableDays;
     }
 
 
@@ -53,7 +55,9 @@ class LunchController extends Controller
 
         $merchantId = Merchant::where('school_id', auth()->user()->school_id)->first();
 
-        Lunch::create([
+      $availableOrderDays = $this->calculateFirstAvailableDate($validate['buffer_time'],$validate['available_days'],$validate['period_length']);
+
+      Lunch::create([
             'merchant_id' => $merchantId->id,
             'title' => $validate['title'],
             'description' => $validate['description'],
@@ -67,9 +71,8 @@ class LunchController extends Controller
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
+            'order_days' => $availableOrderDays ?? null,
         ]);
-
-      $this->calculateFirstAvailableDate($validate['buffer_time'],$validate['available_days'],$validate['period_length']);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
     }

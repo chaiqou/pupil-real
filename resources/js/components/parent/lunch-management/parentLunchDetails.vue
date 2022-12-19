@@ -163,23 +163,19 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, onUpdated } from "vue";
+import { onMounted, ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addYears } from "date-fns";
 
 const store = useLunchFormStore();
 const datepickerValue = ref([]);
 
-onUpdated(() => {
-    console.log(datepickerValue.value.length);
-    console.log(datepickerValue.value);
-}),
-    onMounted(() => {
-        axios
-            .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
-            .then((response) => {
-                store.lunches.push(response.data.data);
-                store.marked_days.push(...response.data.data.available_days);
-            });
-    });
+onMounted(() => {
+    axios
+        .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
+        .then((response) => {
+            store.lunches.push(response.data.data);
+            store.marked_days.push(...response.data.data.available_days);
+        });
+});
 </script>

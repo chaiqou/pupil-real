@@ -25,6 +25,7 @@ return new class() extends Migration
             $table->json('holds')->nullable();
             $table->json('extras')->nullable();
             $table->json('available_days');
+            $table->json('order_days')->nullable();
             $table->integer('buffer_time');
             $table->integer('price_day');
             $table->integer('price_period');
