@@ -176,6 +176,12 @@ const firstAvailableDate = ref();
 watch([bufferTime, availableDays], (newValue) => {
     firstPossibleDay.value = addHours(currentDate, newValue[0]);
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
+
+    firstAvailableDate.value = availableDays.value[0].filter((date) =>
+        isAfter(date, firstPossibleDay.value)
+    );
+
+    firstAvailableDate.value.sort((a, b) => a - b);
 });
 
 onMounted(() => {
