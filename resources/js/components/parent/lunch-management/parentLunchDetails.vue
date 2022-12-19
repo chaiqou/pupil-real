@@ -151,12 +151,15 @@
             >
                 <p v-if="datepickerValue.length > 0" class="text-center">
                     {{
-                        "Order starting " +
+                        "Order starting at " +
                         format(datepickerValue[0], "yyyy MMMM dd")
                     }}
                 </p>
-                <p v-else class="text-center">
-                    {{ "Order starting at buffer time" }}
+                <p v-for="lunch in store.lunches" v-else class="text-center">
+                    {{
+                        "Order starting at " +
+                        format(parseISO(lunch.order_days[0]), "yyyy MMMM dd")
+                    }}
                 </p>
             </button>
         </div>
