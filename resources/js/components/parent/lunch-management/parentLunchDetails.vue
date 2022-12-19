@@ -165,23 +165,33 @@ const store = useLunchFormStore();
 const firstDay = ref(new Date());
 const allowedDates = ref(["2022-11-12"]);
 
+const periodLength = ref();
 const currentDate = new Date();
-const bufferTime = ref("");
-
+const bufferDays = ref("");
 const firstPossibleDay = ref("");
-const addOneDayToFirstPossibleDay = ref("");
 const availableDays = ref([]);
-const firstAvailableDate = ref();
+const addOneDayToFirstPossibleDay = ref("");
 
-watch([bufferTime, availableDays], (newValue) => {
-    firstPossibleDay.value = addHours(currentDate, newValue[0]);
+const filteredDates = ref();
+const availableDatesForStartOrdering = ref();
+
+watch(bufferDays, (newValue) => {
+    // Add buffer time hours to firstPossibleDay
+    firstPossibleDay.value = addHours(currentDate, newValue);
+
+    // Add one day to firstPossibleDay
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
+    // firstPossibleDay.value = addHours;
 
-    firstAvailableDate.value = availableDays.value[0].filter((date) =>
-        isAfter(date, firstPossibleDay.value)
+    // find dates which past then firstPossibleDay and store it to firstAvailableDay and Sort dates by ASC
+    filteredDates.value = availableDays.value[0]
+        .filter((date) => isAfter(date, firstPossibleDay.value))
+        .sort((a, b) => a - b);
+
+    // Remove from filteredDates period length days
+    availableDatesForStartOrdering.value = filteredDates.value.splice(
+        periodLength.value
     );
-
-    firstAvailableDate.value.sort((a, b) => a - b);
 });
 
 onMounted(() => {
@@ -193,7 +203,8 @@ onMounted(() => {
                     return parseISO(availableDay);
                 })
             );
-            bufferTime.value = response.data.data.buffer_time;
+            periodLength.value = response.data.data.period_length;
+            bufferDays.value = response.data.data.buffer_time;
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
         });
