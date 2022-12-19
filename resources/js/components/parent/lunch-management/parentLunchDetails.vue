@@ -145,7 +145,10 @@
                 <button
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p class="text-center">
+                    <p v-if="firstDay == ''" class="text-center">
+                        Please select order starting date
+                    </p>
+                    <p v-else class="text-center">
                         {{
                             "Order starting at " +
                             format(firstDay, "yyyy MMMM dd")
@@ -162,7 +165,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 
 const store = useLunchFormStore();
-const firstDay = ref(new Date());
+const firstDay = ref("");
 
 const periodLength = ref();
 const currentDate = new Date();
@@ -180,7 +183,6 @@ watch(bufferDays, (newValue) => {
 
     // Add one day to firstPossibleDay
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
-    // firstPossibleDay.value = addHours;
 
     // find dates which past then firstPossibleDay and store it to firstAvailableDay and Sort dates by ASC
     filteredDates.value = availableDays.value[0]
