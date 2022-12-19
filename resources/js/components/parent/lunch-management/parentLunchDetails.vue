@@ -157,18 +157,30 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, addDays, addHours, add } from "date-fns";
 
 const store = useLunchFormStore();
 const firstDay = ref(new Date());
 const allowedDates = ref(["2022-11-12"]);
 
+const currentDate = new Date();
+const bufferTime = ref("");
+
+const startDay = ref("");
+const addOneDayToStartDay = ref("");
+
+watch(bufferTime, (newValue) => {
+    startDay.value = addHours(currentDate, newValue);
+    addOneDayToStartDay.value = addDays(startDay.value, 1);
+});
+
 onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
+            bufferTime.value = response.data.data.buffer_time;
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
         });
