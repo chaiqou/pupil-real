@@ -138,26 +138,21 @@
                 <Datepicker
                     closeOnScroll
                     v-model="firstDay"
+                    :allowed-dates="allowedDates"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
+                <button
+                    class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
+                >
+                    <p class="text-center">
+                        {{
+                            "Order starting at " +
+                            format(firstDay, "yyyy MMMM dd")
+                        }}
+                    </p>
+                </button>
             </div>
-            <button
-                class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
-            >
-                <p v-if="datepickerValue.length > 0" class="text-center">
-                    {{
-                        "Order starting at " +
-                        format(datepickerValue[0], "yyyy MMMM dd")
-                    }}
-                </p>
-                <p v-for="lunch in store.lunches" v-else class="text-center">
-                    {{
-                        "Order starting at " +
-                        format(parseISO(lunch.order_days[0]), "yyyy MMMM dd")
-                    }}
-                </p>
-            </button>
         </div>
     </div>
 </template>
@@ -167,14 +162,15 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO } from "date-fns";
 
 const store = useLunchFormStore();
-const datepickerValue = ref(new Date());
 const firstDay = ref(null);
+const allowedDates = ref([]);
 
 onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            firstDay.value = response.data.data.order_days[0];
+            firstDay.value = parseISO(response.data.data.order_days[0]);
+            allowedDates.value.push(...response.data.data.order_days);
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
         });
