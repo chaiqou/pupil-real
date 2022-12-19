@@ -159,7 +159,7 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours, add } from "date-fns";
+import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 
 const store = useLunchFormStore();
 const firstDay = ref(new Date());
@@ -168,18 +168,25 @@ const allowedDates = ref(["2022-11-12"]);
 const currentDate = new Date();
 const bufferTime = ref("");
 
-const startDay = ref("");
-const addOneDayToStartDay = ref("");
+const firstPossibleDay = ref("");
+const addOneDayToFirstPossibleDay = ref("");
+const availableDays = ref([]);
+const firstAvailableDate = ref();
 
-watch(bufferTime, (newValue) => {
-    startDay.value = addHours(currentDate, newValue);
-    addOneDayToStartDay.value = addDays(startDay.value, 1);
+watch([bufferTime, availableDays], (newValue) => {
+    firstPossibleDay.value = addHours(currentDate, newValue[0]);
+    addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
 });
 
 onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
+            availableDays.value.push(
+                response.data.data.available_days.map((availableDay) => {
+                    return parseISO(availableDay);
+                })
+            );
             bufferTime.value = response.data.data.buffer_time;
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
