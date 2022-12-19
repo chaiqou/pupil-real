@@ -157,13 +157,12 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 
 const store = useLunchFormStore();
 const firstDay = ref(new Date());
-const allowedDates = ref(["2022-11-12"]);
 
 const periodLength = ref();
 const currentDate = new Date();
@@ -192,6 +191,10 @@ watch(bufferDays, (newValue) => {
     availableDatesForStartOrdering.value = filteredDates.value.splice(
         periodLength.value
     );
+});
+
+const allowedDates = computed(() => {
+    return availableDatesForStartOrdering.value;
 });
 
 onMounted(() => {
