@@ -18,62 +18,32 @@ class LunchController extends Controller
     {
         $lunches = Lunch::where('merchant_id', auth()->user()->school_id)->paginate(9);
 
-        $this->calculateFirstAvailableDate();
-
-
-
         return LunchResource::collection($lunches);
     }
 
-    public function calculateFirstAvailableDate()
+    public function calculateFirstAvailableDate($bufferTime , $availableDays, $periodLength)
     {
         $currentDate = Carbon::now();
 
-        // hard coded buffer time for example
-        $bufferTime = 72;
-
-        // hard coded available dates
-
-        $availableDates = [
-            '2022-12-01',
-            '2022-12-02',
-            '2022-12-03',
-            '2022-12-04',
-            '2022-12-20',
-            '2022-12-21',
-            '2022-12-22',
-            '2022-12-23',
-            '2022-12-24',
-            '2022-12-25',
-            '2022-12-26',
-            '2022-12-27',
-            '2022-12-28',
-            '2022-12-29',
-            '2022-12-30',
- ];
-
-        // hard coded period length
-        $periodLength = 5;
 
         $firstAvailableDate = $currentDate->addHours($bufferTime)->addDay();
 
-        dump($firstAvailableDate->toDateString());
+
 
         // remove days which before $firstAvailableDate
-        foreach ($availableDates as $key => $date) {
+        foreach ($availableDays as $key => $date) {
             $date = Carbon::parse($date);
             if ($date->lt($firstAvailableDate)) {
-                unset($availableDates[$key]);
+                unset($availableDays[$key]);
             }
         }
 
-        dump($availableDates);
-        dump(count($availableDates) - $periodLength);
+        dump($availableDays);
+        dump(count($availableDays) - $periodLength);
 
-        $availableDates = array_slice($availableDates, 0, count($availableDates) - $periodLength);
+        $availableDays = array_slice($availableDays, 0, count($availableDays) - $periodLength);
 
-        dump($availableDates);
-        // return $availableDates;
+        dump($availableDays);
     }
 
 
@@ -98,6 +68,8 @@ class LunchController extends Controller
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
         ]);
+
+      $this->calculateFirstAvailableDate($validate['buffer_time'],$validate['available_days'],$validate['period_length']);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
     }
