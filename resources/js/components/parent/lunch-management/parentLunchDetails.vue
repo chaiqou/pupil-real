@@ -111,7 +111,9 @@
                             class="flex"
                             v-for="available_days in lunch.available_days"
                         >
-                            {{ available_days }}
+                            {{
+                                format(parseISO(available_days), "yyyy MMM dd")
+                            }}
                         </div>
                     </dd>
                 </div>
@@ -165,7 +167,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 
 const store = useLunchFormStore();
-const firstDay = ref("");
+const firstDay = ref();
 
 const periodLength = ref();
 const currentDate = new Date();
@@ -193,6 +195,9 @@ watch(bufferDays, (newValue) => {
     availableDatesForStartOrdering.value = filteredDates.value.splice(
         periodLength.value
     );
+
+    // on load firstDay will be  available dates first day
+    firstDay.value = availableDatesForStartOrdering.value[0];
 });
 
 const allowedDates = computed(() => {
