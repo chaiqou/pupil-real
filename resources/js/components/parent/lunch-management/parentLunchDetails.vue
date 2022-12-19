@@ -162,15 +162,13 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO } from "date-fns";
 
 const store = useLunchFormStore();
-const firstDay = ref(null);
-const allowedDates = ref([]);
+const firstDay = ref(new Date());
+const allowedDates = ref(["2022-11-12"]);
 
 onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            firstDay.value = parseISO(response.data.data.order_days[0]);
-            allowedDates.value.push(...response.data.data.order_days);
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
         });

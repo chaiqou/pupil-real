@@ -28,7 +28,6 @@ class LunchResource extends JsonResource
             'price_day' => $this->price_day,
             'price_period' => $this->price_period,
             'claimables' => $this->claimables,
-            'order_days' => $this->order_days,
         ];
     }
 }

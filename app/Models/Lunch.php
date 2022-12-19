@@ -19,7 +19,6 @@ class Lunch extends Model
         'claimables' => 'array',
         'weekdays' => 'array',
         'available_days' => 'array',
-        'order_days' => 'array'
     ];
 
     public function merchant(): BelongsTo

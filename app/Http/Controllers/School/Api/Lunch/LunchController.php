@@ -21,30 +21,6 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
-    public function calculateFirstAvailableDate($bufferTime , $availableDays, $periodLength)
-    {
-        $currentDate = Carbon::now();
-
-
-        $firstAvailableDate = $currentDate->addHours($bufferTime)->addDay();
-
-
-
-        // remove days which before $firstAvailableDate
-        foreach ($availableDays as $key => $date) {
-            $date = Carbon::parse($date);
-            if ($date->lt($firstAvailableDate)) {
-                unset($availableDays[$key]);
-            }
-        }
-
-
-        $availableDays = array_slice($availableDays, 0, count($availableDays) - $periodLength);
-
-
-        return $availableDays;
-    }
-
 
     public function store(LunchRequest $request): JsonResponse
     {
@@ -52,7 +28,6 @@ class LunchController extends Controller
 
         $merchantId = Merchant::where('school_id', auth()->user()->school_id)->first();
 
-      $availableOrderDays = $this->calculateFirstAvailableDate($validate['buffer_time'],$validate['available_days'],$validate['period_length']);
 
       Lunch::create([
             'merchant_id' => $merchantId->id,
@@ -68,7 +43,6 @@ class LunchController extends Controller
             'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
-            'order_days' => $availableOrderDays ?? null,
         ]);
 
        return response()->json(['success' => 'Lunch created successfully'], 201);
