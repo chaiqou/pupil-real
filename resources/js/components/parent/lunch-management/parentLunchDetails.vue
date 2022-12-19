@@ -134,18 +134,14 @@
                     </dd>
                 </div>
             </dl>
-            <Datepicker
-                multi-dates
-                multi-dates-limit="1"
-                closeOnScroll
-                v-model="datepickerValue"
-                :maxDate="addYears(new Date(), 1)"
-                :partialRange="true"
-                :minDate="new Date()"
-                :enableTimePicker="false"
-                no-disabled-range
-                :clearable="false"
-            />
+            <div v-if="firstDay != null">
+                <Datepicker
+                    closeOnScroll
+                    v-model="firstDay"
+                    :enableTimePicker="false"
+                    :clearable="false"
+                />
+            </div>
             <button
                 class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
             >
@@ -168,15 +164,17 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addYears } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 const store = useLunchFormStore();
-const datepickerValue = ref([]);
+const datepickerValue = ref(new Date());
+const firstDay = ref(null);
 
 onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
+            firstDay.value = response.data.data.order_days[0];
             store.lunches.push(response.data.data);
             store.marked_days.push(...response.data.data.available_days);
         });
