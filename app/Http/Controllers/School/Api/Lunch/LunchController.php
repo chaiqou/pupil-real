@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
+use Carbon\Carbon;
 use App\Models\Lunch;
 use App\Models\Merchant;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,6 @@ class LunchController extends Controller
     {
         $lunches = Lunch::where('merchant_id', auth()->user()->school_id)->paginate(9);
 
-
         return LunchResource::collection($lunches);
     }
 
@@ -28,7 +28,8 @@ class LunchController extends Controller
 
         $merchantId = Merchant::where('school_id', auth()->user()->school_id)->first();
 
-        Lunch::create([
+
+      Lunch::create([
             'merchant_id' => $merchantId->id,
             'title' => $validate['title'],
             'description' => $validate['description'],

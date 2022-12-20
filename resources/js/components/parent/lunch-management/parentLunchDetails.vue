@@ -111,7 +111,9 @@
                             class="flex"
                             v-for="available_days in lunch.available_days"
                         >
-                            {{ available_days }}
+                            {{
+                                format(parseISO(available_days), "yyyy MMM dd")
+                            }}
                         </div>
                     </dd>
                 </div>
@@ -134,51 +136,91 @@
                     </dd>
                 </div>
             </dl>
-            <Datepicker
-                closeOnScroll
-                v-model="datepickerValue"
-                :maxDate="addYears(new Date(), 1)"
-                :partialRange="true"
-                :minDate="new Date()"
-                :enableTimePicker="false"
-                no-disabled-range
-                :clearable="false"
-                range
-            />
-            <button
-                class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
-            >
-                <p v-if="datepickerValue.length > 0" class="text-center">
-                    {{
-                        "Order starting " +
-                        format(datepickerValue[0], "yyyy MMMM dd")
-                    }}
-                </p>
-                <p v-else class="text-center">
-                    {{ "Order starting at buffer time" }}
-                </p>
-            </button>
+            <div v-if="firstDay != null">
+                <Datepicker
+                    closeOnScroll
+                    v-model="firstDay"
+                    :allowed-dates="allowedDates"
+                    :enableTimePicker="false"
+                    :clearable="false"
+                />
+                <button
+                    class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
+                >
+                    <p v-if="firstDay == ''" class="text-center">
+                        Please select order starting date
+                    </p>
+                    <p v-else class="text-center">
+                        {{
+                            "Order starting at " +
+                            format(firstDay, "yyyy MMMM dd")
+                        }}
+                    </p>
+                </button>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-import { onMounted, ref, onUpdated } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addYears } from "date-fns";
+import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 
 const store = useLunchFormStore();
-const datepickerValue = ref([]);
+const firstDay = ref();
 
-onUpdated(() => {
-    console.log(datepickerValue.value.length);
-    console.log(datepickerValue.value);
-}),
-    onMounted(() => {
-        axios
-            .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
-            .then((response) => {
-                store.lunches.push(response.data.data);
-                store.marked_days.push(...response.data.data.available_days);
-            });
-    });
+const periodLength = ref();
+const currentDate = new Date();
+const bufferDays = ref("");
+const firstPossibleDay = ref("");
+const availableDays = ref([]);
+const addOneDayToFirstPossibleDay = ref("");
+
+const filteredDates = ref();
+const availableDatesForStartOrdering = ref();
+
+watch(bufferDays, (newValue) => {
+    // Add buffer time hours to firstPossibleDay
+    firstPossibleDay.value = addHours(currentDate, newValue);
+
+    // Add one day to firstPossibleDay
+    addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
+
+    // find dates which past then firstPossibleDay and store it to firstAvailableDay and Sort dates by ASC
+    filteredDates.value = availableDays.value[0]
+        .filter((date) => isAfter(date, firstPossibleDay.value))
+        .sort((a, b) => a - b);
+
+    if (filteredDates.value.length < periodLength) {
+        // Remove from filteredDates period length days
+        availableDatesForStartOrdering.value = filteredDates.value.splice(
+            periodLength.value
+        );
+    } else {
+        availableDatesForStartOrdering.value = filteredDates.value;
+    }
+
+    // on load firstDay will be  available dates first day
+    firstDay.value = availableDatesForStartOrdering.value[0];
+});
+
+const allowedDates = computed(() => {
+    return availableDatesForStartOrdering.value;
+});
+
+onMounted(() => {
+    axios
+        .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
+        .then((response) => {
+            availableDays.value.push(
+                response.data.data.available_days.map((availableDay) => {
+                    return parseISO(availableDay);
+                })
+            );
+            periodLength.value = response.data.data.period_length;
+            bufferDays.value = response.data.data.buffer_time;
+            store.lunches.push(response.data.data);
+            store.marked_days.push(...response.data.data.available_days);
+        });
+});
 </script>
