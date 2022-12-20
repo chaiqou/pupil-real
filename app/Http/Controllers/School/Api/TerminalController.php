@@ -9,6 +9,8 @@ use App\Models\Merchant;
 use App\Models\Terminal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class TerminalController extends Controller
 {
@@ -30,7 +32,7 @@ class TerminalController extends Controller
             'private_key' => str_replace("|", "-", $privateKeyToUpper),
         ]);
 
-        $keys = ["publicKey" => $terminal->public_key, "privateKey" => $terminal->private_key];
+        $keys = ["PUBLIC-KEY" => $terminal->public_key, "PRIVATE-KEY" => $terminal->private_key];
         $terminals = Terminal::where('merchant_id', $merchant->id)->latest()->paginate(5);
         return [
             $keys,
@@ -42,5 +44,27 @@ class TerminalController extends Controller
     {
         $terminals = Terminal::where('merchant_id', $request->merchant_id)->latest()->paginate(5);
         return TerminalResource::collection($terminals);
+    }
+
+    public function requestSignature(Request $request)
+    {
+        $terminal = Terminal::where('public_key', $request->public_key)->first();
+        $terminal->update(['verification' => Str::random('24')]);
+        $signature = Hash::make($terminal->verification . $terminal->private_key);
+        return $signature;
+    }
+
+    public function verifySignature(Request $request)
+    {
+        $terminal = Terminal::where('public_key', $request->public_key)->first();
+
+        $realSignature = $terminal->verification . $terminal->private_key;
+        $givenSignature = $request->signature;
+
+        if (Hash::check($realSignature, $givenSignature)) {
+            return 'yes';
+        } else {
+            return 'no';
+        }
     }
 }

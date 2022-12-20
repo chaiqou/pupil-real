@@ -56,7 +56,7 @@
                                 <p>Create a new terminal.</p>
                             </div>
 
-                           <ValidationForm class="mt-10">
+                           <ValidationForm @submit="onSubmit" class="mt-10">
                                <div
                                    class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6"
                                >
@@ -155,9 +155,8 @@
                                    </div>
                                </div>
                                </div>
+                               <button class="mt-10 px-3 py-2 text-white bg-green-500 rounded-md w-full hover:bg-green-600">Create</button>
                            </ValidationForm>
-
-                              <button @click="onSubmit()" class="mt-10 px-3 py-2 text-white bg-green-500 rounded-md w-full hover:bg-green-600">Create</button>
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -205,7 +204,7 @@ export default {
     },
     methods: {
         ...mapActions(useModalStore, ["showHideTerminalCreate"]),
-        onSubmit() {
+        onSubmit(values,actions) {
             axios.post('/api/school/terminal', {
                 public_key: "public_key",
                 private_key: "private_key",
@@ -218,7 +217,7 @@ export default {
                 this.isQrCodeVisible = true;
                 this.terminals = res.data[1].data;
                 this.QRKeys = JSON.stringify(res.data[0]);
-                console.log(this.QRKeys, 'keys');
+                actions.setValues("");
                 })
                 .catch((err) => console.log(err));
         }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->string('private_key');
             $table->string('public_key');
+            $table->string('verification')->nullable();
             $table->foreignId('merchant_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
