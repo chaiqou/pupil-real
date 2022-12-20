@@ -94,6 +94,12 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
+const props = defineProps({
+    studentId: {
+        type: [Number, String],
+    },
+});
+
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
         store.lunches.push(...response.data.data);
@@ -102,6 +108,7 @@ onMounted(() => {
 
 const currentLunchEditId = (id) => {
     localStorage.setItem("lunchId", id);
-    window.location.href = "/parent/lunch-details/" + id;
+    window.location.href =
+        "/parent/lunch-details/" + id + "/student/" + props.studentId;
 };
 </script>

@@ -31,7 +31,7 @@ class NavigationController extends Controller
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/parent/knowledge-base/'.$student->id, 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                     ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
-                    ['name' => 'Lunch Details', 'icon' => 'none' , 'href' => '/parent/lunch-details/'.$lunchId, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches']
+                    ['name' => 'Lunch Details', 'icon' => 'none' , 'href' => '/parent/lunch-details/'.$lunchId . "student/" .$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches']
                 ];
         }
 
