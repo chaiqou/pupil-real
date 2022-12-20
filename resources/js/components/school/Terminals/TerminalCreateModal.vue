@@ -55,6 +55,108 @@
                             >
                                 <p>Create a new terminal.</p>
                             </div>
+
+                           <ValidationForm class="mt-10">
+                               <div
+                                   class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6"
+                               >
+                               <div class="sm:col-span-3">
+                                   <label
+                                       for="name"
+                                       class="block text-sm font-medium text-gray-700"
+                                   >Name</label
+                                   >
+                                   <div class="mt-1">
+                                       <Field
+                                           rules="required"
+                                           v-model="
+                                                        this
+                                                            .name
+                                                    "
+                                           type="text"
+                                           name="name"
+                                           id="name"
+                                           autocomplete="name"
+                                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                       />
+                                       <ErrorMessage
+                                           name="name"
+                                           class="text-red-500 text-sm"
+                                       >
+                                           <p
+                                               class="text-red-500 text-sm"
+                                           >
+                                               name is required
+                                           </p>
+                                       </ErrorMessage>
+                                   </div>
+                               </div>
+
+                               <div class="sm:col-span-3">
+                                   <label
+                                       for="serial-number"
+                                       class="block text-sm font-medium text-gray-700"
+                                   >Serial number</label
+                                   >
+                                   <div class="mt-1">
+                                       <Field
+                                           rules="required"
+                                           v-model="
+                                                        this
+                                                            .serial_number
+                                                    "
+                                           type="text"
+                                           name="serial_number"
+                                           id="serial_number"
+                                           autocomplete="serial-number"
+                                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                       />
+                                       <ErrorMessage
+                                           name="serial_number"
+                                           class="text-red-500 text-sm"
+                                       >
+                                           <p
+                                               class="text-red-500 text-sm"
+                                           >
+                                               serial number is required
+                                           </p>
+                                       </ErrorMessage>
+                                   </div>
+                               </div>
+
+                               <div class="sm:col-span-6">
+                                   <label
+                                       for="note"
+                                       class="block text-sm font-medium text-gray-700"
+                                   >Note</label
+                                   >
+                                   <div class="mt-1">
+                                       <Field
+                                           v-model="
+                                                        this
+                                                            .note
+                                                    "
+                                           type="text"
+                                           name="note"
+                                           id="note"
+                                           autocomplete="note"
+                                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                       />
+                                       <ErrorMessage
+                                           name="note"
+                                           class="text-red-500 text-sm"
+                                       >
+                                           <p
+                                               class="text-red-500 text-sm"
+                                           >
+                                               this field is required
+                                           </p>
+                                       </ErrorMessage>
+                                   </div>
+                               </div>
+                               </div>
+                           </ValidationForm>
+
                               <button @click="onSubmit()" class="mt-10 px-3 py-2 text-white bg-green-500 rounded-md w-full hover:bg-green-600">Create</button>
                         </DialogPanel>
                     </TransitionChild>
@@ -76,6 +178,7 @@ import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { useModalStore } from "@/stores/useModalStore";
 import { useTerminalStore } from "@/stores/useTerminalStore";
+import { Field, Form as ValidationForm, ErrorMessage} from "vee-validate";
 export default {
     components: {
         Dialog,
@@ -85,15 +188,20 @@ export default {
         TransitionRoot,
         ExclamationTriangleIcon,
         XMarkIcon,
+        ValidationForm,
+        Field,
+        ErrorMessage,
     },
     data() {
         return {
-      asd: ""
+         name: "",
+         serial_number: "",
+         note: "",
         }
     },
     computed: {
         ...mapWritableState(useModalStore, ["isTerminalCreateVisible", "isQrCodeVisible", "isTerminalCreateVisible"]),
-        ...mapWritableState(useTerminalStore, ["QRKeys"]),
+        ...mapWritableState(useTerminalStore, ["QRKeys", "terminals"]),
     },
     methods: {
         ...mapActions(useModalStore, ["showHideTerminalCreate"]),
@@ -101,11 +209,16 @@ export default {
             axios.post('/api/school/terminal', {
                 public_key: "public_key",
                 private_key: "private_key",
+                name: this.name,
+                serial_number: this.serial_number,
+                note: this.note,
             })
                 .then((res) => {
                 this.isTerminalCreateVisible = false;
                 this.isQrCodeVisible = true;
-                this.QRKeys = JSON.stringify(res.data);
+                this.terminals = res.data[1].data;
+                this.QRKeys = JSON.stringify(res.data[0]);
+                console.log(this.QRKeys, 'keys');
                 })
                 .catch((err) => console.log(err));
         }

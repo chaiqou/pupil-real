@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Parent;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\PersonalFormRequest;
-use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
 use App\Mail\OnboardingVerification;
 use App\Models\Invite;
@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
