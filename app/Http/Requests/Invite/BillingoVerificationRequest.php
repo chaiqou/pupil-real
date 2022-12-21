@@ -24,7 +24,7 @@ class BillingoVerificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'api_key' => 'required'
+            'api_key' => 'required',
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Invite\PersonalFormRequest;
-use App\Http\Requests\Invite\SetupAccountRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
 use App\Mail\OnboardingVerification;
 use App\Models\Invite;
@@ -14,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
@@ -55,20 +53,21 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $foundUser = User::where('email', $invite->email)->first();
         $request->validate([
-            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,' . $foundUser->id : 'unique:users,email'],
-            'password' => [Password::min(8)->mixedCase()->numbers(), 'required']
+            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,'.$foundUser->id : 'unique:users,email'],
+            'password' => [Password::min(8)->mixedCase()->numbers(), 'required'],
         ]);
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]) : $user = User::create([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ])->assignRole('parent');
         $invite->update([
-            'email' =>  isset($foundUser) ? $foundUser->email : $user->email,
+            'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
+
         return redirect()->route('parent-personal.form', ['uniqueID' => request()->uniqueID]);
     }
 

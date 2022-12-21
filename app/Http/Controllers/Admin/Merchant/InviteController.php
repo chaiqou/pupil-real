@@ -58,22 +58,20 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $foundUser = User::where('email', $invite->email)->first();
         $request->validate([
-            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,' . $foundUser->id : 'unique:users,email', 'unique:invites,email,' . $invite->id],
-            'password' => [Password::min(8)->mixedCase()->numbers(), 'required']
+            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,'.$foundUser->id : 'unique:users,email', 'unique:invites,email,'.$invite->id],
+            'password' => [Password::min(8)->mixedCase()->numbers(), 'required'],
         ]);
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]) : $user = User::create([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ])->assignRole('school');
         $invite->update([
-            'email' =>  isset($foundUser) ? $foundUser->email : $user->email,
+            'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
-
-
 
         return redirect()->route('merchant-personal.form', ['uniqueID' => request()->uniqueID]);
     }
@@ -155,8 +153,8 @@ class InviteController extends Controller
     public function submitBillingoVerify(BillingoVerificationRequest $request): RedirectResponse
     {
         $requestBillingo = Http::withHeaders([
-            'X-API-KEY' => $request->api_key
-      ])->get('https://api.billingo.hu/v3/utils/time');
+            'X-API-KEY' => $request->api_key,
+        ])->get('https://api.billingo.hu/v3/utils/time');
 
         if ($requestBillingo->status() === 401) {
             return redirect()->back()->withErrors('You provided wrong API key');
@@ -172,6 +170,7 @@ class InviteController extends Controller
             $user = User::where('email', $invite->email)->first();
             $merchant = Merchant::where('user_id', $user->id)->first();
             $merchant->update(['billingo_api_key' => $request->api_key]);
+
             return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
         } else {
             return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
@@ -213,8 +212,10 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
+
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
+
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

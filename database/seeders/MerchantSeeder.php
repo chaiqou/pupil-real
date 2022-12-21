@@ -59,7 +59,7 @@ class MerchantSeeder extends Seeder
             'company_details' => json_encode([
                 'company_name' => 'Winston',
                 'street_address' => '',
-                'VAT' => ''
+                'VAT' => '',
             ]),
             'merchant_nick' => 'White Bamboo',
         ]);

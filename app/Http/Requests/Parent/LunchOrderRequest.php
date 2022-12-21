@@ -28,7 +28,7 @@ class LunchOrderRequest extends FormRequest
             'available_days' => 'required',
             'claimables' => 'required',
             'period_length' => 'required',
-            'start_day' => 'required'
+            'start_day' => 'required',
         ];
     }
 }

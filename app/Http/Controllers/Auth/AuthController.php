@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\InviteController;
-use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
@@ -30,9 +30,11 @@ class AuthController extends Controller
 
             if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
                 $route = InviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             } elseif (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
                 $route = MerchantInviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             }
 

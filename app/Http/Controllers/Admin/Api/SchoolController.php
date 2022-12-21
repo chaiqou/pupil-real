@@ -16,6 +16,7 @@ class SchoolController extends Controller
     public function index(): ResourceCollection
     {
         $schools = School::latest('created_at')->paginate(5);
+
         return SchoolResource::collection($schools);
     }
 
@@ -24,9 +25,9 @@ class SchoolController extends Controller
         $schools = School::all();
         $schoolsArray = [];
         foreach ($schools as $school) {
-            $schoolsArray[] = (object)[
+            $schoolsArray[] = (object) [
                 'id' => $school->id,
-                'name' => $school->short_name . ' ' . '(' . $school->school_code . ')',
+                'name' => $school->short_name.' '.'('.$school->school_code.')',
             ];
         }
 
@@ -62,8 +63,10 @@ class SchoolController extends Controller
             'school_code' => $request->school_code,
         ]);
         $schools = School::latest('created_at')->paginate(5);
+
         return SchoolResource::collection($schools);
     }
+
     public function store(StoreSchoolRequest $request): ResourceCollection
     {
         School::create([
@@ -85,6 +88,7 @@ class SchoolController extends Controller
             'school_code' => $request->school_code,
         ]);
         $schools = School::latest('created_at')->paginate(5);
+
         return SchoolResource::collection($schools);
     }
 }

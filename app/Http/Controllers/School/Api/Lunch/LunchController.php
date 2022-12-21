@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\LunchRequest;
+use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
-use App\Models\Student;
 use App\Models\Merchant;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LunchRequest;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\LunchResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LunchController extends Controller
 {
-
-    public function index (): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         $lunches = Lunch::where('merchant_id', auth()->user()->school_id)->paginate(9);
 
         return LunchResource::collection($lunches);
     }
-
 
     public function store(LunchRequest $request): JsonResponse
     {
@@ -30,8 +25,7 @@ class LunchController extends Controller
 
         $merchantId = Merchant::where('school_id', auth()->user()->school_id)->first();
 
-
-      Lunch::create([
+        Lunch::create([
             'merchant_id' => $merchantId->id,
             'title' => $validate['title'],
             'description' => $validate['description'],
@@ -47,7 +41,7 @@ class LunchController extends Controller
             'buffer_time' => $validate['buffer_time'],
         ]);
 
-       return response()->json(['success' => 'Lunch created successfully'], 201);
+        return response()->json(['success' => 'Lunch created successfully'], 201);
     }
 
     public function show(Lunch $lunch): LunchResource
@@ -56,14 +50,13 @@ class LunchController extends Controller
     }
 
     public function update(LunchRequest $request, Lunch $lunch)
-{
-    $validatedData = $request->validated();
+    {
+        $validatedData = $request->validated();
 
-    $lunch->update($validatedData);
+        $lunch->update($validatedData);
 
-    $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
+        $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
 
-    return LunchResource::collection($lunches);
-}
-
+        return LunchResource::collection($lunches);
+    }
 }

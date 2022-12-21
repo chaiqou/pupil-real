@@ -15,12 +15,12 @@ class MerchantInviteResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'id' => $this->id,
-        'email' => $this->email,
-        'state' => $this->state,
-        'school' => json_decode($this->school),
-        'created_at' => $this->created_at,
-        'updated_at' => $this->updated_at,
-    ];
+            'id' => $this->id,
+            'email' => $this->email,
+            'state' => $this->state,
+            'school' => json_decode($this->school),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }
