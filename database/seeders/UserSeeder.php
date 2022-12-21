@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'first_name' => 'AdminF',
             'last_name' => 'AdminL',
-            'school_id' => 1,
+            'school_id' => null,
             'summary_frequency' => 1,
             'finished_onboarding' => 1,
             'user_information' => json_encode([

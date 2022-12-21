@@ -28,7 +28,7 @@ defineRule("max", (value) => {
 });
 
 defineRule("email", (value) => {
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!regexEmail.test(value)) {
         return 'Please write correct email';
     }
@@ -45,7 +45,7 @@ defineRule("min-words-3", (value) => {
 
 defineRule("phone", (value) => {
     const regexPhoneNumber =
-        /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
+        /^\+(?:[0-9] ?){6,14}[0-9]$/;
     if (!regexPhoneNumber.test(value)) {
         return;
     }
