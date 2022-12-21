@@ -47,18 +47,6 @@
                     >
                         {{ terminal.public_key }}
                     </td>
-
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                    >
-                        <button @click="this.handleGetSignatureRequest(terminal.public_key)" class="text-white bg-green-500 px-3 py-2 rounded-md">Request</button>
-                    </td>
-
-                    <td
-                        class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                    >
-                        <button @click="this.handleVerifySignatureRequest(terminal.public_key)" class="text-white bg-green-500 px-3 py-2 rounded-md">Verify</button>
-                    </td>
                 </tr>
                 <tr v-if="!this.isTerminalsLoaded" v-for="n in 7">
                     <td
@@ -107,7 +95,6 @@ export default {
         return {
             currentPage: 1,
             lastPage: 2,
-            signature: null,
         };
     },
     props: {
@@ -127,18 +114,6 @@ export default {
         ]),
     },
     methods: {
-        handleGetSignatureRequest(key) {
-          axios.get(`/api/school/${key}/request`)
-              .then((res) => {
-                  this.signature = res.data;
-              })
-              .catch(err => console.log(err))
-        },
-        handleVerifySignatureRequest(key) {
-          axios.post(`/api/school/${key}/verify`, {signature: this.signature})
-              .then(res => console.log(res.data))
-              .catch(err => console.log(err))
-        },
         handleGetTerminalsRequest() {
             axios
                 .get(

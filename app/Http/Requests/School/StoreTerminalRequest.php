@@ -25,7 +25,7 @@ class StoreTerminalRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'serial_number' => 'required',
+            'serial_number' => 'required|min:12|max:12',
             'note' => '',
             'public_key' => 'required|string',
             'private_key' => 'required|string',

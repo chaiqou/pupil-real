@@ -7,6 +7,7 @@ use App\Http\Requests\School\StoreTerminalRequest;
 use App\Http\Resources\TerminalResource;
 use App\Models\Merchant;
 use App\Models\Terminal;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Hash;
@@ -46,7 +47,7 @@ class TerminalController extends Controller
         return TerminalResource::collection($terminals);
     }
 
-    public function requestSignature(Request $request)
+    public function getSignature(Request $request)
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
         $terminal->update(['verification' => Str::random('24')]);
@@ -54,7 +55,7 @@ class TerminalController extends Controller
         return $signature;
     }
 
-    public function verifySignature(Request $request)
+    public function verifySignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
 
@@ -62,9 +63,9 @@ class TerminalController extends Controller
         $givenSignature = $request->signature;
 
         if (Hash::check($realSignature, $givenSignature)) {
-            return 'yes';
+            return response()->json(['message' => 'Signature verified successfully']);
         } else {
-            return 'no';
+            return response()->json(['error' => 'Something went wrong'], 404);
         }
     }
 }

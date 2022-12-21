@@ -100,7 +100,7 @@
                                    >
                                    <div class="mt-1">
                                        <Field
-                                           rules="required"
+                                           rules="required|min:12|max:12"
                                            v-model="
                                                         this
                                                             .serial_number
