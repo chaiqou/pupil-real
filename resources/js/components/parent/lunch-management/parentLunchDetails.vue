@@ -179,6 +179,12 @@ const addOneDayToFirstPossibleDay = ref("");
 const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
 
+const props = defineProps({
+    studentId: {
+        type: [Number, String],
+    },
+});
+
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay
     firstPossibleDay.value = addHours(currentDate, newValue);
