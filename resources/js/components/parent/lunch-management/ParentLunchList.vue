@@ -51,7 +51,7 @@
                                         new Date()
                                     )
                                 }}
-                                days left</span
+                                {{ lunch.id }}</span
                             >
                         </a>
                     </div>
@@ -106,9 +106,8 @@ onMounted(() => {
     });
 });
 
-const currentLunchEditId = (id) => {
-    localStorage.setItem("lunchId", id);
-    window.location.href =
-        "/parent/lunch-details/" + id + "/student/" + props.studentId;
+const currentLunchEditId = (lunchId) => {
+    localStorage.setItem("lunchId", lunchId);
+    window.location.href = "/parent/lunch-details/" + props.studentId;
 };
 </script>

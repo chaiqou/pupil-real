@@ -4,8 +4,10 @@ namespace App\Http\Controllers\School\Api\Lunch;
 
 use Carbon\Carbon;
 use App\Models\Lunch;
+use App\Models\Student;
 use App\Models\Merchant;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LunchRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LunchResource;

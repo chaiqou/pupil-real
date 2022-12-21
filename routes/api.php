@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInv
 use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
             Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
+            Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'index'])->name('parent.order_lunch');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
