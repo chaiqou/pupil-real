@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Parent\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
 class OrderLunchController extends Controller
 {
-    public function index(Request $request)
+    public function index(LunchOrderRequest $request)
     {
 
-        dump($request->lunch_details);
-        $student = Student::where('id', $request->student_id)->first();
+        $validate = $request->validated();
+        $student = Student::where('id', $validate->student_id)->first();
 
         $lunch = PeriodicLunch::create([
             'student_id' => $student->id,
