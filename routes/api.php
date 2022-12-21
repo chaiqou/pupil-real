@@ -92,8 +92,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
             });
             Route::controller(TerminalController::class)->group(function () {
-                Route::get('{public_key}/verify', 'getSignature')->name('get.signature');
-                Route::post('{public_key}/verify', 'verifySignature')->name('verify.signature');
                 Route::get('{merchant_id}/terminals', 'get')->name('terminal.get');
                 Route::post('terminal', 'store')->name('terminal.store');
             });
@@ -101,4 +99,6 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+Route::get('{public_key}/verify', 'getSignature')->name('get.signature');
+Route::post('{public_key}/verify', 'verifySignature')->name('verify.signature');
 Route::apiResource('school/lunch', LunchController::class);

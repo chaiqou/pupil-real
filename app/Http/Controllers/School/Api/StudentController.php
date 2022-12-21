@@ -21,6 +21,7 @@ class StudentController extends Controller
 
     public function getDashboardStudents(Request $request): ResourceCollection|JsonResponse
     {
+        //this needs fix in the future, because we have multiple merchants per school
         $merchant = Merchant::where('user_id', $request->school_id)->first();
         $students = Student::where('school_id', $merchant->id)->with('user')->latest('created_at')->paginate(6);
 
