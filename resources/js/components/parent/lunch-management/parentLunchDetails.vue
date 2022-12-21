@@ -190,11 +190,15 @@ const props = defineProps({
 const startOrderingLunch = () => {
     axios.post("/api/parent/lunch-order/" + props.studentId, {
         student_id: props.studentId,
-        lunch_details: lunchDetails.value,
+        available_days: lunchDetails.value[0].available_days,
+        claimables: lunchDetails.value[0].claimables,
+        period_length: lunchDetails.value[0].period_length,
+        start_day: firstDay.value,
     });
 };
 
 watch(bufferDays, (newValue) => {
+    console.log(lunchDetails.value);
     // Add buffer time hours to firstPossibleDay
     firstPossibleDay.value = addHours(currentDate, newValue);
 

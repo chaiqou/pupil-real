@@ -25,7 +25,10 @@ class LunchOrderRequest extends FormRequest
     {
         return [
             'student_id' => 'required',
-            'lunch_details' => 'required'
+            'available_days' => 'required',
+            'claimables' => 'required',
+            'period_length' => 'required',
+            'start_day' => 'required'
         ];
     }
 }

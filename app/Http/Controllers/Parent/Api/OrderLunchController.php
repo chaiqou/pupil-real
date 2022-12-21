@@ -14,6 +14,7 @@ class OrderLunchController extends Controller
     {
 
         $validate = $request->validated();
+        dump($validate);
         $student = Student::where('id', $validate->student_id)->first();
 
         $lunch = PeriodicLunch::create([
