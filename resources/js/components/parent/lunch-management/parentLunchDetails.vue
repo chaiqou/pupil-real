@@ -145,6 +145,7 @@
                     :clearable="false"
                 />
                 <button
+                    @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
                     <p v-if="firstDay == ''" class="text-center">
@@ -184,6 +185,12 @@ const props = defineProps({
         type: [Number, String],
     },
 });
+
+const startOrderingLunch = () => {
+    axios.post("/api/parent/lunch-order/" + props.studentId, {
+        student_id: props.studentId,
+    });
+};
 
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay

@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class OrderLunchController extends Controller
 {
-    public function index($student_id)
+    public function index(Request $request)
     {
-        dump($student_id);
+        dump($request->all());
+
+        return response()->json(['success' => 'success']);
     }
 }
