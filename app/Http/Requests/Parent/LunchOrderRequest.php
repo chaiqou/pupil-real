@@ -29,6 +29,7 @@ class LunchOrderRequest extends FormRequest
             'claimables' => 'required',
             'period_length' => 'required',
             'start_day' => 'required',
+            'lunch_id' => 'required',
         ];
     }
 }

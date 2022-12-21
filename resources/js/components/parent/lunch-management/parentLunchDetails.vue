@@ -194,11 +194,11 @@ const startOrderingLunch = () => {
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
         start_day: firstDay.value,
+        lunch_id: lunchDetails.value[0].id,
     });
 };
 
 watch(bufferDays, (newValue) => {
-    console.log(lunchDetails.value);
     // Add buffer time hours to firstPossibleDay
     firstPossibleDay.value = addHours(currentDate, newValue);
 

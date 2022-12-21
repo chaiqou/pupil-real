@@ -13,12 +13,10 @@ class OrderLunchController extends Controller
     public function index(LunchOrderRequest $request)
     {
         $validate = $request->validated();
-        dump($validate);
         $student = Student::where('id', $validate['student_id'])->first();
 
         // Validate the start date
         $startDate = Carbon::parse($validate['start_day']);
-        dump($startDate->toDateString());
 
         // Filter the available dates array and take the first n elements
         $availableDates = array_filter($validate['available_days'], function ($date) use ($startDate) {
@@ -27,16 +25,17 @@ class OrderLunchController extends Controller
 
         $availableDates = array_slice($availableDates, 0, $validate['period_length']);
 
-        dump($availableDates);
-
-
-
+        $availableDatesCollection = collect($availableDates);
 
         $lunch = PeriodicLunch::create([
             'student_id' => $student->id,
-            'card_data' => $student->card_data,
-            'transaction_id' => 123,
+            'transaction_id' => 1,
             'merchant_id' => $student->school_id,
+            'lunch_id' => $validate['lunch_id'],
+            'card_data' => $student->card_data,
+            'start_date' => $availableDatesCollection->first(),
+            'end_date' => $availableDatesCollection->last(),
+            'claims' => json_encode($availableDates),
         ]);
 
         return response()->json(['success' => 'success']);
