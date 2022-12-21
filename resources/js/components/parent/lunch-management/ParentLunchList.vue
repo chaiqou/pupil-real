@@ -51,7 +51,7 @@
                                         new Date()
                                     )
                                 }}
-                                {{ lunch.id }}</span
+                                days left</span
                             >
                         </a>
                     </div>

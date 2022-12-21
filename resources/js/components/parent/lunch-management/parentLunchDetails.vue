@@ -10,7 +10,7 @@
         </div>
         <div class="mt-5 border-t border-gray-200">
             <dl
-                v-for="lunch in store.lunches"
+                v-for="lunch in lunchDetails"
                 class="sm:divide-y sm:divide-gray-200"
             >
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -179,6 +179,7 @@ const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
+const lunchDetails = ref([]);
 
 const props = defineProps({
     studentId: {
@@ -189,6 +190,7 @@ const props = defineProps({
 const startOrderingLunch = () => {
     axios.post("/api/parent/lunch-order/" + props.studentId, {
         student_id: props.studentId,
+        lunch_details: lunchDetails.value,
     });
 };
 
@@ -232,7 +234,7 @@ onMounted(() => {
             );
             periodLength.value = response.data.data.period_length;
             bufferDays.value = response.data.data.buffer_time;
-            store.lunches.push(response.data.data);
+            lunchDetails.value = [response.data.data];
             store.marked_days.push(...response.data.data.available_days);
         });
 });

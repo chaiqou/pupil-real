@@ -12,6 +12,7 @@ class OrderLunchController extends Controller
     public function index(Request $request)
     {
 
+        dump($request->lunch_details);
         $student = Student::where('id', $request->student_id)->first();
 
         $lunch = PeriodicLunch::create([
