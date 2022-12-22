@@ -23,14 +23,30 @@ class OrderLunchController extends Controller
             return Carbon::parse($date)->gte($startDate);
         });
 
-             $sortedAvailableDates =  collect($availableDates)->sortBy(function ($item) {
+        $sortedAvailableDates = collect($availableDates)->sortBy(function ($item) {
             return Carbon::parse($item)->timestamp;
         });
 
         $sortedAvailableDates->splice($validate['period_length']);
 
 
+        // Generates claims json for each days and also loops over claimables
 
+        $claimsJson = [];
+
+        foreach ($sortedAvailableDates as $date) {
+            $claimables = [];
+
+            foreach ($validate['claimables'] as $claimable) {
+                $claimables[] = [
+                    'name' => $claimable,
+                    'claimed' => false,
+                    'claimed_date' => null,
+                ];
+            }
+
+            $claimsJson[$date] = $claimables;
+        }
 
         $lunch = PeriodicLunch::create([
             'student_id' => $student->id,
@@ -40,7 +56,7 @@ class OrderLunchController extends Controller
             'card_data' => $student->card_data,
             'start_date' => $sortedAvailableDates->first(),
             'end_date' => $sortedAvailableDates->last(),
-            'claims' => json_encode($sortedAvailableDates),
+            'claims' => json_encode($claimsJson),
         ]);
 
         return response()->json(['success' => 'success']);
