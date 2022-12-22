@@ -149,7 +149,7 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!formIsValid">Button is disabled</p>
+                    <p v-if="!formIsValid">Lunch is not valid</p>
                     <p
                         v-if="firstDay == '' && !formIsValid"
                         class="text-center"
@@ -185,7 +185,7 @@ const addOneDayToFirstPossibleDay = ref("");
 const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
 const lunchDetails = ref([]);
-const formIsValid = ref(false);
+const formIsValid = ref();
 
 const props = defineProps({
     studentId: {
@@ -223,6 +223,12 @@ watch(bufferDays, (newValue) => {
         );
     } else {
         availableDatesForStartOrdering.value = filteredDates.value;
+    }
+
+    if (availableDays.value[0].length < +periodLength.value) {
+        formIsValid.value = false;
+    } else {
+        formIsValid.value = true;
     }
 
     // on load firstDay will be  available dates first day
