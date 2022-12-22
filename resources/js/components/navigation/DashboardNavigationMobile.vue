@@ -195,6 +195,7 @@ import {
     BookOpenIcon,
     Cog8ToothIcon,
     CakeIcon,
+    CommandLineIcon,
 } from "@heroicons/vue/24/outline";
 export default {
     components: {
@@ -206,6 +207,7 @@ export default {
         BookOpenIcon,
         Cog8ToothIcon,
         CakeIcon,
+        CommandLineIcon,
     },
     computed: {
         ...mapWritableState(useModalStore, [

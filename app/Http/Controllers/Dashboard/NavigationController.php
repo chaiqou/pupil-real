@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\User;
@@ -75,6 +76,7 @@ class NavigationController extends Controller
                     ['name' => 'Lunch management', 'icon' => 'BuildingOffice2Icon', 'href' => '/school/lunch-management', 'current' => false],
                     ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' => '/school/transactions', 'current' => false],
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
+                    ['name' => 'Terminals', 'icon' => 'CommandLineIcon', 'href' => '/school/terminals', 'current' => false],
                     ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
                     ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
@@ -85,6 +87,8 @@ class NavigationController extends Controller
         }
 
         $currentTab = request()->route()->getName();
+
+        $merchantIdByUser = Merchant::where('user_id', auth()->user()->id)->first()->id;
 
         if (auth()->user()->is_verified === 0) {
             return redirect()->route('2fa.form');
@@ -98,6 +102,7 @@ class NavigationController extends Controller
             'student' => $user,
             'schoolId' => $user->school_id,
             'lunchId' => $lunchId,
+            'merchantIdByUser' => $merchantIdByUser,
         ])->with(['page', 'Dashboard']);
     }
 

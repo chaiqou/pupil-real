@@ -24,8 +24,6 @@ return new class() extends Migration
             $table->boolean('has_balance')->default(false);
             $table->boolean('has_lunch')->default(false);
             $table->json('company_details');
-            $table->integer('private_key')->nullable();
-            $table->integer('public_key')->nullable();
             $table->timestamps();
         });
     }

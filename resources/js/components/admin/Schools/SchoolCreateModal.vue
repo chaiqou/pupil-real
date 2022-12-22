@@ -224,7 +224,7 @@
                                             <label
                                                 for="state"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >state</label
+                                            >State</label
                                             >
                                             <div class="mt-1">
                                                 <Field
@@ -352,7 +352,7 @@
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required|phone"
-                                                    type="number"
+                                                    type="text"
                                                     v-model="
                                                         this.phone_number
                                                     "
@@ -369,36 +369,6 @@
                                                         class="text-red-500 text-sm"
                                                     >
                                                         phone number is required
-                                                    </p>
-                                                </ErrorMessage>
-                                            </div>
-                                        </div>
-
-                                        <div class="sm:col-span-2">
-                                            <label
-                                                for="mobile-number"
-                                                class="block text-sm font-medium text-gray-700"
-                                            >Mobile number</label
-                                            >
-                                            <div class="mt-1">
-                                                <Field
-                                                    type="number"
-                                                    v-model="
-                                                        this.mobile_number
-                                                    "
-                                                    name="mobile_number"
-                                                    id="mobile_number"
-                                                    autocomplete="mobile-number"
-                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                />
-                                                <ErrorMessage
-                                                    name="mobile_number"
-                                                    class="text-red-500 text-sm"
-                                                >
-                                                    <p
-                                                        class="text-red-500 text-sm"
-                                                    >
-                                                        mobile number is required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -434,6 +404,35 @@
                                             </div>
                                         </div>
 
+                                        <div class="sm:col-span-2">
+                                            <label
+                                                for="mobile-number"
+                                                class="block text-sm font-medium text-gray-700"
+                                            >Mobile number</label
+                                            >
+                                            <div class="mt-1">
+                                                <Field
+                                                    type="number"
+                                                    v-model="
+                                                        this.mobile_number
+                                                    "
+                                                    name="mobile_number"
+                                                    id="mobile_number"
+                                                    autocomplete="mobile-number"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                />
+                                                <ErrorMessage
+                                                    name="mobile_number"
+                                                    class="text-red-500 text-sm"
+                                                >
+                                                    <p
+                                                        class="text-red-500 text-sm"
+                                                    >
+                                                        mobile number is required
+                                                    </p>
+                                                </ErrorMessage>
+                                            </div>
+                                        </div>
 
                                         <div class="sm:col-span-6">
                                             <label

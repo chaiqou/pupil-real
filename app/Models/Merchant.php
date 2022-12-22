@@ -14,7 +14,7 @@ class Merchant extends Model
 
     protected $guarded = ['id'];
 
-    public function user(): HasMany
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }

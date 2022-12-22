@@ -13,6 +13,8 @@ export const useModalStore = defineStore("modal", {
             isMerchantEditVisible: false,
             isInviteMerchantVisible: false,
             isCreateSchoolVisible: false,
+            isTerminalCreateVisible: false,
+            isQrCodeVisible: false,
         };
     },
     actions: {
@@ -45,6 +47,9 @@ export const useModalStore = defineStore("modal", {
         },
         showHideInviteMerchant() {
             this.isInviteMerchantVisible = !this.isInviteMerchantVisible;
-        }
+        },
+        showHideTerminalCreate() {
+            this.isTerminalCreateVisible = !this.isTerminalCreateVisible;
+        },
     },
 });
