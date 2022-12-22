@@ -27,7 +27,8 @@ class OrderLunchController extends Controller
             return Carbon::parse($item)->timestamp;
         });
 
-        dump($sortedAvailableDates);
+        $sortedAvailableDates->splice(-$validate['period_length']);
+
 
 
 
@@ -39,7 +40,7 @@ class OrderLunchController extends Controller
             'card_data' => $student->card_data,
             'start_date' => $sortedAvailableDates->first(),
             'end_date' => $sortedAvailableDates->last(),
-            'claims' => json_encode($availableDates),
+            'claims' => json_encode($sortedAvailableDates),
         ]);
 
         return response()->json(['success' => 'success']);
