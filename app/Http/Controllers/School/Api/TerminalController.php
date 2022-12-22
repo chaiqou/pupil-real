@@ -51,19 +51,18 @@ class TerminalController extends Controller
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
         $terminal->update(['verification' => Str::random('24')]);
-        $signature = Hash::make($terminal->verification . $terminal->private_key);
-        return $signature;
+        return response()->json(['verification' => $terminal->verification], 200);
     }
 
     public function verifySignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
 
-        $realSignature = $terminal->verification . $terminal->private_key;
-        $givenSignature = $request->signature;
+        $realSignature = strtoupper(hash('sha512', $terminal->verification . $terminal->private_key));
+        $givenSignature = strtoupper($request->signature);
 
-        if (Hash::check($realSignature, $givenSignature)) {
-            return response()->json(['message' => 'Signature verified successfully']);
+        if ($realSignature === $givenSignature) {
+            return response()->json(['message' => 'Signature verified successfully'], 200);
         } else {
             return response()->json(['error' => 'Something went wrong'], 404);
         }
