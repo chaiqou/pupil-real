@@ -23,9 +23,13 @@ class OrderLunchController extends Controller
             return Carbon::parse($date)->gte($startDate);
         });
 
-        $availableDates = array_slice($availableDates, 0, $validate['period_length']);
+             $sortedAvailableDates =  collect($availableDates)->sortBy(function ($item) {
+            return Carbon::parse($item)->timestamp;
+        });
 
-        $availableDatesCollection = collect($availableDates);
+        dump($sortedAvailableDates);
+
+
 
         $lunch = PeriodicLunch::create([
             'student_id' => $student->id,
@@ -33,8 +37,8 @@ class OrderLunchController extends Controller
             'merchant_id' => $student->school_id,
             'lunch_id' => $validate['lunch_id'],
             'card_data' => $student->card_data,
-            'start_date' => $availableDatesCollection->first(),
-            'end_date' => $availableDatesCollection->last(),
+            'start_date' => $sortedAvailableDates->first(),
+            'end_date' => $sortedAvailableDates->last(),
             'claims' => json_encode($availableDates),
         ]);
 
