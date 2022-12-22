@@ -27,7 +27,7 @@ class OrderLunchController extends Controller
             return Carbon::parse($item)->timestamp;
         });
 
-        $sortedAvailableDates->splice(-$validate['period_length']);
+        $sortedAvailableDates->splice($validate['period_length']);
 
 
 
