@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 class TerminalController extends Controller
 {
-    public function store(StoreTerminalRequest $request)
+    public function store(StoreTerminalRequest $request): array
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $public_key = $request->user()->createToken($request->public_key);
@@ -47,7 +47,7 @@ class TerminalController extends Controller
         return TerminalResource::collection($terminals);
     }
 
-    public function getSignature(Request $request)
+    public function getSignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
         $terminal->update(['verification' => Str::random('24')]);
