@@ -145,13 +145,18 @@
                     :clearable="false"
                 />
                 <button
+                    v-bind:disabled="!formIsValid"
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="firstDay == ''" class="text-center">
+                    <p v-if="!formIsValid">Button is disabled</p>
+                    <p
+                        v-if="firstDay == '' && !formIsValid"
+                        class="text-center"
+                    >
                         Please select order starting date
                     </p>
-                    <p v-else class="text-center">
+                    <p v-if="firstDay != '' && formIsValid" class="text-center">
                         {{
                             "Order starting at " +
                             format(firstDay, "yyyy MMMM dd")
@@ -180,6 +185,7 @@ const addOneDayToFirstPossibleDay = ref("");
 const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
 const lunchDetails = ref([]);
+const formIsValid = ref(false);
 
 const props = defineProps({
     studentId: {
