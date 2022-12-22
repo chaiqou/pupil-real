@@ -63,6 +63,7 @@ class InviteController extends Controller
             'password' => bcrypt($request->password)
         ]) : $user = User::create([
             'email' => $request->email,
+            'school_id' => $invite->school_id,
             'password' => bcrypt($request->password)
         ])->assignRole('parent');
         $invite->update([
