@@ -11,6 +11,7 @@
         <div class="mt-5 border-t border-gray-200">
             <dl
                 v-for="lunch in lunchDetails"
+                :key="lunch"
                 class="sm:divide-y sm:divide-gray-200"
             >
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -46,7 +47,11 @@
                     <dd
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <div class="flex" v-for="weekdays in lunch.weekdays">
+                        <div
+                            class="flex"
+                            v-for="weekdays in lunch.weekdays"
+                            :key="weekdays"
+                        >
                             {{ weekdays }}
                         </div>
                     </dd>
@@ -77,6 +82,7 @@
                         <div
                             class="flex"
                             v-for="claimables in lunch.claimables"
+                            :key="claimables"
                         >
                             {{ claimables }}
                         </div>
@@ -110,6 +116,7 @@
                         <div
                             class="flex"
                             v-for="available_days in lunch.available_days"
+                            :key="available_days"
                         >
                             {{
                                 format(parseISO(available_days), "yyyy MMM dd")
