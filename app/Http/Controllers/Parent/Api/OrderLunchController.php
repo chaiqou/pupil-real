@@ -59,6 +59,26 @@ class OrderLunchController extends Controller
             'claims' => json_encode($claimsJson),
         ]);
 
+
+        Transaction::create([
+            'student_id' => $student->id,
+            'merchant_id' => $student->school_id,
+            'transaction_date' => now()->format('Y-m-d'),
+            'billingo_transaction_id' => null,
+            'amount' => 1,
+            'transaction_type' => 'debit',
+            'billing_type' => 'proforma',
+            'billing_comment' => 'billing_comment_here',
+            'pending' => json_encode([
+                'pending' => 0,
+                'pending_history' => [],
+            ]),
+            'comment' => json_encode([
+                'comment' => 'Placed lunch order on ' .now()->format('Y-m-d'),
+                'comment_history' => [],
+            ]),
+        ]);
+
         return response()->json(['success' => 'success']);
     }
 }
