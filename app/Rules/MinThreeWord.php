@@ -26,7 +26,8 @@ class MinThreeWord implements Rule
     public function passes($attribute, $value)
     {
         $regexMinThreeWord = '/^([a-z0-9]*[a-z]){3}[a-z0-9]*$/i';
-        return (bool)preg_match($regexMinThreeWord, $value);
+
+        return (bool) preg_match($regexMinThreeWord, $value);
     }
 
     /**

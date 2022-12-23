@@ -16,7 +16,6 @@ class InviteUserMail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-
     public function __construct(public $invite)
     {
     }

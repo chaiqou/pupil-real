@@ -1,5 +1,5 @@
 <template>
-    <div class="sm:mt-20 min-w-[30vw] xl:px-4">
+    <div v-if="dataIsLoaded" class="sm:mt-20 min-w-[30vw] xl:px-4">
         <form>
             <p class="mb-2 text-center text-xl font-black">
                 Create new lunch plan
@@ -35,7 +35,7 @@
             <div>
                 <label class="text-md font-bold text-gray-600">Weekdays</label>
                 <div class="grid grid-cols-3 gap-3 sm:grid-cols-7 text-center">
-                    <ul v-for="day in dayOptions">
+                    <ul v-for="day in dayOptions" :key="day">
                         <li>
                             <Field
                                 name="Weekdays"
@@ -76,6 +76,7 @@
                         <ul role="list" class="-my-5 divide-y divide-gray-200">
                             <li
                                 v-for="(extra, extraIdx) in store.extras"
+                                :key="extra"
                                 class="py-4"
                             >
                                 <div class="flex items-center space-x-4">
@@ -113,6 +114,7 @@
                             </li>
                             <li
                                 v-for="(hold, holdIdx) in store.holds"
+                                :key="hold"
                                 class="py-4"
                             >
                                 <div class="flex items-center space-x-4">
@@ -239,6 +241,13 @@
                 type="number"
                 rules="required"
             />
+            <BaseInput
+                v-model="store.buffer_time"
+                name="Buffer Time"
+                label="Buffer Time"
+                type="number"
+                rules="required|min:3|max:100"
+            />
             <Button @click="isOpen = !isOpen" type="button" text="Save Lunch" />
             <ConfirmationModal v-if="isOpen" />
         </form>
@@ -249,7 +258,7 @@
 import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
 import { ref, onMounted } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { Field } from "vee-validate";
+import { Field, ErrorMessage } from "vee-validate";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
@@ -267,6 +276,7 @@ const store = useLunchFormStore();
 
 const multiselectRef = ref(null);
 const isOpen = ref(false);
+const dataIsLoaded = ref(false);
 
 // Fetch appropriate lunch from API
 
@@ -274,6 +284,7 @@ onMounted(() => {
     axios
         .get("/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
+            dataIsLoaded.value = true;
             store.title = response.data.data.title;
             store.description = response.data.data.description;
             store.period_length = response.data.data.period_length;
@@ -285,6 +296,7 @@ onMounted(() => {
             store.extras = response.data.data.extras;
             store.holds = response.data.data.holds;
             store.lunch_id = response.data.data.id;
+            store.buffer_time = response.data.data.buffer_time;
         });
 });
 

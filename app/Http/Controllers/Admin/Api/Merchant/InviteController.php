@@ -27,21 +27,22 @@ class InviteController extends Controller
         $existsInInvites = Invite::where('email', $request->email)->first();
         $existsInUsers = User::where('email', $request->email)->first();
         if (isset($existsInInvites)) {
-            return response()->json(['message'=>'Invite for this email exists'], 404);
+            return response()->json(['message' => 'Invite for this email exists'], 404);
         }
         if (isset($existsInUsers)) {
-            return response()->json(['message'=>'User with this email exists'], 404);
+            return response()->json(['message' => 'User with this email exists'], 404);
         }
 
         $invite = Invite::create([
             'uniqueID' => Str::random(32),
             'email' => $request->email,
             'school_id' => request('schoolId'),
-            'role' => 'merchant'
+            'role' => 'merchant',
         ]);
         Mail::to($invite->email)->send(new InviteMerchantMail($invite));
         $invite->update(['state' => 1]);
         $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
+
         return MerchantInviteResource::collection($invites);
     }
 }

@@ -10,5 +10,6 @@ class PartnerId extends Model
     use HasFactory;
 
     protected $table = 'partner_ids';
+
     protected $guarded = ['id'];
 }

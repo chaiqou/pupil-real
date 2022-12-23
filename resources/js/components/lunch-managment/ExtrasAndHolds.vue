@@ -9,7 +9,11 @@
         <div class="rounded-md bg-inherit">
             <div class="mt-6 flow-root">
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
-                    <li v-for="(extra, extraIdx) in store.extras" class="py-4">
+                    <li
+                        v-for="(extra, extraIdx) in store.extras"
+                        :key="extra"
+                        class="py-4"
+                    >
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span
@@ -39,7 +43,11 @@
                             </div>
                         </div>
                     </li>
-                    <li v-for="(hold, holdIdx) in store.holds" class="py-4">
+                    <li
+                        v-for="(hold, holdIdx) in store.holds"
+                        :key="hold"
+                        class="py-4"
+                    >
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
                                 <span

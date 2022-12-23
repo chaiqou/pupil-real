@@ -30,9 +30,11 @@ class AuthController extends Controller
 
             if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
                 $route = InviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             } elseif (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
                 $route = MerchantInviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             }
 

@@ -31,4 +31,11 @@ class Student extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    // PeriodicLunch relationship
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(PeriodicLunch::class);
+    }
 }
