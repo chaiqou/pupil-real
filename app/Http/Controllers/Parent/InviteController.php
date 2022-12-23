@@ -138,8 +138,10 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
+
             return BillingoController::createParentBillingo($user->id);
         }
+
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

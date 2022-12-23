@@ -15,11 +15,11 @@ class TerminalResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'id' => $this->id,
-        'name' => $this->name,
-        'serial_number' => $this->serial_number,
-        'note' => $this->note,
-        'public_key' => $this->public_key,
-    ];
+            'id' => $this->id,
+            'name' => $this->name,
+            'serial_number' => $this->serial_number,
+            'note' => $this->note,
+            'public_key' => $this->public_key,
+        ];
     }
 }

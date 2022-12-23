@@ -40,7 +40,6 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
     });
 
-
     Route::controller(BillingoController::class)->group(function () {
         Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });

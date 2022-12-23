@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Merchant;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Invite\BillingoVerificationRequest;
 use App\Http\Requests\Invite\CompanyDetailRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
@@ -15,7 +14,6 @@ use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;

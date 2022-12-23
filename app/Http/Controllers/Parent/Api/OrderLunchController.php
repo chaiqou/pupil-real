@@ -29,7 +29,6 @@ class OrderLunchController extends Controller
 
         $sortedAvailableDates->splice($validate['period_length']);
 
-
         // Generates claims json for each days and also loops over claimables
 
         $claimsJson = [];
