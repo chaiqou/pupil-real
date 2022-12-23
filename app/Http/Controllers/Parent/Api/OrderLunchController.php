@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\PeriodicLunch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Models\Lunch;
 
 class OrderLunchController extends Controller
 {
@@ -69,6 +70,14 @@ class OrderLunchController extends Controller
             'transaction_type' => 'debit',
             'billing_type' => 'proforma',
             'billing_comment' => 'billing_comment_here',
+            'billing_items' => json_encode([
+                'name' => "Test lunch " . $sortedAvailableDates->first() . " - " . $sortedAvailableDates->last(),
+                "unit_price" => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+                "unit_price_type" => "gross",
+                "quantity" => 1,
+                "unit" => "db",
+                "vat" => "27%"
+            ]),
             'pending' => json_encode([
                 'pending' => 0,
                 'pending_history' => [],
