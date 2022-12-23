@@ -156,7 +156,7 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!formIsValid">Lunch is not valid</p>
+                    <p v-if="!formIsValid">It is not possible to order lunch</p>
                     <p
                         v-if="firstDay == '' && !formIsValid"
                         class="text-center"
@@ -170,6 +170,7 @@
                         }}
                     </p>
                 </button>
+                <Toast ref="childrenToast" />
             </div>
         </div>
     </div>
@@ -178,6 +179,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
+import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 const firstDay = ref();
@@ -193,6 +195,7 @@ const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
 const lunchDetails = ref([]);
 const formIsValid = ref();
+const childrenToast = ref();
 
 const props = defineProps({
     studentId: {
@@ -201,6 +204,8 @@ const props = defineProps({
 });
 
 const startOrderingLunch = () => {
+    formIsValid.value = false;
+    childrenToast.value.showToaster("Lunch ordered successfully");
     axios.post("/api/parent/lunch-order/" + props.studentId, {
         student_id: props.studentId,
         available_days: lunchDetails.value[0].available_days,
