@@ -21,6 +21,8 @@ return new class() extends Migration
             $table->integer('billingo_transaction_id')->nullable();
             $table->integer('amount');
             $table->string('transaction_type');
+            $table->enum('billing_type', [ 'advance', 'draft', 'invoice', 'proforma', 'none' ]);
+            $table->string('billing_comment')->nullable();
             $table->json('pending');
             $table->json('comment');
             $table->timestamps();
