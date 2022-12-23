@@ -12,6 +12,7 @@ use App\Http\Controllers\Parent\SettingController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
+use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,8 +93,16 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_invites.get-emails');
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
             });
+            Route::controller(TerminalController::class)->group(function () {
+                Route::get('{merchant_id}/terminals', 'get')->name('terminal.get');
+                Route::post('terminal', 'store')->name('terminal.store');
+            });
         });
     });
 });
 
+Route::controller(TerminalController::class)->group(function () {
+    Route::get('{public_key}/verify', 'getSignature')->name('get.signature');
+    Route::post('{public_key}/verify', 'verifySignature')->name('verify.signature');
+});
 Route::apiResource('school/lunch', LunchController::class);

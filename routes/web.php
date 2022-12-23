@@ -5,8 +5,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Dashboard\NavigationController;
-use App\Http\Controllers\InviteController as UserInviteController;
+use App\Http\Controllers\Parent\InviteController as UserInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +35,14 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
 
         Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo-verify');
-        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
 
         Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
+    });
+
+
+    Route::controller(BillingoController::class)->group(function () {
+        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });
 
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
@@ -109,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('dashboard', 'school')->name('school.dashboard');
                 Route::get('invite', 'school')->name('school.invite');
                 Route::get('lunch-management/{lunch_id}/edit', 'school')->name('school.lunch-management-edit');
+                Route::get('terminals', 'school')->name('school.terminals');
             });
         });
     });

@@ -143,38 +143,11 @@ class InviteController extends Controller
         ]);
     }
 
-    public function billingoVerify(): View
+    public function billingoVerify(): View  // just a simple note that function for submitting/verifying billingo will be into the billingo controller
     {
         return view('invite.merchant.billingo-verify', [
             'uniqueID' => request()->uniqueID,
         ]);
-    }
-
-    public function submitBillingoVerify(BillingoVerificationRequest $request): RedirectResponse
-    {
-        $requestBillingo = Http::withHeaders([
-            'X-API-KEY' => $request->api_key,
-        ])->get('https://api.billingo.hu/v3/utils/time');
-
-        if ($requestBillingo->status() === 401) {
-            return redirect()->back()->withErrors('You provided wrong API key');
-        }
-        if ($requestBillingo->status() === 402) {
-            return redirect()->back()->withErrors("You dont have an active Billingo's subscription");
-        }
-        if ($requestBillingo->status() === 500) {
-            return redirect()->back()->withErrors("Something went wrong at Billingo's side");
-        }
-        if ($requestBillingo->status() === 200) {
-            $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-            $user = User::where('email', $invite->email)->first();
-            $merchant = Merchant::where('user_id', $user->id)->first();
-            $merchant->update(['billingo_api_key' => $request->api_key]);
-
-            return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
-        } else {
-            return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
-        }
     }
 
     public function verifyEmail(): View

@@ -18,9 +18,14 @@ class School extends Model
         return $this->hasMany(User::class);
     }
 
-    public function invite(): HasMany
+    public function invites(): HasMany
     {
         return $this->hasMany(Invite::class);
+    }
+
+    public function merchants(): HasMany
+    {
+        return $this->hasMany(Merchant::class);
     }
 
     public function students(): HasManyThrough

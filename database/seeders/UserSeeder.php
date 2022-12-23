@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
             'first_name' => 'Levente',
             'last_name' => 'Kazo',
             'school_id' => 1,
-            'billingo_id' => 1,
             'summary_frequency' => 1,
             'finished_onboarding' => 1,
             'user_information' => json_encode([
@@ -39,7 +38,6 @@ class UserSeeder extends Seeder
             'first_name' => 'Luka',
             'last_name' => 'Ramishvili',
             'school_id' => 1,
-            'billingo_id' => 1,
             'summary_frequency' => 1,
             'finished_onboarding' => 1,
             'user_information' => json_encode([
@@ -57,7 +55,6 @@ class UserSeeder extends Seeder
             'first_name' => 'nika',
             'last_name' => 'lomtadze',
             'school_id' => 1,
-            'billingo_id' => 1,
             'summary_frequency' => 1,
             'finished_onboarding' => 1,
             'user_information' => json_encode([
@@ -74,8 +71,7 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'first_name' => 'AdminF',
             'last_name' => 'AdminL',
-            'school_id' => 1,
-            'billingo_id' => 1,
+            'school_id' => null,
             'summary_frequency' => 1,
             'finished_onboarding' => 1,
             'user_information' => json_encode([

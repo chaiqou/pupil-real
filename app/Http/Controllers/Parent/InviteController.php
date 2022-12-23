@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Parent;
 
+use App\Http\Controllers\BillingoController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
 use App\Mail\OnboardingVerification;
@@ -136,10 +138,8 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
-
-            return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
+            return BillingoController::createParentBillingo($user->id);
         }
-
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

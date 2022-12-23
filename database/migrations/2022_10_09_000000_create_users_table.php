@@ -20,8 +20,7 @@ return new class() extends Migration
             $table->string('middle_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreignId('school_id')->default(1)->constrained();
-            $table->integer('billingo_id')->default(0);
+            $table->foreignId('school_id')->nullable()->constrained();
             $table->tinyInteger('summary_frequency')->default(0);
             $table->tinyInteger('finished_onboarding')->default(0);
             $table->json('user_information')->nullable();
