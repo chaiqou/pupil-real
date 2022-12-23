@@ -23,6 +23,7 @@ return new class() extends Migration
             $table->string('transaction_type');
             $table->enum('billing_type', [ 'advance', 'draft', 'invoice', 'proforma', 'none' ]);
             $table->string('billing_comment')->nullable();
+            $table->json('billing_items');
             $table->json('pending');
             $table->json('comment');
             $table->timestamps();
