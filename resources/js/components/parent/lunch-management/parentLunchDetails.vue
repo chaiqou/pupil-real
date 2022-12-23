@@ -91,19 +91,27 @@
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">Holds</dt>
                     <dd
+                        v-for="holds in lunch.holds"
+                        :key="holds"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <span v-if="lunch.holds.length >= 0"></span>
-                        <span v-else>{{ lunch.holds }}</span>
+                        <template class="flex" v-for="hold in holds">
+                            <br />
+                            {{ format(parseISO(hold), "yyyy MMM dd") }}
+                        </template>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">Extras</dt>
                     <dd
+                        v-for="extras in lunch.extras"
+                        :key="extras"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <span v-if="lunch.extras.length >= 0"></span>
-                        <span v-else>{{ lunch.extras }}</span>
+                        <template class="flex mt-4" v-for="extra in extras">
+                            <br />
+                            {{ format(parseISO(extra), "yyyy MMM dd") }}
+                        </template>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
