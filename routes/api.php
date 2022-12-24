@@ -101,8 +101,9 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::controller(TerminalController::class)->group(function () {
-    Route::get('{public_key}/verify', 'getSignature')->name('get.signature');
-    Route::post('{public_key}/verify', 'verifySignature')->name('verify.signature');
+Route::controller()->group(function () {
+    Route::get('{public_key}/verify', [TerminalController::class, 'getSignature'])->name('get.signature');
+    Route::post('{public_key}/verify', [TerminalController::class, 'verifySignature'])->name('verify.signature');
+    Route::get('/lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
 });
 Route::apiResource('school/lunch', LunchController::class);
