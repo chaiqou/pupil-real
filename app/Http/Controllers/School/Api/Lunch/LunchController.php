@@ -157,7 +157,7 @@ class LunchController extends Controller
                     if ($claimsKey == $checkDate) {
                         //Find the claim where the name = $validated['claim_name']
                         foreach ($claim as $claimKey => $claimable) {
-                            if($claimable['name'] == $validated['claim_name']) {
+                            if ($claimable['name'] == $validated['claim_name']) {
                                 if ($claimable['claimed'] == false) {
                                     $claimable['claimed'] = true;
                                     $claimable['claimed_date'] = $validated['claim_date'];
@@ -171,7 +171,7 @@ class LunchController extends Controller
                                     $lunch->save();
                                     return response()->json(['message' => 'Lunch successfully claimed.'], 200);
                                 } else {
-                                    return response()->json(['error' => 'Lunch already claimed.'], 400);
+                                    return response()->json(['error' => 'Lunch already claimed.'], 409);
                                 }
                             }
                         }
