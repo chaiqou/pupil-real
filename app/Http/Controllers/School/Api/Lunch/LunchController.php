@@ -8,6 +8,7 @@ use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use App\Models\Merchant;
 use App\Models\PeriodicLunch;
+use App\Models\Student;
 use App\Models\Terminal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -105,8 +106,12 @@ class LunchController extends Controller
                         $claims = json_decode($lunch->claims, true);
                         $checkDate = Carbon::createFromFormat('Y.m.d', $validated['lunch_date'])->format('Y-m-d');
                         foreach ($claims as $key => $claim) {
-                            if($key == $checkDate){
-                                return response()->json(['lunch' => $claim], 200);
+                            if ($key == $checkDate) {
+                                //Filter "claims" out of $lunch
+                                //Get the student's data from the lunch student_id
+                                $student = Student::where('id', $lunch->student_id)->first();
+                                $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
+                                return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student'])], 200);
                             }
                         }
                     }
@@ -115,6 +120,65 @@ class LunchController extends Controller
                 return response()->json(['error' => 'No lunch found for the user for the specified date.'], 404);
             } else {
                 return response()->json(['error' => 'No lunches found for the user.'], 404);
+            }
+        }
+    }
+
+    public function claimLunch(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'public_key' => 'required',
+            'signature' => 'required|size:128',
+            'lunch_id' => 'required',
+            'lunch_date' => 'required|date_format:Y.m.d',
+            'claim_name' => 'required',
+            'claim_date' => 'required|date_format:Y.m.d H:i:s',
+        ]);
+        Log::info($request->all());
+        if ($validator->fails()) {
+            return response()->json(['error' => 'Invalid request.'], 400);
+        }
+        $validated = $validator->validated();
+        $terminal = Terminal::where('public_key', $validated['public_key'])->first();
+        if (!$terminal) {
+            return response()->json(['error' => 'Invalid request.'], 400);
+        }
+        $message = $validated['lunch_date'] . $validated['lunch_id'] . $validated['claim_name'] . $validated['claim_date'];
+        $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
+
+        if ($validSignature !== strtoupper($validated['signature'])) {
+            return response()->json(['error' => 'Invalid signature.'], 401);
+        } else {
+            $lunch = PeriodicLunch::where('id', $validated['lunch_id'])->first();
+            if ($lunch) {
+                $claims = json_decode($lunch->claims, true);
+                $checkDate = Carbon::createFromFormat('Y.m.d', $validated['lunch_date'])->format('Y-m-d');
+                foreach ($claims as $claimsKey => $claim) {
+                    if ($claimsKey == $checkDate) {
+                        //Find the claim where the name = $validated['claim_name']
+                        foreach ($claim as $claimKey => $claimable) {
+                            if($claimable['name'] == $validated['claim_name']) {
+                                if ($claimable['claimed'] == false) {
+                                    $claimable['claimed'] = true;
+                                    $claimable['claimed_date'] = $validated['claim_date'];
+                                    //Update the $claim with the new claimable
+                                    $claim[$claimKey] = $claimable;
+                                    //Update the $claims with the new claim
+                                    $claims[$claimsKey] = $claim;
+                                    $lunch->claims = json_encode($claims);
+                                    Log::info($lunch->claims);
+                                    Log::info($claimable);
+                                    $lunch->save();
+                                    return response()->json(['message' => 'Lunch successfully claimed.'], 200);
+                                } else {
+                                    return response()->json(['error' => 'Lunch already claimed.'], 400);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                return response()->json(['error' => 'No lunch found for the specified ID.'], 404);
             }
         }
     }
