@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\PeriodicLunch;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 
@@ -48,36 +49,40 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        $lunch = PeriodicLunch::create([
-            'student_id' => $student->id,
-            'transaction_id' => 1,
-            'merchant_id' => $student->school_id,
-            'lunch_id' => $validate['lunch_id'],
-            'card_data' => $student->card_data,
-            'start_date' => $sortedAvailableDates->first(),
-            'end_date' => $sortedAvailableDates->last(),
-            'claims' => json_encode($claimsJson),
-        ]);
+        DB::transaction(function () {
+            $lunch = PeriodicLunch::create([
+                'student_id' => $student->id,
+                'transaction_id' => 1,
+                'merchant_id' => $student->school_id,
+                'lunch_id' => $validate['lunch_id'],
+                'card_data' => $student->card_data,
+                'start_date' => $sortedAvailableDates->first(),
+                'end_date' => $sortedAvailableDates->last(),
+                'claims' => json_encode($claimsJson),
+            ]);
 
 
-        Transaction::create([
-            'student_id' => $student->id,
-            'merchant_id' => $student->school_id,
-            'transaction_date' => now()->format('Y-m-d'),
-            'billingo_transaction_id' => null,
-            'amount' => 1,
-            'transaction_type' => 'debit',
-            'billing_type' => 'proforma',
-            'billing_comment' => 'billing_comment_here',
-            'pending' => json_encode([
-                'pending' => 0,
-                'pending_history' => [],
-            ]),
-            'comment' => json_encode([
-                'comment' => 'Placed lunch order on ' .now()->format('Y-m-d'),
-                'comment_history' => [],
-            ]),
-        ]);
+            Transaction::create([
+                'student_id' => $student->id,
+                'merchant_id' => $student->school_id,
+                'transaction_date' => now()->format('Y-m-d'),
+                'billingo_transaction_id' => null,
+                'amount' => 1,
+                'transaction_type' => 'debit',
+                'billing_type' => 'proforma',
+                'billing_comment' => 'billing_comment_here',
+                'pending' => json_encode([
+                    'pending' => 0,
+                    'pending_history' => [],
+                ]),
+                'comment' => json_encode([
+                    'comment' => 'Placed lunch order on ' . now()->format('Y-m-d'),
+                    'comment_history' => [],
+                ]),
+            ]);
+        });
+
+
 
         return response()->json(['success' => 'success']);
     }
