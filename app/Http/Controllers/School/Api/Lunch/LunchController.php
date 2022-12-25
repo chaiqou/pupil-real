@@ -111,7 +111,9 @@ class LunchController extends Controller
                                 //Get the student's data from the lunch student_id
                                 $student = Student::where('id', $lunch->student_id)->first();
                                 $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
-                                return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student'])], 200);
+                                $originalPlan = Lunch::where('id', $lunch->lunch_id)->first();
+                                $lunch->original_plan = $originalPlan->only(['id','title','description','period_length','weekdays','active_range','claimables','buffer_item','price_period','created_at','updated_at']);
+                                return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student', 'original_plan'])], 200);
                             }
                         }
                     }
@@ -150,6 +152,9 @@ class LunchController extends Controller
             return response()->json(['error' => 'Invalid signature.'], 401);
         } else {
             $lunch = PeriodicLunch::where('id', $validated['lunch_id'])->first();
+            if($lunch->merchant_id != $terminal->merchant_id) {
+                return response()->json(['error' => 'Invalid request.'], 400);
+            }
             if ($lunch) {
                 $claims = json_decode($lunch->claims, true);
                 $checkDate = Carbon::createFromFormat('Y.m.d', $validated['lunch_date'])->format('Y-m-d');
