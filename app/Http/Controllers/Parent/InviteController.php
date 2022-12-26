@@ -55,21 +55,22 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $foundUser = User::where('email', $invite->email)->first();
         $request->validate([
-            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,' . $foundUser->id : 'unique:users,email'],
-            'password' => [Password::min(8)->mixedCase()->numbers(), 'required']
+            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,'.$foundUser->id : 'unique:users,email'],
+            'password' => [Password::min(8)->mixedCase()->numbers(), 'required'],
         ]);
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]) : $user = User::create([
             'email' => $request->email,
             'school_id' => $invite->school_id,
             'password' => bcrypt($request->password)
         ])->assignRole('parent');
         $invite->update([
-            'email' =>  isset($foundUser) ? $foundUser->email : $user->email,
+            'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
+
         return redirect()->route('parent-personal.form', ['uniqueID' => request()->uniqueID]);
     }
 
@@ -138,8 +139,10 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
+
             return BillingoController::createParentBillingo($user->id);
         }
+
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

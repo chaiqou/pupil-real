@@ -39,8 +39,7 @@ class UpdateSchoolRequest extends FormRequest
             'phone_number' => ['required', new PhoneNumber()],
             'mobile_number' => '',
             'extension' => '',
-            'school_code' => ['required', new MinThreeWord()]
+            'school_code' => ['required', new MinThreeWord()],
         ];
     }
-
 }

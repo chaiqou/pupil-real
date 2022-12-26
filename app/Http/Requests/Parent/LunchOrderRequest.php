@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Invite;
+namespace App\Http\Requests\Parent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BillingoVerificationRequest extends FormRequest
+class LunchOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,12 @@ class BillingoVerificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'api_key' => 'required',
+            'student_id' => 'required',
+            'available_days' => 'required',
+            'claimables' => 'required',
+            'period_length' => 'required',
+            'start_day' => 'required',
+            'lunch_id' => 'required',
         ];
     }
 }

@@ -9,7 +9,6 @@ use App\Http\Requests\User\UpdatePersonalRequest;
 use App\Http\Resources\Parent\StudentResource;
 use App\Models\Student;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -77,6 +76,7 @@ class SettingController extends Controller
         ]);
         $parent = User::where('id', $student->user_id)->first();
         $students = Student::where('user_id', $parent->id)->latest('created_at')->get();
+
         return StudentResource::collection($students);
     }
 }

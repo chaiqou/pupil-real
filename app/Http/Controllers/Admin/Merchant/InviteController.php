@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Merchant;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Invite\BillingoVerificationRequest;
 use App\Http\Requests\Invite\CompanyDetailRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
@@ -15,7 +14,6 @@ use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
@@ -58,22 +56,20 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $foundUser = User::where('email', $invite->email)->first();
         $request->validate([
-            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,' . $foundUser->id : 'unique:users,email', 'unique:invites,email,' . $invite->id],
-            'password' => [Password::min(8)->mixedCase()->numbers(), 'required']
+            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,'.$foundUser->id : 'unique:users,email', 'unique:invites,email,'.$invite->id],
+            'password' => [Password::min(8)->mixedCase()->numbers(), 'required'],
         ]);
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]) : $user = User::create([
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ])->assignRole('school');
         $invite->update([
-            'email' =>  isset($foundUser) ? $foundUser->email : $user->email,
+            'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
-
-
 
         return redirect()->route('merchant-personal.form', ['uniqueID' => request()->uniqueID]);
     }
@@ -187,8 +183,10 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
+
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
+
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

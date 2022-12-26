@@ -114,7 +114,6 @@ import {
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { useRouter } from "vue-router";
 
 // Data
 
@@ -123,7 +122,6 @@ const open = ref(true);
 // Composables
 
 const store = useLunchFormStore();
-const router = useRouter();
 
 // Save data with changes
 
@@ -140,6 +138,7 @@ const saveWithShifting = () => {
             price_period: store.price_period,
             extras: store.extras,
             holds: store.holds,
+            buffer_time: store.buffer_time,
         })
         .then((response) => {
             store.extras = [];

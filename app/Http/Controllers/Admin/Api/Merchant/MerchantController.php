@@ -15,6 +15,7 @@ class MerchantController extends Controller
     public function index(Request $request): ResourceCollection
     {
         $merchants = Merchant::where('school_id', $request->school_id)->latest('created_at')->paginate(5);
+
         return MerchantResource::collection($merchants);
     }
 
@@ -42,14 +43,17 @@ class MerchantController extends Controller
             ],
         ]);
         $merchants = Merchant::where('school_id', $request->school_id)->paginate(5);
+
         return MerchantResource::collection($merchants);
     }
+
     public function updateStatus(Request $request): JsonResponse
     {
         $merchant = Merchant::where('id', $request->merchant_id)->first();
         $merchant->update([
-            'activated' => $request->activated
+            'activated' => $request->activated,
         ]);
+
         return response()->json($merchant);
     }
 }

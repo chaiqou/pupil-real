@@ -10,7 +10,6 @@ use App\Models\Terminal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class TerminalController extends Controller
@@ -29,12 +28,13 @@ class TerminalController extends Controller
             'note' => $request->note,
             'merchant_id' => $merchant->id,
             'user_id' => auth()->user()->id,
-            'public_key' => str_replace("|", "-", $publicKeyToUpper),
-            'private_key' => str_replace("|", "-", $privateKeyToUpper),
+            'public_key' => str_replace('|', '-', $publicKeyToUpper),
+            'private_key' => str_replace('|', '-', $privateKeyToUpper),
         ]);
 
-        $keys = ["PUBLIC-KEY" => $terminal->public_key, "PRIVATE-KEY" => $terminal->private_key];
+        $keys = ['PUBLIC-KEY' => $terminal->public_key, 'PRIVATE-KEY' => $terminal->private_key];
         $terminals = Terminal::where('merchant_id', $merchant->id)->latest()->paginate(5);
+
         return [
             $keys,
             $terminals,
@@ -44,27 +44,35 @@ class TerminalController extends Controller
     public function get(Request $request): ResourceCollection
     {
         $terminals = Terminal::where('merchant_id', $request->merchant_id)->latest()->paginate(5);
+
         return TerminalResource::collection($terminals);
     }
 
     public function getSignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
-        $terminal->update(['verification' => Str::random('24')]);
-        return response()->json(['verification' => $terminal->verification], 200);
+        if($terminal){
+            $terminal->update(['verification' => Str::random('24')]);
+            return response()->json(['verification' => $terminal->verification], 200);
+        }else{
+            return response()->json(['error' => 'Cannot find resource'], 404);
+        }
     }
 
     public function verifySignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
+        if ($terminal) {
+            $realSignature = strtoupper(hash('sha512', $terminal->verification.$terminal->private_key));
+            $givenSignature = strtoupper($request->signature);
 
-        $realSignature = strtoupper(hash('sha512', $terminal->verification . $terminal->private_key));
-        $givenSignature = strtoupper($request->signature);
-
-        if ($realSignature === $givenSignature) {
-            return response()->json(['message' => 'Signature verified successfully'], 200);
+            if ($realSignature === $givenSignature) {
+                return response()->json(['message' => 'Signature verified successfully'], 200);
+            } else {
+                return response()->json(['error' => 'Cannot find resource'], 404);
+            }
         } else {
-            return response()->json(['error' => 'Something went wrong'], 404);
-        }
+        return response()->json(['error' => 'Cannot find resource'], 404);
+    }
     }
 }

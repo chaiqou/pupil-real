@@ -8,6 +8,7 @@
         >
             <li
                 v-for="lunch in store.lunches"
+                :key="lunch"
                 class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
             >
                 <div
@@ -94,14 +95,20 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
+const props = defineProps({
+    studentId: {
+        type: [Number, String],
+    },
+});
+
 onMounted(() => {
     axios.get("/api/school/lunch").then((response) => {
         store.lunches.push(...response.data.data);
     });
 });
 
-const currentLunchEditId = (id) => {
-    localStorage.setItem("lunchId", id);
-    window.location.href = "/parent/lunch-details/" + id;
+const currentLunchEditId = (lunchId) => {
+    localStorage.setItem("lunchId", lunchId);
+    window.location.href = "/parent/lunch-details/" + props.studentId;
 };
 </script>

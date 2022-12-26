@@ -10,7 +10,8 @@
         </div>
         <div class="mt-5 border-t border-gray-200">
             <dl
-                v-for="lunch in store.lunches"
+                v-for="lunch in lunchDetails"
+                :key="lunch"
                 class="sm:divide-y sm:divide-gray-200"
             >
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -46,7 +47,11 @@
                     <dd
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <div class="flex" v-for="weekdays in lunch.weekdays">
+                        <div
+                            class="flex"
+                            v-for="weekdays in lunch.weekdays"
+                            :key="weekdays"
+                        >
                             {{ weekdays }}
                         </div>
                     </dd>
@@ -77,6 +82,7 @@
                         <div
                             class="flex"
                             v-for="claimables in lunch.claimables"
+                            :key="claimables"
                         >
                             {{ claimables }}
                         </div>
@@ -85,19 +91,27 @@
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">Holds</dt>
                     <dd
+                        v-for="holds in lunch.holds"
+                        :key="holds"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <span v-if="lunch.holds.length >= 0"></span>
-                        <span v-else>{{ lunch.holds }}</span>
+                        <template class="flex" v-for="hold in holds">
+                            <br />
+                            {{ format(parseISO(hold), "yyyy MMM dd") }}
+                        </template>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium text-gray-500">Extras</dt>
                     <dd
+                        v-for="extras in lunch.extras"
+                        :key="extras"
                         class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
                     >
-                        <span v-if="lunch.extras.length >= 0"></span>
-                        <span v-else>{{ lunch.extras }}</span>
+                        <template class="flex mt-4" v-for="extra in extras">
+                            <br />
+                            {{ format(parseISO(extra), "yyyy MMM dd") }}
+                        </template>
                     </dd>
                 </div>
                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -110,6 +124,7 @@
                         <div
                             class="flex"
                             v-for="available_days in lunch.available_days"
+                            :key="available_days"
                         >
                             {{
                                 format(parseISO(available_days), "yyyy MMM dd")
@@ -145,18 +160,25 @@
                     :clearable="false"
                 />
                 <button
+                    v-bind:disabled="!formIsValid"
+                    @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="firstDay == ''" class="text-center">
+                    <p v-if="!formIsValid">It is not possible to order lunch</p>
+                    <p
+                        v-if="firstDay == '' && !formIsValid"
+                        class="text-center"
+                    >
                         Please select order starting date
                     </p>
-                    <p v-else class="text-center">
+                    <p v-if="firstDay != '' && formIsValid" class="text-center">
                         {{
                             "Order starting at " +
                             format(firstDay, "yyyy MMMM dd")
                         }}
                     </p>
                 </button>
+                <Toast ref="childrenToast" />
             </div>
         </div>
     </div>
@@ -165,6 +187,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
+import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 const firstDay = ref();
@@ -178,6 +201,28 @@ const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
 const availableDatesForStartOrdering = ref();
+const lunchDetails = ref([]);
+const formIsValid = ref();
+const childrenToast = ref();
+
+const props = defineProps({
+    studentId: {
+        type: [Number, String],
+    },
+});
+
+const startOrderingLunch = () => {
+    formIsValid.value = false;
+    childrenToast.value.showToaster("Lunch ordered successfully");
+    axios.post("/api/parent/lunch-order/" + props.studentId, {
+        student_id: props.studentId,
+        available_days: lunchDetails.value[0].available_days,
+        claimables: lunchDetails.value[0].claimables,
+        period_length: lunchDetails.value[0].period_length,
+        start_day: firstDay.value,
+        lunch_id: lunchDetails.value[0].id,
+    });
+};
 
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay
@@ -200,6 +245,12 @@ watch(bufferDays, (newValue) => {
         availableDatesForStartOrdering.value = filteredDates.value;
     }
 
+    if (availableDays.value[0].length < +periodLength.value) {
+        formIsValid.value = false;
+    } else {
+        formIsValid.value = true;
+    }
+
     // on load firstDay will be  available dates first day
     firstDay.value = availableDatesForStartOrdering.value[0];
 });
@@ -219,7 +270,7 @@ onMounted(() => {
             );
             periodLength.value = response.data.data.period_length;
             bufferDays.value = response.data.data.buffer_time;
-            store.lunches.push(response.data.data);
+            lunchDetails.value = [response.data.data];
             store.marked_days.push(...response.data.data.available_days);
         });
 });
