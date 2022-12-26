@@ -11,12 +11,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
 
+
 class OrderLunchController extends Controller
 {
     public function index(LunchOrderRequest $request)
     {
         $validate = $request->validated();
         $student = Student::where('id', $validate['student_id'])->first();
+        $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
 
         // Validate the start date
         $startDate = Carbon::parse($validate['start_day']);
@@ -50,7 +52,7 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () {
+        DB::transaction(function () use ($student, $validate, $sortedAvailableDates, $claimsJson, $pricePeriod)  {
             $lunch = PeriodicLunch::create([
                 'student_id' => $student->id,
                 'transaction_id' => 1,
@@ -73,7 +75,7 @@ class OrderLunchController extends Controller
                 'billing_comment' => 'billing_comment_here',
                 'billing_items' => json_encode([
                     'name' => "Test lunch " . $sortedAvailableDates->first() . " - " . $sortedAvailableDates->last(),
-                    "unit_price" => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+                    "unit_price" => $pricePeriod,
                     "unit_price_type" => "gross",
                     "quantity" => 1,
                     "unit" => "db",
