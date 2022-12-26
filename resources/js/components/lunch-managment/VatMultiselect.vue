@@ -7,7 +7,7 @@
         v-bind="$attrs"
         name="vat"
         mode="single"
-        :limit="10"
+        :limit="50"
         required
         searchable
         :close-on-select="false"

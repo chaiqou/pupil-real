@@ -227,7 +227,7 @@
                 :options="multiselectOptions"
                 selectAll
             />
-            <VatMultiselect selectAll :value="store.vat" />
+            <VatMultiselect :value="store.vat" />
             <BaseInput
                 v-model="store.price_period"
                 name="Price Period"
