@@ -9,6 +9,7 @@ use App\Models\PeriodicLunch;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Models\Lunch;
 
 class OrderLunchController extends Controller
 {
@@ -61,7 +62,6 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimsJson),
             ]);
 
-
             Transaction::create([
                 'student_id' => $student->id,
                 'merchant_id' => $student->school_id,
@@ -71,17 +71,25 @@ class OrderLunchController extends Controller
                 'transaction_type' => 'debit',
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
+                'billing_items' => json_encode([
+                    'name' => "Test lunch " . $sortedAvailableDates->first() . " - " . $sortedAvailableDates->last(),
+                    "unit_price" => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+                    "unit_price_type" => "gross",
+                    "quantity" => 1,
+                    "unit" => "db",
+                    "vat" => "27%"
+                ]),
                 'pending' => json_encode([
                     'pending' => 0,
                     'pending_history' => [],
                 ]),
                 'comment' => json_encode([
-                    'comment' => 'Placed lunch order on ' . now()->format('Y-m-d'),
+                    'comment' => 'Placed lunch order on ' .now()->format('Y-m-d'),
                     'comment_history' => [],
                 ]),
             ]);
-        });
 
+        });
 
 
         return response()->json(['success' => 'success']);
