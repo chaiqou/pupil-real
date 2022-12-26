@@ -227,17 +227,11 @@
                 :options="multiselectOptions"
                 selectAll
             />
-            <BaseInput
-                v-model="store.price_day"
-                name="Price Day"
-                label="Price per day"
-                type="number"
-                rules="required"
-            />
+            <VatMultiselect selectAll :value="store.vat" />
             <BaseInput
                 v-model="store.price_period"
                 name="Price Period"
-                label="Price per period"
+                label="Price for period (Gross)"
                 type="number"
                 rules="required"
             />
@@ -267,6 +261,7 @@ import Button from "@/components/ui/Button.vue";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import ConfirmationModal from "../lunch-managment/ConfirmationModal.vue";
+import VatMultiselect from "./VatMultiselect.vue";
 
 // Composables
 
@@ -291,12 +286,12 @@ onMounted(() => {
             store.weekdays = response.data.data.weekdays;
             store.active_range = response.data.data.active_range;
             store.claimables = response.data.data.claimables;
-            store.price_day = response.data.data.price_day;
             store.price_period = response.data.data.price_period;
             store.extras = response.data.data.extras;
             store.holds = response.data.data.holds;
             store.lunch_id = response.data.data.id;
             store.buffer_time = response.data.data.buffer_time;
+            store.vat = response.data.data.vat;
         });
 });
 

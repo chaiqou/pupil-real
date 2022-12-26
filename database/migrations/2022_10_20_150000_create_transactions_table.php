@@ -24,6 +24,10 @@ return new class() extends Migration
             $table->enum('payment_status', ["paid", "outstanding", "cancelled", "not_required"]);
             $table->enum('billing_type', ["none", "advance", "invoice", "proforma"]);
             $table->string('billing_comment');
+            $table->enum('billing_type', ['advance', 'draft', 'invoice', 'proforma', 'none']);
+            $table->string('billing_comment')->nullable();
+            $table->json('billing_items');
+            $table->json('pending');
             $table->json('comment');
             $table->json('billing_item');
             $table->json('pending');

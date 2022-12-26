@@ -4,6 +4,8 @@ namespace App\Http\Controllers\School\Api\Lunch;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
+use App\Http\Requests\School\ClaimLunchRequest;
+use App\Http\Requests\School\RetrieveLunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use App\Models\Merchant;
@@ -11,11 +13,8 @@ use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Terminal;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class LunchController extends Controller
 {
@@ -43,7 +42,6 @@ class LunchController extends Controller
             'extras' => $validate['extras'] ?? null,
             'weekdays' => $validate['weekdays'],
             'available_days' => $validate['available_days'],
-            'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
         ]);
@@ -67,40 +65,33 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
-    public function retrieveLunch(Request $request)
+    public function retrieveLunch(RetrieveLunchRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'public_key' => 'required',
-            'signature' => 'required|size:128',
-            'card_data' => 'required',
-            'lunch_date' => 'required|date_format:Y.m.d'
-        ]);
-        Log::info($request->all());
-        if ($validator->fails()) {
+        $validated = $request->validated();
+
+        if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $validated = $validator->validated();
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
-        if (!$terminal) {
+
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $message = $validated['lunch_date'] . $validated['card_data'];
-        $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
+
+        $message = $validated['lunch_date'].$validated['card_data'];
+        $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
 
         if ($validSignature !== strtoupper($validated['signature'])) {
             return response()->json(['error' => 'Invalid signature.'], 401);
         } else {
             $lunches = PeriodicLunch::where('card_data', $validated['card_data'])->get();
             if ($lunches) {
-                Log::info('Lunches found');
                 foreach ($lunches as $lunch) {
-                    Log::info('Checking lunch');
                     //Convert the lunch start and end date to "YYYY.MM.DD" format
                     $lunchStartDate = date('Y.m.d', strtotime($lunch->start_date));
                     $lunchEndDate = date('Y.m.d', strtotime($lunch->end_date));
-                    Log::info($lunchStartDate);
-                    Log::info($lunchEndDate);
+
                     //Check if the date is in the active range
                     if ($lunchStartDate <= $request->lunch_date && $lunchEndDate >= $request->lunch_date) {
                         $claims = json_decode($lunch->claims, true);
@@ -112,7 +103,8 @@ class LunchController extends Controller
                                 $student = Student::where('id', $lunch->student_id)->first();
                                 $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
                                 $originalPlan = Lunch::where('id', $lunch->lunch_id)->first();
-                                $lunch->original_plan = $originalPlan->only(['id','title','description','period_length','weekdays','active_range','claimables','buffer_item','price_period','created_at','updated_at']);
+                                $lunch->original_plan = $originalPlan->only(['id', 'title', 'description', 'period_length', 'weekdays', 'active_range', 'claimables', 'buffer_item', 'price_period', 'created_at', 'updated_at']);
+
                                 return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student', 'original_plan'])], 200);
                             }
                         }
@@ -126,33 +118,26 @@ class LunchController extends Controller
         }
     }
 
-    public function claimLunch(Request $request)
+    public function claimLunch(ClaimLunchRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'public_key' => 'required',
-            'signature' => 'required|size:128',
-            'lunch_id' => 'required',
-            'lunch_date' => 'required|date_format:Y.m.d',
-            'claim_name' => 'required',
-            'claim_date' => 'required|date_format:Y.m.d H:i:s',
-        ]);
-        Log::info($request->all());
-        if ($validator->fails()) {
+        $validated = $request->validated();
+
+        if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $validated = $validator->validated();
+
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $message = $validated['lunch_date'] . $validated['lunch_id'] . $validated['claim_name'] . $validated['claim_date'];
-        $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
+        $message = $validated['lunch_date'].$validated['lunch_id'].$validated['claim_name'].$validated['claim_date'];
+        $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
 
         if ($validSignature !== strtoupper($validated['signature'])) {
             return response()->json(['error' => 'Invalid signature.'], 401);
         } else {
             $lunch = PeriodicLunch::where('id', $validated['lunch_id'])->first();
-            if($lunch->merchant_id != $terminal->merchant_id) {
+            if ($lunch->merchant_id != $terminal->merchant_id) {
                 return response()->json(['error' => 'Invalid request.'], 400);
             }
             if ($lunch) {
@@ -171,9 +156,8 @@ class LunchController extends Controller
                                     //Update the $claims with the new claim
                                     $claims[$claimsKey] = $claim;
                                     $lunch->claims = json_encode($claims);
-                                    Log::info($lunch->claims);
-                                    Log::info($claimable);
                                     $lunch->save();
+
                                     return response()->json(['message' => 'Lunch successfully claimed.'], 200);
                                 } else {
                                     return response()->json(['error' => 'Lunch already claimed.'], 409);

@@ -51,10 +51,11 @@ class TerminalController extends Controller
     public function getSignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
-        if($terminal){
+        if ($terminal) {
             $terminal->update(['verification' => Str::random('24')]);
+
             return response()->json(['verification' => $terminal->verification], 200);
-        }else{
+        } else {
             return response()->json(['error' => 'Cannot find resource'], 404);
         }
     }
@@ -72,7 +73,7 @@ class TerminalController extends Controller
                 return response()->json(['error' => 'Cannot find resource'], 404);
             }
         } else {
-        return response()->json(['error' => 'Cannot find resource'], 404);
-    }
+            return response()->json(['error' => 'Cannot find resource'], 404);
+        }
     }
 }
