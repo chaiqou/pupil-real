@@ -62,6 +62,7 @@
                 :searchable="true"
                 :options="multiselectOptions"
             />
+            <VatMultiselect />
             <BaseInput
                 v-model="store.price_period"
                 name="Price Period"
@@ -92,6 +93,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
+import VatMultiselect from "./VatMultiselect.vue";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
@@ -161,6 +163,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             holds: store.holds,
             extras: store.extras,
             price_period: store.price_period,
+            vat: store.vat,
             available_days: store.marked_days,
             buffer_time: store.buffer_time,
         })

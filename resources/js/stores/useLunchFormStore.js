@@ -22,6 +22,7 @@ export const useLunchFormStore = defineStore("lunch", {
             lunches: [],
             currentLunchEditId: "",
             buffer_time: null,
+            vat: "",
         };
     },
 

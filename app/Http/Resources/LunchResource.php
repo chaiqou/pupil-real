@@ -28,6 +28,7 @@ class LunchResource extends JsonResource
             'price_period' => $this->price_period,
             'claimables' => $this->claimables,
             'buffer_time' => $this->buffer_time,
+            'vat' => $this->vat,
         ];
     }
 }

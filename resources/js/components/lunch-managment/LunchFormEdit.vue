@@ -227,6 +227,7 @@
                 :options="multiselectOptions"
                 selectAll
             />
+            <VatMultiselect selectAll :value="store.vat" />
             <BaseInput
                 v-model="store.price_period"
                 name="Price Period"
@@ -260,6 +261,7 @@ import Button from "@/components/ui/Button.vue";
 import ExtrasIcon from "../icons/ExtrasIcon.vue";
 import HoldsIcon from "../icons/HoldsIcon.vue";
 import ConfirmationModal from "../lunch-managment/ConfirmationModal.vue";
+import VatMultiselect from "./VatMultiselect.vue";
 
 // Composables
 
@@ -289,6 +291,7 @@ onMounted(() => {
             store.holds = response.data.data.holds;
             store.lunch_id = response.data.data.id;
             store.buffer_time = response.data.data.buffer_time;
+            store.vat = response.data.data.vat;
         });
 });
 

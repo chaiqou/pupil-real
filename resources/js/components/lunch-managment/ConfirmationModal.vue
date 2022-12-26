@@ -135,6 +135,7 @@ const saveWithShifting = () => {
             active_range: store.active_range,
             claimables: store.claimables,
             price_period: store.price_period,
+            vat: store.vat,
             extras: store.extras,
             holds: store.holds,
             buffer_time: store.buffer_time,
@@ -163,6 +164,7 @@ const saveWithoutShifting = () => {
             store.active_range = response.data.data.active_range;
             store.claimables = response.data.data.claimables;
             store.price_period = response.data.data.price_period;
+            store.vat = response.data.data.vat;
             store.extras = response.data.data.extras;
             store.holds = response.data.data.holds;
             store.lunch_id = response.data.data.id;

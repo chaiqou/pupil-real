@@ -35,6 +35,7 @@ class LunchRequest extends FormRequest
             'claimables' => 'required',
             'available_days' => 'array',
             'buffer_time' => 'required',
+            'vat' => 'required',
         ];
     }
 }
