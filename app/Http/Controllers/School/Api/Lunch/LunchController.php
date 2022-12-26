@@ -16,8 +16,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class LunchController extends Controller
 {
@@ -71,15 +69,19 @@ class LunchController extends Controller
     public function retrieveLunch(RetrieveLunchRequest $request)
     {
         $validated = $request->validated();
-        Log::info($request->all());
+
+
         if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
+
+
         if (!$terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
+
         $message = $validated['lunch_date'] . $validated['card_data'];
         $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
 
@@ -88,14 +90,11 @@ class LunchController extends Controller
         } else {
             $lunches = PeriodicLunch::where('card_data', $validated['card_data'])->get();
             if ($lunches) {
-                Log::info('Lunches found');
                 foreach ($lunches as $lunch) {
-                    Log::info('Checking lunch');
                     //Convert the lunch start and end date to "YYYY.MM.DD" format
                     $lunchStartDate = date('Y.m.d', strtotime($lunch->start_date));
                     $lunchEndDate = date('Y.m.d', strtotime($lunch->end_date));
-                    Log::info($lunchStartDate);
-                    Log::info($lunchEndDate);
+
                     //Check if the date is in the active range
                     if ($lunchStartDate <= $request->lunch_date && $lunchEndDate >= $request->lunch_date) {
                         $claims = json_decode($lunch->claims, true);
@@ -124,7 +123,7 @@ class LunchController extends Controller
     public function claimLunch(ClaimLunchRequest $request)
     {
         $validated = $request->validated();
-        Log::info($request->all());
+
         if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
@@ -159,8 +158,6 @@ class LunchController extends Controller
                                     //Update the $claims with the new claim
                                     $claims[$claimsKey] = $claim;
                                     $lunch->claims = json_encode($claims);
-                                    Log::info($lunch->claims);
-                                    Log::info($claimable);
                                     $lunch->save();
                                     return response()->json(['message' => 'Lunch successfully claimed.'], 200);
                                 } else {
