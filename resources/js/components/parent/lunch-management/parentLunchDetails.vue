@@ -147,7 +147,7 @@
                 <Datepicker
                     closeOnScroll
                     v-model="firstDay"
-                    :allowed-dates="allowedDates"
+                    :allowed-dates="store.availableDatesForStartOrdering"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
@@ -192,7 +192,6 @@ const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
-const availableDatesForStartOrdering = ref();
 const lunchDetails = ref([]);
 const formIsValid = ref();
 const childrenToast = ref();
@@ -230,11 +229,11 @@ watch(bufferDays, (newValue) => {
 
     if (filteredDates.value.length < periodLength) {
         // Remove from filteredDates period length days
-        availableDatesForStartOrdering.value = filteredDates.value.splice(
+        store.availableDatesForStartOrdering = filteredDates.value.splice(
             periodLength.value
         );
     } else {
-        availableDatesForStartOrdering.value = filteredDates.value;
+        store.availableDatesForStartOrdering = filteredDates.value;
     }
 
     if (availableDays.value[0].length < +periodLength.value) {
@@ -244,11 +243,7 @@ watch(bufferDays, (newValue) => {
     }
 
     // on load firstDay will be  available dates first day
-    firstDay.value = availableDatesForStartOrdering.value[0];
-});
-
-const allowedDates = computed(() => {
-    return availableDatesForStartOrdering.value;
+    firstDay.value = store.availableDatesForStartOrdering[0];
 });
 
 onMounted(() => {
