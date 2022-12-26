@@ -62,17 +62,11 @@
                 :searchable="true"
                 :options="multiselectOptions"
             />
-            <BaseInput
-                v-model="store.price_day"
-                name="Price per day"
-                label="Price per day"
-                type="number"
-                rules="required"
-            />
+            <VatMultiselect />
             <BaseInput
                 v-model="store.price_period"
-                name="Price per period"
-                label="Price per period"
+                name="Price Period"
+                label="Price for period (Gross)"
                 type="number"
                 rules="required"
             />
@@ -99,6 +93,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
+import VatMultiselect from "./VatMultiselect.vue";
 import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
 import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
@@ -167,8 +162,8 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             claimables: store.claimables,
             holds: store.holds,
             extras: store.extras,
-            price_day: store.price_day,
             price_period: store.price_period,
+            vat: store.vat,
             available_days: store.marked_days,
             buffer_time: store.buffer_time,
         })

@@ -25,6 +25,9 @@ class TransactionSeeder extends Seeder
                 'pending' => 0,
                 'pending_history' => [],
             ]),
+            'billing_items' => json_encode([
+                'item' => 1,
+            ]),
             'comment' => json_encode([
                 'comment' => 0,
                 'comment_history' => [],
@@ -42,6 +45,9 @@ class TransactionSeeder extends Seeder
                 'pending' => 0,
                 'pending_history' => [],
             ]),
+            'billing_items' => json_encode([
+                'item' => 1,
+            ]),
             'comment' => json_encode([
                 'comment' => 0,
                 'comment_history' => [],
@@ -58,6 +64,9 @@ class TransactionSeeder extends Seeder
             'pending' => json_encode([
                 'pending' => 0,
                 'pending_history' => [],
+            ]),
+            'billing_items' => json_encode([
+                'item' => 1,
             ]),
             'comment' => json_encode([
                 'comment' => 0,

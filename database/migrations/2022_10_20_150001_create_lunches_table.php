@@ -26,7 +26,7 @@ return new class() extends Migration
             $table->json('extras')->nullable();
             $table->json('available_days');
             $table->integer('buffer_time');
-            $table->integer('price_day');
+            $table->enum('vat', ['"0%"', '"1%"', '"10%"', '"11%"', '"12%"', '"13%"', '"14%"', '"15%"', '"16%"', '"17%"', '"18%"', '"19%"', '"2%"', '"20%"', '"21%"', '"22%"', '"23%"', '"24%"', '"25%"', '"26%"', '"27%"', '"3%"', '"4%"', '"5%"', '"5,5%"', '"6%"', '"7%"', '"7,7%"', '"8%"', '"9%"', '"9,5%"', '"AAM"', '"AM"', '"EU"', '"EUK"', '"F.AFA"', '"FAD"', '"K.AFA"', '"MAA"', '"TAM"', '"ÁKK"', '"ÁTHK"']);
             $table->integer('price_period');
             $table->timestamps();
         });
