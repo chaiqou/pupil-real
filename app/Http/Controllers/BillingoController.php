@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Invite\BillingoVerificationRequest;
+use App\Models\BillingoData;
 use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\PartnerId;
+use App\Models\Student;
+use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -17,6 +21,9 @@ class BillingoController extends Controller
         $requestBillingo = Http::withHeaders([
             'X-API-KEY' => $request->api_key,
         ])->get('https://api.billingo.hu/v3/utils/time');
+        $requestBillingoForBlockId = Http::withHeaders([
+            'X-API-KEY' => $request->api_key
+        ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
 
         if ($requestBillingo->status() === 401) {
             return redirect()->back()->withErrors('You provided wrong API key');
@@ -31,8 +38,12 @@ class BillingoController extends Controller
             $invite = Invite::where('uniqueID', request()->uniqueID)->first();
             $user = User::where('email', $invite->email)->first();
             $merchant = Merchant::where('user_id', $user->id)->first();
+            BillingoData::create([
+                'block_id' => $requestBillingoForBlockId['data'][0]['id'],
+                'billingo_api_key' => $request->api_key,
+                'merchant_id' => $merchant->id,
+            ]);
             $merchant->update(['billingo_api_key' => $request->api_key]);
-
             return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
         } else {
             return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
@@ -45,8 +56,9 @@ class BillingoController extends Controller
         $merchants = Merchant::where('school_id', $user->school_id)->get();
         $info = json_decode($user->user_information);
         foreach ($merchants as $merchant) {
+            $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
             $requestBillingo = Http::withHeaders([
-                'X-API-KEY' => $merchant->billingo_api_key,
+                'X-API-KEY' => $billingoData->billingo_api_key,
             ])->post('https://api.billingo.hu/v3/partners', [
                 'name' => $user->middle_name ? $user->last_name.' '.$user->first_name.' '.$user->middle_name : $user->last_name.' '.$user->first_name,
                 'address' => [
@@ -65,7 +77,42 @@ class BillingoController extends Controller
                 'merchant_id' => $merchant->id,
             ]);
         }
-
         return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
     }
+
+    public static function onTransactionCreate()
+    {
+        // $user = User::where('id', auth()->user()->id)->first();
+
+        $user = User::where('email', 'jackrestler@gmail.com')->first();
+        $merchants = Merchant::where('school_id', $user->school_id)->get();
+        $info = json_decode($user->user_information);
+        $partnerId = PartnerId::where('user_id', $user->id)->first()->id;
+
+        $student = Student::where('user_id', $user->id)->get();
+
+        foreach ($merchants as $merchant) {
+            $studentWithTransaction = Student::where('user_id', $user->id)->where('merchant_id', $merchant->id)->with('transactions')->first();
+            $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
+            Http::withHeaders([
+                'X-API-KEY' => $billingoData->billingo_api_key,
+            ])->post('https://api.billingo.hu/v3/documents', [
+                'partner_id' => $partnerId,
+                'block_id' => $billingoData->block_id,
+                'type' => $studentWithTransaction->transaction,
+                'name' => $user->middle_name ? $user->last_name . ' ' . $user->first_name . ' ' . $user->middle_name : $user->last_name . ' ' . $user->first_name,
+                'address' => [
+                    'country_code' => $info->country,
+                    'post_code' => $info->zip,
+                    'city' => $info->city,
+                    'address' => $info->street_address,
+                ],
+                'emails' => [
+                    $user->email,
+                ]
+            ])->json();
+        }
+        return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
+    }
+
 }

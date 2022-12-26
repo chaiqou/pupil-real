@@ -20,7 +20,6 @@ return new class() extends Migration
             $table->boolean('activated')->default(false);
             $table->foreignId('user_id')->constrained();
             $table->foreignId('school_id')->constrained();
-            $table->string('billingo_api_key')->nullable();
             $table->boolean('has_balance')->default(false);
             $table->boolean('has_lunch')->default(false);
             $table->json('company_details');
