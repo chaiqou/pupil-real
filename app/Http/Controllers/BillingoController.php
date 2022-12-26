@@ -7,7 +7,10 @@ use App\Models\BillingoData;
 use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\PartnerId;
+use App\Models\Student;
+use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -76,4 +79,39 @@ class BillingoController extends Controller
         }
         return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
     }
+
+    public static function onTransactionCreate()
+    {
+        // $user = User::where('id', auth()->user()->id)->first();
+
+        $user = User::where('email', 'jackrestler@gmail.com')->first();
+        $merchants = Merchant::where('school_id', $user->school_id)->get();
+        $info = json_decode($user->user_information);
+        $partnerId = PartnerId::where('user_id', $user->id)->first()->id;
+
+        $student = Student::where('user_id', $user->id)->get();
+
+        foreach ($merchants as $merchant) {
+            $studentWithTransaction = Student::where('user_id', $user->id)->where('merchant_id', $merchant->id)->with('transactions')->first();
+            $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
+            Http::withHeaders([
+                'X-API-KEY' => $billingoData->billingo_api_key,
+            ])->post('https://api.billingo.hu/v3/documents', [
+                'partner_id' => $partnerId,
+                'block_id' => $billingoData->block_id,
+                'type' => $studentWithTransaction->transaction,
+                'name' => $user->middle_name ? $user->last_name . ' ' . $user->first_name . ' ' . $user->middle_name : $user->last_name . ' ' . $user->first_name,
+                'address' => [
+                    'country_code' => $info->country,
+                    'post_code' => $info->zip,
+                    'city' => $info->city,
+                    'address' => $info->street_address,
+                ],
+                'emails' => [
+                    $user->email,
+                ]
+            ])->json();
+        }
+    }
+
 }
