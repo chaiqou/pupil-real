@@ -21,13 +21,10 @@ class TransactionSeeder extends Seeder
             'billingo_transaction_id' => 123456789,
             'amount' => 1000,
             'transaction_type' => 'debit',
-            'billing_type' => 'none',
+            'billing_type' => 'proforma',
             'pending' => json_encode([
                 'pending' => 0,
                 'pending_history' => [],
-            ]),
-            'billing_items' => json_encode([
-                'item' => 1,
             ]),
             'comment' => json_encode([
                 'comment' => 0,
@@ -36,7 +33,6 @@ class TransactionSeeder extends Seeder
             'billing_comment' => 'Some comment',
             'billing_item' => json_encode([
                 'item' => 0,
-                'item_history' => [],
             ]),
         ]);
 
@@ -53,16 +49,12 @@ class TransactionSeeder extends Seeder
                 'pending_history' => [],
             ]),
             'billing_comment' => 'Some comment',
-            'billing_items' => json_encode([
-                'item' => 1,
-            ]),
             'comment' => json_encode([
                 'comment' => 0,
                 'comment_history' => [],
             ]),
             'billing_item' => json_encode([
                 'item' => 0,
-                'item_history' => [],
             ]),
         ]);
 
@@ -73,13 +65,10 @@ class TransactionSeeder extends Seeder
             'billingo_transaction_id' => 123456789,
             'amount' => 1000,
             'transaction_type' => 'debit',
-            'billing_type' => 'invoice',
+            'billing_type' => 'proforma',
             'pending' => json_encode([
                 'pending' => 0,
                 'pending_history' => [],
-            ]),
-            'billing_items' => json_encode([
-                'item' => 1,
             ]),
             'comment' => json_encode([
                 'comment' => 0,
@@ -88,7 +77,6 @@ class TransactionSeeder extends Seeder
             'billing_comment' => 'Some comment',
             'billing_item' => json_encode([
                 'item' => 0,
-                'item_history' => [],
             ]),
         ]);
     }
