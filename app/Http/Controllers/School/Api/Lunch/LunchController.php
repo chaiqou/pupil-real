@@ -4,6 +4,8 @@ namespace App\Http\Controllers\School\Api\Lunch;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
+use App\Http\Requests\School\ClaimLunchRequest;
+use App\Http\Requests\School\RetrieveLunchRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use App\Models\Merchant;
@@ -66,19 +68,13 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
-    public function retrieveLunch(Request $request)
+    public function retrieveLunch(RetrieveLunchRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'public_key' => 'required',
-            'signature' => 'required|size:128',
-            'card_data' => 'required',
-            'lunch_date' => 'required|date_format:Y.m.d'
-        ]);
+        $validated = $request->validated();
         Log::info($request->all());
-        if ($validator->fails()) {
+        if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $validated = $validator->validated();
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
         if (!$terminal) {
@@ -125,21 +121,14 @@ class LunchController extends Controller
         }
     }
 
-    public function claimLunch(Request $request)
+    public function claimLunch(ClaimLunchRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'public_key' => 'required',
-            'signature' => 'required|size:128',
-            'lunch_id' => 'required',
-            'lunch_date' => 'required|date_format:Y.m.d',
-            'claim_name' => 'required',
-            'claim_date' => 'required|date_format:Y.m.d H:i:s',
-        ]);
+        $validated = $request->validated();
         Log::info($request->all());
-        if ($validator->fails()) {
+        if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $validated = $validator->validated();
+
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
         if (!$terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
