@@ -13,7 +13,6 @@ use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Terminal;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -70,20 +69,18 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-
         if ($validated->fails()) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 
-
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
-        $message = $validated['lunch_date'] . $validated['card_data'];
-        $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
+        $message = $validated['lunch_date'].$validated['card_data'];
+        $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
 
         if ($validSignature !== strtoupper($validated['signature'])) {
             return response()->json(['error' => 'Invalid signature.'], 401);
@@ -106,7 +103,8 @@ class LunchController extends Controller
                                 $student = Student::where('id', $lunch->student_id)->first();
                                 $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
                                 $originalPlan = Lunch::where('id', $lunch->lunch_id)->first();
-                                $lunch->original_plan = $originalPlan->only(['id','title','description','period_length','weekdays','active_range','claimables','buffer_item','price_period','created_at','updated_at']);
+                                $lunch->original_plan = $originalPlan->only(['id', 'title', 'description', 'period_length', 'weekdays', 'active_range', 'claimables', 'buffer_item', 'price_period', 'created_at', 'updated_at']);
+
                                 return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student', 'original_plan'])], 200);
                             }
                         }
@@ -129,17 +127,17 @@ class LunchController extends Controller
         }
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
-        $message = $validated['lunch_date'] . $validated['lunch_id'] . $validated['claim_name'] . $validated['claim_date'];
-        $validSignature = strtoupper(hash('sha512', $message . $terminal->private_key));
+        $message = $validated['lunch_date'].$validated['lunch_id'].$validated['claim_name'].$validated['claim_date'];
+        $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
 
         if ($validSignature !== strtoupper($validated['signature'])) {
             return response()->json(['error' => 'Invalid signature.'], 401);
         } else {
             $lunch = PeriodicLunch::where('id', $validated['lunch_id'])->first();
-            if($lunch->merchant_id != $terminal->merchant_id) {
+            if ($lunch->merchant_id != $terminal->merchant_id) {
                 return response()->json(['error' => 'Invalid request.'], 400);
             }
             if ($lunch) {
@@ -159,6 +157,7 @@ class LunchController extends Controller
                                     $claims[$claimsKey] = $claim;
                                     $lunch->claims = json_encode($claims);
                                     $lunch->save();
+
                                     return response()->json(['message' => 'Lunch successfully claimed.'], 200);
                                 } else {
                                     return response()->json(['error' => 'Lunch already claimed.'], 409);

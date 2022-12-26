@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use Carbon\Carbon;
-use App\Models\Student;
-use App\Models\Transaction;
-use App\Models\PeriodicLunch;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
-
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use App\Models\Transaction;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
@@ -52,7 +51,7 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () use ($student, $validate, $sortedAvailableDates, $claimsJson, $pricePeriod)  {
+        DB::transaction(function () use ($student, $validate, $sortedAvailableDates, $claimsJson, $pricePeriod) {
             $lunch = PeriodicLunch::create([
                 'student_id' => $student->id,
                 'transaction_id' => 1,
@@ -74,25 +73,23 @@ class OrderLunchController extends Controller
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
                 'billing_items' => json_encode([
-                    'name' => "Test lunch " . $sortedAvailableDates->first() . " - " . $sortedAvailableDates->last(),
-                    "unit_price" => $pricePeriod,
-                    "unit_price_type" => "gross",
-                    "quantity" => 1,
-                    "unit" => "db",
-                    "vat" => "27%"
+                    'name' => 'Test lunch '.$sortedAvailableDates->first().' - '.$sortedAvailableDates->last(),
+                    'unit_price' => $pricePeriod,
+                    'unit_price_type' => 'gross',
+                    'quantity' => 1,
+                    'unit' => 'db',
+                    'vat' => '27%',
                 ]),
                 'pending' => json_encode([
                     'pending' => 0,
                     'pending_history' => [],
                 ]),
                 'comment' => json_encode([
-                    'comment' => 'Placed lunch order on ' .now()->format('Y-m-d'),
+                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
                     'comment_history' => [],
                 ]),
             ]);
-
         });
-
 
         return response()->json(['success' => 'success']);
     }

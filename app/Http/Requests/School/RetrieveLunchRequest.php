@@ -27,7 +27,7 @@ class RetrieveLunchRequest extends FormRequest
             'public_key' => 'required',
             'signature' => 'required|size:128',
             'card_data' => 'required',
-            'lunch_date' => 'required|date_format:Y.m.d'
+            'lunch_date' => 'required|date_format:Y.m.d',
         ];
     }
 }
