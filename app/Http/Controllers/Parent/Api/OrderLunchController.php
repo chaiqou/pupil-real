@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
 
+
 class OrderLunchController extends Controller
 {
     public function index(LunchOrderRequest $request)
@@ -49,6 +50,25 @@ class OrderLunchController extends Controller
 
             $claimsJson[$date] = $claimables;
         }
+        $transaction = Transaction::create([
+            'student_id' => $student->id,
+            'merchant_id' => $student->school_id,
+            'transaction_date' => Carbon::now(),
+            'billingo_transaction_id' => null,
+            'amount' => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+            'transaction_type' => 'lunch',
+            'pending' => json_encode(['pending' => true]),
+            'comment' => json_encode(['comment' => 'Lunch']),
+            'billing_items' => json_encode([
+                [
+                    'name' => 'Lunch',
+                    'quantity' => 1,
+                    'unit_price' => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+                    'tax_rate' => 0,
+                    'total' => Lunch::where('id', $validate['lunch_id'])->first()->price_period,
+                ]
+                ]),
+        ]);
 
         DB::transaction(function () {
             $lunch = PeriodicLunch::create([

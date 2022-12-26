@@ -51,22 +51,28 @@ class TerminalController extends Controller
     public function getSignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
-        $terminal->update(['verification' => Str::random('24')]);
-
-        return response()->json(['verification' => $terminal->verification], 200);
+        if($terminal){
+            $terminal->update(['verification' => Str::random('24')]);
+            return response()->json(['verification' => $terminal->verification], 200);
+        }else{
+            return response()->json(['error' => 'Cannot find resource'], 404);
+        }
     }
 
     public function verifySignature(Request $request): JsonResponse
     {
         $terminal = Terminal::where('public_key', $request->public_key)->first();
+        if ($terminal) {
+            $realSignature = strtoupper(hash('sha512', $terminal->verification.$terminal->private_key));
+            $givenSignature = strtoupper($request->signature);
 
-        $realSignature = strtoupper(hash('sha512', $terminal->verification.$terminal->private_key));
-        $givenSignature = strtoupper($request->signature);
-
-        if ($realSignature === $givenSignature) {
-            return response()->json(['message' => 'Signature verified successfully'], 200);
+            if ($realSignature === $givenSignature) {
+                return response()->json(['message' => 'Signature verified successfully'], 200);
+            } else {
+                return response()->json(['error' => 'Cannot find resource'], 404);
+            }
         } else {
-            return response()->json(['error' => 'Something went wrong'], 404);
-        }
+        return response()->json(['error' => 'Cannot find resource'], 404);
+    }
     }
 }
