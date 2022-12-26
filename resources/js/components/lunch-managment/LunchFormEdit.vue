@@ -228,16 +228,9 @@
                 selectAll
             />
             <BaseInput
-                v-model="store.price_day"
-                name="Price Day"
-                label="Price per day"
-                type="number"
-                rules="required"
-            />
-            <BaseInput
                 v-model="store.price_period"
                 name="Price Period"
-                label="Price per period"
+                label="Price for period (Gross)"
                 type="number"
                 rules="required"
             />
@@ -291,7 +284,6 @@ onMounted(() => {
             store.weekdays = response.data.data.weekdays;
             store.active_range = response.data.data.active_range;
             store.claimables = response.data.data.claimables;
-            store.price_day = response.data.data.price_day;
             store.price_period = response.data.data.price_period;
             store.extras = response.data.data.extras;
             store.holds = response.data.data.holds;

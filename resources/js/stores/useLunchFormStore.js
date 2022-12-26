@@ -12,7 +12,6 @@ export const useLunchFormStore = defineStore("lunch", {
             claimables: [],
             holds: [],
             extras: [],
-            price_day: "",
             price_period: "",
             disabled_extra_days: [],
             disabled_hold_days: [],

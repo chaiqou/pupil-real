@@ -36,7 +36,6 @@ class LunchController extends Controller
             'extras' => $validate['extras'] ?? null,
             'weekdays' => $validate['weekdays'],
             'available_days' => $validate['available_days'],
-            'price_day' => $validate['price_day'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
         ]);

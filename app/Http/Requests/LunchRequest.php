@@ -30,7 +30,6 @@ class LunchRequest extends FormRequest
             'period_length' => 'required',
             'extras' => 'array',
             'holds' => 'array',
-            'price_day' => 'required',
             'price_period' => 'required',
             'weekdays' => 'required',
             'claimables' => 'required',

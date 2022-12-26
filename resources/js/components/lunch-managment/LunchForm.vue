@@ -63,16 +63,9 @@
                 :options="multiselectOptions"
             />
             <BaseInput
-                v-model="store.price_day"
-                name="Price per day"
-                label="Price per day"
-                type="number"
-                rules="required"
-            />
-            <BaseInput
                 v-model="store.price_period"
-                name="Price per period"
-                label="Price per period"
+                name="Price Period"
+                label="Price for period (Gross)"
                 type="number"
                 rules="required"
             />
@@ -167,7 +160,6 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             claimables: store.claimables,
             holds: store.holds,
             extras: store.extras,
-            price_day: store.price_day,
             price_period: store.price_period,
             available_days: store.marked_days,
             buffer_time: store.buffer_time,

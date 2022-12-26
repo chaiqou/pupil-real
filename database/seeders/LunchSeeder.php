@@ -37,7 +37,6 @@ class LunchSeeder extends Seeder
                 'end' => '2021-10-20',
             ],
             'available_days' => 'Levente',
-            'price_day' => 'Levente',
             'price_period' => 'Levente',
 
         ]);
@@ -65,7 +64,6 @@ class LunchSeeder extends Seeder
                 'end' => '2021-10-20',
             ],
             'available_days' => 'Luka',
-            'price_day' => 'Luka',
             'price_period' => 'Luka',
 
         ]);
@@ -93,7 +91,6 @@ class LunchSeeder extends Seeder
                 'end' => '2021-10-20',
             ],
             'available_days' => 'Nikoloz',
-            'price_day' => 'Nikoloz',
             'price_period' => 'Nikoloz',
 
         ]);

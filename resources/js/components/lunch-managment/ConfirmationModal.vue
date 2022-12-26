@@ -134,7 +134,6 @@ const saveWithShifting = () => {
             weekdays: store.weekdays,
             active_range: store.active_range,
             claimables: store.claimables,
-            price_day: store.price_day,
             price_period: store.price_period,
             extras: store.extras,
             holds: store.holds,
@@ -163,7 +162,6 @@ const saveWithoutShifting = () => {
             store.weekdays = response.data.data.weekdays;
             store.active_range = response.data.data.active_range;
             store.claimables = response.data.data.claimables;
-            store.price_day = response.data.data.price_day;
             store.price_period = response.data.data.price_period;
             store.extras = response.data.data.extras;
             store.holds = response.data.data.holds;
