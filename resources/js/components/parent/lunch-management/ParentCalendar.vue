@@ -37,26 +37,13 @@
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
-                                    : 'bg-gray-50 text-gray-400',
-                                dayIdx === 0 && 'rounded-tl-lg',
-                                dayIdx === 6 && 'rounded-tr-lg',
-                                dayIdx === month.days.length - 7 &&
-                                    'rounded-bl-lg',
-                                dayIdx === month.days.length - 1 &&
-                                    'rounded-br-lg',
-                                'py-1.5 hover:bg-gray-100 focus:z-10',
+                                    : 'bg-gray-100 text-gray-500',
+                                'py-1.5',
                             ]"
                         >
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
-                                    isToday(day) && [
-                                        getMonthByIndex(day.getMonth()) &&
-                                        month.name ===
-                                            monthFullNames[day.getMonth()]
-                                            ? 'bg-indigo-400 font-semibold text-white h-full w-full border-b-1 border-indigo-600 aspect-auto'
-                                            : 'bg-indigo-400 text-gray-50 font-semibold  h-full w-full border-b-1 border-indigo-600 aspect-auto',
-                                    ],
                                     'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
                                     markAvailableDays(
                                         format(day, 'yyyy-MM-dd')
