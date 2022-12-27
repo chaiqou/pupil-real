@@ -9,11 +9,13 @@ use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+
 
 class OrderLunchController extends Controller
 {
-    public function index(LunchOrderRequest $request)
+    public function index(LunchOrderRequest $request): JsonResponse
     {
         $validate = $request->validated();
         $student = Student::where('id', $validate['student_id'])->first();
@@ -72,7 +74,7 @@ class OrderLunchController extends Controller
                 'transaction_type' => 'debit',
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
-                'billing_items' => json_encode([
+                'billing_item' => json_encode([
                     'name' => 'Test lunch '.$sortedAvailableDates->first().' - '.$sortedAvailableDates->last(),
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',
@@ -92,5 +94,21 @@ class OrderLunchController extends Controller
         });
 
         return response()->json(['success' => 'success']);
+    }
+
+    public function claims($lunch_id): Array
+    {
+        $claims = PeriodicLunch::where('lunch_id', $lunch_id)->select('claims')
+        ->get();
+
+        $dates = [];
+
+        foreach ($claims as $item) {
+            $claims = json_decode($item['claims'], true);
+            $dates = array_merge(array_keys($claims));
+        }
+
+
+        return $dates;
     }
 }
