@@ -16,6 +16,7 @@ return new class() extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
             $table->date('transaction_date');
             $table->integer('billingo_transaction_id')->nullable();

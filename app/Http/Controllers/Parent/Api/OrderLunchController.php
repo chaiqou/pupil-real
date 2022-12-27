@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
@@ -63,7 +64,8 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimsJson),
             ]);
 
-            Transaction::create([
+           $transaction = Transaction::create([
+                'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $student->school_id,
                 'transaction_date' => now()->format('Y-m-d'),
@@ -72,7 +74,7 @@ class OrderLunchController extends Controller
                 'transaction_type' => 'debit',
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
-                'billing_items' => json_encode([
+                'billing_item' => json_encode([
                     'name' => 'Test lunch '.$sortedAvailableDates->first().' - '.$sortedAvailableDates->last(),
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',
@@ -89,6 +91,8 @@ class OrderLunchController extends Controller
                     'comment_history' => [],
                 ]),
             ]);
+
+            BillingoController::onTransactionCreate($transaction);
         });
 
         return response()->json(['success' => 'success']);
