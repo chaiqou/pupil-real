@@ -55,9 +55,12 @@
                                         month.name ===
                                             monthFullNames[day.getMonth()]
                                             ? 'bg-indigo-400 font-semibold text-white h-full w-full border-b-1 border-indigo-600 aspect-auto'
-                                            : 'bg-indigo-400 text-gray-50  h-full w-full border-b-1 border-indigo-600 aspect-auto',
+                                            : 'bg-indigo-400 text-gray-50 font-semibold  h-full w-full border-b-1 border-indigo-600 aspect-auto',
                                     ],
                                     'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
+                                    markAvailableDays(
+                                        format(day, 'yyyy-MM-dd')
+                                    ),
                                 ]"
                             >
                                 <div class="flex-col">
@@ -70,7 +73,7 @@
                                     ></div>
                                     <div
                                         v-if="ifDaysMatch(day) && !isToday(day)"
-                                        class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
+                                        class="w-4 h-0.5 mx-auto bg-white rounded-full"
                                     ></div>
                                 </div>
                             </time>
@@ -98,7 +101,7 @@ import {
     isSameDay,
     parseISO,
 } from "date-fns";
-import { ref, defineProps, onMounted, onBeforeMount } from "vue";
+import { ref, defineProps, computed, onBeforeMount } from "vue";
 import { useLunchFormStore } from "../../../stores/useLunchFormStore";
 
 const store = useLunchFormStore();
@@ -109,6 +112,18 @@ const props = defineProps({
         required: true,
     },
 });
+
+const availableDays = computed(() => {
+    return store.availableDatesForStartOrdering.map((day) => {
+        return format(day, "yyyy-MM-dd");
+    });
+});
+
+const markAvailableDays = (day) => {
+    if (availableDays.value.includes(day)) {
+        return "bg-indigo-600 font-semibold text-white h-full w-full border-b-1 border-green-600 aspect-auto";
+    }
+};
 
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(
