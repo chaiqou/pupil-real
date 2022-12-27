@@ -29,10 +29,11 @@
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            v-for="(day, dayIdx) in month.days"
+                            v-for="day in month.days"
                             :key="day.date"
                             type="button"
                             :class="[
+                                markAvailableDays(format(day, 'yyyy-MM-dd')),
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -45,9 +46,6 @@
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 :class="[
                                     'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
-                                    markAvailableDays(
-                                        format(day, 'yyyy-MM-dd')
-                                    ),
                                 ]"
                             >
                                 <div class="flex-col">
@@ -106,12 +104,6 @@ const availableDays = computed(() => {
     });
 });
 
-const markAvailableDays = (day) => {
-    if (availableDays.value.includes(day)) {
-        return "bg-indigo-600 font-semibold text-white h-full w-full border-b-1 border-green-600 aspect-auto";
-    }
-};
-
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(
         "lunchId"
@@ -166,6 +158,12 @@ const getMonthByIndex = function (index) {
     const month = date.toLocaleString(locale, { month: "long" });
 
     return month;
+};
+
+const markAvailableDays = (day) => {
+    if (availableDays.value.includes(day)) {
+        return "!bg-indigo-600 font-semibold !text-white h-full w-full border-b-1 border-green-600 aspect-auto";
+    }
 };
 
 // i added days to the end of month to make all month equals to 42 length for design purpose
