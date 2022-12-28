@@ -161,7 +161,7 @@ const getMonthByIndex = function (index) {
 };
 
 const markAvailableDays = (day) => {
-    if (store.claim_days.includes(day)) {
+    if (store.availableDatesForStartOrdering.includes(day)) {
         return "!bg-indigo-600 font-semibold !text-white h-full w-full border-b-1 border-green-600 aspect-auto";
     }
 };

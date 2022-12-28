@@ -248,12 +248,6 @@ watch(bufferDays, (newValue) => {
 
 onMounted(() => {
     axios
-        .get("/api/parent/claims/" + localStorage.getItem("lunchId"))
-        .then((response) => {
-            console.log(response.data);
-            store.claim_days = response.data;
-        });
-    axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
             availableDays.value.push(

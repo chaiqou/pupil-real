@@ -96,19 +96,4 @@ class OrderLunchController extends Controller
         return response()->json(['success' => 'success']);
     }
 
-    public function claims($lunch_id): Array
-    {
-        $claims = PeriodicLunch::where('lunch_id', $lunch_id)->select('claims')
-        ->get();
-
-        $dates = [];
-
-        foreach ($claims as $item) {
-            $claims = json_decode($item['claims'], true);
-            $dates = array_merge(array_keys($claims));
-        }
-
-
-        return $dates;
-    }
 }
