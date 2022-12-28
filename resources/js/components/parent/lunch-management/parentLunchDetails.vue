@@ -244,6 +244,8 @@ watch(bufferDays, (newValue) => {
 
     // on load firstDay will be  available dates first day
     firstDay.value = store.availableDatesForStartOrdering[0];
+
+    store.first_day = firstDay.value;
 });
 
 onMounted(() => {
@@ -259,6 +261,8 @@ onMounted(() => {
             bufferDays.value = response.data.data.buffer_time;
             lunchDetails.value = [response.data.data];
             store.marked_days.push(...response.data.data.available_days);
+            store.period_length = response.data.data.period_length;
+            store.available_days = response.data.data.available_days;
         });
 });
 </script>

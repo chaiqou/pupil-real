@@ -33,7 +33,7 @@
                             :key="day.date"
                             type="button"
                             :class="[
-                                markAvailableDays(format(day, 'yyyy-MM-dd')),
+                                claimDays,
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -98,12 +98,6 @@ const props = defineProps({
     },
 });
 
-const availableDays = computed(() => {
-    return store.availableDatesForStartOrdering.map((day) => {
-        return format(day, "yyyy-MM-dd");
-    });
-});
-
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(
         "lunchId"
@@ -165,6 +159,18 @@ const markAvailableDays = (day) => {
         return "!bg-indigo-600 font-semibold !text-white h-full w-full border-b-1 border-green-600 aspect-auto";
     }
 };
+
+const claimDays = computed(() => {
+    const days = store.availableDatesForStartOrdering
+        .filter((date) => {
+            return new Date(date) >= new Date(store.first_day);
+        })
+        .slice(0, store.period_length);
+
+    if (days.length > 0) {
+        console.log("yes");
+    }
+});
 
 // i added days to the end of month to make all month equals to 42 length for design purpose
 

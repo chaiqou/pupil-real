@@ -25,6 +25,7 @@ export const useLunchFormStore = defineStore("lunch", {
             vat: "27%",
             availableDatesForStartOrdering: [],
             claim_days: [],
+            first_day: "",
         };
     },
 
