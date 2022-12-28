@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\TransactionCreated;
+use App\Http\Controllers\School\Api\TransactionController;
 use App\Models\BillingoData;
 use App\Models\Merchant;
 use App\Models\PartnerId;
@@ -35,14 +36,13 @@ class TransactionToDocumentInsert
         $user = User::where('id', auth()->user()->id)->first();
         $partner = PartnerId::where('user_id', $user->id)->first();
         $transactionBillingItem = json_decode($event->transaction->billing_item);
-        $exactTransaction = Transaction::where('merchant_id', $event->transaction->merchant_id)->where('user_id', auth()->user()->id)->first();
-        $exactMerchant = Merchant::where('id', $exactTransaction->merchant_id)->first();
+        $merchant = Merchant::where('id', $event->transaction->merchant_id)->first();
         $transaction_date = $event->transaction->transaction_date;
         $transaction_date = strtotime($transaction_date);
         $transaction_date = strtotime("+7 days", $transaction_date);
         $transaction_due_date = date('Y-m-d', $transaction_date);
-        $billingoData = BillingoData::where('merchant_id', $exactMerchant->id)->first();
-           Http::withHeaders([
+        $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
+          $request = Http::withHeaders([
                 'X-API-KEY' => $billingoData->billingo_api_key,
             ])->post('https://api.billingo.hu/v3/documents', [
                 'partner_id' => $partner->partner_id,
@@ -66,6 +66,14 @@ class TransactionToDocumentInsert
                 'settings' => [
                     "should_send_email" => true,
                 ]
-            ]);
+            ])->json();
+          $event->transaction->update([
+              'billingo_transaction_id' => $request['id']
+          ]);
+        $transactionComment = json_decode($event->transaction->comment);
+        $transactionComment->comment_history[] = $transactionComment->comment;
+        $transactionComment->comment =
+            'Issued' . ' ' . ucfirst($event->transaction->billing_type) . ' on ' . now()->format('Y-m-d') . ' (' . $request['invoice_number'] . ')';
+          TransactionController::updateComment($event->transaction->id, $transactionComment->comment);
     }
 }
