@@ -143,10 +143,10 @@
                     </dd>
                 </div>
             </dl>
-            <div v-if="firstDay != null">
+            <div v-if="store.first_day != null">
                 <Datepicker
                     closeOnScroll
-                    v-model="firstDay"
+                    v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :enableTimePicker="false"
                     :clearable="false"
@@ -158,15 +158,18 @@
                 >
                     <p v-if="!formIsValid">It is not possible to order lunch</p>
                     <p
-                        v-if="firstDay == '' && !formIsValid"
+                        v-if="store.first_day == '' && !formIsValid"
                         class="text-center"
                     >
                         Please select order starting date
                     </p>
-                    <p v-if="firstDay != '' && formIsValid" class="text-center">
+                    <p
+                        v-if="store.first_day != '' && formIsValid"
+                        class="text-center"
+                    >
                         {{
                             "Order starting at " +
-                            format(firstDay, "yyyy MMMM dd")
+                            format(store.first_day, "yyyy MMMM dd")
                         }}
                     </p>
                 </button>
@@ -176,13 +179,12 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
-const firstDay = ref();
 
 const periodLength = ref();
 const currentDate = new Date();
@@ -210,7 +212,7 @@ const startOrderingLunch = () => {
         available_days: lunchDetails.value[0].available_days,
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
-        start_day: firstDay.value,
+        start_day: store.first_day.value,
         lunch_id: lunchDetails.value[0].id,
     });
 };
@@ -242,10 +244,10 @@ watch(bufferDays, (newValue) => {
         formIsValid.value = true;
     }
 
-    // on load firstDay will be  available dates first day
-    firstDay.value = store.availableDatesForStartOrdering[0];
+    // on load store.first_day will be  available dates first day
+    store.first_day.value = store.availableDatesForStartOrdering[0];
 
-    store.first_day = firstDay.value;
+    store.first_day = store.first_day.value;
 });
 
 onMounted(() => {
