@@ -70,7 +70,7 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if ($validated->fails()) {
+        if (!is_null($validated)) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
@@ -123,7 +123,7 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if ($validated->fails()) {
+        if (!is_null($validated)) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
