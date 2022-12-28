@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
+use App\Events\TransactionCreated;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
@@ -91,8 +92,9 @@ class OrderLunchController extends Controller
                     'comment_history' => [],
                 ]),
             ]);
-
-            BillingoController::onTransactionCreate($transaction);
+          if ($transaction->billing_type !== 'none') {
+             event(new TransactionCreated($transaction));
+           };
         });
 
         return response()->json(['success' => 'success']);
