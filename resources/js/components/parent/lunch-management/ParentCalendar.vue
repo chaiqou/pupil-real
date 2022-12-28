@@ -33,8 +33,8 @@
                             :key="day"
                             type="button"
                             :class="[
-                                claimDays.map((ggjj) => {
-                                    return format(ggjj, 'yyyy-MM-dd') ==
+                                claimDays.map((claim) => {
+                                    return format(claim, 'yyyy-MM-dd') ==
                                         format(day, 'yyyy-MM-dd') &&
                                         month.name !==
                                             getMonthByIndex(day.getMonth()) &&
@@ -47,7 +47,7 @@
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
-                                    : 'bg-gray-100 text-gray-500',
+                                    : 'bg-gray-50 text-gray-400',
                                 dayIdx === 0 && 'rounded-tl-lg',
                                 dayIdx === 6 && 'rounded-tr-lg',
                                 dayIdx === month.days.length - 7 &&
