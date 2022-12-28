@@ -212,7 +212,7 @@ const startOrderingLunch = () => {
         available_days: lunchDetails.value[0].available_days,
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
-        start_day: store.first_day.value,
+        start_day: store.first_day,
         lunch_id: lunchDetails.value[0].id,
     });
 };
@@ -244,10 +244,7 @@ watch(bufferDays, (newValue) => {
         formIsValid.value = true;
     }
 
-    // on load store.first_day will be  available dates first day
-    store.first_day.value = store.availableDatesForStartOrdering[0];
-
-    store.first_day = store.first_day.value;
+    store.first_day = store.availableDatesForStartOrdering[0];
 });
 
 onMounted(() => {
