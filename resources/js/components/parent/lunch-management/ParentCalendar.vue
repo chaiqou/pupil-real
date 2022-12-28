@@ -29,7 +29,7 @@
                         class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
                     >
                         <button
-                            v-for="day in month.days"
+                            v-for="(day, dayIdx) in month.days"
                             :key="day"
                             type="button"
                             :class="[
@@ -40,7 +40,7 @@
                                             getMonthByIndex(day.getMonth()) &&
                                         month.name ===
                                             monthFullNames[day.getMonth()]
-                                        ? '!bg-indigo-600 text-white'
+                                        ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
                                         : '';
                                 }),
                                 month.name !==
@@ -48,7 +48,13 @@
                                 month.name === monthFullNames[day.getMonth()]
                                     ? 'bg-white text-gray-900'
                                     : 'bg-gray-100 text-gray-500',
-                                'py-1.5',
+                                dayIdx === 0 && 'rounded-tl-lg',
+                                dayIdx === 6 && 'rounded-tr-lg',
+                                dayIdx === month.days.length - 7 &&
+                                    'rounded-bl-lg',
+                                dayIdx === month.days.length - 1 &&
+                                    'rounded-br-lg',
+                                'py-1.5 hover:bg-gray-100 focus:z-10',
                             ]"
                         >
                             <time
@@ -161,12 +167,6 @@ const getMonthByIndex = function (index) {
     const month = date.toLocaleString(locale, { month: "long" });
 
     return month;
-};
-
-const markAvailableDays = (day) => {
-    if (store.availableDatesForStartOrdering.includes(day)) {
-        return "!bg-indigo-600 font-semibold !text-white h-full w-full border-b-1 border-green-600 aspect-auto";
-    }
 };
 
 const claimDays = computed(() => {
