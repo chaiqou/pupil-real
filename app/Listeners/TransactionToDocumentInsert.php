@@ -68,7 +68,12 @@ class TransactionToDocumentInsert
                 ]
             ])->json();
           $event->transaction->update([
-              'billingo_transaction_id' => $request['id']
+              'billingo_transaction_id' => $request['id'],
+              'pending' => json_encode([
+                  'pending' => '1',
+                  'pending_status' => 'waiting_for_proforma_payment',
+                  'pending_history' => [],
+              ])
           ]);
         $transactionComment = json_decode($event->transaction->comment);
         $transactionComment->comment_history[] = $transactionComment->comment;
