@@ -260,7 +260,6 @@ onMounted(() => {
             periodLength.value = response.data.data.period_length;
             bufferDays.value = response.data.data.buffer_time;
             lunchDetails.value = [response.data.data];
-            store.marked_days.push(...response.data.data.available_days);
             store.period_length = response.data.data.period_length;
             store.available_days = response.data.data.available_days;
         });

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="claimDays">
         <div
             class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
         >
@@ -30,10 +30,19 @@
                     >
                         <button
                             v-for="day in month.days"
-                            :key="day.date"
+                            :key="day"
                             type="button"
                             :class="[
-                                claimDays,
+                                claimDays.map((ggjj) => {
+                                    return format(ggjj, 'yyyy-MM-dd') ==
+                                        format(day, 'yyyy-MM-dd') &&
+                                        month.name !==
+                                            getMonthByIndex(day.getMonth()) &&
+                                        month.name ===
+                                            monthFullNames[day.getMonth()]
+                                        ? '!bg-indigo-600 text-white'
+                                        : '';
+                                }),
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -87,7 +96,7 @@ import {
     parseISO,
 } from "date-fns";
 import { ref, defineProps, computed, onBeforeMount } from "vue";
-import { useLunchFormStore } from "../../../stores/useLunchFormStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
@@ -168,7 +177,7 @@ const claimDays = computed(() => {
         .slice(0, store.period_length);
 
     if (days.length > 0) {
-        console.log("yes");
+        return days;
     }
 });
 
