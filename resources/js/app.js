@@ -34,7 +34,7 @@ import "@/config/vee-validate/index.js";
 import AdminSchools from "@/components/admin/Schools/Schools.vue";
 import AdminMerchants from "@/components/admin/Merchants/Merchants.vue";
 import ParentLunchList from "@/components/parent/lunch-management/ParentLunchList.vue";
-import AdminMerchantsHeader from "@/components/admin/Merchants/MerchantsHeader.vue"
+import AdminMerchantsHeader from "@/components/admin/Merchants/MerchantsHeader.vue";
 import AdminMerchantInvitesHeader from "@/components/admin/Merchants/Invite/MerchantInvitesHeader.vue";
 import AdminMerchantInvites from "@/components/admin/Merchants/Invite/MerchantInvites.vue";
 import AdminSchoolsHeader from "@/components/admin/Schools/SchoolsHeader.vue";
@@ -44,6 +44,7 @@ import ConfirmationModal from "@/components/lunch-managment/ConfirmationModal.vu
 import ParentLunchDetails from "@/components/parent/lunch-management/parentLunchDetails.vue";
 import SchoolTerminals from "@/components/school/Terminals/Terminals.vue";
 import SchoolTerminalsHeader from "@/components/school/Terminals/TerminalsHeader.vue";
+import ParentCalendar from "../js/components/parent/lunch-management/ParentCalendar.vue";
 const pinia = createPinia();
 const app = createApp({});
 
@@ -85,5 +86,6 @@ app.component("confirmation-modal", ConfirmationModal);
 app.component("parent-lunch-details", ParentLunchDetails);
 app.component("school-terminals", SchoolTerminals);
 app.component("school-terminals-header", SchoolTerminalsHeader);
+app.component("parent-calendar", ParentCalendar);
 app.use(pinia);
 app.mount("#app");

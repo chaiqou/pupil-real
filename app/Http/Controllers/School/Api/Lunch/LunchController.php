@@ -44,6 +44,7 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
+            'vat' => $validate['vat'],
         ]);
 
         return response()->json(['success' => 'Lunch created successfully'], 201);
@@ -68,7 +69,6 @@ class LunchController extends Controller
     public function retrieveLunch(RetrieveLunchRequest $request)
     {
         $validated = $request->validated();
-
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 

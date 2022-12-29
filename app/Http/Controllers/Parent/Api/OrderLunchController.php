@@ -11,11 +11,13 @@ use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+
 
 class OrderLunchController extends Controller
 {
-    public function index(LunchOrderRequest $request)
+    public function index(LunchOrderRequest $request): JsonResponse
     {
         $validate = $request->validated();
         $student = Student::where('id', $validate['student_id'])->first();
@@ -99,4 +101,5 @@ class OrderLunchController extends Controller
 
         return response()->json(['success' => 'success']);
     }
+
 }
