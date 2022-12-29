@@ -77,9 +77,6 @@
                                 </div>
                             </time>
                         </button>
-                        <template v-if="tooltip">
-                            <Tooltip :selectedDay="selectedDay" />
-                        </template>
                     </div>
                 </section>
             </div>
