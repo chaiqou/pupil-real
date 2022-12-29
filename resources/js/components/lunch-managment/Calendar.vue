@@ -2,6 +2,7 @@
     <div>
         <div
             class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
+            :class="classes"
         >
             <div
                 class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -98,8 +99,8 @@ import {
     isSameDay,
     parseISO,
 } from "date-fns";
-import { ref, defineProps, onMounted, onBeforeMount } from "vue";
-import { useLunchFormStore } from "../../stores/useLunchFormStore";
+import { ref, defineProps, onBeforeMount } from "vue";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
@@ -107,6 +108,11 @@ const props = defineProps({
     months: {
         type: Number,
         required: true,
+    },
+    classes: {
+        type: String,
+        required: false,
+        default: "",
     },
 });
 
