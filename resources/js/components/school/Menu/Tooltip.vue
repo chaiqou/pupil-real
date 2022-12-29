@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed flex min-h-screen min-w-[100vw] flex-col z-50 justify-center overflow-hidden bg-black/50 py-6 sm:py-12"
+        class="fixed flex min-h-screen min-w-[90vw] flex-col z-50 justify-center overflow-hidden bg-black/50 py-6 sm:py-12"
     >
         <div
             class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 w-full"
@@ -8,7 +8,7 @@
             <div class="mx-auto max-w-md w-full">
                 <div class="flex items-start space-x-4">
                     <div class="min-w-0 flex-1">
-                        <form action="#">
+                        <form ref="target" action="#">
                             <div
                                 class="border-b border-gray-200 focus-within:border-indigo-600"
                             >
@@ -106,6 +106,14 @@
 <script setup>
 import LunchesArrowIcon from "@/components/icons/LunchesArrowIcon.vue";
 import CheckIcon from "@/components/icons/checkIcon.vue";
+import { ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
+import { useGlobalStore } from "@/components/stores/useGlobalStore";
+
+const target = ref(null);
+const globalStore = useGlobalStore();
+
+onClickOutside(target, (event) => (globalStore.toggleTooltip = false));
 
 const props = defineProps({
     selectedDay: {
