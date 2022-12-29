@@ -22,7 +22,10 @@ export const useLunchFormStore = defineStore("lunch", {
             lunches: [],
             currentLunchEditId: "",
             buffer_time: null,
-            vat: "",
+            vat: "27%",
+            availableDatesForStartOrdering: [],
+            claim_days: [],
+            first_day: "",
         };
     },
 

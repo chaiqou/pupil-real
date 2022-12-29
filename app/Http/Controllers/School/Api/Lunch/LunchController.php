@@ -44,6 +44,7 @@ class LunchController extends Controller
             'available_days' => $validate['available_days'],
             'price_period' => $validate['price_period'],
             'buffer_time' => $validate['buffer_time'],
+            'vat' => $validate['vat'],
         ]);
 
         return response()->json(['success' => 'Lunch created successfully'], 201);
@@ -69,7 +70,7 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if ($validated->fails()) {
+        if (!is_null($validated)) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
@@ -122,7 +123,7 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if ($validated->fails()) {
+        if (!is_null($validated)) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 

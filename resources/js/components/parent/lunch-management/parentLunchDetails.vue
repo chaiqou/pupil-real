@@ -143,11 +143,11 @@
                     </dd>
                 </div>
             </dl>
-            <div v-if="firstDay != null">
+            <div v-if="store.first_day != null">
                 <Datepicker
                     closeOnScroll
-                    v-model="firstDay"
-                    :allowed-dates="allowedDates"
+                    v-model="store.first_day"
+                    :allowed-dates="store.availableDatesForStartOrdering"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
@@ -158,15 +158,18 @@
                 >
                     <p v-if="!formIsValid">It is not possible to order lunch</p>
                     <p
-                        v-if="firstDay == '' && !formIsValid"
+                        v-if="store.first_day == '' && !formIsValid"
                         class="text-center"
                     >
                         Please select order starting date
                     </p>
-                    <p v-if="firstDay != '' && formIsValid" class="text-center">
+                    <p
+                        v-if="store.first_day != '' && formIsValid"
+                        class="text-center"
+                    >
                         {{
                             "Order starting at " +
-                            format(firstDay, "yyyy MMMM dd")
+                            format(store.first_day, "yyyy MMMM dd")
                         }}
                     </p>
                 </button>
@@ -176,13 +179,12 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
-const firstDay = ref();
 
 const periodLength = ref();
 const currentDate = new Date();
@@ -192,7 +194,6 @@ const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
-const availableDatesForStartOrdering = ref();
 const lunchDetails = ref([]);
 const formIsValid = ref();
 const childrenToast = ref();
@@ -211,7 +212,7 @@ const startOrderingLunch = () => {
         available_days: lunchDetails.value[0].available_days,
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
-        start_day: firstDay.value,
+        start_day: store.first_day,
         lunch_id: lunchDetails.value[0].id,
     });
 };
@@ -230,11 +231,11 @@ watch(bufferDays, (newValue) => {
 
     if (filteredDates.value.length < periodLength) {
         // Remove from filteredDates period length days
-        availableDatesForStartOrdering.value = filteredDates.value.splice(
+        store.availableDatesForStartOrdering = filteredDates.value.splice(
             periodLength.value
         );
     } else {
-        availableDatesForStartOrdering.value = filteredDates.value;
+        store.availableDatesForStartOrdering = filteredDates.value;
     }
 
     if (availableDays.value[0].length < +periodLength.value) {
@@ -243,12 +244,7 @@ watch(bufferDays, (newValue) => {
         formIsValid.value = true;
     }
 
-    // on load firstDay will be  available dates first day
-    firstDay.value = availableDatesForStartOrdering.value[0];
-});
-
-const allowedDates = computed(() => {
-    return availableDatesForStartOrdering.value;
+    store.first_day = store.availableDatesForStartOrdering[0];
 });
 
 onMounted(() => {
@@ -263,7 +259,8 @@ onMounted(() => {
             periodLength.value = response.data.data.period_length;
             bufferDays.value = response.data.data.buffer_time;
             lunchDetails.value = [response.data.data];
-            store.marked_days.push(...response.data.data.available_days);
+            store.period_length = response.data.data.period_length;
+            store.available_days = response.data.data.available_days;
         });
 });
 </script>
