@@ -31,7 +31,6 @@ class NavigationController extends Controller
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                     ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
                     ['name' => 'Lunch Details', 'icon' => 'none', 'href' => '/parent/lunch-details/'.$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches'],
-                    ['name' => 'Menu Management', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menu-management/'.$student->id, 'curreunt' => false],
                 ];
         }
 
@@ -71,6 +70,7 @@ class NavigationController extends Controller
                 [
                     ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/school/dashboard', 'current' => false],
                     ['name' => 'Lunch management', 'icon' => 'BuildingOffice2Icon', 'href' => '/school/lunch-management', 'current' => false],
+                    ['name' => 'Menu Management', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/school/menu-management', 'curreunt' => false],
                     ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' => '/school/transactions', 'current' => false],
                     ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
                     ['name' => 'Terminals', 'icon' => 'CommandLineIcon', 'href' => '/school/terminals', 'current' => false],

@@ -99,7 +99,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('dashboard/{student_id}', 'parent')->name('parent.dashboard');
                 Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
                 Route::get('lunch-details/{student_id}', 'parent')->name('parent.lunch-details');
-                Route::get('menu-management/{student_id}', 'parent')->name('parent.menu-management');
             });
         });
     });
@@ -115,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invite', 'school')->name('school.invite');
                 Route::get('lunch-management/{lunch_id}/edit', 'school')->name('school.lunch-management-edit');
                 Route::get('terminals', 'school')->name('school.terminals');
+                Route::get('menu-management', 'school')->name('school.menu-management');
             });
         });
     });
