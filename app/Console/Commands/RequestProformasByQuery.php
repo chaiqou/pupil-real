@@ -36,9 +36,8 @@ class RequestProformasByQuery extends Command
         foreach ($merchants as $merchant) {
             $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
             $request = Http::withHeaders([
-                'X-API-KEY' => $billingoData->billingo_api_key,//
-                //                ?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date
-            ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=2&payment_status=paid&paid_start_date=$yesterday_date")->json();
+                'X-API-KEY' => $billingoData->billingo_api_key,
+            ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date")->json();
             $firstRequest = [];
             array_push($firstRequest, $request['data']);
 
