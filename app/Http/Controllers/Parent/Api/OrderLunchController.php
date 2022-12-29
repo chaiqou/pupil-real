@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
+use App\Events\TransactionCreated;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
@@ -65,7 +67,8 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimsJson),
             ]);
 
-            Transaction::create([
+           $transaction = Transaction::create([
+                'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $student->school_id,
                 'transaction_date' => now()->format('Y-m-d'),
@@ -91,6 +94,9 @@ class OrderLunchController extends Controller
                     'comment_history' => [],
                 ]),
             ]);
+          if ($transaction->billing_type !== 'none') {
+             event(new TransactionCreated($transaction));
+           };
         });
 
         return response()->json(['success' => 'success']);

@@ -15,6 +15,7 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         $transactions_for_levente = Transaction::create([
+            'user_id' => 3,
             'student_id' => 1,
             'merchant_id' => 1,
             'transaction_date' => '2021-10-20',
@@ -37,6 +38,7 @@ class TransactionSeeder extends Seeder
         ]);
 
         $transactions_for_luka = Transaction::create([
+            'user_id' => 3,
             'student_id' => 2,
             'merchant_id' => 1,
             'transaction_date' => '2021-10-20',
@@ -59,6 +61,7 @@ class TransactionSeeder extends Seeder
         ]);
 
         $transactions_for_nikoloz = Transaction::create([
+            'user_id' => 1,
             'student_id' => 3,
             'merchant_id' => 1,
             'transaction_date' => '2021-10-20',

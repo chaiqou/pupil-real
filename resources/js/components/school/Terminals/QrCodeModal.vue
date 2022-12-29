@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-center items-center">
-                                <qrcode-vue :value="this.QRKeys" :size="300"></qrcode-vue>
+                                <qrcode-vue :value="this.QRKeys" :size="300" :level="'M'"></qrcode-vue>
                             </div>
                         </DialogPanel>
                     </TransitionChild>

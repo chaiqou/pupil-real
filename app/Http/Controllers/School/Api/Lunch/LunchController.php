@@ -70,10 +70,6 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if (!is_null($validated)) {
-            return response()->json(['error' => 'Invalid request.'], 400);
-        }
-
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 
         if (! $terminal) {
@@ -105,6 +101,9 @@ class LunchController extends Controller
                                 $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
                                 $originalPlan = Lunch::where('id', $lunch->lunch_id)->first();
                                 $lunch->original_plan = $originalPlan->only(['id', 'title', 'description', 'period_length', 'weekdays', 'active_range', 'claimables', 'buffer_item', 'price_period', 'created_at', 'updated_at']);
+                                //Update formatted dated from "YYYY-MM-DD HH:MM:SS" to "YYYY.MM.DD"
+                                $lunch->start_date = date('Y.m.d', strtotime($lunch->start_date));
+                                $lunch->end_date = date('Y.m.d', strtotime($lunch->end_date));
 
                                 return response()->json(['lunch' => $claim, 'lunch_meta' => $lunch->only(['id', 'student_id', 'card_data', 'transaction_id', 'merchant_id', 'lunch_id', 'lunch_id', 'start_date', 'end_date', 'created_at', 'updated_at', 'student', 'original_plan'])], 200);
                             }
@@ -122,10 +121,6 @@ class LunchController extends Controller
     public function claimLunch(ClaimLunchRequest $request)
     {
         $validated = $request->validated();
-
-        if (!is_null($validated)) {
-            return response()->json(['error' => 'Invalid request.'], 400);
-        }
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
         if (! $terminal) {

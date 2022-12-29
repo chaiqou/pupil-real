@@ -71,7 +71,7 @@ class StudentSeeder extends Seeder
                 'zip' => '99212',
             ],
             'school_id' => 1,
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
 
         $student_for_levente2 = Student::create([
@@ -91,7 +91,7 @@ class StudentSeeder extends Seeder
                 'zip' => '99212',
             ],
             'school_id' => 1,
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
 
         $student_for_luka = Student::create([

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\School\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\School\UpdateTransactionCommentRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
@@ -23,5 +24,18 @@ class TransactionController extends Controller
         $transactions = Transaction::where('merchant_id', $request->school_id)->orderBy('transaction_date', 'desc')->take(5)->with('merchant', 'student')->get();
 
         return TransactionResource::collection($transactions);
+    }
+
+    static public function updateComment(int $transaction_id, string $comment): void
+    {
+     $transaction = Transaction::where('id', $transaction_id)->first();
+        $transactionComment = json_decode($transaction->comment);
+        $transactionComment->comment_history[] = $transactionComment->comment;
+     $transaction->update([
+         'comment' => json_encode([
+             'comment' => $comment,
+             'comment_history' => $transactionComment->comment_history,
+         ]),
+     ]);
     }
 }
