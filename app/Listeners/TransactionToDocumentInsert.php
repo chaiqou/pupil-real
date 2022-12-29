@@ -68,9 +68,9 @@ class TransactionToDocumentInsert
                 ]
             ])->json();
           $event->transaction->update([
-              'billingo_transaction_id' => $request['id'],
+              'billingo_proforma_id' => $event->transaction->billing_type === 'proforma' ? $request['id'] : null,
               'pending' => json_encode([
-                  'pending' => '1',
+                  'pending' => 1,
                   'pending_status' => 'waiting_for_proforma_payment',
                   'pending_history' => [],
               ])

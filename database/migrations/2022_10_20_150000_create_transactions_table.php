@@ -19,6 +19,7 @@ return new class() extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
             $table->date('transaction_date');
+            $table->integer('billingo_proforma_id')->nullable();
             $table->integer('billingo_transaction_id')->nullable();
             $table->integer('amount');
             $table->string('transaction_type');
