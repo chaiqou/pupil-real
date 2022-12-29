@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-   <calendar :classes="['!w-full']" :months={{ 11 }}></calendar>
+   <menu-calendar :classes="['!w-full']" :months={{ 11 }}></menu-calendar>
 @endsection
