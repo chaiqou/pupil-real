@@ -31,7 +31,7 @@ class NavigationController extends Controller
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                     ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
                     ['name' => 'Lunch Details', 'icon' => 'none', 'href' => '/parent/lunch-details/'.$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches'],
-                    ['name' => 'Menu Management', 'icon' => 'DocumentAddIcon', 'href' => '/parent/menu-management/'.$student->id, 'curreunt' => false],
+                    ['name' => 'Menu Management', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menu-management/'.$student->id, 'curreunt' => false],
                 ];
         }
 

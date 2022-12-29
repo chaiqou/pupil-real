@@ -196,7 +196,7 @@ import {
     Cog8ToothIcon,
     CakeIcon,
     CommandLineIcon,
-    DocumentTextIcon,
+    ClipboardDocumentListIcon,
 } from "@heroicons/vue/24/outline";
 export default {
     components: {
@@ -209,7 +209,7 @@ export default {
         Cog8ToothIcon,
         CakeIcon,
         CommandLineIcon,
-        DocumentTextIcon,
+        ClipboardDocumentListIcon,
     },
     computed: {
         ...mapWritableState(useModalStore, [
