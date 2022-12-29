@@ -158,4 +158,12 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+    selectedDay: {
+        type: [Date, String],
+        default: "",
+        required: true,
+    },
+});
+</script>

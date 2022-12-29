@@ -31,6 +31,7 @@
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
+                            @click="toggleTooltip(day)"
                             :key="day.date"
                             type="button"
                             :class="[
@@ -76,6 +77,9 @@
                                 </div>
                             </time>
                         </button>
+                        <template v-if="tooltip">
+                            <Tooltip :selectedDay="selectedDay" />
+                        </template>
                     </div>
                 </section>
             </div>
@@ -101,6 +105,7 @@ import {
 } from "date-fns";
 import { ref, defineProps, onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import Tooltip from "./Tooltip.vue";
 
 const store = useLunchFormStore();
 
@@ -110,11 +115,19 @@ const props = defineProps({
         required: true,
     },
     classes: {
-        type: String,
+        type: Array,
         required: false,
         default: "",
     },
 });
+
+const tooltip = ref(false);
+const selectedDay = ref(null);
+
+const toggleTooltip = (day) => {
+    tooltip.value = true;
+    selectedDay.value = day;
+};
 
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(

@@ -110,7 +110,7 @@ const props = defineProps({
         required: true,
     },
     classes: {
-        type: String,
+        type: Array,
         required: false,
         default: "",
     },
