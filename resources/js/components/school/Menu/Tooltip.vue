@@ -108,7 +108,7 @@ import LunchesArrowIcon from "@/components/icons/LunchesArrowIcon.vue";
 import CheckIcon from "@/components/icons/checkIcon.vue";
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import { useGlobalStore } from "@/components/stores/useGlobalStore";
+import { useGlobalStore } from "@/stores/useGlobalStore";
 
 const target = ref(null);
 const globalStore = useGlobalStore();
