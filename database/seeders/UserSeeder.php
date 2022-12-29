@@ -32,6 +32,23 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'klevente@pupilpay.hu',
             'password' => bcrypt('pupilpay'),
+        ])->assignRole('school');
+
+        $leventeParent = User::create([
+            'first_name' => 'Levente',
+            'last_name' => 'Kazo',
+            'school_id' => 1,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
+                'country' => 'HU',
+                'state' => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ]),
+            'email' => 'kazo.levente@gmail.com',
+            'password' => bcrypt('pupilpay'),
         ])->assignRole('parent');
 
         $luka = User::create([
@@ -49,7 +66,7 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'jackrestler@gmail.com',
             'password' => bcrypt('adminadmin'),
-        ])->assignRole('parent');
+        ])->assignRole('school');
 
         $nikoloz = User::create([
             'first_name' => 'nika',
