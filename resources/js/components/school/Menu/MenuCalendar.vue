@@ -91,12 +91,10 @@ import {
     add,
     startOfWeek,
     addDays,
-    isSameDay,
-    parseISO,
 } from "date-fns";
-import { ref, defineProps, onBeforeMount } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { ref, defineProps } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
 
 const store = useLunchFormStore();
@@ -114,29 +112,10 @@ const props = defineProps({
     },
 });
 
-const selectedDay = ref(null);
-
 const toggleTooltip = (day) => {
     tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
     tooltipStore.selected_day = day;
 };
-
-onBeforeMount(() => {
-    const targetPath = `/school/lunch-management/${localStorage.getItem(
-        "lunchId"
-    )}/edit`;
-    const currentPath = window.location.pathname;
-
-    if (currentPath == targetPath) {
-        axios.get("/api/school/lunch").then((response) => {
-            response.data.data.map((data) => {
-                if (localStorage.getItem("lunchId") == data.id) {
-                    store.marked_days.push(...data.available_days);
-                }
-            });
-        });
-    }
-});
 
 const today = startOfToday();
 
