@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('auth:clear-resets')->everyThirtyMinutes();
         $schedule->command('request:paid-proformas')->everyTwoMinutes();
+        $schedule->command('check:check:user-partner-id-check')->daily();
+        $schedule->command('check:merchant-billingo-data-check')->daily();
     }
 
     /**
