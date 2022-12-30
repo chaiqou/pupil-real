@@ -91,6 +91,8 @@ import {
     add,
     startOfWeek,
     addDays,
+    isSameDay,
+    parseISO,
 } from "date-fns";
 import { ref, defineProps, onBeforeMount } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
@@ -123,6 +125,7 @@ onBeforeMount(() => {
     axios.get("/api/school/lunch").then((response) => {
         response.data.data.map((data) => {
             availableDates.value.push(...data.available_days);
+            store.marked_days.push(...data.available_days);
         });
     });
 });
