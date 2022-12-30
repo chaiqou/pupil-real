@@ -1,4 +1,7 @@
 <template>
+    <template v-if="tooltipStore.toggle_tooltip">
+        <Tooltip />
+    </template>
     <div>
         <div
             class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
@@ -31,7 +34,8 @@
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
-                            :key="day.date"
+                            @click="toggleTooltip(day)"
+                            :key="day"
                             type="button"
                             :class="[
                                 month.name !==
@@ -50,16 +54,7 @@
                         >
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
-                                :class="[
-                                    isToday(day) && [
-                                        getMonthByIndex(day.getMonth()) &&
-                                        month.name ===
-                                            monthFullNames[day.getMonth()]
-                                            ? 'bg-indigo-600 font-semibold text-white h-full w-full border-b-1 border-indigo-600 aspect-auto'
-                                            : 'bg-indigo-400 text-gray-50  h-full w-full border-b-1 border-indigo-600 aspect-auto',
-                                    ],
-                                    'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
-                                ]"
+                                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
                             >
                                 <div class="flex-col">
                                     <h1>
@@ -101,8 +96,11 @@ import {
 } from "date-fns";
 import { ref, defineProps, onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { useTooltipStore } from "@/stores/useTooltipStore";
+import Tooltip from "./Tooltip.vue";
 
 const store = useLunchFormStore();
+const tooltipStore = useTooltipStore();
 
 const props = defineProps({
     months: {
@@ -115,6 +113,13 @@ const props = defineProps({
         default: "",
     },
 });
+
+const selectedDay = ref(null);
+
+const toggleTooltip = (day) => {
+    tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
+    tooltipStore.selected_day = day;
+};
 
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(

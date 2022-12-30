@@ -29,6 +29,7 @@ import {
     Cog8ToothIcon,
     CakeIcon,
     CommandLineIcon,
+    ClipboardDocumentListIcon,
 } from "@heroicons/vue/24/outline";
 
 export default {
@@ -41,6 +42,7 @@ export default {
         Cog8ToothIcon,
         CakeIcon,
         CommandLineIcon,
+        ClipboardDocumentListIcon,
     },
     props: {
         navigation: {
