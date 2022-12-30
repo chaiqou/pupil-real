@@ -31,6 +31,7 @@ class RequestProformasByQuery extends Command
      */
     public function handle()
     {
+        $this->info('Please wait..');
         $yesterday_date = date('Y-m-d',strtotime("-1 days"));
         $merchants = Merchant::all();
         foreach ($merchants as $merchant) {
@@ -74,7 +75,8 @@ class RequestProformasByQuery extends Command
                             'billing_type' => 'invoice',
                             'billingo_transaction_id' => $request['id']
                         ]);
-                    }
+                       $this->info('Invoices successfully made and sent to email addresses');
+                    } else $this->info('Seems like we dont have transaction for this proforma in DB..');
                 }
             }
     }
