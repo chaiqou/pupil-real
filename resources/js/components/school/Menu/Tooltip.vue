@@ -5,6 +5,9 @@
         <div
             class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 w-full"
         >
+            <h1 class="text-gray-700 mb-2 font-semibold">
+                {{ format(store.selected_day, "yyyy MMMM dd") }}
+            </h1>
             <div class="mx-auto max-w-md w-full">
                 <div class="flex items-start space-x-4">
                     <div class="min-w-0 flex-1">
@@ -87,7 +90,7 @@
                                 </div>
                                 <button
                                     type="button"
-                                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 mt-1 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
                                     Add another
                                 </button>
@@ -107,6 +110,7 @@ import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { useTooltipStore } from "@/stores/useTooltipStore";
 import { Field, Form } from "vee-validate";
+import { format } from "date-fns";
 
 const props = defineProps({
     selectedDay: {

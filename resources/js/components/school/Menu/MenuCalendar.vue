@@ -35,7 +35,7 @@
                         <button
                             v-for="(day, dayIdx) in month.days"
                             @click="toggleTooltip(day)"
-                            :key="day.date"
+                            :key="day"
                             type="button"
                             :class="[
                                 month.name !==
@@ -118,7 +118,7 @@ const selectedDay = ref(null);
 
 const toggleTooltip = (day) => {
     tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
-    selectedDay.value = day;
+    tooltipStore.selected_day = day;
 };
 
 onBeforeMount(() => {

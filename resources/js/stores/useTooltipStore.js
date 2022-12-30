@@ -6,6 +6,7 @@ export const useTooltipStore = defineStore("tooltip", {
             toggle_tooltip: false,
             toggle_select: false,
             tooltip_textarea: "",
+            selected_day: "",
         };
     },
 });
