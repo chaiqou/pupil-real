@@ -74,7 +74,6 @@ class RequestProformasByQuery extends Command
                             'billing_type' => 'invoice',
                             'billingo_transaction_id' => $request['id']
                         ]);
-                        return;
                     }
                 }
             }
