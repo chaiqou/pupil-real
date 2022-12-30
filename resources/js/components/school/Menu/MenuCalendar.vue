@@ -1,5 +1,5 @@
 <template>
-    <template v-if="globalStore.toggleTooltip">
+    <template v-if="tooltipStore.toggle_tooltip">
         <Tooltip />
     </template>
     <div>
@@ -96,11 +96,11 @@ import {
 } from "date-fns";
 import { ref, defineProps, onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { useGlobalStore } from "@/stores/useGlobalStore";
+import { useTooltipStore } from "@/stores/useTooltipStore";
 import Tooltip from "./Tooltip.vue";
 
 const store = useLunchFormStore();
-const globalStore = useGlobalStore();
+const tooltipStore = useTooltipStore();
 
 const props = defineProps({
     months: {
@@ -117,7 +117,7 @@ const props = defineProps({
 const selectedDay = ref(null);
 
 const toggleTooltip = (day) => {
-    globalStore.toggleTooltip = !globalStore.toggleTooltip;
+    tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
     selectedDay.value = day;
 };
 

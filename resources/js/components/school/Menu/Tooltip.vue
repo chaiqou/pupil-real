@@ -12,16 +12,15 @@
                             <div
                                 class="border-b border-gray-200 focus-within:border-indigo-600"
                             >
-                                <label for="comment" class="sr-only"
-                                    >Add your comment</label
-                                >
-                                <textarea
-                                    rows="3"
-                                    name="comment"
-                                    id="comment"
-                                    class="block w-full resize-none border-0 border-b border-transparent p-0 pb-2 focus:border-indigo-600 focus:ring-0 sm:text-sm"
+                                <BaseInput
+                                    v-model="store.description"
+                                    inputType="textarea"
+                                    name="Comment"
+                                    label="Comment"
+                                    rules="required|min:3|max:100"
+                                    class="block w-full resize-none !border-none p-0 pb-2 focus:border-indigo-600 focus:ring-0 sm:text-sm"
                                     placeholder="Menu description..."
-                                ></textarea>
+                                />
                             </div>
                             <div class="flex justify-between pt-2">
                                 <div class="flex items-center space-x-5"></div>
@@ -108,12 +107,13 @@ import LunchesArrowIcon from "@/components/icons/LunchesArrowIcon.vue";
 import CheckIcon from "@/components/icons/checkIcon.vue";
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import { useGlobalStore } from "@/stores/useGlobalStore";
+import { useTooltipStore } from "@/stores/useTooltipStore";
+import BaseInput from "../../form-components/BaseInput.vue";
 
+const store = useTooltipStore();
 const target = ref(null);
-const globalStore = useGlobalStore();
 
-onClickOutside(target, (event) => (globalStore.toggleTooltip = false));
+onClickOutside(target, (event) => (store.toggle_tooltip = false));
 
 const props = defineProps({
     selectedDay: {
