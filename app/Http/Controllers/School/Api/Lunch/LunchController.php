@@ -94,7 +94,8 @@ class LunchController extends Controller
             //Get the total number of pages
             $totalPages = ceil($totalStudents / $per_page);
             //Get the students for the current page from the students collection
-            $students = $students->forPage($page, $per_page);
+            $students = $students->forPage($page, $per_page)->values();
+            //->values() is used to reset the keys of the collection
             //Return the students
             return response()->json(['students' => $students, 'total_pages' => $totalPages], 200);
         }
