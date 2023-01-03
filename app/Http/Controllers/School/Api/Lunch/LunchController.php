@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
 use App\Http\Requests\School\ClaimLunchRequest;
 use App\Http\Requests\School\RetrieveLunchRequest;
+use App\Http\Requests\School\StudentListRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
 use App\Models\Merchant;
 use App\Models\PeriodicLunch;
+use App\Models\School;
 use App\Models\Student;
 use App\Models\Terminal;
 use Carbon\Carbon;
@@ -66,17 +68,45 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
+    public function retrieveStudents(StudentListRequest $request){
+        $validated = $request->validated();
+
+        $terminal = Terminal::where('public_key', $validated['public_key'])->first();
+
+        if (!$terminal) {
+            return response()->json(['error' => 'Invalid request.'], 400);
+        }
+
+        $message = $validated['per_page'].$validated['page'];
+        $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
+
+        if ($validSignature !== strtoupper($validated['signature'])) {
+            return response()->json(['error' => 'Invalid signature.'], 401);
+        } else {
+            $per_page = $validated['per_page'];
+            $page = $validated['page'];
+            //Get the merchant through the terminal
+            $merchant = Merchant::where('id', $terminal->merchant_id)->first();
+            $school = School::where('id', $merchant->school_id)->first();
+            $students = Student::where('school_id', $school->id)->get();
+            //Get the total number of students
+            $totalStudents = $students->count();
+            //Get the total number of pages
+            $totalPages = ceil($totalStudents / $per_page);
+            //Get the students for the current page from the students collection
+            $students = $students->forPage($page, $per_page);
+            //Return the students
+            return response()->json(['students' => $students, 'total_pages' => $totalPages], 200);
+        }
+    }
+
     public function retrieveLunch(RetrieveLunchRequest $request)
     {
         $validated = $request->validated();
 
-        if (!is_null($validated)) {
-            return response()->json(['error' => 'Invalid request.'], 400);
-        }
-
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 
-        if (! $terminal) {
+        if (!$terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
@@ -123,12 +153,8 @@ class LunchController extends Controller
     {
         $validated = $request->validated();
 
-        if (!is_null($validated)) {
-            return response()->json(['error' => 'Invalid request.'], 400);
-        }
-
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
-        if (! $terminal) {
+        if (!$terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
         $message = $validated['lunch_date'].$validated['lunch_id'].$validated['claim_name'].$validated['claim_date'];
