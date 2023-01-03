@@ -104,7 +104,8 @@ Route::middleware(['auth'])->group(function () {
 Route::controller()->group(function () {
     Route::get('{public_key}/verify', [TerminalController::class, 'getSignature'])->name('get.signature');
     Route::post('{public_key}/verify', [TerminalController::class, 'verifySignature'])->name('verify.signature');
-    Route::get('/lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
-    Route::post('/lunch/claim', [LunchController::class, 'claimLunch'])->name('lunch.claim');
+    Route::get('lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
+    Route::post('lunch/claim', [LunchController::class, 'claimLunch'])->name('lunch.claim');
+    Route::get('lunch/students/retrieve', [LunchController::class, 'retrieveStudents'])->name('lunch.students.retrieve');
 });
 Route::apiResource('school/lunch', LunchController::class);

@@ -16,7 +16,7 @@ return new class() extends Migration
         Schema::create('periodic_lunches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained();
-            $table->integer('card_data')->constrained('students', 'card_data');
+            $table->string('card_data')->constrained('students', 'card_data');
             $table->foreignId('transaction_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
             $table->foreignId('lunch_id')->constrained();
