@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
             });
             Route::controller(TerminalController::class)->group(function () {
-                Route::get('{merchant_id}/terminals', 'get')->name('terminal.get');
+                Route::get('terminals', 'get')->name('terminal.get');
                 Route::post('terminal', 'store')->name('terminal.store');
             });
         });

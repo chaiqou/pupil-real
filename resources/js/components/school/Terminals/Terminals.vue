@@ -102,10 +102,6 @@ export default {
             type: Number,
             required: true,
         },
-        merchantIdByUser: {
-            type: Number,
-            required: true,
-        }
     },
     computed: {
         ...mapWritableState(useTerminalStore, [
@@ -117,7 +113,7 @@ export default {
         handleGetTerminalsRequest() {
             axios
                 .get(
-                    `/api/school/${this.merchantIdByUser}/terminals?page=${this.currentPage}`
+                    `/api/school/terminals?page=${this.currentPage}`
                 )
                 .then((res) => {
                     this.currentPage++;

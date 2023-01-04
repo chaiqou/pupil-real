@@ -41,9 +41,9 @@ class TerminalController extends Controller
         ];
     }
 
-    public function get(Request $request): ResourceCollection
+    public function get(): ResourceCollection
     {
-        $terminals = Terminal::where('merchant_id', $request->merchant_id)->latest()->paginate(5);
+        $terminals = Terminal::latest()->paginate(5);
 
         return TerminalResource::collection($terminals);
     }

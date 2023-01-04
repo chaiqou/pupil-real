@@ -87,8 +87,6 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-        $merchantIdByUser = Merchant::where('user_id', auth()->user()->id)->first()->id;
-
         if (auth()->user()->is_verified === 0) {
             return redirect()->route('2fa.form');
         }
@@ -101,7 +99,6 @@ class NavigationController extends Controller
             'student' => $user,
             'schoolId' => $user->school_id,
             'lunchId' => $lunchId,
-            'merchantIdByUser' => $merchantIdByUser,
         ])->with(['page', 'Dashboard']);
     }
 
