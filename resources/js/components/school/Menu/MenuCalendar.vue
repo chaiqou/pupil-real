@@ -85,10 +85,12 @@ import { useTooltipStore } from "@/stores/useTooltipStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 
 const store = useLunchFormStore();
 const tooltipStore = useTooltipStore();
 const { monthsDays } = useFindMonthDays(11);
+const { getMonthByIndex } = useFindMonthByIndex();
 
 const props = defineProps({
     months: {
@@ -169,19 +171,6 @@ onUpdated(() => {
 
 const ifDaysMatch = (day) => {
     return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
-// Get Month full name by index , for example if we pass 1 we will get February
-
-const getMonthByIndex = function (index) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(index - 1);
-
-    const locale = "en-us";
-    const month = date.toLocaleString(locale, { month: "long" });
-
-    return month;
 };
 
 // i added days to the end of month to make all month equals to 42 length for design purpose

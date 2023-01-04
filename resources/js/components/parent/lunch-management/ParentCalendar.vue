@@ -87,9 +87,13 @@
 
 <script setup>
 import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
-import { computed, onBeforeMount } from "vue";
+import { computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
+
+const { getMonthByIndex } = useFindMonthByIndex();
+const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
 
@@ -100,40 +104,8 @@ const props = defineProps({
     },
 });
 
-const { monthsDays } = useFindMonthDays(11);
-
-onBeforeMount(() => {
-    const targetPath = `/school/lunch-management/${localStorage.getItem(
-        "lunchId"
-    )}/edit`;
-    const currentPath = window.location.pathname;
-
-    if (currentPath == targetPath) {
-        axios.get("/api/school/lunch").then((response) => {
-            response.data.data.map((data) => {
-                if (localStorage.getItem("lunchId") == data.id) {
-                    store.marked_days.push(...data.available_days);
-                }
-            });
-        });
-    }
-});
-
 const ifDaysMatch = (day) => {
     return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
-// Get Month full name by index , for example if we pass 1 we will get February
-
-const getMonthByIndex = function (index) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(index - 1);
-
-    const locale = "en-us";
-    const month = date.toLocaleString(locale, { month: "long" });
-
-    return month;
 };
 
 const claimDays = computed(() => {

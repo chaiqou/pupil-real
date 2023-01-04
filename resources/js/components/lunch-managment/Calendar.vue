@@ -88,7 +88,10 @@ import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
 import { onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 
+
+const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
@@ -124,19 +127,6 @@ onBeforeMount(() => {
 
 const ifDaysMatch = (day) => {
     return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
-// Get Month full name by index , for example if we pass 1 we will get February
-
-const getMonthByIndex = function (index) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(index - 1);
-
-    const locale = "en-us";
-    const month = date.toLocaleString(locale, { month: "long" });
-
-    return month;
 };
 
 // i added days to the end of month to make all month equals to 42 length for design purpose
