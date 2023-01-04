@@ -7,10 +7,7 @@ use App\Http\Controllers\School\Api\TransactionController;
 use App\Models\BillingoData;
 use App\Models\Merchant;
 use App\Models\PartnerId;
-use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 
 class TransactionToDocumentInsert
