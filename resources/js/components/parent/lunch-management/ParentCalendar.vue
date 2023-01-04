@@ -87,11 +87,11 @@
 
 <script setup>
 import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
-import { defineProps, computed, onBeforeMount } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import useFindMonthDays from "@/composables/useFindMonthDays";
 
 const store = useLunchFormStore();
-const { monthsDays } = useFindMonthDays(11);
 
 const props = defineProps({
     months: {
@@ -99,6 +99,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const { monthsDays } = useFindMonthDays(11);
 
 onBeforeMount(() => {
     const targetPath = `/school/lunch-management/${localStorage.getItem(

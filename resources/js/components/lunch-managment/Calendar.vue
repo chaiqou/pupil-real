@@ -85,9 +85,9 @@
 
 <script setup>
 import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
-import { defineProps, onBeforeMount } from "vue";
+import { onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import useFindMonthDays from "../../composables/useFindMonthDays";
+import useFindMonthDays from "@/composables/useFindMonthDays";
 
 const { monthsDays } = useFindMonthDays(11);
 

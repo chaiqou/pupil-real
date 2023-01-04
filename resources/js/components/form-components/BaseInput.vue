@@ -23,7 +23,6 @@
 
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
-import { defineProps } from "vue";
 
 const props = defineProps({
     name: {

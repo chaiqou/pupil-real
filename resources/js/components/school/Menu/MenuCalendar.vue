@@ -79,25 +79,12 @@
 </template>
 
 <script setup>
-import {
-    startOfToday,
-    format,
-    eachDayOfInterval,
-    startOfMonth,
-    endOfMonth,
-    endOfWeek,
-    isToday,
-    eachMonthOfInterval,
-    add,
-    startOfWeek,
-    addDays,
-    isSameDay,
-    parseISO,
-} from "date-fns";
-import { ref, defineProps, onBeforeMount, computed, onUpdated } from "vue";
+import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
+import { ref, onBeforeMount, computed, onUpdated } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
+import useFindMonthDays from "@/composables/useFindMonthDays";
 
 const store = useLunchFormStore();
 const tooltipStore = useTooltipStore();
