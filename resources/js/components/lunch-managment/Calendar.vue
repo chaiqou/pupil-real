@@ -92,7 +92,7 @@ import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex } = useFindMonthByIndex();
+const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
@@ -125,19 +125,4 @@ onBeforeMount(() => {
         });
     }
 });
-
-const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
 </script>

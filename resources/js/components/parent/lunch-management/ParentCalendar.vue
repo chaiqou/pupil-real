@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
+import { format, isToday } from "date-fns";
 import { computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
@@ -94,7 +94,7 @@ import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex } = useFindMonthByIndex();
+const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
@@ -117,19 +117,4 @@ const claimDays = computed(() => {
         return days;
     }
 });
-
-const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
 </script>

@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
+import { format, isToday, addDays } from "date-fns";
 import { ref, onBeforeMount, computed, onUpdated } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
@@ -90,7 +90,7 @@ import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 const store = useLunchFormStore();
 const tooltipStore = useTooltipStore();
 const { monthsDays } = useFindMonthDays(11);
-const { getMonthByIndex } = useFindMonthByIndex();
+const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 
 const props = defineProps({
     months: {
@@ -168,19 +168,4 @@ onUpdated(() => {
             });
         });
     });
-
-const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
 </script>
