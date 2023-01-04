@@ -94,9 +94,9 @@ import {
     isSameDay,
     parseISO,
 } from "date-fns";
-import { ref, defineProps, onBeforeMount } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { ref, defineProps, onBeforeMount, computed, onUpdated } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
 
 const store = useLunchFormStore();
@@ -114,29 +114,70 @@ const props = defineProps({
     },
 });
 
-const selectedDay = ref(null);
-
 const toggleTooltip = (day) => {
     tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
     tooltipStore.selected_day = day;
 };
 
-onBeforeMount(() => {
-    const targetPath = `/school/lunch-management/${localStorage.getItem(
-        "lunchId"
-    )}/edit`;
-    const currentPath = window.location.pathname;
+const availableDates = ref([]);
 
-    if (currentPath == targetPath) {
+const lunchPlans = ref([
+    {
+        id: 1,
+        name: "Normal testing Lunch",
+        startDate: "2022-12-28",
+        endDate: "2023-01-01",
+    },
+    {
+        id: 2,
+        name: "Vegan testing Lunch",
+        startDate: " 2022-12-31",
+        endDate: "2023-01-02",
+    },
+]);
+
+const calculateLunches = computed(() => {
+    let availableDays = availableDates.value;
+
+    for (let lunchPlan of lunchPlans.value) {
+        let startDate = new Date(lunchPlan.startDate);
+        let endDate = new Date(lunchPlan.endDate);
+
+        // Iterate over the range of dates covered by the lunch plan
+        for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
+            let formattedDate = format(date, "yyyy-MM-dd");
+
+            // Check if the date is already in the big array
+            if (availableDays[formattedDate]) {
+                // If it is, add the lunch plan's ID and name to the array for that date
+                availableDays[formattedDate].push({
+                    id: lunchPlan.id,
+                    name: lunchPlan.name,
+                });
+            } else {
+                // If it isn't, add a new entry to the big array with the date as the key
+                // and an array containing the lunch plan's ID and name as the value
+                availableDays[formattedDate] = [
+                    { id: lunchPlan.id, name: lunchPlan.name },
+                ];
+            }
+        }
+    }
+
+    return availableDays;
+});
+
+onUpdated(() => {
+    calculateLunches.value;
+}),
+    onBeforeMount(() => {
         axios.get("/api/school/lunch").then((response) => {
             response.data.data.map((data) => {
-                if (localStorage.getItem("lunchId") == data.id) {
-                    store.marked_days.push(...data.available_days);
-                }
+                availableDates.value.push(...data.available_days);
+                store.marked_days.push(...data.available_days);
             });
         });
-    }
-});
+    });
 
 const today = startOfToday();
 
