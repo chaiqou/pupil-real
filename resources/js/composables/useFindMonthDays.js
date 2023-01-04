@@ -9,6 +9,7 @@ import {
     endOfWeek,
     endOfMonth,
     startOfToday,
+    addDays,
 } from "date-fns";
 
 export default function useFindMonthDays(months = 11) {
@@ -39,6 +40,17 @@ export default function useFindMonthDays(months = 11) {
             ],
         })),
     ];
+
+    // added days to the end of month to make all month equals to 42 length for design purpose
+
+    monthsDays.forEach((month) => {
+        month.days.filter(() => {
+            if (month.days.length < 42) {
+                let lastElement = month.days[month.days.length - 1];
+                month.days.push(addDays(lastElement, 1));
+            }
+        });
+    });
 
     return {
         monthsDays,

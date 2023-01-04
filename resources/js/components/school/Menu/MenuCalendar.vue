@@ -173,17 +173,6 @@ const ifDaysMatch = (day) => {
     return store.marked_days.some((data) => isSameDay(parseISO(data), day));
 };
 
-// i added days to the end of month to make all month equals to 42 length for design purpose
-
-monthsDays.forEach((month) => {
-    month.days.filter(() => {
-        if (month.days.length < 42) {
-            let lastElement = month.days[month.days.length - 1];
-            month.days.push(addDays(lastElement, 1));
-        }
-    });
-});
-
 const monthFullNames = [
     "January",
     "February",
