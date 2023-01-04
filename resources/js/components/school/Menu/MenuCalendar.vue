@@ -79,28 +79,18 @@
 </template>
 
 <script setup>
-import {
-    startOfToday,
-    format,
-    eachDayOfInterval,
-    startOfMonth,
-    endOfMonth,
-    endOfWeek,
-    isToday,
-    eachMonthOfInterval,
-    add,
-    startOfWeek,
-    addDays,
-    isSameDay,
-    parseISO,
-} from "date-fns";
-import { ref, defineProps, onBeforeMount, computed, onUpdated } from "vue";
+import { format, isToday, addDays } from "date-fns";
+import { ref, onBeforeMount, computed, onUpdated } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
+import useFindMonthDays from "@/composables/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 
 const store = useLunchFormStore();
 const tooltipStore = useTooltipStore();
+const { monthsDays } = useFindMonthDays(11);
+const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 
 const props = defineProps({
     months: {
@@ -178,69 +168,4 @@ onUpdated(() => {
             });
         });
     });
-
-const today = startOfToday();
-
-const ifDaysMatch = (day) => {
-    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
-const currentMonthWithOtherMonths = ref(
-    eachMonthOfInterval({
-        start: today,
-        end: add(today, { months: props.months }),
-    })
-);
-
-const monthsDays = [
-    ...currentMonthWithOtherMonths.value.map((month) => ({
-        name: format(month, "MMMM"),
-        year: format(month, "yyyy"),
-        days: [
-            ...eachDayOfInterval({
-                start: startOfWeek(startOfMonth(month), { weekStartsOn: 1 }),
-                end: endOfWeek(endOfMonth(month)),
-            }),
-        ],
-    })),
-];
-
-// Get Month full name by index , for example if we pass 1 we will get February
-
-const getMonthByIndex = function (index) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(index - 1);
-
-    const locale = "en-us";
-    const month = date.toLocaleString(locale, { month: "long" });
-
-    return month;
-};
-
-// i added days to the end of month to make all month equals to 42 length for design purpose
-
-monthsDays.forEach((month) => {
-    month.days.filter(() => {
-        if (month.days.length < 42) {
-            let lastElement = month.days[month.days.length - 1];
-            month.days.push(addDays(lastElement, 1));
-        }
-    });
-});
-
-const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
 </script>

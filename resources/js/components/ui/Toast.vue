@@ -18,7 +18,7 @@
 
 <script setup>
 import { CheckCircleIcon } from "@heroicons/vue/20/solid";
-import { ref, defineExpose } from "vue";
+import { ref } from "vue";
 
 const isVisible = ref(false);
 const toasterMessage = ref("");

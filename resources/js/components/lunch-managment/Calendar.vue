@@ -84,23 +84,16 @@
 </template>
 
 <script setup>
-import {
-    startOfToday,
-    format,
-    eachDayOfInterval,
-    startOfMonth,
-    endOfMonth,
-    endOfWeek,
-    isToday,
-    eachMonthOfInterval,
-    add,
-    startOfWeek,
-    addDays,
-    isSameDay,
-    parseISO,
-} from "date-fns";
-import { ref, defineProps, onBeforeMount } from "vue";
+import { format, isToday } from "date-fns";
+import { onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import useFindMonthDays from "@/composables/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
+
+const { ifDaysMatch } = useCheckIfDaysMatches();
+const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
 
@@ -132,69 +125,4 @@ onBeforeMount(() => {
         });
     }
 });
-
-const today = startOfToday();
-
-const ifDaysMatch = (day) => {
-    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
-const currentMonthWithOtherMonths = ref(
-    eachMonthOfInterval({
-        start: today,
-        end: add(today, { months: props.months }),
-    })
-);
-
-const monthsDays = [
-    ...currentMonthWithOtherMonths.value.map((month) => ({
-        name: format(month, "MMMM"),
-        year: format(month, "yyyy"),
-        days: [
-            ...eachDayOfInterval({
-                start: startOfWeek(startOfMonth(month), { weekStartsOn: 1 }),
-                end: endOfWeek(endOfMonth(month)),
-            }),
-        ],
-    })),
-];
-
-// Get Month full name by index , for example if we pass 1 we will get February
-
-const getMonthByIndex = function (index) {
-    const date = new Date();
-    date.setDate(1);
-    date.setMonth(index - 1);
-
-    const locale = "en-us";
-    const month = date.toLocaleString(locale, { month: "long" });
-
-    return month;
-};
-
-// i added days to the end of month to make all month equals to 42 length for design purpose
-
-monthsDays.forEach((month) => {
-    month.days.filter(() => {
-        if (month.days.length < 42) {
-            let lastElement = month.days[month.days.length - 1];
-            month.days.push(addDays(lastElement, 1));
-        }
-    });
-});
-
-const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
 </script>
