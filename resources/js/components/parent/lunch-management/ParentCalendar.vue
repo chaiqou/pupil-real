@@ -86,25 +86,12 @@
 </template>
 
 <script setup>
-import {
-    startOfToday,
-    format,
-    eachDayOfInterval,
-    startOfMonth,
-    endOfMonth,
-    endOfWeek,
-    isToday,
-    eachMonthOfInterval,
-    add,
-    startOfWeek,
-    addDays,
-    isSameDay,
-    parseISO,
-} from "date-fns";
-import { ref, defineProps, computed, onBeforeMount } from "vue";
+import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
+import { defineProps, computed, onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
+const { monthsDays } = useFindMonthDays(11);
 
 const props = defineProps({
     months: {
@@ -130,31 +117,9 @@ onBeforeMount(() => {
     }
 });
 
-const today = startOfToday();
-
 const ifDaysMatch = (day) => {
     return store.marked_days.some((data) => isSameDay(parseISO(data), day));
 };
-
-const currentMonthWithOtherMonths = ref(
-    eachMonthOfInterval({
-        start: today,
-        end: add(today, { months: props.months }),
-    })
-);
-
-const monthsDays = [
-    ...currentMonthWithOtherMonths.value.map((month) => ({
-        name: format(month, "MMMM"),
-        year: format(month, "yyyy"),
-        days: [
-            ...eachDayOfInterval({
-                start: startOfWeek(startOfMonth(month), { weekStartsOn: 1 }),
-                end: endOfWeek(endOfMonth(month)),
-            }),
-        ],
-    })),
-];
 
 // Get Month full name by index , for example if we pass 1 we will get February
 
