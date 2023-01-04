@@ -169,10 +169,6 @@ onUpdated(() => {
         });
     });
 
-const ifDaysMatch = (day) => {
-    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
-
 const monthFullNames = [
     "January",
     "February",

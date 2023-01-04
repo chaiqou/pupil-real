@@ -84,12 +84,14 @@
 </template>
 
 <script setup>
-import { format, isToday, addDays, isSameDay, parseISO } from "date-fns";
+import { format, isToday } from "date-fns";
 import { onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
+const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
@@ -123,10 +125,6 @@ onBeforeMount(() => {
         });
     }
 });
-
-const ifDaysMatch = (day) => {
-    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
 
 const monthFullNames = [
     "January",

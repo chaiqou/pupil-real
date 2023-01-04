@@ -91,7 +91,9 @@ import { computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
+const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
@@ -103,10 +105,6 @@ const props = defineProps({
         required: true,
     },
 });
-
-const ifDaysMatch = (day) => {
-    return store.marked_days.some((data) => isSameDay(parseISO(data), day));
-};
 
 const claimDays = computed(() => {
     const days = store.availableDatesForStartOrdering
