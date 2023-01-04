@@ -89,6 +89,7 @@ class InviteController extends Controller
             'last_name' => $request->last_name,
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
+            'school_id' => $invite->school_id,
             'user_information' => [
                 'country' => $request->country,
                 'street_address' => $request->street_address,
