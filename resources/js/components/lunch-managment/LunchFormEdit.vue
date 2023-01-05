@@ -280,7 +280,7 @@ const dataIsLoaded = ref(false);
 
 const afterFeeCanBeCalculated = ref(false);
 const afterFeesCalculate = () => {
-    store.after_fees = (Number(store.price_period) + 85) / (1 - (7/500));
+    store.after_fees = Math.round((Number(store.price_period) + 85) / (1 - (7/500)));
     store.price_period = store.after_fees;
     afterFeeCanBeCalculated.value = false;
     setFieldValue('Price Period', store.price_period);
