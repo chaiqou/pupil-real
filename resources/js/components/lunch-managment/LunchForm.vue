@@ -70,6 +70,10 @@
                 type="number"
                 rules="required"
             />
+             <div class="my-5">
+                 <button :disabled="store.price_period && !afterFeeCanBeCalculated" @click="afterFeesCalculate" type="button"
+                         :class="calculateAvailable && afterFeeCanBeCalculated ? 'inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2' : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'">Calculate after fees</button>
+             </div>
             <BaseInput
                 v-model.number="store.buffer_time"
                 name="buffer_time"
@@ -87,7 +91,7 @@
 <script setup>
 import { useForm } from "vee-validate";
 import { addYears, format, eachDayOfInterval } from "date-fns";
-import { ref } from "vue";
+import { ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 import axios from "@/config/axios/index";
@@ -100,11 +104,29 @@ import Button from "@/components/ui/Button.vue";
 import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
-const { handleSubmit } = useForm();
+const { handleSubmit, setFieldValue } = useForm();
 
 const multiselectRef = ref(null);
 const activeRange = ref(null);
 const childrenToast = ref();
+const afterFeeCanBeCalculated = ref(false);
+const afterFeesCalculate = () => {
+    store.after_fees = Math.round((Number(store.price_period) + 85) / (1 - (7/500)));
+    store.price_period = store.after_fees;
+    afterFeeCanBeCalculated.value = false;
+    setFieldValue('Price Period', store.price_period);
+};
+
+const calculateAvailable = computed(() => {
+      return !!store.price_period;
+});
+
+watch(() => store.price_period, () => {
+    if(store.after_fees !== store.price_period) {
+        afterFeeCanBeCalculated.value = true;
+    }
+    store.after_fees = "";
+});
 
 const addActiveRange = (modelData) => {
     if (store.active_range.length < 2) {

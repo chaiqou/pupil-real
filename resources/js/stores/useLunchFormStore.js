@@ -26,6 +26,7 @@ export const useLunchFormStore = defineStore("lunch", {
             availableDatesForStartOrdering: [],
             claim_days: [],
             first_day: "",
+            after_fees: "",
         };
     },
 
