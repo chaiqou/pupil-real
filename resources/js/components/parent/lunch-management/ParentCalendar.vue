@@ -87,7 +87,7 @@
 
 <script setup>
 import { format, isToday } from "date-fns";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
@@ -117,10 +117,4 @@ const claimDays = computed(() => {
         return days;
     }
 });
-
-// onMounted(() => {
-//     axios
-//         .get(`/api/parent/available-orders/3`)
-//         .then((response) => console.log(response));
-// });
 </script>

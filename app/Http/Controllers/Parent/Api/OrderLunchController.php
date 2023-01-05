@@ -20,9 +20,7 @@ class OrderLunchController extends Controller
 
     public function availableOrders(): JsonResponse
     {
-        $studentId = 3;
-
-        $orders = PeriodicLunch::where('student_id', $studentId)->get();
+        $orders = PeriodicLunch::where('student_id', auth()->user()->id)->get();
 
         return response()->json(['orders' => $orders]);
     }
@@ -71,7 +69,7 @@ class OrderLunchController extends Controller
                 'transaction_id' => 1,
                 'merchant_id' => $student->school_id,
                 'lunch_id' => $validate['lunch_id'],
-                'card_data' => $student->card_data,
+                'card_data' => 'hardcoded instead of $student->card_data',
                 'start_date' => $sortedAvailableDates->first(),
                 'end_date' => $sortedAvailableDates->last(),
                 'claims' => json_encode($claimsJson),

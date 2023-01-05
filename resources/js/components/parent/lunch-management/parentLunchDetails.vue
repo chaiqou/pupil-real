@@ -198,6 +198,8 @@ const lunchDetails = ref([]);
 const formIsValid = ref();
 const childrenToast = ref();
 
+const availableOrders = ref();
+
 const props = defineProps({
     studentId: {
         type: [Number, String],
@@ -248,6 +250,10 @@ watch(bufferDays, (newValue) => {
 });
 
 onMounted(() => {
+    axios
+        .get(`/api/parent/available-orders/${props.studentId}`)
+        .then((response) => (availableOrders.value = response.data.data));
+
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
