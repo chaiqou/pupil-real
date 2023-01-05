@@ -42,8 +42,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{student_id}/transactions', 'getTransactions')->name('parent.transactions_api');
             });
             Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
-            Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'orderLunch'])->name('parent.order_lunch');
-            Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
+            Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'index'])->name('parent.order_lunch');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
