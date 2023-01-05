@@ -14,7 +14,7 @@ class UserToBillingoHealthCheck extends Command
      *
      * @var string
      */
-    protected $signature = 'check:user-partner-id-check';
+    protected $signature = 'check:user-partner-id';
 
     /**
      * The console command description.

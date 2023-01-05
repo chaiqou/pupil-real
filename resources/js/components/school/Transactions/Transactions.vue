@@ -26,7 +26,7 @@
                         this.isTransactionsLoaded && !this.transactions.length
                     "
                 >
-                    <td class="bg-white" colspan="5">
+                    <td class="bg-white" colspan="6">
                         <TransactionsNotFound
                             role="school"
                         ></TransactionsNotFound>

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="flex min-h-full md:ml-32 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="w-full max-w-xl space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+    <div class="w-full max-w-xl space-y-8">
         @error('*')
         <div class="rounded-md bg-red-50 p-4">
             <div class="flex">
@@ -341,12 +341,12 @@
         </form>
       <div>
           <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
-                  <two-factor-auth-modal :two-fa="{{$twoFa}}">
-                      <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
-                          @csrf
-                          <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
-                      </form>
-                  </two-factor-auth-modal>
+          <two-factor-auth-modal :two-fa="{{$twoFa}}">
+              <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
+                  @csrf
+                  <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
+              </form>
+          </two-factor-auth-modal>
 
 
           <change-password-modal>
@@ -372,31 +372,31 @@
           </change-password-modal>
 <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
 
-<div>
-    <h1 class="px-3">Student management</h1>
-    <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
-    <div class="-my-2 -mx-4 hidden md:block sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <parent-students :user-id="{{$user->id}}"></parent-students>
-        </div>
-        <div class="m-3 mb-10 mt-10 flex justify-end">
-            <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
-        </div>
-    </div>
-</div>
-
-          <div class="md:hidden block -my-2 -mx-4 overflow-x-scroll overflow-y-scroll md:overflow-hidden sm:-mx-6 lg:-mx-8">
-              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                  <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                      <parent-students-mobile :user-id="{{$user->id}}"></parent-students-mobile>
+          <div>
+              <h1 class="px-3">Student management</h1>
+              <p class="py-2 px-3 text-sm text-gray-500">List of all available students at this account, also you are able to edit information here.</p>
+              <div class="-my-2 -mx-4 hidden md:block sm:-mx-6 lg:-mx-8">
+                  <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                          <parent-students :user-id="{{$user->id}}"></parent-students>
+                      </div>
+                      <div class="m-3 mb-10 mt-10 flex justify-end">
+                          <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+                      </div>
                   </div>
               </div>
+
+              <div class="md:hidden block -my-2 -mx-4 overflow-x-scroll overflow-y-scroll md:overflow-hidden sm:-mx-6 lg:-mx-8">
+                  <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                          <parent-students-mobile :user-id="{{$user->id}}"></parent-students-mobile>
+                      </div>
+                  </div>
+              </div>
+              <div class="m-3 mb-10 mt-10 md:hidden block">
+                  <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+              </div>
           </div>
-          <div class="m-3 mb-10 mt-10 md:hidden block">
-              <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
-          </div>
-      </div>
 
     </div>
     </div>
