@@ -14,7 +14,7 @@ class MerchantToBillingoHealthCheck extends Command
      *
      * @var string
      */
-    protected $signature = 'check:merchant-billingo-data-check';
+    protected $signature = 'check:merchant-billingo-data';
 
     /**
      * The console command description.
