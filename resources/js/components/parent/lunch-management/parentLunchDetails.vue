@@ -198,7 +198,8 @@ const lunchDetails = ref([]);
 const formIsValid = ref();
 const childrenToast = ref();
 
-const availableOrders = ref();
+const availableOrders = ref([]);
+const lunchDays = ref([]);
 
 const props = defineProps({
     studentId: {
@@ -218,6 +219,20 @@ const startOrderingLunch = () => {
         lunch_id: lunchDetails.value[0].id,
     });
 };
+
+watch(availableOrders, () => {
+    // Foreach each available order
+    availableOrders.value.forEach((order) => {
+        // claims is a JSON we need parse it to get it as a javascript object
+        let parsedClaims = JSON.parse(order.claims);
+        // get keys from claims
+        let claimsKeys = Object.keys(parsedClaims);
+
+        // Assign all dates in one state
+        claimsKeys.forEach((claim) => lunchDays.value.push(claim));
+        console.log(lunchDays.value);
+    });
+});
 
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay
@@ -252,7 +267,7 @@ watch(bufferDays, (newValue) => {
 onMounted(() => {
     axios
         .get(`/api/parent/available-orders/${props.studentId}`)
-        .then((response) => (availableOrders.value = response.data.data));
+        .then((response) => (availableOrders.value = response.data.orders));
 
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
