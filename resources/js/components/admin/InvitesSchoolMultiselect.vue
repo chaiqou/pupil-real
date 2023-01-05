@@ -52,8 +52,7 @@ export default {
                axios
        .get('/api/admin/schools-for-invites')
        .then((res) => {
-           this.schools = res.data
-          console.log(this.schools);
+           this.schools = res.data;
        })
        .catch((err) => console.log(err))
         },
