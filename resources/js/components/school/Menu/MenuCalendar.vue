@@ -86,11 +86,13 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Tooltip from "./Tooltip.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
 const store = useLunchFormStore();
 const tooltipStore = useTooltipStore();
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { ifDaysMatch } = useCheckIfDaysMatches();
 
 const props = defineProps({
     months: {

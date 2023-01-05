@@ -5,7 +5,6 @@ import { createPinia } from "pinia";
 
 import * as Sentry from "@sentry/vue";
 
-
 import DashboardNavigation from "@/components/navigation/DashboardNavigation.vue";
 import DashboardNavigationMobile from "@/components/navigation/DashboardNavigationMobile.vue";
 import NavigationMenuButton from "@/components/navigation/NavigationMenuButton.vue";
@@ -66,7 +65,6 @@ Sentry.init({
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
 });
-
 
 app.component("dashboard-navigation", DashboardNavigation);
 app.component("dashboard-navigation-mobile", DashboardNavigationMobile);

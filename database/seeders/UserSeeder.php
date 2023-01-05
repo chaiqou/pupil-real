@@ -83,7 +83,7 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'lomtadzenikusha@gmail.com',
             'password' => bcrypt('adminadmin'),
-        ])->assignRole('school');
+        ])->assignRole('admin');
 
         $admin = User::create([
             'first_name' => 'AdminF',
