@@ -20,7 +20,7 @@ class OrderLunchController extends Controller
 
     public function availableOrders(): JsonResponse
     {
-        $studentId = 1;
+        $studentId = 3;
 
         $orders = PeriodicLunch::where('student_id', $studentId)->get();
 
