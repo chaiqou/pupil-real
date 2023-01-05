@@ -17,6 +17,16 @@ use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
+
+    public function availableOrders(): JsonResponse
+    {
+        $studentId = 1;
+
+        $orders = PeriodicLunch::where('student_id', $studentId)->get();
+
+        return response()->json(['orders' => $orders]);
+    }
+
     public function index(LunchOrderRequest $request): JsonResponse
     {
         $validate = $request->validated();
