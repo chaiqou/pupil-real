@@ -149,7 +149,11 @@
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :disabled-dates="lunchDays"
-                    :disabled="periodLength < lunchDays.length ? true : false"
+                    :disabled="
+                        periodLength < lunchDays.length || !formIsValid
+                            ? true
+                            : false
+                    "
                     :enableTimePicker="false"
                     :clearable="false"
                 />
@@ -161,9 +165,11 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!formIsValid">It is not possible to order lunch</p>
+                    <p v-if="!formIsValid">
+                        Period not enough for ordering lunch
+                    </p>
                     <p v-else-if="periodLength < lunchDays.length">
-                        Period Length is not enough
+                        Period not enough for ordering lunch
                     </p>
                     <p
                         v-if="store.first_day == '' && !formIsValid"
