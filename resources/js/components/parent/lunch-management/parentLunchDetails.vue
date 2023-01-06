@@ -148,15 +148,22 @@
                     closeOnScroll
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
+                    :disabled="periodLength < lunchDays.length ? true : false"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
                 <button
-                    v-bind:disabled="!formIsValid"
+                    :disabled="[
+                        !formIsValid,
+                        periodLength < lunchDays.length ? true : false,
+                    ]"
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
                     <p v-if="!formIsValid">It is not possible to order lunch</p>
+                    <p v-else-if="periodLength < lunchDays.length">
+                        Period Length is not enough
+                    </p>
                     <p
                         v-if="store.first_day == '' && !formIsValid"
                         class="text-center"
@@ -164,7 +171,11 @@
                         Please select order starting date
                     </p>
                     <p
-                        v-if="store.first_day != '' && formIsValid"
+                        v-if="
+                            store.first_day != '' &&
+                            formIsValid &&
+                            periodLength > lunchDays.length
+                        "
                         class="text-center"
                     >
                         {{
@@ -229,7 +240,7 @@ watch(availableOrders, () => {
         let claimsKeys = Object.keys(parsedClaims);
 
         // Assign all dates in one state
-        claimsKeys.forEach((claim) => lunchDays.value.push(claim));
+        claimsKeys.forEach((claim) => lunchDays.value.push(parseISO(claim)));
         console.log(lunchDays.value);
     });
 });
