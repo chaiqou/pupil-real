@@ -148,6 +148,7 @@
                     closeOnScroll
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
+                    :disabled-dates="lunchDays"
                     :disabled="periodLength < lunchDays.length ? true : false"
                     :enableTimePicker="false"
                     :clearable="false"
@@ -241,7 +242,6 @@ watch(availableOrders, () => {
 
         // Assign all dates in one state
         claimsKeys.forEach((claim) => lunchDays.value.push(parseISO(claim)));
-        console.log(lunchDays.value);
     });
 });
 
