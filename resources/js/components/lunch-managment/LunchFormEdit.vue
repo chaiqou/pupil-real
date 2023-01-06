@@ -256,7 +256,7 @@
 import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
 import {ref, onMounted, watch, computed} from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import {Field, ErrorMessage, useForm} from "vee-validate";
+import {Field, ErrorMessage, useForm, useField} from "vee-validate";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
@@ -277,13 +277,15 @@ const multiselectRef = ref(null);
 const isOpen = ref(false);
 const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
-
 const afterFeeCanBeCalculated = ref(false);
+
+const { value } = useField('Price Period');
+
 const afterFeesCalculate = () => {
     store.after_fees = Math.round((Number(store.price_period) + 85) / (1 - (7/500)));
     store.price_period = store.after_fees;
     afterFeeCanBeCalculated.value = false;
-    setFieldValue('Price Period', store.price_period);
+    value.value = store.price_period;
 };
 
 const calculateAvailable = computed(() => {
