@@ -143,8 +143,6 @@
                     </dd>
                 </div>
             </dl>
-            {{ periodLength }}
-            {{ lunchDays.length }}
             <div v-if="store.first_day != null">
                 <Datepicker
                     closeOnScroll
