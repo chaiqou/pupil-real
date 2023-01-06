@@ -151,15 +151,12 @@
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :disabled-dates="lunchDays"
-                    :disabled="datepickerIsDisabled"
+                    :disabled="isDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
                 <button
-                    :disabled="[
-                        !formIsValid,
-                        periodLength < lunchDays.length ? true : false,
-                    ]"
+                    :disabled="isDisabled"
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
@@ -223,7 +220,7 @@ const props = defineProps({
     },
 });
 
-const datepickerIsDisabled = computed(() => {
+const isDisabled = computed(() => {
     return +periodLength.value < +lunchDays.value.length ? true : false;
 });
 
