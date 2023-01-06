@@ -158,14 +158,14 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!formIsValid">
+                    <p v-if="!lunchDays">
                         Period not enough for ordering lunch
                     </p>
                     <p v-else-if="periodLength < lunchDays.length">
                         Period not enough for ordering lunch
                     </p>
                     <p
-                        v-if="store.first_day == '' && !formIsValid"
+                        v-if="store.first_day == '' && !lunchDays"
                         class="text-center"
                     >
                         Please select order starting date
@@ -173,7 +173,7 @@
                     <p
                         v-if="
                             store.first_day != '' &&
-                            formIsValid &&
+                            lunchDays &&
                             periodLength > lunchDays.length
                         "
                         class="text-center"
@@ -206,7 +206,6 @@ const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
 const lunchDetails = ref([]);
-const formIsValid = ref();
 const childrenToast = ref();
 
 const availableOrders = ref([]);
@@ -223,7 +222,6 @@ const isDisabled = computed(() => {
 });
 
 const startOrderingLunch = () => {
-    formIsValid.value = false;
     childrenToast.value.showToaster("Lunch ordered successfully");
     axios.post("/api/parent/lunch-order/" + props.studentId, {
         student_id: props.studentId,
@@ -269,13 +267,7 @@ watch(bufferDays, (newValue) => {
         store.availableDatesForStartOrdering = filteredDates.value;
     }
 
-    if (availableDays.value[0].length < +periodLength.value) {
-        formIsValid.value = false;
-    } else {
-        formIsValid.value = true;
-    }
-
-    store.first_day = store.availableDatesForStartOrdering[0];
+    store.first_day = lunchDays.value[0];
 });
 
 onMounted(() => {
