@@ -148,7 +148,7 @@
                     closeOnScroll
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
-                    :disabled-dates="lunchDays"
+                    :disabled-dates="disabledDaysForLunchOrder"
                     :disabled="isDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
@@ -158,14 +158,20 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!lunchDays">
-                        Period not enough for ordering lunch
-                    </p>
-                    <p v-else-if="periodLength < lunchDays.length">
+                    <p v-if="!disabledDaysForLunchOrder">
                         Period not enough for ordering lunch
                     </p>
                     <p
-                        v-if="store.first_day == '' && !lunchDays"
+                        v-else-if="
+                            periodLength < disabledDaysForLunchOrder.length
+                        "
+                    >
+                        Period not enough for ordering lunch
+                    </p>
+                    <p
+                        v-if="
+                            store.first_day == '' && !disabledDaysForLunchOrder
+                        "
                         class="text-center"
                     >
                         Please select order starting date
@@ -173,8 +179,8 @@
                     <p
                         v-if="
                             store.first_day != '' &&
-                            lunchDays &&
-                            periodLength > lunchDays.length
+                            disabledDaysForLunchOrder &&
+                            periodLength > disabledDaysForLunchOrder.length
                         "
                         class="text-center"
                     >
@@ -209,7 +215,7 @@ const lunchDetails = ref([]);
 const childrenToast = ref();
 
 const availableOrders = ref([]);
-const lunchDays = ref([]);
+const disabledDaysForLunchOrder = ref([]);
 
 const props = defineProps({
     studentId: {
@@ -218,7 +224,9 @@ const props = defineProps({
 });
 
 const isDisabled = computed(() => {
-    return +periodLength.value < +lunchDays.value.length ? true : false;
+    return +periodLength.value < +disabledDaysForLunchOrder.value.length
+        ? true
+        : false;
 });
 
 const startOrderingLunch = () => {
@@ -242,7 +250,9 @@ watch(availableOrders, () => {
         let claimsKeys = Object.keys(parsedClaims);
 
         // Assign all dates in one state
-        claimsKeys.forEach((claim) => lunchDays.value.push(parseISO(claim)));
+        claimsKeys.forEach((claim) =>
+            disabledDaysForLunchOrder.value.push(parseISO(claim))
+        );
     });
 });
 
@@ -267,7 +277,7 @@ watch(bufferDays, (newValue) => {
         store.availableDatesForStartOrdering = filteredDates.value;
     }
 
-    store.first_day = lunchDays.value[0];
+    store.first_day = disabledDaysForLunchOrder.value[0];
 });
 
 onMounted(() => {
