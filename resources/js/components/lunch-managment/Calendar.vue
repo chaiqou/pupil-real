@@ -55,8 +55,8 @@
                                         getMonthByIndex(day.getMonth()) &&
                                         month.name ===
                                             monthFullNames[day.getMonth()]
-                                            ? 'bg-indigo-600 font-semibold text-white h-full w-full border-b-1 border-indigo-600 aspect-auto'
-                                            : 'bg-indigo-400 text-gray-50  h-full w-full border-b-1 border-indigo-600 aspect-auto',
+                                            ? 'bg-indigo-600 font-semibold text-white  border-b-2 border-indigo-600 aspect-auto'
+                                            : 'bg-indigo-400 text-gray-50   border-b-2 border-indigo-600 aspect-auto',
                                     ],
                                     'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
                                 ]"
