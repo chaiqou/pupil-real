@@ -143,17 +143,15 @@
                     </dd>
                 </div>
             </dl>
+            {{ periodLength }}
+            {{ lunchDays.length }}
             <div v-if="store.first_day != null">
                 <Datepicker
                     closeOnScroll
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :disabled-dates="lunchDays"
-                    :disabled="
-                        periodLength < lunchDays.length || !formIsValid
-                            ? true
-                            : false
-                    "
+                    :disabled="datepickerIsDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
@@ -197,7 +195,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
@@ -223,6 +221,10 @@ const props = defineProps({
     studentId: {
         type: [Number, String],
     },
+});
+
+const datepickerIsDisabled = computed(() => {
+    return +periodLength.value < +lunchDays.value.length ? true : false;
 });
 
 const startOrderingLunch = () => {
