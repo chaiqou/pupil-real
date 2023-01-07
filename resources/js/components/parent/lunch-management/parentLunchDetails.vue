@@ -256,6 +256,22 @@ watch(availableOrders, () => {
     });
 });
 
+const findCorrectStartDay = computed(() => {
+    const formattedFilteretdDates = filteredDates.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    let result = formattedFilteretdDates.filter(
+        (x) => !formattedDisabledDays.includes(x)
+    );
+
+    return result;
+});
+
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay
     firstPossibleDay.value = addHours(currentDate, newValue);
@@ -277,7 +293,7 @@ watch(bufferDays, (newValue) => {
         store.availableDatesForStartOrdering = filteredDates.value;
     }
 
-    store.first_day = disabledDaysForLunchOrder.value[0];
+    store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
 
 onMounted(() => {
