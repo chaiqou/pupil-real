@@ -5,7 +5,6 @@ import { createPinia } from "pinia";
 
 import * as Sentry from "@sentry/vue";
 
-
 import DashboardNavigation from "@/components/navigation/DashboardNavigation.vue";
 import DashboardNavigationMobile from "@/components/navigation/DashboardNavigationMobile.vue";
 import NavigationMenuButton from "@/components/navigation/NavigationMenuButton.vue";
@@ -52,21 +51,6 @@ import MenuCalendar from "../js/components/school/Menu/MenuCalendar.vue";
 
 const pinia = createPinia();
 const app = createApp({});
-
-// import { BrowserTracing } from "@sentry/tracing";
-// Sentry.init({
-//     app,
-//     dsn: "https://76042f674d6b4d699621aa64e177b6d6@o1074627.ingest.sentry.io/4504446374838272",
-//     integrations: [
-//         new BrowserTracing({
-//             tracePropagationTargets: ["localhost", "my-site-url.com", /^\//],
-//         }),
-//     ],
-//     // Set tracesSampleRate to 1.0 to capture 100%
-//     // of transactions for performance monitoring.
-//     // We recommend adjusting this value in production
-//     tracesSampleRate: 1.0,
-// });
 
 
 app.component("dashboard-navigation", DashboardNavigation);

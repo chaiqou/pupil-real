@@ -148,23 +148,40 @@
                     closeOnScroll
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
+                    :disabled-dates="disabledDaysForLunchOrder"
+                    :disabled="isDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
                 <button
-                    v-bind:disabled="!formIsValid"
+                    :disabled="isDisabled"
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!formIsValid">It is not possible to order lunch</p>
+                    <p v-if="!disabledDaysForLunchOrder">
+                        Period not enough for ordering lunch
+                    </p>
                     <p
-                        v-if="store.first_day == '' && !formIsValid"
+                        v-else-if="
+                            periodLength < disabledDaysForLunchOrder.length
+                        "
+                    >
+                        Period not enough for ordering lunch
+                    </p>
+                    <p
+                        v-if="
+                            store.first_day == '' && !disabledDaysForLunchOrder
+                        "
                         class="text-center"
                     >
                         Please select order starting date
                     </p>
                     <p
-                        v-if="store.first_day != '' && formIsValid"
+                        v-if="
+                            store.first_day != '' &&
+                            disabledDaysForLunchOrder &&
+                            periodLength > disabledDaysForLunchOrder.length
+                        "
                         class="text-center"
                     >
                         {{
@@ -179,7 +196,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
@@ -195,8 +212,10 @@ const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
 const lunchDetails = ref([]);
-const formIsValid = ref();
 const childrenToast = ref();
+
+const availableOrders = ref([]);
+const disabledDaysForLunchOrder = ref([]);
 
 const props = defineProps({
     studentId: {
@@ -204,8 +223,13 @@ const props = defineProps({
     },
 });
 
+const isDisabled = computed(() => {
+    return +periodLength.value < +disabledDaysForLunchOrder.value.length
+        ? true
+        : false;
+});
+
 const startOrderingLunch = () => {
-    formIsValid.value = false;
     childrenToast.value.showToaster("Lunch ordered successfully");
     axios.post("/api/parent/lunch-order/" + props.studentId, {
         student_id: props.studentId,
@@ -216,6 +240,37 @@ const startOrderingLunch = () => {
         lunch_id: lunchDetails.value[0].id,
     });
 };
+
+watch(availableOrders, () => {
+    // Foreach each available order
+    availableOrders.value.forEach((order) => {
+        // claims is a JSON we need parse it to get it as a javascript object
+        let parsedClaims = JSON.parse(order.claims);
+        // get keys from claims
+        let claimsKeys = Object.keys(parsedClaims);
+
+        // Assign all dates in one state
+        claimsKeys.forEach((claim) =>
+            disabledDaysForLunchOrder.value.push(parseISO(claim))
+        );
+    });
+});
+
+const findCorrectStartDay = computed(() => {
+    const formattedFilteretdDates = filteredDates.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    let result = formattedFilteretdDates.filter(
+        (x) => !formattedDisabledDays.includes(x)
+    );
+
+    return result;
+});
 
 watch(bufferDays, (newValue) => {
     // Add buffer time hours to firstPossibleDay
@@ -238,16 +293,14 @@ watch(bufferDays, (newValue) => {
         store.availableDatesForStartOrdering = filteredDates.value;
     }
 
-    if (availableDays.value[0].length < +periodLength.value) {
-        formIsValid.value = false;
-    } else {
-        formIsValid.value = true;
-    }
-
-    store.first_day = store.availableDatesForStartOrdering[0];
+    store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
 
 onMounted(() => {
+    axios
+        .get(`/api/parent/available-orders/${props.studentId}`)
+        .then((response) => (availableOrders.value = response.data.orders));
+
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {

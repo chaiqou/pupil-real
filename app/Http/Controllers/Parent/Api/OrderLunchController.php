@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
+
+    public function availableOrders(): JsonResponse
+    {
+        $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
+
+        return response()->json(['orders' => $orders]);
+    }
+
     public function index(LunchOrderRequest $request): JsonResponse
     {
         $validate = $request->validated();
@@ -61,7 +69,7 @@ class OrderLunchController extends Controller
                 'transaction_id' => 1,
                 'merchant_id' => $student->school_id,
                 'lunch_id' => $validate['lunch_id'],
-                'card_data' => $student->card_data,
+                'card_data' => 'hardcoded instead of $student->card_data',
                 'start_date' => $sortedAvailableDates->first(),
                 'end_date' => $sortedAvailableDates->last(),
                 'claims' => json_encode($claimsJson),
