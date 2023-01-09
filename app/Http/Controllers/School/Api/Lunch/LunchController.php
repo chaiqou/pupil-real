@@ -29,6 +29,8 @@ class LunchController extends Controller
 
     public function store(LunchRequest $request): JsonResponse
     {
+        // Needs refactor, because we can have multiple merchants per school
+
         $validate = $request->validated();
 
         $merchantId = Merchant::where('school_id', auth()->user()->school_id)->first();

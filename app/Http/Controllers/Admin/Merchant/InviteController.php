@@ -138,19 +138,21 @@ class InviteController extends Controller
             ]),
         ]);
         $invite->update(['state' => 5]);
-        $storeStripeAccountRequest = Http::asForm()->withToken(config('app.stripe_secret_key'))->post('https://api.stripe.com/v1/accounts', [
-            'type' => 'express',
-            'country' => $request->country,
-            'email' => $invite->email
-        ])->json();
 
-        $merchant->update([
-            'stripe_account_id' => $storeStripeAccountRequest['id']
+        $stripe = new \Stripe\StripeClient(config('app.stripe_secret_key'));
+        $stripeAccount = $stripe->accounts->create([
+            'type' => 'express',
+            'country' => $request->contry,
+            'email' => $invite->email,
         ]);
+          // WORK IN PROGRESS
+//        $merchant->update([
+//            'stripe_account_id' => $storeStripeAccountRequest['id']
+//        ]);
 
        Str::endsWith(env('APP_URL'), '/') ?
-           [$refresh_url = env('APP_URL').'merchant-company-details-post/'.$invite->uniqueID, $return_url = env('APP_URL').'merchant-billingo-verify/'.$invite->uniqueID.'/']
-           : [$refresh_url = env('APP_URL').'/merchant-company-details-post/'.$invite->uniqueID, $return_url = env('APP_URL').'/merchant-billingo-verify/'.$invite->uniqueID];
+           [$refresh_url = env('APP_URL').route('merchant-company.details_submit', ['uniqueID' => $invite->uniqueID]), $return_url = env('APP_URL').route('merchant-billingo-verify', ['uniqueID' => $invite->uniqueID])]
+           : [$refresh_url = env('APP_URL').'/'.route('merchant-company.details_submit', ['uniqueID' => $invite->uniqueID]), $return_url = env('APP_URL').'/'.route('merchant-billingo-verify', ['uniqueID' => $invite->uniqueID])];
         $generateStripeAccountLinkRequest = Http::asForm()->withToken(config('app.stripe_secret_key'))->post('https://api.stripe.com/v1/account_links', [
             'account' => $merchant->stripe_account_id,
             'refresh_url' => $refresh_url,

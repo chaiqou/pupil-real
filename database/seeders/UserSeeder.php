@@ -2,9 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\BillingoController;
+use App\Models\BillingoData;
+use App\Models\Merchant;
+use App\Models\PartnerId;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
 
 class UserSeeder extends Seeder
 {
@@ -101,5 +106,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('adminadmin'),
         ])->assignRole('admin');
+
     }
 }
