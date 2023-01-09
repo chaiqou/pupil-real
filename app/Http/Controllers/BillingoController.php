@@ -40,11 +40,8 @@ class BillingoController extends Controller
                 'billingo_api_key' => $request->api_key,
                 'merchant_id' => $merchant->id,
             ]);
-<<<<<<< HEAD
             $merchant->update(['billingo_api_key' => $request->api_key]);
 
-=======
->>>>>>> fc6bebc683607aefdf420f1a39cb86e0f1951516
             return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
         } else {
             return redirect()->back()->withErrors("Something went wrong from pupilpay's side");

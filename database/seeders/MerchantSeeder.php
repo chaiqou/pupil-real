@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\BillingoController;
 use App\Models\BillingoData;
->>>>>>> fc6bebc683607aefdf420f1a39cb86e0f1951516
 use App\Models\Merchant;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
