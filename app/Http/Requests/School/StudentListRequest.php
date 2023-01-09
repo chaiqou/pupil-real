@@ -28,6 +28,9 @@ class StudentListRequest extends FormRequest
             'signature' => 'required|size:128',
             'per_page' => 'required|integer',
             'page' => 'required|integer',
+            'mode' => 'required|in:all,search',
+            'search_key' => 'string',
+            "search_value" => 'string'
         ];
     }
 }
