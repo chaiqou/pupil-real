@@ -7,6 +7,7 @@ use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class NavigationController extends Controller

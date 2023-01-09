@@ -14,85 +14,31 @@ class LunchSeeder extends Seeder
      */
     public function run()
     {
-        $lunch_for_levente = Lunch::create([
+         $oxford_lunch = Lunch::create([
             'merchant_id' => 1,
-            'name' => 'Levente',
-            'description' => 'Levente',
-            'period_length' => 'Levente',
-            'claimables' => 'Levente',
-            'active_range' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'weekdays' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'holds' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'extras' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'available_days' => 'Levente',
-            'price_period' => 'Levente',
-
-        ]);
-
-        $lunch_for_luka = Lunch::create([
-            'merchant_id' => 2,
-            'name' => 'Luka',
-            'description' => 'Luka',
-            'period_length' => 'Luka',
-            'claimables' => 'Luka',
-            'active_range' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'weekdays' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'holds' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'extras' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'available_days' => 'Luka',
-            'price_period' => 'Luka',
-
-        ]);
-
-        $lunch_for_nikoloz = Lunch::create([
-            'merchant_id' => 3,
-            'name' => 'Nikoloz',
-            'description' => 'Nikoloz',
-            'period_length' => 'Nikoloz',
-            'claimables' => 'Nikoloz',
-            'active_range' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'weekdays' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'holds' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'extras' => [
-                'start' => '2021-10-20',
-                'end' => '2021-10-20',
-            ],
-            'available_days' => 'Nikoloz',
-            'price_period' => 'Nikoloz',
-
-        ]);
+            'title' => 'Some random title lunch',
+            'description' => 'Description123123',
+             'period_length' => 4,
+             'weekdays' => json_encode([
+                 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+             ]),
+             'active_range' => json_encode([
+                 '2023-01-09', '2023-01-31'
+             ]),
+             'claimables' => json_encode([
+                 'Beverage',
+                 'Breakfast',
+                 'Bread',
+                 'Appetizer'
+             ]),
+             'holds' => [],
+             'extras' => [],
+             'available_days' => json_encode([
+                 "2023-01-09","2023-01-16","2023-01-23","2023-01-30","2023-01-10","2023-01-17","2023-01-24","2023-01-31","2023-01-11","2023-01-18","2023-01-25","2023-01-12","2023-01-19","2023-01-26","2023-01-13","2023-01-20","2023-01-27","2023-01-14","2023-01-21","2023-01-28"
+             ]),
+             'buffer_time' => 4,
+             'vat' => '27%',
+             'price_period' => 89,
+         ]);
     }
 }
