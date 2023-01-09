@@ -21,8 +21,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         TransactionCreated::class => [
-            TransactionToDocumentInsert::class
-        ]
+            TransactionToDocumentInsert::class,
+        ],
     ];
 
     /**

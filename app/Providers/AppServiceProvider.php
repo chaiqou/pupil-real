@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\BillingoController;
-use App\Models\Transaction;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

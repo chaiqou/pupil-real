@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\BillingoData;
 use App\Models\Merchant;
 use Illuminate\Database\Seeder;
 

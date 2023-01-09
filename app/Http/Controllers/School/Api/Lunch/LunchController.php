@@ -22,7 +22,6 @@ class LunchController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-
         $student = Student::where('school_id', auth()->user()->school_id)->first();
         $merchant = Merchant::where('school_id', $student->school_id)->first();
 
@@ -72,12 +71,13 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
-    public function retrieveStudents(StudentListRequest $request){
+    public function retrieveStudents(StudentListRequest $request)
+    {
         $validated = $request->validated();
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
@@ -111,7 +111,7 @@ class LunchController extends Controller
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
 
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
@@ -162,7 +162,7 @@ class LunchController extends Controller
         $validated = $request->validated();
 
         $terminal = Terminal::where('public_key', $validated['public_key'])->first();
-        if (!$terminal) {
+        if (! $terminal) {
             return response()->json(['error' => 'Invalid request.'], 400);
         }
         $message = $validated['lunch_date'].$validated['lunch_id'].$validated['claim_name'].$validated['claim_date'];

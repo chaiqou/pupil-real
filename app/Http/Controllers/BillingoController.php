@@ -7,9 +7,7 @@ use App\Models\BillingoData;
 use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\PartnerId;
-use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -21,7 +19,7 @@ class BillingoController extends Controller
             'X-API-KEY' => $request->api_key,
         ])->get('https://api.billingo.hu/v3/utils/time');
         $requestBillingoForBlockId = Http::withHeaders([
-            'X-API-KEY' => $request->api_key
+            'X-API-KEY' => $request->api_key,
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
 
         if ($requestBillingo->status() === 401) {
@@ -43,6 +41,7 @@ class BillingoController extends Controller
                 'merchant_id' => $merchant->id,
             ]);
             $merchant->update(['billingo_api_key' => $request->api_key]);
+
             return redirect()->route('merchant-verify.email', ['uniqueID' => request()->uniqueID]);
         } else {
             return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
@@ -76,7 +75,7 @@ class BillingoController extends Controller
                 'merchant_id' => $merchant->id,
             ]);
         }
+
         return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
     }
-
 }
