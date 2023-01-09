@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class NavigationController extends Controller

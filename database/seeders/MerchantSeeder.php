@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\BillingoController;
 use App\Models\BillingoData;
 use App\Models\Merchant;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
 
 class MerchantSeeder extends Seeder
 {
@@ -32,6 +34,17 @@ class MerchantSeeder extends Seeder
             'merchant_nick' => 'Cafeteria',
         ]);
 
+        $requestBillingoForBlockId1 = Http::withHeaders([
+            'X-API-KEY' => env('BILLINGO_API_KEY')
+        ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
+            $merchant = Merchant::where('id', $merchant_for_levente->id)->first();
+            BillingoData::create([
+                'block_id' => $requestBillingoForBlockId1['data'][0]['id'],
+                'billingo_api_key' => env('BILLINGO_API_KEY'),
+                'merchant_id' => $merchant->id,
+            ]);
+
+
         $merchant_for_nikoloz = Merchant::create([
             'user_id' => 2,
             'school_id' => 1,
@@ -49,6 +62,16 @@ class MerchantSeeder extends Seeder
             'merchant_nick' => 'Will Stone',
         ]);
 
+        $requestBillingoForBlockId2 = Http::withHeaders([
+            'X-API-KEY' => env('BILLINGO_API_KEY')
+        ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
+        $merchant = Merchant::where('id', $merchant_for_nikoloz->id)->first();
+        BillingoData::create([
+            'block_id' => $requestBillingoForBlockId2['data'][0]['id'],
+            'billingo_api_key' => env('BILLINGO_API_KEY'),
+            'merchant_id' => $merchant->id,
+        ]);
+
         $merchant_for_luka = Merchant::create([
             'user_id' => 3,
             'school_id' => 2,
@@ -60,6 +83,16 @@ class MerchantSeeder extends Seeder
                 'VAT' => '',
             ]),
             'merchant_nick' => 'White Bamboo',
+        ]);
+
+        $requestBillingoForBlockId3 = Http::withHeaders([
+            'X-API-KEY' => env('BILLINGO_API_KEY')
+        ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
+        $merchant = Merchant::where('id', $merchant_for_luka->id)->first();
+        BillingoData::create([
+            'block_id' => $requestBillingoForBlockId3['data'][0]['id'],
+            'billingo_api_key' => env('BILLINGO_API_KEY'),
+            'merchant_id' => $merchant->id,
         ]);
     }
 }
