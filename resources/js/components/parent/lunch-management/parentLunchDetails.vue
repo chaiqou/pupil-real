@@ -158,14 +158,7 @@
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!disabledDaysForLunchOrder">
-                        Period not enough for ordering lunch
-                    </p>
-                    <p
-                        v-else-if="
-                            periodLength < disabledDaysForLunchOrder.length
-                        "
-                    >
+                    <p v-if="isDisabled">
                         Period not enough for ordering lunch
                     </p>
                     <p

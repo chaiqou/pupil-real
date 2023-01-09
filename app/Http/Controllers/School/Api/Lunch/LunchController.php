@@ -22,7 +22,11 @@ class LunchController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $lunches = Lunch::where('merchant_id', auth()->user()->school_id)->paginate(9);
+
+        $student = Student::where('school_id', auth()->user()->school_id)->first();
+        $merchant = Merchant::where('school_id', $student->school_id)->first();
+
+        $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
 
         return LunchResource::collection($lunches);
     }
