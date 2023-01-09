@@ -32,7 +32,9 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
 
         Route::get('/merchant-company-details/{uniqueID}', 'companyDetails')->name('merchant-company.details');
-        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
+
+        //notice that post in the end of this route is made by purpose, because we use this in refresh_url in stripe, check merchant Invite Controller in admin folder
+        Route::post('/merchant-company-details-post/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
 
         Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo-verify');
 
