@@ -177,11 +177,7 @@
                         Please select order starting date
                     </p>
                     <p
-                        v-if="
-                            store.first_day != '' &&
-                            disabledDaysForLunchOrder &&
-                            periodLength > disabledDaysForLunchOrder.length
-                        "
+                        v-if="store.first_day != '' && !isDisabled"
                         class="text-center"
                     >
                         {{
