@@ -63,49 +63,49 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () use ($student, $validate, $sortedAvailableDates, $claimsJson, $pricePeriod) {
-            $lunch = PeriodicLunch::create([
-                'student_id' => $student->id,
-                'transaction_id' => 1,
-                'merchant_id' => $student->school_id,
-                'lunch_id' => $validate['lunch_id'],
-                'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $sortedAvailableDates->first(),
-                'end_date' => $sortedAvailableDates->last(),
-                'claims' => json_encode($claimsJson),
-            ]);
+       DB::transaction(function () use ($student, $validate, $sortedAvailableDates, $claimsJson, $pricePeriod) {
+            $transaction = Transaction::create([
+                 'user_id' => $student->user_id,
+                 'student_id' => $student->id,
+                 'merchant_id' => $student->school_id,
+                 'transaction_date' => now()->format('Y-m-d'),
+                 'billingo_transaction_id' => null,
+                 'amount' => 1,
+                 'transaction_type' => 'debit',
+                 'billing_type' => 'proforma',
+                 'billing_comment' => 'billing_comment_here',
+                 'billing_item' => json_encode([
+                     'name' => 'Test lunch '.$sortedAvailableDates->first().' - '.$sortedAvailableDates->last(),
+                     'unit_price' => $pricePeriod,
+                     'unit_price_type' => 'gross',
+                     'quantity' => 1,
+                     'unit' => 'db',
+                     'vat' => '27%',
+                 ]),
+                 'pending' => json_encode([
+                     'pending' => 0,
+                     'pending_history' => [],
+                 ]),
+                 'comment' => json_encode([
+                     'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
+                     'comment_history' => [],
+                 ]),
+             ]);
 
-           $transaction = Transaction::create([
-                'user_id' => $student->user_id,
-                'student_id' => $student->id,
-                'merchant_id' => $student->school_id,
-                'transaction_date' => now()->format('Y-m-d'),
-                'billingo_transaction_id' => null,
-                'amount' => 1,
-                'transaction_type' => 'debit',
-                'billing_type' => 'proforma',
-                'billing_comment' => 'billing_comment_here',
-                'billing_item' => json_encode([
-                    'name' => 'Test lunch '.$sortedAvailableDates->first().' - '.$sortedAvailableDates->last(),
-                    'unit_price' => $pricePeriod,
-                    'unit_price_type' => 'gross',
-                    'quantity' => 1,
-                    'unit' => 'db',
-                    'vat' => '27%',
-                ]),
-                'pending' => json_encode([
-                    'pending' => 0,
-                    'pending_history' => [],
-                ]),
-                'comment' => json_encode([
-                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-                    'comment_history' => [],
-                ]),
-            ]);
-          if ($transaction->billing_type !== 'none') {
-             event(new TransactionCreated($transaction));
-           };
-        });
+             $lunch = PeriodicLunch::create([
+                 'student_id' => $student->id,
+                 'transaction_id' => $transaction->id,
+                 'merchant_id' => $student->school_id,
+                 'lunch_id' => $validate['lunch_id'],
+                 'card_data' => 'hardcoded instead of $student->card_data',
+                 'start_date' => $sortedAvailableDates->first(),
+                 'end_date' => $sortedAvailableDates->last(),
+                 'claims' => json_encode($claimsJson),
+             ]);
+           if ($transaction->billing_type !== 'none') {
+              event(new TransactionCreated($transaction));
+            };
+         });
 
         return response()->json(['success' => 'success']);
     }
