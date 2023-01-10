@@ -226,9 +226,10 @@ watch(availableOrders, () => {
         let claimsKeys = Object.keys(parsedClaims);
 
         // Assign all dates in one state
-        claimsKeys.forEach((claim) =>
-            disabledDaysForLunchOrder.value.push(parseISO(claim))
-        );
+        claimsKeys.forEach((claim) => {
+            store.disabledDaysForLunchOrdering.push(parseISO(claim)),
+                disabledDaysForLunchOrder.value.push(parseISO(claim));
+        });
     });
 });
 

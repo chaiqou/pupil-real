@@ -33,6 +33,12 @@
                             :key="day"
                             type="button"
                             :class="[
+                                highlightDisabledDays.map((highlight) =>
+                                    format(highlight, 'yyy-MM-dd') ==
+                                    format(day, 'yyyy-MM-dd')
+                                        ? 'bg-indigo-500 hover:bg-indigo-600 text-white'
+                                        : ''
+                                ),
                                 claimDays.length > 0
                                     ? claimDays.map((claim) => {
                                           return format(claim, 'yyyy-MM-dd') ==
@@ -108,6 +114,10 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+});
+
+const highlightDisabledDays = computed(() => {
+    return store.disabledDaysForLunchOrdering.map((day) => day);
 });
 
 const claimDays = computed(() => {
