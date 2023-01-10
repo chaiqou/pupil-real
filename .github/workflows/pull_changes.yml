@@ -20,8 +20,10 @@ jobs:
           script: |
             cd /var/www/${{ steps.extract_branch.outputs.branch }}
             php artisan down
+            composer install --no-interaction
+            npm install
             git stash
             git pull origin ${{ steps.extract_branch.outputs.branch }}
             php artisan migrate
-            npm run prod
+            npm run build
             php artisan up

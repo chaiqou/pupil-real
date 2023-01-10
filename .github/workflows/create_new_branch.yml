@@ -28,6 +28,9 @@ jobs:
             sed -i 's/branchname/${{ steps.extract_branch.outputs.branch }}/g' .env
             sed -i 's/dbpass/${{ secrets.PASSWORD }}/g' .env
             sed -i 's/mailpass/${{ secrets.MAIL_PASS }}/g' .env
+            sed -i 's/stripesecret/${{ secrets.STRIPE_SECRET }}/g' .env
+            sed -i 's/stripepublishable/${{ secrets.STRIPE_PUBLISHABLE }}/g' .env
+            sed -i 's/billingoapi/${{ secrets.BILLINGO_API_KEY }}/g' .env
             mysql -u root -p${{ secrets.PASSWORD }} -e "CREATE DATABASE \`${{ steps.extract_branch.outputs.branch }}\`;"
             php artisan migrate
             php artisan db:seed
@@ -39,4 +42,4 @@ jobs:
             service apache2 restart
             git stash
             git pull origin ${{ steps.extract_branch.outputs.branch }}
-            npm run prod
+            npm run build
