@@ -43,10 +43,19 @@
                     </li>
 
                     <li class="relative md:flex md:flex-1">
+                        <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                <span class="text-gray-500">04</span>
+                            </span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">Stripe</span>
+                        </div>
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
                         <div class="group flex items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
-                                    <span class="text-gray-500">04</span>
+                                    <span class="text-gray-500">05</span>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Billingo</span>
                             </span>
@@ -57,7 +66,7 @@
                         <div class="group flex items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
-                                    <span class="text-gray-500">05</span>
+                                    <span class="text-gray-500">06</span>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
                             </span>

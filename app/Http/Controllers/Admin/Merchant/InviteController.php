@@ -14,7 +14,6 @@ use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -29,12 +28,23 @@ class InviteController extends Controller
         $invite = Invite::where('email', $user->email)->first();
         //Log out the user (So they don't have access to the dashboard)
         Auth::logout();
+        if ($invite->state == 3) {
+            return route('merchant-personal.form', ['uniqueID' => $invite->uniqueID]);
+        }
         if ($invite->state == 4) {
-            //If the invite is in state 4, redirect to email verification
+            //If the invite is in state 4, redirect to company details
+            return route('merchant-company.details', ['uniqueID' => $invite->uniqueID]);
+        }
+        if ($invite->state == 5) {
+            return route('merchant-setup.stripe', ['uniqueID' => $invite->uniqueID]);
+        }
+        if ($invite->state == 6) {
+            return route('merchant-billingo.verify', ['uniqueID' => $invite->uniqueID]);
+        }
+        if ($invite->state == 7) {
             return route('merchant-verify.email', ['uniqueID' => $invite->uniqueID]);
         }
-        //If the invite is not state 4 (Aka before the personal form, but after the user has already been created)
-        return route('merchant-personal.form', ['uniqueID' => $invite->uniqueID]);
+        return route('merchant-setup.account', ['uniqueID' => $invite->uniqueID]);
     }
 
     public function setupAccount($uniqueID): View
@@ -138,7 +148,6 @@ class InviteController extends Controller
                 'VAT' => $request->VAT,
             ]),
         ]);
-        $invite->update(['state' => 5]);
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
             if($request->business_type === 'individual') {
@@ -202,18 +211,42 @@ class InviteController extends Controller
         $merchant->update([
             'stripe_account_id' => $stripeAccount->id
         ]);
+        $invite->update(['state' => 5]);
+        return redirect()->route('merchant-setup.stripe', ['uniqueID' => request()->uniqueID]);
+    }
 
-       Str::endsWith(env('APP_URL'), '/') ?
-           [$refresh_url = env('APP_URL').'merchant-company-details/'.$invite->uniqueID, $return_url = env('APP_URL').'merchant-billingo-verify/'.$invite->uniqueID]
-           : [$refresh_url = env('APP_URL').'/'.'merchant-company-details/'.$invite->uniqueID, $return_url = env('APP_URL').'/'.'merchant-billingo-verify/'.$invite->uniqueID];
+    public function setupStripe(): View {
+        return view('invite.merchant.setup-stripe', [
+            'uniqueID' => request()->uniqueID,
+        ]);
+    }
 
-        $stripeAccountLink = $stripe->accountLinks->create([
+    public function submitSetupStripe(): RedirectResponse
+    {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
+        $user = User::where('email', $invite->email)->first();
+       $merchant = Merchant::where('user_id', $user->id)->first();
+        Str::endsWith(env('APP_URL'), '/') ?
+            [$refresh_url = env('APP_URL').'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'merchant-billingo-verify/'.$invite->uniqueID]
+            : [$refresh_url = env('APP_URL').'/'.'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'/'.'merchant-billingo-verify/'.$invite->uniqueID];
+
+        try {
+            $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
+            $stripeAccountLink = $stripe->accountLinks->create([
                 'account' => $merchant->stripe_account_id,
                 'refresh_url' => $refresh_url,
                 'return_url' => $return_url,
                 'type' => 'account_onboarding',
             ]);
-
+        }catch(\Stripe\Exception\CardException $e) {
+            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            return redirect()->back()->withErrors('An invalid request occurred.');
+        } catch (\Stripe\Exception\ApiConnectionException) {
+            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+        } catch (\Stripe\Exception\ApiErrorException) {
+            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+        }
           return redirect()->to($stripeAccountLink->url);
     }
 
@@ -229,12 +262,13 @@ class InviteController extends Controller
         $stripeAccountRetrieve = $stripe->accounts->retrieve(
             $merchant->stripe_account_id
         );
+        $invite->update(['state' => 6]);
         if($stripeAccountRetrieve->charges_enabled) {
             $merchant->stripe_completed = true;
             return view('invite.merchant.billingo-verify', [
                 'uniqueID' => request()->uniqueID,
             ]);
-        } else return redirect()->back()->withErrors('Something went wrong, try again');
+        } else return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
     }
 
     public function verifyEmail(): View
