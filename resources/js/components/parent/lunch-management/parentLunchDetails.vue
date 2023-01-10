@@ -198,6 +198,7 @@ const addOneDayToFirstPossibleDay = ref("");
 
 const filteredDates = ref();
 const lunchDetails = ref([]);
+const bufferTime = ref();
 const childrenToast = ref();
 
 const availableOrders = ref([]);
@@ -258,7 +259,7 @@ const findCorrectStartDay = computed(() => {
     return result;
 });
 
-watch(store.buffer_time, (newValue) => {
+watch(bufferTime, (newValue) => {
     // Add buffer time hours to firstPossibleDay
     firstPossibleDay.value = addHours(new Date(), newValue);
 
@@ -297,7 +298,7 @@ onMounted(() => {
                     return parseISO(availableDay);
                 })
             );
-            store.buffer_time = response.data.data.buffer_time;
+            bufferTime.value = response.data.data.buffer_time;
             store.period_length = response.data.data.period_length;
             store.available_days = response.data.data.available_days;
             lunchDetails.value = [response.data.data];
