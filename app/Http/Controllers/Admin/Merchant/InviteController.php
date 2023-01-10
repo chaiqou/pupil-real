@@ -156,6 +156,9 @@ class InviteController extends Controller
                     'country' => $request->country,
                     'email' => $user->email,
                     'business_type' => $request->business_type,
+                    'business_profile' => [
+                        'product_description' => 'Merchant for the PupilPay Platform.'
+                    ],
                     'company' => [
                         'address' => [
                             'city' => $request->city,
@@ -186,6 +189,9 @@ class InviteController extends Controller
                     'country' => $request->country,
                     'email' => $user->email,
                     'business_type' => $request->business_type,
+                    'business_profile' => [
+                        'product_description' => 'Merchant for the PupilPay Platform.'
+                    ],
                     'company' => [
                         'address' => [
                             'city' => $request->city,
