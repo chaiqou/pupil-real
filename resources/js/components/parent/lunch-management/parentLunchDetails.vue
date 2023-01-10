@@ -192,9 +192,6 @@ import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 
-const periodLength = ref();
-const currentDate = new Date();
-const bufferDays = ref("");
 const firstPossibleDay = ref("");
 const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
@@ -213,7 +210,7 @@ const props = defineProps({
 });
 
 const isDisabled = computed(() => {
-    return +periodLength.value < +disabledDaysForLunchOrder.value.length
+    return +store.period_length < +disabledDaysForLunchOrder.value.length
         ? true
         : false;
 });
@@ -261,9 +258,9 @@ const findCorrectStartDay = computed(() => {
     return result;
 });
 
-watch(bufferDays, (newValue) => {
+watch(store.buffer_time, (newValue) => {
     // Add buffer time hours to firstPossibleDay
-    firstPossibleDay.value = addHours(currentDate, newValue);
+    firstPossibleDay.value = addHours(new Date(), newValue);
 
     // Add one day to firstPossibleDay
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
@@ -273,10 +270,10 @@ watch(bufferDays, (newValue) => {
         .filter((date) => isAfter(date, firstPossibleDay.value))
         .sort((a, b) => a - b);
 
-    if (filteredDates.value.length < periodLength) {
+    if (filteredDates.value.length < store.period_length) {
         // Remove from filteredDates period length days
         store.availableDatesForStartOrdering = filteredDates.value.splice(
-            periodLength.value
+            store.period_length
         );
     } else {
         store.availableDatesForStartOrdering = filteredDates.value;
@@ -286,10 +283,12 @@ watch(bufferDays, (newValue) => {
 });
 
 onMounted(() => {
+    // Fetch existing all orders and save to availableOrders
     axios
         .get(`/api/parent/available-orders/${props.studentId}`)
         .then((response) => (availableOrders.value = response.data.orders));
 
+    // Fetch concrette order based lunch id
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
@@ -298,11 +297,10 @@ onMounted(() => {
                     return parseISO(availableDay);
                 })
             );
-            periodLength.value = response.data.data.period_length;
-            bufferDays.value = response.data.data.buffer_time;
-            lunchDetails.value = [response.data.data];
+            store.buffer_time = response.data.data.buffer_time;
             store.period_length = response.data.data.period_length;
             store.available_days = response.data.data.available_days;
+            lunchDetails.value = [response.data.data];
         });
 });
 </script>
