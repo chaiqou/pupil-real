@@ -151,23 +151,23 @@
                     :disabled-dates="disabledDaysForLunchOrder"
                     :enableTimePicker="false"
                     :clearable="false"
+                    :disabled="disableIfDatesLessThenPeriodLength"
                 />
                 <button
                     @click="startOrderingLunch"
+                    :disabled="disableIfDatesLessThenPeriodLength"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <!-- <p v-if="isDisabled">
+                    <p v-if="disableIfDatesLessThenPeriodLength">
                         Period not enough for ordering lunch
-                    </p> -->
+                    </p>
                     <p
                         v-if="
-                            store.first_day == '' && !disabledDaysForLunchOrder
+                            store.first_day != '' &&
+                            !disableIfDatesLessThenPeriodLength
                         "
                         class="text-center"
                     >
-                        Please select order starting date
-                    </p>
-                    <p v-if="store.first_day != ''" class="text-center">
                         {{
                             "Order starting at " +
                             format(store.first_day, "yyyy MMMM dd")
@@ -204,12 +204,6 @@ const props = defineProps({
         type: [Number, String],
     },
 });
-
-// const isDisabled = computed(() => {
-//     return +store.period_length < +disabledDaysForLunchOrder.value.length
-//         ? true
-//         : false;
-// });
 
 const startOrderingLunch = () => {
     childrenToast.value.showToaster("Lunch ordered successfully");
@@ -255,6 +249,12 @@ const findCorrectStartDay = computed(() => {
 
     store.availableDatesForStartOrdering = formatResult;
     return result;
+});
+
+const disableIfDatesLessThenPeriodLength = computed(() => {
+    return +store.availableDatesForStartOrdering.length < +store.period_length
+        ? true
+        : false;
 });
 
 watch(bufferTime, (newValue) => {
