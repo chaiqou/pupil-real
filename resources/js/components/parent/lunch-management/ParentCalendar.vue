@@ -33,16 +33,20 @@
                             :key="day"
                             type="button"
                             :class="[
-                                claimDays.map((claim) => {
-                                    return format(claim, 'yyyy-MM-dd') ==
-                                        format(day, 'yyyy-MM-dd') &&
-                                        month.name !==
-                                            getMonthByIndex(day.getMonth()) &&
-                                        month.name ===
-                                            monthFullNames[day.getMonth()]
-                                        ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
-                                        : '';
-                                }),
+                                claimDays.length > 0
+                                    ? claimDays.map((claim) => {
+                                          return format(claim, 'yyyy-MM-dd') ==
+                                              format(day, 'yyyy-MM-dd') &&
+                                              month.name !==
+                                                  getMonthByIndex(
+                                                      day.getMonth()
+                                                  ) &&
+                                              month.name ===
+                                                  monthFullNames[day.getMonth()]
+                                              ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
+                                              : '';
+                                      })
+                                    : '',
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -113,8 +117,6 @@ const claimDays = computed(() => {
         })
         .slice(0, store.period_length);
 
-    if (days.length > 0) {
-        return days;
-    }
+    return days;
 });
 </script>
