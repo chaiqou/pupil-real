@@ -121,6 +121,17 @@
                             </div>
 
                             <div class="sm:col-span-6">
+                                <label for="business_type" class="block text-sm font-medium text-gray-700">Business type</label>
+                                <div class="mt-1">
+                                    <select id="business_type" value="{{old('business_type')}}" name="business_type" autocomplete="business_type" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                        <option value="individual">Individual</option>
+                                        <option value="company">Company</option>
+                                        <option value="non_profit">Non profit</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
                                 <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
                                 <div class="mt-1">
                                     <select id="country" value="{{old('country')}}" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
