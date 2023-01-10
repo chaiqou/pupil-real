@@ -196,7 +196,7 @@ const firstPossibleDay = ref("");
 const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
 
-const filteredDates = ref();
+const sortedDates = ref();
 const lunchDetails = ref([]);
 const bufferTime = ref();
 const childrenToast = ref();
@@ -244,7 +244,7 @@ watch(availableOrders, () => {
 });
 
 const findCorrectStartDay = computed(() => {
-    const formattedFilteretdDates = filteredDates.value.map((date) =>
+    const formattedFilteretdDates = sortedDates.value.map((date) =>
         format(date, "yyyy-MM-dd")
     );
 
@@ -266,18 +266,15 @@ watch(bufferTime, (newValue) => {
     // Add one day to firstPossibleDay
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
 
-    // find dates which past then firstPossibleDay and store it to firstAvailableDay and Sort dates by ASC
-    filteredDates.value = availableDays.value[0]
-        .filter((date) => isAfter(date, firstPossibleDay.value))
-        .sort((a, b) => a - b);
+    sortedDates.value = availableDays.value.map((date) => parseISO(date));
 
-    if (filteredDates.value.length < store.period_length) {
-        // Remove from filteredDates period length days
-        store.availableDatesForStartOrdering = filteredDates.value.splice(
+    if (sortedDates.value.length < store.period_length) {
+        // Remove from sortedDates period length days
+        store.availableDatesForStartOrdering = sortedDates.value.splice(
             store.period_length
         );
     } else {
-        store.availableDatesForStartOrdering = filteredDates.value;
+        store.availableDatesForStartOrdering = sortedDates.value;
     }
 
     store.first_day = parseISO(findCorrectStartDay.value[0]);
@@ -293,10 +290,8 @@ onMounted(() => {
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            availableDays.value.push(
-                response.data.data.available_days.map((availableDay) => {
-                    return parseISO(availableDay);
-                })
+            availableDays.value = response.data.data.available_days.sort(
+                (a, b) => parseISO(a) - parseISO(b)
             );
             bufferTime.value = response.data.data.buffer_time;
             store.period_length = response.data.data.period_length;
