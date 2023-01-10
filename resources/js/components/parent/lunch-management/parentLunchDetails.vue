@@ -149,18 +149,16 @@
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :disabled-dates="disabledDaysForLunchOrder"
-                    :disabled="isDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
                 />
                 <button
-                    :disabled="isDisabled"
                     @click="startOrderingLunch"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="isDisabled">
+                    <!-- <p v-if="isDisabled">
                         Period not enough for ordering lunch
-                    </p>
+                    </p> -->
                     <p
                         v-if="
                             store.first_day == '' && !disabledDaysForLunchOrder
@@ -169,10 +167,7 @@
                     >
                         Please select order starting date
                     </p>
-                    <p
-                        v-if="store.first_day != '' && !isDisabled"
-                        class="text-center"
-                    >
+                    <p v-if="store.first_day != ''" class="text-center">
                         {{
                             "Order starting at " +
                             format(store.first_day, "yyyy MMMM dd")
@@ -210,11 +205,11 @@ const props = defineProps({
     },
 });
 
-const isDisabled = computed(() => {
-    return +store.period_length < +disabledDaysForLunchOrder.value.length
-        ? true
-        : false;
-});
+// const isDisabled = computed(() => {
+//     return +store.period_length < +disabledDaysForLunchOrder.value.length
+//         ? true
+//         : false;
+// });
 
 const startOrderingLunch = () => {
     childrenToast.value.showToaster("Lunch ordered successfully");
@@ -244,7 +239,7 @@ watch(availableOrders, () => {
 });
 
 const findCorrectStartDay = computed(() => {
-    const formattedFilteretdDates = sortedDates.value.map((date) =>
+    const formatedSortedDates = sortedDates.value.map((date) =>
         format(date, "yyyy-MM-dd")
     );
 
@@ -252,10 +247,13 @@ const findCorrectStartDay = computed(() => {
         format(date, "yyyy-MM-dd")
     );
 
-    let result = formattedFilteretdDates.filter(
+    let result = formatedSortedDates.filter(
         (x) => !formattedDisabledDays.includes(x)
     );
 
+    let formatResult = result.map((day) => parseISO(day));
+
+    store.availableDatesForStartOrdering = formatResult;
     return result;
 });
 
@@ -271,15 +269,6 @@ watch(bufferTime, (newValue) => {
 
     // Save sorted available days
     sortedDates.value = availableDays.value.map((date) => parseISO(date));
-
-    if (sortedDates.value.length < store.period_length) {
-        // Remove from sortedDates period length days
-        store.availableDatesForStartOrdering = sortedDates.value.splice(
-            store.period_length
-        );
-    } else {
-        store.availableDatesForStartOrdering = sortedDates.value;
-    }
 
     store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
