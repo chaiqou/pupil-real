@@ -260,12 +260,16 @@ const findCorrectStartDay = computed(() => {
 });
 
 watch(bufferTime, (newValue) => {
-    // Add buffer time hours to firstPossibleDay
-    firstPossibleDay.value = addHours(new Date(), newValue);
+    //  Find first order da and add buffer times
+    firstPossibleDay.value = addHours(
+        parseISO(availableDays.value[0]),
+        newValue
+    );
 
-    // Add one day to firstPossibleDay
+    // Add Extra one day to first possible day
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
 
+    // Save sorted available days
     sortedDates.value = availableDays.value.map((date) => parseISO(date));
 
     if (sortedDates.value.length < store.period_length) {
