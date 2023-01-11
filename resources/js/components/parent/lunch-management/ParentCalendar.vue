@@ -127,6 +127,7 @@ const claimDays = computed(() => {
         })
         .slice(0, store.period_length);
 
+    store.claim_days = days;
     return days;
 });
 </script>

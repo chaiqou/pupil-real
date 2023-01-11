@@ -214,6 +214,7 @@ const startOrderingLunch = () => {
         period_length: lunchDetails.value[0].period_length,
         start_day: store.first_day,
         lunch_id: lunchDetails.value[0].id,
+        claims: store.claim_days,
     });
 };
 
