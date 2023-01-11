@@ -274,23 +274,28 @@ watch(bufferTime, (newValue) => {
     store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
 
-onMounted(() => {
-    // Fetch existing all orders and save to availableOrders
-    axios
-        .get(`/api/parent/available-orders/${props.studentId}`)
-        .then((response) => (availableOrders.value = response.data.orders));
+onMounted(async () => {
+    try {
+        // Fetch existing all orders and save to availableOrders
+        const availableOrdersResponse = await axios.get(
+            `/api/parent/available-orders/${props.studentId}`
+        );
+        availableOrders.value = availableOrdersResponse.data.orders;
 
-    // Fetch concrette order based lunch id
-    axios
-        .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
-        .then((response) => {
-            availableDays.value = response.data.data.available_days.sort(
+        // Fetch concrette order based lunch id
+        const lunchDetailsResponse = await axios.get(
+            "/api/school/lunch/" + localStorage.getItem("lunchId")
+        );
+        availableDays.value =
+            lunchDetailsResponse.data.data.available_days.sort(
                 (a, b) => parseISO(a) - parseISO(b)
             );
-            bufferTime.value = response.data.data.buffer_time;
-            store.period_length = response.data.data.period_length;
-            store.available_days = response.data.data.available_days;
-            lunchDetails.value = [response.data.data];
-        });
+        bufferTime.value = lunchDetailsResponse.data.data.buffer_time;
+        store.period_length = lunchDetailsResponse.data.data.period_length;
+        store.available_days = lunchDetailsResponse.data.data.available_days;
+        lunchDetails.value = [lunchDetailsResponse.data.data];
+    } catch (err) {
+        console.error(err);
+    }
 });
 </script>
