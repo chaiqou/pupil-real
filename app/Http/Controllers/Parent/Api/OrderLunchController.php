@@ -19,8 +19,7 @@ class OrderLunchController extends Controller
 {
     public function availableOrders(): JsonResponse
     {
-        sleep(1);
-        $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
+      $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
 
         return response()->json(['orders' => $orders]);
     }

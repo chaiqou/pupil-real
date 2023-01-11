@@ -22,6 +22,7 @@ class LunchController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
+        sleep(1);
         $student = Student::where('school_id', auth()->user()->school_id)->first();
         $merchant = Merchant::where('school_id', $student->school_id)->first();
 
