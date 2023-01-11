@@ -35,6 +35,7 @@ class BillingoController extends Controller
             $invite = Invite::where('uniqueID', request()->uniqueID)->first();
             $user = User::where('email', $invite->email)->first();
             $merchant = Merchant::where('user_id', $user->id)->first();
+            $invite->update(['state' => 7]);
             BillingoData::create([
                 'block_id' => $requestBillingoForBlockId['data'][0]['id'],
                 'billingo_api_key' => $request->api_key,

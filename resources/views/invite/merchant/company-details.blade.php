@@ -53,7 +53,7 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                     <span class="text-gray-500">04</span>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-gray-500">Verify Billingo</span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">Stripe</span>
                             </span>
                         </div>
                     </li>
@@ -64,6 +64,17 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                     <span class="text-gray-500">05</span>
                                 </span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">Verify Billingo</span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
+                        <div class="group flex items-center">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                    <span class="text-gray-500">06</span>
+                                </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
                             </span>
                         </div>
@@ -72,7 +83,7 @@
             </nav>
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Fill out your personal information</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Fill out your business details</h2>
             </div>
             @error('*')
             <div class="rounded-md bg-red-50 p-4">
@@ -117,6 +128,17 @@
                                 <label for="company_legal_name" class="block text-sm font-medium text-gray-700">Company legal name</label>
                                 <div class="mt-1">
                                     <input type="text" value="{{old('company_legal_name')}}" required name="company_legal_name" id="company_legal_name" autocomplete="company_legal_name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="business_type" class="block text-sm font-medium text-gray-700">Business type</label>
+                                <div class="mt-1">
+                                    <select id="business_type" value="{{old('business_type')}}" name="business_type" autocomplete="business_type" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                        <option value="individual">Individual</option>
+                                        <option value="company">Company</option>
+                                        <option value="non_profit">Non profit</option>
+                                    </select>
                                 </div>
                             </div>
 

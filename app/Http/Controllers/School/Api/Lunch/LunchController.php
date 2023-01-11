@@ -83,7 +83,24 @@ class LunchController extends Controller
             return response()->json(['error' => 'Invalid request.'], 400);
         }
 
-        $message = $validated['per_page'].$validated['page'];
+        //Validate if request has a "mode" that is either "all" or "search"
+        if ($validated['mode'] !== 'all' && $validated['mode'] !== 'search') {
+            return response()->json(['error' => 'Invalid request.'], 400);
+        }else{
+            //if "mode" is "search", validate if it has a search_key and search_value
+            if($validated['mode'] === 'search'){
+                if(isset($validated['search_key']) && isset($validated['search_value'])){
+                    //validate if search_key is one of id,card_data,card_number,name
+                    if(!in_array($validated['search_key'], ['id','card_data','card_number','name'])){
+                        return response()->json(['error' => 'Invalid request.'], 400);
+                    }
+                }else{
+                    return response()->json(['error' => 'Invalid request.'], 400);
+                }
+            }
+        }
+
+        $message = $validated['per_page'].$validated['page'].$validated["mode"];
         $validSignature = strtoupper(hash('sha512', $message.$terminal->private_key));
 
         if ($validSignature !== strtoupper($validated['signature'])) {
@@ -94,7 +111,17 @@ class LunchController extends Controller
             //Get the merchant through the terminal
             $merchant = Merchant::where('id', $terminal->merchant_id)->first();
             $school = School::where('id', $merchant->school_id)->first();
-            $students = Student::where('school_id', $school->id)->get();
+            if($validated["mode"] =='all'){
+                $students = Student::where('school_id', $school->id)->get();
+            }
+            if($validated["mode"] == 'search'){
+                if(in_array($validated["search_key"], ['id','card_data','card_number'])){
+                    $students = Student::where('school_id',$school->id)->where($validated["search_key"], $validated["search_value"])->get();
+                }else{
+                    //find students by name. Keep in mind that in the db first_name and last_name is stored in separate columns but API returns one combined name
+                    $students = Student::where('school_id',$school->id)->where('first_name', 'like', '%'.$validated["search_value"].'%')->orWhere('last_name', 'like', '%'.$validated["search_value"].'%')->get();
+                }
+            }
             //Get the total number of students
             $totalStudents = $students->count();
             //Get the total number of pages
@@ -103,7 +130,7 @@ class LunchController extends Controller
             $students = $students->forPage($page, $per_page)->values();
             //->values() is used to reset the keys of the collection
             //Return the students
-            return response()->json(['students' => $students, 'total_pages' => $totalPages], 200);
+            return response()->json(['students' => $students, 'total_pages' => $totalPages, 'total_students'=>$totalStudents], 200);
         }
     }
 

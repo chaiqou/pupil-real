@@ -20,7 +20,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
-            if (auth()->user()->hasRole(['2fa', 'school', 'admin'])) {
+            if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
                 return auth()->user()->sendTwoFactorCode();
             }
 

@@ -27,6 +27,7 @@ class CompanyDetailRequest extends FormRequest
             'merchant_nick' => 'required',
             'company_name' => 'required',
             'company_legal_name' => 'required',
+            'business_type' => 'required',
             'street_address' => 'required',
             'country' => 'required',
             'city' => 'required',

@@ -34,7 +34,10 @@ Route::middleware(['guest'])->group(function () {
         Route::get('/merchant-company-details/{uniqueID}', 'companyDetails')->name('merchant-company.details');
         Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
 
-        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo-verify');
+        Route::get('/merchant-setup-stripe/{uniqueID}', 'setupStripe')->name('merchant-setup.stripe');
+        Route::post('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
+
+        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
 
         Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
