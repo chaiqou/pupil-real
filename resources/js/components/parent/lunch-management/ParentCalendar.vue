@@ -36,7 +36,7 @@
                                 highlightDisabledDays.map((highlight) =>
                                     format(highlight, 'yyy-MM-dd') ==
                                     format(day, 'yyyy-MM-dd')
-                                        ? 'bg-indigo-500 hover:bg-indigo-600 text-white'
+                                        ? 'bg-indigo-400 hover:bg-indigo-500 !text-white'
                                         : ''
                                 ),
                                 claimDays.length > 0
