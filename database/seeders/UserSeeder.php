@@ -2,14 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\BillingoController;
-use App\Models\BillingoData;
-use App\Models\Merchant;
-use App\Models\PartnerId;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Http;
 
 class UserSeeder extends Seeder
 {
@@ -88,7 +83,24 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'lomtadzenikusha@gmail.com',
             'password' => bcrypt('adminadmin'),
-        ])->assignRole('admin');
+        ])->assignRole('school');
+
+        $nikolozParent = User::create([
+            'first_name' => 'nika',
+            'last_name' => 'lomtadze',
+            'school_id' => 1,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
+                'country' => 'HU',
+                'state' => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random str.15',
+                'zip' => '99212',
+            ]),
+            'email' => 'nikolozlomtadze@redberry.ge',
+            'password' => bcrypt('adminadmin'),
+        ])->assignRole('parent');
 
         $admin = User::create([
             'first_name' => 'AdminF',
@@ -106,6 +118,5 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('adminadmin'),
         ])->assignRole('admin');
-
     }
 }

@@ -32,10 +32,9 @@ class MerchantToBillingoHealthCheck extends Command
     {
         $merchants = Merchant::with('billingo_data')->get();
 
-        foreach($merchants as $merchant)
-        {
-            if(!isset($merchant->billingo_data)) {
-                Mail::to("info@pupilpay.hu")->send(new MerchantBillingoDataReportMail($merchant));
+        foreach ($merchants as $merchant) {
+            if (! isset($merchant->billingo_data)) {
+                Mail::to('info@pupilpay.hu')->send(new MerchantBillingoDataReportMail($merchant));
             }
         }
     }

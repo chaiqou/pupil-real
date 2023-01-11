@@ -30,13 +30,12 @@ class UserToBillingoHealthCheck extends Command
      */
     public function handle()
     {
-          $users = User::with('partnerId')->get();
+        $users = User::with('partnerId')->get();
 
-          foreach($users as $user)
-          {
-              if(!isset($user->partnerId)) {
-                  Mail::to("info@pupilpay.hu")->send(new UserPartnerIdReportMail($user));
-              };
-          }
+        foreach ($users as $user) {
+            if (! isset($user->partnerId)) {
+                Mail::to('info@pupilpay.hu')->send(new UserPartnerIdReportMail($user));
+            }
+        }
     }
 }

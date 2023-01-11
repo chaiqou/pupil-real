@@ -149,38 +149,22 @@
                     v-model="store.first_day"
                     :allowed-dates="store.availableDatesForStartOrdering"
                     :disabled-dates="disabledDaysForLunchOrder"
-                    :disabled="isDisabled"
                     :enableTimePicker="false"
                     :clearable="false"
+                    :disabled="disableIfDatesLessThenPeriodLength"
                 />
                 <button
-                    :disabled="isDisabled"
                     @click="startOrderingLunch"
+                    :disabled="disableIfDatesLessThenPeriodLength"
                     class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
                 >
-                    <p v-if="!disabledDaysForLunchOrder">
+                    <p v-if="disableIfDatesLessThenPeriodLength">
                         Period not enough for ordering lunch
-                    </p>
-                    <p
-                        v-else-if="
-                            periodLength < disabledDaysForLunchOrder.length
-                        "
-                    >
-                        Period not enough for ordering lunch
-                    </p>
-                    <p
-                        v-if="
-                            store.first_day == '' && !disabledDaysForLunchOrder
-                        "
-                        class="text-center"
-                    >
-                        Please select order starting date
                     </p>
                     <p
                         v-if="
                             store.first_day != '' &&
-                            disabledDaysForLunchOrder &&
-                            periodLength > disabledDaysForLunchOrder.length
+                            !disableIfDatesLessThenPeriodLength
                         "
                         class="text-center"
                     >
@@ -198,20 +182,18 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
+import { format, parseISO, addDays, addHours } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
 
-const periodLength = ref();
-const currentDate = new Date();
-const bufferDays = ref("");
 const firstPossibleDay = ref("");
 const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
 
-const filteredDates = ref();
+const sortedDates = ref();
 const lunchDetails = ref([]);
+const bufferTime = ref();
 const childrenToast = ref();
 
 const availableOrders = ref([]);
@@ -223,12 +205,6 @@ const props = defineProps({
     },
 });
 
-const isDisabled = computed(() => {
-    return +periodLength.value < +disabledDaysForLunchOrder.value.length
-        ? true
-        : false;
-});
-
 const startOrderingLunch = () => {
     childrenToast.value.showToaster("Lunch ordered successfully");
     axios.post("/api/parent/lunch-order/" + props.studentId, {
@@ -236,8 +212,8 @@ const startOrderingLunch = () => {
         available_days: lunchDetails.value[0].available_days,
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
-        start_day: store.first_day,
         lunch_id: lunchDetails.value[0].id,
+        claims: store.claim_days,
     });
 };
 
@@ -250,14 +226,15 @@ watch(availableOrders, () => {
         let claimsKeys = Object.keys(parsedClaims);
 
         // Assign all dates in one state
-        claimsKeys.forEach((claim) =>
-            disabledDaysForLunchOrder.value.push(parseISO(claim))
-        );
+        claimsKeys.forEach((claim) => {
+            store.disabledDaysForLunchOrdering.push(parseISO(claim)),
+                disabledDaysForLunchOrder.value.push(parseISO(claim));
+        });
     });
 });
 
 const findCorrectStartDay = computed(() => {
-    const formattedFilteretdDates = filteredDates.value.map((date) =>
+    const formatedSortedDates = sortedDates.value.map((date) =>
         format(date, "yyyy-MM-dd")
     );
 
@@ -265,55 +242,55 @@ const findCorrectStartDay = computed(() => {
         format(date, "yyyy-MM-dd")
     );
 
-    let result = formattedFilteretdDates.filter(
+    let result = formatedSortedDates.filter(
         (x) => !formattedDisabledDays.includes(x)
     );
 
+    let formatResult = result.map((day) => parseISO(day));
+
+    store.availableDatesForStartOrdering = formatResult;
     return result;
 });
 
-watch(bufferDays, (newValue) => {
-    // Add buffer time hours to firstPossibleDay
-    firstPossibleDay.value = addHours(currentDate, newValue);
+const disableIfDatesLessThenPeriodLength = computed(() => {
+    return +store.availableDatesForStartOrdering.length < +store.period_length
+        ? true
+        : false;
+});
 
-    // Add one day to firstPossibleDay
+watch(bufferTime, (newValue) => {
+    //  Find first order da and add buffer times
+    firstPossibleDay.value = addHours(
+        parseISO(availableDays.value[0]),
+        newValue
+    );
+
+    // Add Extra one day to first possible day
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
 
-    // find dates which past then firstPossibleDay and store it to firstAvailableDay and Sort dates by ASC
-    filteredDates.value = availableDays.value[0]
-        .filter((date) => isAfter(date, firstPossibleDay.value))
-        .sort((a, b) => a - b);
-
-    if (filteredDates.value.length < periodLength) {
-        // Remove from filteredDates period length days
-        store.availableDatesForStartOrdering = filteredDates.value.splice(
-            periodLength.value
-        );
-    } else {
-        store.availableDatesForStartOrdering = filteredDates.value;
-    }
+    // Save sorted available days
+    sortedDates.value = availableDays.value.map((date) => parseISO(date));
 
     store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
 
 onMounted(() => {
+    // Fetch existing all orders and save to availableOrders
     axios
         .get(`/api/parent/available-orders/${props.studentId}`)
         .then((response) => (availableOrders.value = response.data.orders));
 
+    // Fetch concrette order based lunch id
     axios
         .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
         .then((response) => {
-            availableDays.value.push(
-                response.data.data.available_days.map((availableDay) => {
-                    return parseISO(availableDay);
-                })
+            availableDays.value = response.data.data.available_days.sort(
+                (a, b) => parseISO(a) - parseISO(b)
             );
-            periodLength.value = response.data.data.period_length;
-            bufferDays.value = response.data.data.buffer_time;
-            lunchDetails.value = [response.data.data];
+            bufferTime.value = response.data.data.buffer_time;
             store.period_length = response.data.data.period_length;
             store.available_days = response.data.data.available_days;
+            lunchDetails.value = [response.data.data];
         });
 });
 </script>

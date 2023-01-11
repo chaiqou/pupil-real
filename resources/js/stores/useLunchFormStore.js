@@ -24,6 +24,7 @@ export const useLunchFormStore = defineStore("lunch", {
             buffer_time: null,
             vat: "27%",
             availableDatesForStartOrdering: [],
+            disabledDaysForLunchOrdering: [],
             claim_days: [],
             first_day: "",
             after_fees: "",

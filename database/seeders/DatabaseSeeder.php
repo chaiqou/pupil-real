@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MerchantSeeder::class);
         $this->call(TransactionSeeder::class);
         $this->call(BillingoDataSeeder::class);
-        $this->call(LunchSeeder::class);
         $this->call(PartnerIdSeeder::class);
     }
 }

@@ -64,7 +64,7 @@ class InviteController extends Controller
         ]) : $user = User::create([
             'email' => $request->email,
             'school_id' => $invite->school_id,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ])->assignRole('parent');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,
