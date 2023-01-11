@@ -21,7 +21,7 @@
                                         <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-gray-900">Set up Account</span>
+                                <span class="ml-4 text-sm font-medium text-gray-900">Setup Account</span>
                             </span>
                         </div>
                     </li>
@@ -33,7 +33,6 @@
                             </span>
                             <span class="ml-4 text-sm font-medium text-indigo-600">Personal Form</span>
                         </div>
-
                     </li>
 
                     <li class="relative md:flex md:flex-1">
@@ -41,6 +40,17 @@
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                     <span class="text-gray-500">03</span>
+                                </span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">Setup Cards</span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li class="relative md:flex md:flex-1">
+                        <div class="group flex items-center">
+                            <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                    <span class="text-gray-500">04</span>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
                             </span>

@@ -20,6 +20,9 @@ Route::middleware(['guest'])->group(function () {
         Route::get('/parent-personal-form/{uniqueID}', 'personalForm')->name('parent-personal.form');
         Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
 
+        Route::get('/parent-setup-cards/{uniqueID}', 'setupCards')->name('parent-setup.cards');
+        Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
+
         Route::get('/parent-verify-email/{uniqueID}', 'verifyEmail')->name('parent-verify.email');
         Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
     });
