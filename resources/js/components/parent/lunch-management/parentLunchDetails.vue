@@ -182,7 +182,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
+import { format, parseISO, addDays, addHours } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 
 const store = useLunchFormStore();
@@ -212,7 +212,6 @@ const startOrderingLunch = () => {
         available_days: lunchDetails.value[0].available_days,
         claimables: lunchDetails.value[0].claimables,
         period_length: lunchDetails.value[0].period_length,
-        start_day: store.first_day,
         lunch_id: lunchDetails.value[0].id,
         claims: store.claim_days,
     });

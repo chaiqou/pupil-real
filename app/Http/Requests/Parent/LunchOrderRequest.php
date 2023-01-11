@@ -25,12 +25,11 @@ class LunchOrderRequest extends FormRequest
     {
         return [
             'student_id' => 'required',
-            'available_days' => 'required',
-            'claimables' => 'required',
+            'available_days' => 'required|array',
+            'claimables' => 'required|array',
             'period_length' => 'required',
-            'start_day' => 'required',
             'lunch_id' => 'required',
-            'claims' => 'required',
+            'claims' => 'required|array|unique:periodic_lunches,claims',
         ];
     }
 }

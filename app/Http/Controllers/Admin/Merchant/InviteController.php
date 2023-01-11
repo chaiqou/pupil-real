@@ -44,6 +44,7 @@ class InviteController extends Controller
         if ($invite->state == 7) {
             return route('merchant-verify.email', ['uniqueID' => $invite->uniqueID]);
         }
+
         return route('merchant-setup.account', ['uniqueID' => $invite->uniqueID]);
     }
 
@@ -150,14 +151,14 @@ class InviteController extends Controller
         ]);
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
-            if($request->business_type === 'individual') {
+            if ($request->business_type === 'individual') {
                 $stripeAccount = $stripe->accounts->create([
                     'type' => 'express',
                     'country' => $request->country,
                     'email' => $user->email,
                     'business_type' => $request->business_type,
                     'business_profile' => [
-                        'product_description' => 'Merchant for the PupilPay Platform.'
+                        'product_description' => 'Merchant for the PupilPay Platform.',
                     ],
                     'company' => [
                         'address' => [
@@ -165,7 +166,7 @@ class InviteController extends Controller
                             'country' => $request->country,
                             'line1' => $request->street_address,
                             'postal_code' => $request->zip,
-                            'state' => $request->state
+                            'state' => $request->state,
                         ],
                         'name' => $request->company_name,
                         'vat_id' => $request->VAT,
@@ -176,7 +177,7 @@ class InviteController extends Controller
                             'country' => $userPersonalInfo->country,
                             'line1' => $userPersonalInfo->street_address,
                             'postal_code' => $userPersonalInfo->zip,
-                            'state' => $userPersonalInfo->state
+                            'state' => $userPersonalInfo->state,
                         ],
                         'email' => $user->email,
                         'first_name' => $user->first_name,
@@ -190,7 +191,7 @@ class InviteController extends Controller
                     'email' => $user->email,
                     'business_type' => $request->business_type,
                     'business_profile' => [
-                        'product_description' => 'Merchant for the PupilPay Platform.'
+                        'product_description' => 'Merchant for the PupilPay Platform.',
                     ],
                     'company' => [
                         'address' => [
@@ -198,14 +199,14 @@ class InviteController extends Controller
                             'country' => $request->country,
                             'line1' => $request->street_address,
                             'postal_code' => $request->zip,
-                            'state' => $request->state
+                            'state' => $request->state,
                         ],
                         'name' => $request->company_name,
                         'vat_id' => $request->VAT,
                     ],
                 ]);
             }
-        }catch(\Stripe\Exception\CardException $e) {
+        } catch(\Stripe\Exception\CardException $e) {
             return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             return redirect()->back()->withErrors('An invalid request occurred.');
@@ -215,13 +216,15 @@ class InviteController extends Controller
             return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
         }
         $merchant->update([
-            'stripe_account_id' => $stripeAccount->id
+            'stripe_account_id' => $stripeAccount->id,
         ]);
         $invite->update(['state' => 5]);
+
         return redirect()->route('merchant-setup.stripe', ['uniqueID' => request()->uniqueID]);
     }
 
-    public function setupStripe(): View {
+    public function setupStripe(): View
+    {
         return view('invite.merchant.setup-stripe', [
             'uniqueID' => request()->uniqueID,
         ]);
@@ -231,7 +234,7 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
-       $merchant = Merchant::where('user_id', $user->id)->first();
+        $merchant = Merchant::where('user_id', $user->id)->first();
         Str::endsWith(env('APP_URL'), '/') ?
             [$refresh_url = env('APP_URL').'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'merchant-billingo-verify/'.$invite->uniqueID]
             : [$refresh_url = env('APP_URL').'/'.'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'/'.'merchant-billingo-verify/'.$invite->uniqueID];
@@ -244,7 +247,7 @@ class InviteController extends Controller
                 'return_url' => $return_url,
                 'type' => 'account_onboarding',
             ]);
-        }catch(\Stripe\Exception\CardException $e) {
+        } catch(\Stripe\Exception\CardException $e) {
             return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             return redirect()->back()->withErrors('An invalid request occurred.');
@@ -253,6 +256,7 @@ class InviteController extends Controller
         } catch (\Stripe\Exception\ApiErrorException) {
             return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
         }
+
           return redirect()->to($stripeAccountLink->url);
     }
 
@@ -261,7 +265,7 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
         $merchant = Merchant::where('user_id', $user->id)->first();
-        if(!isset($merchant->stripe_account_id)) {
+        if (! isset($merchant->stripe_account_id)) {
             return redirect()->back();
         }
         $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
@@ -269,12 +273,15 @@ class InviteController extends Controller
             $merchant->stripe_account_id
         );
         $invite->update(['state' => 6]);
-        if($stripeAccountRetrieve->charges_enabled) {
+        if ($stripeAccountRetrieve->charges_enabled) {
             $merchant->stripe_completed = true;
+
             return view('invite.merchant.billingo-verify', [
                 'uniqueID' => request()->uniqueID,
             ]);
-        } else return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
+        } else {
+            return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
+        }
     }
 
     public function verifyEmail(): View

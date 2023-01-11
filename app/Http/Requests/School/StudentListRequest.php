@@ -30,7 +30,7 @@ class StudentListRequest extends FormRequest
             'page' => 'required|integer',
             'mode' => 'required|in:all,search',
             'search_key' => 'string',
-            "search_value" => 'string'
+            'search_value' => 'string',
         ];
     }
 }

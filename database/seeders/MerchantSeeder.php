@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\BillingoController;
 use App\Models\BillingoData;
 use App\Models\Merchant;
 use Illuminate\Database\Seeder;
@@ -35,15 +34,14 @@ class MerchantSeeder extends Seeder
         ]);
 
         $requestBillingoForBlockId1 = Http::withHeaders([
-            'X-API-KEY' => env('BILLINGO_API_KEY')
+            'X-API-KEY' => env('BILLINGO_API_KEY'),
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
-            $merchant = Merchant::where('id', $merchant_for_levente->id)->first();
-            BillingoData::create([
-                'block_id' => $requestBillingoForBlockId1['data'][0]['id'],
-                'billingo_api_key' => env('BILLINGO_API_KEY'),
-                'merchant_id' => $merchant->id,
-            ]);
-
+        $merchant = Merchant::where('id', $merchant_for_levente->id)->first();
+        BillingoData::create([
+            'block_id' => $requestBillingoForBlockId1['data'][0]['id'],
+            'billingo_api_key' => env('BILLINGO_API_KEY'),
+            'merchant_id' => $merchant->id,
+        ]);
 
         $merchant_for_nikoloz = Merchant::create([
             'user_id' => 2,
@@ -63,7 +61,7 @@ class MerchantSeeder extends Seeder
         ]);
 
         $requestBillingoForBlockId2 = Http::withHeaders([
-            'X-API-KEY' => env('BILLINGO_API_KEY')
+            'X-API-KEY' => env('BILLINGO_API_KEY'),
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
         $merchant = Merchant::where('id', $merchant_for_nikoloz->id)->first();
         BillingoData::create([
@@ -86,7 +84,7 @@ class MerchantSeeder extends Seeder
         ]);
 
         $requestBillingoForBlockId3 = Http::withHeaders([
-            'X-API-KEY' => env('BILLINGO_API_KEY')
+            'X-API-KEY' => env('BILLINGO_API_KEY'),
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
         $merchant = Merchant::where('id', $merchant_for_luka->id)->first();
         BillingoData::create([

@@ -28,6 +28,7 @@ class OrderLunchController extends Controller
     {
         $validate = $request->validated();
 
+        // Get correct claims days and add each of them 1 day
         $claimDates = [];
         foreach ($validate['claims'] as $date) {
             $date = new DateTime($date);
@@ -68,7 +69,7 @@ class OrderLunchController extends Controller
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
                 'billing_item' => json_encode([
-                    'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates)-1],
+                    'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',
                     'quantity' => 1,
@@ -92,7 +93,7 @@ class OrderLunchController extends Controller
                 'lunch_id' => $validate['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
                 'start_date' => $claimDates[0],
-                'end_date' => $claimDates[count($claimDates)-1],
+                'end_date' => $claimDates[count($claimDates) - 1],
                 'claims' => json_encode($claimsJson),
             ]);
             if ($transaction->billing_type !== 'none') {
