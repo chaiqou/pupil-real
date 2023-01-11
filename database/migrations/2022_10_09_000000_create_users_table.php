@@ -20,6 +20,8 @@ return new class() extends Migration
             $table->string('middle_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('stripe_customer_id')->nullable();
+            $table->string('stripe_session_id')->nullable();
             $table->foreignId('school_id')->nullable()->constrained();
             $table->tinyInteger('summary_frequency')->default(0);
             $table->tinyInteger('finished_onboarding')->default(0);

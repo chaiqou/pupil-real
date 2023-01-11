@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Set up account | PupilPay</title>
+    <title>Setup account | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -19,7 +19,7 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
                                     <span class="text-indigo-600">01</span>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-indigo-600">Set up Account</span>
+                                <span class="ml-4 text-sm font-medium text-indigo-600">Setup Account</span>
                             </span>
                         </div>
                     </li>
@@ -31,14 +31,22 @@
                             </span>
                             <span class="ml-4 text-sm font-medium text-gray-500">Personal Form</span>
                         </div>
+                    </li>
 
+                    <li class="relative md:flex md:flex-1">
+                        <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+                                <span class="text-gray-500">03</span>
+                            </span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">Setup Card</span>
+                        </div>
                     </li>
 
                     <li class="relative md:flex md:flex-1">
                         <div class="group flex items-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
-                                    <span class="text-gray-500">03</span>
+                                    <span class="text-gray-500">04</span>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
                             </span>
@@ -48,7 +56,7 @@
             </nav>
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Set up your account</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Setup your account</h2>
             </div>
             @error('password')
             <div class="rounded-md bg-red-50 p-4">
