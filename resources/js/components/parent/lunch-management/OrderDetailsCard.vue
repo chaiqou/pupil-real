@@ -27,27 +27,17 @@
                         >
                             <dt class="flex items-center text-sm text-gray-600">
                                 <span>Period length</span>
-                                <button
-                                    class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                                    @mouseenter="show"
-                                    @mouseleave="hide"
-                                    ref="referenceRef"
+                                <Tooltip
+                                    floating-name="first"
+                                    content="First Text"
+                                    placement="top"
                                 >
-                                    <QuestionMarkIcon />
-                                    <div
-                                        ref="floatingRef"
-                                        :class="[
-                                            'absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
-                                            !isHidden && 'hidden',
-                                        ]"
+                                    <button
+                                        class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
                                     >
-                                        Tooltip Content
-                                        <div
-                                            class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
-                                            ref="arrowRef"
-                                        ></div>
-                                    </div>
-                                </button>
+                                        <QuestionMarkIcon />
+                                    </button>
+                                </Tooltip>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 {{ props.periodLength }}
@@ -58,18 +48,17 @@
                         >
                             <dt class="flex text-sm text-gray-600">
                                 <span>Claimables</span>
-                                <a
-                                    href="#"
-                                    class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+                                <Tooltip
+                                    floating-name="second"
+                                    content="Second Text"
+                                    placement="top"
                                 >
-                                    <span class="sr-only"
-                                        >Learn more about what a claimable
-                                        is</span
+                                    <button
+                                        class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
                                     >
-                                    <button>
                                         <QuestionMarkIcon />
                                     </button>
-                                </a>
+                                </Tooltip>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 {{ props.claimables.length }} / Day
@@ -128,13 +117,13 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 import { format } from "date-fns";
-import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
 
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
 import BankIcon from "@/components/icons/BankIcon.vue";
+import Tooltip from "@/components/parent/lunch-management/Tooltip.vue";
 
 const props = defineProps({
     periodLength: {
@@ -166,61 +155,4 @@ const firstAndLastDay = computed(() => {
 
     return firstAndLastDays;
 });
-
-// Tooltip
-
-const referenceRef = ref();
-const floatingRef = ref();
-const arrowRef = ref();
-const referenceRefSecond = ref();
-const floatingRefSecond = ref();
-const arrowRefSecond = ref();
-const isHidden = ref(true);
-const isHiddenSecond = ref(true);
-
-const calculatePosition = async () => {
-    const { x, y, middlewareData, placement } = await computePosition(
-        referenceRef.value,
-        floatingRef.value,
-        {
-            placement: "top",
-            middleware: [
-                offset(8),
-                flip(),
-                shift(),
-                arrow({ element: arrowRef.value }),
-            ],
-        }
-    );
-
-    Object.assign(floatingRef.value.style, {
-        left: `${x}px`,
-        top: `${x + 30}px`,
-    });
-
-    const { x: arrowX, y: arrowY } = middlewareData.arrow;
-
-    const opposedSide = {
-        left: "right",
-        right: "left",
-        top: "bottom",
-        bottom: "top",
-    }[placement];
-
-    Object.assign(arrowRef.value.style, {
-        left: arrowX ? `${arrowX}px` : "",
-        top: arrowY ? `${arrowY}px` : "",
-        bottom: "",
-        right: "",
-        [opposedSide]: "-4px",
-    });
-};
-
-const show = () => {
-    isHidden.value = true;
-    calculatePosition();
-};
-const hide = () => {
-    isHidden.value = false;
-};
 </script>
