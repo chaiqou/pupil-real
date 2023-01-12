@@ -27,17 +27,12 @@
                         >
                             <dt class="flex items-center text-sm text-gray-600">
                                 <span>Period length</span>
-                                <Tooltip
-                                    floating-name="first"
-                                    content="First Text"
+                                <BaseTooltip
+                                    content="Big Content here Big Content here Big Content here Big Content here for testing"
                                     placement="top"
                                 >
-                                    <button
-                                        class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                                    >
-                                        <QuestionMarkIcon />
-                                    </button>
-                                </Tooltip>
+                                    <QuestionMarkIcon />
+                                </BaseTooltip>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 {{ props.periodLength }}
@@ -48,9 +43,8 @@
                         >
                             <dt class="flex text-sm text-gray-600">
                                 <span>Claimables</span>
-                                <Tooltip
-                                    floating-name="second"
-                                    content="Second Text"
+                                <BaseTooltip
+                                    content="Small content here for testing"
                                     placement="top"
                                 >
                                     <button
@@ -58,7 +52,7 @@
                                     >
                                         <QuestionMarkIcon />
                                     </button>
-                                </Tooltip>
+                                </BaseTooltip>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 {{ props.claimables.length }} / Day
@@ -123,7 +117,7 @@ import { format } from "date-fns";
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
 import BankIcon from "@/components/icons/BankIcon.vue";
-import Tooltip from "@/components/parent/lunch-management/Tooltip.vue";
+import BaseTooltip from "@/components/ui/BaseTooltip.vue";
 
 const props = defineProps({
     periodLength: {
