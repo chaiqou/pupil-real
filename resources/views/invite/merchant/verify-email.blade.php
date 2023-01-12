@@ -86,7 +86,7 @@
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Verify your email</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Enter the
-                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
+                    <span class="font-semibold text-indigo-600 hover:text-indigo-500">6-digit</span>
                     verification code sent to {{ $email }}.
                 </p>
                 <p class="mt-2 text-center text-xs text-gray-600">
@@ -110,7 +110,7 @@
             <div class="w-full">
                 <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('merchant-verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
                     @csrf
-                    <div class="-space-y-px rounded-md shadow-md p-4">
+                    <div class="-space-y-px rounded-md shadow-sm border-[2px] border-gray-200 p-4">
                         <div class="row-start-2 grid grid-cols-6">
                             <input type="text" onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)" id="sc-1" name="code_each[1]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="1" value=""/>
                             <input type="text" onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)" id="sc-2" name="code_each[2]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="2" value=""/>

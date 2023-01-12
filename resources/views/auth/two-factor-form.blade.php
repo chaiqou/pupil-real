@@ -37,7 +37,7 @@
             <form name="twoFaForm" class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
-                <div class="-space-y-px rounded-md shadow-md p-4">
+                <div class="-space-y-px rounded-md shadow-sm border-[2px] border-gray-200 p-4">
                     <div class="row-start-2 grid grid-cols-6">
                         <input onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)"
                             id="sc-1"
