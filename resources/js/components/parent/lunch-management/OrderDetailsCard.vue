@@ -35,7 +35,19 @@
                                         >Learn more about what claimable days
                                         are</span
                                     >
-                                    <QuestionMarkIcon />
+                                    <button ref="referenceRef">
+                                        <QuestionMarkIcon />
+                                    </button>
+                                    <div
+                                        ref="floatingRef"
+                                        class="absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default"
+                                    >
+                                        Tooltip Content
+                                        <div
+                                            class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
+                                            ref="arrowRef"
+                                        ></div>
+                                    </div>
                                 </a>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
@@ -55,7 +67,9 @@
                                         >Learn more about what a claimable
                                         is</span
                                     >
-                                    <QuestionMarkIcon />
+                                    <button>
+                                        <QuestionMarkIcon />
+                                    </button>
                                 </a>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
@@ -115,8 +129,9 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { format } from "date-fns";
+import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
 
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
@@ -151,6 +166,48 @@ const firstAndLastDay = computed(() => {
     );
 
     return firstAndLastDays;
+});
+
+const referenceRef = ref();
+const floatingRef = ref();
+const arrowRef = ref();
+
+onMounted(async () => {
+    const { x, y, middlewareData, placement } = await computePosition(
+        referenceRef.value,
+        floatingRef.value,
+        {
+            placement: "top",
+            middleware: [
+                offset(8),
+                flip(),
+                shift(),
+                arrow({ element: arrowRef.value }),
+            ],
+        }
+    );
+
+    Object.assign(floatingRef.value.style, {
+        left: `${x}px`,
+        top: `${x + 30}px`,
+    });
+
+    const { x: arrowX, y: arrowY } = middlewareData.arrow;
+
+    const opposedSide = {
+        left: "right",
+        right: "left",
+        top: "bottom",
+        bottom: "top",
+    }[placement];
+
+    Object.assign(arrowRef.value.style, {
+        left: arrowX ? `${arrowX}px` : "",
+        top: arrowY ? `${arrowY}px` : "",
+        bottom: "",
+        right: "",
+        [opposedSide]: "-4px",
+    });
 });
 </script>
 
