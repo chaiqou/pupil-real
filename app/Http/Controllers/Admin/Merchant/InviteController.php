@@ -168,7 +168,7 @@ class InviteController extends Controller
                             'postal_code' => $request->zip,
                             'state' => $request->state,
                         ],
-                        'name' => $request->company_name,
+                        'name' => $request->company_legal_name,
                         'vat_id' => $request->VAT,
                     ],
                     'individual' => [
@@ -201,7 +201,7 @@ class InviteController extends Controller
                             'postal_code' => $request->zip,
                             'state' => $request->state,
                         ],
-                        'name' => $request->company_name,
+                        'name' => $request->company_legal_name,
                         'vat_id' => $request->VAT,
                     ],
                 ]);

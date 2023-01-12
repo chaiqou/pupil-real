@@ -9,8 +9,8 @@
 </head>
 
 <body class="h-full">
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8 flex items-center justify-center flex-col" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+    <div class="flex min-h-full justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="space-y-8 w-full max-w-xl flex bg-black items-center justify-center flex-col" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
             <nav aria-label="Progress">
                 <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
                     <li class="relative md:flex md:flex-1">
@@ -76,7 +76,7 @@
                 </div>
             </div>
             @enderror
-            <div class="w-full">
+            <div>
                 <form id="form" method="POST" action="{{route('parent-personal.form_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                     @csrf
                     <div class="bg-white p-8">
@@ -400,7 +400,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

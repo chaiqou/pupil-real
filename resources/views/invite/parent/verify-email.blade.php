@@ -89,7 +89,7 @@
             <div class="w-full">
                 <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('parent-verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
                     @csrf
-                    <div class="-space-y-px rounded-md shadow-sm border-[2px] border-gray-200 p-4">
+                    <div class="-space-y-px rounded-md shadow-sm border border-gray-200 p-4">
                         <div class="row-start-2 grid grid-cols-6">
                             <input type="text" onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)" id="sc-1" name="code_each[1]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="1" value=""/>
                             <input type="text" onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)" id="sc-2" name="code_each[2]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="2" value=""/>
