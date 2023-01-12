@@ -26,7 +26,7 @@
                             class="flex items-center justify-between border-t border-gray-200 pt-4"
                         >
                             <dt class="flex items-center text-sm text-gray-600">
-                                <span>Claimable days</span>
+                                <span>Period ength</span>
                                 <a
                                     href="#"
                                     class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
@@ -39,7 +39,7 @@
                                 </a>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
-                                15
+                                {{ props.periodLength }}
                             </dd>
                         </div>
                         <div
@@ -59,7 +59,7 @@
                                 </a>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
-                                2 / Day
+                                {{ props.claimables.length }} / Day
                             </dd>
                         </div>
                         <div
@@ -69,7 +69,9 @@
                                 Claimable days
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
-                                Mon. - Fri.
+                                <p>
+                                    {{ computeWeekdayNames }}
+                                </p>
                             </dd>
                         </div>
                         <div
@@ -113,9 +115,27 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
 import BankIcon from "@/components/icons/BankIcon.vue";
+
+const props = defineProps({
+    periodLength: {
+        type: [Number],
+    },
+    claimables: {
+        type: [Array],
+    },
+    weekdays: {
+        type: [Array],
+    },
+});
+
+const computeWeekdayNames = computed(() => {
+    return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
+});
 </script>
 
 <style lang="scss" scoped></style>

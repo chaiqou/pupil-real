@@ -187,7 +187,11 @@
             </div>
         </template>
         <template v-else>
-            <OrderDetailsCard />
+            <OrderDetailsCard
+                :period-length="store.period_length"
+                :claimables="store.claimables"
+                :weekdays="store.weekdays"
+            />
         </template>
     </div>
 </template>
@@ -309,6 +313,8 @@ onMounted(async () => {
         bufferTime.value = lunchDetailsResponse.data.data.buffer_time;
         store.period_length = lunchDetailsResponse.data.data.period_length;
         store.available_days = lunchDetailsResponse.data.data.available_days;
+        store.claimables = lunchDetailsResponse.data.data.claimables;
+        store.weekdays = lunchDetailsResponse.data.data.weekdays;
         lunchDetails.value = [lunchDetailsResponse.data.data];
     } catch (err) {
         console.error(err);
