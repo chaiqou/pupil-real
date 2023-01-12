@@ -19,7 +19,7 @@
                         <div class="flex items-center justify-between">
                             <dt class="text-sm text-gray-600">Lunch Dates</dt>
                             <dd class="text-sm font-medium text-gray-900">
-                                2023.01.01 - 2023.01.15
+                                {{ firstAndLastDay }}
                             </dd>
                         </div>
                         <div
@@ -70,7 +70,7 @@
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 <p>
-                                    {{ computeWeekdayNames }}
+                                    {{ weekdayNames }}
                                 </p>
                             </dd>
                         </div>
@@ -116,6 +116,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { format } from "date-fns";
 
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
@@ -131,10 +132,25 @@ const props = defineProps({
     weekdays: {
         type: [Array],
     },
+    lunchDays: {
+        type: [Array],
+    },
 });
 
-const computeWeekdayNames = computed(() => {
+const weekdayNames = computed(() => {
     return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
+});
+
+const firstAndLastDay = computed(() => {
+    const formattedDays = props.lunchDays.map((lunchDay) =>
+        format(lunchDay, "yyyy.MM.dd")
+    );
+
+    let firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
+        " - "
+    );
+
+    return firstAndLastDays;
 });
 </script>
 

@@ -191,6 +191,7 @@
                 :period-length="store.period_length"
                 :claimables="store.claimables"
                 :weekdays="store.weekdays"
+                :lunch-days="store.claim_days"
             />
         </template>
     </div>
