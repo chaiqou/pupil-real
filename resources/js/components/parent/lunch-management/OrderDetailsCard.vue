@@ -26,7 +26,7 @@
                             class="flex items-center justify-between border-t border-gray-200 pt-4"
                         >
                             <dt class="flex items-center text-sm text-gray-600">
-                                <span>Period ength</span>
+                                <span>Period length</span>
                                 <a
                                     href="#"
                                     class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
@@ -35,19 +35,26 @@
                                         >Learn more about what claimable days
                                         are</span
                                     >
-                                    <button ref="referenceRef">
-                                        <QuestionMarkIcon />
-                                    </button>
-                                    <div
-                                        ref="floatingRef"
-                                        class="absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default"
+                                    <button
+                                        @mouseenter="show"
+                                        @mouseleave="hide"
+                                        ref="referenceRef"
                                     >
-                                        Tooltip Content
+                                        <QuestionMarkIcon />
                                         <div
-                                            class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
-                                            ref="arrowRef"
-                                        ></div>
-                                    </div>
+                                            ref="floatingRef"
+                                            :class="[
+                                                'absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
+                                                !isHidden && 'hidden',
+                                            ]"
+                                        >
+                                            Tooltip Content
+                                            <div
+                                                class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
+                                                ref="arrowRef"
+                                            ></div>
+                                        </div>
+                                    </button>
                                 </a>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
@@ -139,7 +146,7 @@ import BankIcon from "@/components/icons/BankIcon.vue";
 
 const props = defineProps({
     periodLength: {
-        type: [Number],
+        type: [String, Number],
     },
     claimables: {
         type: [Array],
@@ -168,9 +175,12 @@ const firstAndLastDay = computed(() => {
     return firstAndLastDays;
 });
 
+// Tooltip
+
 const referenceRef = ref();
 const floatingRef = ref();
 const arrowRef = ref();
+const isHidden = ref(true);
 
 onMounted(async () => {
     const { x, y, middlewareData, placement } = await computePosition(
@@ -209,6 +219,11 @@ onMounted(async () => {
         [opposedSide]: "-4px",
     });
 });
-</script>
 
-<style lang="scss" scoped></style>
+const show = () => {
+    isHidden.value = true;
+};
+const hide = () => {
+    isHidden.value = false;
+};
+</script>
