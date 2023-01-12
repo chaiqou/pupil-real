@@ -27,35 +27,27 @@
                         >
                             <dt class="flex items-center text-sm text-gray-600">
                                 <span>Period length</span>
-                                <a
-                                    href="#"
+                                <button
                                     class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+                                    @mouseenter="show"
+                                    @mouseleave="hide"
+                                    ref="referenceRef"
                                 >
-                                    <span class="sr-only"
-                                        >Learn more about what claimable days
-                                        are</span
+                                    <QuestionMarkIcon />
+                                    <div
+                                        ref="floatingRef"
+                                        :class="[
+                                            'absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
+                                            !isHidden && 'hidden',
+                                        ]"
                                     >
-                                    <button
-                                        @mouseenter="show"
-                                        @mouseleave="hide"
-                                        ref="referenceRef"
-                                    >
-                                        <QuestionMarkIcon />
+                                        Tooltip Content
                                         <div
-                                            ref="floatingRef"
-                                            :class="[
-                                                'absolute top-0 left-0 z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
-                                                !isHidden && 'hidden',
-                                            ]"
-                                        >
-                                            Tooltip Content
-                                            <div
-                                                class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
-                                                ref="arrowRef"
-                                            ></div>
-                                        </div>
-                                    </button>
-                                </a>
+                                            class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
+                                            ref="arrowRef"
+                                        ></div>
+                                    </div>
+                                </button>
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">
                                 {{ props.periodLength }}
@@ -180,9 +172,13 @@ const firstAndLastDay = computed(() => {
 const referenceRef = ref();
 const floatingRef = ref();
 const arrowRef = ref();
+const referenceRefSecond = ref();
+const floatingRefSecond = ref();
+const arrowRefSecond = ref();
 const isHidden = ref(true);
+const isHiddenSecond = ref(true);
 
-onMounted(async () => {
+const calculatePosition = async () => {
     const { x, y, middlewareData, placement } = await computePosition(
         referenceRef.value,
         floatingRef.value,
@@ -218,10 +214,11 @@ onMounted(async () => {
         right: "",
         [opposedSide]: "-4px",
     });
-});
+};
 
 const show = () => {
     isHidden.value = true;
+    calculatePosition();
 };
 const hide = () => {
     isHidden.value = false;
