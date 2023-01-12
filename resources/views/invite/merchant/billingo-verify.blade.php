@@ -108,7 +108,7 @@
                             <input type="text" value="{{old('api_key')}}" name="api_key" id="api_key" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                     </div>
-                    <button type="submit" class="bg-green-500 text-white px-3 py-2 w-full rounded-md hover:bg-green-600">Submit</button>
+                    <button type="submit" class="bg-indigo-600 text-white px-3 py-2 w-full rounded-md hover:bg-indigo-700">Submit</button>
                 </form>
 
             </div>

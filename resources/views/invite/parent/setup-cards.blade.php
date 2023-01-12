@@ -84,8 +84,8 @@
             <form id="form" method="POST" action="{{route('parent-setup.cards_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                 @csrf
                <div class="flex w-full bg-black justify-between">
-                   <button name="user_response" class="bg-green-500 hover:bg-green-600 px-3 py-1.5 text-white rounded-md" value="save_card">Save card for faster checkout</button>
-                   <button name="user_response" class="bg-red-500 hover:bg-red-700 px-3 py-1.5 text-white rounded-md" value="dont_save_card">Don't save card</button>
+                   <button name="user_response" value="save_card" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save card for faster checkout</button>
+                   <button name="user_response" value="dont_save_card" class="inline-flex justify-center rounded-md border border-[1px] bg-white py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Don't save card</button>
                </div>
             </form>
         </div>

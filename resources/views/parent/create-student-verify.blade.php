@@ -54,7 +54,7 @@
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
                               <input type="hidden" value="confirm" name="value"/>
-                              <button class="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Confirm</button>
+                              <button class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Confirm</button>
                           </form>
                       </div>
 

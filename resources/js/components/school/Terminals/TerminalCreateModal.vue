@@ -155,7 +155,7 @@
                                    </div>
                                </div>
                                </div>
-                               <button class="mt-10 px-3 py-2 text-white bg-green-500 rounded-md w-full hover:bg-green-600">Create</button>
+                               <button class="mt-10 px-3 py-2 text-white bg-indigo-600 rounded-md w-full hover:bg-indigo-700">Create</button>
                            </ValidationForm>
                         </DialogPanel>
                     </TransitionChild>
