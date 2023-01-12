@@ -212,7 +212,7 @@ const childrenToast = ref();
 const availableOrders = ref([]);
 const disabledDaysForLunchOrder = ref([]);
 
-const hideTableInformation = ref(true);
+const hideTableInformation = ref(false);
 
 const props = defineProps({
     studentId: {
