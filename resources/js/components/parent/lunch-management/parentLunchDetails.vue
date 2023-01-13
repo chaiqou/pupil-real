@@ -192,6 +192,7 @@
                 :claimables="store.claimables"
                 :weekdays="store.weekdays"
                 :lunch-days="store.claim_days"
+                :price="store.price_period"
             />
         </template>
     </div>
@@ -217,7 +218,7 @@ const childrenToast = ref();
 const availableOrders = ref([]);
 const disabledDaysForLunchOrder = ref([]);
 
-const hideTableInformation = ref(false);
+const hideTableInformation = ref(true);
 
 const props = defineProps({
     studentId: {
@@ -316,6 +317,7 @@ onMounted(async () => {
         store.available_days = lunchDetailsResponse.data.data.available_days;
         store.claimables = lunchDetailsResponse.data.data.claimables;
         store.weekdays = lunchDetailsResponse.data.data.weekdays;
+        store.price_period = lunchDetailsResponse.data.data.price_period;
         lunchDetails.value = [lunchDetailsResponse.data.data];
     } catch (err) {
         console.error(err);

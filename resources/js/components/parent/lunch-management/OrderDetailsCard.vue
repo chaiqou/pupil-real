@@ -77,7 +77,7 @@
                                 Order total
                             </dt>
                             <dd class="text-base font-medium text-gray-900">
-                                $112.32
+                                ${{ props.price }}
                             </dd>
                         </div>
                     </dl>
@@ -124,13 +124,16 @@ const props = defineProps({
         type: [String, Number],
     },
     claimables: {
-        type: [Array],
+        type: Array,
     },
     weekdays: {
-        type: [Array],
+        type: Array,
     },
     lunchDays: {
-        type: [Array],
+        type: Array,
+    },
+    price: {
+        type: [String, Number],
     },
 });
 
