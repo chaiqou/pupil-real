@@ -13,6 +13,7 @@ use App\Http\Controllers\Parent\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
+    Route::get('/resend-onboarding-verification', [TwoFactorAuthenticationController::class, 'resendForOnboardingUser'])->name('resend-verification');
     Route::controller(UserInviteController::class)->group(function () {
         Route::get('/parent-setup-account/{uniqueID}', 'setupAccount')->name('parent-setup.account');
         Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');

@@ -29,7 +29,10 @@
                 <form action="{{ route('2fa.resend') }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="group relative mt-4 flex w-fit justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="group relative flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
                         Resend Code
                     </button>
                 </form>
@@ -37,7 +40,7 @@
             <form name="twoFaForm" class="mt-8 space-y-6" action="{{ route('2fa.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
-                <div class="-space-y-px rounded-md shadow-sm border-[2px] border-gray-200 p-4">
+                <div class="-space-y-px rounded-md shadow-sm border border-gray-200 p-4">
                     <div class="row-start-2 grid grid-cols-6">
                         <input onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)"
                             id="sc-1"
