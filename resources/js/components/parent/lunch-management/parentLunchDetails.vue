@@ -227,6 +227,7 @@ const props = defineProps({
 });
 
 const startOrderingLunch = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     hideTableInformation.value = false;
     childrenToast.value.showToaster("Lunch ordered successfully");
     axios.post("/api/parent/lunch-order/" + props.studentId, {
