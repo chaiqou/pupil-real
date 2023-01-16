@@ -24,7 +24,7 @@ class SetupCardRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_response' => 'required_with:save_card,dont_save_card'
+            'user_response' => 'required_with:save_card,dont_save_card',
         ];
     }
 }

@@ -19,12 +19,12 @@ class OrderLunchController extends Controller
 {
     public function availableOrders(): JsonResponse
     {
-      $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
+        $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
 
         return response()->json(['orders' => $orders]);
     }
 
-    public function index(LunchOrderRequest $request): JsonResponse
+    public function orderLunch(LunchOrderRequest $request): JsonResponse
     {
         $validate = $request->validated();
 
@@ -38,6 +38,10 @@ class OrderLunchController extends Controller
 
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
+
+        $lunch = Lunch::where('id', $validate["lunch_id"])->first();
+
+
 
         // Generates claims json for each days and also loops over claimables
 
@@ -57,11 +61,11 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () use ($student, $validate, $claimDates, $claimsJson, $pricePeriod) {
+        DB::transaction(function () use ($student, $validate, $claimDates, $claimsJson, $pricePeriod, $lunch) {
             $transaction = Transaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
-                'merchant_id' => $student->school_id,
+                'merchant_id' => $lunch->merchant_id,
                 'transaction_date' => now()->format('Y-m-d'),
                 'billingo_transaction_id' => null,
                 'amount' => 1,
@@ -89,7 +93,7 @@ class OrderLunchController extends Controller
             $lunch = PeriodicLunch::create([
                 'student_id' => $student->id,
                 'transaction_id' => $transaction->id,
-                'merchant_id' => $student->school_id,
+                'merchant_id' => $lunch->merchant_id,
                 'lunch_id' => $validate['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
                 'start_date' => $claimDates[0],
@@ -102,5 +106,9 @@ class OrderLunchController extends Controller
         });
 
         return response()->json(['success' => 'success']);
+    }
+
+    public function checkout()
+    {
     }
 }
