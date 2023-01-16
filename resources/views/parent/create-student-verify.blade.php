@@ -40,10 +40,10 @@
         </nav>
         <div class="flex flex-col items-center justify-center">
             <div class="mb-8 text-xl">
-                <p>Confirm student creation</p>
+                <p class="font-bold text-3xl">Confirm student creation</p>
             </div>
             <div class="md:w-[30rem]">
-                <img class="bg-gray-200 mx-auto rounded-md shadow-2xl" src="{{asset('img/pupilpay-with-lines.svg')}}" alt="PupilPay" />
+                <img class="rounded-lg shadow-2xl px-10" src="{{asset('img/pupilpay-with-lines.svg')}}" alt="PupilPay" />
                 <div>
                 <p class="mt-10 text-sm">
                     Are you sure you’re ready to create a new student and request a card?
