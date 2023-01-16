@@ -1,7 +1,7 @@
 <template>
 
     <div class="m-3 rounded-md text-white">
-        <button @click="showHideTwoFactor()" :class="this.twoFa === 0 ? 'p-2.5 bg-green-400 rounded-md hover:bg-green-500' : 'p-2.5 bg-red-400 rounded-md hover:bg-red-500'">{{this.twoFa === 0 ? 'Activate 2FA' : 'Deactivate 2FA'}}</button>
+        <button @click="showHideTwoFactor()" :class="this.twoFa === 0 ? 'p-2.5 shadow-sm bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700' : 'p-2.5 shadow-sm bg-red-400 rounded-md hover:bg-red-500'">{{this.twoFa === 0 ? 'Activate 2FA' : 'Deactivate 2FA'}}</button>
     </div>
 
     <TransitionRoot as="template" :show="this.isTwoFactorVisible">

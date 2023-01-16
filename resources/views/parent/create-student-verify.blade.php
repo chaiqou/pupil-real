@@ -40,10 +40,10 @@
         </nav>
         <div class="flex flex-col items-center justify-center">
             <div class="mb-8 text-xl">
-                <p>Confirm student creation</p>
+                <p class="font-bold text-3xl">Confirm student creation</p>
             </div>
             <div class="md:w-[30rem]">
-                <img class="bg-gray-200 mx-auto rounded-md shadow-2xl" src="{{asset('img/pupilpay-with-lines.svg')}}" alt="PupilPay" />
+                <img class="rounded-lg shadow-2xl px-10" src="{{asset('img/pupilpay-with-lines.svg')}}" alt="PupilPay" />
                 <div>
                 <p class="mt-10 text-sm">
                     Are you sure you’re ready to create a new student and request a card?
@@ -54,7 +54,7 @@
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
                               <input type="hidden" value="confirm" name="value"/>
-                              <button class="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Confirm</button>
+                              <button class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Confirm</button>
                           </form>
                       </div>
 

@@ -11,7 +11,7 @@
                     </p>
                 </div>
                 <span
-                    class="cursor-pointer hidden bg-green-500 hover:bg-green-600 rounded-md text-white px-4 py-2 md:flex items-center"
+                    class="cursor-pointer hidden bg-blue-600 hover:bg-blue-700 rounded-md text-white px-4 py-2 md:flex items-center"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
                             d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                         />
                     </svg>
-                    <a :href="'/admin/school/' + this.school.id + '/merchant-invites'" class="ml-1.5">Manage merchant invites</a>
+                    <a :href="'/admin/school/' + this.school.id + '/merchant-invites'" class="ml-1.5">Manage invites</a>
                 </span>
             </div>
         </div>

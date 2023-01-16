@@ -81,6 +81,9 @@
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
                 <h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">Set up stripe account</h2>
                 <p class="mt-2">We use <b>Stripe</b> to safely handle online card payments. For this, all you will need to do is click the button below and fill the forms out.</p>
+                <p class="text-sm mt-1 text-gray-500">
+                    <b>Stripe</b> is one of the leading payment processing services in the world. Used by some of the largest companies, such as Amazon, Ford, Samsung or Apple.
+                </p>
             </div>
             @error('*')
             <div class="rounded-md bg-red-50 p-4">

@@ -143,8 +143,8 @@
                 type="submit"
                 :class="
                     disabledCalculator
-                        ? 'bg-green-500 opacity-60 rounded-md text-white px-5 py-2 w-full mt-10'
-                        : 'bg-green-500 rounded-md text-white px-5 py-2 w-full mt-10'
+                        ? 'bg-indigo-600 hover:bg-indigo-700 opacity-60 rounded-md text-white px-5 py-2 w-full mt-10'
+                        : 'bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-5 py-2 w-full mt-10'
                 "
             >
                 <svg

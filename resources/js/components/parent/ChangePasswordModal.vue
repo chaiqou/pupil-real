@@ -1,6 +1,6 @@
 <template>
     <div class="m-3 text-white rounded-md">
-        <button @click="showHideChangePassword()" class="p-2.5 bg-green-400 rounded-md hover:bg-green-500">Change Password</button>
+        <button @click="showHideChangePassword()" class="p-2.5 shadow-sm border border-transparent bg-red-600 rounded-md hover:bg-red-700">Change Password</button>
     </div>
 
     <TransitionRoot as="template" :show="this.isChangePasswordVisible">

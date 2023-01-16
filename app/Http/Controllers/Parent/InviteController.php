@@ -178,20 +178,19 @@ class InviteController extends Controller
             $invite->update(['state' => 5]);
 
             return redirect()->to($stripeCreateSessionRequest->url);
-        } if ($request->user_response === 'dont_save_card') {
-            $invite->update(['state' => 5]);
-
-            return redirect()->route('parent-verify.email', [
-                'uniqueID' => request()->uniqueID,
-            ]);
+        } if($request->user_response === 'dont_save_card') {
+        $invite->update(['state' => 5]);
+        return $user->sendVerificationEmail('parent-verify.email');
         } else {
             $invite->update(['state' => 5]);
+
+            return redirect()->back()->withErrors('Please select you answer');
         }
 
-        return redirect()->back()->withErrors('Please select you answer');
+
     }
 
-    public function verifyEmail(): View
+    public function verifyEmail(): View|RedirectResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         if (! $invite) {
@@ -199,16 +198,10 @@ class InviteController extends Controller
                 ->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
         $user = User::where('email', $invite->email)->first();
-        //Check if invite has VerificationCode
-        $verificationCode = VerificationCode::where('invite_id', $invite->id)->first();
-        if (! $verificationCode) {
-            $verificationCode = VerificationCode::create([
-                'invite_id' => $invite->id,
-                'code' => random_int(100000, 999999),
-            ]);
-        }
-        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
-
+        $verificationSent = VerificationCode::where('invite_id', $invite->id)->first();
+        if(!isset($verificationSent)) {
+            return $user->sendVerificationEmail('parent-verify.email');
+        } else
         return view('invite.parent.verify-email', [
             'uniqueID' => request()->uniqueID,
             'email' => $invite->email,

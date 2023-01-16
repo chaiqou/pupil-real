@@ -10,7 +10,7 @@
 
 <body class="h-full">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8 flex items-center justify-center flex-col" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+        <div class="w-full max-w-md flex items-center justify-center flex-col" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
             <nav aria-label="Progress">
                 <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0 md:w-fit">
                     <li class="relative md:flex md:flex-1">
@@ -60,17 +60,30 @@
                     </li>
                 </ol>
             </nav>
-            <div>
+            <div class="mt-8">
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
                 <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Verify your email</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Enter the
-                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-digit</span>
+                    <span class="font-semibold text-indigo-600 hover:text-indigo-500">6-digit</span>
                     verification code sent to {{ $email }}.
                 </p>
                 <p class="mt-2 text-center text-xs text-gray-600">
                     If you can't find the email in a few minutes, check your spam folder.
                 </p>
+                <div class="flex mt-6 items-center justify-center">
+                    <form action="{{ route('resend-verification', ['uniqueID' => $uniqueID]) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="route" value="parent-verify.email"/>
+                        <button type="submit"
+                                class="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                            Resend Code
+                        </button>
+                    </form>
+                </div>
             </div>
             @error('*')
             <div class="rounded-md bg-red-50 p-4">
@@ -89,7 +102,7 @@
             <div class="w-full">
                 <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('parent-verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">
                     @csrf
-                    <div class="-space-y-px rounded-md shadow-md p-4">
+                    <div class="-space-y-px rounded-md shadow-sm border border-gray-200 p-4">
                         <div class="row-start-2 grid grid-cols-6">
                             <input type="text" onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)" id="sc-1" name="code_each[1]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="1" value=""/>
                             <input type="text" onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)" id="sc-2" name="code_each[2]" oninput="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="2" value=""/>
