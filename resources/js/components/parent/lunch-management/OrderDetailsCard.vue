@@ -17,7 +17,8 @@
                     <template
                         v-if="
                             !successFeedbackPayWithTransfer &&
-                            !errorFeedbackPayWithTransfer
+                            !errorFeedbackPayWithTransfer &&
+                            !loading
                         "
                     >
                         <dl class="mt-6 space-y-4">
@@ -111,7 +112,7 @@
                             </button>
                         </div>
                     </template>
-                    <p class="mt-2 text-sm text-gray-500">
+                    <p class="mt-2 text-sm text-gray-500 lg:mb-12">
                         Bank transfers usually take a few hours, or in some
                         cases a few days to process.
                     </p>
@@ -132,6 +133,9 @@
                     <ErrorResponseIcon />
                 </OrderFeedbackCard>
             </template>
+            <template v-if="loading">
+                <Loading />
+            </template>
         </div>
     </div>
 </template>
@@ -148,6 +152,7 @@ import BaseTooltip from "@/components/ui/BaseTooltip.vue";
 import OrderFeedbackCard from "@/components/parent/lunch-management/OrderFeedbackCard.vue";
 import SuccessResponseIcon from "../../icons/SuccessResponseIcon.vue";
 import ErrorResponseIcon from "@/components/icons/ErrorResponseIcon.vue";
+import Loading from "@/components/icons/Loading.vue";
 
 const props = defineProps({
     periodLength: {
@@ -191,8 +196,10 @@ const firstAndLastDay = computed(() => {
 
 const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
+const loading = ref(false);
 
 const payWithTransferhandler = () => {
+    loading.value = true;
     axios
         .post("/api/parent/lunch-order/" + props.studentId, {
             student_id: props.studentId,
@@ -205,8 +212,10 @@ const payWithTransferhandler = () => {
         .then((response) => {
             if (response.status == 200) {
                 successFeedbackPayWithTransfer.value = true;
+                loading.value = false;
             } else {
                 errorFeedbackPayWithTransfer.value = true;
+                loading.value = false;
             }
         });
 };
