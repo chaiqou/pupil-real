@@ -39,6 +39,10 @@ class OrderLunchController extends Controller
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
 
+        $lunch = Lunch::where('id', $validate["lunch_id"])->first();
+
+
+
         // Generates claims json for each days and also loops over claimables
 
         $claimsJson = [];
@@ -57,11 +61,11 @@ class OrderLunchController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () use ($student, $validate, $claimDates, $claimsJson, $pricePeriod) {
+        DB::transaction(function () use ($student, $validate, $claimDates, $claimsJson, $pricePeriod, $lunch) {
             $transaction = Transaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
-                'merchant_id' => $student->school_id,
+                'merchant_id' => $lunch->merchant_id,
                 'transaction_date' => now()->format('Y-m-d'),
                 'billingo_transaction_id' => null,
                 'amount' => 1,
