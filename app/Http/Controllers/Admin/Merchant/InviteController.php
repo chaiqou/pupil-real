@@ -129,9 +129,8 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
-        Merchant::where('user_id', $user->id)->delete();
         $userPersonalInfo = json_decode($user->user_information);
-        $merchant = Merchant::create([
+        $merchant = Merchant::updateOrCreate(['user_id' => $user->id],[
             'merchant_nick' => $request->merchant_nick,
             'company_legal_name' => $request->company_legal_name,
             'user_id' => $user->id,
@@ -168,7 +167,7 @@ class InviteController extends Controller
                             'postal_code' => $request->zip,
                             'state' => $request->state,
                         ],
-                        'name' => $request->company_name,
+                        'name' => $request->company_legal_name,
                         'vat_id' => $request->VAT,
                     ],
                     'individual' => [
@@ -201,7 +200,7 @@ class InviteController extends Controller
                             'postal_code' => $request->zip,
                             'state' => $request->state,
                         ],
-                        'name' => $request->company_name,
+                        'name' => $request->company_legal_name,
                         'vat_id' => $request->VAT,
                     ],
                 ]);
@@ -291,17 +290,6 @@ class InviteController extends Controller
             return view('auth.redirect-template')
                 ->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
-        $user = User::where('email', $invite->email)->first();
-        //Check if invite has VerificationCode
-        $verificationCode = VerificationCode::where('invite_id', $invite->id)->first();
-        if (! $verificationCode) {
-            $verificationCode = VerificationCode::create([
-                'invite_id' => $invite->id,
-                'code' => random_int(100000, 999999),
-            ]);
-        }
-        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
-
         return view('invite.merchant.verify-email', [
             'uniqueID' => request()->uniqueID,
             'email' => $invite->email,
@@ -319,7 +307,6 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
-
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
 

@@ -78,7 +78,7 @@
                         class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium pl-2 pr-6"
                     >
                         <a :href="'/admin/school/'+school.id+'/merchants'"
-                            class="text-white hover:text-gray-100 hover:bg-green-400 px-2 py-1.5 rounded-md bg-green-500"
+                            class="text-white hover:text-gray-100 hover:bg-blue-700 px-2 py-1.5 rounded-md bg-blue-600"
                         >
                             Merchants
                         </a>

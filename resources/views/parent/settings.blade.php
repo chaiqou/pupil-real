@@ -344,7 +344,8 @@
           <two-factor-auth-modal :two-fa="{{$twoFa}}">
               <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
                   @csrf
-                  <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
+
+                  <button class="{{$twoFa === 0 ? 'inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm' : 'inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm'}}" >{{$twoFa === 0 ? 'Activate' : 'Deactivate'}}</button>
               </form>
           </two-factor-auth-modal>
 
@@ -367,7 +368,7 @@
                           </div>
                       </div>
                   </div>
-                  <button class="inline-flex mt-4 w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Change password</button>
+                  <button class="inline-flex mt-4 w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Save</button>
               </form>
           </change-password-modal>
 <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
@@ -381,7 +382,7 @@
                           <parent-students :user-id="{{$user->id}}"></parent-students>
                       </div>
                       <div class="m-3 mb-10 mt-10 flex justify-end">
-                          <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+                          <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
                       </div>
                   </div>
               </div>
@@ -394,7 +395,7 @@
                   </div>
               </div>
               <div class="m-3 mb-10 mt-10 md:hidden block">
-                  <a class="p-3 bg-green-400 hover:bg-green-500 rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+                  <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
               </div>
           </div>
 
