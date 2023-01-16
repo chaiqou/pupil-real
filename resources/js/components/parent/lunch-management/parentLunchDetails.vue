@@ -11,7 +11,7 @@
             </div>
             <div class="mt-5 border-t border-gray-200">
                 <dl
-                    v-for="lunch in lunchDetails"
+                    v-for="lunch in store.lunch_details"
                     :key="lunch"
                     class="sm:divide-y sm:divide-gray-200"
                 >
@@ -193,6 +193,7 @@
                 :weekdays="store.weekdays"
                 :lunch-days="store.claim_days"
                 :price="store.price_period"
+                :student-id="props.studentId"
             />
         </template>
     </div>
@@ -211,7 +212,6 @@ const availableDays = ref([]);
 const addOneDayToFirstPossibleDay = ref("");
 
 const sortedDates = ref();
-const lunchDetails = ref([]);
 const bufferTime = ref();
 const childrenToast = ref();
 
@@ -229,15 +229,6 @@ const props = defineProps({
 const startOrderingLunch = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     hideTableInformation.value = false;
-    childrenToast.value.showToaster("Lunch ordered successfully");
-    axios.post("/api/parent/lunch-order/" + props.studentId, {
-        student_id: props.studentId,
-        available_days: lunchDetails.value[0].available_days,
-        claimables: lunchDetails.value[0].claimables,
-        period_length: lunchDetails.value[0].period_length,
-        lunch_id: lunchDetails.value[0].id,
-        claims: store.claim_days,
-    });
 };
 
 watch(availableOrders, () => {
@@ -319,7 +310,7 @@ onMounted(async () => {
         store.claimables = lunchDetailsResponse.data.data.claimables;
         store.weekdays = lunchDetailsResponse.data.data.weekdays;
         store.price_period = lunchDetailsResponse.data.data.price_period;
-        lunchDetails.value = [lunchDetailsResponse.data.data];
+        store.lunch_details = [lunchDetailsResponse.data.data];
     } catch (err) {
         console.error(err);
     }

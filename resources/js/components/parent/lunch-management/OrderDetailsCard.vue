@@ -84,7 +84,7 @@
 
                     <div class="mt-6">
                         <button
-                            type="submit"
+                            @click="payOnlineHandler"
                             class="w-full items-center justify-center inline-flex rounded-md border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg border hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:shadow-md transition-all focus:ring-offset-gray-50"
                         >
                             <CardIcon />
@@ -113,6 +113,7 @@
 <script setup>
 import { computed } from "vue";
 import { format } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
@@ -135,7 +136,13 @@ const props = defineProps({
     price: {
         type: [String, Number],
     },
+    studentId: {
+        type: [String, Number],
+        required: true,
+    },
 });
+
+const store = useLunchFormStore();
 
 const weekdayNames = computed(() => {
     return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
@@ -152,4 +159,18 @@ const firstAndLastDay = computed(() => {
 
     return firstAndLastDays;
 });
+
+const payOnlineHandler = () => {
+    console.log("working");
+    axios
+        .post("/api/parent/lunch-order/" + props.studentId, {
+            student_id: props.studentId,
+            available_days: store.lunch_details[0].available_days,
+            claimables: store.lunch_details[0].claimables,
+            period_length: store.lunch_details[0].period_length,
+            lunch_id: store.lunch_details[0].id,
+            claims: store.claim_days,
+        })
+        .then((response) => console.log(response));
+};
 </script>
