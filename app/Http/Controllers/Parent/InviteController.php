@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\SetupCardRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
-use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
@@ -15,7 +14,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -178,16 +176,15 @@ class InviteController extends Controller
             $invite->update(['state' => 5]);
 
             return redirect()->to($stripeCreateSessionRequest->url);
-        } if($request->user_response === 'dont_save_card') {
-        $invite->update(['state' => 5]);
-        return $user->sendVerificationEmail('parent-verify.email');
+        } if ($request->user_response === 'dont_save_card') {
+            $invite->update(['state' => 5]);
+
+            return $user->sendVerificationEmail('parent-verify.email');
         } else {
             $invite->update(['state' => 5]);
 
             return redirect()->back()->withErrors('Please select you answer');
         }
-
-
     }
 
     public function verifyEmail(): View|RedirectResponse
@@ -199,13 +196,14 @@ class InviteController extends Controller
         }
         $user = User::where('email', $invite->email)->first();
         $verificationSent = VerificationCode::where('invite_id', $invite->id)->first();
-        if(!isset($verificationSent)) {
+        if (! isset($verificationSent)) {
             return $user->sendVerificationEmail('parent-verify.email');
-        } else
-        return view('invite.parent.verify-email', [
-            'uniqueID' => request()->uniqueID,
-            'email' => $invite->email,
-        ]);
+        } else {
+            return view('invite.parent.verify-email', [
+                'uniqueID' => request()->uniqueID,
+                'email' => $invite->email,
+            ]);
+        }
     }
 
     public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
