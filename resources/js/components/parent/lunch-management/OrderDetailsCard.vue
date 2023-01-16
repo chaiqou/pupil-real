@@ -14,7 +14,12 @@
                     >
                         Order summary
                     </h2>
-                    <template v-if="!feedbackPayWithTransfer">
+                    <template
+                        v-if="
+                            !successFeedbackPayWithTransfer &&
+                            !errorFeedbackPayWithTransfer
+                        "
+                    >
                         <dl class="mt-6 space-y-4">
                             <div class="flex items-center justify-between">
                                 <dt class="text-sm text-gray-600">
@@ -112,8 +117,20 @@
                     </p>
                 </section>
             </div>
-            <template v-if="feedbackPayWithTransfer">
-                <OrderSummaryCard />
+            <template v-if="successFeedbackPayWithTransfer">
+                <OrderFeedbackCard>
+                    <SuccessResponseIcon />
+                </OrderFeedbackCard>
+            </template>
+            <template v-if="errorFeedbackPayWithTransfer">
+                <OrderFeedbackCard
+                    main-text="An error occurred on our server, please try again."
+                    sub-text="If this issue persists, please get in touch with us."
+                    main-classname="border-red-300 bg-red-100 hover:border-red-400"
+                    text-classname="text-red-700"
+                >
+                    <ErrorResponseIcon />
+                </OrderFeedbackCard>
             </template>
         </div>
     </div>
@@ -128,7 +145,9 @@ import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
 import BankIcon from "@/components/icons/BankIcon.vue";
 import BaseTooltip from "@/components/ui/BaseTooltip.vue";
-import OrderSummaryCard from "@/components/parent/lunch-management/OrderSummaryCard.vue";
+import OrderFeedbackCard from "@/components/parent/lunch-management/OrderFeedbackCard.vue";
+import SuccessResponseIcon from "../../icons/SuccessResponseIcon.vue";
+import ErrorResponseIcon from "@/components/icons/ErrorResponseIcon.vue";
 
 const props = defineProps({
     periodLength: {
@@ -154,8 +173,6 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const feedbackPayWithTransfer = ref(false);
-
 const weekdayNames = computed(() => {
     return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
 });
@@ -172,6 +189,9 @@ const firstAndLastDay = computed(() => {
     return firstAndLastDays;
 });
 
+const successFeedbackPayWithTransfer = ref(false);
+const errorFeedbackPayWithTransfer = ref(false);
+
 const payWithTransferhandler = () => {
     axios
         .post("/api/parent/lunch-order/" + props.studentId, {
@@ -184,7 +204,9 @@ const payWithTransferhandler = () => {
         })
         .then((response) => {
             if (response.status == 200) {
-                feedbackPayWithTransfer.value = true;
+                successFeedbackPayWithTransfer.value = true;
+            } else {
+                errorFeedbackPayWithTransfer.value = true;
             }
         });
 };
