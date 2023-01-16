@@ -38,6 +38,7 @@ class InviteController extends Controller
             //If the invite is in state 5, redirect to email verification
             return route('parent-verify.email', ['uniqueID' => $invite->uniqueID]);
         }
+
         return route('parent-setup.account', ['uniqueID' => $invite->uniqueID]);
     }
 
@@ -107,7 +108,7 @@ class InviteController extends Controller
         $userInformation = json_decode($user->user_information);
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
-            $stripeCustomerRequest =  $stripe->customers->create([
+            $stripeCustomerRequest = $stripe->customers->create([
                 'address' => [
                     'city' => $userInformation->city,
                     'country' => $userInformation->country,
@@ -116,14 +117,13 @@ class InviteController extends Controller
                     'state' => $userInformation->state,
                 ],
                 'email' => $user->email,
-                'name' => $user->last_name . ' ' . $user->first_name . ' ' . $user->middle_name
+                'name' => $user->last_name.' '.$user->first_name.' '.$user->middle_name,
             ]);
-        }
-    catch(\Stripe\Exception\CardException $e) {
-        return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
-    } catch (\Stripe\Exception\InvalidRequestException $e) {
-        return redirect()->back()->withErrors('An invalid request occurred.');
-    } catch (\Stripe\Exception\ApiConnectionException) {
+        } catch(\Stripe\Exception\CardException $e) {
+            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            return redirect()->back()->withErrors('An invalid request occurred.');
+        } catch (\Stripe\Exception\ApiConnectionException) {
             return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
         } catch (\Stripe\Exception\ApiErrorException) {
             return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
@@ -149,7 +149,7 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
-        if($request->user_response === 'save_card') {
+        if ($request->user_response === 'save_card') {
             Str::endsWith(env('APP_URL'), '/') ?
                 [$success_url = env('APP_URL').'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'parent-setup-cards/'.$invite->uniqueID]
                 : [$success_url = env('APP_URL').'/'.'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'/'.'parent-setup-cards/'.$invite->uniqueID];
@@ -163,29 +163,32 @@ class InviteController extends Controller
                     'success_url' => $success_url,
                     'cancel_url' => $cancel_url,
                 ]);
-            }
-        catch(\Stripe\Exception\CardException $e) {
+            } catch(\Stripe\Exception\CardException $e) {
                 return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
             } catch (\Stripe\Exception\InvalidRequestException $e) {
                 return redirect()->back()->withErrors('An invalid request occurred.');
             } catch (\Stripe\Exception\ApiConnectionException) {
-            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
-        } catch (\Stripe\Exception\ApiErrorException) {
-            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
-        }
+                return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+            } catch (\Stripe\Exception\ApiErrorException) {
+                return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+            }
             $user->update([
-              'stripe_session_id' => $stripeCreateSessionRequest->id
-           ]);
+                'stripe_session_id' => $stripeCreateSessionRequest->id,
+            ]);
             $invite->update(['state' => 5]);
+
             return redirect()->to($stripeCreateSessionRequest->url);
-        } if($request->user_response === 'dont_save_card') {
-        $invite->update(['state' => 5]);
-        return redirect()->route('parent-verify.email', [
-            'uniqueID' => request()->uniqueID,
-        ]);
-        } else
+        } if ($request->user_response === 'dont_save_card') {
             $invite->update(['state' => 5]);
-            return redirect()->back()->withErrors('Please select you answer');
+
+            return redirect()->route('parent-verify.email', [
+                'uniqueID' => request()->uniqueID,
+            ]);
+        } else {
+            $invite->update(['state' => 5]);
+        }
+
+        return redirect()->back()->withErrors('Please select you answer');
     }
 
     public function verifyEmail(): View
