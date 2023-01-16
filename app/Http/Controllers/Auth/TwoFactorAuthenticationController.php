@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class TwoFactorAuthenticationController extends Controller
@@ -50,10 +51,10 @@ class TwoFactorAuthenticationController extends Controller
        return auth()->user()->sendTwoFactorCode();
    }
 
-    public function resendForOnboardingUser(): RedirectResponse
+    public function resendForOnboardingUser(Request $request): RedirectResponse
     {
-        // because we send 2fa while page is opened, it would be easier to just redirect back to this page
-        // but notice that for now its just one time solution, which may would need refactor in future
-        return redirect()->back();
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
+        return $user->sendVerificationEmail($request->route);
     }
 }

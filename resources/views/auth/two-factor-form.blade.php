@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html class="h-full bg-gray-50">
 
 <head>
@@ -10,7 +11,7 @@
 
 <body class="h-full">
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8">
+        <div class="w-full max-w-md space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
                     alt="PupilPay" />
@@ -96,6 +97,13 @@
             </div>
         </div>
     </div>
+    <script src="{{asset('js/sal.js')}}"></script>
+    <script>
+        sal({
+            threshold: 0,
+            once: true,
+        });
+    </script>
     <script>
         window.onload = function() {
             document.getElementById("sc-1").focus();

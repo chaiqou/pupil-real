@@ -96,8 +96,9 @@
                         If you can't find the email in a few minutes, check your spam folder.
                     </p>
                     <div class="flex mt-6 items-center justify-center">
-                        <form action="{{ route('resend-verification') }}" method="GET">
+                        <form action="{{ route('resend-verification', ['uniqueID' => $uniqueID]) }}" method="POST">
                             @csrf
+                            <input type="hidden" name="route" value="merchant-verify.email"/>
                             <button type="submit"
                                     class="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
