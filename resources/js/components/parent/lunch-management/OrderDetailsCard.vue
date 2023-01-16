@@ -14,7 +14,7 @@
                     >
                         Order summary
                     </h2>
-                    <template v-if="!feedbackAfterOnlinePay">
+                    <template v-if="!feedbackPayWithTransfer">
                         <dl class="mt-6 space-y-4">
                             <div class="flex items-center justify-between">
                                 <dt class="text-sm text-gray-600">
@@ -90,7 +90,6 @@
 
                         <div class="mt-6">
                             <button
-                                @click="payOnlineHandler"
                                 class="w-full items-center justify-center inline-flex rounded-md border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg border hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:shadow-md transition-all focus:ring-offset-gray-50"
                             >
                                 <CardIcon />
@@ -99,7 +98,7 @@
                         </div>
                         <div class="mt-2">
                             <button
-                                type="button"
+                                @click="payWithTransferhandler"
                                 class="inline-flex w-full justify-center items-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 <BankIcon />
@@ -113,7 +112,7 @@
                     </p>
                 </section>
             </div>
-            <template v-if="feedbackAfterOnlinePay">
+            <template v-if="feedbackPayWithTransfer">
                 <OrderSummaryCard />
             </template>
         </div>
@@ -155,7 +154,7 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const feedbackAfterOnlinePay = ref(false);
+const feedbackPayWithTransfer = ref(false);
 
 const weekdayNames = computed(() => {
     return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
@@ -173,7 +172,7 @@ const firstAndLastDay = computed(() => {
     return firstAndLastDays;
 });
 
-const payOnlineHandler = () => {
+const payWithTransferhandler = () => {
     axios
         .post("/api/parent/lunch-order/" + props.studentId, {
             student_id: props.studentId,
@@ -185,7 +184,7 @@ const payOnlineHandler = () => {
         })
         .then((response) => {
             if (response.status == 200) {
-                feedbackAfterOnlinePay.value = true;
+                feedbackPayWithTransfer.value = true;
             }
         });
 };
