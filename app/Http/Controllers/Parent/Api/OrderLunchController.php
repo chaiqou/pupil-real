@@ -39,9 +39,7 @@ class OrderLunchController extends Controller
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
 
-        $lunch = Lunch::where('id', $validate["lunch_id"])->first();
-
-
+        $lunch = Lunch::where('id', $validate['lunch_id'])->first();
 
         // Generates claims json for each days and also loops over claimables
 
@@ -106,9 +104,5 @@ class OrderLunchController extends Controller
         });
 
         return response()->json(['success' => 'success']);
-    }
-
-    public function checkout()
-    {
     }
 }
