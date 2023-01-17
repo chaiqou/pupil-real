@@ -231,6 +231,10 @@ const payWithOnlineHandler = () => {
 
     axios
         .post("/api/parent/checkout", {
+            student_id: props.studentId,
+            claimables: store.lunch_details[0].claimables,
+            lunch_id: store.lunch_details[0].id,
+            claims: store.claim_days,
             price: props.price,
             title: props.title,
         })

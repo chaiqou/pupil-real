@@ -25,7 +25,11 @@ class StripePaymentRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'price' => 'required|integer'
+            'price' => 'required|integer',
+            'student_id' => 'required|integer',
+            'lunch_id' => 'required|integer',
+            'claimables' => 'required|array',
+            'claims' => 'required|array',
         ];
     }
 }
