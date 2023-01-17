@@ -175,6 +175,10 @@ const props = defineProps({
         type: [String, Number],
         required: true,
     },
+    title: {
+        type: String,
+        required: true,
+    },
 });
 
 const store = useLunchFormStore();
@@ -228,7 +232,7 @@ const payWithOnlineHandler = () => {
     axios
         .post("/api/parent/checkout", {
             price: props.price,
-            claimables: props.claimables,
+            title: props.title,
         })
         .then((response) => {
             console.log(response.data.url);
