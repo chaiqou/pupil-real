@@ -29,6 +29,9 @@ return new class() extends Migration
             $table->json('billing_item');
             $table->json('comment');
             $table->json('pending');
+            $table->boolean('stripe_pending')->default(false);
+            $table->boolean('stripe_payment')->default(false);
+            $table->string('stripe_session_id')->nullable();
             $table->timestamps();
         });
     }
