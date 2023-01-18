@@ -31,6 +31,7 @@ class StripePaymentController extends Controller
         }
 
         $student = Student::where('id', $validate['student_id'])->first();
+        dd(auth()->user());
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
 
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
@@ -105,6 +106,7 @@ class StripePaymentController extends Controller
             $stripe = new StripeClient(env('STRIPE_SECRET_KEY'));
 
             $checkout_session = $stripe->checkout->sessions->create([
+                'customer_email' => auth()->user()->email,
                 'line_items' => [[
                     'price_data' => [
                         'currency' => 'usd',
@@ -116,13 +118,21 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'payment',
-                'success_url' => 'http://127.0.0.1:8000/success',
-                'cancel_url' => 'http://127.0.0.1:8000/cancel',
+                'success_url' => route('parent.checkout_success', [], true),
+                'cancel_url' =>  route('parent.checkout_cancel', [], true),
             ]);
 
             return response()->json($checkout_session, 200);
         } catch(Exception $ex) {
             return response()->json(['error' => $ex], 500);
         }
+    }
+
+    public function success()
+    {}
+
+    public function cancel()
+    {
+
     }
 }
