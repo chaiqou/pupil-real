@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use DateTime;
-use DateInterval;
+use App\Events\TransactionCreated;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Parent\StripePaymentRequest;
 use App\Models\Lunch;
-use App\Models\Student;
-use Stripe\StripeClient;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
 use App\Models\PeriodicLunch;
-use PHPUnit\Runner\Exception;
+use App\Models\Student;
+use App\Models\Transaction;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Parent\LunchOrderRequest;
-use App\Http\Requests\Parent\StripePaymentRequest;
-use App\Events\TransactionCreated;
+use PHPUnit\Runner\Exception;
+use Stripe\StripeClient;
 
 class StripePaymentController extends Controller
 {
@@ -103,25 +101,24 @@ class StripePaymentController extends Controller
             }
         });
 
-
         try {
             $stripe = new StripeClient(env('STRIPE_SECRET_KEY'));
 
             $checkout_session = $stripe->checkout->sessions->create([
                 'line_items' => [[
-                  'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                      'name' =>  $validate['title'],
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => $validate['title'],
+                        ],
+                        'unit_amount' => $validate['price'] * 100,
                     ],
-                    'unit_amount' => $validate['price'] * 100,
-                  ],
-                  'quantity' => 1,
+                    'quantity' => 1,
                 ]],
                 'mode' => 'payment',
                 'success_url' => 'http://127.0.0.1:8000/success',
                 'cancel_url' => 'http://127.0.0.1:8000/cancel',
-              ]);
+            ]);
 
             return response()->json($checkout_session, 200);
         } catch(Exception $ex) {
