@@ -139,9 +139,9 @@ class StripePaymentController extends Controller
                 return view('parent.cancel');
             }
 
-            $payment = Transaction::where('stripe_session_id', $session_id)->get();
+            $payment = Transaction::query()->where('stripe_session_id', $session_id)->first();
 
-            if (!$payment || ! $payment->stripe_pending) {
+            if (! $payment || ! $payment->stripe_pending) {
                 return view('parent.cancel');
             }
 
@@ -150,6 +150,10 @@ class StripePaymentController extends Controller
             $payment->update();
 
             $customer = auth()->user();
+
+            $order = PeriodicLunch::where('transaction_id', $payment->id)->first();
+            $order->payment = 'paid';
+            $order->update();
 
             return view('parent.success', compact('customer'));
         } catch(Exception $exception) {
