@@ -46,10 +46,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'orderLunch'])->name('parent.order_lunch');
             Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
             Route::post('checkout', [StripePaymentController::class, 'checkout'])->name('parent.checkout');
-            Route::get('checkout/success', [StripePaymentController::class, 'success'])->name('parent.checkout_success');
-            Route::get('checkout/cancel', [StripePaymentController::class, 'cancel'])->name('parent.checkout_cancel');
-
-
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {

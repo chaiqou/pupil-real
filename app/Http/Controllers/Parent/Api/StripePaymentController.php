@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Runner\Exception;
 use Stripe\StripeClient;
@@ -31,7 +32,6 @@ class StripePaymentController extends Controller
         }
 
         $student = Student::where('id', $validate['student_id'])->first();
-        dd(auth()->user());
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
 
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
@@ -118,8 +118,8 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'payment',
-                'success_url' => route('parent.checkout_success', [], true),
-                'cancel_url' =>  route('parent.checkout_cancel', [], true),
+                'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('parent.checkout_cancel', [], true),
             ]);
 
             return response()->json($checkout_session, 200);
@@ -128,11 +128,17 @@ class StripePaymentController extends Controller
         }
     }
 
-    public function success()
-    {}
-
-    public function cancel()
+    public function success(Request $request)
     {
+        $stripe = new StripeClient(env('STRIPE_SECRET_KEY'));
 
+        $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
+        dd($session);
+        $customer = $stripe->customers->retrieve($session->customer);
+    }
+
+    public function cancel(Request $request)
+    {
+        dd($request->all);
     }
 }
