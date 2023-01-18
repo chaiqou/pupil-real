@@ -56,7 +56,28 @@ class StripePaymentController extends Controller
             $claimsJson[$date] = $claimables;
         }
 
-        DB::transaction(function () use ($student, $validate, $claimDates, $claimsJson, $pricePeriod, $lunch) {
+        // STRIPE
+
+        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+
+        $checkout_session = Session::create([
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $validate['title'],
+                    ],
+                    'unit_amount' => $validate['price'] * 100,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+        ]);
+
+
+        // Payment
             $transaction = Transaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
@@ -86,6 +107,7 @@ class StripePaymentController extends Controller
                 'payment_status' => 'outstanding',
                 'stripe_payment' => true,
                 'stripe_pending' => true,
+                'stripe_session_id' => $checkout_session->id,
 
             ]);
 
@@ -102,25 +124,7 @@ class StripePaymentController extends Controller
             if ($transaction->billing_type !== 'none') {
                 event(new TransactionCreated($transaction));
             }
-        });
 
-        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
-
-        $checkout_session = Session::create([
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => $validate['title'],
-                    ],
-                    'unit_amount' => $validate['price'] * 100,
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
-        ]);
 
         return response()->json($checkout_session);
     }
@@ -130,7 +134,8 @@ class StripePaymentController extends Controller
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
         try {
-            $session = Session::retrieve($request->get('session_id'));
+            $session_id = $request->get('session_id');
+            $session = Session::retrieve($session_id);
             $customer = auth()->user();
 
             if (! $session) {
