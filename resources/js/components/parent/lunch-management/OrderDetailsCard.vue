@@ -145,6 +145,7 @@
 import { computed, ref } from "vue";
 import { format } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import axios from "axios";
 
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
@@ -230,7 +231,7 @@ const payWithOnlineHandler = () => {
     loading.value = true;
 
     axios
-        .post("/api/parent/checkout", {
+        .post("/parent/checkout", {
             student_id: props.studentId,
             claimables: store.lunch_details[0].claimables,
             lunch_id: store.lunch_details[0].id,

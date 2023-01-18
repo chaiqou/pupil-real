@@ -109,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('lunch-details/{student_id}', 'parent')->name('parent.lunch-details');
             });
 
+            Route::post('checkout', [StripePaymentController::class, 'checkout'])->name('parent.checkout');
             Route::get('checkout/success', [StripePaymentController::class, 'success'])->name('parent.checkout_success');
             Route::get('checkout/cancel', [StripePaymentController::class, 'cancel'])->name('parent.checkout_cancel');
         });
