@@ -13,7 +13,6 @@ use DateInterval;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
 use Stripe\Checkout\Session;
@@ -76,55 +75,54 @@ class StripePaymentController extends Controller
             'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
         ]);
 
-
         // Payment
-            $transaction = Transaction::create([
-                'user_id' => $student->user_id,
-                'student_id' => $student->id,
-                'merchant_id' => $lunch->merchant_id,
-                'transaction_date' => now()->format('Y-m-d'),
-                'billingo_transaction_id' => null,
-                'amount' => 1,
-                'transaction_type' => 'debit',
-                'billing_type' => 'invoice',
-                'billing_comment' => 'billing_comment_here',
-                'billing_item' => json_encode([
-                    'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
-                    'unit_price' => $pricePeriod,
-                    'unit_price_type' => 'gross',
-                    'quantity' => 1,
-                    'unit' => 'db',
-                    'vat' => '27%',
-                ]),
-                'pending' => json_encode([
-                    'pending' => 0,
-                    'pending_history' => [],
-                ]),
-                'comment' => json_encode([
-                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-                    'comment_history' => [],
-                ]),
-                'payment_status' => 'outstanding',
-                'stripe_payment' => true,
-                'stripe_pending' => true,
-                'stripe_session_id' => $checkout_session->id,
+        $transaction = Transaction::create([
+            'user_id' => $student->user_id,
+            'student_id' => $student->id,
+            'merchant_id' => $lunch->merchant_id,
+            'transaction_date' => now()->format('Y-m-d'),
+            'billingo_transaction_id' => null,
+            'amount' => 1,
+            'transaction_type' => 'debit',
+            'billing_type' => 'invoice',
+            'billing_comment' => 'billing_comment_here',
+            'billing_item' => json_encode([
+                'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
+                'unit_price' => $pricePeriod,
+                'unit_price_type' => 'gross',
+                'quantity' => 1,
+                'unit' => 'db',
+                'vat' => '27%',
+            ]),
+            'pending' => json_encode([
+                'pending' => 0,
+                'pending_history' => [],
+            ]),
+            'comment' => json_encode([
+                'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
+                'comment_history' => [],
+            ]),
+            'payment_status' => 'outstanding',
+            'stripe_payment' => true,
+            'stripe_pending' => true,
+            'stripe_session_id' => $checkout_session->id,
 
-            ]);
+        ]);
 
-            $lunch = PeriodicLunch::create([
-                'student_id' => $student->id,
-                'transaction_id' => $transaction->id,
-                'merchant_id' => $lunch->merchant_id,
-                'lunch_id' => $validate['lunch_id'],
-                'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $claimDates[0],
-                'end_date' => $claimDates[count($claimDates) - 1],
-                'claims' => json_encode($claimsJson),
-            ]);
-            if ($transaction->billing_type !== 'none') {
-                event(new TransactionCreated($transaction));
-            }
-
+        $lunch = PeriodicLunch::create([
+            'student_id' => $student->id,
+            'transaction_id' => $transaction->id,
+            'merchant_id' => $lunch->merchant_id,
+            'lunch_id' => $validate['lunch_id'],
+            'card_data' => 'hardcoded instead of $student->card_data',
+            'start_date' => $claimDates[0],
+            'end_date' => $claimDates[count($claimDates) - 1],
+            'claims' => json_encode($claimsJson),
+            'payment' => 'outstanding',
+        ]);
+        if ($transaction->billing_type !== 'none') {
+            event(new TransactionCreated($transaction));
+        }
 
         return response()->json($checkout_session);
     }
@@ -136,11 +134,22 @@ class StripePaymentController extends Controller
         try {
             $session_id = $request->get('session_id');
             $session = Session::retrieve($session_id);
-            $customer = auth()->user();
 
             if (! $session) {
                 return view('parent.cancel');
             }
+
+            $payment = Transaction::where('stripe_session_id', $session_id)->get();
+
+            if (!$payment || ! $payment->stripe_pending) {
+                return view('parent.cancel');
+            }
+
+            $payment->stripe_pending = false;
+            $payment->payment_status = 'paid';
+            $payment->update();
+
+            $customer = auth()->user();
 
             return view('parent.success', compact('customer'));
         } catch(Exception $exception) {
