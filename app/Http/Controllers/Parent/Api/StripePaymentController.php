@@ -139,9 +139,22 @@ class StripePaymentController extends Controller
             if (! $session) {
                 return view('parent.cancel');
             }
-            $this->updateOrderAndSession($session_id);
+
+            $payment = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
+
+            if (! $payment) {
+                throw new NotFoundHttpException();
+            }
+
+            if ($payment->payment_status == 'outstanding') {
+                $this->updateOrderAndSession($session_id);
+            }
+
+            $customer = auth()->user();
 
             return view('parent.success', compact('customer'));
+        } catch(NotFoundHttpException $exception) {
+            throw $exception;
         } catch(Exception $exception) {
             return view('parent.cancel');
         }
@@ -181,7 +194,12 @@ class StripePaymentController extends Controller
                 $paymentIntent = $event->data->object;
                 $sessionId = $paymentIntent['id'];
 
-                $this->updateOrderAndSession($sessionId);
+                $payment = Transaction::query()->where('stripe_session_id', $sessionId)->where('payment_status', 'outstanding')->first();
+
+                if ($payment) {
+                    $this->updateOrderAndSession($payment);
+                }
+
                 // ... handle other event types
             default:
                 echo 'Received unknown event type '.$event->type;
@@ -192,20 +210,11 @@ class StripePaymentController extends Controller
         return response('', 200);
     }
 
-    private function updateOrderAndSession($session_id)
+    private function updateOrderAndSession($payment)
     {
-
-        $payment = Transaction::query()->where('stripe_session_id', $session_id)->where('payment_status', 'outstanding')->first();
-
-        if (! $payment || ! $payment->stripe_pending) {
-             throw new NotFoundHttpException();
-        }
-
         $payment->stripe_pending = false;
         $payment->payment_status = 'paid';
         $payment->update();
-
-        $customer = auth()->user();
 
         $order = PeriodicLunch::where('transaction_id', $payment->id)->first();
         $order->payment = 'paid';
