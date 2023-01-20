@@ -139,7 +139,7 @@ class StripePaymentController extends Controller
                 return view('parent.cancel');
             }
 
-            $payment = Transaction::query()->where('stripe_session_id', $session_id)->where( 'payment_status' , 'outstanding')->first();
+            $payment = Transaction::query()->where('stripe_session_id', $session_id)->where('payment_status', 'outstanding')->first();
 
             if (! $payment || ! $payment->stripe_pending) {
                 return view('parent.cancel');
@@ -164,5 +164,43 @@ class StripePaymentController extends Controller
     public function cancel(Request $request)
     {
         dd($request->all);
+    }
+
+    public function webhook()
+    {
+        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        $endpoint_secret = 'whsec_dba703edd0b062ce10cd089ef984e5b240e310e1dcb35bb50e962ebb83345c44';
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+            );
+        } catch(\UnexpectedValueException $e) {
+            // Invalid payload
+            http_response_code(401);
+            exit();
+        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            http_response_code(402);
+            exit();
+        }
+
+        // Handle the event
+        switch ($event->type) {
+            case 'checkout.session':
+                $paymentIntent = $event->data->object;
+                $sessionId = $paymentIntent['id'];
+                // ... handle other event types
+            default:
+                echo 'Received unknown event type '.$event->type;
+        }
+
+        http_response_code(200);
+
+        return response('', 200);
     }
 }

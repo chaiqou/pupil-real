@@ -129,3 +129,5 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
+
+Route::post('/webhook/stripe', [StripePaymentController::class, 'webhook'])->name('parent.webhook');
