@@ -139,7 +139,7 @@ class StripePaymentController extends Controller
                 return view('parent.cancel');
             }
 
-            $payment = Transaction::query()->where('stripe_session_id', $session_id)->first();
+            $payment = Transaction::query()->where('stripe_session_id', $session_id)->where( 'payment_status' , 'outstanding')->first();
 
             if (! $payment || ! $payment->stripe_pending) {
                 return view('parent.cancel');
