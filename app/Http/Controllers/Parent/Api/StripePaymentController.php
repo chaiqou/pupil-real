@@ -17,6 +17,7 @@ use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StripePaymentController extends Controller
 {
@@ -138,22 +139,7 @@ class StripePaymentController extends Controller
             if (! $session) {
                 return view('parent.cancel');
             }
-
-            $payment = Transaction::query()->where('stripe_session_id', $session_id)->where('payment_status', 'outstanding')->first();
-
-            if (! $payment || ! $payment->stripe_pending) {
-                return view('parent.cancel');
-            }
-
-            $payment->stripe_pending = false;
-            $payment->payment_status = 'paid';
-            $payment->update();
-
-            $customer = auth()->user();
-
-            $order = PeriodicLunch::where('transaction_id', $payment->id)->first();
-            $order->payment = 'paid';
-            $order->update();
+            $this->updateOrderAndSession($session_id);
 
             return view('parent.success', compact('customer'));
         } catch(Exception $exception) {
@@ -191,9 +177,11 @@ class StripePaymentController extends Controller
 
         // Handle the event
         switch ($event->type) {
-            case 'checkout.session':
+            case 'checkout.session.completed':
                 $paymentIntent = $event->data->object;
                 $sessionId = $paymentIntent['id'];
+
+                $this->updateOrderAndSession($sessionId);
                 // ... handle other event types
             default:
                 echo 'Received unknown event type '.$event->type;
@@ -202,5 +190,25 @@ class StripePaymentController extends Controller
         http_response_code(200);
 
         return response('', 200);
+    }
+
+    private function updateOrderAndSession($session_id)
+    {
+
+        $payment = Transaction::query()->where('stripe_session_id', $session_id)->where('payment_status', 'outstanding')->first();
+
+        if (! $payment || ! $payment->stripe_pending) {
+             throw new NotFoundHttpException();
+        }
+
+        $payment->stripe_pending = false;
+        $payment->payment_status = 'paid';
+        $payment->update();
+
+        $customer = auth()->user();
+
+        $order = PeriodicLunch::where('transaction_id', $payment->id)->first();
+        $order->payment = 'paid';
+        $order->update();
     }
 }
