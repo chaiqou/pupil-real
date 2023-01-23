@@ -210,6 +210,13 @@ class StripePaymentController extends Controller
         if ($transaction) {
             $transaction->update(['cancelled' => true]);
 
+            $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+
+            $stripe->checkout->sessions->expire(
+                $session_id,
+                []
+            );
+
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
         }
     }
