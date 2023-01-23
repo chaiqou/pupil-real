@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
 use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Stripe;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -59,6 +60,10 @@ class StripePaymentController extends Controller
         // STRIPE
 
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+
+        // $stripeCustomer = Customer::create([
+        //     'address' =>
+        // ])
 
         $checkout_session = Session::create([
             'line_items' => [[
@@ -147,10 +152,11 @@ class StripePaymentController extends Controller
             }
 
             if ($payment->payment_status == 'outstanding') {
-                $this->updateOrderAndSession($session_id);
+                $this->updateOrderAndSession($payment);
             }
 
             $customer = auth()->user();
+            // dump($customer);
 
             return view('parent.success', compact('customer'));
         } catch(NotFoundHttpException $exception) {
@@ -210,13 +216,13 @@ class StripePaymentController extends Controller
         return response('', 200);
     }
 
-    private function updateOrderAndSession($payment)
+    private function updateOrderAndSession(Transaction $transaction)
     {
-        $payment->stripe_pending = false;
-        $payment->payment_status = 'paid';
-        $payment->update();
+        $transaction->stripe_pending = false;
+        $transaction->payment_status = 'paid';
+        $transaction->update();
 
-        $order = PeriodicLunch::where('transaction_id', $payment->id)->first();
+        $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
         $order->payment = 'paid';
         $order->update();
     }
