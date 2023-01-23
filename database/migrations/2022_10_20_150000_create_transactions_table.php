@@ -32,6 +32,7 @@ return new class() extends Migration
             $table->boolean('stripe_pending')->default(false);
             $table->boolean('stripe_payment')->default(false);
             $table->string('stripe_session_id')->nullable();
+            $table->boolean('cancelled')->default(false);
             $table->timestamps();
         });
     }

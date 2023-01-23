@@ -170,7 +170,6 @@ class StripePaymentController extends Controller
 
     public function success(Request $request): View
     {
-
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
         try {
@@ -204,7 +203,15 @@ class StripePaymentController extends Controller
 
     public function cancel(Request $request)
     {
-        dd($request->all);
+        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        $session_id = $request->get('session_id');
+        $transaction = Transaction::where('stripe_session_id', $session_id)->first();
+
+        if ($transaction) {
+            $transaction->update(['cancelled' => true]);
+
+            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+        }
     }
 
     public function webhook()
