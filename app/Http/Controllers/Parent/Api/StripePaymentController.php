@@ -64,7 +64,7 @@ class StripePaymentController extends Controller
 
         $customer = auth()->user();
 
-        $existingCustomer = User::whereIn(['id', '==', $customer->id, 'stripe_customer_id', '!=', null])->first();
+        $existingCustomer = User::where('id', $customer->id)->where('stripe_customer_id', '!=', null)->first();
 
         if ($existingCustomer != null) {
             $checkout_session = Session::create([
