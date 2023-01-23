@@ -9,6 +9,7 @@ use App\Models\Lunch;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
+use App\Models\User;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\JsonResponse;
@@ -62,36 +63,58 @@ class StripePaymentController extends Controller
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
         $customer = auth()->user();
-        $customerAdressDetails = json_decode($customer->user_information);
 
-        $stripeCustomer = Customer::create([
-            'address' => [
-                'line1' => $customerAdressDetails->street_address,
-                'state' => $customerAdressDetails->state,
-                'postal_code' => $customerAdressDetails->zip,
-                'country' => $customerAdressDetails->country,
-                'city' => $customerAdressDetails->city,
-            ],
-            'email' => $customer->email,
-            'name' => $customer->first_name,
-        ]);
+        $existingCustomer = User::whereIn(['id', '==', $customer->id, 'stripe_customer_id', '!=', null])->first();
 
-        $checkout_session = Session::create([
-            'customer' => $stripeCustomer->id,
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => $validate['title'],
+        if ($existingCustomer != null) {
+            $checkout_session = Session::create([
+                'customer' => $existingCustomer->stripe_customer_id,
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => $validate['title'],
+                        ],
+                        'unit_amount' => $validate['price'] * 100,
                     ],
-                    'unit_amount' => $validate['price'] * 100,
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+            ]);
+        } else {
+            $customerAdressDetails = json_decode($customer->user_information);
+
+            $stripeCustomer = Customer::create([
+                'address' => [
+                    'line1' => $customerAdressDetails->street_address,
+                    'state' => $customerAdressDetails->state,
+                    'postal_code' => $customerAdressDetails->zip,
+                    'country' => $customerAdressDetails->country,
+                    'city' => $customerAdressDetails->city,
                 ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
-        ]);
+                'email' => $customer->email,
+                'name' => $customer->first_name,
+            ]);
+
+            $checkout_session = Session::create([
+                'customer' => $stripeCustomer->id,
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => $validate['title'],
+                        ],
+                        'unit_amount' => $validate['price'] * 100,
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+            ]);
+        }
 
         // Payment
         $transaction = Transaction::create([
