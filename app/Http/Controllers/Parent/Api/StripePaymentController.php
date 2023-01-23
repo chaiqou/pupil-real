@@ -170,6 +170,7 @@ class StripePaymentController extends Controller
 
     public function success(Request $request): View
     {
+
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
         try {
@@ -180,14 +181,15 @@ class StripePaymentController extends Controller
                 return view('parent.cancel');
             }
 
-            $payment = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
+            $transaction = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
 
-            if (! $payment) {
+            if (! $transaction) {
                 throw new NotFoundHttpException();
             }
 
-            if ($payment->payment_status == 'outstanding') {
-                $this->updateOrderAndSession($payment);
+            if ($transaction->payment_status == 'outstanding') {
+                $this->updateOrderAndSession($transaction);
+                event(new TransactionCreated($transaction));
             }
 
             $customer = auth()->user();
