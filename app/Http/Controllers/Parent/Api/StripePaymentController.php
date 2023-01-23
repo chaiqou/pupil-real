@@ -205,9 +205,11 @@ class StripePaymentController extends Controller
     {
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
         $session_id = $request->get('session_id');
+        $session = Session::retrieve($session_id);
+
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
 
-        if ($transaction) {
+        if ($transaction  && $session->status === 'open') {
             $transaction->update(['cancelled' => true]);
 
             $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
@@ -218,6 +220,15 @@ class StripePaymentController extends Controller
             );
 
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+
+            return view('parent.cancel');
+        } else if($transaction) {
+            $transaction->update(['cancelled' => true]);
+            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+
+            return view('parent.cancel');
+        } else {
+            throw new NotFoundHttpException();
         }
     }
 
