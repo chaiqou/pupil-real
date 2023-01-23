@@ -61,11 +61,23 @@ class StripePaymentController extends Controller
 
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
-        // $stripeCustomer = Customer::create([
-        //     'address' =>
-        // ])
+        $customer = auth()->user();
+        $customerAdressDetails = json_decode($customer->user_information);
+
+        $stripeCustomer = Customer::create([
+            'address' => [
+                'line1' => $customerAdressDetails->street_address,
+                'state' => $customerAdressDetails->state,
+                'postal_code' => $customerAdressDetails->zip,
+                'country' => $customerAdressDetails->country,
+                'city' => $customerAdressDetails->city,
+            ],
+            'email' => $customer->email,
+            'name' => $customer->first_name,
+        ]);
 
         $checkout_session = Session::create([
+            'customer' => $stripeCustomer->id,
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'usd',
@@ -156,7 +168,6 @@ class StripePaymentController extends Controller
             }
 
             $customer = auth()->user();
-            // dump($customer);
 
             return view('parent.success', compact('customer'));
         } catch(NotFoundHttpException $exception) {
