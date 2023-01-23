@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\CompanyDetailRequest;
 use App\Http\Requests\Invite\PersonalFormRequest;
 use App\Http\Requests\Invite\VerificationCodeRequest;
-use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\User;
@@ -15,7 +14,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -130,7 +128,7 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
         $userPersonalInfo = json_decode($user->user_information);
-        $merchant = Merchant::updateOrCreate(['user_id' => $user->id],[
+        $merchant = Merchant::updateOrCreate(['user_id' => $user->id], [
             'merchant_nick' => $request->merchant_nick,
             'company_legal_name' => $request->company_legal_name,
             'user_id' => $user->id,
@@ -290,6 +288,7 @@ class InviteController extends Controller
             return view('auth.redirect-template')
                 ->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
+
         return view('invite.merchant.verify-email', [
             'uniqueID' => request()->uniqueID,
             'email' => $invite->email,
@@ -307,6 +306,7 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             $user->update(['finished_onboarding' => 1]);
             $invite->delete();
+
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
 

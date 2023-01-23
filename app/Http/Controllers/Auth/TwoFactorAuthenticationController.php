@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\TwoFactorAuthenticationRequest;
-use App\Mail\OnboardingVerification;
 use App\Models\Invite;
 use App\Models\User;
-use App\Models\VerificationCode;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class TwoFactorAuthenticationController extends Controller
 {
@@ -55,6 +52,7 @@ class TwoFactorAuthenticationController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
+
         return $user->sendVerificationEmail($request->route);
     }
 }

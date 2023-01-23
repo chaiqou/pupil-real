@@ -95,6 +95,7 @@
     </div>
 </template>
 
+
 <script>
 import StudentsNotFound from "@/components/not-found/StudentsNotFound.vue";
 import { mapActions, mapWritableState } from "pinia";
