@@ -28,6 +28,7 @@ export default {
     data () {
         return {
         daysOfMonth: [],
+            object: [],
         }
     },
     mounted() {
@@ -85,19 +86,54 @@ export default {
             }
         });
 
+        // data generating
+        const data = [
+            {
+                label: 'label123',
+                data: [99,94,91,83,45,45,45,45],
+                borderColor: 'rgb(99,99,211)'
+            },
+            {
+                label: 'example3',
+                data: [3,23,95,95,95,52,52],
+                borderColor: 'rgb(42,212,43)'
+            }
+        ]
+
+        data.forEach((element) => {
+             let objectData = {
+                label: element.label,
+                data: element.data,
+                borderColor: element.borderColor,
+                yAxisID: 'yAxis',
+                xAxisID: 'xAxis',
+            }
+            this.object.push(objectData);
+        })
+        //
+        console.log(this.object);
+
        //Line area chart
         const labels = this.daysOfMonth;
         const dataLine = {
             labels: labels,
-            datasets: [{
-                label: 'My First Dataset',
-                data: [65, 19, 80, 81, 56, 55, 40],
-                fill: false,
-                borderColor: 'rgb(3, 192, 192)',
-                tension: 0.1,
-                yAxisID: 'yAxis',
-                xAxisID: 'xAxis',
-            }],
+            datasets:
+                this.object
+            //     {
+            //     label: 'Monro',
+            //     data: [10,10,10,10,10,10,10],
+            //     borderColor: 'rgb(75,192,192)',
+            //     yAxisID: 'yAxis',
+            //     xAxisID: 'xAxis',
+            // },
+            //     {
+            //         label: 'Example',
+            //         data: [4,6,9,4,66,3],
+            //         borderColor: 'rgb(33,12,174)',
+            //         yAxisID: 'yAxis',
+            //         xAxisID: 'xAxis',
+            //     },
+            ,
         };
 
         const ctxLine = document.getElementById('chartLine');
@@ -105,22 +141,32 @@ export default {
             type: 'line',
             data: dataLine,
             options: {
-                scales: {
-                  yAxis: {
-                      border: {
-                          dash: [5,2,3]
-                      },
-                      
-                  },
-                    xAxis: {
-                        border: {
-                            dash: [5,2,3]
-                        },
-                        width: 5,
-                        dashOffset: 100,
+                elements: {
+                    point: {
+                    radius: 0
                     }
                 },
                 plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                        }
+                    }
+                },
+                scales: {
+                  yAxis: {
+                      border: {
+                          dash: [5,5,5]
+                      },
+                  },
+                    xAxis: {
+                        grid: {
+                            display: false,
+                        }
+                    }
                 },
                 onClick: (e) => {
                     const canvasPosition = getRelativePosition(e, chartLine);
@@ -132,6 +178,9 @@ export default {
             }
         });
     }
+
+
+
 }
 </script>
 
