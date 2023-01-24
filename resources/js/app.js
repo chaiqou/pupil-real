@@ -52,7 +52,6 @@ import MenuCalendar from "../js/components/school/Menu/MenuCalendar.vue";
 const pinia = createPinia();
 const app = createApp({});
 
-
 app.component("dashboard-navigation", DashboardNavigation);
 app.component("dashboard-navigation-mobile", DashboardNavigationMobile);
 app.component("navigation-menu-button", NavigationMenuButton);
