@@ -209,6 +209,7 @@ class StripePaymentController extends Controller
         $session = Session::retrieve($session_id);
 
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
+        $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
 
         if ($transaction && $session->status === 'open') {
             $transaction->update(['cancelled' => true]);
@@ -222,12 +223,12 @@ class StripePaymentController extends Controller
 
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
 
-            return view('parent.cancel');
+            return view('parent.cancel', compact('order'));
         } elseif ($transaction) {
             $transaction->update(['cancelled' => true]);
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
 
-            return view('parent.cancel');
+            return view('parent.cancel', compact('order'));
         } else {
             throw new NotFoundHttpException();
         }
