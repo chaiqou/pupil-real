@@ -16,8 +16,7 @@
                         Order summary
                     </h2>
                      <p class="mt-2 text-sm text-gray-500 lg:mb-12">
-                        Bank transfers usually take a few hours, or in some
-                        cases a few days to process.
+                   order cancelled from {{ \Carbon\Carbon::parse($order->start_date)->format('Y-m-d') }} - {{ \Carbon\Carbon::parse($order->end_date)->format('Y-m-d') }}
                     </p>
                 </section>
             <div class="relative block w-full mt-4 rounded-lg border-2 border-red-300 bg-red-100 p-12 text-center hover:border-red-400">

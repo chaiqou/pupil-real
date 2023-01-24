@@ -13,11 +13,10 @@
         <div class="bg-white px-12 py-10 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
                 <section>
                     <h2 class="text-lg font-medium text-gray-900">
-                        Order summary
+                        Order summary - Thanks {{ $customer->first_name }} {{ $customer->last_name }}
                     </h2>
-                     <p class="mt-2 text-sm text-gray-500 lg:mb-12">
-                        Bank transfers usually take a few hours, or in some
-                        cases a few days to process.
+                     <p class="mt-2 text-sm text-gray-500 font-medium lg:mb-12">
+                  your order dates from {{ \Carbon\Carbon::parse($order->start_date)->format('Y-m-d') }} - {{ \Carbon\Carbon::parse($order->end_date)->format('Y-m-d') }}
                     </p>
                 </section>
             <div class="w-full mt-4 rounded-lg border-2 border-green-600 !bg-green-300 hover:border-green-400 p-12 text-center ">

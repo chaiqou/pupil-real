@@ -173,10 +173,6 @@ class StripePaymentController extends Controller
             $session_id = $request->get('session_id');
             $session = Session::retrieve($session_id);
 
-            if (! $session) {
-                return view('parent.cancel');
-            }
-
             $transaction = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
 
             if (! $transaction) {
@@ -191,13 +187,18 @@ class StripePaymentController extends Controller
                 event(new TransactionCreated($transaction));
             }
 
+            $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
             $customer = auth()->user();
 
-            return view('parent.success', compact('customer'));
+            if (! $session) {
+                return view('parent.cancel', compact('order'));
+            }
+
+            return view('parent.success', compact('customer', 'order'));
         } catch(NotFoundHttpException $exception) {
             throw $exception;
         } catch(Exception $exception) {
-            return view('parent.cancel');
+            return view('parent.cancel', compact('order'));
         }
     }
 
@@ -246,16 +247,13 @@ class StripePaymentController extends Controller
                 $payload, $sig_header, $endpoint_secret
             );
         } catch(\UnexpectedValueException $e) {
-            // Invalid payload
             http_response_code(401);
             exit();
         } catch(\Stripe\Exception\SignatureVerificationException $e) {
-            // Invalid signature
             http_response_code(402);
             exit();
         }
 
-        // Handle the event
         switch ($event->type) {
             case 'checkout.session.completed':
                 $paymentIntent = $event->data->object;
@@ -267,7 +265,6 @@ class StripePaymentController extends Controller
                     $this->updateOrderAndSession($payment);
                 }
 
-                // ... handle other event types
             default:
                 echo 'Received unknown event type '.$event->type;
         }
