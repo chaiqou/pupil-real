@@ -161,9 +161,6 @@ class StripePaymentController extends Controller
             'claims' => json_encode($claimsJson),
             'payment' => 'outstanding',
         ]);
-        if ($transaction->billing_type !== 'none') {
-            event(new TransactionCreated($transaction));
-        }
 
         return response()->json($checkout_session);
     }
@@ -188,6 +185,9 @@ class StripePaymentController extends Controller
 
             if ($transaction->payment_status == 'outstanding') {
                 $this->updateOrderAndSession($transaction);
+            }
+
+            if ($transaction->payment_status == 'paid') {
                 event(new TransactionCreated($transaction));
             }
 
@@ -209,7 +209,7 @@ class StripePaymentController extends Controller
 
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
 
-        if ($transaction  && $session->status === 'open') {
+        if ($transaction && $session->status === 'open') {
             $transaction->update(['cancelled' => true]);
 
             $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
@@ -222,7 +222,7 @@ class StripePaymentController extends Controller
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
 
             return view('parent.cancel');
-        } else if($transaction) {
+        } elseif ($transaction) {
             $transaction->update(['cancelled' => true]);
             PeriodicLunch::where('transaction_id', $transaction->id)->delete();
 
