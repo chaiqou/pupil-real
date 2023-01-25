@@ -179,13 +179,14 @@ class StripePaymentController extends Controller
                 throw new NotFoundHttpException();
             }
 
+            if ($transaction->payment_status != 'paid') {
+                event(new TransactionCreated($transaction));
+            }
+
             if ($transaction->payment_status == 'outstanding') {
                 $this->updateOrderAndSession($transaction);
             }
 
-            if ($transaction->payment_status == 'paid') {
-                event(new TransactionCreated($transaction));
-            }
 
             $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
             $customer = auth()->user();
