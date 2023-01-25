@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Dashboard\NavigationController;
+use App\Http\Controllers\Parent\Api\StripePaymentController;
 use App\Http\Controllers\Parent\InviteController as UserInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
@@ -107,6 +108,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
                 Route::get('lunch-details/{student_id}', 'parent')->name('parent.lunch-details');
             });
+            Route::get('checkout/success', [StripePaymentController::class, 'success'])->name('parent.checkout_success');
+            Route::get('checkout/cancel', [StripePaymentController::class, 'cancel'])->name('parent.checkout_cancel');
         });
     });
 
@@ -126,3 +129,5 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
+
+Route::post('/webhook/stripe', [StripePaymentController::class, 'webhook'])->name('parent.webhook');

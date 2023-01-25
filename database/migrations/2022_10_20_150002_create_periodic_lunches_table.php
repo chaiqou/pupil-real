@@ -22,7 +22,7 @@ return new class() extends Migration
             $table->foreignId('lunch_id')->constrained();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->enum('payment', ['paid', 'outstanding', 'cancelled', 'not_required']);
+            $table->enum('payment', ['paid', 'outstanding', 'cancelled', 'not_required', 'unpaid']);
             $table->json('claims');
             $table->timestamps();
         });

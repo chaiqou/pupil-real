@@ -194,6 +194,7 @@
                 :lunch-days="store.claim_days"
                 :price="store.price_period"
                 :student-id="props.studentId"
+                :title="lunchTitle"
             />
         </template>
     </div>
@@ -209,6 +210,7 @@ const store = useLunchFormStore();
 
 const firstPossibleDay = ref("");
 const availableDays = ref([]);
+const lunchTitle = ref("");
 const addOneDayToFirstPossibleDay = ref("");
 
 const sortedDates = ref();
@@ -311,6 +313,7 @@ onMounted(async () => {
         store.weekdays = lunchDetailsResponse.data.data.weekdays;
         store.price_period = lunchDetailsResponse.data.data.price_period;
         store.lunch_details = [lunchDetailsResponse.data.data];
+        lunchTitle.value = lunchDetailsResponse.data.data.title;
     } catch (err) {
         console.error(err);
     }

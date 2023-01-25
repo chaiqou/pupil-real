@@ -97,6 +97,7 @@
                         <div class="mt-6">
                             <button
                                 class="w-full items-center justify-center inline-flex rounded-md border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg border hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:shadow-md transition-all focus:ring-offset-gray-50"
+                                @click="payWithOnlineHandler"
                             >
                                 <CardIcon />
                                 Pay Online
@@ -104,7 +105,7 @@
                         </div>
                         <div class="mt-2">
                             <button
-                                @click="payWithTransferhandler"
+                                @click="payWithTransferHandler"
                                 class="inline-flex w-full justify-center items-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 <BankIcon />
@@ -174,6 +175,10 @@ const props = defineProps({
         type: [String, Number],
         required: true,
     },
+    title: {
+        type: String,
+        required: true,
+    },
 });
 
 const store = useLunchFormStore();
@@ -198,7 +203,7 @@ const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
 
-const payWithTransferhandler = () => {
+const payWithTransferHandler = () => {
     loading.value = true;
     axios
         .post("/api/parent/lunch-order/" + props.studentId, {
@@ -212,11 +217,37 @@ const payWithTransferhandler = () => {
         .then((response) => {
             if (response.status == 200) {
                 successFeedbackPayWithTransfer.value = true;
-                loading.value = false;
             } else {
                 errorFeedbackPayWithTransfer.value = true;
-                loading.value = false;
             }
+        })
+        .finally(() => {
+            loading.value = false;
+        });
+};
+
+const payWithOnlineHandler = () => {
+    loading.value = true;
+
+    axios
+        .post("/api/parent/checkout", {
+            student_id: props.studentId,
+            claimables: store.lunch_details[0].claimables,
+            lunch_id: store.lunch_details[0].id,
+            claims: store.claim_days,
+            price: props.price,
+            title: props.title,
+        })
+        .then((response) => {
+            if (response.status == 200) {
+                successFeedbackPayWithTransfer.value = true;
+            } else {
+                errorFeedbackPayWithTransfer.value = true;
+            }
+            window.location.href = response.data.url;
+        })
+        .finally(() => {
+            loading.value = false;
         });
 };
 </script>
