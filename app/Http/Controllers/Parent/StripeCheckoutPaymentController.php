@@ -74,7 +74,7 @@ class StripeCheckoutPaymentController extends Controller
                 'customer' => $existingCustomer->stripe_customer_id,
                 'line_items' => [[
                     'price_data' => [
-                        'currency' => 'usd',
+                        'currency' => 'huf',
                         'product_data' => [
                             'name' => $validate['title'],
                         ],
@@ -105,7 +105,7 @@ class StripeCheckoutPaymentController extends Controller
                 'customer' => $stripeCustomer->id,
                 'line_items' => [[
                     'price_data' => [
-                        'currency' => 'usd',
+                        'currency' => 'huf',
                         'product_data' => [
                             'name' => $validate['title'],
                         ],
