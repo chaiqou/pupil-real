@@ -187,7 +187,6 @@ class StripePaymentController extends Controller
                 $this->updateOrderAndSession($transaction);
             }
 
-
             $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
             $customer = auth()->user();
 
@@ -211,6 +210,13 @@ class StripePaymentController extends Controller
 
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
+
+
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+
+        if ($pageWasRefreshed) {
+            return redirect('/');
+        }
 
         if ($transaction && $session->status === 'open') {
             $transaction->update(['cancelled' => true]);
