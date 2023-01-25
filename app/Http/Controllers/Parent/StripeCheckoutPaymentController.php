@@ -1,28 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Parent\Api;
+namespace App\Http\Controllers\Parent;
 
+use DateTime;
+use DateInterval;
+use Stripe\Stripe;
+use App\Models\User;
+use Stripe\Customer;
+use App\Models\Lunch;
+use App\Models\Student;
+use Stripe\StripeClient;
+use Illuminate\View\View;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
+use App\Models\PeriodicLunch;
+use PHPUnit\Runner\Exception;
+use UnexpectedValueException;
+use Illuminate\Http\JsonResponse;
 use App\Events\TransactionCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
-use App\Models\Lunch;
-use App\Models\PeriodicLunch;
-use App\Models\Student;
-use App\Models\Transaction;
-use App\Models\User;
-use DateInterval;
-use DateTime;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use PHPUnit\Runner\Exception;
-use Stripe\Checkout\Session;
-use Stripe\Customer;
-use Stripe\Stripe;
+use Stripe\Exception\SignatureVerificationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class StripePaymentController extends Controller
+
+class StripeCheckoutPaymentController extends Controller
 {
+
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
         $validate = $request->validated();
@@ -217,7 +222,7 @@ class StripePaymentController extends Controller
         }
 
         if ($transaction && $session->status === 'open') {
-            $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+            $stripe = new StripeClient(getenv('STRIPE_SECRET_KEY'));
 
             $stripe->checkout->sessions->expire(
                 $session_id,
@@ -246,13 +251,13 @@ class StripePaymentController extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
             );
-        } catch(\UnexpectedValueException $e) {
+        } catch(UnexpectedValueException $e) {
             http_response_code(401);
             exit();
-        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+        } catch(SignatureVerificationException $e) {
             http_response_code(402);
             exit();
         }
@@ -294,3 +299,5 @@ class StripePaymentController extends Controller
         PeriodicLunch::where('transaction_id', $transaction->id)->delete();
     }
 }
+
+
