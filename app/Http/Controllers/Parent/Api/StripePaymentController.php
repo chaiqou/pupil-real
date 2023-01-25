@@ -174,6 +174,8 @@ class StripePaymentController extends Controller
             $session = Session::retrieve($session_id);
 
             $transaction = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
+            $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
+            $customer = auth()->user();
 
             if (! $transaction) {
                 throw new NotFoundHttpException();
@@ -186,9 +188,6 @@ class StripePaymentController extends Controller
             if ($transaction->payment_status == 'outstanding') {
                 $this->updateOrderAndSession($transaction);
             }
-
-            $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
-            $customer = auth()->user();
 
             if (! $session) {
                 return view('parent.cancel', compact('order'));
@@ -211,7 +210,6 @@ class StripePaymentController extends Controller
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
 
-
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
 
         if ($pageWasRefreshed) {
@@ -219,8 +217,6 @@ class StripePaymentController extends Controller
         }
 
         if ($transaction && $session->status === 'open') {
-            $transaction->update(['cancelled' => true]);
-
             $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
 
             $stripe->checkout->sessions->expire(
@@ -228,12 +224,11 @@ class StripePaymentController extends Controller
                 []
             );
 
-            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+            $this->deleteLunchIfCancelled($transaction);
 
             return view('parent.cancel', compact('order'));
         } elseif ($transaction) {
-            $transaction->update(['cancelled' => true]);
-            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+            $this->deleteLunchIfCancelled($transaction);
 
             return view('parent.cancel', compact('order'));
         } else {
@@ -291,5 +286,11 @@ class StripePaymentController extends Controller
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
         $order->payment = 'paid';
         $order->update();
+    }
+
+    private function deleteLunchIfCancelled(Transaction $transaction)
+    {
+        $transaction->update(['cancelled' => true]);
+        PeriodicLunch::where('transaction_id', $transaction->id)->delete();
     }
 }
