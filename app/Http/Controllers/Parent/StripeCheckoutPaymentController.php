@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers\Parent;
 
-use DateTime;
-use DateInterval;
-use Stripe\Stripe;
-use App\Models\User;
-use Stripe\Customer;
-use App\Models\Lunch;
-use App\Models\Student;
-use Stripe\StripeClient;
-use Illuminate\View\View;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
-use App\Models\PeriodicLunch;
-use PHPUnit\Runner\Exception;
-use UnexpectedValueException;
-use Illuminate\Http\JsonResponse;
 use App\Events\TransactionCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
+use App\Models\Lunch;
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use App\Models\Transaction;
+use App\Models\User;
+use DateInterval;
+use DateTime;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use PHPUnit\Runner\Exception;
+use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Exception\SignatureVerificationException;
+use Stripe\Stripe;
+use Stripe\StripeClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use UnexpectedValueException;
 
 class StripeCheckoutPaymentController extends Controller
 {
-
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
         $validate = $request->validated();
@@ -215,9 +213,7 @@ class StripeCheckoutPaymentController extends Controller
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
 
-        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-
-        if ($pageWasRefreshed) {
+        if (! $order) {
             return redirect('/');
         }
 
@@ -299,5 +295,3 @@ class StripeCheckoutPaymentController extends Controller
         PeriodicLunch::where('transaction_id', $transaction->id)->delete();
     }
 }
-
-

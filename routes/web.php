@@ -7,10 +7,10 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Dashboard\NavigationController;
-use App\Http\Controllers\Parent\StripeCheckoutPaymentController;
 use App\Http\Controllers\Parent\InviteController as UserInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\Parent\StripeCheckoutPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
