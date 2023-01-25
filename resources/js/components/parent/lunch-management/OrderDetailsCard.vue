@@ -239,15 +239,7 @@ const payWithOnlineHandler = () => {
             title: props.title,
         })
         .then((response) => {
-            if (response.status == 200) {
-                successFeedbackPayWithTransfer.value = true;
-            } else {
-                errorFeedbackPayWithTransfer.value = true;
-            }
             window.location.href = response.data.url;
-        })
-        .finally(() => {
-            loading.value = false;
         });
 };
 </script>
