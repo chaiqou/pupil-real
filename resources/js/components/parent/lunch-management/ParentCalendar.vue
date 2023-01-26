@@ -33,26 +33,8 @@
                             :key="day"
                             type="button"
                             :class="[
-                                highlightDisabledDays.map((highlight) =>
-                                    format(highlight, 'yyy-MM-dd') ==
-                                    format(day, 'yyyy-MM-dd')
-                                        ? 'bg-indigo-400 hover:bg-indigo-500 !text-white'
-                                        : ''
-                                ),
-                                claimDays.length > 0
-                                    ? claimDays.map((claim) => {
-                                          return format(claim, 'yyyy-MM-dd') ==
-                                              format(day, 'yyyy-MM-dd') &&
-                                              month.name !==
-                                                  getMonthByIndex(
-                                                      day.getMonth()
-                                                  ) &&
-                                              month.name ===
-                                                  monthFullNames[day.getMonth()]
-                                              ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
-                                              : '';
-                                      })
-                                    : '',
+                                markAllDisabledDays(day),
+                                markAllPossibleDays(day, month),
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -69,9 +51,8 @@
                         >
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
-                                :class="[
-                                    'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
-                                ]"
+                                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
+                                ,
                             >
                                 <div class="flex-col">
                                     <h1>
@@ -112,13 +93,29 @@ const store = useLunchFormStore();
 const props = defineProps({
     months: {
         type: Number,
-        required: true,
+        default: 11,
     },
 });
 
-const highlightDisabledDays = computed(() => {
-    return store.disabledDaysForLunchOrdering.map((day) => day);
-});
+const markAllDisabledDays = (day) => {
+    return store.disabledDaysForLunchOrdering.map((highlight) =>
+        format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
+            ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
+            : ""
+    );
+};
+
+const markAllPossibleDays = (day, month) => {
+    return claimDays.value.length > 0
+        ? claimDays.value.map((claim) => {
+              return format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
+                  month.name !== getMonthByIndex(day.getMonth()) &&
+                  month.name === monthFullNames[day.getMonth()]
+                  ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
+                  : "";
+          })
+        : "";
+};
 
 const claimDays = computed(() => {
     const days = store.availableDatesForStartOrdering

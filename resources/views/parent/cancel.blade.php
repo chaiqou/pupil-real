@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
-<body class="h-full flex justify-center items-center bg-red-300">
+<body class="h-full flex justify-center items-center ">
+    <div id="app">
+    <parent-calendar></parent-calendar>
+    </div>
 
         <div class="bg-white px-12 py-10 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
                 <section>
@@ -39,6 +42,7 @@
         </div>
         </div>
 
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </body>
 </html>
