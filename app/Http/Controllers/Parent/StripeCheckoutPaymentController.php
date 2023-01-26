@@ -214,8 +214,7 @@ class StripeCheckoutPaymentController extends Controller
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
 
         if (! $order) {
-            $order = PeriodicLunch::where('transaction_id', 4)->first();
-            // return redirect('/');
+            return redirect('/');
         }
 
         if ($transaction && $session->status === 'open') {

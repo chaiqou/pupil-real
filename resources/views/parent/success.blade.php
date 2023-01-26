@@ -9,6 +9,10 @@
 </head>
 
 <body class="h-full flex justify-center items-center">
+<div id="app">
+    <parent-calendar :stripe-days="{{$order}}"
+    ></parent-calendar>
+    </div>
 
         <div class="bg-white px-12 py-10 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
                 <section>
@@ -29,6 +33,6 @@
         </div>
         </div>
 
-
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </body>
 </html>
