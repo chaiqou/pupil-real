@@ -35,6 +35,7 @@
                             :class="[
                                 markAllDisabledDays(day),
                                 markAllPossibleDays(day, month),
+                                markAllPossibleDaysForStripe(day, month),
                                 month.name !==
                                     getMonthByIndex(day.getMonth()) &&
                                 month.name === monthFullNames[day.getMonth()]
@@ -52,7 +53,6 @@
                             <time
                                 :datetime="format(day, 'yyyy-MM-dd')"
                                 class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
-                                ,
                             >
                                 <div class="flex-col">
                                     <h1>
@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { format, isToday } from "date-fns";
+import { format, isToday, parseISO } from "date-fns";
 import { computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/useFindMonthDays";
@@ -94,6 +94,9 @@ const props = defineProps({
     months: {
         type: Number,
         default: 11,
+    },
+    stripeDays: {
+        required: false,
     },
 });
 
@@ -117,6 +120,21 @@ const markAllPossibleDays = (day, month) => {
         : "";
 };
 
+const markAllPossibleDaysForStripe = (day, month) => {
+    if (dates.value) {
+        return dates.value.length > 0
+            ? dates.value.map((claim) => {
+                  return format(claim, "yyyy-MM-dd") ==
+                      format(day, "yyyy-MM-dd") &&
+                      month.name !== getMonthByIndex(day.getMonth()) &&
+                      month.name === monthFullNames[day.getMonth()]
+                      ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
+                      : "";
+              })
+            : "";
+    }
+};
+
 const claimDays = computed(() => {
     const days = store.availableDatesForStartOrdering
         .filter((date) => {
@@ -126,5 +144,12 @@ const claimDays = computed(() => {
 
     store.claim_days = days;
     return days;
+});
+
+let dates = computed(() => {
+    if (props.stripeDays) {
+        let getDays = Object.keys(JSON.parse(props.stripeDays.claims));
+        return getDays.map((day) => parseISO(day));
+    }
 });
 </script>

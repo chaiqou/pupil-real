@@ -10,7 +10,8 @@
 
 <body class="h-full flex justify-center items-center ">
     <div id="app">
-    <parent-calendar></parent-calendar>
+    <parent-calendar :stripe-days="{{$order}}"
+    ></parent-calendar>
     </div>
 
         <div class="bg-white px-12 py-10 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
