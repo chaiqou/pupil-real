@@ -8,23 +8,23 @@
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
-<body class="h-full flex justify-center items-center">
-<div id="app">
+<body class="flex justify-center items-center">
+<div class="hidden sm:block" id="app">
     <parent-calendar :stripe-days="{{$order}}"
     ></parent-calendar>
     </div>
 
-        <div class="bg-white px-12 py-10 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+        <div class="bg-white mt-40 px-12 py-10 md:shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
                 <section>
                     <h2 class="text-lg font-medium text-gray-900">
-                        Order summary - Thanks {{ $customer->first_name }} {{ $customer->last_name }}
+                        Order summary
                     </h2>
                      <p class="mt-2 text-sm text-gray-500 font-medium lg:mb-12">
-                  your order dates from {{ \Carbon\Carbon::parse($order->start_date)->format('Y-m-d') }} - {{ \Carbon\Carbon::parse($order->end_date)->format('Y-m-d') }}
+                   Order dates from {{ \Carbon\Carbon::parse($order->start_date)->format('Y-m-d') }} - {{ \Carbon\Carbon::parse($order->end_date)->format('Y-m-d') }}
                     </p>
                 </section>
-            <div class="w-full mt-4 rounded-lg border-2 border-green-600 !bg-green-300 hover:border-green-400 p-12 text-center ">
-    <svg  class="mx-auto h-12 w-12 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="w-full mt-4 rounded-lg border-2 border-green-600 !bg-green-300 hover:border-green-400 hover:shadow-2xl p-12 text-center ">
+    <svg  class="mx-auto h-12 w-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
 </svg>
 
