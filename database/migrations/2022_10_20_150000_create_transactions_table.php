@@ -26,7 +26,7 @@ return new class() extends Migration
             $table->json('history')->default(json_encode(['history' => ['data' => null, 'data_by' => null, 'data_at' => null]]));
             $table->string('wallet_id')->nullable();
             /* Update wallet to be constrained to wallet table */
-            $table->string('stripe_session_id')->nullable();
+            $table->string('stripe_payment_intent')->nullable();
             $table->enum('payment_method',["stripe", "bank_transfer", "wallet", "other", "none"]);
             $table->json('billing_items')->nullable();
             $table->enum('billing_provider',["none","billingo"]);
