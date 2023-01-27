@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('billing_provider');
             $table->string('billing_comment');
             $table->string('billing_type');
-            $table->integet('proforma_id')->nullable();
+            $table->integer('proforma_id')->nullable();
             $table->string('convert_to_invoice');
             $table->string('handler_status');
             $table->string('cancelled_status');
