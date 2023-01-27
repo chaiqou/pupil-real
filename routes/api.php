@@ -6,10 +6,10 @@ use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantC
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
-use App\Http\Controllers\Parent\Api\StripePaymentController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\Parent\StripeCheckoutPaymentController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
             Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'orderLunch'])->name('parent.order_lunch');
             Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
-            Route::post('checkout', [StripePaymentController::class, 'checkout'])->name('parent.checkout');
+            Route::post('checkout', [StripeCheckoutPaymentController::class, 'checkout'])->name('parent.checkout');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {

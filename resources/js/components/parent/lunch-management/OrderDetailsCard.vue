@@ -135,7 +135,9 @@
                 </OrderFeedbackCard>
             </template>
             <template v-if="loading">
-                <Loading />
+                <div class="w-1/2 mx-auto">
+                    <Loading />
+                </div>
             </template>
         </div>
     </div>
@@ -239,15 +241,7 @@ const payWithOnlineHandler = () => {
             title: props.title,
         })
         .then((response) => {
-            if (response.status == 200) {
-                successFeedbackPayWithTransfer.value = true;
-            } else {
-                errorFeedbackPayWithTransfer.value = true;
-            }
             window.location.href = response.data.url;
-        })
-        .finally(() => {
-            loading.value = false;
         });
 };
 </script>
