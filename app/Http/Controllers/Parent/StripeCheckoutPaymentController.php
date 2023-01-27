@@ -70,13 +70,17 @@ class StripeCheckoutPaymentController extends Controller
         $existingCustomer = User::where('id', $customer->id)->where('stripe_customer_id', '!=', null)->first();
 
         if ($existingCustomer != null) {
+            $formattedStartDate = new DateTime($claimDates[0]);
+            $formattedEndDate = new DateTime($claimDates[count($claimDates) - 1]);
+            $formattedStartDate = $formattedStartDate->format('Y-m-d');
+            $formattedEndDate = $formattedEndDate->format('Y-m-d');
             $checkout_session = Session::create([
                 'customer' => $existingCustomer->stripe_customer_id,
                 'line_items' => [[
                     'price_data' => [
                         'currency' => 'huf',
                         'product_data' => [
-                            'name' => $validate['title'],
+                            'name' => $validate['title'] . ' | ' . $formattedStartDate . ' - ' . $formattedEndDate,
                         ],
                         'unit_amount' => $validate['price'] * 100,
                     ],
@@ -196,6 +200,8 @@ class StripeCheckoutPaymentController extends Controller
                 return view('parent.cancel', compact('order'));
             }
 
+            $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
+
             return view('parent.success', compact('customer', 'order'));
         } catch(NotFoundHttpException $exception) {
             throw $exception;
@@ -216,6 +222,7 @@ class StripeCheckoutPaymentController extends Controller
         if (! $order) {
             return redirect('/');
         }
+        $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
         if ($transaction && $session->status === 'open') {
             $stripe = new StripeClient(getenv('STRIPE_SECRET_KEY'));
