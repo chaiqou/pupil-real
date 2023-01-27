@@ -20,21 +20,22 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained();
             $table->string('transaction_identifier');
             $table->date('transaction_date');
-            $table->string('transaction_amount');
-            $table->string('transaction_type');
-            $table->string('comments');
-            $table->string('history');
-            $table->string('wallet');
-            $table->string('stripe_session_id');
-            $table->string('payment_method');
-            $table->string('billing_items');
-            $table->string('billing_provider');
-            $table->string('billing_comment');
-            $table->string('billing_type');
+            $table->bigInteger('transaction_amount');
+            $table->enum('transaction_type',["payment", "storno", "top_up"]);
+            $table->json('comments')->default(json_encode(['comments' => ['comment' => null, 'comment_by' => null, 'comment_at' => null]]));
+            $table->json('history')->default(json_encode(['history' => ['data' => null, 'data_by' => null, 'data_at' => null]]));
+            $table->string('wallet_id')->nullable();
+            /* Update wallet to be constrained to wallet table */
+            $table->string('stripe_session_id')->nullable();
+            $table->enum('payment_method',["stripe", "bank_transfer", "wallet", "other", "none"]);
+            $table->json('billing_items')->nullable();
+            $table->enum('billing_provider',["none","billingo"]);
+            $table->json('billing_comment')->nullable();
+            $table->enum('billing_type',["invoice", "proforma", "none"]);
             $table->integer('proforma_id')->nullable();
-            $table->string('convert_to_invoice');
-            $table->string('handler_status');
-            $table->string('cancelled_status');
+            $table->boolean('convert_to_invoice')->default(false);
+            $table->string('handler_status')->default('awaiting_handler');
+            $table->json('cancelled_status')->default(json_encode(['cancelled' => false, 'cancelled_by' => null, 'cancelled_at' => null, 'cancelled_reason' => null]));
             $table->timestamps();
         });
     }
