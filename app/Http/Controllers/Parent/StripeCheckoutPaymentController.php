@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Parent\Api;
+namespace App\Http\Controllers\Parent;
 
 use App\Events\TransactionCreated;
 use App\Http\Controllers\Controller;
@@ -18,10 +18,13 @@ use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
+use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
+use Stripe\StripeClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use UnexpectedValueException;
 
-class StripePaymentController extends Controller
+class StripeCheckoutPaymentController extends Controller
 {
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
@@ -67,13 +70,17 @@ class StripePaymentController extends Controller
         $existingCustomer = User::where('id', $customer->id)->where('stripe_customer_id', '!=', null)->first();
 
         if ($existingCustomer != null) {
+            $formattedStartDate = new DateTime($claimDates[0]);
+            $formattedEndDate = new DateTime($claimDates[count($claimDates) - 1]);
+            $formattedStartDate = $formattedStartDate->format('Y-m-d');
+            $formattedEndDate = $formattedEndDate->format('Y-m-d');
             $checkout_session = Session::create([
                 'customer' => $existingCustomer->stripe_customer_id,
                 'line_items' => [[
                     'price_data' => [
-                        'currency' => 'usd',
+                        'currency' => 'huf',
                         'product_data' => [
-                            'name' => $validate['title'],
+                            'name' => $validate['title'] . ' | ' . $formattedStartDate . ' - ' . $formattedEndDate,
                         ],
                         'unit_amount' => $validate['price'] * 100,
                     ],
@@ -102,7 +109,7 @@ class StripePaymentController extends Controller
                 'customer' => $stripeCustomer->id,
                 'line_items' => [[
                     'price_data' => [
-                        'currency' => 'usd',
+                        'currency' => 'huf',
                         'product_data' => [
                             'name' => $validate['title'],
                         ],
@@ -174,25 +181,26 @@ class StripePaymentController extends Controller
             $session = Session::retrieve($session_id);
 
             $transaction = Transaction::query()->where('stripe_session_id', $session_id)->whereIn('payment_status', ['outstanding', 'paid'])->first();
+            $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
+            $customer = auth()->user();
 
             if (! $transaction) {
                 throw new NotFoundHttpException();
+            }
+
+            if ($transaction->payment_status != 'paid') {
+                event(new TransactionCreated($transaction));
             }
 
             if ($transaction->payment_status == 'outstanding') {
                 $this->updateOrderAndSession($transaction);
             }
 
-            if ($transaction->payment_status == 'paid') {
-                event(new TransactionCreated($transaction));
-            }
-
-            $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
-            $customer = auth()->user();
-
             if (! $session) {
                 return view('parent.cancel', compact('order'));
             }
+
+            $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
             return view('parent.success', compact('customer', 'order'));
         } catch(NotFoundHttpException $exception) {
@@ -211,22 +219,24 @@ class StripePaymentController extends Controller
         $transaction = Transaction::where('stripe_session_id', $session_id)->first();
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
 
-        if ($transaction && $session->status === 'open') {
-            $transaction->update(['cancelled' => true]);
+        if (! $order) {
+            return redirect('/');
+        }
+        $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
-            $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        if ($transaction && $session->status === 'open') {
+            $stripe = new StripeClient(getenv('STRIPE_SECRET_KEY'));
 
             $stripe->checkout->sessions->expire(
                 $session_id,
                 []
             );
 
-            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+            $this->deleteLunchIfCancelled($transaction);
 
             return view('parent.cancel', compact('order'));
         } elseif ($transaction) {
-            $transaction->update(['cancelled' => true]);
-            PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+            $this->deleteLunchIfCancelled($transaction);
 
             return view('parent.cancel', compact('order'));
         } else {
@@ -244,13 +254,13 @@ class StripePaymentController extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
             );
-        } catch(\UnexpectedValueException $e) {
+        } catch(UnexpectedValueException $e) {
             http_response_code(401);
             exit();
-        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+        } catch(SignatureVerificationException $e) {
             http_response_code(402);
             exit();
         }
@@ -284,5 +294,11 @@ class StripePaymentController extends Controller
         $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
         $order->payment = 'paid';
         $order->update();
+    }
+
+    private function deleteLunchIfCancelled(Transaction $transaction)
+    {
+        $transaction->update(['cancelled' => true]);
+        PeriodicLunch::where('transaction_id', $transaction->id)->delete();
     }
 }
