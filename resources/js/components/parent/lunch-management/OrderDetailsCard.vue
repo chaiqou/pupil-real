@@ -135,7 +135,9 @@
                 </OrderFeedbackCard>
             </template>
             <template v-if="loading">
-                <Loading />
+                <div class="w-1/2 mx-auto">
+                    <Loading />
+                </div>
             </template>
         </div>
     </div>
