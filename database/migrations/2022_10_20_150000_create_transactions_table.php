@@ -22,8 +22,8 @@ return new class() extends Migration
             $table->date('transaction_date');
             $table->bigInteger('transaction_amount');
             $table->enum('transaction_type',["payment", "storno", "top_up"]);
-            $table->json('comments')->default(json_encode(['comments' => ['comment' => null, 'comment_by' => null, 'comment_at' => null]]));
-            $table->json('history')->default(json_encode(['history' => ['data' => null, 'data_by' => null, 'data_at' => null]]));
+            $table->json('comments');
+            $table->json('history');
             $table->string('wallet_id')->nullable();
             /* Update wallet to be constrained to wallet table */
             $table->string('stripe_payment_intent')->nullable();
