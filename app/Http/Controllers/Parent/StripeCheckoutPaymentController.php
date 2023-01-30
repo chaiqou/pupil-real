@@ -244,15 +244,15 @@ class StripeCheckoutPaymentController extends Controller
         $session_id = $request->get('session_id');
         $session = Session::retrieve($session_id);
 
-        $transaction = Transaction::where('stripe_session_id', $session_id)->first();
-        $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
+        $pending_transaction = PendingTransaction::query()->where('stripe_session_id', $session_id)->first();
+        $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
 
         if (! $order) {
             return redirect('/');
         }
         $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
-        if ($transaction && $session->status === 'open') {
+        if ($pending_transaction && $session->status === 'open') {
             $stripe = new StripeClient(getenv('STRIPE_SECRET_KEY'));
 
             $stripe->checkout->sessions->expire(
@@ -260,11 +260,11 @@ class StripeCheckoutPaymentController extends Controller
                 []
             );
 
-            $this->deleteLunchIfCancelled($transaction);
+            $this->deleteLunchIfCancelled($pending_transaction);
 
             return view('parent.cancel', compact('order'));
-        } elseif ($transaction) {
-            $this->deleteLunchIfCancelled($transaction);
+        } elseif ($pending_transaction) {
+            $this->deleteLunchIfCancelled($pending_transaction);
 
             return view('parent.cancel', compact('order'));
         } else {
@@ -300,9 +300,6 @@ class StripeCheckoutPaymentController extends Controller
 
                 $payment = Transaction::query()->where('stripe_session_id', $sessionId)->where('payment_status', 'outstanding')->first();
 
-                if ($payment) {
-                    $this->updateOrderAndSession($payment);
-                }
 
             default:
                 echo 'Received unknown event type '.$event->type;
@@ -313,20 +310,8 @@ class StripeCheckoutPaymentController extends Controller
         return response('', 200);
     }
 
-    private function updateOrderAndSession(Transaction $transaction)
+    private function deleteLunchIfCancelled(PendingTransaction $transaction)
     {
-        $transaction->stripe_pending = false;
-        $transaction->payment_status = 'paid';
-        $transaction->update();
-
-        $order = PeriodicLunch::where('transaction_id', $transaction->id)->first();
-        $order->payment = 'paid';
-        $order->update();
-    }
-
-    private function deleteLunchIfCancelled(Transaction $transaction)
-    {
-        $transaction->update(['cancelled' => true]);
-        PeriodicLunch::where('transaction_id', $transaction->id)->delete();
+        PeriodicLunch::where('pending_transactions_id', $transaction->id)->delete();
     }
 }
