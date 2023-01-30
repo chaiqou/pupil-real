@@ -21,21 +21,21 @@ return new class extends Migration
             $table->string('transaction_identifier');
             $table->date('transaction_date');
             $table->bigInteger('transaction_amount');
-            $table->enum('transaction_type',["payment", "storno", "top_up"]);
+            $table->enum('transaction_type', ['payment', 'storno', 'top_up']);
             $table->json('comments');
             $table->json('history');
             $table->string('wallet_id')->nullable();
             /* Update wallet to be constrained to wallet table */
             $table->string('stripe_session_id')->nullable();
-            $table->enum('payment_method',["stripe", "bank_transfer", "wallet", "other", "none"]);
+            $table->enum('payment_method', ['stripe', 'bank_transfer', 'wallet', 'other', 'none']);
             $table->json('billing_items')->nullable();
-            $table->enum('billing_provider',["none","billingo"]);
+            $table->enum('billing_provider', ['none', 'billingo']);
             $table->json('billing_comment')->nullable();
-            $table->enum('billing_type',["invoice", "proforma", "none"]);
+            $table->enum('billing_type', ['invoice', 'proforma', 'none']);
             $table->integer('proforma_id')->nullable();
             $table->boolean('convert_to_invoice')->default(false);
             $table->string('handler_status')->default('awaiting_handler');
-            $table->json('cancelled_status');
+            $table->json('cancelled_status')->nullable();
             $table->timestamps();
         });
     }
