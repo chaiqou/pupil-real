@@ -70,7 +70,7 @@ class OrderLunchController extends Controller
                 'transaction_type' => 'debit',
                 'billing_type' => 'proforma',
                 'billing_comment' => 'billing_comment_here',
-                'billing_item' => json_encode([
+                'billing_items' => json_encode([
                     'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',

@@ -32,7 +32,7 @@ class TransactionToDocumentInsert
     {
         $user = User::where('id', auth()->user()->id)->first();
         $partner = PartnerId::where('user_id', $user->id)->first();
-        $transactionBillingItem = json_decode($event->transaction->billing_item);
+        $transactionBillingItem = json_decode($event->transaction->billing_items);
         $merchant = Merchant::where('id', $event->transaction->merchant_id)->first();
         $transaction_date = $event->transaction->transaction_date;
         $transaction_date = strtotime($transaction_date);
