@@ -203,8 +203,8 @@ class StripeCheckoutPaymentController extends Controller
                 'payment_method' => 'stripe',
                 'billing_type' => 'invoice',
                 'billing_items' => json_encode([
-                    // 'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
-                    // 'unit_price' => $pricePeriod,
+                    'name' => 'Test lunch',
+                    'unit_price' => 'pricePeriod',
                     'unit_price_type' => 'gross',
                     'quantity' => 1,
                     'unit' => 'db',

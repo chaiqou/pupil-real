@@ -72,7 +72,7 @@ class TransactionToDocumentInsert
                 'pending_history' => [],
             ]),
         ]);
-        $transactionComment = json_decode($event->transaction->comment);
+        $transactionComment = json_decode($event->transaction->comments);
         $transactionComment->comment_history[] = $transactionComment->comment;
         $transactionComment->comment =
             'Issued'.' '.ucfirst($event->transaction->billing_type).' on '.now()->format('Y-m-d').' ('.$request['invoice_number'].')';
