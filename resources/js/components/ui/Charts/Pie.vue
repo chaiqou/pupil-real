@@ -35,13 +35,12 @@ export default {
          default: '500'
      },
      chartData: {
-         // please notice that data should be Array of integers/numbers
-         type: Array,
-         required: true,
+         type: Array,  // notice that data should be Array of integers/numbers
+         required: true
      },
      labels: {
          type: Array,
-         required: true,
+         required: true
      },
      id: {
        type: String,
