@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers\Parent;
 
-use DateTime;
-use DateInterval;
-use Stripe\Stripe;
-use Stripe\Webhook;
-use App\Models\User;
-use Stripe\Customer;
-use App\Models\Lunch;
-use App\Models\Student;
-use Stripe\StripeClient;
-use Illuminate\View\View;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
-use App\Models\PeriodicLunch;
-use PHPUnit\Runner\Exception;
-use UnexpectedValueException;
-use Illuminate\Http\JsonResponse;
 use App\Events\TransactionCreated;
-use App\Models\PendingTransaction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
+use App\Models\Lunch;
+use App\Models\PendingTransaction;
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use App\Models\Transaction;
+use App\Models\User;
+use DateInterval;
+use DateTime;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use PHPUnit\Runner\Exception;
+use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Exception\SignatureVerificationException;
+use Stripe\Stripe;
+use Stripe\StripeClient;
+use Stripe\Webhook;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use UnexpectedValueException;
 
 class StripeCheckoutPaymentController extends Controller
 {
@@ -122,42 +122,8 @@ class StripeCheckoutPaymentController extends Controller
                 'mode' => 'payment',
                 'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
-              ]);
+            ]);
         }
-
-        // Payment
-        // $transaction = Transaction::create([
-        //     'user_id' => $student->user_id,
-        //     'student_id' => $student->id,
-        //     'merchant_id' => $lunch->merchant_id,
-        //     'transaction_date' => now()->format('Y-m-d'),
-        //     'billingo_transaction_id' => null,
-        //     'amount' => 1,
-        //     'transaction_type' => 'debit',
-        //     'billing_type' => 'invoice',
-        //     'billing_comment' => 'billing_comment_here',
-        //     'billing_item' => json_encode([
-        //         'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
-        //         'unit_price' => $pricePeriod,
-        //         'unit_price_type' => 'gross',
-        //         'quantity' => 1,
-        //         'unit' => 'db',
-        //         'vat' => '27%',
-        //     ]),
-        //     'pending' => json_encode([
-        //         'pending' => 0,
-        //         'pending_history' => [],
-        //     ]),
-        //     'comment' => json_encode([
-        //         'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-        //         'comment_history' => [],
-        //     ]),
-        //     'payment_status' => 'outstanding',
-        //     'stripe_payment' => true,
-        //     'stripe_pending' => true,
-        //     'stripe_session_id' => $checkout_session->id,
-
-        // ]);
 
         $pending_transaction = PendingTransaction::create([
             'user_id' => $student->user_id,
@@ -193,7 +159,7 @@ class StripeCheckoutPaymentController extends Controller
 
         $lunch = PeriodicLunch::create([
             'student_id' => $student->id,
-            'pending_transaction_id' => $pending_transaction->id,
+            'pending_transactions_id' => $pending_transaction->id,
             'merchant_id' => $lunch->merchant_id,
             'lunch_id' => $validate['lunch_id'],
             'card_data' => 'hardcoded instead of $student->card_data',
@@ -214,9 +180,8 @@ class StripeCheckoutPaymentController extends Controller
             $session_id = $request->get('session_id');
             $session = Session::retrieve($session_id);
 
-
             $pending_transaction = PendingTransaction::query()->where('stripe_session_id', $session_id)->first();
-            $order = PeriodicLunch::where('transaction_id', $pending_transaction->id)->first();
+            $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
             $customer = auth()->user();
 
             $transaction = Transaction::create([
@@ -255,12 +220,8 @@ class StripeCheckoutPaymentController extends Controller
                 throw new NotFoundHttpException();
             }
 
-            if ($transaction->payment_status != 'paid') {
+            if ($transaction) {
                 event(new TransactionCreated($transaction));
-            }
-
-            if ($transaction->payment_status == 'outstanding') {
-                $this->updateOrderAndSession($transaction);
             }
 
             if (! $session) {

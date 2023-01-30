@@ -31,7 +31,7 @@ return new class() extends Migration
             $table->json('billing_items')->nullable();
             $table->enum('billing_provider', ['none', 'billingo']);
             $table->json('billing_comment')->nullable();
-            $table->integer('invoice_id');
+            $table->integer('invoiceId')->nullable();
             $table->timestamps();
         });
     }
