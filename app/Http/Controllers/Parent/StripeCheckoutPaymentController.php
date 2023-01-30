@@ -132,7 +132,7 @@ class StripeCheckoutPaymentController extends Controller
             'transaction_identifier' => 'here_should_be_some_hash',
             'transaction_date' => now()->format('Y-m-d'),
             'transaction_amount' => 1,
-            'transaction_type' => 'storno',
+            'transaction_type' => 'payment',
             'comments' => json_encode([
                 'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
                 'comment_history' => [],
@@ -191,7 +191,7 @@ class StripeCheckoutPaymentController extends Controller
                 'transaction_identifier' => 'here_should_be_some_hash',
                 'transaction_date' => now()->format('Y-m-d'),
                 'transaction_amount' => 1,
-                'transaction_type' => 'storno',
+                'transaction_type' => 'payment',
                 'comments' => json_encode([
                     'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
                     'comment_history' => [],
