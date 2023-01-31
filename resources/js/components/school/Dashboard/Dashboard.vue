@@ -8,9 +8,6 @@
             </div>
         </div>
             <div class="grid-area-4 mt-32">
-<!--                <div>-->
-<!--                    <Doughnut v-if="this.dataForRoundChart" :chartData="this.dataForRoundChart"></Doughnut>-->
-<!--                </div>-->
                   <ApexChart width="850" type="line" :options="chartOptions" :series="series"></ApexChart>
             </div>
         </div>
@@ -18,7 +15,7 @@
 
 <script>
 import VueApexCharts from "vue3-apexcharts";
-import { startOfMonth, endOfMonth,eachDayOfInterval, getDaysInMonth, addDays, format } from "date-fns";
+import { startOfMonth, endOfMonth,eachDayOfInterval } from "date-fns";
 import Pie from "@/components/ui/Charts/Pie.vue";
 
 export default {
@@ -37,19 +34,26 @@ export default {
             },
                 {
                     name: "Page Views",
-                    data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+                    data: [null,null,7 , 4, 5, 6, 29, 37, 36, 51, 32, 35, 20,21,22,31],
                 },
                 {
                     name: 'Total Visits',
-                    data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+                    data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47],
                 },
             ],
             chartOptions: {
+                colors: ['#0061F2', '#6900C7', '#cac8cb' ],
                 chart: {
                     height: 350,
                     type: 'line',
                     zoom: {
                         enabled: false
+                    },
+                    toolbar: {
+                        show: true,
+                        tools: {
+                            download: false
+                        }
                     },
                 },
                 dataLabels: {
@@ -57,12 +61,11 @@ export default {
                 },
                 stroke: {
                     width: [5, 7, 5],
-                    curve: 'straight',
-                    dashArray: [0, 0, 5]
+                    curve: 'smooth',
+                    dashArray: [0, 0, 2]
                 },
                 title: {
-                    text: 'Page Statistics',
-                    align: 'left'
+                    show: false
                 },
                 legend: {
                     tooltipHoverFormatter: function(val, opts) {

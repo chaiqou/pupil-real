@@ -49,7 +49,7 @@ class BillingoController extends Controller
         }
     }
 
-    public static function createParentBillingo($user_id): RedirectResponse
+    public static function createParentBillingo($user_id): void
     {
         $user = User::where('id', $user_id)->first();
         $merchants = Merchant::where('school_id', $user->school_id)->get();
@@ -76,7 +76,5 @@ class BillingoController extends Controller
                 'merchant_id' => $merchant->id,
             ]);
         }
-
-        return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
     }
 }

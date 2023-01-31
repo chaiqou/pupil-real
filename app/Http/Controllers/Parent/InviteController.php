@@ -176,7 +176,7 @@ class InviteController extends Controller
             $invite->update(['state' => 5]);
 
             return redirect()->to($stripeCreateSessionRequest->url);
-        } if ($request->user_response === 'dont_save_card') {
+        } if($request->user_response === 'dont_save_card') {
             $invite->update(['state' => 5]);
 
             return $user->sendVerificationEmail('parent-verify.email');
@@ -208,17 +208,16 @@ class InviteController extends Controller
 
     public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
     {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-        $user = User::where('email', $invite->email)->first();
+        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
+        $user = User::where('email', $invite->email)->firstOrFail();
         $input_summary = implode('', $request->input('code_each.*'));
         $verification_code = VerificationCode::where('invite_id', $invite->id)->first();
         Log::info($input_summary);
         Log::info($verification_code->code);
         if ($verification_code->code == $input_summary) {
+            BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
-            $invite->delete();
-
-            return BillingoController::createParentBillingo($user->id);
+            return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
 
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
