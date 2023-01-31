@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use Carbon\Carbon;
-use App\Models\Lunch;
-use App\Models\Student;
-use App\Models\Transaction;
-use App\Models\PeriodicLunch;
-use App\Helpers\CalculateClaims;
-use Illuminate\Http\JsonResponse;
 use App\Events\TransactionCreated;
-use Illuminate\Support\Facades\DB;
+use App\Helpers\CalculateClaims;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Models\Lunch;
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use App\Models\Transaction;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
@@ -30,7 +30,6 @@ class OrderLunchController extends Controller
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
-
 
         $calculateClaims = new CalculateClaims(['claims' => $validate['claims'], 'claimables' => $validate['claimables']]);
         $claimResult = $calculateClaims->calculateClaimsJson();
