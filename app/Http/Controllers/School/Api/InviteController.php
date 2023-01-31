@@ -60,7 +60,14 @@ class InviteController extends Controller
             Mail::to($email)->send(new InviteUserMail($invite));
             $invite->update(['state' => 1]);
         }
-
         return response()->json('Invite(s) sent!');
+    }
+
+    public function delete(Request $request): ResourceCollection
+    {
+        $invite = Invite::where('id', $request->invite_id)->first();
+        $invite->delete();
+        $invites = Invite::where('school_id', auth()->user()->school_id)->where('role', 'parent')->latest('created_at')->paginate(5);
+        return InviteResource::collection($invites);
     }
 }

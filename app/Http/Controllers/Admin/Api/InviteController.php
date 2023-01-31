@@ -9,6 +9,7 @@ use App\Mail\InviteUserMail;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -62,5 +63,13 @@ class InviteController extends Controller
         $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);
 
         return InviteResource::collection($invites);
+    }
+
+    public function delete(Request $request): ResourceCollection
+    {
+     $invite = Invite::where('id', $request->invite_id)->first();
+     $invite->delete();
+     $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);
+     return InviteResource::collection($invites);
     }
 }
