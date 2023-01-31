@@ -52,7 +52,7 @@ class OrderLunchController extends Controller
                     'history' => [],
                 ]),
                 'payment_method' => 'bank_transfer',
-                'billing_type' => 'invoice',
+                'billing_type' => 'proforma',
                 'billing_items' => json_encode([
                     'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                     'unit_price' => $pricePeriod,
@@ -61,7 +61,7 @@ class OrderLunchController extends Controller
                     'unit' => 'db',
                     'vat' => '27%',
                 ]),
-                'billing_provider' => 'none',
+                'billing_provider' => 'billingo',
                 'billing_comment' => json_encode([
                     'comment' => 'hardcoded billing comment',
                 ]),
