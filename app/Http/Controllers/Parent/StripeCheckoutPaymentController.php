@@ -204,7 +204,6 @@ class StripeCheckoutPaymentController extends Controller
                     ]),
                     'stripe_payment_intent' => $session->payment_intent,
                     'payment_method' => 'stripe',
-                    'billing_type' => 'invoice',
                     'billing_items' => json_encode([
                         'name' => 'Test lunch',
                         'unit_price' => 'pricePeriod',
@@ -219,12 +218,15 @@ class StripeCheckoutPaymentController extends Controller
                     ]),
                 ]);
 
-                if (! $transaction) {
-                    throw new NotFoundHttpException();
+                if ($transaction) {
+                    PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['transaction_id' => $transaction->id]);
+                    PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['pending_transactions_id' => null]);
+                    PendingTransaction::where('id', $pending_transaction->id)->delete();
+                    event(new TransactionCreated($transaction));
                 }
 
-                if ($transaction) {
-                    event(new TransactionCreated($transaction));
+                if (! $transaction) {
+                    throw new NotFoundHttpException();
                 }
             }
 
