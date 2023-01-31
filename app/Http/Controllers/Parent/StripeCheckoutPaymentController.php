@@ -184,44 +184,48 @@ class StripeCheckoutPaymentController extends Controller
             $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
             $customer = auth()->user();
 
-            $transaction = Transaction::create([
-                'user_id' => $pending_transaction->user_id,
-                'student_id' => $pending_transaction->id,
-                'merchant_id' => $pending_transaction->merchant_id,
-                'transaction_identifier' => 'here_should_be_some_hash',
-                'transaction_date' => now()->format('Y-m-d'),
-                'transaction_amount' => 1,
-                'transaction_type' => 'payment',
-                'comments' => json_encode([
-                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-                    'comment_history' => [],
-                ]),
-                'history' => json_encode([
-                    'history' => [],
-                ]),
-                'stripe_payment_intent' => $session->payment_intent,
-                'payment_method' => 'stripe',
-                'billing_type' => 'invoice',
-                'billing_items' => json_encode([
-                    'name' => 'Test lunch',
-                    'unit_price' => 'pricePeriod',
-                    'unit_price_type' => 'gross',
-                    'quantity' => 1,
-                    'unit' => 'db',
-                    'vat' => '27%',
-                ]),
-                'billing_provider' => 'none',
-                'billing_comment' => json_encode([
-                    'comment' => 'hardcoded billing comment',
-                ]),
-            ]);
+            $existing_transaction = Transaction::where('stripe_payment_intent', $session->payment_intent)->first();
 
-            if (! $transaction) {
-                throw new NotFoundHttpException();
-            }
+            if (! $existing_transaction) {
+                $transaction = Transaction::create([
+                    'user_id' => $pending_transaction->user_id,
+                    'student_id' => $pending_transaction->student_id,
+                    'merchant_id' => $pending_transaction->merchant_id,
+                    'transaction_identifier' => 'here_should_be_some_hash',
+                    'transaction_date' => now()->format('Y-m-d'),
+                    'transaction_amount' => 1,
+                    'transaction_type' => 'payment',
+                    'comments' => json_encode([
+                        'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
+                        'comment_history' => [],
+                    ]),
+                    'history' => json_encode([
+                        'history' => [],
+                    ]),
+                    'stripe_payment_intent' => $session->payment_intent,
+                    'payment_method' => 'stripe',
+                    'billing_type' => 'invoice',
+                    'billing_items' => json_encode([
+                        'name' => 'Test lunch',
+                        'unit_price' => 'pricePeriod',
+                        'unit_price_type' => 'gross',
+                        'quantity' => 1,
+                        'unit' => 'db',
+                        'vat' => '27%',
+                    ]),
+                    'billing_provider' => 'none',
+                    'billing_comment' => json_encode([
+                        'comment' => 'hardcoded billing comment',
+                    ]),
+                ]);
 
-            if ($transaction) {
-                event(new TransactionCreated($transaction));
+                if (! $transaction) {
+                    throw new NotFoundHttpException();
+                }
+
+                if ($transaction) {
+                    event(new TransactionCreated($transaction));
+                }
             }
 
             if (! $session) {
@@ -299,7 +303,6 @@ class StripeCheckoutPaymentController extends Controller
                 $sessionId = $paymentIntent['id'];
 
                 $payment = Transaction::query()->where('stripe_session_id', $sessionId)->where('payment_status', 'outstanding')->first();
-
 
             default:
                 echo 'Received unknown event type '.$event->type;
