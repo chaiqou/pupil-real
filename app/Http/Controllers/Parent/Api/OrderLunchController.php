@@ -39,12 +39,18 @@ class OrderLunchController extends Controller
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $lunch->merchant_id,
+                'transaction_identifier' => 'here_should_be_some_hash',
                 'transaction_date' => now()->format('Y-m-d'),
-                'billingo_transaction_id' => null,
-                'amount' => 1,
-                'transaction_type' => 'debit',
-                'billing_type' => 'proforma',
-                'billing_comment' => 'billing_comment_here',
+                'transaction_amount' => 1,
+                'transaction_type' => 'payment',
+                'comments' => json_encode([
+                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
+                    'comment_history' => [],
+                ]),
+                'history' => json_encode([
+                    'history' => [],
+                ]),
+                'payment_method' => 'bank_transfer',
                 'billing_items' => json_encode([
                     'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                     'unit_price' => $pricePeriod,
@@ -53,13 +59,9 @@ class OrderLunchController extends Controller
                     'unit' => 'db',
                     'vat' => '27%',
                 ]),
-                'pending' => json_encode([
-                    'pending' => 0,
-                    'pending_history' => [],
-                ]),
-                'comment' => json_encode([
-                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-                    'comment_history' => [],
+                'billing_provider' => 'none',
+                'billing_comment' => json_encode([
+                    'comment' => 'hardcoded billing comment',
                 ]),
             ]);
 

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\Parent;
 
-use DateTime;
-use Stripe\Stripe;
-use Stripe\Webhook;
-use App\Models\User;
-use Stripe\Customer;
-use App\Models\Lunch;
-use App\Models\Student;
-use Stripe\StripeClient;
-use Illuminate\View\View;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
-use App\Models\PeriodicLunch;
-use PHPUnit\Runner\Exception;
-use UnexpectedValueException;
-use App\Helpers\CalculateClaims;
-use Illuminate\Http\JsonResponse;
 use App\Events\TransactionCreated;
-use App\Models\PendingTransaction;
-use Illuminate\Support\Facades\DB;
+use App\Helpers\CalculateClaims;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
+use App\Models\Lunch;
+use App\Models\PendingTransaction;
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use App\Models\Transaction;
+use App\Models\User;
+use DateTime;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use PHPUnit\Runner\Exception;
+use Stripe\Checkout\Session;
+use Stripe\Customer;
 use Stripe\Exception\SignatureVerificationException;
+use Stripe\Stripe;
+use Stripe\StripeClient;
+use Stripe\Webhook;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use UnexpectedValueException;
 
 class StripeCheckoutPaymentController extends Controller
 {
@@ -97,16 +97,16 @@ class StripeCheckoutPaymentController extends Controller
                                 'unit_amount' => $validate['price'] * 100,
                             ],
                             'quantity' => 1,
-                        ]
+                        ],
                     ],
                     'mode' => 'payment',
-                    'success_url' => route('parent.checkout_success', [], true) . '?session_id={CHECKOUT_SESSION_ID}',
-                    'cancel_url' => route('parent.checkout_cancel', [], true) . '?session_id={CHECKOUT_SESSION_ID}',
+                    'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 ]);
             });
         }
 
-        DB::transaction(function () use ($checkout_session, $student, $lunch, $pricePeriod, $claimResult , $validate) {
+        DB::transaction(function () use ($checkout_session, $student, $lunch, $pricePeriod, $claimResult, $validate) {
             $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
