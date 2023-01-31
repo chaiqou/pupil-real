@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use App\Events\TransactionCreated;
-use App\Helpers\CalculateClaims;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Parent\LunchOrderRequest;
+use Carbon\Carbon;
 use App\Models\Lunch;
-use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
-use Carbon\Carbon;
+use App\Models\PeriodicLunch;
+use App\Helpers\CalculateClaims;
 use Illuminate\Http\JsonResponse;
+use App\Events\TransactionCreated;
+use App\Models\PendingTransaction;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Parent\LunchOrderRequest;
 
 class OrderLunchController extends Controller
 {
@@ -35,7 +36,7 @@ class OrderLunchController extends Controller
         $claimResult = $calculateClaims->calculateClaimsJson();
 
         DB::transaction(function () use ($student, $validate, $claimResult, $pricePeriod, $lunch) {
-            $transaction = Transaction::create([
+             $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $lunch->merchant_id,
@@ -51,6 +52,7 @@ class OrderLunchController extends Controller
                     'history' => [],
                 ]),
                 'payment_method' => 'bank_transfer',
+                'billing_type' => 'invoice',
                 'billing_items' => json_encode([
                     'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                     'unit_price' => $pricePeriod,
@@ -67,7 +69,7 @@ class OrderLunchController extends Controller
 
             $lunch = PeriodicLunch::create([
                 'student_id' => $student->id,
-                'transaction_id' => $transaction->id,
+                'pending_transaction_id' => $pending_transaction->id,
                 'merchant_id' => $lunch->merchant_id,
                 'lunch_id' => $validate['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
@@ -75,9 +77,6 @@ class OrderLunchController extends Controller
                 'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
-            if ($transaction->billing_type !== 'none') {
-                event(new TransactionCreated($transaction));
-            }
         });
 
         return response()->json(['success' => 'success']);
