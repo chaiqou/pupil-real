@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Events\TransactionCreated;
+use App\Helpers\CalculateClaims;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
 use App\Models\Lunch;
@@ -11,7 +12,6 @@ use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\User;
-use DateInterval;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,39 +32,15 @@ class StripeCheckoutPaymentController extends Controller
     {
         $validate = $request->validated();
 
-        // Get correct claims days and add each of them 1 day
-        $claimDates = [];
-        foreach ($validate['claims'] as $date) {
-            $date = new DateTime($date);
-            $date->add(new DateInterval('P1D'));
-            $claimDates[] = $date->format('Y-m-d H:i:s');
-        }
-
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
-
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
 
-        // Generates claims json for each days and also loops over claimables
-
-        $claimsJson = [];
-
-        foreach ($claimDates as $date) {
-            $claimables = [];
-
-            foreach ($validate['claimables'] as $claimable) {
-                $claimables[] = [
-                    'name' => $claimable,
-                    'claimed' => false,
-                    'claimed_date' => null,
-                ];
-            }
-
-            $claimsJson[$date] = $claimables;
-        }
+        // Claims
+        $calculateClaims = new CalculateClaims(['claims' => $validate['claims'], 'claimables' => $validate['claimables']]);
+        $claimResult = $calculateClaims->calculateClaimsJson();
 
         // STRIPE
-
         Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
 
         $customer = auth()->user();
@@ -72,8 +48,8 @@ class StripeCheckoutPaymentController extends Controller
         $existingCustomer = User::where('id', $customer->id)->where('stripe_customer_id', '!=', null)->first();
 
         if ($existingCustomer != null) {
-            $formattedStartDate = new DateTime($claimDates[0]);
-            $formattedEndDate = new DateTime($claimDates[count($claimDates) - 1]);
+            $formattedStartDate = new DateTime($claimResult['claimDates'][0]);
+            $formattedEndDate = new DateTime($claimResult['claimDates'][count($claimResult['claimDates']) - 1]);
             $formattedStartDate = $formattedStartDate->format('Y-m-d');
             $formattedEndDate = $formattedEndDate->format('Y-m-d');
             $checkout_session = Session::create([
@@ -144,7 +120,7 @@ class StripeCheckoutPaymentController extends Controller
             'payment_method' => 'stripe',
             'billing_type' => 'invoice',
             'billing_items' => json_encode([
-                'name' => 'Test lunch '.$claimDates[0].' - '.$claimDates[count($claimDates) - 1],
+                'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                 'unit_price' => $pricePeriod,
                 'unit_price_type' => 'gross',
                 'quantity' => 1,
@@ -163,9 +139,9 @@ class StripeCheckoutPaymentController extends Controller
             'merchant_id' => $lunch->merchant_id,
             'lunch_id' => $validate['lunch_id'],
             'card_data' => 'hardcoded instead of $student->card_data',
-            'start_date' => $claimDates[0],
-            'end_date' => $claimDates[count($claimDates) - 1],
-            'claims' => json_encode($claimsJson),
+            'start_date' => $claimResult['claimDates'][0],
+            'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
+            'claims' => json_encode($claimResult['claimJson']),
             'payment' => 'outstanding',
         ]);
 
