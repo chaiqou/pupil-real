@@ -28,4 +28,14 @@ class Merchant extends Model
     {
         return $this->hasOne(BillingoData::class);
     }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function pendingTransactions(): HasMany
+    {
+        return $this->hasMany(PendingTransaction::class);
+    }
 }

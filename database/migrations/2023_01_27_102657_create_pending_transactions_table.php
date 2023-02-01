@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ return new class() extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('pending_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained();
             $table->foreignId('user_id')->constrained();
@@ -26,12 +26,16 @@ return new class() extends Migration
             $table->json('history');
             $table->string('wallet_id')->nullable();
             /* Update wallet to be constrained to wallet table */
-            $table->string('stripe_payment_intent')->nullable();
+            $table->string('stripe_session_id')->nullable();
             $table->enum('payment_method', ['stripe', 'bank_transfer', 'wallet', 'other', 'none']);
             $table->json('billing_items')->nullable();
             $table->enum('billing_provider', ['none', 'billingo']);
             $table->json('billing_comment')->nullable();
-            $table->integer('invoiceId')->nullable();
+            $table->enum('billing_type', ['invoice', 'proforma', 'none']);
+            $table->integer('proforma_id')->nullable();
+            $table->boolean('convert_to_invoice')->default(false);
+            $table->string('handler_status')->default('awaiting_handler');
+            $table->json('cancelled_status')->nullable();
             $table->timestamps();
         });
     }
@@ -43,6 +47,6 @@ return new class() extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('pending_transactions');
     }
 };
