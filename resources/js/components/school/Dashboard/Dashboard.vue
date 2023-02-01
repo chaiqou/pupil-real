@@ -1,15 +1,63 @@
 <template>
     <div class="grid grid-template-areas-2x2 mt-10">
-        <div class="grid-area-1">1</div>
-        <div class="grid-area-2">2</div>
-        <div class="grid-area-3 mt-32">
-            <div class="w-full">
-                <Pie width="500" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
-            </div>
+        <div class="grid-area-1">
+            <div class="w-1/2 mt-10">
+
+                <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
+                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                            <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
+                            <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                                <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                                    {{ item.stat }}
+                                    <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
+                                </div>
+
+                                <div :class="[item.changeType === 'increase' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0']">
+                                    <ArrowUpIcon v-if="item.changeType === 'increase'" class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                                    <ArrowDownIcon v-else class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                                    <span class="sr-only"> {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }} by </span>
+                                    {{ item.change }}
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+
+                <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                        <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
+                        <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                            <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                                {{ item.stat }}
+                                <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
+                            </div>
+
+                            <div :class="[item.changeType === 'increase' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0']">
+                                <ArrowUpIcon v-if="item.changeType === 'increase'" class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                                <ArrowDownIcon v-else class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                                <span class="sr-only"> {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }} by </span>
+                                {{ item.change }}
+                            </div>
+                        </dd>
+                    </div>
+                </dl>
+
+                </div>
+
         </div>
-            <div class="grid-area-4 mt-32">
-                  <ApexChart width="850" type="line" :options="chartOptions" :series="series"></ApexChart>
-            </div>
+        <div class="grid-area-2">2</div>
+      <div class="flex justify-between">
+          <div class="grid-area-3 mt-32">
+              <div class="w-full bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
+                  <div>
+                      <Pie width="500" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
+                  </div>
+              </div>
+          </div>
+          <div class="grid-area-4 mt-32  bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
+              <ApexChart width="850" :options="chartOptions" :series="series"></ApexChart>
+          </div>
+      </div>
         </div>
 </template>
 
@@ -17,32 +65,49 @@
 import VueApexCharts from "vue3-apexcharts";
 import { startOfMonth, endOfMonth,eachDayOfInterval } from "date-fns";
 import Pie from "@/components/ui/Charts/Pie.vue";
-
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid'
+import { CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon } from '@heroicons/vue/24/outline'
 export default {
     components: {
         ApexChart: VueApexCharts,
         Pie,
+        ArrowDownIcon,ArrowUpIcon,CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon
     },
     data() {
         return {
+           statsTop: [
+                { id: 1, name: 'Total Subscribers', stat: '71,897', icon: UsersIcon, change: '122', changeType: 'increase' },
+                { id: 2, name: 'Avg. Open Rate', stat: '58.16%', icon: EnvelopeOpenIcon, change: '5.4%', changeType: 'increase' },
+           ],
+            statsBottom: [
+                { name: 'Total Subscribers', stat: '71,897', previousStat: '70,946', change: '12%', changeType: 'increase' },
+                { name: 'Avg. Open Rate', stat: '58.16%', previousStat: '56.14%', change: '2.02%', changeType: 'increase' },
+            ],
             currentMonthDates: [],
             labels: ['example1', 'example2'],
             chartData: [40, 50, 12],
             series: [{
                 name: "Session Duration",
+                type: 'area',
                 data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
             },
                 {
                     name: "Page Views",
-                    data: [null,null,7 , 4, 5, 6, 29, 37, 36, 51, 32, 35, 20,21,22,31],
+                    type: 'line',
+                    data: [null,null,null,7 , 4, 5, 6, 29, 37, 36, 51, 32, 35, 20,21,22,31,null,null,null,null,null, null,null,null,null,null,null,null,null,null],
                 },
                 {
+                    type: 'line',
                     name: 'Total Visits',
-                    data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47],
+                    data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47, null,null,null,null,null,null, null,null,null,null,null,null,null,null,null],
                 },
             ],
             chartOptions: {
                 colors: ['#0061F2', '#6900C7', '#cac8cb' ],
+                fill: {
+                    type:'solid',
+                    opacity: [0.25, 1],
+                },
                 chart: {
                     height: 350,
                     type: 'line',
@@ -50,7 +115,6 @@ export default {
                         enabled: false
                     },
                     toolbar: {
-                        show: true,
                         tools: {
                             download: false
                         }
@@ -74,9 +138,6 @@ export default {
                 },
                 markers: {
                     size: 0,
-                    hover: {
-                        sizeOffset: 6
-                    }
                 },
                 xaxis: {
                     categories: this.currentMonthDates,

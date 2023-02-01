@@ -29,7 +29,6 @@
         "@vueuse/components": "^9.10.0",
         "@vueuse/core": "^9.10.0",
         "apexcharts": "^3.36.3",
-        "chart.js": "^4.2.0",
         "date-fns": "^2.29.3",
         "pinia": "^2.0.29",
         "qrcode.vue": "^3.3.3",
