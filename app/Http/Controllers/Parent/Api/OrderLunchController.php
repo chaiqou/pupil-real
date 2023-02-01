@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use Carbon\Carbon;
-use App\Models\Lunch;
-use App\Models\Student;
-use App\Models\Transaction;
-use App\Models\PeriodicLunch;
 use App\Helpers\CalculateClaims;
-use Illuminate\Http\JsonResponse;
-use App\Events\TransactionCreated;
-use App\Models\PendingTransaction;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Models\Lunch;
+use App\Models\PendingTransaction;
+use App\Models\PeriodicLunch;
+use App\Models\Student;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
@@ -36,7 +34,7 @@ class OrderLunchController extends Controller
         $claimResult = $calculateClaims->calculateClaimsJson();
 
         DB::transaction(function () use ($student, $validate, $claimResult, $pricePeriod, $lunch) {
-             $pending_transaction = PendingTransaction::create([
+            $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $lunch->merchant_id,

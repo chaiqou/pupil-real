@@ -22,7 +22,7 @@ return new class() extends Migration
             $table->foreignId('school_id')->constrained();
             $table->string('stripe_account_id')->nullable();
             $table->boolean('stripe_completed')->default(false);
-            $table->boolean('has_balance')->default(false);
+            $table->boolean('has_wallet')->default(false);
             $table->boolean('has_lunch')->default(false);
             $table->json('company_details');
             $table->timestamps();

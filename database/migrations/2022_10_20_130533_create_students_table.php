@@ -21,7 +21,6 @@ return new class() extends Migration
             $table->string('card_number')->nullable();
             $table->string('card_data')->nullable();
             $table->json('user_information')->nullable();
-            $table->json('balances')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('school_id')->constrained('users', 'school_id');
             $table->timestamps();
