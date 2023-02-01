@@ -1,8 +1,7 @@
 <template>
-    <div class="grid grid-template-areas-2x2 mt-10">
+    <div class="grid grid-template-areas-2x2 mt-10 gap-4">
         <div class="grid-area-1">
-            <div class="w-1/2 mt-10">
-
+            <div class="w-full">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
                     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
@@ -45,8 +44,11 @@
                 </div>
 
         </div>
-        <div class="grid-area-2">2</div>
-      <div class="flex justify-between">
+        <div class="grid-area-2 w-full">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
+            <dashboard-transactions class="mt-5" :schoolId="1"></dashboard-transactions>
+
+        </div>
           <div class="grid-area-3 mt-32">
               <div class="w-full bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
                   <div>
@@ -54,11 +56,10 @@
                   </div>
               </div>
           </div>
-          <div class="grid-area-4 mt-32  bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
+          <div class="grid-area-4 mt-32 mb-32 bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
               <ApexChart width="850" :options="chartOptions" :series="series"></ApexChart>
           </div>
       </div>
-        </div>
 </template>
 
 <script>
@@ -67,11 +68,13 @@ import { startOfMonth, endOfMonth,eachDayOfInterval } from "date-fns";
 import Pie from "@/components/ui/Charts/Pie.vue";
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid'
 import { CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon } from '@heroicons/vue/24/outline'
+import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue"
 export default {
     components: {
         ApexChart: VueApexCharts,
         Pie,
-        ArrowDownIcon,ArrowUpIcon,CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon
+        ArrowDownIcon,ArrowUpIcon,CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon,
+        DashboardTransactions
     },
     data() {
         return {
@@ -180,103 +183,6 @@ export default {
                     date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })
                 );
                 console.log(this.currentMonthDates)
-
-                //     this.dataForRoundChart = {
-                //         datasets: [{
-                //             label: 'My First Dataset',
-                //             data: [300, 50, 150, 99],
-                //             backgroundColor: [
-                //                 'rgb(98, 192, 255)',
-                //                 'rgb(109, 168, 255)',
-                //                 'rgb(0, 97, 242)',
-                //                 'rgb(0, 30, 74)'
-                //             ],
-                //             hoverOffset: 4,
-                //         }],
-                //         labels: [
-                //             '1',
-                //             'Blue',
-                //             '3',
-                //             'Green'
-                //         ],
-                //     };
-                //
-                //
-                //     // data generating
-                //     const data = [
-                //         {
-                //             label: 'label123',
-                //             data: [99,94,91,83,45,45,45,45],
-                //             borderColor: 'rgb(99,99,211)'
-                //         },
-                //         {
-                //             label: 'example3',
-                //             data: [3,23,95,95,95,52,52],
-                //             borderColor: 'rgb(42,212,43)'
-                //         }
-                //     ]
-                //
-                //     data.forEach((element) => {
-                //          let objectData = {
-                //             label: element.label,
-                //             data: element.data,
-                //             borderColor: element.borderColor,
-                //             yAxisID: 'yAxis',
-                //             xAxisID: 'xAxis',
-                //         }
-                //         this.object.push(objectData);
-                //     })
-                //     //
-                //     console.log(this.object);
-                //
-                //    //Line area chart
-                //     const labels = this.daysOfMonth;
-                //     const dataLine = {
-                //         labels: labels,
-                //         datasets: this.object
-                //     };
-                //
-                //     const ctxLine = document.getElementById('chartLine');
-                //     const chartLine = new Chart(ctxLine, {
-                //         type: 'line',
-                //         data: dataLine,
-                //         options: {
-                //             elements: {
-                //                 point: {
-                //                 radius: 0
-                //                 }
-                //             },
-                //             plugins: {
-                //                 legend: {
-                //                     display: true,
-                //                     position: 'bottom',
-                //                     labels: {
-                //                         usePointStyle: true,
-                //                         pointStyle: 'circle',
-                //                     }
-                //                 }
-                //             },
-                //             scales: {
-                //               yAxis: {
-                //                   border: {
-                //                       dash: [5,5,5]
-                //                   },
-                //               },
-                //                 xAxis: {
-                //                     grid: {
-                //                         display: false,
-                //                     }
-                //                 }
-                //             },
-                //             onClick: (e) => {
-                //                 const canvasPosition = getRelativePosition(e, chartLine);
-                //
-                //                 // Substitute the appropriate scale IDs
-                //                 const dataX = chartLine.scales.x.getValueForPixel(canvasPosition.x);
-                //                 const dataY = chartLine.scales.y.getValueForPixel(canvasPosition.y);
-                //             }
-                //         }
-                //     });
             }
 }
 </script>
