@@ -274,18 +274,27 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
         : false;
 });
 
-watch(bufferTime, (newValue) => {
+watch(bufferTime, () => {
     //  Find first order da and add buffer times
     firstPossibleDay.value = addHours(
         parseISO(availableDays.value[0]),
-        newValue
+        bufferTime
     );
 
     // Add Extra one day to first possible day
     addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
 
+    const filteredAndAddedBufferTime = Object.values(
+        availableDays.value
+    ).filter(
+        (date) =>
+            date >= format(addOneDayToFirstPossibleDay.value, "yyyy-MM-dd")
+    );
+
     // Save sorted available days
-    sortedDates.value = availableDays.value.map((date) => parseISO(date));
+    sortedDates.value = filteredAndAddedBufferTime.map((date) =>
+        parseISO(date)
+    );
 
     store.first_day = parseISO(findCorrectStartDay.value[0]);
 });
