@@ -109,7 +109,6 @@ class InviteController extends Controller
             $stripeCustomerRequest = $stripe->customers->create([
                 'address' => [
                     'city' => $userInformation->city,
-                    'country' => $userInformation->country,
                     'line1' => $userInformation->street_address,
                     'postal_code' => $userInformation->zip,
                     'state' => $userInformation->state,
@@ -157,6 +156,7 @@ class InviteController extends Controller
                 $stripeCreateSessionRequest = $stripe->checkout->sessions->create([
                     'payment_method_types' => ['card'],
                     'mode' => 'setup',
+                    'client_reference_id' => $user->stripe_customer_id,
                     'customer' => $user->stripe_customer_id,
                     'success_url' => $success_url,
                     'cancel_url' => $cancel_url,
@@ -182,9 +182,9 @@ class InviteController extends Controller
             return $user->sendVerificationEmail('parent-verify.email');
         } else {
             $invite->update(['state' => 5]);
+        }
 
             return redirect()->back()->withErrors('Please select you answer');
-        }
     }
 
     public function verifyEmail(): View|RedirectResponse
@@ -208,17 +208,16 @@ class InviteController extends Controller
 
     public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
     {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-        $user = User::where('email', $invite->email)->first();
+        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
+        $user = User::where('email', $invite->email)->firstOrFail();
         $input_summary = implode('', $request->input('code_each.*'));
         $verification_code = VerificationCode::where('invite_id', $invite->id)->first();
         Log::info($input_summary);
         Log::info($verification_code->code);
         if ($verification_code->code == $input_summary) {
+            BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
-            $invite->delete();
-
-            return BillingoController::createParentBillingo($user->id);
+            return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
 
         return back()->withErrors(['code' => 'These credentials do not match our records.']);

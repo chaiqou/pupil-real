@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteContro
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Parent\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
+use App\Models\Invite;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,13 +19,14 @@ class AuthController extends Controller
     public function authenticate(AuthenticationRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-
         if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
             if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
                 return auth()->user()->sendTwoFactorCode();
             }
 
             if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0 && auth()->user()->hasRole('parent')) {
+                $invite = Invite::where('email', $request->email)->first();
+                $invite ? $invite->delete() : null;
                 return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
             }
 

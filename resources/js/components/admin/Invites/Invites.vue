@@ -15,11 +15,14 @@
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">School Code</th>
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Send date</th>
                 <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Update date</th>
+                <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+                    <span class="sr-only">Actions</span>
+                </th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
                 <tr v-if="this.isInvitesLoaded && !this.invites.length">
-                    <td class="bg-white" colspan="4">
+                    <td class="bg-white" colspan="7">
                         <InvitesNotFound role="school"></InvitesNotFound>
                     </td>
                 </tr>
@@ -52,6 +55,15 @@
                         class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
                     >
                         {{ invite.updated_at }}
+                    </td>
+                    <td
+                        class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                    >
+                        <button
+                            class="text-indigo-600 hover:text-indigo-900"
+                        >
+                            <dropdown-animated role="admin" :items="['Delete']" :invite-id="invite.id">Actions</dropdown-animated>
+                        </button>
                     </td>
                 </tr>
                 <tr v-if="!this.isInvitesLoaded" v-for="n in 7">
@@ -90,6 +102,13 @@
                             class="h-2 bg-slate-300 rounded animate-pulse"
                         ></div>
                     </td>
+                    <td
+                        class="whitespace-nowrap  px-3 py-4 text-sm text-gray-500"
+                    >
+                        <div
+                            class="h-2 bg-slate-300 rounded animate-pulse"
+                        ></div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -100,10 +119,12 @@
 import { mapWritableState } from "pinia";
 import { useInviteStore } from "@/stores/useInviteStore";
 import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
+import DropdownAnimated from "@/components/ui/Invites/DropdownAnimated.vue";
 
 export default {
     components: {
         InvitesNotFound,
+        DropdownAnimated,
     },
     data() {
         return {
