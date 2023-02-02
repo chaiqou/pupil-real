@@ -202,7 +202,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours } from "date-fns";
+import { format, parseISO, addDays, addHours, isBefore } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
 
@@ -249,25 +249,6 @@ watch(availableOrders, () => {
     });
 });
 
-const findCorrectStartDay = computed(() => {
-    const formatedSortedDates = sortedDates.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    let result = formatedSortedDates.filter(
-        (x) => !formattedDisabledDays.includes(x)
-    );
-
-    let formatResult = result.map((day) => parseISO(day));
-
-    store.availableDatesForStartOrdering = formatResult;
-    return result;
-});
-
 const disableIfDatesLessThenPeriodLength = computed(() => {
     return +store.availableDatesForStartOrdering.length < +store.period_length
         ? true
@@ -296,7 +277,18 @@ watch(bufferTime, (newValue) => {
         parseISO(date)
     );
 
-    store.first_day = parseISO(findCorrectStartDay.value[0]);
+    let getCurrentTime = new Date().getHours(); // get today's date and time
+
+    let startingDay;
+    if (newValue <= getCurrentTime) {
+        startingDay = addDays(sortedDates.value[0], 1);
+    } else {
+        startingDay = sortedDates.value[0];
+    }
+
+    store.availableDatesForStartOrdering = sortedDates.value;
+
+    store.first_day = startingDay;
 });
 
 onMounted(async () => {
