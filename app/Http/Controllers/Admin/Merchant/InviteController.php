@@ -147,7 +147,7 @@ class InviteController extends Controller
             ]),
         ]);
         try {
-            $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
             if ($request->business_type === 'individual') {
                 $stripeAccount = $stripe->accounts->create([
                     'type' => 'express',
@@ -237,7 +237,7 @@ class InviteController extends Controller
             : [$refresh_url = env('APP_URL').'/'.'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'/'.'merchant-billingo-verify/'.$invite->uniqueID];
 
         try {
-            $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
             $stripeAccountLink = $stripe->accountLinks->create([
                 'account' => $merchant->stripe_account_id,
                 'refresh_url' => $refresh_url,
@@ -265,7 +265,7 @@ class InviteController extends Controller
         if (! isset($merchant->stripe_account_id)) {
             return redirect()->back();
         }
-        $stripe = new \Stripe\StripeClient(env('STRIPE_API_SECRET'));
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $stripeAccountRetrieve = $stripe->accounts->retrieve(
             $merchant->stripe_account_id
         );

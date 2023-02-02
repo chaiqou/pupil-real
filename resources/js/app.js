@@ -52,7 +52,6 @@ import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
 const pinia = createPinia();
 const app = createApp({});
 
-
 app.component("dashboard-navigation", DashboardNavigation);
 app.component("dashboard-navigation-mobile", DashboardNavigationMobile);
 app.component("navigation-menu-button", NavigationMenuButton);

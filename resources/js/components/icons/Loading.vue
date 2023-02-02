@@ -1,5 +1,5 @@
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.626 221.04792">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208.626 221.04792" class="p-1">
         <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#0061F2" />
@@ -17,7 +17,7 @@
             style="
                 fill: none;
                 stroke-miterlimit: 10;
-                animation: dash 2s infinite linear;
+                animation: dash 1.3s infinite linear;
                 stroke-dasharray: 500;
                 stroke-dashoffset: 1000;
                 stroke-width: 3;

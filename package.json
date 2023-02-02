@@ -18,7 +18,8 @@
         "vue-loader": "^17.0.1"
     },
     "dependencies": {
-        "@headlessui/vue": "^1.7.7",
+        "@floating-ui/dom": "^1.1.0",
+        "@headlessui/vue": "^1.7.4",
         "@heroicons/vue": "^2.0.13",
         "@sentry/tracing": "^7.30.0",
         "@sentry/vue": "^7.30.0",
