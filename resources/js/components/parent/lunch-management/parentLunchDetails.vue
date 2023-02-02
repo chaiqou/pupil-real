@@ -274,11 +274,11 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
         : false;
 });
 
-watch(bufferTime, () => {
+watch(bufferTime, (newValue) => {
     //  Find first order da and add buffer times
     firstPossibleDay.value = addHours(
         parseISO(availableDays.value[0]),
-        bufferTime
+        newValue
     );
 
     // Add Extra one day to first possible day
