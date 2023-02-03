@@ -19,10 +19,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Lomtadze',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
@@ -39,10 +35,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Ramishvili',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
@@ -59,10 +51,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Lomtadze',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
@@ -79,10 +67,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Ramishvili',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
@@ -99,10 +83,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Lomtadze',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
@@ -119,10 +99,6 @@ class StudentSeeder extends Seeder
             'last_name' => 'Ramishvili',
             'card_number' => 123456789,
             'card_data' => 123456789,
-            'balances' => json_encode([
-                'balance' => 0,
-                'balance_history' => [],
-            ]),
             'user_information' => [
                 'country' => 'HU',
                 'state' => 'RansomState',
