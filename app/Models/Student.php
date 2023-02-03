@@ -43,4 +43,9 @@ class Student extends Model
     {
         return $this->hasMany(PeriodicLunch::class);
     }
+
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(Wallet::class);
+    }
 }

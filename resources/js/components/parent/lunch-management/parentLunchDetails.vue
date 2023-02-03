@@ -202,24 +202,18 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours } from "date-fns";
+import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
 
 const store = useLunchFormStore();
 
-const firstPossibleDay = ref("");
 const availableDays = ref([]);
 const lunchTitle = ref("");
-const addOneDayToFirstPossibleDay = ref("");
-
-const sortedDates = ref();
 const bufferTime = ref();
 const childrenToast = ref();
-
 const availableOrders = ref([]);
 const disabledDaysForLunchOrder = ref([]);
-
 const hideTableInformation = ref(true);
 
 const props = defineProps({
@@ -249,25 +243,6 @@ watch(availableOrders, () => {
     });
 });
 
-const findCorrectStartDay = computed(() => {
-    const formatedSortedDates = sortedDates.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    let result = formatedSortedDates.filter(
-        (x) => !formattedDisabledDays.includes(x)
-    );
-
-    let formatResult = result.map((day) => parseISO(day));
-
-    store.availableDatesForStartOrdering = formatResult;
-    return result;
-});
-
 const disableIfDatesLessThenPeriodLength = computed(() => {
     return +store.availableDatesForStartOrdering.length < +store.period_length
         ? true
@@ -275,19 +250,48 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
 });
 
 watch(bufferTime, (newValue) => {
-    //  Find first order da and add buffer times
-    firstPossibleDay.value = addHours(
-        parseISO(availableDays.value[0]),
-        newValue
+    let currentDate = addHours(new Date(), newValue); // add buffer time in hours
+
+    // Removela all days which is before currentDate
+
+    let firstAvailableLunchDate = availableDays.value.filter((day) =>
+        isAfter(parseISO(day), currentDate)
     );
 
-    // Add Extra one day to first possible day
-    addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
+    // If this date does not available apply first one in array
 
-    // Save sorted available days
-    sortedDates.value = availableDays.value.map((date) => parseISO(date));
+    if (!firstAvailableLunchDate) {
+        firstAvailableLunchDate = availableDays.value[0];
+    }
 
-    store.first_day = parseISO(findCorrectStartDay.value[0]);
+    // Format from ISO string to 2022-13-13 format
+
+    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    // Remove all days from availableDays which includes inside formattedDisabledDays array
+    // Also remove days which is before firstAvailableLunchDate
+    // And format back to ISO string
+
+    let removeDisabledDays = availableDays.value
+        .filter((x) => {
+            return (
+                (!formattedDisabledDays.includes(x) &&
+                    isAfter(
+                        parseISO(x),
+                        parseISO(firstAvailableLunchDate[0])
+                    )) ||
+                isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0]))
+            );
+        })
+        .map((day) => parseISO(day));
+
+    // Assign first correct day
+    store.first_day = removeDisabledDays[0];
+
+    // Assign available days for start ordering
+    store.availableDatesForStartOrdering = removeDisabledDays;
 });
 
 onMounted(async () => {

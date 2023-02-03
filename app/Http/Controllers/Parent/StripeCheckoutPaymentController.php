@@ -103,6 +103,11 @@ class StripeCheckoutPaymentController extends Controller
                     'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 ]);
+
+                if(!$stripeCustomer || !$checkout_session)
+                {
+                    DB::rollBack();
+                }
             });
         }
 
@@ -150,6 +155,11 @@ class StripeCheckoutPaymentController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
                 'payment' => 'outstanding',
             ]);
+
+            if(!$pending_transaction || !$lunch)
+            {
+                DB::rollBack();
+            }
         });
 
         return response()->json($checkout_session);
