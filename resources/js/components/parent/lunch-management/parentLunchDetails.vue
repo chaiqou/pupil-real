@@ -255,6 +255,25 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
         : false;
 });
 
+const findCorrectStartDay = computed(() => {
+    const formatedSortedDates = sortedDates.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    let result = formatedSortedDates.filter(
+        (x) => !formattedDisabledDays.includes(x)
+    );
+
+    let formatResult = result.map((day) => parseISO(day));
+
+    store.availableDatesForStartOrdering = formatResult;
+    return result;
+});
+
 watch(bufferTime, (newValue) => {
     //  Find first order da and add buffer times
     firstPossibleDay.value = addHours(
@@ -281,12 +300,10 @@ watch(bufferTime, (newValue) => {
 
     let startingDay;
     if (newValue <= getCurrentTime) {
-        startingDay = addDays(sortedDates.value[0], 1);
+        startingDay = addDays(parseISO(findCorrectStartDay.value[0]), 1);
     } else {
-        startingDay = sortedDates.value[0];
+        startingDay = parseISO(findCorrectStartDay.value[0]);
     }
-
-    store.availableDatesForStartOrdering = sortedDates.value;
 
     store.first_day = startingDay;
 });
