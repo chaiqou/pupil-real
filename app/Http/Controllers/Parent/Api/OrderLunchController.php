@@ -75,6 +75,11 @@ class OrderLunchController extends Controller
                 'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
+
+            if(!$pending_transaction || !$lunch)
+            {
+                DB::rollBack();
+            }
         });
 
         return response()->json(['success' => 'success']);
