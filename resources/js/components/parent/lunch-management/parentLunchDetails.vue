@@ -202,7 +202,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
+import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
 
@@ -264,14 +264,34 @@ watch(bufferTime, (newValue) => {
         firstAvailableLunchDate = availableDays.value[0];
     }
 
-    // Format Result to ISO string for availableDatesForStartingOrder store
+    // Format from ISO string to 2022-13-13 format
 
-    let formatResult = firstAvailableLunchDate.map((day) => parseISO(day));
-    store.availableDatesForStartOrdering = formatResult;
+    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+        format(date, "yyyy-MM-dd")
+    );
+
+    // Remove all days from availableDays which includes inside formattedDisabledDays array
+    // Also remove days which is before firstAvailableLunchDate
+    // And format back to ISO string
+
+    let removeDisabledDays = availableDays.value
+        .filter((x) => {
+            return (
+                (!formattedDisabledDays.includes(x) &&
+                    isAfter(
+                        parseISO(x),
+                        parseISO(firstAvailableLunchDate[0])
+                    )) ||
+                isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0]))
+            );
+        })
+        .map((day) => parseISO(day));
 
     // Assign first correct day
+    store.first_day = removeDisabledDays[0];
 
-    store.first_day = parseISO(firstAvailableLunchDate[0]);
+    // Assign available days for start ordering
+    store.availableDatesForStartOrdering = removeDisabledDays;
 });
 
 onMounted(async () => {
