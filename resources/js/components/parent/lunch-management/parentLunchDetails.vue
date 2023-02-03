@@ -208,18 +208,12 @@ import OrderDetailsCard from "./OrderDetailsCard.vue";
 
 const store = useLunchFormStore();
 
-const firstPossibleDay = ref("");
 const availableDays = ref([]);
 const lunchTitle = ref("");
-const addOneDayToFirstPossibleDay = ref("");
-
-const sortedDates = ref();
 const bufferTime = ref();
 const childrenToast = ref();
-
 const availableOrders = ref([]);
 const disabledDaysForLunchOrder = ref([]);
-
 const hideTableInformation = ref(true);
 
 const props = defineProps({
@@ -256,8 +250,7 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
 });
 
 watch(bufferTime, (newValue) => {
-    let currentDate = addDays(new Date(), 1);
-    currentDate = addHours(currentDate, newValue); // add buffer time in hours
+    let currentDate = addHours(new Date(), newValue); // add buffer time in hours
 
     // Removela all days which is before currentDate
 
