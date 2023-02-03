@@ -202,7 +202,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addDays, addHours, isBefore } from "date-fns";
+import { format, parseISO, addDays, addHours, isAfter } from "date-fns";
 import Toast from "@/components/ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
 
@@ -255,57 +255,30 @@ const disableIfDatesLessThenPeriodLength = computed(() => {
         : false;
 });
 
-const findCorrectStartDay = computed(() => {
-    const formatedSortedDates = sortedDates.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-        format(date, "yyyy-MM-dd")
-    );
-
-    let result = formatedSortedDates.filter(
-        (x) => !formattedDisabledDays.includes(x)
-    );
-
-    let formatResult = result.map((day) => parseISO(day));
-
-    store.availableDatesForStartOrdering = formatResult;
-    return result;
-});
-
 watch(bufferTime, (newValue) => {
-    //  Find first order da and add buffer times
-    firstPossibleDay.value = addHours(
-        parseISO(availableDays.value[0]),
-        newValue
+    let currentDate = addDays(new Date(), 1);
+    currentDate = addHours(currentDate, newValue); // add buffer time in hours
+
+    // Removela all days which is before currentDate
+
+    let firstAvailableLunchDate = availableDays.value.filter((day) =>
+        isAfter(parseISO(day), currentDate)
     );
 
-    // Add Extra one day to first possible day
-    addOneDayToFirstPossibleDay.value = addDays(firstPossibleDay.value, 1);
+    // If this date does not available apply first one in array
 
-    const filteredAndAddedBufferTime = Object.values(
-        availableDays.value
-    ).filter(
-        (date) =>
-            date >= format(addOneDayToFirstPossibleDay.value, "yyyy-MM-dd")
-    );
-
-    // Save sorted available days
-    sortedDates.value = filteredAndAddedBufferTime.map((date) =>
-        parseISO(date)
-    );
-
-    let getCurrentTime = new Date().getHours(); // get today's date and time
-
-    let startingDay;
-    if (newValue <= getCurrentTime) {
-        startingDay = addDays(parseISO(findCorrectStartDay.value[0]), 1);
-    } else {
-        startingDay = parseISO(findCorrectStartDay.value[0]);
+    if (!firstAvailableLunchDate) {
+        firstAvailableLunchDate = availableDays.value[0];
     }
 
-    store.first_day = startingDay;
+    // Format Result to ISO string for availableDatesForStartingOrder store
+
+    let formatResult = firstAvailableLunchDate.map((day) => parseISO(day));
+    store.availableDatesForStartOrdering = formatResult;
+
+    // Assign first correct day
+
+    store.first_day = parseISO(firstAvailableLunchDate[0]);
 });
 
 onMounted(async () => {
