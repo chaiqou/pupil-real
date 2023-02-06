@@ -3,7 +3,7 @@
         class="fixed flex min-h-screen w-screen flex-col z-50 justify-center items-center bg-black/50"
     >
         <div
-            class="bg-white px-6 py-10 shadow-2xl sm:max-w-lg rounded-lg w-full"
+            class="absolute md:right-1/3 xl:right-[45%] bg-white px-6 py-10 shadow-2xl max-w-lg rounded-lg w-full"
         >
             <template
                 class="flex flex-wrap justify-between border-b border-gray-200"
@@ -15,7 +15,7 @@
             </template>
 
             <Form ref="target">
-                <template
+                <div
                     class="flex flex-wrap space-y-4 w-full justify-between sm:space-y-0 sm:flex-nowrap sm:space-x-12 my-4"
                 >
                     <button
@@ -30,17 +30,17 @@
                     >
                         Choices
                     </button>
-                </template>
-                <template
+                </div>
+                <div
                     class="border-y p-2 border-gray-200 focus-within:border-indigo-600"
                 >
                     <Field
                         name="Comment"
                         as="textarea"
-                        class="block w-full resize-none border-transparent p-0 pb-2 focus:border-indigo-600 focus:rounded-lg focus:border-none focus:ring-0 sm:text-sm"
+                        class="w-full resize-none border-transparent p-0 pb-2 focus:border-indigo-600 focus:rounded-lg focus:border-none focus:ring-0 sm:text-sm"
                         placeholder="Menu description..."
                     ></Field>
-                </template>
+                </div>
             </Form>
         </div>
     </div>
