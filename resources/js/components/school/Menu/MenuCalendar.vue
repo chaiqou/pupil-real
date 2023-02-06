@@ -1,6 +1,6 @@
 <template>
     <template v-if="tooltipStore.toggle_tooltip">
-        <Tooltip />
+        <MenuManagementCard />
     </template>
     <div>
         <div
@@ -83,7 +83,7 @@ import { format, isToday, addDays } from "date-fns";
 import { ref, onBeforeMount, computed, onUpdated } from "vue";
 import { useTooltipStore } from "@/stores/useTooltipStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import Tooltip from "./Tooltip.vue";
+import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
