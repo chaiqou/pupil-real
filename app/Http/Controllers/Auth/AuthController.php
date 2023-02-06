@@ -27,6 +27,7 @@ class AuthController extends Controller
             if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0 && auth()->user()->hasRole('parent')) {
                 $invite = Invite::where('email', $request->email)->first();
                 $invite ? $invite->delete() : null;
+
                 return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
             }
 

@@ -104,8 +104,7 @@ class StripeCheckoutController extends Controller
                     'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 ]);
 
-                if(!$stripeCustomer || !$checkout_session)
-                {
+                if (! $stripeCustomer || ! $checkout_session) {
                     DB::rollBack();
                 }
             });
@@ -156,8 +155,7 @@ class StripeCheckoutController extends Controller
                 'payment' => 'outstanding',
             ]);
 
-            if(!$pending_transaction || !$lunch)
-            {
+            if (! $pending_transaction || ! $lunch) {
                 DB::rollBack();
             }
         });
@@ -167,7 +165,7 @@ class StripeCheckoutController extends Controller
 
     public function success(Request $request): View
     {
-        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('stripe_secret_key'));
 
         try {
             $session_id = $request->get('session_id');

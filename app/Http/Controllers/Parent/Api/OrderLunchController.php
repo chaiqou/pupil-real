@@ -76,8 +76,7 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
-            if(!$pending_transaction || !$lunch)
-            {
+            if (! $pending_transaction || ! $lunch) {
                 DB::rollBack();
             }
         });

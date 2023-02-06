@@ -67,9 +67,10 @@ class InviteController extends Controller
 
     public function delete(Request $request): ResourceCollection
     {
-     $invite = Invite::where('id', $request->invite_id)->first();
-     $invite->delete();
-     $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);
-     return InviteResource::collection($invites);
+        $invite = Invite::where('id', $request->invite_id)->first();
+        $invite->delete();
+        $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);
+
+        return InviteResource::collection($invites);
     }
 }
