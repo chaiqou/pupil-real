@@ -10,7 +10,7 @@ use App\Http\Controllers\Dashboard\NavigationController;
 use App\Http\Controllers\Parent\InviteController as UserInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
-use App\Http\Controllers\Parent\StripeCheckoutPaymentController;
+use App\Http\Controllers\Parent\StripeCheckoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
@@ -108,8 +108,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
                 Route::get('lunch-details/{student_id}', 'parent')->name('parent.lunch-details');
             });
-            Route::get('checkout/success', [StripeCheckoutPaymentController::class, 'success'])->name('parent.checkout_success');
-            Route::get('checkout/cancel', [StripeCheckoutPaymentController::class, 'cancel'])->name('parent.checkout_cancel');
+            Route::get('checkout/success', [StripeCheckoutController::class, 'success'])->name('parent.checkout_success');
+            Route::get('checkout/cancel', [StripeCheckoutController::class, 'cancel'])->name('parent.checkout_cancel');
         });
     });
 
@@ -130,4 +130,4 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::post('/webhook/stripe', [StripeCheckoutPaymentController::class, 'webhook'])->name('parent.webhook');
+Route::post('/webhook/stripe', [StripeCheckoutController::class, 'webhook'])->name('parent.webhook');

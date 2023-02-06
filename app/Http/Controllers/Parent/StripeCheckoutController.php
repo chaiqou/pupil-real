@@ -27,7 +27,7 @@ use Stripe\Webhook;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use UnexpectedValueException;
 
-class StripeCheckoutPaymentController extends Controller
+class StripeCheckoutController extends Controller
 {
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
@@ -70,16 +70,16 @@ class StripeCheckoutPaymentController extends Controller
                 'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
             ]);
         } else {
-            $customerAdressDetails = json_decode($customer->user_information);
+            $customerAddressDetails = json_decode($customer->user_information);
 
-            DB::transaction(function () use ($customerAdressDetails, $customer, $validate) {
+            DB::transaction(function () use ($customerAddressDetails, $customer, $validate) {
                 $stripeCustomer = Customer::create([
                     'address' => [
-                        'line1' => $customerAdressDetails->street_address,
-                        'state' => $customerAdressDetails->state,
-                        'postal_code' => $customerAdressDetails->zip,
-                        'country' => $customerAdressDetails->country,
-                        'city' => $customerAdressDetails->city,
+                        'line1' => $customerAddressDetails->street_address,
+                        'state' => $customerAddressDetails->state,
+                        'postal_code' => $customerAddressDetails->zip,
+                        'country' => $customerAddressDetails->country,
+                        'city' => $customerAddressDetails->city,
                     ],
                     'email' => $customer->email,
                     'name' => $customer->first_name,
