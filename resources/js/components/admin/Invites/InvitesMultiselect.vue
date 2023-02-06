@@ -10,34 +10,36 @@
         <p class="absolute mt-16">{{ errorShowing }}</p>
     </div>
     <ValidationForm id="form" @submit="onSubmit()">
-        <div :class="this.mainEmailsArray.length ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col' : 'mb-5 hidden'">
+        <div
+            :class="
+                this.mainEmailsArray.length
+                    ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col'
+                    : 'mb-5 hidden'
+            "
+        >
             <p class="ml-7 text-sm">Sending invites to:</p>
-            <div
-                class="flex flex-wrap pl-5"
-            >
+            <div class="flex flex-wrap pl-5">
                 <div v-for="(element, index) in mainEmailsArray" :key="index">
                     <div
                         @mouseover="this.showInviteError = true"
                         @mouseleave="this.showInviteError = false"
                         v-if="element.existsInInvites && !element.existsInUsers"
-                        class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+                        class="border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
                     >
                         <exclamation-triangle-icon
                             class="text-yellow-500 mr-1.5 w-5 h-5"
                         ></exclamation-triangle-icon>
-                        <p
-                            class="text-yellow-500"
-                        >
+                        <p class="text-yellow-500">
                             {{ element.email }}
                         </p>
                         <span
                             class="ml-1.5 cursor-pointer text-gray-500"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                            this.showInviteError = false;
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                                this.showInviteError = false;
+                            "
+                            >x</span
                         >
                     </div>
                     <div
@@ -49,23 +51,23 @@
                         <exclamation-triangle-icon
                             class="text-yellow-500 mr-1.5 w-5 h-5"
                         ></exclamation-triangle-icon>
-                        <p
-                            class="text-yellow-500"
-                        >
+                        <p class="text-yellow-500">
                             {{ element.email }}
                         </p>
                         <span
                             class="ml-1.5 cursor-pointer text-gray-500"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                            this.showEmailError = false;
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                                this.showEmailError = false;
+                            "
+                            >x</span
                         >
                     </div>
                     <div
-                        v-if="!element.existsInInvites && !element.existsInUsers"
+                        v-if="
+                            !element.existsInInvites && !element.existsInUsers
+                        "
                         class="flex bg-[#6C757D] border-2 max-w-fit mr-3 text-sm justify-between text-white rounded-md p-1 m-1.5 flex items-center"
                     >
                         <p class="max-w-fit">
@@ -74,10 +76,10 @@
                         <span
                             class="ml-1.5 cursor-pointer"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                            "
+                            >x</span
                         >
                     </div>
                 </div>

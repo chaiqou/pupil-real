@@ -3,7 +3,7 @@
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isCreateSchoolVisible = false;"
+            @close="this.isCreateSchoolVisible = false"
         >
             <TransitionChild
                 as="template"
@@ -41,7 +41,7 @@
                                 <button
                                     type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isCreateSchoolVisible = false;"
+                                    @click="this.isCreateSchoolVisible = false"
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon
@@ -81,9 +81,7 @@
                                                     rules="required"
                                                     type="text"
                                                     required
-                                                    v-model="
-                                                        this.short_name
-                                                    "
+                                                    v-model="this.short_name"
                                                     name="short_name"
                                                     id="short_name"
                                                     autocomplete="school-short-name"
@@ -110,9 +108,7 @@
                                                 <Field
                                                     rules="required"
                                                     type="text"
-                                                    v-model="
-                                                        this.full_name
-                                                    "
+                                                    v-model="this.full_name"
                                                     required
                                                     name="first_name"
                                                     id="first_name"
@@ -141,9 +137,7 @@
                                             <div class="mt-1">
                                                 <Field
                                                     type="text"
-                                                    v-model="
-                                                        this.long_name
-                                                    "
+                                                    v-model="this.long_name"
                                                     name="long_name"
                                                     id="long_name"
                                                     autocomplete="school-long-name"
@@ -156,7 +150,7 @@
                                             </div>
                                         </div>
 
-                                 <CountriesSelect></CountriesSelect>
+                                        <CountriesSelect></CountriesSelect>
 
                                         <div class="sm:col-span-6">
                                             <label
@@ -193,14 +187,12 @@
                                             <label
                                                 for="city"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >City</label
+                                                >City</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
-                                                    v-model="
-                                                        this.city
-                                                    "
+                                                    v-model="this.city"
                                                     type="text"
                                                     name="city"
                                                     id="city"
@@ -224,13 +216,11 @@
                                             <label
                                                 for="state"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >State</label
+                                                >State</label
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    v-model="
-                                                        this.state
-                                                    "
+                                                    v-model="this.state"
                                                     type="text"
                                                     name="state"
                                                     id="state"
@@ -254,14 +244,12 @@
                                             <label
                                                 for="zip"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >ZIP</label
+                                                >ZIP</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
-                                                    v-model="
-                                                        this.zip
-                                                    "
+                                                    v-model="this.zip"
                                                     type="text"
                                                     name="zip"
                                                     id="zip"
@@ -291,9 +279,7 @@
                                                 <Field
                                                     rules="required|email"
                                                     type="text"
-                                                    v-model="
-                                                        this.email
-                                                    "
+                                                    v-model="this.email"
                                                     name="email"
                                                     id="email"
                                                     autocomplete="school-email"
@@ -306,7 +292,8 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        email field is required in email format
+                                                        email field is required
+                                                        in email format
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -353,9 +340,7 @@
                                                 <Field
                                                     rules="required|phone"
                                                     type="text"
-                                                    v-model="
-                                                        this.phone_number
-                                                    "
+                                                    v-model="this.phone_number"
                                                     name="phone_number"
                                                     id="phone_number"
                                                     autocomplete="phone-number"
@@ -378,14 +363,12 @@
                                             <label
                                                 for="extension"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >Extension</label
+                                                >Extension</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     type="number"
-                                                    v-model="
-                                                        this.extension
-                                                    "
+                                                    v-model="this.extension"
                                                     name="extension"
                                                     id="extension"
                                                     autocomplete="extension"
@@ -408,14 +391,12 @@
                                             <label
                                                 for="mobile-number"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >Mobile number</label
+                                                >Mobile number</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     type="number"
-                                                    v-model="
-                                                        this.mobile_number
-                                                    "
+                                                    v-model="this.mobile_number"
                                                     name="mobile_number"
                                                     id="mobile_number"
                                                     autocomplete="mobile-number"
@@ -428,7 +409,8 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        mobile number is required
+                                                        mobile number is
+                                                        required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -438,15 +420,12 @@
                                             <label
                                                 for="school-code"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >School code</label
+                                                >School code</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required|min-words-3"
-                                                    v-model="
-                                                        this
-                                                            .school_code
-                                                    "
+                                                    v-model="this.school_code"
                                                     type="text"
                                                     name="school_code"
                                                     id="school_code"
@@ -465,7 +444,6 @@
                                                 </ErrorMessage>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="pt-5">
                                         <div class="flex justify-end">
@@ -501,7 +479,7 @@ import { useSchoolStore } from "@/stores/useSchoolStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/ui/CountriesSelect.vue"
+import CountriesSelect from "@/components/ui/CountriesSelect.vue";
 
 export default {
     data() {
@@ -519,7 +497,7 @@ export default {
             city: "",
             state: "",
             school_code: "",
-        }
+        };
     },
     components: {
         Dialog,
@@ -541,7 +519,7 @@ export default {
     },
     methods: {
         ...mapActions(useModalStore, ["showHideSchoolCreate"]),
-        onSubmit(values,actions) {
+        onSubmit(values, actions) {
             axios
                 .post(`/api/admin/school`, {
                     short_name: this.short_name,
@@ -563,7 +541,7 @@ export default {
                     this.schools = res.data.data;
                     actions.setValues("");
                 })
-               .catch((err) => console.log(err))
+                .catch((err) => console.log(err))
                 .finally(() => {
                     this.isCreateSchoolVisible = false;
                 });

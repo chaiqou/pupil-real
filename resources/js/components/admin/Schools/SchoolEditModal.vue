@@ -1,9 +1,16 @@
 <template>
-    <TransitionRoot v-if="this.isRequestEndSuccessfully" as="template" :show="this.isSchoolEditVisible">
+    <TransitionRoot
+        v-if="this.isRequestEndSuccessfully"
+        as="template"
+        :show="this.isSchoolEditVisible"
+    >
         <Dialog
             as="div"
             class="relative z-10"
-            @close="this.isSchoolEditVisible = false; this.schoolId = null;"
+            @close="
+                this.isSchoolEditVisible = false;
+                this.schoolId = null;
+            "
         >
             <TransitionChild
                 as="template"
@@ -41,7 +48,10 @@
                                 <button
                                     type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    @click="this.isSchoolEditVisible = false; this.schoolId = null"
+                                    @click="
+                                        this.isSchoolEditVisible = false;
+                                        this.schoolId = null;
+                                    "
                                 >
                                     <span class="sr-only">Close</span>
                                     <XMarkIcon
@@ -52,7 +62,10 @@
                             </div>
                             <Form
                                 id="form"
-                                @submit="onSubmit(); this.schoolId = null"
+                                @submit="
+                                    onSubmit();
+                                    this.schoolId = null;
+                                "
                                 class="mt-8 space-y-6 w-full"
                             >
                                 <div class="bg-white p-8">
@@ -156,7 +169,7 @@
                                             </div>
                                         </div>
 
-                                 <CountriesSelect></CountriesSelect>
+                                        <CountriesSelect></CountriesSelect>
 
                                         <div class="sm:col-span-6">
                                             <label
@@ -193,14 +206,12 @@
                                             <label
                                                 for="city"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >City</label
+                                                >City</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
-                                                    v-model="
-                                                        this.city
-                                                    "
+                                                    v-model="this.city"
                                                     type="text"
                                                     name="city"
                                                     id="city"
@@ -224,13 +235,11 @@
                                             <label
                                                 for="state"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >State</label
+                                                >State</label
                                             >
                                             <div class="mt-1">
                                                 <Field
-                                                    v-model="
-                                                        this.state
-                                                    "
+                                                    v-model="this.state"
                                                     type="text"
                                                     name="state"
                                                     id="state"
@@ -254,14 +263,12 @@
                                             <label
                                                 for="zip"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >ZIP</label
+                                                >ZIP</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required"
-                                                    v-model="
-                                                        this.zip
-                                                    "
+                                                    v-model="this.zip"
                                                     type="text"
                                                     name="zip"
                                                     id="zip"
@@ -291,9 +298,7 @@
                                                 <Field
                                                     rules="required|email"
                                                     type="text"
-                                                    v-model="
-                                                        this.email
-                                                    "
+                                                    v-model="this.email"
                                                     name="email"
                                                     id="email"
                                                     autocomplete="school-email"
@@ -306,7 +311,8 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        email field is required in email format
+                                                        email field is required
+                                                        in email format
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -353,9 +359,7 @@
                                                 <Field
                                                     rules="required|phone"
                                                     type="text"
-                                                    v-model="
-                                                        this.phone_number
-                                                    "
+                                                    v-model="this.phone_number"
                                                     name="phone_number"
                                                     id="phone_number"
                                                     autocomplete="phone-number"
@@ -378,14 +382,12 @@
                                             <label
                                                 for="extension"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >Extension</label
+                                                >Extension</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     type="text"
-                                                    v-model="
-                                                        this.extension
-                                                    "
+                                                    v-model="this.extension"
                                                     name="extension"
                                                     id="extension"
                                                     autocomplete="extension"
@@ -408,14 +410,12 @@
                                             <label
                                                 for="mobile-number"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >Mobile number</label
+                                                >Mobile number</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     type="text"
-                                                    v-model="
-                                                        this.mobile_number
-                                                    "
+                                                    v-model="this.mobile_number"
                                                     name="mobile_number"
                                                     id="mobile_number"
                                                     autocomplete="mobile-number"
@@ -428,7 +428,8 @@
                                                     <p
                                                         class="text-red-500 text-sm"
                                                     >
-                                                        mobile number is required
+                                                        mobile number is
+                                                        required
                                                     </p>
                                                 </ErrorMessage>
                                             </div>
@@ -438,14 +439,13 @@
                                             <label
                                                 for="school-code"
                                                 class="block text-sm font-medium text-gray-700"
-                                            >School code</label
+                                                >School code</label
                                             >
                                             <div class="mt-1">
                                                 <Field
                                                     rules="required|min-words-3"
                                                     v-model="
-                                                        this.school
-                                                            .school_code
+                                                        this.school.school_code
                                                     "
                                                     type="text"
                                                     name="school_code"
@@ -465,7 +465,6 @@
                                                 </ErrorMessage>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="pt-5">
                                         <div class="flex justify-end">
@@ -501,7 +500,7 @@ import { useSchoolStore } from "@/stores/useSchoolStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/ui/CountriesSelect.vue"
+import CountriesSelect from "@/components/ui/CountriesSelect.vue";
 
 export default {
     data() {
@@ -516,7 +515,7 @@ export default {
             zip: "",
             city: "",
             state: "",
-        }
+        };
     },
     components: {
         Dialog,
@@ -561,13 +560,14 @@ export default {
                     this.schools = res.data.data;
                     this.countrySelect = "";
                 })
-               .catch((err) => console.log(err))
+                .catch((err) => console.log(err))
                 .finally(() => {
                     this.isSchoolEditVisible = false;
                 });
         },
         handleGetSchoolRequest() {
-            axios.get(`/api/admin/school/${this.schoolId}`)
+            axios
+                .get(`/api/admin/school/${this.schoolId}`)
                 .then((res) => {
                     this.school = res.data.data;
                     this.email = this.school.details.email;
@@ -581,11 +581,11 @@ export default {
                     this.city = this.school.details.city;
                     this.state = this.school.details.state;
                 })
-                .finally(() => this.isRequestEndSuccessfully = true);
-        }
+                .finally(() => (this.isRequestEndSuccessfully = true));
+        },
     },
     created() {
-         this.handleGetSchoolRequest();
-    }
+        this.handleGetSchoolRequest();
+    },
 };
 </script>

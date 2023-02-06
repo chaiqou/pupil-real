@@ -1,6 +1,7 @@
 <template>
     <div>
-        <label class="text-md mt-10 flex font-bold text-gray-600 whitespace-normal"
+        <label
+            class="text-md mt-10 flex font-bold text-gray-600 whitespace-normal"
             >{{ this.label }}
         </label>
         <Multiselect
@@ -20,8 +21,8 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-import { useInviteStore } from '@/stores/useInviteStore'
-import {mapWritableState} from "pinia";
+import { useInviteStore } from "@/stores/useInviteStore";
+import { mapWritableState } from "pinia";
 
 export default {
     components: {
@@ -30,8 +31,8 @@ export default {
     },
     data() {
         return {
-            value: []
-        }
+            value: [],
+        };
     },
     props: {
         name: {
@@ -41,33 +42,30 @@ export default {
         label: {
             type: String,
             required: true,
-        }
+        },
     },
     computed: {
-      ...mapWritableState(useInviteStore, ["schools", "chosenSchool"])
+        ...mapWritableState(useInviteStore, ["schools", "chosenSchool"]),
     },
     methods: {
-        handleGetSchoolsRequest()
-        {
-               axios
-       .get('/api/admin/schools-for-invites')
-       .then((res) => {
-           this.schools = res.data;
-       })
-       .catch((err) => console.log(err))
+        handleGetSchoolsRequest() {
+            axios
+                .get("/api/admin/schools-for-invites")
+                .then((res) => {
+                    this.schools = res.data;
+                })
+                .catch((err) => console.log(err));
         },
 
         add(value) {
-           this.value = value
+            this.value = value;
             this.chosenSchool = this.value;
         },
-     },
+    },
     created() {
         this.handleGetSchoolsRequest();
-    }
-}
-
-
+    },
+};
 </script>
 
 <style src="../../../../node_modules/@vueform/multiselect/themes/default.css" />

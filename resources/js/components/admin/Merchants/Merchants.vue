@@ -7,14 +7,40 @@
                 : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
         "
     >
-        <table class="min-w-full divide-y divide-gray-300 border-separate" style="border-spacing: 0">
+        <table
+            class="min-w-full divide-y divide-gray-300 border-separate"
+            style="border-spacing: 0"
+        >
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50  py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Nickname</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Company legal name</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Details</th>
-                    <th scope="col" class="sticky top-0 z-10  border-b border-gray-300 bg-gray-50  px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Activated</th>
-                    <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter">
+                    <th
+                        scope="col"
+                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                    >
+                        Nickname
+                    </th>
+                    <th
+                        scope="col"
+                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                    >
+                        Company legal name
+                    </th>
+                    <th
+                        scope="col"
+                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                    >
+                        Details
+                    </th>
+                    <th
+                        scope="col"
+                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                    >
+                        Activated
+                    </th>
+                    <th
+                        scope="col"
+                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 backdrop-blur backdrop-filter"
+                    >
                         <span class="sr-only">Edit</span>
                     </th>
                 </tr>
@@ -104,7 +130,10 @@
             </tbody>
         </table>
     </div>
-    <merchant-edit-modal v-if="this.merchantId" :schoolId="this.schoolId"></merchant-edit-modal>
+    <merchant-edit-modal
+        v-if="this.merchantId"
+        :schoolId="this.schoolId"
+    ></merchant-edit-modal>
 </template>
 
 <script>
@@ -127,8 +156,8 @@ export default {
     props: {
         school: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
     computed: {
         ...mapWritableState(useMerchantStore, [
@@ -137,25 +166,20 @@ export default {
             "merchantId",
         ]),
 
-        ...mapWritableState(useModalStore, [
-            "isSchoolEditVisible"
-        ])
+        ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
     },
     methods: {
-        ...mapActions(useModalStore, [
-           "showHideMerchantEdit"
-        ]),
-        ...mapActions(useMerchantStore, [
-            "currentMerchantEdit"
-        ]),
+        ...mapActions(useModalStore, ["showHideMerchantEdit"]),
+        ...mapActions(useMerchantStore, ["currentMerchantEdit"]),
         handleGetMerchantsRequest() {
             axios
-                .get(`/api/admin/school/${this.school.id}/merchants/?page=${this.currentPage}`)
+                .get(
+                    `/api/admin/school/${this.school.id}/merchants/?page=${this.currentPage}`
+                )
                 .then((res) => {
                     this.currentPage++;
                     this.lastPage = res.data.meta.last_page;
                     this.merchants.push(...res.data.data);
-                    console.log(res)
                 })
                 .finally(() => (this.isMerchantsLoaded = true));
         },

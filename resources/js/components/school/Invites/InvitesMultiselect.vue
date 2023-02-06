@@ -6,11 +6,15 @@
         <p class="absolute mt-16">{{ errorShowing }}</p>
     </div>
     <ValidationForm id="form" @submit="onSubmit()">
-        <div :class="this.mainEmailsArray.length ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col' : 'mb-5 hidden'">
+        <div
+            :class="
+                this.mainEmailsArray.length
+                    ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col'
+                    : 'mb-5 hidden'
+            "
+        >
             <p class="ml-7 text-sm">Sending invites to:</p>
-            <div
-                class="flex flex-wrap pl-5"
-            >
+            <div class="flex flex-wrap pl-5">
                 <div v-for="(element, index) in mainEmailsArray" :key="index">
                     <div
                         @mouseover="this.showInviteError = true"
@@ -21,19 +25,17 @@
                         <exclamation-triangle-icon
                             class="text-yellow-500 mr-1.5 w-5 h-5"
                         ></exclamation-triangle-icon>
-                        <p
-                            class="text-yellow-500"
-                        >
+                        <p class="text-yellow-500">
                             {{ element.email }}
                         </p>
                         <span
                             class="ml-1.5 cursor-pointer text-gray-500"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                            this.showInviteError = false;
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                                this.showInviteError = false;
+                            "
+                            >x</span
                         >
                     </div>
                     <div
@@ -45,19 +47,17 @@
                         <exclamation-triangle-icon
                             class="text-yellow-500 mr-1.5 w-5 h-5"
                         ></exclamation-triangle-icon>
-                        <p
-                            class="text-yellow-500"
-                        >
+                        <p class="text-yellow-500">
                             {{ element.email }}
                         </p>
                         <span
                             class="ml-1.5 cursor-pointer text-gray-500"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                            this.showEmailError = false;
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                                this.showEmailError = false;
+                            "
+                            >x</span
                         >
                     </div>
                     <div
@@ -69,24 +69,24 @@
                         <exclamation-triangle-icon
                             class="text-yellow-500 mr-1.5 w-5 h-5"
                         ></exclamation-triangle-icon>
-                        <p
-                            class="text-yellow-500"
-                        >
+                        <p class="text-yellow-500">
                             {{ element.email }}
                         </p>
                         <span
                             class="ml-1.5 cursor-pointer text-gray-500"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                            this.showEmailError = false;
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                                this.showEmailError = false;
+                            "
+                            >x</span
                         >
                     </div>
 
                     <div
-                        v-if="!element.existsInInvites && !element.existsInUsers"
+                        v-if="
+                            !element.existsInInvites && !element.existsInUsers
+                        "
                         class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
                     >
                         <p class="max-w-fit">
@@ -95,18 +95,18 @@
                         <span
                             class="ml-1.5 cursor-pointer"
                             @click="
-                            removeTag(index);
-                            removeTagForMain(index);
-                        "
-                        >x</span
+                                removeTag(index);
+                                removeTagForMain(index);
+                            "
+                            >x</span
                         >
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
-      <div :class="this.mainEmailsArray.length ? 'text-sm' : 'mt-10'">
-          <label for="emails">Email addresses</label>
-      </div>
+        <div :class="this.mainEmailsArray.length ? 'text-sm' : 'mt-10'">
+            <label for="emails">Email addresses</label>
+        </div>
         <div
             class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-1.5"
         >
