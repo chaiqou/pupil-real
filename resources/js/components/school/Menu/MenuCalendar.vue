@@ -1,5 +1,5 @@
 <template>
-    <template v-if="menuManagementStore.toggle_card">
+    <template v-if="menuManagementStore.toggleCard">
         <MenuManagementCard :selected-day="selectedDay" />
     </template>
     <div>
@@ -109,13 +109,14 @@ const props = defineProps({
 });
 
 const onClickCalendar = async (day) => {
-    menuManagementStore.toggle_card = !menuManagementStore.toggle_card;
+    menuManagementStore.toggleCard = !menuManagementStore.toggleCard;
     selectedDay.value = day;
 
     const response = await axios.get("/api/lunch/suitable-lunch/date", {
         params: { date: day },
     });
-    console.log(response);
+
+    menuManagementStore.suitableLunch = response.data.lunches;
 };
 
 const lunchDays = ref([]);

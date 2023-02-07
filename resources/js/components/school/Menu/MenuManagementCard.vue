@@ -14,8 +14,8 @@
                 </h1>
             </template>
 
-            <div>
-                <SingleLunchCard name="first test lunch name" />
+            <div v-for="lunch in store.suitableLunch">
+                <SingleLunchCard :name="lunch.title" />
             </div>
         </div>
     </div>
@@ -41,5 +41,5 @@ const store = useMenuManagementStore();
 // Close on click outside model
 
 const target = ref(null);
-onClickOutside(target, () => (store.toggle_card = false));
+onClickOutside(target, () => (store.toggleCard = false));
 </script>
