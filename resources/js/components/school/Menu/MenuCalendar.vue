@@ -1,5 +1,5 @@
 <template>
-    <template v-if="tooltipStore.toggle_tooltip">
+    <template v-if="menuManagementStore.toggle_menu_card">
         <MenuManagementCard />
     </template>
     <div>
@@ -81,7 +81,7 @@
 <script setup>
 import { format, isToday, addDays } from "date-fns";
 import { ref, onBeforeMount, computed, onUpdated } from "vue";
-import { useTooltipStore } from "@/stores/useTooltipStore";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
@@ -89,7 +89,7 @@ import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 
 const store = useLunchFormStore();
-const tooltipStore = useTooltipStore();
+const menuManagementStore = useMenuManagementStore();
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 const { ifDaysMatch } = useCheckIfDaysMatches();
@@ -107,8 +107,9 @@ const props = defineProps({
 });
 
 const toggleTooltip = (day) => {
-    tooltipStore.toggle_tooltip = !tooltipStore.toggle_tooltip;
-    tooltipStore.selected_day = day;
+    menuManagementStore.toggle_menu_card =
+        !menuManagementStore.toggle_menu_card;
+    menuManagementStore.selected_day = day;
 };
 
 const availableDates = ref([]);

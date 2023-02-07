@@ -49,7 +49,7 @@
 <script setup>
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import { useTooltipStore } from "@/stores/useTooltipStore";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { Field, Form } from "vee-validate";
 import { format } from "date-fns";
 
@@ -61,10 +61,10 @@ const props = defineProps({
     },
 });
 
-const store = useTooltipStore();
+const store = useMenuManagementStore();
 
 // Close on click outside model
 
 const target = ref(null);
-onClickOutside(target, () => (store.toggle_tooltip = false));
+onClickOutside(target, () => (store.toggle_menu_card = false));
 </script>
