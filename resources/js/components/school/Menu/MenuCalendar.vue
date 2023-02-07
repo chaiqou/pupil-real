@@ -112,29 +112,15 @@ const toggleTooltip = (day) => {
     menuManagementStore.selected_day = day;
 };
 
-const availableDates = ref([]);
-
-const lunchPlans = ref([
-    {
-        id: 1,
-        name: "Normal testing Lunch",
-        startDate: "2022-12-28",
-        endDate: "2023-01-01",
-    },
-    {
-        id: 2,
-        name: "Vegan testing Lunch",
-        startDate: " 2022-12-31",
-        endDate: "2023-01-02",
-    },
-]);
+const lunchDays = ref([]);
+const lunches = ref([]);
 
 const calculateLunches = computed(() => {
-    let availableDays = availableDates.value;
+    let availableDays = lunchDays.value;
 
-    for (let lunchPlan of lunchPlans.value) {
-        let startDate = new Date(lunchPlan.startDate);
-        let endDate = new Date(lunchPlan.endDate);
+    for (let lunch of lunches.value) {
+        let startDate = new Date(lunch.available_days[0]);
+        let endDate = new Date(lunch.available_days[-1]);
 
         // Iterate over the range of dates covered by the lunch plan
         for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
@@ -144,14 +130,14 @@ const calculateLunches = computed(() => {
             if (availableDays[formattedDate]) {
                 // If it is, add the lunch plan's ID and name to the array for that date
                 availableDays[formattedDate].push({
-                    id: lunchPlan.id,
-                    name: lunchPlan.name,
+                    id: lunch.id,
+                    name: lunch.title,
                 });
             } else {
                 // If it isn't, add a new entry to the big array with the date as the key
                 // and an array containing the lunch plan's ID and name as the value
                 availableDays[formattedDate] = [
-                    { id: lunchPlan.id, name: lunchPlan.name },
+                    { id: lunch.id, name: lunch.title },
                 ];
             }
         }
@@ -163,10 +149,12 @@ const calculateLunches = computed(() => {
 onUpdated(() => {
     calculateLunches.value;
 }),
+    // Fetch all existing lunch for merchant and mark it on calendar also fill lunchDays array
     onBeforeMount(() => {
         axios.get("/api/school/lunch").then((response) => {
+            lunches.value = response.data.data;
             response.data.data.map((data) => {
-                availableDates.value.push(...data.available_days);
+                lunchDays.value.push(...data.available_days);
                 store.marked_days.push(...data.available_days);
             });
         });
