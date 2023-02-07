@@ -79,8 +79,8 @@
 </template>
 
 <script setup>
-import { format, isToday, addDays } from "date-fns";
-import { ref, onBeforeMount, computed, onUpdated } from "vue";
+import { format, isToday } from "date-fns";
+import { ref, onBeforeMount } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import MenuManagementCard from "./MenuManagementCard.vue";
@@ -115,48 +115,14 @@ const toggleTooltip = (day) => {
 const lunchDays = ref([]);
 const lunches = ref([]);
 
-const calculateLunches = computed(() => {
-    let availableDays = lunchDays.value;
-
-    for (let lunch of lunches.value) {
-        let startDate = new Date(lunch.available_days[0]);
-        let endDate = new Date(lunch.available_days[-1]);
-
-        // Iterate over the range of dates covered by the lunch plan
-        for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
-            let formattedDate = format(date, "yyyy-MM-dd");
-
-            // Check if the date is already in the big array
-            if (availableDays[formattedDate]) {
-                // If it is, add the lunch plan's ID and name to the array for that date
-                availableDays[formattedDate].push({
-                    id: lunch.id,
-                    name: lunch.title,
-                });
-            } else {
-                // If it isn't, add a new entry to the big array with the date as the key
-                // and an array containing the lunch plan's ID and name as the value
-                availableDays[formattedDate] = [
-                    { id: lunch.id, name: lunch.title },
-                ];
-            }
-        }
-    }
-
-    return availableDays;
-});
-
-onUpdated(() => {
-    calculateLunches.value;
-}),
-    // Fetch all existing lunch for merchant and mark it on calendar also fill lunchDays array
-    onBeforeMount(() => {
-        axios.get("/api/school/lunch").then((response) => {
-            lunches.value = response.data.data;
-            response.data.data.map((data) => {
-                lunchDays.value.push(...data.available_days);
-                store.marked_days.push(...data.available_days);
-            });
+// Fetch all existing lunch for merchant and mark it on calendar also fill lunchDays array
+onBeforeMount(() => {
+    axios.get("/api/school/lunch").then((response) => {
+        lunches.value = response.data.data;
+        response.data.data.map((data) => {
+            lunchDays.value.push(...data.available_days);
+            store.marked_days.push(...data.available_days);
         });
     });
+});
 </script>
