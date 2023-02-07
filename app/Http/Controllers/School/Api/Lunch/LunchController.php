@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LunchRequest;
-use App\Http\Requests\School\ClaimLunchRequest;
-use App\Http\Requests\School\RetrieveLunchRequest;
-use App\Http\Requests\School\StudentListRequest;
-use App\Http\Resources\LunchResource;
+use Carbon\Carbon;
 use App\Models\Lunch;
-use App\Models\Merchant;
-use App\Models\PeriodicLunch;
 use App\Models\School;
 use App\Models\Student;
+use App\Models\Merchant;
 use App\Models\Terminal;
-use Carbon\Carbon;
+use App\Models\PeriodicLunch;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\LunchRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\LunchResource;
+use App\Http\Requests\School\ClaimLunchRequest;
+use App\Http\Requests\School\StudentListRequest;
+use App\Http\Requests\School\RetrieveLunchRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LunchController extends Controller
@@ -61,6 +62,13 @@ class LunchController extends Controller
     public function show(Lunch $lunch): LunchResource
     {
         return new LunchResource($lunch);
+    }
+
+    public function suitableLunchForDate(Request $request): JsonResponse
+    {
+        $date = $request->query('date');
+
+        return response()->json(['lunch' => 'hard_coded']);
     }
 
     public function update(LunchRequest $request, Lunch $lunch)

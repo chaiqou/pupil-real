@@ -112,5 +112,6 @@ Route::controller()->group(function () {
     Route::get('lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
     Route::post('lunch/claim', [LunchController::class, 'claimLunch'])->name('lunch.claim');
     Route::get('lunch/students/retrieve', [LunchController::class, 'retrieveStudents'])->name('lunch.students.retrieve');
+    Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
 });
 Route::apiResource('school/lunch', LunchController::class);

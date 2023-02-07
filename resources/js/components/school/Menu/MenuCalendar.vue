@@ -34,7 +34,7 @@
                     >
                         <button
                             v-for="(day, dayIdx) in month.days"
-                            @click="toggleTooltip(day)"
+                            @click="onClickCalendar(day)"
                             :key="day"
                             type="button"
                             :class="[
@@ -108,9 +108,14 @@ const props = defineProps({
     },
 });
 
-const toggleTooltip = (day) => {
+const onClickCalendar = async (day) => {
     menuManagementStore.toggle_card = !menuManagementStore.toggle_card;
     selectedDay.value = day;
+
+    const response = await axios.get("/api/lunch/suitable/lunch", {
+        params: { date: day },
+    });
+    console.log(response);
 };
 
 const lunchDays = ref([]);
