@@ -39,7 +39,7 @@ class RequestProformasByQuery extends Command
             $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
             $request = Http::withHeaders([
                 'X-API-KEY' => $billingoData->billingo_api_key,
-            ])->get("https://api.billingo.hu/v3/documents?payment_status=paid&type=proforma&per_page=100&paid_start_date=$yesterday_date")->json();
+            ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date")->json();
             $dataArray = [];
             array_push($dataArray, $request['data']);
             if ($request['next_page_url'] !== null) {
@@ -52,7 +52,6 @@ class RequestProformasByQuery extends Command
                 } while ($request['next_page_url'] !== null);
             }
         }
-        dd($dataArray);
         foreach ($dataArray as $datas) {
             foreach ($datas as $data) {
                 $pending_transaction = PendingTransaction::where('proforma_id', $data['id'])->where('billing_provider', 'billingo')->where('convert_to_invoice', true)->first();

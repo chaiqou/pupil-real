@@ -50,13 +50,13 @@
 
         </div>
           <div class="grid-area-3 mt-32">
-              <div class="w-full bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
+              <div class="w-full bg-white rounded-lg shadow-2xl px-10 flex items-center justify-center">
                   <div>
                       <Pie width="500" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
                   </div>
               </div>
           </div>
-          <div class="grid-area-4 mt-32 mb-32 bg-gray-200 rounded-lg shadow-2xl px-10 flex items-center justify-center">
+          <div class="grid-area-4 mt-32 mb-32 bg-white rounded-lg shadow-2xl px-10 flex items-center justify-center">
               <ApexChart width="850" :options="chartOptions" :series="series"></ApexChart>
           </div>
       </div>
