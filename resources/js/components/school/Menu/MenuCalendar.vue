@@ -1,6 +1,6 @@
 <template>
-    <template v-if="menuManagementStore.toggle_menu_card">
-        <MenuManagementCard />
+    <template v-if="menuManagementStore.toggle_card">
+        <MenuManagementCard :selected-day="selectedDay" />
     </template>
     <div>
         <div
@@ -94,6 +94,8 @@ const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 const { ifDaysMatch } = useCheckIfDaysMatches();
 
+const selectedDay = ref();
+
 const props = defineProps({
     months: {
         type: Number,
@@ -107,9 +109,8 @@ const props = defineProps({
 });
 
 const toggleTooltip = (day) => {
-    menuManagementStore.toggle_menu_card =
-        !menuManagementStore.toggle_menu_card;
-    menuManagementStore.selected_day = day;
+    menuManagementStore.toggle_card = !menuManagementStore.toggle_card;
+    selectedDay.value = day;
 };
 
 const lunchDays = ref([]);

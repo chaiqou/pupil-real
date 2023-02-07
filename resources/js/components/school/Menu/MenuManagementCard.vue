@@ -10,7 +10,7 @@
                 class="flex flex-wrap justify-between border-b border-gray-200"
             >
                 <h1 class="text-gray-700 mb-2 font-semibold">
-                    {{ format(store.selected_day, "yyyy MMMM dd") }}
+                    {{ format(props.selectedDay, "yyyy MMMM dd") }}
                 </h1>
             </template>
 
@@ -41,5 +41,5 @@ const store = useMenuManagementStore();
 // Close on click outside model
 
 const target = ref(null);
-onClickOutside(target, () => (store.toggle_menu_card = false));
+onClickOutside(target, () => (store.toggle_card = false));
 </script>
