@@ -3,7 +3,7 @@
         <div>
             <div class="relative mt-1">
                 <button
-                    type="button"
+                    @click="onClickSelect"
                     class="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                 >
                     <span class="block truncate">2 Lunches Selected</span>
@@ -14,6 +14,7 @@
                     </span>
                 </button>
                 <ul
+                    v-if="toggleSelect"
                     class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                 >
                     <li
@@ -60,6 +61,15 @@
 </template>
 
 <script setup>
+// WE ARE NOT USING THIS COMPONENT YET (BUT THIS IS NICE SELECTOR COMPONENT FOR FUTURE USING, DONT DELETE)
+
+import { ref } from "vue";
 import LunchesArrowIcon from "@/components/icons/LunchesArrowIcon.vue";
 import CheckIcon from "@/components/icons/checkIcon.vue";
+
+const toggleSelect = ref(false);
+
+const onClickSelect = () => {
+    toggleSelect.value = !toggleSelect.value;
+};
 </script>

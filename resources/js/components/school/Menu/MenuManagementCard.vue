@@ -3,6 +3,7 @@
         class="fixed flex min-h-screen w-screen flex-col z-50 justify-center items-center bg-black/50"
     >
         <div
+            ref="target"
             class="absolute md:right-1/3 xl:right-[45%] bg-white px-6 py-10 shadow-2xl max-w-lg rounded-lg w-full"
         >
             <template
@@ -13,8 +14,7 @@
                 </h1>
                 <h2 class="text-gray-700 mb-2 font-semibold">Lunch Name</h2>
             </template>
-
-            <Form ref="target">
+            <Form>
                 <div
                     class="flex flex-wrap space-y-4 w-full justify-between sm:space-y-0 sm:flex-nowrap sm:space-x-12 my-4"
                 >
@@ -31,16 +31,6 @@
                         Choices
                     </button>
                 </div>
-                <div
-                    class="border-y p-2 border-gray-200 focus-within:border-indigo-600"
-                >
-                    <Field
-                        name="Comment"
-                        as="textarea"
-                        class="w-full resize-none border-transparent p-0 pb-2 focus:border-indigo-600 focus:rounded-lg focus:border-none focus:ring-0 sm:text-sm"
-                        placeholder="Menu description..."
-                    ></Field>
-                </div>
             </Form>
         </div>
     </div>
@@ -50,7 +40,7 @@
 import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import { Field, Form } from "vee-validate";
+import { Form } from "vee-validate";
 import { format } from "date-fns";
 
 const props = defineProps({
