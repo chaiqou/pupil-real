@@ -112,7 +112,7 @@ const onClickCalendar = async (day) => {
     menuManagementStore.toggle_card = !menuManagementStore.toggle_card;
     selectedDay.value = day;
 
-    const response = await axios.get("/api/lunch/suitable/lunch", {
+    const response = await axios.get("/api/lunch/suitable-lunch/date", {
         params: { date: day },
     });
     console.log(response);

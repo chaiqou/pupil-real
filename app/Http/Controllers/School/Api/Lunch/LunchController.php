@@ -8,10 +8,11 @@ use App\Models\School;
 use App\Models\Student;
 use App\Models\Merchant;
 use App\Models\Terminal;
+use Illuminate\Http\Request;
 use App\Models\PeriodicLunch;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LunchRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LunchResource;
 use App\Http\Requests\School\ClaimLunchRequest;
@@ -67,8 +68,13 @@ class LunchController extends Controller
     public function suitableLunchForDate(Request $request): JsonResponse
     {
         $date = $request->query('date');
+        $formatted_date = date('Y-m-d', strtotime($date));
 
-        return response()->json(['lunch' => 'hard_coded']);
+        $lunches = DB::table('lunches')
+                ->whereJsonContains('available_days', $formatted_date)
+                ->get();
+
+        return response()->json(['lunches' => $lunches]);
     }
 
     public function update(LunchRequest $request, Lunch $lunch)
