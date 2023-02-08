@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import AnimatedPlaceholder from "../../ui/AnimatedPlaceholder.vue";
+import AnimatedPlaceholder from "@/components/ui/AnimatedPlaceholder.vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
 const store = useMenuManagementStore();

@@ -10,7 +10,7 @@
                 class="flex flex-wrap justify-between border-b border-gray-200"
             >
                 <h1 class="text-gray-700 mb-2 font-semibold">
-                    {{ format(props.selectedDay, "yyyy MMMM dd") }}
+                    {{ format(store.selectedDay, "yyyy MMMM dd") }}
                 </h1>
             </template>
 
@@ -27,14 +27,6 @@ import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import SingleLunchCard from "./SingleLunchCard.vue";
-
-const props = defineProps({
-    selectedDay: {
-        type: [Date, String],
-        default: "",
-        required: false,
-    },
-});
 
 const store = useMenuManagementStore();
 
