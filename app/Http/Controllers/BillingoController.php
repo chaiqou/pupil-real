@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\School\Api\TransactionController;
 use App\Http\Requests\Invite\BillingoVerificationRequest;
+use App\Http\Resources\PendingTransactionResource;
 use App\Models\BillingoData;
 use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\PartnerId;
+use App\Models\PendingTransaction;
+use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -77,4 +82,52 @@ class BillingoController extends Controller
             ]);
         }
     }
+
+    public static function providePendingTransactionToBillingo(PendingTransaction $pending_transaction): PendingTransactionResource
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        $partner = PartnerId::where('user_id', $user->id)->first();
+        $transactionBillingItem = json_decode($pending_transaction->billing_items);
+        $merchant = Merchant::where('id', $pending_transaction->merchant_id)->first();
+        $transaction_date = $pending_transaction->transaction_date;
+        $transaction_date = strtotime($transaction_date);
+        $transaction_date = strtotime('+7 days', $transaction_date);
+        $transaction_due_date = date('Y-m-d', $transaction_date);
+        $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
+        $request = Http::withHeaders([
+            'X-API-KEY' => $billingoData->billingo_api_key,
+        ])->post('https://api.billingo.hu/v3/documents', [
+            'partner_id' => $partner->partner_id,
+            'block_id' => $billingoData->block_id,
+            'type' => $pending_transaction->billing_type,
+            'fulfillment_date' => $pending_transaction->transaction_date,
+            'due_date' => $transaction_due_date,
+            'payment_method' => 'wire_transfer',
+            'language' => 'en',
+            'currency' => 'HUF',
+            'items' => [
+                [
+                    'name' => $transactionBillingItem->name,
+                    'unit_price' => $transactionBillingItem->unit_price,
+                    'unit_price_type' => $transactionBillingItem->unit_price_type,
+                    'quantity' => $transactionBillingItem->quantity,
+                    'unit' => $transactionBillingItem->unit,
+                    'vat' => $transactionBillingItem->vat,
+                    'comment' => $pending_transaction->billing_comment,
+                ], ],
+            'settings' => [
+                'should_send_email' => true,
+            ],
+        ])->json();
+        $pending_transaction->update([
+            'proforma_id' => $pending_transaction->billing_type === 'proforma' ? $request['id'] : 'none',
+        ]);
+        $transactionComment = json_decode($pending_transaction->comments);
+        $transactionComment->comment_history[] = $transactionComment->comment;
+        $transactionComment->comment =
+            'Issued'.' '.ucfirst($pending_transaction->billing_type).' on '.now()->format('Y-m-d').' ('.$request['invoice_number'].')';
+        TransactionController::updateComment($pending_transaction, $transactionComment->comment);
+        return new PendingTransactionResource($pending_transaction);
+    }
+
 }

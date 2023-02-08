@@ -4,6 +4,7 @@ namespace App\Http\Controllers\School\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
+use App\Models\PendingTransaction;
 use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,14 +26,13 @@ class TransactionController extends Controller
         return TransactionResource::collection($transactions);
     }
 
-    public static function updateComment(int $transaction_id, string $comment): void
+    public static function updateComment(PendingTransaction $pending_transaction, string $newComment): void
     {
-        $transaction = Transaction::where('id', $transaction_id)->first();
-        $transactionComment = json_decode($transaction->comment);
+        $transactionComment = json_decode($pending_transaction->comments);
         $transactionComment->comment_history[] = $transactionComment->comment;
-        $transaction->update([
-            'comment' => json_encode([
-                'comment' => $comment,
+        $pending_transaction->update([
+            'comments' => json_encode([
+                'comment' => $newComment,
                 'comment_history' => $transactionComment->comment_history,
             ]),
         ]);

@@ -105,7 +105,7 @@ class InviteController extends Controller
         ]);
         $userInformation = json_decode($user->user_information);
         try {
-            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
             $stripeCustomerRequest = $stripe->customers->create([
                 'address' => [
                     'city' => $userInformation->city,
@@ -150,9 +150,8 @@ class InviteController extends Controller
             Str::endsWith(env('APP_URL'), '/') ?
                 [$success_url = env('APP_URL').'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'parent-setup-cards/'.$invite->uniqueID]
                 : [$success_url = env('APP_URL').'/'.'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'/'.'parent-setup-cards/'.$invite->uniqueID];
-
             try {
-                $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+                $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
                 $stripeCreateSessionRequest = $stripe->checkout->sessions->create([
                     'payment_method_types' => ['card'],
                     'mode' => 'setup',
@@ -183,7 +182,6 @@ class InviteController extends Controller
         } else {
             $invite->update(['state' => 5]);
         }
-
             return redirect()->back()->withErrors('Please select you answer');
     }
 
@@ -219,7 +217,6 @@ class InviteController extends Controller
             $user->update(['finished_onboarding' => 1]);
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
-
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }
