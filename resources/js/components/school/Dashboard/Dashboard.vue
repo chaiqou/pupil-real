@@ -1,8 +1,8 @@
 <template>
-    <div class="xl:flex mt-10 gap-2">
-        <div class="w-1/2">
+    <div class="xl:flex gap-2">
+        <div class="lg:w-1/2 lg:mt-10">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
-                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 w-full">
                         <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                             <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
                             <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
@@ -41,17 +41,17 @@
                 </dl>
         </div>
 
-        <div class="w-2/3">
+        <div class="lg:w-2/3 mt-10">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
             <dashboard-transactions class="mt-5" :schoolId="1"></dashboard-transactions>
         </div>
 
       </div>
-        <div class="lg:flex md:mt-32 md:mb-32 px-1">
-                <div class="w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center">
+        <div class="lg:flex md:mt-32 md:mb-32 px-1 my-12">
+                <div class="lg:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center">
                         <Pie width="100%" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
                 </div>
-                <div class="w-2/3 bg-white rounded-lg shadow-2xl  flex items-center justify-center">
+                <div class="lg:w-2/3 bg-white rounded-lg shadow-2xl  flex items-center justify-center">
                     <div class="w-full">
                         <ApexChart width="100%" :options="chartOptions" :series="series"></ApexChart>
                     </div>
