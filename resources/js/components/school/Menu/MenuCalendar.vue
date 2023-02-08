@@ -39,7 +39,7 @@
                     <button
                         v-for="(day, dayIdx) in month.days"
                         @click="onClickCalendar(day)"
-                        :key="day"
+                        :key="day.id"
                         type="button"
                         :class="[
                             month.name !== getMonthByIndex(day.getMonth()) &&
@@ -53,54 +53,7 @@
                             'py-1.5 hover:bg-gray-100',
                         ]"
                     >
-                        <BaseTooltip
-                            v-if="
-                                !store.marked_days.includes(
-                                    format(day, 'yyyy-MM-dd')
-                                )
-                            "
-                            content="No lunch for the day"
-                            placement="top"
-                        >
-                            <time
-                                :datetime="format(day, 'yyyy-MM-dd')"
-                                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
-                            >
-                                <div class="flex-col">
-                                    <h1>
-                                        {{ format(day, "d") }}
-                                    </h1>
-                                    <div
-                                        v-if="ifDaysMatch(day) && isToday(day)"
-                                        class="w-4 h-0.5 mx-auto bg-white rounded-full"
-                                    ></div>
-                                    <div
-                                        v-if="ifDaysMatch(day) && !isToday(day)"
-                                        class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
-                                    ></div>
-                                </div>
-                            </time>
-                        </BaseTooltip>
-                        <div v-else>
-                            <time
-                                :datetime="format(day, 'yyyy-MM-dd')"
-                                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
-                            >
-                                <div class="flex-col">
-                                    <h1>
-                                        {{ format(day, "d") }}
-                                    </h1>
-                                    <div
-                                        v-if="ifDaysMatch(day) && isToday(day)"
-                                        class="w-4 h-0.5 mx-auto bg-white rounded-full"
-                                    ></div>
-                                    <div
-                                        v-if="ifDaysMatch(day) && !isToday(day)"
-                                        class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
-                                    ></div>
-                                </div>
-                            </time>
-                        </div>
+                        <MenuCalendarDays :day="day" />
                     </button>
                 </div>
             </section>
@@ -109,23 +62,21 @@
 </template>
 
 <script setup>
-import { format, isToday } from "date-fns";
+import { format } from "date-fns";
 import { ref, onBeforeMount } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
-import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
 import MenuManagementSkeleton from "./MenuManagementSkeleton.vue";
-import BaseTooltip from "@/components/ui/BaseTooltip.vue";
+import MenuCalendarDays from "./MenuCalendarDays.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
-const { ifDaysMatch } = useCheckIfDaysMatches();
 
 const props = defineProps({
     months: {
