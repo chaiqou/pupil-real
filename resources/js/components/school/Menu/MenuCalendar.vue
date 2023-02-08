@@ -1,6 +1,13 @@
 <template>
     <template v-if="menuManagementStore.toggleCard">
-        <MenuManagementCard :selected-day="selectedDay" />
+        <Suspense>
+            <MenuManagementCard
+                :selected-day="menuManagementStore.selectedDay"
+            />
+            <template #fallback>
+                <SingleLunchSkeleton />
+            </template>
+        </Suspense>
     </template>
     <div>
         <div
@@ -87,14 +94,13 @@ import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
+import SingleLunchSkeleton from "./SingleLunchSkeleton.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 const { ifDaysMatch } = useCheckIfDaysMatches();
-
-const selectedDay = ref();
 
 const props = defineProps({
     months: {
@@ -108,15 +114,9 @@ const props = defineProps({
     },
 });
 
-const onClickCalendar = async (day) => {
+const onClickCalendar = (day) => {
     menuManagementStore.toggleCard = !menuManagementStore.toggleCard;
-    selectedDay.value = day;
-
-    const response = await axios.get("/api/lunch/suitable-lunch/date", {
-        params: { date: day },
-    });
-
-    menuManagementStore.suitableLunch = response.data.lunches;
+    menuManagementStore.selectedDay = day;
 };
 
 const lunchDays = ref([]);

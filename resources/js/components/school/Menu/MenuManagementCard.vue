@@ -22,10 +22,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import { format } from "date-fns";
 import SingleLunchCard from "./SingleLunchCard.vue";
 
 const props = defineProps({
@@ -37,6 +37,27 @@ const props = defineProps({
 });
 
 const store = useMenuManagementStore();
+
+const getLunchData = async () => {
+    try {
+        const response = await axios.get("/api/lunch/suitable-lunch/date", {
+            params: { date: format(store.selectedDay, "yyyy-MM-dd") },
+        });
+
+        store.suitableLunch = response.data.lunches;
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const lunchData = await getLunchData();
+// console.log(lunchData);
+
+onMounted(() => {
+    console.log(lunchData);
+});
 
 // Close on click outside model
 

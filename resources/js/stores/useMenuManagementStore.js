@@ -5,6 +5,7 @@ export const useMenuManagementStore = defineStore("menu_management", {
         return {
             toggleCard: false,
             suitableLunch: [],
+            selectedDay: "",
         };
     },
 });
