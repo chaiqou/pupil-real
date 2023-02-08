@@ -111,8 +111,12 @@ const props = defineProps({
 const lunches = ref([]);
 
 const onClickCalendar = (day) => {
-    menuManagementStore.toggleCard = !menuManagementStore.toggleCard;
-    menuManagementStore.selectedDay = day;
+    let formatedDay = format(day, "yyyy-MM-dd");
+
+    if (store.marked_days.includes(formatedDay)) {
+        menuManagementStore.toggleCard = !menuManagementStore.toggleCard;
+        menuManagementStore.selectedDay = day;
+    }
 };
 
 // Fetch all existing lunch for merchant and mark it on calendar
