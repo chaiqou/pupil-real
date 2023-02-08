@@ -94,7 +94,7 @@ import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
-import SingleLunchSkeleton from "./SingleLunchSkeleton.vue";
+import SingleLunchSkeleton from "./MenuManagementSkeleton.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();

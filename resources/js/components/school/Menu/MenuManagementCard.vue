@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
@@ -53,11 +53,6 @@ const getLunchData = async () => {
 };
 
 const lunchData = await getLunchData();
-// console.log(lunchData);
-
-onMounted(() => {
-    console.log(lunchData);
-});
 
 // Close on click outside model
 
