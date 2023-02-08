@@ -13,23 +13,21 @@
                 />
             </template>
 
-            <div v-for="lunch in store.suitableLunch">
-                <div class="border-b border-gray-200">
-                    <h2 class="text-gray-700 mt-2 font-semibold">
-                        <AnimatedPlaceholder
-                            class="text-gray-700 mb-2 font-semibold w-full"
-                        />
-                    </h2>
-                    <div
-                        class="flex flex-wrap space-y-4 w-full justify-between my-4 sm:space-y-0 sm:flex-nowrap sm:space-x-12"
-                    >
-                        <AnimatedPlaceholder
-                            class="text-gray-700 mb-2 font-semibold w-full"
-                        />
-                        <AnimatedPlaceholder
-                            class="text-gray-700 mb-2 font-semibold w-full"
-                        />
-                    </div>
+            <div class="border-b border-gray-200 mt-4">
+                <h2 class="text-gray-700 mt-2 font-semibold">
+                    <AnimatedPlaceholder
+                        class="text-gray-700 mb-2 font-semibold w-full"
+                    />
+                </h2>
+                <div
+                    class="flex flex-wrap space-y-4 w-full justify-between my-4 sm:space-y-0 sm:flex-nowrap sm:space-x-12"
+                >
+                    <AnimatedPlaceholder
+                        class="text-gray-700 mb-2 font-semibold w-full"
+                    />
+                    <AnimatedPlaceholder
+                        class="text-gray-700 mb-2 font-semibold w-full"
+                    />
                 </div>
             </div>
         </div>
@@ -38,7 +36,4 @@
 
 <script setup>
 import AnimatedPlaceholder from "@/components/ui/AnimatedPlaceholder.vue";
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-
-const store = useMenuManagementStore();
 </script>
