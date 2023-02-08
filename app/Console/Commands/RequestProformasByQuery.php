@@ -34,6 +34,7 @@ class RequestProformasByQuery extends Command
     {
         $this->info('Please wait..');
         $yesterday_date = date('Y-m-d', strtotime('-1 days'));
+        $tomorrow_date = date('Y-m-d', strtotime('+1 days'));
         $merchants = Merchant::all();
         foreach ($merchants as $merchant) {
             $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
@@ -41,6 +42,7 @@ class RequestProformasByQuery extends Command
                 'X-API-KEY' => $billingoData->billingo_api_key,
             ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date")->json();
             $dataArray = [];
+            dd($request);
             array_push($dataArray, $request['data']);
             if ($request['next_page_url'] !== null) {
                 do {
