@@ -6,12 +6,14 @@
         >
             <button
                 type="button"
+                @click="showFixedCard"
                 class="items-center p-4 w-full rounded-md border border-gray-300 bg-white text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
                 Fixed
             </button>
             <button
                 type="button"
+                @click="showChoicesCard"
                 class="items-center p-4 w-full rounded-md border border-gray-300 bg-white text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
                 Choices
@@ -21,6 +23,8 @@
 </template>
 
 <script setup>
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+
 const props = defineProps({
     name: {
         type: String,
@@ -29,4 +33,15 @@ const props = defineProps({
     fixedData: {},
     choicesData: {},
 });
+
+const store = useMenuManagementStore();
+
+const showFixedCard = () => {
+    store.toggleMenuManagementCard = false;
+    store.toggleFixedCard = true;
+};
+const showChoicesCard = () => {
+    store.toggleMenuManagementCard = false;
+    store.toggleChoicesCard = true;
+};
 </script>

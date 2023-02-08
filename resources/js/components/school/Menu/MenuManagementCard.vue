@@ -49,8 +49,9 @@ const lunchData = await getLunchData();
 // Close on click outside model
 
 const target = ref(null);
+
 onClickOutside(target, () => {
-    store.toggleCard = false;
+    store.toggleMenuManagementCard = false;
     store.suitableLunch = [];
     store.selectedDay = "";
 });

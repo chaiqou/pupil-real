@@ -1,11 +1,17 @@
 <template>
-    <template v-if="menuManagementStore.toggleCard">
+    <template v-if="menuManagementStore.toggleMenuManagementCard">
         <Suspense>
             <MenuManagementCard />
             <template #fallback>
                 <MenuManagementSkeleton />
             </template>
         </Suspense>
+    </template>
+    <template v-if="menuManagementStore.toggleChoicesCard">
+        <ChoicesCard />
+    </template>
+    <template v-if="menuManagementStore.toggleFixedCard">
+        <FixedCard />
     </template>
     <div
         class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
@@ -71,6 +77,8 @@ import useFindMonthDays from "@/composables/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
 import MenuManagementSkeleton from "./MenuManagementSkeleton.vue";
 import MenuCalendarDays from "./MenuCalendarDays.vue";
+import FixedCard from "./FixedCard.vue";
+import ChoicesCard from "./ChoicesCard.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
@@ -96,7 +104,8 @@ const onClickCalendar = (day) => {
     let formatedDay = format(day, "yyyy-MM-dd");
 
     if (store.marked_days.includes(formatedDay)) {
-        menuManagementStore.toggleCard = !menuManagementStore.toggleCard;
+        menuManagementStore.toggleMenuManagementCard =
+            !menuManagementStore.toggleMenuManagementCard;
         menuManagementStore.selectedDay = day;
     }
 };
