@@ -32,7 +32,7 @@ export default {
      width: {
          type: String,
          required: false,
-         default: '500'
+         default: '100%'
      },
      chartData: {
          type: Array,  // notice that data should be Array of integers/numbers
