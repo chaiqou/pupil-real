@@ -17,7 +17,10 @@
                 v-for="claimable in store.parsedClaimables(props.claimables)"
                 :key="claimable"
             >
-                <h2>{{ claimable }}</h2>
+                <h2 class="text-gray-700 m-2 font-semibold">
+                    {{ claimable }}
+                </h2>
+                <BaseInput />
             </div>
         </div>
     </div>
@@ -27,6 +30,7 @@
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
+import BaseInput from "@/components/form-components/BaseInput.vue";
 
 const props = defineProps({
     claimables: {
