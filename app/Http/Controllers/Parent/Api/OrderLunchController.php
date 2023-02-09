@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Parent\Api;
 
 use App\Helpers\CalculateClaims;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
@@ -59,6 +60,7 @@ class OrderLunchController extends Controller
                     'unit' => 'db',
                     'vat' => '27%',
                 ]),
+                'convert_to_invoice' => true,
                 'billing_provider' => 'billingo',
                 'billing_comment' => json_encode([
                     'comment' => 'hardcoded billing comment',
@@ -76,7 +78,10 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
-            if (! $pending_transaction || ! $lunch) {
+            BillingoController::providePendingTransactionToBillingo($pending_transaction);
+
+            if(!$pending_transaction || !$lunch)
+            {
                 DB::rollBack();
             }
         });
