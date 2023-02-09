@@ -21,18 +21,6 @@
                         scope="col"
                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                        Type
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                        Date
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
                         Merchant
                     </th>
                 </tr>
@@ -58,55 +46,27 @@
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                     >
                         {{ transaction.student.first_name }}
+                        <p class="text-gray-400 text-[11px]">
+                            {{ transaction.transaction_date }}
+                        </p>
                     </td>
                     <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        class="whitespace-nowrap px-3 py-4 font-medium text-sm text-gray-900"
                     >
-                        {{ transaction.amount }}
+                        {{ transaction.amount || 'none' }}
+                        <p class="text-gray-400 text-[11px]">
+                            {{ transaction.transaction_type }}
+                        </p>
                     </td>
                     <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        {{ transaction.transaction_type }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        {{ transaction.transaction_date }}
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium"
                     >
                         {{ transaction.merchant.merchant_nick }}
                     </td>
-                    <td
-                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
-                    ></td>
                 </tr>
                 <tr v-if="!this.isTransactionsLoaded" v-for="n in 7">
                     <td
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                    >
-                        <div
-                            class="h-2 bg-slate-300 rounded animate-pulse"
-                        ></div>
-                    </td>
-                    <td
-                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                     >
                         <div
                             class="h-2 bg-slate-300 rounded animate-pulse"

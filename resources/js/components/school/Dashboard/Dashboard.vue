@@ -1,13 +1,12 @@
 <template>
-    <div class="grid grid-template-areas-2x2 mt-10 gap-4">
-        <div class="grid-area-1">
-            <div class="w-full">
+    <div class="xl:flex gap-2">
+        <div class="xl:w-1/2 lg:mt-10">
                 <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
-                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 w-full">
                         <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                             <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
                             <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                                <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                                <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
                                     {{ item.stat }}
                                     <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
                                 </div>
@@ -26,7 +25,7 @@
                     <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                         <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
                         <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                            <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                            <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
                                 {{ item.stat }}
                                 <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
                             </div>
@@ -40,26 +39,24 @@
                         </dd>
                     </div>
                 </dl>
-
-                </div>
-
         </div>
-        <div class="grid-area-2 w-full">
+
+        <div class="xl:w-2/3 mt-10">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
             <dashboard-transactions class="mt-5" :schoolId="1"></dashboard-transactions>
-
         </div>
-          <div class="grid-area-3 mt-32">
-              <div class="w-full bg-white rounded-lg shadow-2xl px-10 flex items-center justify-center">
-                  <div>
-                      <Pie width="500" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
-                  </div>
-              </div>
-          </div>
-          <div class="grid-area-4 mt-32 mb-32 bg-white rounded-lg shadow-2xl px-10 flex items-center justify-center">
-              <ApexChart width="850" :options="chartOptions" :series="series"></ApexChart>
-          </div>
+
       </div>
+        <div class="xl:flex md:mt-32 md:mb-32 px-1 my-12">
+                <div class="xl:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center">
+                        <Pie width="100%" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
+                </div>
+                <div class="xl:w-2/3 bg-white rounded-lg shadow-2xl  flex items-center justify-center">
+                    <div class="w-full">
+                        <ApexChart width="100%" :options="chartOptions" :series="series"></ApexChart>
+                    </div>
+                </div>
+    </div>
 </template>
 
 <script>
@@ -114,6 +111,7 @@ export default {
                 chart: {
                     height: 350,
                     type: 'line',
+                    width: '100%',
                     zoom: {
                         enabled: false
                     },
@@ -186,22 +184,3 @@ export default {
             }
 }
 </script>
-<style>
-.grid-template-areas-2x2 {
-    grid-template-areas:
-    "top-left top-right"
-    "bottom-left bottom-right";
-}
-.grid-area-1 {
-    grid-area: top-left;
-}
-.grid-area-2 {
-    grid-area: top-right;
-}
-.grid-area-3 {
-    grid-area: bottom-left;
-}
-.grid-area-4 {
-    grid-area: bottom-right;
-}
-</style>
