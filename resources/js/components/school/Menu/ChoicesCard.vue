@@ -15,4 +15,17 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { onClickOutside } from "@vueuse/core";
+import { ref } from "vue";
+
+const store = useMenuManagementStore();
+
+// Close on click outside
+
+const target = ref(null);
+onClickOutside(target, () => {
+    store.toggleChoicesCard = false;
+});
+</script>

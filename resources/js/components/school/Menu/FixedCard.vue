@@ -1,9 +1,9 @@
 <template>
     <div
         class="fixed flex min-h-screen w-screen flex-col z-50 justify-center items-center bg-black/50"
-        ref="target"
     >
         <div
+            ref="target"
             class="absolute md:right-1/3 xl:right-[45%] bg-white px-6 py-10 shadow-2xl max-w-lg rounded-lg w-full"
         >
             <template
@@ -15,4 +15,17 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { onClickOutside } from "@vueuse/core";
+import { ref } from "vue";
+
+const store = useMenuManagementStore();
+
+// Close on click outside
+
+const target = ref(null);
+onClickOutside(target, () => {
+    store.toggleFixedCard = false;
+});
+</script>
