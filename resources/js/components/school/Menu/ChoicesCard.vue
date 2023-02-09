@@ -12,8 +12,24 @@
                 <h1 class="text-gray-700 mb-2 font-semibold">
                     {{ props.name }}
                 </h1>
-                <h2>{{ props.claimables }}</h2>
             </template>
+            <div
+                v-for="claimable in store.parsedClaimables(props.claimables)"
+                :key="claimable"
+            >
+                <h2 class="text-gray-700 m-2 font-semibold">
+                    {{ claimable }}
+                </h2>
+                <button
+                    class="flex w-full justify-center rounded-md mt-4 mb-4 bg-indigo-700 px-4 py-2 text-base font-medium text-white"
+                    @click="onClickAddInput"
+                >
+                    Add Input
+                </button>
+                <template v-for="(input, index) in inputs" :key="index">
+                    <BaseInput />
+                </template>
+            </div>
         </div>
     </div>
 </template>
@@ -22,6 +38,7 @@
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
+import BaseInput from "@/components/form-components/BaseInput.vue";
 
 const props = defineProps({
     claimables: {
@@ -35,6 +52,12 @@ const props = defineProps({
 });
 
 const store = useMenuManagementStore();
+
+const inputs = ref([]);
+
+const onClickAddInput = () => {
+    inputs.value.push({});
+};
 
 // Close on click outside
 
