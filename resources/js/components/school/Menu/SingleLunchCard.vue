@@ -28,10 +28,12 @@ import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 const props = defineProps({
     name: {
         type: String,
-        default: "Lunch Name",
+        required: true,
     },
-    fixedData: {},
-    choicesData: {},
+    claimables: {
+        type: String,
+        required: true,
+    },
 });
 
 const store = useMenuManagementStore();
@@ -39,9 +41,13 @@ const store = useMenuManagementStore();
 const showFixedCard = () => {
     store.toggleMenuManagementCard = false;
     store.toggleFixedCard = true;
+    store.claimables = props.claimables;
+    store.lunchName = props.name;
 };
 const showChoicesCard = () => {
     store.toggleMenuManagementCard = false;
     store.toggleChoicesCard = true;
+    store.claimables = props.claimables;
+    store.lunchName = props.name;
 };
 </script>

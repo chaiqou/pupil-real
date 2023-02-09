@@ -9,7 +9,10 @@
             <template
                 class="flex flex-wrap justify-between border-b border-gray-200"
             >
-                <h1 class="text-gray-700 mb-2 font-semibold">CHOICES CARD</h1>
+                <h1 class="text-gray-700 mb-2 font-semibold">
+                    {{ props.name }}
+                </h1>
+                <h2>{{ props.claimables }}</h2>
             </template>
         </div>
     </div>
@@ -19,6 +22,17 @@
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
+
+const props = defineProps({
+    claimables: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+});
 
 const store = useMenuManagementStore();
 

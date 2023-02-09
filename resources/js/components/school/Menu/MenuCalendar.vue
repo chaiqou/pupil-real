@@ -8,10 +8,16 @@
         </Suspense>
     </template>
     <template v-if="menuManagementStore.toggleChoicesCard">
-        <ChoicesCard />
+        <ChoicesCard
+            :name="menuManagementStore.lunchName"
+            :claimables="menuManagementStore.claimables"
+        />
     </template>
     <template v-if="menuManagementStore.toggleFixedCard">
-        <FixedCard />
+        <FixedCard
+            :name="menuManagementStore.lunchName"
+            :claimables="menuManagementStore.claimables"
+        />
     </template>
     <div
         class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"

@@ -14,15 +14,18 @@
                 </h1>
             </template>
 
-            <div v-for="lunch in store.suitableLunch">
-                <SingleLunchCard :name="lunch.title" />
+            <div v-for="(lunch, index) in store.suitableLunch" :key="lunch.id">
+                <SingleLunchCard
+                    :claimables="lunch.claimables"
+                    :name="lunch.title"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
@@ -49,6 +52,10 @@ const lunchData = await getLunchData();
 // Close on click outside model
 
 const target = ref(null);
+
+onMounted(() => {
+    console.log(lunchData);
+});
 
 onClickOutside(target, () => {
     store.toggleMenuManagementCard = false;

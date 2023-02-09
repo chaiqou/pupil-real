@@ -8,6 +8,8 @@ export const useMenuManagementStore = defineStore("menu_management", {
             toggleFixedCard: false,
             suitableLunch: [],
             selectedDay: "",
+            claimables: [],
+            lunchName: "",
         };
     },
 });
