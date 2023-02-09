@@ -12,8 +12,13 @@
                 <h1 class="text-gray-700 mb-2 font-semibold">
                     {{ props.name }}
                 </h1>
-                <h2>{{ props.claimables }}</h2>
             </template>
+            <div
+                v-for="claimable in store.parsedClaimables(props.claimables)"
+                :key="claimable"
+            >
+                <h2>{{ claimable }}</h2>
+            </div>
         </div>
     </div>
 </template>

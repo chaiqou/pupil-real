@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
@@ -52,10 +52,6 @@ const lunchData = await getLunchData();
 // Close on click outside model
 
 const target = ref(null);
-
-onMounted(() => {
-    console.log(lunchData);
-});
 
 onClickOutside(target, () => {
     store.toggleMenuManagementCard = false;

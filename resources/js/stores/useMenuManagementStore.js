@@ -12,4 +12,13 @@ export const useMenuManagementStore = defineStore("menu_management", {
             lunchName: "",
         };
     },
+
+    getters: {
+        parsedClaimables() {
+            return (claimable) =>
+                JSON.parse(claimable).map((claim) =>
+                    claim.split('"').join(" ")
+                );
+        },
+    },
 });
