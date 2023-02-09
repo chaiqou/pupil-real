@@ -6,7 +6,7 @@
                         <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                             <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
                             <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                                <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                                <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
                                     {{ item.stat }}
                                     <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
                                 </div>
@@ -25,7 +25,7 @@
                     <div v-for="item in statsBottom" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                         <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
                         <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                            <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                            <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
                                 {{ item.stat }}
                                 <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
                             </div>
@@ -48,10 +48,10 @@
 
       </div>
         <div class="xl:flex md:mt-32 md:mb-32 px-1 my-12">
-                <div class="lg:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center">
+                <div class="xl:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center">
                         <Pie width="100%" id="RandomChart" :chartData="this.chartData" :labels="this.labels"></Pie>
                 </div>
-                <div class="lg:w-2/3 bg-white rounded-lg shadow-2xl  flex items-center justify-center">
+                <div class="xl:w-2/3 bg-white rounded-lg shadow-2xl  flex items-center justify-center">
                     <div class="w-full">
                         <ApexChart width="100%" :options="chartOptions" :series="series"></ApexChart>
                     </div>
