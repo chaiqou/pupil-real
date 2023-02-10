@@ -73,22 +73,22 @@ class RequestProformasByQuery extends Command
                         ],
                     ])->json();
                     Transaction::create([
-                       'student_id' => $pending_transaction->student_id,
-                       'user_id' => $pending_transaction->user_id,
-                       'merchant_id' => $pending_transaction->merchant_id,
-                       'transaction_identifier' => $pending_transaction->transaction_identifier,
-                       'transaction_date' => $pending_transaction->transaction_date,
-                       'transaction_amount' => $pending_transaction->transaction_amount,
-                       'transaction_type' => $pending_transaction->transaction_type,
-                       'comments' => $pending_transaction->comments,
-                       'history' => $pending_transaction->history,
-                       'wallet_id' => $pending_transaction->wallet_id,
-                       'stripe_payment_intent' => null,
-                       'payment_method' => $pending_transaction->payment_method,
-                       'billing_items' => $pending_transaction->billing_items,
-                       'billing_provider' => $pending_transaction->billing_provider,
-                       'billing_comment' => $pending_transaction->billing_comment,
-                       'invoiceId' => $pending_transaction->invoiceId
+                        'student_id' => $pending_transaction->student_id,
+                        'user_id' => $pending_transaction->user_id,
+                        'merchant_id' => $pending_transaction->merchant_id,
+                        'transaction_identifier' => $pending_transaction->transaction_identifier,
+                        'transaction_date' => $pending_transaction->transaction_date,
+                        'transaction_amount' => $pending_transaction->transaction_amount,
+                        'transaction_type' => $pending_transaction->transaction_type,
+                        'comments' => $pending_transaction->comments,
+                        'history' => $pending_transaction->history,
+                        'wallet_id' => $pending_transaction->wallet_id,
+                        'stripe_payment_intent' => null,
+                        'payment_method' => $pending_transaction->payment_method,
+                        'billing_items' => $pending_transaction->billing_items,
+                        'billing_provider' => $pending_transaction->billing_provider,
+                        'billing_comment' => $pending_transaction->billing_comment,
+                        'invoiceId' => $pending_transaction->invoiceId,
                     ]);
                     $pending_transaction->delete();
                     $this->info('Invoices successfully made and sent to email addresses');

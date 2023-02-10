@@ -10,9 +10,7 @@ use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\PartnerId;
 use App\Models\PendingTransaction;
-use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -127,7 +125,7 @@ class BillingoController extends Controller
         $transactionComment->comment =
             'Issued'.' '.ucfirst($pending_transaction->billing_type).' on '.now()->format('Y-m-d').' ('.$request['invoice_number'].')';
         TransactionController::updateComment($pending_transaction, $transactionComment->comment);
+
         return new PendingTransactionResource($pending_transaction);
     }
-
 }
