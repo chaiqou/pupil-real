@@ -14,21 +14,21 @@
                 </h1>
             </template>
             <div
-                v-for="claimable in store.parsedClaimables(props.claimables)"
-                :key="claimable"
+                v-for="(claimable, index) in store.parsedClaimables(
+                    props.claimables
+                )"
+                :key="index"
             >
                 <h2 class="text-gray-700 m-2 font-semibold">
                     {{ claimable }}
                 </h2>
                 <button
                     class="flex w-full justify-center rounded-md mt-4 mb-4 bg-indigo-700 px-4 py-2 text-base font-medium text-white"
-                    @click="onClickAddInput"
+                    @click="onClickAddField"
                 >
                     Add Input
                 </button>
-                <template v-for="(input, index) in inputs" :key="index">
-                    <BaseInput />
-                </template>
+                <BaseInput />
             </div>
         </div>
     </div>
@@ -52,12 +52,6 @@ const props = defineProps({
 });
 
 const store = useMenuManagementStore();
-
-const inputs = ref([]);
-
-const onClickAddInput = () => {
-    inputs.value.push({});
-};
 
 // Close on click outside
 
