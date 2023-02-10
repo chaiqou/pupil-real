@@ -31,7 +31,7 @@
                     v-for="(input, index) in inputCounts[claimable]"
                     :key="input"
                 >
-                    <BaseInput class="w-full" />
+                    <BaseInput :name="claimable" class="w-full" />
                     <button
                         class="rounded-md whitespace-nowrap py-3 px-2 bg-indigo-700 text-base font-medium text-white"
                         @click="onClickRemoveInput(claimable, index)"
