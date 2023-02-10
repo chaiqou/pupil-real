@@ -24,11 +24,17 @@
                 </h2>
                 <button
                     class="flex w-full justify-center rounded-md mt-4 mb-4 bg-indigo-700 px-4 py-2 text-base font-medium text-white"
-                    @click="onClickAddField"
                 >
                     Add Input
                 </button>
-                <BaseInput />
+                <div class="flex space-x-2">
+                    <BaseInput class="w-full" />
+                    <button
+                        class="rounded-md whitespace-nowrap p-2 bg-indigo-700 text-base font-medium text-white"
+                    >
+                        Remove Input
+                    </button>
+                </div>
             </div>
         </div>
     </div>
