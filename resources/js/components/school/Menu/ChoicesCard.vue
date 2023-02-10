@@ -27,13 +27,13 @@
                     Add Input
                 </button>
                 <div
-                    class="flex space-x-2"
+                    class="flex justify-center items-center space-x-2 space-y-2"
                     v-for="(input, index) in inputCounts[claimable]"
                     :key="input"
                 >
-                    <BaseInput class="w-full mt-4" />
+                    <BaseInput class="w-full" />
                     <button
-                        class="rounded-md whitespace-nowrap p-2 bg-indigo-700 text-base font-medium text-white"
+                        class="rounded-md whitespace-nowrap py-3 px-2 bg-indigo-700 text-base font-medium text-white"
                         @click="onClickRemoveInput(claimable, index)"
                     >
                         Remove Input
@@ -77,7 +77,7 @@ const claimables = computed(() => props.claimables);
 
 onMounted(() => {
     JSON.parse(claimables.value).forEach((claimable) => {
-        inputCounts.value[claimable] = [0];
+        inputCounts.value[claimable] = [];
     });
 });
 
