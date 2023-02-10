@@ -40,9 +40,8 @@ class RequestProformasByQuery extends Command
             $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
             $request = Http::withHeaders([
                 'X-API-KEY' => $billingoData->billingo_api_key,
-            ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date")->json();
+            ])->get("https://api.billingo.hu/v3/documents?type=proforma&per_page=100&payment_status=paid&paid_start_date=$yesterday_date&paid_end_date=$tomorrow_date")->json();
             $dataArray = [];
-            dd($request);
             array_push($dataArray, $request['data']);
             if ($request['next_page_url'] !== null) {
                 do {
@@ -88,7 +87,7 @@ class RequestProformasByQuery extends Command
                         'billing_items' => $pending_transaction->billing_items,
                         'billing_provider' => $pending_transaction->billing_provider,
                         'billing_comment' => $pending_transaction->billing_comment,
-                        'invoiceId' => $pending_transaction->invoiceId,
+                        'invoiceId' => $request['id'],
                     ]);
                     $pending_transaction->delete();
                     $this->info('Invoices successfully made and sent to email addresses');
