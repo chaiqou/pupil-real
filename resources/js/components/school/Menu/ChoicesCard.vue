@@ -24,13 +24,19 @@
                 </h2>
                 <button
                     class="flex w-full justify-center rounded-md mt-4 mb-4 bg-indigo-700 px-4 py-2 text-base font-medium text-white"
+                    @click="onClickAddInput(claimable)"
                 >
                     Add Input
                 </button>
-                <div class="flex space-x-2">
+                <div
+                    class="flex space-x-2"
+                    v-for="input in inputCounts[claimable]"
+                    :key="input"
+                >
                     <BaseInput class="w-full" />
                     <button
                         class="rounded-md whitespace-nowrap p-2 bg-indigo-700 text-base font-medium text-white"
+                        @click="onClickRemoveInput(claimable)"
                     >
                         Remove Input
                     </button>
@@ -43,7 +49,7 @@
 <script setup>
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 
 const props = defineProps({
@@ -65,4 +71,19 @@ const target = ref(null);
 onClickOutside(target, () => {
     store.toggleChoicesCard = false;
 });
+
+// Add and Remove multiple inputs
+
+const inputCounts = ref({});
+const claimables = computed(() => props.claimables);
+
+onMounted(() => {
+    JSON.parse(claimables.value).forEach((claimable) => {
+        inputCounts.value[claimable] = 0;
+    });
+});
+
+const onClickAddInput = (claimable) => {
+    inputCounts.value[claimable]++;
+};
 </script>
