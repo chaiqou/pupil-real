@@ -20,7 +20,7 @@
                 <h2 class="text-gray-700 m-2 font-semibold">
                     {{ claimable }}
                 </h2>
-                <BaseInput />
+                <BaseInput :name="claimable" class="w-full" />
             </div>
         </div>
     </div>
