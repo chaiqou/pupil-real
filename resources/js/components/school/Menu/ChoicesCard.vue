@@ -14,9 +14,7 @@
                 </h1>
             </template>
             <div
-                v-for="(claimable, index) in store.parsedClaimables(
-                    props.claimables
-                )"
+                v-for="(claimable, index) in store.parsedClaimables(claimables)"
                 :key="index"
             >
                 <h2 class="text-gray-700 m-2 font-semibold">
@@ -30,13 +28,13 @@
                 </button>
                 <div
                     class="flex space-x-2"
-                    v-for="input in inputCounts[claimable]"
+                    v-for="(input, index) in inputCounts[claimable]"
                     :key="input"
                 >
-                    <BaseInput class="w-full" />
+                    <BaseInput class="w-full mt-4" />
                     <button
                         class="rounded-md whitespace-nowrap p-2 bg-indigo-700 text-base font-medium text-white"
-                        @click="onClickRemoveInput(claimable)"
+                        @click="onClickRemoveInput(claimable, index)"
                     >
                         Remove Input
                     </button>
@@ -79,11 +77,15 @@ const claimables = computed(() => props.claimables);
 
 onMounted(() => {
     JSON.parse(claimables.value).forEach((claimable) => {
-        inputCounts.value[claimable] = 0;
+        inputCounts.value[claimable] = [0];
     });
 });
 
-const onClickAddInput = (claimable) => {
-    inputCounts.value[claimable]++;
-};
+function onClickAddInput(claimable) {
+    inputCounts.value[claimable].push(inputCounts.value[claimable].length);
+}
+
+function onClickRemoveInput(claimable, index) {
+    inputCounts.value[claimable].splice(index, 1);
+}
 </script>
