@@ -1,59 +1,104 @@
 <template>
-    <div class="m-3 text-white rounded-md">
-        <button @click="showHideChangePassword()" class="p-2.5 shadow-sm border border-transparent bg-red-600 rounded-md hover:bg-red-700">Change Password</button>
-    </div>
+  <div class="m-3 text-white rounded-md">
+    <button
+      @click="showHideChangePassword()"
+      class="p-2.5 shadow-sm border border-transparent bg-red-600 rounded-md hover:bg-red-700"
+    >
+      Change Password
+    </button>
+  </div>
 
-    <TransitionRoot as="template" :show="this.isChangePasswordVisible">
-        <Dialog as="div" class="relative z-10" @close="this.isChangePasswordVisible = false">
-            <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </TransitionChild>
+  <TransitionRoot as="template" :show="this.isChangePasswordVisible">
+    <Dialog
+      as="div"
+      class="relative z-10"
+      @close="this.isChangePasswordVisible = false"
+    >
+      <TransitionChild
+        as="template"
+        enter="ease-out duration-300"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="ease-in duration-200"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        />
+      </TransitionChild>
 
-            <div class="fixed inset-0 z-10 overflow-y-auto">
-                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                        <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-                                <button class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" @click="this.isChangePasswordVisible = false">
-                                    <span class="sr-only">Close</span>
-                                    <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-                                </button>
-                            </div>
-                            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 text-center">Change password</DialogTitle>
-                            <div class="mt-2 text-center">
-                                <p class="text-sm text-gray-500">Always use a password that you can easily remember.</p>
-                            </div>
-                            <slot></slot>
-                        </DialogPanel>
-                    </TransitionChild>
-                </div>
-            </div>
-        </Dialog>
-    </TransitionRoot>
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <TransitionChild
+            as="template"
+            enter="ease-out duration-300"
+            enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            enter-to="opacity-100 translate-y-0 sm:scale-100"
+            leave="ease-in duration-200"
+            leave-from="opacity-100 translate-y-0 sm:scale-100"
+            leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          >
+            <DialogPanel
+              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+            >
+              <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                <button
+                  class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  @click="this.isChangePasswordVisible = false"
+                >
+                  <span class="sr-only">Close</span>
+                  <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-gray-900 text-center"
+                >Change password</DialogTitle
+              >
+              <div class="mt-2 text-center">
+                <p class="text-sm text-gray-500">
+                  Always use a password that you can easily remember.
+                </p>
+              </div>
+              <slot></slot>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <script>
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { useModalStore } from "@/stores/useModalStore";
-import { mapActions, mapWritableState } from "pinia";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { useModalStore } from '@/stores/useModalStore';
+import { mapActions, mapWritableState } from 'pinia';
 
 export default {
-    components: {
-        Dialog,
-        DialogPanel,
-        DialogTitle,
-        TransitionChild,
-        TransitionRoot,
-        ExclamationTriangleIcon,
-        XMarkIcon,
-    },
-    computed: {
-      ...mapWritableState(useModalStore, ["isChangePasswordVisible"]),
-    },
-    methods: {
-        ...mapActions(useModalStore, ["showHideChangePassword"]),
-    }
-
-}
+  components: {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+    ExclamationTriangleIcon,
+    XMarkIcon,
+  },
+  computed: {
+    ...mapWritableState(useModalStore, ['isChangePasswordVisible']),
+  },
+  methods: {
+    ...mapActions(useModalStore, ['showHideChangePassword']),
+  },
+};
 </script>
