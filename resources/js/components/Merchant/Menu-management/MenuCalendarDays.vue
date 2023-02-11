@@ -51,7 +51,7 @@
 import { format, isToday } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import BaseTooltip from "@/components/ui/BaseTooltip.vue";
-import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
+import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const store = useLunchFormStore();
 const { ifDaysMatch } = useCheckIfDaysMatches();

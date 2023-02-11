@@ -87,9 +87,9 @@
 import { format, isToday } from "date-fns";
 import { onBeforeMount } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import useFindMonthDays from "@/composables/useFindMonthDays";
-import useFindMonthByIndex from "@/composables/useFindMonthByIndex";
-import useCheckIfDaysMatches from "@/composables/useCheckIfDaysMatches";
+import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
