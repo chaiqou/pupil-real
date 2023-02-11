@@ -108,8 +108,8 @@ import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
 import VatMultiselect from "./VatMultiselect.vue";
-import WeekdaysChechkbox from "@/components/lunch-managment/WeekdaysCechkbox.vue";
-import ExtrasAndHolds from "@/components/lunch-managment/ExtrasAndHolds.vue";
+import WeekdaysChechkbox from "@/components/Merchant/lunch-management/WeekdaysCechkbox.vue";
+import ExtrasAndHolds from "@/components/Merchant/lunch-management/ExtrasAndHolds.vue";
 import Button from "@/components/ui/Button.vue";
 import Toast from "@/components/ui/Toast.vue";
 

@@ -130,8 +130,8 @@
 </template>
 
 <script setup>
-import ExtrasIcon from "../icons/ExtrasIcon.vue";
-import HoldsIcon from "../icons/HoldsIcon.vue";
+import ExtrasIcon from "@/components/icons/ExtrasIcon.vue";
+import HoldsIcon from "@/components/icons/HoldsIcon.vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { addYears, format } from "date-fns";
 

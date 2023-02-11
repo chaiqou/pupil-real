@@ -236,8 +236,18 @@
                 rules="required"
             />
             <div class="my-5">
-                <button :disabled="store.price_period && !afterFeeCanBeCalculated" @click="afterFeesCalculate" type="button"
-                        :class="calculateAvailable && afterFeeCanBeCalculated ? 'inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2' : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'">Calculate after fees</button>
+                <button
+                    :disabled="store.price_period && !afterFeeCanBeCalculated"
+                    @click="afterFeesCalculate"
+                    type="button"
+                    :class="
+                        calculateAvailable && afterFeeCanBeCalculated
+                            ? 'inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                            : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                    "
+                >
+                    Calculate after fees
+                </button>
             </div>
             <BaseInput
                 v-model="store.buffer_time"
@@ -254,18 +264,19 @@
 
 <script setup>
 import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
-import {ref, onMounted, watch, computed} from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import {Field, ErrorMessage, useForm, useField} from "vee-validate";
+import { Field, ErrorMessage, useForm, useField } from "vee-validate";
 
 import axios from "@/config/axios/index";
 import BaseInput from "@/components/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
 import Button from "@/components/ui/Button.vue";
-import ExtrasIcon from "../icons/ExtrasIcon.vue";
-import HoldsIcon from "../icons/HoldsIcon.vue";
-import ConfirmationModal from "../lunch-managment/ConfirmationModal.vue";
+import ExtrasIcon from "@/components/icons/ExtrasIcon.vue";
+import HoldsIcon from "@/components/icons/HoldsIcon.vue";
+import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";
 import VatMultiselect from "./VatMultiselect.vue";
+
 const { setFieldValue } = useForm();
 // Composables
 
@@ -279,10 +290,12 @@ const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
 const afterFeeCanBeCalculated = ref(false);
 
-const { value } = useField('Price Period');
+const { value } = useField("Price Period");
 
 const afterFeesCalculate = () => {
-    store.after_fees = Math.round((Number(store.price_period) + 85) / (1 - (7/500)));
+    store.after_fees = Math.round(
+        (Number(store.price_period) + 85) / (1 - 7 / 500)
+    );
     store.price_period = store.after_fees;
     afterFeeCanBeCalculated.value = false;
     value.value = store.price_period;
@@ -292,12 +305,15 @@ const calculateAvailable = computed(() => {
     return !!store.price_period;
 });
 
-watch(() => store.price_period, () => {
-    if(store.after_fees !== store.price_period) {
-        afterFeeCanBeCalculated.value = true;
+watch(
+    () => store.price_period,
+    () => {
+        if (store.after_fees !== store.price_period) {
+            afterFeeCanBeCalculated.value = true;
+        }
+        store.after_fees = "";
     }
-    store.after_fees = "";
-});
+);
 
 onMounted(() => {
     axios
