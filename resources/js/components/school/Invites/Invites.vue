@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import DropdownAnimated from "@/components/ui/Invites/DropdownAnimated.vue";
+import DropdownAnimated from "@/components/Ui/Invites/DropdownAnimated.vue";
 import { mapWritableState } from "pinia";
 import { useInviteStore } from "@/stores/useInviteStore";
 import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";

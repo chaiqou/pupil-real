@@ -13,7 +13,7 @@
     <div
       :class="
         this.mainEmailsArray.length
-          ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col'
+          ? 'my-5 py-5 border-[1px] border-gray-400 rounded-md flex justify-center flex-col'
           : 'mb-5 hidden'
       "
     >
@@ -46,7 +46,7 @@
             @mouseover="this.showEmailError = true"
             @mouseleave="this.showEmailError = false"
             v-if="!element.existsInInvites && element.existsInUsers"
-            class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+            class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 m-1.5 items-center"
           >
             <exclamation-triangle-icon
               class="text-yellow-500 mr-1.5 w-5 h-5"
@@ -66,7 +66,7 @@
           </div>
           <div
             v-if="!element.existsInInvites && !element.existsInUsers"
-            class="flex bg-[#6C757D] border-2 max-w-fit mr-3 text-sm justify-between text-white rounded-md p-1 m-1.5 flex items-center"
+            class="flex bg-[#6C757D] border-2 max-w-fit mr-3 text-sm justify-between text-white rounded-md p-1 m-1.5 items-center"
           >
             <p class="max-w-fit">
               {{ element.email }}

@@ -423,7 +423,7 @@ import { useSchoolStore } from "@/stores/useSchoolStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/ui/CountriesSelect.vue";
+import CountriesSelect from "@/components/Ui/CountriesSelect.vue";
 
 export default {
   data() {

@@ -133,7 +133,7 @@
 <script>
 import VueApexCharts from "vue3-apexcharts";
 import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
-import Pie from "@/components/ui/Charts/Pie.vue";
+import Pie from "@/components/Ui/Charts/Pie.vue";
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 import {
   CursorArrowRaysIcon,

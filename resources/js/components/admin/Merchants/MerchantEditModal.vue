@@ -333,7 +333,7 @@
                             class="h-3 w-3 origin-bottom-left rotate-45 bg-gray-300 transform ml-5 absolute z-30"
                           ></div>
                           <div
-                            class="mt-3 w-fit z-20 absolute z-20 rounded-md border-[1px] border-gray-400"
+                            class="mt-3 w-fit z-20 absolute rounded-md border-[1px] border-gray-400"
                           >
                             <p
                               class="px-3 py-2 bg-gray-300 w-full rounded-t-[0.3rem]"
@@ -405,7 +405,7 @@ import { useMerchantStore } from "@/stores/useMerchantStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { useGlobalStore } from "@/stores/useGlobalStore";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/ui/CountriesSelect.vue";
+import CountriesSelect from "@/components/Ui/CountriesSelect.vue";
 import { OnClickOutside } from "@vueuse/components";
 
 export default {

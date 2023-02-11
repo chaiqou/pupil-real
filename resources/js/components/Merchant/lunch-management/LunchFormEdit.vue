@@ -253,9 +253,9 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { Field, ErrorMessage, useForm, useField } from "vee-validate";
 
 import axios from "@/config/axios/index";
-import BaseInput from "@/components/form-components/BaseInput.vue";
+import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
 import Multiselect from "@vueform/multiselect";
-import Button from "@/components/ui/Button.vue";
+import Button from "@/components/Ui/Button.vue";
 import ExtrasIcon from "@/components/icons/ExtrasIcon.vue";
 import HoldsIcon from "@/components/icons/HoldsIcon.vue";
 import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";

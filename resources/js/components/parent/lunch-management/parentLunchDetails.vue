@@ -161,7 +161,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
-import Toast from "@/components/ui/Toast.vue";
+import Toast from "@/components/Ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
 
 const store = useLunchFormStore();

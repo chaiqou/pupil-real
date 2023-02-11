@@ -140,9 +140,9 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
 import CardIcon from "@/components/icons/CardIcon.vue";
 import BankIcon from "@/components/icons/BankIcon.vue";
-import BaseTooltip from "@/components/ui/BaseTooltip.vue";
+import BaseTooltip from "@/components/Ui/BaseTooltip.vue";
 import OrderFeedbackCard from "@/components/parent/lunch-management/OrderFeedbackCard.vue";
-import SuccessResponseIcon from "../../icons/SuccessResponseIcon.vue";
+import SuccessResponseIcon from "@/components/icons/SuccessResponseIcon.vue";
 import ErrorResponseIcon from "@/components/icons/ErrorResponseIcon.vue";
 import Loading from "@/components/icons/Loading.vue";
 
