@@ -47,7 +47,7 @@ import ParentLunchDetails from "@/components/parent/lunch-management/parentLunch
 import SchoolTerminals from "@/components/school/Terminals/Terminals.vue";
 import SchoolTerminalsHeader from "@/components/school/Terminals/TerminalsHeader.vue";
 import ParentCalendar from "../js/components/parent/lunch-management/ParentCalendar.vue";
-import MenuCalendar from "../js/components/school/Menu/MenuCalendar.vue";
+import MenuCalendar from "@/components/Merchant/Menu-management/MenuCalendar.vue";
 import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
 const pinia = createPinia();
 const app = createApp({});
