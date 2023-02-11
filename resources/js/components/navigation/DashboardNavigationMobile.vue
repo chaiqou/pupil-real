@@ -85,7 +85,7 @@
                     <a :href="item.id" class="flex flex-col">
                       <div class="flex justify-between">
                         <p class="font-normal">
-                          {{ item.first_name + ' ' + item.last_name }}
+                          {{ item.first_name + " " + item.last_name }}
                         </p>
 
                         <span class="text-white">
@@ -171,9 +171,9 @@
 </template>
 
 <script>
-import { mapWritableState, mapActions } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
-import { OnClickOutside } from '@vueuse/components';
+import { mapWritableState, mapActions } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
+import { OnClickOutside } from "@vueuse/components";
 import {
   HomeIcon,
   ListBulletIcon,
@@ -184,7 +184,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-} from '@heroicons/vue/24/outline';
+} from "@heroicons/vue/24/outline";
 export default {
   components: {
     OnClickOutside,
@@ -200,8 +200,8 @@ export default {
   },
   computed: {
     ...mapWritableState(useModalStore, [
-      'isNavbarVisible',
-      'isMobileSwitchAccountVisible',
+      "isNavbarVisible",
+      "isMobileSwitchAccountVisible",
     ]),
   },
   props: {
@@ -224,17 +224,17 @@ export default {
   },
   methods: {
     ...mapActions(useModalStore, [
-      'showHideNavbar',
-      'showHideMobileSwitchAccount',
+      "showHideNavbar",
+      "showHideMobileSwitchAccount",
     ]),
 
     findCurrent() {
       let cleanedCurrent = this.current;
-      cleanedCurrent = cleanedCurrent.split('.').splice(1).join('.');
+      cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
       let navigation = this.navigation.find(
         (col) =>
-          col.name.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.') ===
-          cleanedCurrent.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.')
+          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
+          cleanedCurrent.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".")
       );
       navigation.current = true;
 

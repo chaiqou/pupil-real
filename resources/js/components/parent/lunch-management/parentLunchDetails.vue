@@ -49,8 +49,8 @@
             <dt class="text-sm font-medium text-gray-500">Active range</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{
-                `${format(parseISO(lunch.active_range.at(0)), 'yyyy MMM dd')} -
- ${format(parseISO(lunch.active_range.at(-1)), 'yyyy MMM dd')}`
+                `${format(parseISO(lunch.active_range.at(0)), "yyyy MMM dd")} -
+ ${format(parseISO(lunch.active_range.at(-1)), "yyyy MMM dd")}`
               }}
             </dd>
           </div>
@@ -75,7 +75,7 @@
             >
               <template class="flex" v-for="hold in holds">
                 <br />
-                {{ format(parseISO(hold), 'yyyy MMM dd') }}
+                {{ format(parseISO(hold), "yyyy MMM dd") }}
               </template>
             </dd>
           </div>
@@ -88,7 +88,7 @@
             >
               <template class="flex mt-4" v-for="extra in extras">
                 <br />
-                {{ format(parseISO(extra), 'yyyy MMM dd') }}
+                {{ format(parseISO(extra), "yyyy MMM dd") }}
               </template>
             </dd>
           </div>
@@ -100,7 +100,7 @@
                 v-for="available_days in lunch.available_days"
                 :key="available_days"
               >
-                {{ format(parseISO(available_days), 'yyyy MMM dd') }}
+                {{ format(parseISO(available_days), "yyyy MMM dd") }}
               </div>
             </dd>
           </div>
@@ -136,7 +136,7 @@
               class="text-center"
             >
               {{
-                'Order starting at ' + format(store.first_day, 'yyyy MMMM dd')
+                "Order starting at " + format(store.first_day, "yyyy MMMM dd")
               }}
             </p>
           </button>
@@ -158,16 +158,16 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import { format, parseISO, addHours, isAfter, isEqual } from 'date-fns';
-import Toast from '@/components/ui/Toast.vue';
-import OrderDetailsCard from './OrderDetailsCard.vue';
+import { onMounted, ref, watch, computed } from "vue";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
+import Toast from "@/components/ui/Toast.vue";
+import OrderDetailsCard from "./OrderDetailsCard.vue";
 
 const store = useLunchFormStore();
 
 const availableDays = ref([]);
-const lunchTitle = ref('');
+const lunchTitle = ref("");
 const bufferTime = ref();
 const childrenToast = ref();
 const availableOrders = ref([]);
@@ -181,7 +181,7 @@ const props = defineProps({
 });
 
 const startOrderingLunch = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
   hideTableInformation.value = false;
 };
 
@@ -225,7 +225,7 @@ watch(bufferTime, (newValue) => {
   // Format from ISO string to 2022-13-13 format
 
   const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-    format(date, 'yyyy-MM-dd')
+    format(date, "yyyy-MM-dd")
   );
 
   // Remove all days from availableDays which includes inside formattedDisabledDays array
@@ -259,7 +259,7 @@ onMounted(async () => {
 
     // Fetch concrette order based lunch id
     const lunchDetailsResponse = await axios.get(
-      '/api/school/lunch/' + localStorage.getItem('lunchId')
+      "/api/school/lunch/" + localStorage.getItem("lunchId")
     );
     availableDays.value = lunchDetailsResponse.data.data.available_days.sort(
       (a, b) => parseISO(a) - parseISO(b)

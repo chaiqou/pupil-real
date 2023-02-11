@@ -34,7 +34,7 @@
               <div class="flex justify-between">
                 <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                 <p class="font-normal">
-                  {{ item.first_name + ' ' + item.last_name }}
+                  {{ item.first_name + " " + item.last_name }}
                 </p>
 
                 <span class="text-white">
@@ -99,7 +99,7 @@
     <div class="flex items-center cursor-pointer">
       <div>
         <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-          {{ student.first_name + ' ' + student.last_name }}
+          {{ student.first_name + " " + student.last_name }}
         </p>
         <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
           Switch student

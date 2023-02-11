@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { useModalStore } from '@/stores/useModalStore';
-import { mapWritableState, mapActions } from 'pinia';
-import InviteMerchantModal from '@/components/admin/Merchants/Invite/InviteMerchantModal.vue';
+import { useModalStore } from "@/stores/useModalStore";
+import { mapWritableState, mapActions } from "pinia";
+import InviteMerchantModal from "@/components/admin/Merchants/Invite/InviteMerchantModal.vue";
 
 export default {
   components: {
@@ -55,10 +55,10 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isInviteMerchantVisible']),
+    ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideInviteMerchant']),
+    ...mapActions(useModalStore, ["showHideInviteMerchant"]),
   },
 };
 </script>

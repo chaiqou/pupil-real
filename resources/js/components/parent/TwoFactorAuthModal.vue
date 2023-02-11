@@ -8,7 +8,7 @@
           : 'p-2.5 shadow-sm bg-red-400 rounded-md hover:bg-red-500'
       "
     >
-      {{ this.twoFa === 0 ? 'Activate 2FA' : 'Deactivate 2FA' }}
+      {{ this.twoFa === 0 ? "Activate 2FA" : "Deactivate 2FA" }}
     </button>
   </div>
 
@@ -58,14 +58,14 @@
                     as="h3"
                     class="text-lg font-medium leading-6 text-gray-900"
                     >{{
-                      this.twoFa === 0 ? 'Activate' : 'Deactivate'
+                      this.twoFa === 0 ? "Activate" : "Deactivate"
                     }}
                     2FA</DialogTitle
                   >
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
                       Are you sure you want to
-                      {{ this.twoFa === 0 ? 'activate' : 'deactivate' }}
+                      {{ this.twoFa === 0 ? "activate" : "deactivate" }}
                       2FA?
                     </p>
                   </div>
@@ -96,10 +96,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
-import { useModalStore } from '@/stores/useModalStore';
-import { mapActions, mapWritableState } from 'pinia';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import { useModalStore } from "@/stores/useModalStore";
+import { mapActions, mapWritableState } from "pinia";
 
 export default {
   components: {
@@ -117,10 +117,10 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isTwoFactorVisible']),
+    ...mapWritableState(useModalStore, ["isTwoFactorVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideTwoFactor']),
+    ...mapActions(useModalStore, ["showHideTwoFactor"]),
   },
 };
 </script>

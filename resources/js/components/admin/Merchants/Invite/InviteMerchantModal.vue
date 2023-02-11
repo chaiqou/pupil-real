@@ -132,17 +132,17 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
+} from "@headlessui/vue";
 import {
   ExclamationTriangleIcon,
   XMarkIcon,
   CheckIcon,
-} from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
-import { useMerchantStore } from '@/stores/useMerchantStore';
-import { useInviteStore } from '@/stores/useInviteStore';
-import { Form as ValidationForm, Field, ErrorMessage } from 'vee-validate';
+} from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
+import { useMerchantStore } from "@/stores/useMerchantStore";
+import { useInviteStore } from "@/stores/useInviteStore";
+import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 export default {
   components: {
     Dialog,
@@ -159,10 +159,10 @@ export default {
   },
   data() {
     return {
-      email: '',
+      email: "",
       isSent: false,
       isSuccessfullySent: null,
-      backResponse: '',
+      backResponse: "",
     };
   },
   props: {
@@ -172,17 +172,17 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isInviteMerchantVisible']),
-    ...mapWritableState(useMerchantStore, ['inviteEmail']),
-    ...mapWritableState(useInviteStore, ['invites']),
+    ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
+    ...mapWritableState(useMerchantStore, ["inviteEmail"]),
+    ...mapWritableState(useInviteStore, ["invites"]),
     buttonTextGenerator() {
-      return this.isSuccessfullySent === 'pending'
-        ? 'Sending...'
-        : this.isSuccessfullySent === 'yes'
-        ? 'Sent'
-        : this.isSuccessfullySent === 'no'
-        ? 'Failed'
-        : 'Send';
+      return this.isSuccessfullySent === "pending"
+        ? "Sending..."
+        : this.isSuccessfullySent === "yes"
+        ? "Sent"
+        : this.isSuccessfullySent === "no"
+        ? "Failed"
+        : "Send";
     },
     disabledCalculator() {
       if (this.isSent === true) {
@@ -191,40 +191,40 @@ export default {
     },
     axiosResponseGenerator() {
       const text = this.isSuccessfullySent;
-      if (text === 'pending') {
-        return 'Please wait, we are sending invites.';
-      } else if (text === 'yes') {
-        return 'Invites send successfully!';
-      } else if (text === 'no') {
-        return 'Could not send invites at the moment, please try again later, or text to support.';
+      if (text === "pending") {
+        return "Please wait, we are sending invites.";
+      } else if (text === "yes") {
+        return "Invites send successfully!";
+      } else if (text === "no") {
+        return "Could not send invites at the moment, please try again later, or text to support.";
       }
     },
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideInviteMerchant']),
+    ...mapActions(useModalStore, ["showHideInviteMerchant"]),
     onSubmit(values, actions) {
-      actions.setFieldValue('email', '');
+      actions.setFieldValue("email", "");
       this.isSent = true;
-      this.isSuccessfullySent = 'pending';
-      this.backResponse = '';
+      this.isSuccessfullySent = "pending";
+      this.backResponse = "";
       axios
         .post(`/api/admin/school/${this.schoolId}/merchant/send-invite`, {
           email: this.email,
         })
         .then((res) => {
-          this.isSuccessfullySent = 'yes';
+          this.isSuccessfullySent = "yes";
           this.invites = res.data.data;
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll('T', ' ');
+              .replaceAll("T", " ");
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll('T', ' ');
+              .replaceAll("T", " ");
           });
         })
         .catch((err) => {
-          this.isSuccessfullySent = 'no';
+          this.isSuccessfullySent = "no";
           this.backResponse = err.response.data.message;
         })
         .finally(() =>

@@ -146,12 +146,12 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
-import { useTerminalStore } from '@/stores/useTerminalStore';
-import { Field, Form as ValidationForm, ErrorMessage } from 'vee-validate';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
+import { useTerminalStore } from "@/stores/useTerminalStore";
+import { Field, Form as ValidationForm, ErrorMessage } from "vee-validate";
 export default {
   components: {
     Dialog,
@@ -167,26 +167,26 @@ export default {
   },
   data() {
     return {
-      name: '',
-      serial_number: '',
-      note: '',
+      name: "",
+      serial_number: "",
+      note: "",
     };
   },
   computed: {
     ...mapWritableState(useModalStore, [
-      'isTerminalCreateVisible',
-      'isQrCodeVisible',
-      'isTerminalCreateVisible',
+      "isTerminalCreateVisible",
+      "isQrCodeVisible",
+      "isTerminalCreateVisible",
     ]),
-    ...mapWritableState(useTerminalStore, ['QRKeys', 'terminals']),
+    ...mapWritableState(useTerminalStore, ["QRKeys", "terminals"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideTerminalCreate']),
+    ...mapActions(useModalStore, ["showHideTerminalCreate"]),
     onSubmit(values, actions) {
       axios
-        .post('/api/school/terminal', {
-          public_key: 'public_key',
-          private_key: 'private_key',
+        .post("/api/school/terminal", {
+          public_key: "public_key",
+          private_key: "private_key",
           name: this.name,
           serial_number: this.serial_number,
           note: this.note,
@@ -196,7 +196,7 @@ export default {
           this.isQrCodeVisible = true;
           this.terminals = res.data[1].data;
           this.QRKeys = JSON.stringify(res.data[0]);
-          actions.setValues('');
+          actions.setValues("");
         })
         .catch((err) => console.log(err));
     },

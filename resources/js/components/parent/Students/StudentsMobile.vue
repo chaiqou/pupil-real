@@ -151,10 +151,10 @@
 </template>
 
 <script>
-import { useStudentStore } from '@/stores/useStudentStore';
-import { useModalStore } from '@/stores/useModalStore';
-import { mapActions, mapWritableState } from 'pinia';
-import StudentEditModal from '@/components/parent/Students/StudentEditModal.vue';
+import { useStudentStore } from "@/stores/useStudentStore";
+import { useModalStore } from "@/stores/useModalStore";
+import { mapActions, mapWritableState } from "pinia";
+import StudentEditModal from "@/components/parent/Students/StudentEditModal.vue";
 export default {
   components: {
     StudentEditModal,
@@ -167,15 +167,15 @@ export default {
   },
   computed: {
     ...mapWritableState(useStudentStore, [
-      'isStudentsLoaded',
-      'students',
-      'studentId',
+      "isStudentsLoaded",
+      "students",
+      "studentId",
     ]),
-    ...mapWritableState(useModalStore, ['isStudentEditVisible']),
+    ...mapWritableState(useModalStore, ["isStudentEditVisible"]),
   },
   methods: {
-    ...mapActions(useStudentStore, ['currentStudentEdit']),
-    ...mapActions(useModalStore, ['showHideStudentEdit']),
+    ...mapActions(useStudentStore, ["currentStudentEdit"]),
+    ...mapActions(useModalStore, ["showHideStudentEdit"]),
     handleGetStudentRequest() {
       axios
         .get(`/api/parent/${this.userId}/students`)

@@ -36,7 +36,7 @@
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"
             >
-              {{ this.weekSumAmount || '0' }}
+              {{ this.weekSumAmount || "0" }}
             </dd>
           </div>
           <div
@@ -48,7 +48,7 @@
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"
             >
-              {{ this.monthSumAmount || '0' }}
+              {{ this.monthSumAmount || "0" }}
             </dd>
           </div>
         </dl>
@@ -89,8 +89,8 @@
 <style>
 .grid-template-areas-2x2 {
   grid-template-areas:
-    'top-left top-right'
-    'bottom-left bottom-right';
+    "top-left top-right"
+    "bottom-left bottom-right";
 }
 .grid-area-1 {
   grid-area: top-left;

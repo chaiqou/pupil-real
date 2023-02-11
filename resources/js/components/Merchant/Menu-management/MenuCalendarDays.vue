@@ -11,7 +11,7 @@
       >
         <div class="flex-col">
           <h1>
-            {{ format(day, 'd') }}
+            {{ format(day, "d") }}
           </h1>
           <div
             v-if="ifDaysMatch(day) && isToday(day)"
@@ -31,7 +31,7 @@
       >
         <div class="flex-col">
           <h1>
-            {{ format(day, 'd') }}
+            {{ format(day, "d") }}
           </h1>
           <div
             v-if="ifDaysMatch(day) && isToday(day)"
@@ -48,10 +48,10 @@
 </template>
 
 <script setup>
-import { format, isToday } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import BaseTooltip from '@/components/ui/BaseTooltip.vue';
-import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
+import { format, isToday } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import BaseTooltip from "@/components/ui/BaseTooltip.vue";
+import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const store = useLunchFormStore();
 const { ifDaysMatch } = useCheckIfDaysMatches();

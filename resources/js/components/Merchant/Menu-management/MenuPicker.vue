@@ -57,9 +57,9 @@
 <script setup>
 // WE ARE NOT USING THIS COMPONENT YET (BUT THIS IS NICE SELECTOR COMPONENT FOR FUTURE USING, DONT DELETE)
 
-import { ref } from 'vue';
-import LunchesArrowIcon from '@/components/icons/LunchesArrowIcon.vue';
-import CheckIcon from '@/components/icons/checkIcon.vue';
+import { ref } from "vue";
+import LunchesArrowIcon from "@/components/icons/LunchesArrowIcon.vue";
+import CheckIcon from "@/components/icons/checkIcon.vue";
 
 const toggleSelect = ref(false);
 

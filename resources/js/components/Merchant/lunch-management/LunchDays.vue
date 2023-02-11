@@ -35,19 +35,19 @@
 </template>
 
 <script setup>
-import MerchantErrorMessage from './MerchantErrorMessage.vue';
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue';
-import { useMerchantFormStore } from '../../stores/useMerchantFormStore';
-import { Field } from 'vee-validate';
+import MerchantErrorMessage from "./MerchantErrorMessage.vue";
+import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
+import { Field } from "vee-validate";
 
 const dayOptions = [
-  { name: 'M', fullName: 'monday', validOption: true },
-  { name: 'T', fullName: 'tuesday', validOption: true },
-  { name: 'W', fullName: 'wednesday', validOption: true },
-  { name: 'T', fullName: 'thursday', validOption: true },
-  { name: 'F', fullName: 'friday', validOption: true },
-  { name: 'S', fullName: 'saturday', validOption: true },
-  { name: 'S', fullName: 'sunday', validOption: true },
+  { name: "M", fullName: "monday", validOption: true },
+  { name: "T", fullName: "tuesday", validOption: true },
+  { name: "W", fullName: "wednesday", validOption: true },
+  { name: "T", fullName: "thursday", validOption: true },
+  { name: "F", fullName: "friday", validOption: true },
+  { name: "S", fullName: "saturday", validOption: true },
+  { name: "S", fullName: "sunday", validOption: true },
 ];
 
 const store = useMerchantFormStore();

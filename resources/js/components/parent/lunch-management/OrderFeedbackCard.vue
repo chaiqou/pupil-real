@@ -18,22 +18,22 @@ const props = defineProps({
   mainText: {
     required: true,
     type: String,
-    default: 'Waiting for proforma payment...',
+    default: "Waiting for proforma payment...",
   },
   subText: {
     required: false,
     type: String,
-    default: 'View details at Billingo',
+    default: "View details at Billingo",
   },
   mainClassname: {
     required: true,
     type: String,
-    default: 'border-green-300 bg-green-100 hover:border-green-400',
+    default: "border-green-300 bg-green-100 hover:border-green-400",
   },
   textClassname: {
     required: true,
     type: String,
-    default: 'text-green-700',
+    default: "text-green-700",
   },
 });
 </script>

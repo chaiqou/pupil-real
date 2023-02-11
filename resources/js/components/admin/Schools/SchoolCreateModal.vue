@@ -416,31 +416,31 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useSchoolStore } from '@/stores/useSchoolStore';
-import { useModalStore } from '@/stores/useModalStore';
-import { useGlobalStore } from '@/stores/useGlobalStore';
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import CountriesSelect from '@/components/ui/CountriesSelect.vue';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useSchoolStore } from "@/stores/useSchoolStore";
+import { useModalStore } from "@/stores/useModalStore";
+import { useGlobalStore } from "@/stores/useGlobalStore";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import CountriesSelect from "@/components/ui/CountriesSelect.vue";
 
 export default {
   data() {
     return {
-      short_name: '',
-      full_name: '',
-      long_name: '',
-      email: '',
-      contact_person: '',
-      phone_number: '',
-      mobile_number: '',
-      extension: '',
-      street_address: '',
-      zip: '',
-      city: '',
-      state: '',
-      school_code: '',
+      short_name: "",
+      full_name: "",
+      long_name: "",
+      email: "",
+      contact_person: "",
+      phone_number: "",
+      mobile_number: "",
+      extension: "",
+      street_address: "",
+      zip: "",
+      city: "",
+      state: "",
+      school_code: "",
     };
   },
   components: {
@@ -457,12 +457,12 @@ export default {
     CountriesSelect,
   },
   computed: {
-    ...mapWritableState(useSchoolStore, ['school', 'schoolId', 'schools']),
-    ...mapWritableState(useGlobalStore, ['countrySelect']),
-    ...mapWritableState(useModalStore, ['isCreateSchoolVisible']),
+    ...mapWritableState(useSchoolStore, ["school", "schoolId", "schools"]),
+    ...mapWritableState(useGlobalStore, ["countrySelect"]),
+    ...mapWritableState(useModalStore, ["isCreateSchoolVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideSchoolCreate']),
+    ...mapActions(useModalStore, ["showHideSchoolCreate"]),
     onSubmit(values, actions) {
       axios
         .post(`/api/admin/school`, {
@@ -483,7 +483,7 @@ export default {
         })
         .then((res) => {
           this.schools = res.data.data;
-          actions.setValues('');
+          actions.setValues("");
         })
         .catch((err) => console.log(err))
         .finally(() => {

@@ -53,7 +53,7 @@
           <td
             class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            {{ student.first_name + ' ' + student.last_name }}
+            {{ student.first_name + " " + student.last_name }}
           </td>
           <td
             class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
@@ -102,10 +102,10 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from 'pinia';
-import { useStudentStore } from '@/stores/useStudentStore';
-import StudentsNotFound from '@/components/not-found/StudentsNotFound.vue';
-import StudentsSlideOver from '@/components/admin/Students/StudentsSlideOver.vue';
+import { mapActions, mapWritableState } from "pinia";
+import { useStudentStore } from "@/stores/useStudentStore";
+import StudentsNotFound from "@/components/not-found/StudentsNotFound.vue";
+import StudentsSlideOver from "@/components/admin/Students/StudentsSlideOver.vue";
 export default {
   components: {
     StudentsNotFound,
@@ -119,15 +119,15 @@ export default {
   },
   computed: {
     ...mapWritableState(useStudentStore, [
-      'isStudentsLoaded',
-      'isSlideOverOpen',
-      'students',
+      "isStudentsLoaded",
+      "isSlideOverOpen",
+      "students",
     ]),
   },
   methods: {
     ...mapActions(useStudentStore, [
-      'showHideSlideOver',
-      'currentStudentDetails',
+      "showHideSlideOver",
+      "currentStudentDetails",
     ]),
     handleGetStudentRequest() {
       axios

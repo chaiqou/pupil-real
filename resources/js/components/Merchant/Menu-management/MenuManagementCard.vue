@@ -8,7 +8,7 @@
     >
       <template class="flex flex-wrap justify-between border-b border-gray-200">
         <h1 class="text-gray-700 mb-2 font-semibold">
-          {{ format(store.selectedDay, 'yyyy MMMM dd') }}
+          {{ format(store.selectedDay, "yyyy MMMM dd") }}
         </h1>
       </template>
 
@@ -20,18 +20,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { format } from 'date-fns';
-import { onClickOutside } from '@vueuse/core';
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
-import SingleLunchCard from './SingleLunchCard.vue';
+import { ref } from "vue";
+import { format } from "date-fns";
+import { onClickOutside } from "@vueuse/core";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import SingleLunchCard from "./SingleLunchCard.vue";
 
 const store = useMenuManagementStore();
 
 const getLunchData = async () => {
   try {
-    const response = await axios.get('/api/lunch/suitable-lunch/date', {
-      params: { date: format(store.selectedDay, 'yyyy-MM-dd') },
+    const response = await axios.get("/api/lunch/suitable-lunch/date", {
+      params: { date: format(store.selectedDay, "yyyy-MM-dd") },
     });
 
     store.suitableLunch = response.data.lunches;
@@ -51,6 +51,6 @@ const target = ref(null);
 onClickOutside(target, () => {
   store.toggleMenuManagementCard = false;
   store.suitableLunch = [];
-  store.selectedDay = '';
+  store.selectedDay = "";
 });
 </script>

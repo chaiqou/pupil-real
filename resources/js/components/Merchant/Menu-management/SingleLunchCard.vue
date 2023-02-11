@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
 const props = defineProps({
   name: {

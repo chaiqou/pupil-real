@@ -43,10 +43,10 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
-import { onClickOutside } from '@vueuse/core';
-import { ref, computed, onMounted } from 'vue';
-import BaseInput from '@/components/form-components/BaseInput.vue';
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { onClickOutside } from "@vueuse/core";
+import { ref, computed, onMounted } from "vue";
+import BaseInput from "@/components/form-components/BaseInput.vue";
 
 const props = defineProps({
   claimables: {

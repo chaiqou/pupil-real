@@ -61,7 +61,7 @@
                     <div class="flex">
                       <p class="font-bold">Middle name:</p>
                       <p class="ml-3">
-                        {{ this.student.middle_name || 'Not given' }}
+                        {{ this.student.middle_name || "Not given" }}
                       </p>
                     </div>
 
@@ -111,10 +111,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { useStudentStore } from '@/stores/useStudentStore';
-import { mapActions, mapWritableState } from 'pinia';
+} from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { useStudentStore } from "@/stores/useStudentStore";
+import { mapActions, mapWritableState } from "pinia";
 
 export default {
   components: {
@@ -126,10 +126,10 @@ export default {
     XMarkIcon,
   },
   computed: {
-    ...mapWritableState(useStudentStore, ['isSlideOverOpen', 'student']),
+    ...mapWritableState(useStudentStore, ["isSlideOverOpen", "student"]),
   },
   methods: {
-    ...mapActions(useStudentStore, ['showHideSlideOver']),
+    ...mapActions(useStudentStore, ["showHideSlideOver"]),
   },
 };
 </script>

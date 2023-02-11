@@ -16,7 +16,7 @@ const props = defineProps({
   type: {
     type: String,
     required: false,
-    default: 'submit',
+    default: "submit",
   },
 });
 </script>

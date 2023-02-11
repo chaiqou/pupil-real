@@ -40,7 +40,7 @@
                 aria-hidden="true"
               />
               <span class="sr-only">
-                {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }}
+                {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
                 by
               </span>
               {{ item.change }}
@@ -87,7 +87,7 @@
                 aria-hidden="true"
               />
               <span class="sr-only">
-                {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }}
+                {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
                 by
               </span>
               {{ item.change }}
@@ -131,16 +131,16 @@
 </template>
 
 <script>
-import VueApexCharts from 'vue3-apexcharts';
-import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
-import Pie from '@/components/ui/Charts/Pie.vue';
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid';
+import VueApexCharts from "vue3-apexcharts";
+import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import Pie from "@/components/ui/Charts/Pie.vue";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 import {
   CursorArrowRaysIcon,
   EnvelopeOpenIcon,
   UsersIcon,
-} from '@heroicons/vue/24/outline';
-import DashboardTransactions from '@/components/school/Dashboard/DashboardTransactions.vue';
+} from "@heroicons/vue/24/outline";
+import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
 export default {
   components: {
     ApexChart: VueApexCharts,
@@ -157,52 +157,52 @@ export default {
       statsTop: [
         {
           id: 1,
-          name: 'Total Subscribers',
-          stat: '71,897',
+          name: "Total Subscribers",
+          stat: "71,897",
           icon: UsersIcon,
-          change: '122',
-          changeType: 'increase',
+          change: "122",
+          changeType: "increase",
         },
         {
           id: 2,
-          name: 'Avg. Open Rate',
-          stat: '58.16%',
+          name: "Avg. Open Rate",
+          stat: "58.16%",
           icon: EnvelopeOpenIcon,
-          change: '5.4%',
-          changeType: 'increase',
+          change: "5.4%",
+          changeType: "increase",
         },
       ],
       statsBottom: [
         {
-          name: 'Total Subscribers',
-          stat: '71,897',
-          previousStat: '70,946',
-          change: '12%',
-          changeType: 'increase',
+          name: "Total Subscribers",
+          stat: "71,897",
+          previousStat: "70,946",
+          change: "12%",
+          changeType: "increase",
         },
         {
-          name: 'Avg. Open Rate',
-          stat: '58.16%',
-          previousStat: '56.14%',
-          change: '2.02%',
-          changeType: 'increase',
+          name: "Avg. Open Rate",
+          stat: "58.16%",
+          previousStat: "56.14%",
+          change: "2.02%",
+          changeType: "increase",
         },
       ],
       currentMonthDates: [],
-      labels: ['example1', 'example2'],
+      labels: ["example1", "example2"],
       chartData: [40, 50, 12],
       series: [
         {
-          name: 'Session Duration',
-          type: 'area',
+          name: "Session Duration",
+          type: "area",
           data: [
             45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
           ],
         },
         {
-          name: 'Page Views',
-          type: 'line',
+          name: "Page Views",
+          type: "line",
           data: [
             null,
             null,
@@ -238,8 +238,8 @@ export default {
           ],
         },
         {
-          type: 'line',
-          name: 'Total Visits',
+          type: "line",
+          name: "Total Visits",
           data: [
             87,
             57,
@@ -272,15 +272,15 @@ export default {
         },
       ],
       chartOptions: {
-        colors: ['#0061F2', '#6900C7', '#cac8cb'],
+        colors: ["#0061F2", "#6900C7", "#cac8cb"],
         fill: {
-          type: 'solid',
+          type: "solid",
           opacity: [0.25, 1],
         },
         chart: {
           height: 350,
-          type: 'line',
-          width: '100%',
+          type: "line",
+          width: "100%",
           zoom: {
             enabled: false,
           },
@@ -295,7 +295,7 @@ export default {
         },
         stroke: {
           width: [5, 7, 5],
-          curve: 'smooth',
+          curve: "smooth",
           dashArray: [0, 0, 2],
         },
         title: {
@@ -305,9 +305,9 @@ export default {
           tooltipHoverFormatter: function (val, opts) {
             return (
               val +
-              ' - ' +
+              " - " +
               opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-              ''
+              ""
             );
           },
         },
@@ -322,14 +322,14 @@ export default {
             {
               title: {
                 formatter: function (val) {
-                  return val + ' (mins)';
+                  return val + " (mins)";
                 },
               },
             },
             {
               title: {
                 formatter: function (val) {
-                  return val + ' per session';
+                  return val + " per session";
                 },
               },
             },
@@ -343,7 +343,7 @@ export default {
           ],
         },
         grid: {
-          borderColor: '#f1f1f1',
+          borderColor: "#f1f1f1",
         },
       },
     };
@@ -352,7 +352,7 @@ export default {
     const start = startOfMonth(new Date());
     const end = endOfMonth(new Date());
     this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) =>
-      date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })
+      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" })
     );
     console.log(this.currentMonthDates);
   },

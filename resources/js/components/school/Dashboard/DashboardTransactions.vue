@@ -47,7 +47,7 @@
           <td
             class="whitespace-nowrap px-3 py-4 font-medium text-sm text-gray-900"
           >
-            {{ transaction.amount || 'none' }}
+            {{ transaction.amount || "none" }}
             <p class="text-gray-400 text-[11px]">
               {{ transaction.transaction_type }}
             </p>
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import TransactionsNotFound from '@/components/not-found/TransactionsNotFound.vue';
+import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
 export default {
   components: {
     TransactionsNotFound,

@@ -94,16 +94,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import {
   Dialog,
   DialogPanel,
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 // Data
 
@@ -117,7 +117,7 @@ const store = useLunchFormStore();
 
 const saveWithShifting = () => {
   axios
-    .put('/api/school/lunch/' + localStorage.getItem('lunchId'), {
+    .put("/api/school/lunch/" + localStorage.getItem("lunchId"), {
       title: store.title,
       description: store.description,
       period_length: store.period_length,
@@ -137,7 +137,7 @@ const saveWithShifting = () => {
       store.disabled_extra_days = [];
       open.value = false;
       store.lunches = response.data.data;
-      window.location.href = '/school/lunch-management/';
+      window.location.href = "/school/lunch-management/";
     });
 };
 
@@ -145,7 +145,7 @@ const saveWithShifting = () => {
 
 const saveWithoutShifting = () => {
   axios
-    .get('/api/school/lunch/' + localStorage.getItem('lunchId'))
+    .get("/api/school/lunch/" + localStorage.getItem("lunchId"))
     .then((response) => {
       store.title = response.data.data.title;
       store.description = response.data.data.description;
@@ -165,7 +165,7 @@ const saveWithoutShifting = () => {
       store.disabled_hold_days = [];
       store.disabled_extra_days = [];
       open.value = false;
-      window.location.href = '/school/lunch-management/';
+      window.location.href = "/school/lunch-management/";
     });
 };
 </script>

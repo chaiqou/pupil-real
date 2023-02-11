@@ -277,16 +277,16 @@
 </template>
 
 <script>
-import { Field, ErrorMessage } from 'vee-validate';
-import { mapWritableState } from 'pinia';
-import { useGlobalStore } from '@/stores/useGlobalStore';
+import { Field, ErrorMessage } from "vee-validate";
+import { mapWritableState } from "pinia";
+import { useGlobalStore } from "@/stores/useGlobalStore";
 export default {
   components: {
     ErrorMessage,
     Field,
   },
   computed: {
-    ...mapWritableState(useGlobalStore, ['countrySelect']),
+    ...mapWritableState(useGlobalStore, ["countrySelect"]),
   },
 };
 </script>

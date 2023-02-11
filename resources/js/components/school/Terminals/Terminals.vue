@@ -63,7 +63,7 @@
           <td
             class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
           >
-            {{ terminal.note || 'NONE' }}
+            {{ terminal.note || "NONE" }}
           </td>
           <td
             class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
@@ -93,9 +93,9 @@
 </template>
 
 <script>
-import { mapWritableState } from 'pinia';
-import { useTerminalStore } from '@/stores/useTerminalStore';
-import TerminalsNotFound from '@/components/not-found/TerminalsNotFound.vue';
+import { mapWritableState } from "pinia";
+import { useTerminalStore } from "@/stores/useTerminalStore";
+import TerminalsNotFound from "@/components/not-found/TerminalsNotFound.vue";
 export default {
   components: {
     TerminalsNotFound,
@@ -113,7 +113,7 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useTerminalStore, ['isTerminalsLoaded', 'terminals']),
+    ...mapWritableState(useTerminalStore, ["isTerminalsLoaded", "terminals"]),
   },
   methods: {
     handleGetTerminalsRequest() {

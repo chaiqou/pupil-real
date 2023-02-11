@@ -290,7 +290,7 @@
                               "
                             >
                               {{
-                                this.merchant.activated ? 'Active' : 'Inactive'
+                                this.merchant.activated ? "Active" : "Inactive"
                               }}
                             </p>
                             <svg
@@ -323,7 +323,7 @@
                               : 'text-white max-w-fit cursor-pointer mt-4 px-3 py-2 rounded-md bg-green-500 hover:bg-green-600 hover:text-gray-200'
                           "
                         >
-                          {{ activated ? 'Deactivate' : 'Activate' }}
+                          {{ activated ? "Deactivate" : "Activate" }}
                         </p>
                       </div>
 
@@ -357,7 +357,7 @@
                                     : 'cursor-pointer bg-green-500 text-white px-3 py-2 w-fit rounded-md hover:bg-green-600 hover:text-gray-200'
                                 "
                               >
-                                {{ activated ? 'Deactivate' : 'Activate' }}
+                                {{ activated ? "Deactivate" : "Activate" }}
                               </p>
                               <p
                                 @click="isConfirmationVisible = false"
@@ -398,15 +398,15 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useMerchantStore } from '@/stores/useMerchantStore';
-import { useModalStore } from '@/stores/useModalStore';
-import { useGlobalStore } from '@/stores/useGlobalStore';
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import CountriesSelect from '@/components/ui/CountriesSelect.vue';
-import { OnClickOutside } from '@vueuse/components';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useMerchantStore } from "@/stores/useMerchantStore";
+import { useModalStore } from "@/stores/useModalStore";
+import { useGlobalStore } from "@/stores/useGlobalStore";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import CountriesSelect from "@/components/ui/CountriesSelect.vue";
+import { OnClickOutside } from "@vueuse/components";
 
 export default {
   data() {
@@ -414,14 +414,14 @@ export default {
       isRequestEndSuccessfully: false,
       isConfirmationVisible: false,
       requestResponse: null,
-      VAT: '',
-      street_address: '',
-      company_name: '',
-      country: '',
-      city: '',
-      state: '',
-      zip: '',
-      activated: '',
+      VAT: "",
+      street_address: "",
+      company_name: "",
+      country: "",
+      city: "",
+      state: "",
+      zip: "",
+      activated: "",
     };
   },
   components: {
@@ -446,21 +446,21 @@ export default {
   },
   computed: {
     ...mapWritableState(useMerchantStore, [
-      'merchant',
-      'merchantId',
-      'merchants',
+      "merchant",
+      "merchantId",
+      "merchants",
     ]),
-    ...mapWritableState(useGlobalStore, ['countrySelect']),
-    ...mapWritableState(useModalStore, ['isMerchantEditVisible']),
+    ...mapWritableState(useGlobalStore, ["countrySelect"]),
+    ...mapWritableState(useModalStore, ["isMerchantEditVisible"]),
   },
   methods: {
     showHideConfirmation() {
-      if (this.requestResponse === 'success') {
+      if (this.requestResponse === "success") {
         this.requestResponse = null;
       }
       this.isConfirmationVisible = !this.isConfirmationVisible;
     },
-    ...mapActions(useModalStore, ['showHideMerchantEdit']),
+    ...mapActions(useModalStore, ["showHideMerchantEdit"]),
     onSubmit() {
       axios
         .put(`/api/admin/merchant`, {
@@ -478,14 +478,14 @@ export default {
         })
         .then((res) => {
           this.merchants = res.data.data;
-          this.countrySelect = '';
+          this.countrySelect = "";
         })
         .finally(() => {
           this.isSchoolEditVisible = false;
         });
     },
     updateStatus() {
-      this.requestResponse = 'pending';
+      this.requestResponse = "pending";
       axios
         .put(`/api/admin/merchant-status`, {
           merchant_id: this.merchant.id,
@@ -493,11 +493,11 @@ export default {
         })
         .then((res) => {
           this.merchant.activated = res.data.activated;
-          this.requestResponse = 'success';
+          this.requestResponse = "success";
         })
         .catch(() => {
           this.activated = !this.activated;
-          this.requestResponse = 'fail';
+          this.requestResponse = "fail";
         });
     },
     handleGetSchoolRequest() {

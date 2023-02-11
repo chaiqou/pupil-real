@@ -29,8 +29,8 @@
               class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
             >
               <span class="whitespace-pre-line">{{
-                `${format(parseISO(lunch.active_range.at(0)), 'yyyy MMM dd')}
- ${format(parseISO(lunch.active_range.at(-1)), 'yyyy MMM dd')}`
+                `${format(parseISO(lunch.active_range.at(0)), "yyyy MMM dd")}
+ ${format(parseISO(lunch.active_range.at(-1)), "yyyy MMM dd")}`
               }}</span>
             </a>
           </div>
@@ -82,9 +82,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { differenceInCalendarDays, format, parseISO } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import { onMounted } from "vue";
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
@@ -95,13 +95,13 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  axios.get('/api/school/lunch').then((response) => {
+  axios.get("/api/school/lunch").then((response) => {
     store.lunches.push(...response.data.data);
   });
 });
 
 const currentLunchEditId = (lunchId) => {
-  localStorage.setItem('lunchId', lunchId);
-  window.location.href = '/parent/lunch-details/' + props.studentId;
+  localStorage.setItem("lunchId", lunchId);
+  window.location.href = "/parent/lunch-details/" + props.studentId;
 };
 </script>

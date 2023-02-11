@@ -121,10 +121,10 @@
 </template>
 
 <script setup>
-import ExtrasIcon from '@/components/icons/ExtrasIcon.vue';
-import HoldsIcon from '@/components/icons/HoldsIcon.vue';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import { addYears, format } from 'date-fns';
+import ExtrasIcon from "@/components/icons/ExtrasIcon.vue";
+import HoldsIcon from "@/components/icons/HoldsIcon.vue";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { addYears, format } from "date-fns";
 
 const store = useLunchFormStore();
 
@@ -153,9 +153,9 @@ const removeExtra = (extraIdx, extra) => {
     startDate.setDate(startDate.getDate() + 1);
   }
 
-  let formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd'));
+  let formattedDates = dates.map((date) => format(date, "yyyy-MM-dd"));
 
-  store.formatDateForHumans('disabled_extra_days', store.disabled_extra_days);
+  store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
 
   store.disabled_extra_days = store.disabled_extra_days.filter(
     (date) => !formattedDates.includes(date)
@@ -168,8 +168,8 @@ const removeExtra = (extraIdx, extra) => {
 
 const handleExtrasDate = (modelData) => {
   store.extras.push([
-    format(modelData[0], 'yyyy-MM-dd'),
-    format(modelData[1], 'yyyy-MM-dd'),
+    format(modelData[0], "yyyy-MM-dd"),
+    format(modelData[1], "yyyy-MM-dd"),
   ]);
 
   store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
@@ -178,7 +178,7 @@ const handleExtrasDate = (modelData) => {
 
   // add extras to marked days
 
-  store.findMiddleRangeDates('add_extras', store.extras);
+  store.findMiddleRangeDates("add_extras", store.extras);
   let deUnique = store.add_marked_extras;
   let uniqueValues = new Set(deUnique);
   deUnique = Array.from(uniqueValues);
@@ -206,13 +206,13 @@ const removeHold = (holdIdx, hold) => {
   let endDate = new Date(hold[1]);
 
   while (startDate <= endDate) {
-    dates.push(format(new Date(startDate), 'yyyy-MM-dd'));
+    dates.push(format(new Date(startDate), "yyyy-MM-dd"));
     startDate.setDate(startDate.getDate() + 1);
   }
 
   store.marked_days = [...store.marked_days, ...dates];
 
-  store.formatDateForHumans('disabled_hold_days', store.disabled_hold_days);
+  store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
 
   store.disabled_hold_days = store.disabled_hold_days.filter(
     (date) => !dates.includes(date)
@@ -221,8 +221,8 @@ const removeHold = (holdIdx, hold) => {
 
 const handleHoldsDate = (modelData) => {
   store.holds.push([
-    format(modelData[0], 'yyyy-MM-dd'),
-    format(modelData[1], 'yyyy-MM-dd'),
+    format(modelData[0], "yyyy-MM-dd"),
+    format(modelData[1], "yyyy-MM-dd"),
   ]);
 
   store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
@@ -231,7 +231,7 @@ const handleHoldsDate = (modelData) => {
 
   // Remove holds from marked days
 
-  store.findMiddleRangeDates('remove_holds', store.holds);
+  store.findMiddleRangeDates("remove_holds", store.holds);
   let daysToDelete = new Set(store.remove_marked_holds);
 
   store.add_marked_extras.map((extra) => {

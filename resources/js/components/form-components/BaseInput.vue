@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from 'vee-validate';
+import { Field, ErrorMessage } from "vee-validate";
 
 const props = defineProps({
   name: {
@@ -40,7 +40,7 @@ const props = defineProps({
   type: {
     type: String,
     required: false,
-    default: 'text',
+    default: "text",
   },
   min: {
     type: [Number, String],
@@ -53,11 +53,11 @@ const props = defineProps({
   inputType: {
     type: String,
     required: false,
-    default: 'input',
+    default: "input",
   },
   modelValue: {
     type: [String, Number, Array],
-    default: '',
+    default: "",
   },
 });
 </script>

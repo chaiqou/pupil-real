@@ -68,17 +68,17 @@
 </template>
 
 <script setup>
-import { format } from 'date-fns';
-import { ref, onBeforeMount } from 'vue';
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import MenuManagementCard from './MenuManagementCard.vue';
-import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
-import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
-import MenuManagementSkeleton from './MenuManagementSkeleton.vue';
-import MenuCalendarDays from './MenuCalendarDays.vue';
-import FixedCard from './FixedCard.vue';
-import ChoicesCard from './ChoicesCard.vue';
+import { format } from "date-fns";
+import { ref, onBeforeMount } from "vue";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import MenuManagementCard from "./MenuManagementCard.vue";
+import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
+import MenuManagementSkeleton from "./MenuManagementSkeleton.vue";
+import MenuCalendarDays from "./MenuCalendarDays.vue";
+import FixedCard from "./FixedCard.vue";
+import ChoicesCard from "./ChoicesCard.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
@@ -94,14 +94,14 @@ const props = defineProps({
   classes: {
     type: Array,
     required: false,
-    default: '',
+    default: "",
   },
 });
 
 const lunches = ref([]);
 
 const onClickCalendar = (day) => {
-  let formatedDay = format(day, 'yyyy-MM-dd');
+  let formatedDay = format(day, "yyyy-MM-dd");
 
   if (store.marked_days.includes(formatedDay)) {
     menuManagementStore.toggleMenuManagementCard =
@@ -113,7 +113,7 @@ const onClickCalendar = (day) => {
 // Fetch all existing lunch for merchant and mark it on calendar
 
 onBeforeMount(() => {
-  axios.get('/api/school/lunch').then((response) => {
+  axios.get("/api/school/lunch").then((response) => {
     lunches.value = response.data.data;
     response.data.data.map((data) => {
       store.marked_days.push(...data.available_days);

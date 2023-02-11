@@ -30,7 +30,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-} from '@heroicons/vue/24/outline';
+} from "@heroicons/vue/24/outline";
 
 export default {
   components: {
@@ -56,11 +56,11 @@ export default {
   methods: {
     findCurrent() {
       let cleanedCurrent = this.current;
-      cleanedCurrent = cleanedCurrent.split('.').splice(1).join('.');
+      cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
       let navigation = this.navigation.find(
         (col) =>
-          col.name.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.') ===
-          cleanedCurrent.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.')
+          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
+          cleanedCurrent.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".")
       );
       navigation.current = true;
 
