@@ -49,6 +49,7 @@ class TwoFactorAuthenticationController extends Controller
    public function resend(): RedirectResponse
    {
        Send2FAAuthenticationEmail::dispatch(auth()->user());
+
        return redirect('two-factor-authentication');
    }
 

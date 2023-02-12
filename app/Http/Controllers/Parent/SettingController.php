@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Parent;
 
-use App\Models\User;
-use App\Models\Student;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use App\Jobs\Send2FAAuthenticationEmail;
-use App\Http\Resources\Parent\StudentResource;
+use App\Http\Requests\Parent\UpdateStudentRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdatePersonalRequest;
-use App\Http\Requests\Parent\UpdateStudentRequest;
+use App\Http\Resources\Parent\StudentResource;
+use App\Jobs\Send2FAAuthenticationEmail;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SettingController extends Controller
@@ -54,6 +54,7 @@ class SettingController extends Controller
             ]);
         } else {
             Send2FAAuthenticationEmail::dispatch(auth()->user());
+
             return redirect('two-factor-authentication');
         }
 

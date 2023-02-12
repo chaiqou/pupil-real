@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Mail\OnboardingVerification;
-use App\Mail\TwoFactorAuthenticationMail;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

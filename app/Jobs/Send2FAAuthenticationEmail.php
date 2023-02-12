@@ -16,7 +16,9 @@ class Send2FAAuthenticationEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, BrowserNameAndDevice;
 
-    public $user;
+    private $user;
+
+    public $timeout = 30;
 
     /**
      * Create a new job instance.
