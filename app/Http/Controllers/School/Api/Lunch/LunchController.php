@@ -16,7 +16,9 @@ use App\Models\Student;
 use App\Models\Terminal;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 
 class LunchController extends Controller
 {
@@ -61,6 +63,18 @@ class LunchController extends Controller
     public function show(Lunch $lunch): LunchResource
     {
         return new LunchResource($lunch);
+    }
+
+    public function suitableLunchForDate(Request $request): JsonResponse
+    {
+        $date = $request->query('date');
+        $formatted_date = date('Y-m-d', strtotime($date));
+
+        $lunches = DB::table('lunches')
+                ->whereJsonContains('available_days', $formatted_date)
+                ->get();
+
+        return response()->json(['lunches' => $lunches]);
     }
 
     public function update(LunchRequest $request, Lunch $lunch)

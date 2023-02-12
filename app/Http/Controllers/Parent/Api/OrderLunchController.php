@@ -80,8 +80,7 @@ class OrderLunchController extends Controller
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
-            if(!$pending_transaction || !$lunch)
-            {
+            if (! $pending_transaction || ! $lunch) {
                 DB::rollBack();
             }
         });

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Mail\OnboardingVerification;
-use App\Mail\TwoFactorAuthenticationMail;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,15 +43,6 @@ class User extends Authenticatable implements CanResetPassword
     public function partnerId(): HasMany
     {
         return $this->hasMany(PartnerId::class);
-    }
-
-    public function sendTwoFactorCode(): RedirectResponse
-    {
-        $code = random_int(100000, 999999);
-        $this->update(['two_factor_token' => $code]);
-        Mail::to($this->email)->send(new TwoFactorAuthenticationMail($code, $this->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
-
-        return redirect('two-factor-authentication');
     }
 
     public function sendVerificationEmail($route): RedirectResponse

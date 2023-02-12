@@ -7,6 +7,7 @@ use App\Http\Requests\Parent\UpdateStudentRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdatePersonalRequest;
 use App\Http\Resources\Parent\StudentResource;
+use App\Jobs\Send2FAAuthenticationEmail;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -52,8 +53,9 @@ class SettingController extends Controller
                 'is_verified' => 1,
             ]);
         } else {
-            $user->assignRole('2fa');
-            $user->sendTwoFactorCode();
+            Send2FAAuthenticationEmail::dispatch(auth()->user());
+
+            return redirect('two-factor-authentication');
         }
 
         return redirect()->back();

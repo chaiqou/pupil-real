@@ -182,7 +182,8 @@ class InviteController extends Controller
         } else {
             $invite->update(['state' => 5]);
         }
-            return redirect()->back()->withErrors('Please select you answer');
+
+        return redirect()->back()->withErrors('Please select you answer');
     }
 
     public function verifyEmail(): View|RedirectResponse
@@ -215,8 +216,10 @@ class InviteController extends Controller
         if ($verification_code->code == $input_summary) {
             BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
+
             return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
+
         return back()->withErrors(['code' => 'These credentials do not match our records.']);
     }
 }

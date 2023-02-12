@@ -9,7 +9,7 @@ use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
-use App\Http\Controllers\Parent\StripeCheckoutPaymentController;
+use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('available-lunches', [LunchController::class, 'index'])->name('parent.available-lunches_api');
             Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'orderLunch'])->name('parent.order_lunch');
             Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
-            Route::post('checkout', [StripeCheckoutPaymentController::class, 'checkout'])->name('parent.checkout');
+            Route::post('checkout', [StripeCheckoutController::class, 'checkout'])->name('parent.checkout');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -112,5 +112,6 @@ Route::controller()->group(function () {
     Route::get('lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
     Route::post('lunch/claim', [LunchController::class, 'claimLunch'])->name('lunch.claim');
     Route::get('lunch/students/retrieve', [LunchController::class, 'retrieveStudents'])->name('lunch.students.retrieve');
+    Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
 });
 Route::apiResource('school/lunch', LunchController::class);
