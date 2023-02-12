@@ -46,15 +46,6 @@ class User extends Authenticatable implements CanResetPassword
         return $this->hasMany(PartnerId::class);
     }
 
-    public function sendTwoFactorCode(): RedirectResponse
-    {
-        $code = random_int(100000, 999999);
-        $this->update(['two_factor_token' => $code]);
-        Mail::to($this->email)->send(new TwoFactorAuthenticationMail($code, $this->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
-
-        return redirect('two-factor-authentication');
-    }
-
     public function sendVerificationEmail($route): RedirectResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();

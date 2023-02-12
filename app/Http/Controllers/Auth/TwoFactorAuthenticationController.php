@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\TwoFactorAuthenticationRequest;
+use App\Jobs\Send2FAAuthenticationEmail;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -47,7 +48,8 @@ class TwoFactorAuthenticationController extends Controller
 
    public function resend(): RedirectResponse
    {
-       return auth()->user()->sendTwoFactorCode();
+       Send2FAAuthenticationEmail::dispatch(auth()->user());
+       return redirect('two-factor-authentication');
    }
 
     public function resendForOnboardingUser(Request $request): RedirectResponse

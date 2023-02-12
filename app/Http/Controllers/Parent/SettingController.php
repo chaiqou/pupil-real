@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Parent;
 
+use App\Models\User;
+use App\Models\Student;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Parent\UpdateStudentRequest;
+use Illuminate\Http\RedirectResponse;
+use App\Jobs\Send2FAAuthenticationEmail;
+use App\Http\Resources\Parent\StudentResource;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdatePersonalRequest;
-use App\Http\Resources\Parent\StudentResource;
-use App\Models\Student;
-use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Parent\UpdateStudentRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SettingController extends Controller
@@ -52,8 +53,8 @@ class SettingController extends Controller
                 'is_verified' => 1,
             ]);
         } else {
-            $user->assignRole('2fa');
-            $user->sendTwoFactorCode();
+            Send2FAAuthenticationEmail::dispatch(auth()->user());
+            return redirect('two-factor-authentication');
         }
 
         return redirect()->back();
