@@ -16,11 +16,11 @@ class TwoFactorAuthentication
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->hasRole(['2fa', 'school']) && $request->user()->is_verified === 0) {
+        if ($request->user()->hasRole(['2fa', 'school']) && session()->get('is_2fa_verified') === false) {
             return redirect('two-factor-authentication');
-        } elseif ($request->user()->hasRole(['2fa', 'admin']) && $request->user()->is_verified === 0) {
+        } elseif ($request->user()->hasRole(['2fa', 'admin']) && session()->get('is_2fa_verified') === false) {
             return redirect('two-factor-authentication');
-        } elseif ($request->user()->hasRole(['2fa', 'parent']) && $request->user()->is_verified === 0) {
+        } elseif ($request->user()->hasRole(['2fa', 'parent']) && session()->get('is_2fa_verified') === false) {
             return redirect('two-factor-authentication');
         }
 
