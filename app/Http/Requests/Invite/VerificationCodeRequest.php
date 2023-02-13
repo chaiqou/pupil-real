@@ -24,14 +24,14 @@ class VerificationCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'code_each.*' => ['required'],
+            'verification_code.*' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'code_each.*.required' => 'Please fill all fields',
+            'verification_code.*.required' => 'Please fill all fields',
         ];
     }
 }

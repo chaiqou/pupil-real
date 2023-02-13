@@ -21,9 +21,10 @@ class TwoFactorAuthenticationController extends Controller
 
     public function verify(TwoFactorAuthenticationRequest $request): RedirectResponse
     {
-        $two_factor_authentication_code = implode('', $request->input('two_factor_code.*'));
-        $two_factor_integer = (int) $two_factor_authentication_code;
-
+            $request_array = $request->all();
+            ksort($request_array['two_factor_code']);
+            $two_factor_authentication_code = implode('', $request_array['two_factor_code']);
+            $two_factor_integer = (int) $two_factor_authentication_code;
         if ($two_factor_integer == auth()->user()->two_factor_code && auth()->user()->hasRole('parent')) {
             auth()->user()->update(['two_factor_code' => null]);
             session()->put('is_2fa_verified', true);
@@ -42,7 +43,6 @@ class TwoFactorAuthenticationController extends Controller
             session()->put('is_2fa_verified', true);
             return redirect()->route('admin.dashboard');
         }
-
         return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);
     }
 

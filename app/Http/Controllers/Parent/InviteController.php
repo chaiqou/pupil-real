@@ -209,11 +209,14 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
-        $input_summary = implode('', $request->input('code_each.*'));
+        $request_array = $request->all();
+        ksort($request_array['verification_code']);
+        $email_verification_code = implode('', $request_array['verification_code']);
+        $email_verification_integer_code = (int) $email_verification_code;
         $verification_code = VerificationCode::where('invite_id', $invite->id)->first();
-        Log::info($input_summary);
+        Log::info($email_verification_integer_code);
         Log::info($verification_code->code);
-        if ($verification_code->code == $input_summary) {
+        if ($verification_code->code === $email_verification_integer_code) {
             BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
 

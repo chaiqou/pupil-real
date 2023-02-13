@@ -55,7 +55,7 @@ class BillingoController extends Controller
     public static function createParentBillingo($user_id): void
     {
         $user = User::where('id', $user_id)->first();
-        $merchants = Merchant::where('school_id', $user->school_id)->get();
+        $merchants = Merchant::where('school_id', $user->school_id)->where('finished_onboarding', true)->get();
         $info = json_decode($user->user_information);
         foreach ($merchants as $merchant) {
             $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
