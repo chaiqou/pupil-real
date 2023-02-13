@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "hisorange/browser-detect": "^4.5",
         "laravel/framework": "^9.2",
+        "laravel/horizon": "^5.14",
         "laravel/octane": "^1.4",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
