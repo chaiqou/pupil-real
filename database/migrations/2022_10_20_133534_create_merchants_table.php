@@ -25,6 +25,7 @@ return new class() extends Migration
             $table->boolean('has_wallet')->default(false);
             $table->boolean('has_lunch')->default(false);
             $table->json('company_details');
+            $table->boolean('finished_onboarding')->default(0);
             $table->timestamps();
         });
     }
