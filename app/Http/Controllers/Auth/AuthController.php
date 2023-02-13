@@ -23,7 +23,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
             if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
                 Send2FAAuthenticationEmail::dispatch(auth()->user());
-
+                session()->put('is_2fa_verified', false);
                 return redirect('two-factor-authentication');
             }
 
@@ -44,9 +44,9 @@ class AuthController extends Controller
                 return redirect($route);
             }
 
-            if (auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && auth()->user()->is_verified === 1) {
+            if (auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && session()->get('is_2fa_verified') === true) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-            } elseif (auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && auth()->user()->is_verified === 1) {
+            } elseif (auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && session()->get('is_2fa_verified') === true) {
                 return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
             }
         }
@@ -56,9 +56,9 @@ class AuthController extends Controller
 
     public function redirectIfLoggedIn()
     {
-        if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && auth()->user()->is_verified === 1) {
+        if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && session()->get('is_2fa_verified') === true) {
             return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-        } elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && auth()->user()->is_verified === 1) {
+        } elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && session()->get('is_2fa_verified') === true) {
             return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
         }
 
@@ -67,7 +67,8 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        auth()->user()->update(['is_verified' => false, 'two_factor_token' => null]);
+        auth()->user()->update(['two_factor_code' => null]);
+        session()->put('is_2fa_verified', false);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

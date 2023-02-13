@@ -46,27 +46,27 @@
                         <input onkeyup="stepForward(1)" onkeydown="stepBack(event, 1)" onclick="resetValue(1)"
                             id="sc-1"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="1" maxlength="1" name="two_factor_token[0]" oninput="checkInputLengths()" required/>
+                            placeholder="1" maxlength="1" name="two_factor_code[0]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(2)" onkeydown="stepBack(event, 2)" onclick="resetValue(2)"
                             id="sc-2"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="2" maxlength="1" name="two_factor_token[1]" oninput="checkInputLengths()" required/>
+                            placeholder="2" maxlength="1" name="two_factor_code[1]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(3)" onkeydown="stepBack(event, 3)" onclick="resetValue(3)"
                             id="sc-3"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="3" maxlength="1" name="two_factor_token[2]" oninput="checkInputLengths()" required/>
+                            placeholder="3" maxlength="1" name="two_factor_code[2]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(4)" onkeydown="stepBack(event, 4)" onclick="resetValue(4)"
                             id="sc-4"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="4" maxlength="1" name="two_factor_token[3]" oninput="checkInputLengths()" required/>
+                            placeholder="4" maxlength="1" name="two_factor_code[3]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(5)" onkeydown="stepBack(event, 5)" onclick="resetValue(5)"
                             id="sc-5"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="5" maxlength="1" name="two_factor_token[4]" oninput="checkInputLengths()" required/>
+                            placeholder="5" maxlength="1" name="two_factor_code[4]" oninput="checkInputLengths()" required/>
                         <input onkeyup="stepForward(6)" onkeydown="stepBack(event, 6)" onclick="resetValue(6)"
                             id="sc-6"
                             class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl"
-                            placeholder="6" maxlength="1" name="two_factor_token[5]" oninput="checkInputLengths()" required/>
+                            placeholder="6" maxlength="1" name="two_factor_code[5]" oninput="checkInputLengths()" required/>
                     </div>
                 </div>
 

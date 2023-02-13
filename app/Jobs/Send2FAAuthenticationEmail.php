@@ -39,7 +39,7 @@ class Send2FAAuthenticationEmail implements ShouldQueue
     {
         $code = random_int(100000, 999999);
 
-        $this->user->update(['two_factor_token' => $code]);
+        $this->user->update(['two_factor_code' => $code]);
         Mail::to($this->user->email)->send(new TwoFactorAuthenticationMail($code, $this->user->first_name, $this->getBrowserName(), $this->getDeviceName(), date('Y')));
     }
 }

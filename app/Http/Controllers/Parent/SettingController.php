@@ -49,9 +49,7 @@ class SettingController extends Controller
         $user = auth()->user();
         if ($user->hasRole('2fa')) {
             $user->removeRole('2fa');
-            $user->update([
-                'is_verified' => 1,
-            ]);
+            session()->put('is_2fa_verified', true);
         } else {
             Send2FAAuthenticationEmail::dispatch(auth()->user());
 

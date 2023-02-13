@@ -26,8 +26,7 @@ return new class() extends Migration
             $table->tinyInteger('summary_frequency')->default(0);
             $table->tinyInteger('finished_onboarding')->default(0);
             $table->json('user_information')->nullable();
-            $table->string('two_factor_token')->nullable()->unique();
-            $table->boolean('is_verified')->default(false);
+            $table->string('two_factor_code')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });

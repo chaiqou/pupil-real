@@ -35,7 +35,7 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-        if (auth()->user()->hasRole('2fa') && auth()->user()->is_verified === 0) {
+        if (auth()->user()->hasRole('2fa') && session()->get('is_2fa_verified') === false) {
             return redirect()->route('2fa.form');
         }
 
@@ -84,7 +84,7 @@ class NavigationController extends Controller
 
         $currentTab = request()->route()->getName();
 
-        if (auth()->user()->is_verified === 0) {
+        if (session()->get('is_2fa_verified') === false) {
             return redirect()->route('2fa.form');
         }
 
@@ -118,7 +118,7 @@ class NavigationController extends Controller
                 ];
         }
         $currentTab = request()->route()->getName();
-        if (auth()->user()->is_verified === 0) {
+        if (session()->get('is_2fa_verified') === false) {
             return redirect()->route('2fa.form');
         }
         $school = School::where('id', request()->school_id)->first();
