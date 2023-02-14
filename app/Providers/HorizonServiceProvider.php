@@ -16,7 +16,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
         parent::boot();
 
         // Horizon::routeSmsNotificationsTo('15556667777');
-        // Horizon::routeMailNotificationsTo('example@example.com');
+        Horizon::routeMailNotificationsTo('example@example.com');
         // Horizon::routeSlackNotificationsTo('slack-webhook-url', '#channel');
 
         Horizon::night();
@@ -35,7 +35,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
                 'klevente@pupilpay.hu',
                 'kazo.levente@gmail.com',
                 'jackrestler@gmail.com',
-                'lomtadzenikusha@redberry.ge'
+                'lomtadzenikusha@redberry.ge',
             ]);
         });
     }

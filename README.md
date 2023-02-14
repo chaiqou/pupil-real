@@ -6,6 +6,7 @@
 </p>
 
 # Dash Starter
+
 ### Laravel dashboard template
 
 ## Deployment
@@ -74,3 +75,42 @@ Replace /var/www/dash to Dash's location
 * * * * * cd /var/www/dash && php artisan schedule:run
 
 ```
+
+# Redis and Horizon configuration
+
+1. Install the Predis package
+
+```
+composer require predis/predis
+
+```
+
+2. Always set QUEUE_CONNECTION to redis in the .env file
+
+```
+QUEUE_CONNECTION=redis
+
+```
+
+3. Start the Horizon dashboard and queue by running the following command (instead of php artisan queue:work)
+
+```
+php artisan horizon
+
+```
+
+4. You should add your email to access Horizon dashboard in gate inside HorizonServiceProvider.php file
+
+```
+
+  protected function gate(): void
+    {
+        Gate::define('viewHorizon', function ($user) {
+            return in_array($user->email, [
+                'ADD YOUR EMAIL HERE'
+            ]);
+        });
+    }
+```
+
+4. That's it! You should now be able to access the Horizon dashboard at http://your-app-url/horizon.

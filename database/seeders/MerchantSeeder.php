@@ -31,7 +31,7 @@ class MerchantSeeder extends Seeder
                 'zip' => null,
             ]),
             'merchant_nick' => 'Cafeteria',
-            'finished_onboarding' => 1
+            'finished_onboarding' => 1,
         ]);
 
         $requestBillingoForBlockId1 = Http::withHeaders([
@@ -59,7 +59,7 @@ class MerchantSeeder extends Seeder
                 'zip' => null,
             ]),
             'merchant_nick' => 'Will Stone',
-            'finished_onboarding' => 1
+            'finished_onboarding' => 1,
         ]);
 
         $requestBillingoForBlockId2 = Http::withHeaders([
@@ -83,7 +83,7 @@ class MerchantSeeder extends Seeder
                 'VAT' => '',
             ]),
             'merchant_nick' => 'White Bamboo',
-            'finished_onboarding' => 1
+            'finished_onboarding' => 1,
         ]);
 
         $requestBillingoForBlockId3 = Http::withHeaders([
