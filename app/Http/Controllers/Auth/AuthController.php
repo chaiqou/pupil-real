@@ -24,6 +24,7 @@ class AuthController extends Controller
             if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
                 Send2FAAuthenticationEmail::dispatch(auth()->user());
                 session()->put('is_2fa_verified', false);
+
                 return redirect('two-factor-authentication');
             }
 

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Mail\JobFailedMail;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Queue::failing(function (JobFailed $event) {
+            Mail::to('lomtadzenikusha@gmail.com')->send(new JobFailedMail($event));
+        });
     }
 }
