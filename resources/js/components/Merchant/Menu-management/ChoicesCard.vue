@@ -29,7 +29,11 @@
           v-for="(input, index) in inputCounts[claimable]"
           :key="input"
         >
-          <BaseInput :name="claimable" class="w-full" />
+          <BaseInput
+            v-model="inputValues[claimable][input]"
+            :name="claimable"
+            class="w-full"
+          />
           <button
             class="rounded-md whitespace-nowrap py-3 px-2 bg-indigo-700 text-base font-medium text-white"
             @click="onClickRemoveInput(claimable, index)"
@@ -61,6 +65,8 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
+const inputValues = ref({});
+
 // Close on click outside
 
 const target = ref(null);
@@ -76,6 +82,7 @@ const claimables = computed(() => props.claimables);
 onMounted(() => {
   JSON.parse(claimables.value).forEach((claimable) => {
     inputCounts.value[claimable] = [];
+    inputValues.value[claimable] = [];
   });
 });
 

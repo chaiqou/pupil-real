@@ -18,7 +18,7 @@
         <h2 class="text-gray-700 m-2 font-semibold">
           {{ claimable }}
         </h2>
-        <BaseInput :name="claimable" class="w-full" />
+        <BaseInput v-model="fixedInput" :name="claimable" class="w-full" />
       </div>
     </div>
   </div>
@@ -42,6 +42,8 @@ const props = defineProps({
 });
 
 const store = useMenuManagementStore();
+
+const fixedInput = ref([]);
 
 // Close on click outside
 
