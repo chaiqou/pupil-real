@@ -9,12 +9,16 @@
   </template>
   <template v-if="menuManagementStore.toggleChoicesCard">
     <ChoicesCard
+      :day="store.selectedDay"
+      menu-type="Choices"
       :name="menuManagementStore.lunchName"
       :claimables="menuManagementStore.claimables"
     />
   </template>
   <template v-if="menuManagementStore.toggleFixedCard">
     <FixedCard
+      :day="store.selectedDay"
+      menu-type="Fixed"
       :name="menuManagementStore.lunchName"
       :claimables="menuManagementStore.claimables"
     />

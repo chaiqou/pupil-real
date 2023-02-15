@@ -39,6 +39,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  day: {
+    required: true,
+  },
+  menuType: {
+    type: String,
+    default: "Fixed",
+  },
 });
 
 const store = useMenuManagementStore();

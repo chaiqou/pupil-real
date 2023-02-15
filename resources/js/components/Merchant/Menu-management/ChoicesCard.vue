@@ -61,6 +61,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  day: {
+    required: true,
+  },
+  menuType: {
+    type: String,
+    default: "Fixed",
+  },
 });
 
 const store = useMenuManagementStore();
@@ -83,6 +90,7 @@ onMounted(() => {
   JSON.parse(claimables.value).forEach((claimable) => {
     inputCounts.value[claimable] = [];
     inputValues.value[claimable] = [];
+    inputValues.value["name"] = claimable;
   });
 });
 
