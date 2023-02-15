@@ -2,6 +2,7 @@
   <div class="flex gap-4 mt-4">
     <button
       type="button"
+      @click="onClickDiscard"
       class="basis-1/2 text-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
     >
       Discard
@@ -15,4 +16,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+
+const store = useMenuManagementStore();
+
+// Discard button
+const onClickDiscard = () => {
+  store.toggleFixedCard = false;
+  store.toggleChoicesCard = false;
+};
+
+// Save Card
+</script>

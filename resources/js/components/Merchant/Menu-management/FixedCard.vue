@@ -20,6 +20,7 @@
         </h2>
         <BaseInput v-model="menus" :name="claimable" class="w-full" />
       </div>
+      <SaveAndDiscardButtons />
     </div>
   </div>
 </template>
@@ -29,6 +30,7 @@ import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
+import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
 
 const props = defineProps({
   claimables: {
