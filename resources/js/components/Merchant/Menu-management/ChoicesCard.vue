@@ -35,13 +35,14 @@
             class="w-full"
           />
           <button
-            class="rounded-md whitespace-nowrap py-3 px-2 bg-indigo-700 text-base font-medium text-white"
+            class="basis-1/2 text-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="onClickRemoveInput(claimable, index)"
           >
             Remove Input
           </button>
         </div>
       </div>
+      <SaveAndDiscardButtons />
     </div>
   </div>
 </template>
@@ -51,6 +52,7 @@ import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref, computed, onMounted } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
+import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
 
 const props = defineProps({
   claimables: {
