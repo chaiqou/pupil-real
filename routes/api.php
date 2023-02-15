@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInv
 use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
@@ -104,6 +105,8 @@ Route::middleware(['auth'])->group(function () {
             });
         });
     });
+
+  Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
 });
 
 Route::controller()->group(function () {

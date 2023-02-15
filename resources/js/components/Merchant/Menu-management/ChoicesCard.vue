@@ -30,7 +30,7 @@
           :key="input"
         >
           <BaseInput
-            v-model="inputValues[claimable][input]"
+            v-model="menus[claimable][input]"
             :name="claimable"
             class="w-full"
           />
@@ -72,7 +72,7 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
-const inputValues = ref({});
+const menus = ref([]);
 
 // Close on click outside
 
@@ -89,8 +89,7 @@ const claimables = computed(() => props.claimables);
 onMounted(() => {
   JSON.parse(claimables.value).forEach((claimable) => {
     inputCounts.value[claimable] = [];
-    inputValues.value[claimable] = [];
-    inputValues.value["name"] = claimable;
+    menus.value[claimable] = [];
   });
 });
 
