@@ -18,7 +18,11 @@
         <h2 class="text-gray-700 m-2 font-semibold">
           {{ claimable }}
         </h2>
-        <BaseInput v-model="menus" :name="claimable" class="w-full" />
+        <BaseInput
+          v-model="menus[claimable]"
+          :name="claimable"
+          class="w-full"
+        />
       </div>
       <SaveAndDiscardButtons />
     </div>
@@ -28,7 +32,7 @@
 <script setup>
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
 import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
 
@@ -52,12 +56,23 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
-const menus = ref([]);
+const menus = ref({});
 
 // Close on click outside
 
 const target = ref(null);
 onClickOutside(target, () => {
   store.toggleFixedCard = false;
+});
+
+// Create menus array based on claimables
+
+const claimables = computed(() => props.claimables);
+
+onMounted(() => {
+  JSON.parse(claimables.value).forEach((claimable) => {
+    console.log(claimable);
+    menus.value[claimable] = [];
+  });
 });
 </script>

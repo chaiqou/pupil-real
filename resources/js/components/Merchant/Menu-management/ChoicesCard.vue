@@ -74,7 +74,7 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
-const menus = ref([]);
+const menus = ref({});
 
 // Close on click outside
 
