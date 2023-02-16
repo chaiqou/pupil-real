@@ -42,7 +42,12 @@
           </button>
         </div>
       </div>
-      <SaveAndDiscardButtons :is-disabled="buttonIsDisabled" />
+      <SaveAndDiscardButtons
+        :day="day"
+        :menu-type="menuType"
+        :menus="menus"
+        :is-disabled="buttonIsDisabled"
+      />
     </div>
   </div>
 </template>

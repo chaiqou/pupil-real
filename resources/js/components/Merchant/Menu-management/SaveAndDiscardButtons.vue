@@ -9,6 +9,7 @@
     </button>
     <button
       :disabled="isDisabled"
+      @click="onClickSaveMenu"
       type="button"
       class="basis-1/2 text-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       :class="[isDisabled ? 'opacity-50 cursor-not-allowed' : '']"
@@ -29,6 +30,18 @@ const props = defineProps({
     required: true,
     default: false,
   },
+  menuType: {
+    type: String,
+    required: true,
+  },
+  menus: {
+    type: Object,
+    required: true,
+  },
+  day: {
+    type: Date,
+    required: true,
+  },
 });
 
 // Discard button
@@ -37,5 +50,13 @@ const onClickDiscard = () => {
   store.toggleChoicesCard = false;
 };
 
-// Save Card
+// Send information to backend on clikc save button
+
+const onClickSaveMenu = () => {
+  axios.post("/api/merchant/create-menu", {
+    menu_type: props.menuType,
+    menus: props.menus,
+    day: props.day,
+  });
+};
 </script>

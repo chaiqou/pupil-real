@@ -24,7 +24,12 @@
           class="w-full"
         />
       </div>
-      <SaveAndDiscardButtons :is-disabled="buttonIsDisabled" />
+      <SaveAndDiscardButtons
+        :is-disabled="buttonIsDisabled"
+        :day="day"
+        :menu-type="menuType"
+        :menus="menus"
+      />
     </div>
   </div>
 </template>

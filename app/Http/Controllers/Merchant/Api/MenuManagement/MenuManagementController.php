@@ -9,6 +9,6 @@ class MenuManagementController extends Controller
 {
     public function createMenu(Request $request)
     {
-        dd($request);
+        dd($request->all());
     }
 }
