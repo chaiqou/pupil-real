@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-  Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
+    Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
 });
 
 Route::controller()->group(function () {
