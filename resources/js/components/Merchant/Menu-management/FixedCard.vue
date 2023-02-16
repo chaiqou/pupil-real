@@ -35,6 +35,7 @@ import { onClickOutside } from "@vueuse/core";
 import { ref, onMounted, computed } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
 import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
+import useSaveButtonIsDisabled from "@/composables/menu-management/useSaveButtonIsDisabled";
 
 const props = defineProps({
   claimables: {
@@ -77,18 +78,5 @@ onMounted(() => {
 
 // disable button if at least one array inside menus is empty
 
-const buttonIsDisabled = computed(() => {
-  let isEmptyArray = false;
-  for (const key in menus.value) {
-    console.log(menus.value[key]);
-    if (
-      (Array.isArray(menus.value[key]) && menus.value[key].length === 0) ||
-      menus.value[key] === ""
-    ) {
-      isEmptyArray = true;
-      break;
-    }
-  }
-  return isEmptyArray;
-});
+const { buttonIsDisabled } = useSaveButtonIsDisabled(menus.value);
 </script>
