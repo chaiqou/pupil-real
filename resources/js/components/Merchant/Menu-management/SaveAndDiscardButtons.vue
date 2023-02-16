@@ -53,10 +53,15 @@ const onClickDiscard = () => {
 // Send information to backend on clikc save button
 
 const onClickSaveMenu = () => {
-  axios.post("/api/merchant/create-menu", {
-    menu_type: props.menuType,
-    menus: props.menus,
-    day: props.day,
-  });
+  axios
+    .post("/api/merchant/create-menu", {
+      menu_type: props.menuType,
+      menus: props.menus,
+      day: props.day,
+    })
+    .then(() => {
+      store.toggleFixedCard = false;
+      store.toggleChoicesCard = false;
+    });
 };
 </script>
