@@ -24,7 +24,7 @@
           class="w-full"
         />
       </div>
-      <SaveAndDiscardButtons />
+      <SaveAndDiscardButtons :is-disabled="buttonIsDisabled" />
     </div>
   </div>
 </template>
@@ -71,8 +71,24 @@ const claimables = computed(() => props.claimables);
 
 onMounted(() => {
   JSON.parse(claimables.value).forEach((claimable) => {
-    console.log(claimable);
     menus.value[claimable] = [];
   });
+});
+
+// disable button if at least one array inside menus is empty
+
+const buttonIsDisabled = computed(() => {
+  let isEmptyArray = false;
+  for (const key in menus.value) {
+    console.log(menus.value[key]);
+    if (
+      (Array.isArray(menus.value[key]) && menus.value[key].length === 0) ||
+      menus.value[key] === ""
+    ) {
+      isEmptyArray = true;
+      break;
+    }
+  }
+  return isEmptyArray;
 });
 </script>
