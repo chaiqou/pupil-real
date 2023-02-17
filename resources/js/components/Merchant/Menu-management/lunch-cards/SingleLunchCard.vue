@@ -7,7 +7,7 @@
       <template v-for="option in options">
         <button
           type="button"
-          @click="onClickShowCard"
+          @click="onClickShowCard(option)"
           class="items-center p-4 w-full rounded-md border border-gray-300 bg-white text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           {{ option }}
@@ -37,12 +37,15 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
-const onClickShowCard = () => {
+const onClickShowCard = (cardName) => {
   store.toggleMenuManagementCard = false;
-  store.toggleFixedCard = true;
   store.claimables = props.claimables;
   store.lunchName = props.name;
   store.lunchId = props.lunchId;
+
+  cardName === "Fixed"
+    ? (store.toggleFixedCard = true)
+    : (store.toggleChoicesCard = true);
 };
 
 const options = ["Fixed", "Choices"];
