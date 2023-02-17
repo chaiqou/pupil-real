@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  lunchId: {
+    type: Number,
+    required: true,
+  },
 });
 
 const store = useMenuManagementStore();
@@ -43,11 +47,13 @@ const showFixedCard = () => {
   store.toggleFixedCard = true;
   store.claimables = props.claimables;
   store.lunchName = props.name;
+  store.lunchId = props.lunchId;
 };
 const showChoicesCard = () => {
   store.toggleMenuManagementCard = false;
   store.toggleChoicesCard = true;
   store.claimables = props.claimables;
   store.lunchName = props.name;
+  store.lunchId = props.lunchId;
 };
 </script>

@@ -27,6 +27,7 @@ class CreateMenuRequest extends FormRequest
             'day' => 'required|date',
             'menu_type' => 'required|string|max:255|min:3',
             'menus' => 'required',
+            'lunch_id' => 'required|numeric',
 
         ];
     }

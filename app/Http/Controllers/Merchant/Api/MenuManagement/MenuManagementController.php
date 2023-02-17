@@ -30,6 +30,6 @@ class MenuManagementController extends Controller
             return Carbon::parse($validated['day'])->format('Y-m-d 23:00:00');
         })->toArray();
 
-        LunchMenu::create(['menus' => $result]);
+        LunchMenu::create(['menus' => json_encode($menus), 'lunch_id' => $validated['lunch_id']]);
     }
 }

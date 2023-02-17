@@ -13,7 +13,11 @@
       </template>
 
       <div v-for="(lunch, index) in store.suitableLunch" :key="lunch.id">
-        <SingleLunchCard :claimables="lunch.claimables" :name="lunch.title" />
+        <SingleLunchCard
+          :lunch-id="lunch.id"
+          :claimables="lunch.claimables"
+          :name="lunch.title"
+        />
       </div>
     </div>
   </div>
