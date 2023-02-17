@@ -6,14 +6,14 @@
     >
       <button
         type="button"
-        @click="showFixedCard"
+        @click="onClickShowCard"
         class="items-center p-4 w-full rounded-md border border-gray-300 bg-white text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         Fixed
       </button>
       <button
         type="button"
-        @click="showChoicesCard"
+        @click="onClickShowCard"
         class="items-center p-4 w-full rounded-md border border-gray-300 bg-white text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         Choices
@@ -42,16 +42,9 @@ const props = defineProps({
 
 const store = useMenuManagementStore();
 
-const showFixedCard = () => {
+const onClickShowCard = () => {
   store.toggleMenuManagementCard = false;
   store.toggleFixedCard = true;
-  store.claimables = props.claimables;
-  store.lunchName = props.name;
-  store.lunchId = props.lunchId;
-};
-const showChoicesCard = () => {
-  store.toggleMenuManagementCard = false;
-  store.toggleChoicesCard = true;
   store.claimables = props.claimables;
   store.lunchName = props.name;
   store.lunchId = props.lunchId;

@@ -57,7 +57,7 @@ import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { onClickOutside } from "@vueuse/core";
 import { ref, computed, onMounted } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
-import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
+import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/components/SaveAndDiscardButtons.vue";
 import useSaveButtonIsDisabled from "@/composables/menu-management/useSaveButtonIsDisabled";
 
 const store = useMenuManagementStore();

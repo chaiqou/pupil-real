@@ -66,13 +66,13 @@ import { format } from "date-fns";
 import { ref, onBeforeMount } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import MenuManagementCard from "./MenuManagementCard.vue";
+import MenuManagementCard from "./lunch-cards/MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import MenuManagementSkeleton from "./MenuManagementSkeleton.vue";
+import MenuManagementSkeleton from "./components/MenuManagementSkeleton.vue";
 import MenuCalendarDays from "./MenuCalendarDays.vue";
-import FixedCard from "./FixedCard.vue";
-import ChoicesCard from "./ChoicesCard.vue";
+import FixedCard from "./lunch-cards/FixedCard.vue";
+import ChoicesCard from "./lunch-cards/ChoicesCard.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
