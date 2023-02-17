@@ -1,24 +1,5 @@
 <template>
-  <template v-if="menuManagementStore.toggleMenuManagementCard">
-    <Suspense>
-      <MenuManagementCard />
-      <template #fallback>
-        <MenuManagementSkeleton />
-      </template>
-    </Suspense>
-  </template>
-  <template v-if="menuManagementStore.toggleChoicesCard">
-    <ChoicesCard
-      :name="menuManagementStore.lunchName"
-      :claimables="menuManagementStore.claimables"
-    />
-  </template>
-  <template v-if="menuManagementStore.toggleFixedCard">
-    <FixedCard
-      :name="menuManagementStore.lunchName"
-      :claimables="menuManagementStore.claimables"
-    />
-  </template>
+  <RenderDifferentCards />
   <div
     class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
     :class="classes"
@@ -26,7 +7,11 @@
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
     >
-      <section v-for="month in monthsDays" :key="month.id" class="text-center">
+      <section
+        v-for="month in monthsDays"
+        :key="month.name"
+        class="text-center"
+      >
         <h2 class="font-semibold text-gray-900">
           {{ month.name }} {{ month.year }}
         </h2>
@@ -45,8 +30,7 @@
           <button
             v-for="(day, dayIdx) in month.days"
             @click="onClickCalendar(day)"
-            :key="day.id"
-            type="button"
+            :key="dayIdx"
             :class="[
               month.name !== getMonthByIndex(day.getMonth()) &&
               month.name === monthFullNames[day.getMonth()]
@@ -72,13 +56,10 @@ import { format } from "date-fns";
 import { ref, onBeforeMount } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import MenuManagementCard from "./MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import MenuManagementSkeleton from "./MenuManagementSkeleton.vue";
-import MenuCalendarDays from "./MenuCalendarDays.vue";
-import FixedCard from "./FixedCard.vue";
-import ChoicesCard from "./ChoicesCard.vue";
+import MenuCalendarDays from "@/components/Merchant/Menu-management/MenuCalendarDays.vue";
+import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
@@ -93,8 +74,6 @@ const props = defineProps({
   },
   classes: {
     type: Array,
-    required: false,
-    default: "",
   },
 });
 

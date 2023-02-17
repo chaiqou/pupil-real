@@ -8,34 +8,34 @@
     >
       <template class="flex flex-wrap justify-between border-b border-gray-200">
         <h1 class="text-gray-700 mb-2 font-semibold">
-          {{ props.name }}
+          {{ store.lunchName }}
         </h1>
       </template>
-      <div
-        v-for="claimable in store.parsedClaimables(props.claimables)"
-        :key="claimable"
-      >
-        <h2 class="text-gray-700 m-2 font-semibold">
-          {{ claimable }}
-        </h2>
-        <BaseInput :name="claimable" class="w-full" />
-      </div>
+      <slot></slot>
+
+      <SaveAndDiscardButtons
+        :day="store.selectedDay"
+        :menus="menus"
+        :is-disabled="buttonIsDisabled"
+        :menu-type="menuType"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
-import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
+import { onClickOutside } from "@vueuse/core";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/components/SaveAndDiscardButtons.vue";
+import useSaveButtonIsDisabled from "@/composables/menu-management/useSaveButtonIsDisabled";
 
 const props = defineProps({
-  claimables: {
-    type: String,
+  menus: {
+    type: Object,
     required: true,
   },
-  name: {
+  menuType: {
     type: String,
     required: true,
   },
@@ -44,9 +44,13 @@ const props = defineProps({
 const store = useMenuManagementStore();
 
 // Close on click outside
-
 const target = ref(null);
+
 onClickOutside(target, () => {
   store.toggleFixedCard = false;
+  store.toggleChoicesCard = false;
 });
+
+// disable button if at least one array inside menus is empty
+const { buttonIsDisabled } = useSaveButtonIsDisabled(props.menus);
 </script>
