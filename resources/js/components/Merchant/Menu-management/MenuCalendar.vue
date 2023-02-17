@@ -1,18 +1,5 @@
 <template>
-  <template v-if="menuManagementStore.toggleMenuManagementCard">
-    <Suspense>
-      <MenuManagementCard />
-      <template #fallback>
-        <MenuManagementSkeleton />
-      </template>
-    </Suspense>
-  </template>
-  <template v-if="menuManagementStore.toggleChoicesCard">
-    <ChoicesCard />
-  </template>
-  <template v-if="menuManagementStore.toggleFixedCard">
-    <FixedCard />
-  </template>
+  <RenderDifferentCards />
   <div
     class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
     :class="classes"
@@ -66,13 +53,10 @@ import { format } from "date-fns";
 import { ref, onBeforeMount } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import MenuManagementCard from "./lunch-cards/MenuManagementCard.vue";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import MenuManagementSkeleton from "./components/MenuManagementSkeleton.vue";
 import MenuCalendarDays from "./MenuCalendarDays.vue";
-import FixedCard from "./lunch-cards/FixedCard.vue";
-import ChoicesCard from "./lunch-cards/ChoicesCard.vue";
+import RenderDifferentCards from "./RenderDifferentCards.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
