@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
+use App\Models\LunchMenu;
 use Carbon\Carbon;
 
 class MenuManagementController extends Controller
@@ -29,6 +30,6 @@ class MenuManagementController extends Controller
             return Carbon::parse($validated['day'])->format('Y-m-d 23:00:00');
         })->toArray();
 
-        dd($result);
+        LunchMenu::create(['menus' => $result]);
     }
 }
