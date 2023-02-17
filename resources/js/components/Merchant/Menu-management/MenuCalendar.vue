@@ -8,20 +8,10 @@
     </Suspense>
   </template>
   <template v-if="menuManagementStore.toggleChoicesCard">
-    <ChoicesCard
-      :day="menuManagementStore.selectedDay"
-      menu-type="Choices"
-      :name="menuManagementStore.lunchName"
-      :claimables="menuManagementStore.claimables"
-    />
+    <ChoicesCard />
   </template>
   <template v-if="menuManagementStore.toggleFixedCard">
-    <FixedCard
-      :day="menuManagementStore.selectedDay"
-      menu-type="Fixed"
-      :name="menuManagementStore.lunchName"
-      :claimables="menuManagementStore.claimables"
-    />
+    <FixedCard />
   </template>
   <div
     class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"

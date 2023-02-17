@@ -28,7 +28,6 @@ const props = defineProps({
   isDisabled: {
     type: Boolean,
     required: true,
-    default: false,
   },
   menuType: {
     type: String,

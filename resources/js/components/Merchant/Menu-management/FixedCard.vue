@@ -8,11 +8,11 @@
     >
       <template class="flex flex-wrap justify-between border-b border-gray-200">
         <h1 class="text-gray-700 mb-2 font-semibold">
-          {{ props.name }}
+          {{ store.lunchName }}
         </h1>
       </template>
       <div
-        v-for="claimable in store.parsedClaimables(props.claimables)"
+        v-for="claimable in store.parsedClaimables(claimables)"
         :key="claimable"
       >
         <h2 class="text-gray-700 m-2 font-semibold">
@@ -25,10 +25,10 @@
         />
       </div>
       <SaveAndDiscardButtons
-        :is-disabled="buttonIsDisabled"
-        :day="day"
-        :menu-type="menuType"
+        :day="store.selectedDay"
         :menus="menus"
+        :is-disabled="buttonIsDisabled"
+        menu-type="Fixed"
       />
     </div>
   </div>
@@ -41,24 +41,6 @@ import { ref, onMounted, computed } from "vue";
 import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
 import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/SaveAndDiscardButtons.vue";
 import useSaveButtonIsDisabled from "@/composables/menu-management/useSaveButtonIsDisabled";
-
-const props = defineProps({
-  claimables: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  day: {
-    required: true,
-  },
-  menuType: {
-    type: String,
-    default: "Fixed",
-  },
-});
 
 const store = useMenuManagementStore();
 
@@ -73,7 +55,7 @@ onClickOutside(target, () => {
 
 // Create menus array based on claimables
 
-const claimables = computed(() => props.claimables);
+const claimables = computed(() => store.claimables);
 
 onMounted(() => {
   JSON.parse(claimables.value).forEach((claimable) => {
