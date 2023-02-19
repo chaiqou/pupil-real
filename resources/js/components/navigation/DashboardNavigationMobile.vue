@@ -45,11 +45,11 @@
                 :href="item.href"
                 :class="
                   item.current
-                    ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900'
-                    : 'group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'
+                    ? 'group flex items-center rounded-md bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300'
+                    : 'group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100'
                 "
               >
-                <div class="w-5 mr-3">
+                <div class="mr-3 w-5">
                   <component :is="item.icon"></component>
                 </div>
                 {{ item.name }}
@@ -76,8 +76,8 @@
                     :key="item.id"
                     :class="
                       item.id === student.id
-                        ? 'cursor-default select-none bg-indigo-500 hover:bg-indigo-600 p-4 text-sm text-white'
-                        : 'cursor-default hover:bg-gray-200 select-none p-4 text-sm text-black'
+                        ? 'cursor-default select-none bg-indigo-500 p-4 text-sm text-white hover:bg-indigo-600'
+                        : 'cursor-default select-none p-4 text-sm text-black hover:bg-gray-200'
                     "
                     id="listbox-option-0"
                     role="option"
@@ -110,7 +110,7 @@
                   </li>
                 </div>
                 <li
-                  class="cursor-default hover:bg-gray-200 select-none p-4 py-3 text-sm text-gray-900"
+                  class="cursor-default select-none p-4 py-3 text-sm text-gray-900 hover:bg-gray-200"
                   id="listbox-option-0"
                   role="option"
                 >

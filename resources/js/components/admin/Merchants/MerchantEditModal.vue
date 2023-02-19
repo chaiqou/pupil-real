@@ -61,7 +61,7 @@
                   onSubmit();
                   this.merchantId = null;
                 "
-                class="mt-8 space-y-6 w-full"
+                class="mt-8 w-full space-y-6"
               >
                 <div class="bg-white p-8">
                   <div>
@@ -93,7 +93,7 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="nickname">
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -118,9 +118,9 @@
                         />
                         <ErrorMessage
                           name="company_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -146,9 +146,9 @@
                         />
                         <ErrorMessage
                           name="company_legal_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -175,9 +175,9 @@
                         />
                         <ErrorMessage
                           name="address"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -200,8 +200,8 @@
                           autocomplete="city"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="city" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="city" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             city field is required
                           </p>
                         </ErrorMessage>
@@ -223,8 +223,8 @@
                           autocomplete="state"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="state" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="state" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             state field is required
                           </p>
                         </ErrorMessage>
@@ -247,8 +247,8 @@
                           autocomplete="zip"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="zip" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="zip" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -272,7 +272,7 @@
                         />
                         <ErrorMessage
                           name="VAT"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         ></ErrorMessage>
                       </div>
                     </div>
@@ -295,7 +295,7 @@
                             </p>
                             <svg
                               v-if="requestResponse === 'pending'"
-                              class="inline ml-2 w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                              class="ml-2 inline h-5 w-5 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                               viewBox="0 0 100 101"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +310,7 @@
                               />
                             </svg>
                             <XMarkIcon
-                              class="text-red-500 w-5 h-5 ml-1.5"
+                              class="ml-1.5 h-5 w-5 text-red-500"
                               v-if="requestResponse === 'fail'"
                             ></XMarkIcon>
                           </div>
@@ -319,8 +319,8 @@
                           @click="showHideConfirmation"
                           :class="
                             activated
-                              ? 'text-white max-w-fit cursor-pointer mt-4 px-3 py-2 rounded-md bg-red-500 hover:bg-red-600 hover:text-gray-200'
-                              : 'text-white max-w-fit cursor-pointer mt-4 px-3 py-2 rounded-md bg-green-500 hover:bg-green-600 hover:text-gray-200'
+                              ? 'mt-4 max-w-fit cursor-pointer rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600 hover:text-gray-200'
+                              : 'mt-4 max-w-fit cursor-pointer rounded-md bg-green-500 px-3 py-2 text-white hover:bg-green-600 hover:text-gray-200'
                           "
                         >
                           {{ activated ? "Deactivate" : "Activate" }}
@@ -330,21 +330,21 @@
                       <OnClickOutside @trigger="isConfirmationVisible = false">
                         <div v-if="isConfirmationVisible">
                           <div
-                            class="h-3 w-3 origin-bottom-left rotate-45 bg-gray-300 transform ml-5 absolute z-30"
+                            class="absolute z-30 ml-5 h-3 w-3 origin-bottom-left rotate-45 transform bg-gray-300"
                           ></div>
                           <div
-                            class="mt-3 w-fit z-20 absolute rounded-md border-[1px] border-gray-400"
+                            class="absolute z-20 mt-3 w-fit rounded-md border-[1px] border-gray-400"
                           >
                             <p
-                              class="px-3 py-2 bg-gray-300 w-full rounded-t-[0.3rem]"
+                              class="w-full rounded-t-[0.3rem] bg-gray-300 px-3 py-2"
                             >
                               Are you sure?
                             </p>
                             <div
-                              class="border-b-[1px] border-gray-400 rounded-md"
+                              class="rounded-md border-b-[1px] border-gray-400"
                             ></div>
 
-                            <div class="flex justify-around my-1.5 w-48">
+                            <div class="my-1.5 flex w-48 justify-around">
                               <p
                                 @click="
                                   this.activated = !this.activated;
@@ -353,15 +353,15 @@
                                 "
                                 :class="
                                   activated
-                                    ? 'cursor-pointer bg-red-500 text-white px-3 py-2 w-fit rounded-md hover:bg-red-600 hover:text-gray-200'
-                                    : 'cursor-pointer bg-green-500 text-white px-3 py-2 w-fit rounded-md hover:bg-green-600 hover:text-gray-200'
+                                    ? 'w-fit cursor-pointer rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600 hover:text-gray-200'
+                                    : 'w-fit cursor-pointer rounded-md bg-green-500 px-3 py-2 text-white hover:bg-green-600 hover:text-gray-200'
                                 "
                               >
                                 {{ activated ? "Deactivate" : "Activate" }}
                               </p>
                               <p
                                 @click="isConfirmationVisible = false"
-                                class="cursor-pointer bg-gray-200 hover:bg-gray-300 text-bg-gray-400 px-3 py-2 w-fit rounded-md"
+                                class="text-bg-gray-400 w-fit cursor-pointer rounded-md bg-gray-200 px-3 py-2 hover:bg-gray-300"
                               >
                                 Cancel
                               </p>

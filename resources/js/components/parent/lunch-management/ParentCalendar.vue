@@ -1,7 +1,7 @@
 <template>
   <div v-if="claimDays">
     <div
-      class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
+      class="bg-inherit md:h-[70vh] md:w-[30vw] xl:h-[50vh] xl:w-[40vw] 2xl:h-[100vh] 2xl:w-[50vw]"
     >
       <div
         class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -47,7 +47,7 @@
             >
               <time
                 :datetime="format(day, 'yyyy-MM-dd')"
-                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
+                class="mx-auto flex h-6 w-6 items-center justify-center rounded-md p-4"
               >
                 <div class="flex-col">
                   <h1>
@@ -55,11 +55,11 @@
                   </h1>
                   <div
                     v-if="ifDaysMatch(day) && isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-white"
                   ></div>
                   <div
                     v-if="ifDaysMatch(day) && !isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-white"
                   ></div>
                 </div>
               </time>

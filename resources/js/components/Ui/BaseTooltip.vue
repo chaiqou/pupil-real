@@ -9,13 +9,13 @@
     <div
       ref="floatingRef"
       :class="[
-        'absolute  z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
+        'absolute  z-50 cursor-default rounded-md bg-gray-700 px-3 py-1.5 text-sm text-white',
         !isHidden && 'hidden',
       ]"
     >
       {{ props.content }}
       <div
-        class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
+        class="absolute h-[8px] w-[8px] rotate-45 bg-gray-700"
         ref="arrowRef"
       ></div>
     </div>

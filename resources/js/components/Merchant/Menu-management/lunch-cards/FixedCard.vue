@@ -4,7 +4,7 @@
       v-for="claimable in store.parsedClaimables(claimables)"
       :key="claimable"
     >
-      <h2 class="text-gray-700 m-2 font-semibold">
+      <h2 class="m-2 font-semibold text-gray-700">
         {{ claimable }}
       </h2>
       <BaseInput v-model="menus[claimable]" :name="claimable" class="w-full" />

@@ -24,13 +24,13 @@
             :key="item.id"
             :class="
               item.id === student.id
-                ? 'select-none bg-indigo-500 hover:bg-indigo-600 text-sm text-white'
-                : 'select-none hover:bg-gray-200 text-sm text-black'
+                ? 'select-none bg-indigo-500 text-sm text-white hover:bg-indigo-600'
+                : 'select-none text-sm text-black hover:bg-gray-200'
             "
             id="listbox-option-0"
             role="option"
           >
-            <a :href="item.id" class="flex flex-col p-4 cursor-pointer">
+            <a :href="item.id" class="flex cursor-pointer flex-col p-4">
               <div class="flex justify-between">
                 <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                 <p class="font-normal">
@@ -58,7 +58,7 @@
           </li>
         </div>
         <li
-          class="cursor-default select-none p-4 py-3 hover:bg-gray-200 text-sm text-gray-900"
+          class="cursor-default select-none p-4 py-3 text-sm text-gray-900 hover:bg-gray-200"
           id="listbox-option-0"
           role="option"
         >
@@ -66,7 +66,7 @@
             <div class="flex justify-between">
               <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
 
-              <h1 class="font-normal cursor-pointer">Log out</h1>
+              <h1 class="cursor-pointer font-normal">Log out</h1>
 
               <span class="text-gray-900">
                 <!-- Heroicon name: mini/arrow-right-on-rectangle -->
@@ -96,7 +96,7 @@
       </ul>
     </Transition>
 
-    <div class="flex items-center cursor-pointer">
+    <div class="flex cursor-pointer items-center">
       <div>
         <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
           {{ student.first_name + " " + student.last_name }}

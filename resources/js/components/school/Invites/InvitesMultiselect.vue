@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center text-center text-red-500 text-sm justify-center"
+    class="flex items-center justify-center text-center text-sm text-red-500"
     v-if="this.showInviteError || this.showEmailError"
   >
     <p class="absolute mt-16">{{ errorShowing }}</p>
@@ -9,7 +9,7 @@
     <div
       :class="
         this.mainEmailsArray.length
-          ? 'my-5 py-5 block border-[1px] border-gray-400 rounded-md flex justify-center flex-col'
+          ? 'my-5 block flex flex-col justify-center rounded-md border-[1px] border-gray-400 py-5'
           : 'mb-5 hidden'
       "
     >
@@ -20,10 +20,10 @@
             @mouseover="this.showInviteError = true"
             @mouseleave="this.showInviteError = false"
             v-if="element.existsInInvites && !element.existsInUsers"
-            class="flex border-dashed border-[2px] mr-3 border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+            class="m-1.5 mr-3 flex flex items-center rounded-md border-[2px] border-dashed border-gray-400 p-1 text-sm text-white"
           >
             <exclamation-triangle-icon
-              class="text-yellow-500 mr-1.5 w-5 h-5"
+              class="mr-1.5 h-5 w-5 text-yellow-500"
             ></exclamation-triangle-icon>
             <p class="text-yellow-500">
               {{ element.email }}
@@ -42,10 +42,10 @@
             @mouseover="this.showEmailError = true"
             @mouseleave="this.showEmailError = false"
             v-if="!element.existsInInvites && element.existsInUsers"
-            class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+            class="m-1.5 mr-3 flex flex items-center rounded-md border-[2px] border-dashed border-gray-400 p-1 text-sm text-white"
           >
             <exclamation-triangle-icon
-              class="text-yellow-500 mr-1.5 w-5 h-5"
+              class="mr-1.5 h-5 w-5 text-yellow-500"
             ></exclamation-triangle-icon>
             <p class="text-yellow-500">
               {{ element.email }}
@@ -64,10 +64,10 @@
             @mouseover="this.showEmailError = true"
             @mouseleave="this.showEmailError = false"
             v-if="element.existsInInvites && element.existsInUsers"
-            class="flex mr-3 border-dashed border-[2px] border-gray-400 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+            class="m-1.5 mr-3 flex flex items-center rounded-md border-[2px] border-dashed border-gray-400 p-1 text-sm text-white"
           >
             <exclamation-triangle-icon
-              class="text-yellow-500 mr-1.5 w-5 h-5"
+              class="mr-1.5 h-5 w-5 text-yellow-500"
             ></exclamation-triangle-icon>
             <p class="text-yellow-500">
               {{ element.email }}
@@ -85,7 +85,7 @@
 
           <div
             v-if="!element.existsInInvites && !element.existsInUsers"
-            class="flex bg-[#6C757D] mr-3 text-sm text-white rounded-md p-1 m-1.5 flex items-center"
+            class="m-1.5 mr-3 flex flex items-center rounded-md bg-[#6C757D] p-1 text-sm text-white"
           >
             <p class="max-w-fit">
               {{ element.email }}
@@ -106,11 +106,11 @@
       <label for="emails">Email addresses</label>
     </div>
     <div
-      class="my-2 flex items-center border-gray-600 border-2 rounded-md justify-between px-1.5"
+      class="my-2 flex items-center justify-between rounded-md border-2 border-gray-600 px-1.5"
     >
       <Field v-slot="{ resetField, field }" name="emails">
         <input
-          class="outline-0 w-full my-1.5 placeholder-white"
+          class="my-1.5 w-full placeholder-white outline-0"
           v-bind="field"
           @keydown.enter="resetField()"
           @keydown="addTag"
@@ -120,7 +120,7 @@
         />
       </Field>
     </div>
-    <p class="text-gray-400 text-[10px]">
+    <p class="text-[10px] text-gray-400">
       Be careful, dont send invite to wrong email.
     </p>
     <p
@@ -141,13 +141,13 @@
         type="submit"
         :class="
           disabledCalculator
-            ? 'bg-indigo-600 hover:bg-indigo-700 opacity-60 rounded-md text-white px-5 py-2 w-full mt-10'
-            : 'bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-5 py-2 w-full mt-10'
+            ? 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white opacity-60 hover:bg-indigo-700'
+            : 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white hover:bg-indigo-700'
         "
       >
         <svg
           v-if="this.isSuccessfullySent === 'pending'"
-          class="inline mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          class="mr-2 inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@
         </svg>
         <CheckIcon
           v-if="this.isSuccessfullySent === 'yes'"
-          class="inline mr-2 w-6 h-6"
+          class="mr-2 inline h-6 w-6"
         ></CheckIcon>
         {{ buttonTextGenerator }}
       </button>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex px-4 flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
+    class="relative flex flex-col justify-center overflow-hidden bg-gray-50 px-4 py-6 sm:py-12"
   >
     <ul
       role="list"
@@ -54,7 +54,7 @@
           <div class="-mt-px flex divide-x divide-gray-200">
             <div class="flex w-0 flex-1">
               <button
-                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-b-lg border border-transparent py-4 hover:text-white text-sm font-medium text-gray-700 focus:text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-b-lg border border-transparent py-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-700 hover:text-white focus:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="currentLunchEditId(lunch.id)"
               >
                 Details

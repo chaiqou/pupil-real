@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    class="flex w-full justify-center mt-4 rounded-md bg-indigo-700 px-4 py-2 text-base font-medium text-white"
+    class="mt-4 flex w-full justify-center rounded-md bg-indigo-700 px-4 py-2 text-base font-medium text-white"
   >
     <p class="text-center"><slot></slot> {{ text }}</p>
   </button>

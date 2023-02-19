@@ -40,20 +40,20 @@
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
             {{ transaction.student.first_name }}
-            <p class="text-gray-400 text-[11px]">
+            <p class="text-[11px] text-gray-400">
               {{ transaction.transaction_date }}
             </p>
           </td>
           <td
-            class="whitespace-nowrap px-3 py-4 font-medium text-sm text-gray-900"
+            class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
           >
             {{ transaction.amount || "none" }}
-            <p class="text-gray-400 text-[11px]">
+            <p class="text-[11px] text-gray-400">
               {{ transaction.transaction_type }}
             </p>
           </td>
           <td
-            class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium"
+            class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
           >
             {{ transaction.merchant.merchant_nick }}
           </td>
@@ -62,13 +62,13 @@
           <td
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
         </tr>
       </tbody>

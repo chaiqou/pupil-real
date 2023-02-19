@@ -1,5 +1,5 @@
 <template>
-  <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+  <label class="text-md flex whitespace-normal font-bold text-gray-600"
     >Vat %
   </label>
   <Multiselect

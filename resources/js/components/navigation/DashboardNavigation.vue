@@ -6,11 +6,11 @@
         :href="item.href"
         :class="
           item.current
-            ? 'group flex items-center rounded-md hover:bg-gray-300 bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900'
-            : 'group flex items-center rounded-md hover:bg-gray-100 px-2 py-2 text-sm font-medium text-gray-900'
+            ? 'group flex items-center rounded-md bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300'
+            : 'group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100'
         "
       >
-        <div class="w-5 mr-3">
+        <div class="mr-3 w-5">
           <component :is="item.icon"></component>
         </div>
         {{ item.name }}

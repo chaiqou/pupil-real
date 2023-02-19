@@ -3,12 +3,12 @@
     @scroll="onScroll"
     :class="
       this.isMerchantsLoaded && this.merchants
-        ? 'overflow-hidden overflow-y-scroll max-h-[17.5rem] md:max-h-[19.3rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+        ? 'max-h-[17.5rem] overflow-hidden overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:max-h-[19.3rem] md:rounded-lg'
         : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
     "
   >
     <table
-      class="min-w-full divide-y divide-gray-300 border-separate"
+      class="min-w-full border-separate divide-y divide-gray-300"
       style="border-spacing: 0"
     >
       <thead class="bg-gray-50">
@@ -84,7 +84,7 @@
                 showHideMerchantEdit();
                 currentMerchantEdit(merchant.id);
               "
-              class="text-indigo-600 hover:text-indigo-900 pr-6"
+              class="pr-6 text-indigo-600 hover:text-indigo-900"
             >
               Edit
             </button>
@@ -94,19 +94,19 @@
           <td
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
         </tr>
       </tbody>

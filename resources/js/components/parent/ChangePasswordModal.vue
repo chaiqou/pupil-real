@@ -1,8 +1,8 @@
 <template>
-  <div class="m-3 text-white rounded-md">
+  <div class="m-3 rounded-md text-white">
     <button
       @click="showHideChangePassword()"
-      class="p-2.5 shadow-sm border border-transparent bg-red-600 rounded-md hover:bg-red-700"
+      class="rounded-md border border-transparent bg-red-600 p-2.5 shadow-sm hover:bg-red-700"
     >
       Change Password
     </button>
@@ -55,7 +55,7 @@
               </div>
               <DialogTitle
                 as="h3"
-                class="text-lg font-medium leading-6 text-gray-900 text-center"
+                class="text-center text-lg font-medium leading-6 text-gray-900"
                 >Change password</DialogTitle
               >
               <div class="mt-2 text-center">

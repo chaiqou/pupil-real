@@ -61,7 +61,7 @@
                   onSubmit();
                   this.studentId = null;
                 "
-                class="mt-8 space-y-6 w-full"
+                class="mt-8 w-full space-y-6"
               >
                 <div class="bg-white p-8">
                   <div>
@@ -93,7 +93,7 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="last_name">
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             last name field is required
                           </p>
                         </ErrorMessage>
@@ -119,9 +119,9 @@
                         />
                         <ErrorMessage
                           name="first_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             first name field is required
                           </p>
                         </ErrorMessage>
@@ -144,7 +144,7 @@
                         />
                         <ErrorMessage
                           name="middle_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         ></ErrorMessage>
                       </div>
                     </div>
@@ -168,7 +168,7 @@
                             id="country"
                             name="country"
                             autocomplete="country-name"
-                            class="block w-full px-4 py-1.5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="block w-full rounded-md border-gray-300 px-4 py-1.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           >
                             <option value="AF">Afghanistan</option>
                             <option value="AX">Aland Islands</option>
@@ -465,9 +465,9 @@
 
                         <ErrorMessage
                           name="country"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             country field is required
                           </p>
                         </ErrorMessage>
@@ -494,9 +494,9 @@
                         />
                         <ErrorMessage
                           name="street_address"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             street address field is required
                           </p>
                         </ErrorMessage>
@@ -519,8 +519,8 @@
                           autocomplete="address-level2"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="city" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="city" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             city field is required
                           </p>
                         </ErrorMessage>
@@ -543,8 +543,8 @@
                           autocomplete="address-level1"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="state" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="state" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             state field is required
                           </p>
                         </ErrorMessage>
@@ -567,8 +567,8 @@
                           autocomplete="postal-code"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="zip" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="zip" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             zip field is required
                           </p>
                         </ErrorMessage>

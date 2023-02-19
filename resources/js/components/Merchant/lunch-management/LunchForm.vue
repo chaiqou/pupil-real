@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:mt-20 min-w-[30vw] xl:px-4">
+  <div class="min-w-[30vw] sm:mt-20 xl:px-4">
     <form @submit.prevent="onSubmit">
       <p class="mb-2 text-center text-xl font-black">Create new lunch plan</p>
       <BaseInput
@@ -15,7 +15,7 @@
         label="Description"
         rules="required|min:3|max:100"
       />
-      <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+      <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >Active Range
       </label>
       <Datepicker
@@ -39,7 +39,7 @@
         type="number"
         rules="required"
       />
-      <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+      <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >Claimables
       </label>
       <Multiselect

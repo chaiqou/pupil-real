@@ -37,13 +37,13 @@
             >
               <div>
                 <h1>Details:</h1>
-                <div class="mb-2 bg-gray-400 text-sm text-white rounded-md p-3">
+                <div class="mb-2 rounded-md bg-gray-400 p-3 text-sm text-white">
                   <p>1. Open "PupilPOS" on your terminal or SoftPOS device.</p>
                   <p>2. Scan the QR Code visible below.</p>
                   <p>3. Continue in the PupilPOS App.</p>
                 </div>
               </div>
-              <div class="flex justify-center items-center">
+              <div class="flex items-center justify-center">
                 <qrcode-vue
                   :value="this.QRKeys"
                   :size="300"

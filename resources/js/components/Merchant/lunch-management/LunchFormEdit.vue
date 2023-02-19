@@ -1,5 +1,5 @@
 <template>
-  <div v-if="dataIsLoaded" class="sm:mt-20 min-w-[30vw] xl:px-4">
+  <div v-if="dataIsLoaded" class="min-w-[30vw] sm:mt-20 xl:px-4">
     <form>
       <p class="mb-2 text-center text-xl font-black">Create new lunch plan</p>
       <BaseInput
@@ -15,7 +15,7 @@
         label="Description"
         rules="required|min:3|max:100"
       />
-      <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+      <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >Active Range
       </label>
       <Datepicker
@@ -31,7 +31,7 @@
       />
       <div>
         <label class="text-md font-bold text-gray-600">Weekdays</label>
-        <div class="grid grid-cols-3 gap-3 sm:grid-cols-7 text-center">
+        <div class="grid grid-cols-3 gap-3 text-center sm:grid-cols-7">
           <ul v-for="day in dayOptions" :key="day">
             <li>
               <Field
@@ -41,14 +41,14 @@
                 @input="toggleWeekdays(day)"
                 rules="required"
                 :id="day.fullName"
-                class="hidden peer"
+                class="peer hidden"
                 v-model="store.weekdays"
               />
               <label
                 :for="day.fullName"
-                class="flex items-center text-left text-md font-semibold px-3 py-2 xl:w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-indigo-500 hover:text-gray-600 peer-checked:text-white hover:bg-gray-50"
+                class="text-md flex cursor-pointer items-center rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-left font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:ring-2 peer-checked:ring-indigo-500 peer-checked:ring-offset-2 xl:w-full"
               >
-                <h1 class="flex text-center mx-auto md:-mx-1 lg:mx-auto">
+                <h1 class="mx-auto flex text-center md:-mx-1 lg:mx-auto">
                   {{ day.name }}
                 </h1>
               </label>
@@ -63,7 +63,7 @@
         class="flex max-h-screen flex-col justify-center overflow-hidden bg-inherit"
       >
         <label
-          class="text-md flex mt-2 font-bold text-gray-600 whitespace-normal"
+          class="text-md mt-2 flex whitespace-normal font-bold text-gray-600"
           >Extras and Holds
         </label>
         <div class="rounded-md bg-inherit">
@@ -190,7 +190,7 @@
         type="number"
         rules="required"
       />
-      <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+      <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >Claimables
       </label>
       <Multiselect

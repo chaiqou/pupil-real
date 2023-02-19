@@ -2,7 +2,7 @@
   <div class="min-w-[30vw] xl:px-4">
     <template v-if="hideTableInformation">
       <div>
-        <h3 class="text-lg font-medium mt-20 leading-6 text-gray-900">
+        <h3 class="mt-20 text-lg font-medium leading-6 text-gray-900">
           Lunch Information
         </h3>
         <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -86,7 +86,7 @@
               :key="extras"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="flex mt-4" v-for="extra in extras">
+              <template class="mt-4 flex" v-for="extra in extras">
                 <br />
                 {{ format(parseISO(extra), "yyyy MMM dd") }}
               </template>
@@ -124,7 +124,7 @@
           <button
             @click="startOrderingLunch"
             :disabled="disableIfDatesLessThenPeriodLength"
-            class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
+            class="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-base font-medium text-white"
           >
             <p v-if="disableIfDatesLessThenPeriodLength">
               Period not enough for ordering lunch

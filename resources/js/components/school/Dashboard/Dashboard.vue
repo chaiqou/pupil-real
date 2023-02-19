@@ -1,8 +1,8 @@
 <template>
-  <div class="xl:flex gap-2">
-    <div class="xl:w-1/2 lg:mt-10">
+  <div class="gap-2 xl:flex">
+    <div class="lg:mt-10 xl:w-1/2">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
-      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 w-full">
+      <dl class="mt-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
         <div
           v-for="item in statsBottom"
           :key="item.name"
@@ -26,7 +26,7 @@
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800',
-                'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0',
+                'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
             >
               <ArrowUpIcon
@@ -73,7 +73,7 @@
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800',
-                'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0',
+                'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
             >
               <ArrowUpIcon
@@ -97,7 +97,7 @@
       </dl>
     </div>
 
-    <div class="xl:w-2/3 mt-10">
+    <div class="mt-10 xl:w-2/3">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
       <dashboard-transactions
         class="mt-5"
@@ -105,9 +105,9 @@
       ></dashboard-transactions>
     </div>
   </div>
-  <div class="xl:flex md:mt-32 md:mb-32 px-1 my-12">
+  <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      class="xl:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center"
+      class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
       <Pie
         width="100%"
@@ -117,7 +117,7 @@
       ></Pie>
     </div>
     <div
-      class="xl:w-2/3 bg-white rounded-lg shadow-2xl flex items-center justify-center"
+      class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
     >
       <div class="w-full">
         <ApexChart

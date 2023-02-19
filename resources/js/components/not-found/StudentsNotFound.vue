@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-center flex-col items-center w-full py-10">
-    <UsersIcon class="w-10 h-10"></UsersIcon>
+  <div class="flex w-full flex-col items-center justify-center py-10">
+    <UsersIcon class="h-10 w-10"></UsersIcon>
     <h3 class="mt-2 text-sm font-medium text-gray-900">
       No students available.
     </h3>

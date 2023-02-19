@@ -61,7 +61,7 @@
                 <ValidationForm @submit="onSubmit">
                   <div class="flex flex-col">
                     <label
-                      class="text-md flex font-bold text-gray-600 whitespace-normal"
+                      class="text-md flex whitespace-normal font-bold text-gray-600"
                       for="email"
                       >Email</label
                     >
@@ -76,7 +76,7 @@
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
                     </Field>
-                    <ErrorMessage name="email" class="text-red-500 mt-2">
+                    <ErrorMessage name="email" class="mt-2 text-red-500">
                     </ErrorMessage>
 
                     <p class="mt-1 text-sm text-red-500">
@@ -88,13 +88,13 @@
                       type="submit"
                       :class="
                         disabledCalculator
-                          ? 'bg-indigo-600 hover:bg-indigo-700 opacity-60 rounded-md text-white px-5 py-2 w-full mt-10'
-                          : 'bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-5 py-2 w-full mt-10'
+                          ? 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white opacity-60 hover:bg-indigo-700'
+                          : 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white hover:bg-indigo-700'
                       "
                     >
                       <svg
                         v-if="this.isSuccessfullySent === 'pending'"
-                        class="inline mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        class="mr-2 inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@
                       </svg>
                       <CheckIcon
                         v-if="this.isSuccessfullySent === 'yes'"
-                        class="inline mr-2 w-6 h-6"
+                        class="mr-2 inline h-6 w-6"
                       ></CheckIcon>
                       {{ buttonTextGenerator }}
                     </button>

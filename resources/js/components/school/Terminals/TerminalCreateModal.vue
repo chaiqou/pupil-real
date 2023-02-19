@@ -69,8 +69,8 @@
                         autocomplete="name"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
-                      <ErrorMessage name="name" class="text-red-500 text-sm">
-                        <p class="text-red-500 text-sm">name is required</p>
+                      <ErrorMessage name="name" class="text-sm text-red-500">
+                        <p class="text-sm text-red-500">name is required</p>
                       </ErrorMessage>
                     </div>
                   </div>
@@ -93,9 +93,9 @@
                       />
                       <ErrorMessage
                         name="serial_number"
-                        class="text-red-500 text-sm"
+                        class="text-sm text-red-500"
                       >
-                        <p class="text-red-500 text-sm">
+                        <p class="text-sm text-red-500">
                           serial number is required
                         </p>
                       </ErrorMessage>
@@ -117,8 +117,8 @@
                         autocomplete="note"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
-                      <ErrorMessage name="note" class="text-red-500 text-sm">
-                        <p class="text-red-500 text-sm">
+                      <ErrorMessage name="note" class="text-sm text-red-500">
+                        <p class="text-sm text-red-500">
                           this field is required
                         </p>
                       </ErrorMessage>
@@ -126,7 +126,7 @@
                   </div>
                 </div>
                 <button
-                  class="mt-10 px-3 py-2 text-white bg-indigo-600 rounded-md w-full hover:bg-indigo-700"
+                  class="mt-10 w-full rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700"
                 >
                   Create
                 </button>

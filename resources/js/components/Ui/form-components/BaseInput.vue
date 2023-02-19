@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+    <label class="text-md flex whitespace-normal font-bold text-gray-600"
       >{{ label }}
     </label>
     <Field
@@ -15,7 +15,7 @@
       v-bind="$attrs"
       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
     />
-    <span class="mt-2 text-sm text-red-500 whitespace-nowrap">
+    <span class="mt-2 whitespace-nowrap text-sm text-red-500">
       <ErrorMessage :name="name" />
     </span>
   </div>

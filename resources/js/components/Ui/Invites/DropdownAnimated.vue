@@ -12,7 +12,7 @@
         aria-activedescendant="listbox-option-0"
       >
         <li
-          class="select-none p-2.5 cursor-pointer py-1.5 hover:bg-gray-200 text-sm text-gray-900"
+          class="cursor-pointer select-none p-2.5 py-1.5 text-sm text-gray-900 hover:bg-gray-200"
           id="listbox-option-0"
           role="option"
         >

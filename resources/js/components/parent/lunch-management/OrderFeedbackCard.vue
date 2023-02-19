@@ -1,7 +1,7 @@
 <template>
   <div
     :class="mainClassname"
-    class="relative block w-full mt-4 rounded-lg border-2 p-12 text-center"
+    class="relative mt-4 block w-full rounded-lg border-2 p-12 text-center"
   >
     <slot></slot>
     <span :class="textClassname" class="mt-2 block text-sm font-medium">{{

@@ -4,8 +4,8 @@
       @click="showHideTwoFactor()"
       :class="
         this.twoFa === 0
-          ? 'p-2.5 shadow-sm bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700'
-          : 'p-2.5 shadow-sm bg-red-400 rounded-md hover:bg-red-500'
+          ? 'rounded-md border border-transparent bg-indigo-600 p-2.5 shadow-sm hover:bg-indigo-700'
+          : 'rounded-md bg-red-400 p-2.5 shadow-sm hover:bg-red-500'
       "
     >
       {{ this.twoFa === 0 ? "Activate 2FA" : "Deactivate 2FA" }}

@@ -10,7 +10,7 @@
           id="country"
           name="country"
           autocomplete="country-name"
-          class="block w-full px-4 py-1.5 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          class="block w-full rounded-md border-gray-300 px-4 py-1.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         >
           <option value="AF">Afghanistan</option>
           <option value="AX">Aland Islands</option>
@@ -269,8 +269,8 @@
         </select>
       </Field>
 
-      <ErrorMessage name="country" class="text-red-500 text-sm">
-        <p class="text-red-500 text-sm">country field is required</p>
+      <ErrorMessage name="country" class="text-sm text-red-500">
+        <p class="text-sm text-red-500">country field is required</p>
       </ErrorMessage>
     </div>
   </div>

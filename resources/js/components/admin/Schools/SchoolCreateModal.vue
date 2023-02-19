@@ -45,7 +45,7 @@
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
-              <Form id="form" @submit="onSubmit" class="mt-8 space-y-6 w-full">
+              <Form id="form" @submit="onSubmit" class="mt-8 w-full space-y-6">
                 <div class="bg-white p-8">
                   <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">
@@ -76,7 +76,7 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="short_name">
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             short name field is required
                           </p>
                         </ErrorMessage>
@@ -102,9 +102,9 @@
                         />
                         <ErrorMessage
                           name="full_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             full name field is required
                           </p>
                         </ErrorMessage>
@@ -127,7 +127,7 @@
                         />
                         <ErrorMessage
                           name="long_name"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         ></ErrorMessage>
                       </div>
                     </div>
@@ -152,9 +152,9 @@
                         />
                         <ErrorMessage
                           name="address"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -177,8 +177,8 @@
                           autocomplete="city"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="city" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="city" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             city field is required
                           </p>
                         </ErrorMessage>
@@ -200,8 +200,8 @@
                           autocomplete="state"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="state" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="state" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             state field is required
                           </p>
                         </ErrorMessage>
@@ -224,8 +224,8 @@
                           autocomplete="zip"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="zip" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="zip" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -248,8 +248,8 @@
                           autocomplete="school-email"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="email" class="text-red-500 text-sm">
-                          <p class="text-red-500 text-sm">
+                        <ErrorMessage name="email" class="text-sm text-red-500">
+                          <p class="text-sm text-red-500">
                             email field is required in email format
                           </p>
                         </ErrorMessage>
@@ -274,9 +274,9 @@
                         />
                         <ErrorMessage
                           name="contact"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             this field is required
                           </p>
                         </ErrorMessage>
@@ -301,9 +301,9 @@
                         />
                         <ErrorMessage
                           name="phone_number"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             phone number is required
                           </p>
                         </ErrorMessage>
@@ -327,9 +327,9 @@
                         />
                         <ErrorMessage
                           name="extension"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             extension is required
                           </p>
                         </ErrorMessage>
@@ -353,9 +353,9 @@
                         />
                         <ErrorMessage
                           name="mobile_number"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             mobile number is required
                           </p>
                         </ErrorMessage>
@@ -380,9 +380,9 @@
                         />
                         <ErrorMessage
                           name="school_code"
-                          class="text-red-500 text-sm"
+                          class="text-sm text-red-500"
                         >
-                          <p class="text-red-500 text-sm">
+                          <p class="text-sm text-red-500">
                             school code is required
                           </p>
                         </ErrorMessage>

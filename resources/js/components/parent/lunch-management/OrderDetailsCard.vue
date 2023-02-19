@@ -85,7 +85,7 @@
 
             <div class="mt-6">
               <button
-                class="w-full items-center justify-center inline-flex rounded-md border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg border hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:shadow-md transition-all focus:ring-offset-gray-50"
+                class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg transition-all hover:bg-indigo-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 @click="payWithOnlineHandler"
               >
                 <CardIcon />
@@ -95,7 +95,7 @@
             <div class="mt-2">
               <button
                 @click="payWithTransferHandler"
-                class="inline-flex w-full justify-center items-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <BankIcon />
                 Pay with transfer
@@ -124,7 +124,7 @@
         </OrderFeedbackCard>
       </template>
       <template v-if="loading">
-        <div class="w-1/2 mx-auto">
+        <div class="mx-auto w-1/2">
           <Loading />
         </div>
       </template>
