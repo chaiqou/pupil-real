@@ -23,8 +23,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
+import { ref } from 'vue';
+import {
+  computePosition, flip, shift, offset, arrow,
+} from '@floating-ui/dom';
 
 const props = defineProps({
   content: {
@@ -43,7 +45,9 @@ const arrowRef = ref();
 const isHidden = ref(false);
 
 const calculatePosition = async () => {
-  const { x, y, middlewareData, placement } = await computePosition(
+  const {
+    x, y, middlewareData, placement,
+  } = await computePosition(
     referenceRef.value,
     floatingRef.value,
     {
@@ -65,18 +69,18 @@ const calculatePosition = async () => {
   const { x: arrowX, y: arrowY } = middlewareData.arrow;
 
   const opposedSide = {
-    left: "right",
-    right: "left",
-    top: "bottom",
-    bottom: "top",
+    left: 'right',
+    right: 'left',
+    top: 'bottom',
+    bottom: 'top',
   }[placement];
 
   Object.assign(arrowRef.value.style, {
-    left: arrowX ? `${arrowX}px` : "",
-    top: arrowY ? `${arrowY}px` : "",
-    bottom: "",
-    right: "",
-    [opposedSide]: "-4px",
+    left: arrowX ? `${arrowX}px` : '',
+    top: arrowY ? `${arrowY}px` : '',
+    bottom: '',
+    right: '',
+    [opposedSide]: '-4px',
   });
 };
 

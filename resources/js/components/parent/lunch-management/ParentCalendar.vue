@@ -72,12 +72,12 @@
 </template>
 
 <script setup>
-import { format, isToday, parseISO } from "date-fns";
-import { computed } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
-import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
+import { format, isToday, parseISO } from 'date-fns';
+import { computed } from 'vue';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
+import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
+import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
@@ -95,45 +95,33 @@ const props = defineProps({
   },
 });
 
-const markAllDisabledDays = (day) => {
-  return store.disabledDaysForLunchOrdering.map((highlight) =>
-    format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
-      ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
-      : "",
-  );
-};
+const markAllDisabledDays = (day) => store.disabledDaysForLunchOrdering.map((highlight) => (format(highlight, 'yyy-MM-dd') == format(day, 'yyyy-MM-dd')
+  ? 'bg-indigo-400 hover:bg-indigo-500 !text-white'
+  : ''));
 
-const markAllPossibleDays = (day, month) => {
-  return claimDays.value.length > 0
-    ? claimDays.value.map((claim) => {
-        return format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-          month.name !== getMonthByIndex(day.getMonth()) &&
-          month.name === monthFullNames[day.getMonth()]
-          ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
-          : "";
-      })
-    : "";
-};
+const markAllPossibleDays = (day, month) => (claimDays.value.length > 0
+  ? claimDays.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
+          && month.name !== getMonthByIndex(day.getMonth())
+          && month.name === monthFullNames[day.getMonth()]
+    ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
+    : ''))
+  : '');
 
 const markAllPossibleDaysForStripe = (day, month) => {
   if (dates.value) {
     return dates.value.length > 0
-      ? dates.value.map((claim) => {
-          return format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-            month.name !== getMonthByIndex(day.getMonth()) &&
-            month.name === monthFullNames[day.getMonth()]
-            ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
-            : "";
-        })
-      : "";
+      ? dates.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
+            && month.name !== getMonthByIndex(day.getMonth())
+            && month.name === monthFullNames[day.getMonth()]
+        ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
+        : ''))
+      : '';
   }
 };
 
 const claimDays = computed(() => {
   const days = store.availableDatesForStartOrdering
-    .filter((date) => {
-      return new Date(date) >= new Date(store.first_day);
-    })
+    .filter((date) => new Date(date) >= new Date(store.first_day))
     .slice(0, store.period_length);
 
   store.claim_days = days;
@@ -142,7 +130,7 @@ const claimDays = computed(() => {
 
 let dates = computed(() => {
   if (props.stripeDays) {
-    let getDays = Object.keys(JSON.parse(props.stripeDays.claims));
+    const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
     return getDays.map((day) => parseISO(day));
   }
 });

@@ -12,6 +12,6 @@
 </template>
 
 <script setup>
-import LunchFormEdit from "./LunchFormEdit.vue";
-import Calendar from "@/components/Merchant/lunch-management/Calendar.vue";
+import LunchFormEdit from './LunchFormEdit.vue';
+import Calendar from '@/components/Merchant/lunch-management/Calendar.vue';
 </script>

@@ -36,19 +36,19 @@
 </template>
 
 <script>
-import { useModalStore } from "@/stores/useModalStore";
-import { mapWritableState, mapActions } from "pinia";
-import InviteUserModal from "@/components/school/Invites/InviteUserModal.vue";
+import { mapWritableState, mapActions } from 'pinia';
+import { useModalStore } from '@/stores/useModalStore';
+import InviteUserModal from '@/components/school/Invites/InviteUserModal.vue';
 
 export default {
   components: {
     InviteUserModal,
   },
   computed: {
-    ...mapWritableState(useModalStore, ["isInviteUserVisible"]),
+    ...mapWritableState(useModalStore, ['isInviteUserVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideInviteUser"]),
+    ...mapActions(useModalStore, ['showHideInviteUser']),
   },
 };
 </script>

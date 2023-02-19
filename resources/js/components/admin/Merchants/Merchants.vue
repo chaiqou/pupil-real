@@ -119,11 +119,12 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from "pinia";
-import { useMerchantStore } from "@/stores/useMerchantStore";
-import MerchantsNotFound from "@/components/not-found/MerchantsNotFound.vue";
-import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
-import { useModalStore } from "@/stores/useModalStore";
+import { mapActions, mapWritableState } from 'pinia';
+import { useMerchantStore } from '@/stores/useMerchantStore';
+import MerchantsNotFound from '@/components/not-found/MerchantsNotFound.vue';
+import MerchantEditModal from '@/components/admin/Merchants/MerchantEditModal.vue';
+import { useModalStore } from '@/stores/useModalStore';
+
 export default {
   components: {
     MerchantsNotFound,
@@ -143,16 +144,16 @@ export default {
   },
   computed: {
     ...mapWritableState(useMerchantStore, [
-      "isMerchantsLoaded",
-      "merchants",
-      "merchantId",
+      'isMerchantsLoaded',
+      'merchants',
+      'merchantId',
     ]),
 
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideMerchantEdit"]),
-    ...mapActions(useMerchantStore, ["currentMerchantEdit"]),
+    ...mapActions(useModalStore, ['showHideMerchantEdit']),
+    ...mapActions(useMerchantStore, ['currentMerchantEdit']),
     handleGetMerchantsRequest() {
       axios
         .get(

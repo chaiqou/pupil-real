@@ -93,9 +93,10 @@
 </template>
 
 <script>
-import { mapWritableState } from "pinia";
-import { useTerminalStore } from "@/stores/useTerminalStore";
-import TerminalsNotFound from "@/components/not-found/TerminalsNotFound.vue";
+import { mapWritableState } from 'pinia';
+import { useTerminalStore } from '@/stores/useTerminalStore';
+import TerminalsNotFound from '@/components/not-found/TerminalsNotFound.vue';
+
 export default {
   components: {
     TerminalsNotFound,
@@ -113,7 +114,7 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useTerminalStore, ["isTerminalsLoaded", "terminals"]),
+    ...mapWritableState(useTerminalStore, ['isTerminalsLoaded', 'terminals']),
   },
   methods: {
     handleGetTerminalsRequest() {

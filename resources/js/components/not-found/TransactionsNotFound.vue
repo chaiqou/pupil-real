@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { ListBulletIcon } from "@heroicons/vue/24/outline";
+import { ListBulletIcon } from '@heroicons/vue/24/outline';
+
 export default {
   components: {
     ListBulletIcon,

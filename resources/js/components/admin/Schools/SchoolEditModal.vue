@@ -433,28 +433,28 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapWritableState } from "pinia";
-import { useSchoolStore } from "@/stores/useSchoolStore";
-import { useModalStore } from "@/stores/useModalStore";
-import { useGlobalStore } from "@/stores/useGlobalStore";
-import { Form, Field, ErrorMessage } from "vee-validate";
-import CountriesSelect from "@/components/Ui/CountriesSelect.vue";
+} from '@headlessui/vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import { useSchoolStore } from '@/stores/useSchoolStore';
+import { useModalStore } from '@/stores/useModalStore';
+import { useGlobalStore } from '@/stores/useGlobalStore';
+import CountriesSelect from '@/components/Ui/CountriesSelect.vue';
 
 export default {
   data() {
     return {
       isRequestEndSuccessfully: false,
-      email: "",
-      street_address: "",
-      phone_number: "",
-      mobile_number: "",
-      extension: "",
-      contact_person: "",
-      zip: "",
-      city: "",
-      state: "",
+      email: '',
+      street_address: '',
+      phone_number: '',
+      mobile_number: '',
+      extension: '',
+      contact_person: '',
+      zip: '',
+      city: '',
+      state: '',
     };
   },
   components: {
@@ -471,15 +471,15 @@ export default {
     CountriesSelect,
   },
   computed: {
-    ...mapWritableState(useSchoolStore, ["school", "schoolId", "schools"]),
-    ...mapWritableState(useGlobalStore, ["countrySelect"]),
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
+    ...mapWritableState(useSchoolStore, ['school', 'schoolId', 'schools']),
+    ...mapWritableState(useGlobalStore, ['countrySelect']),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideSchoolEdit"]),
+    ...mapActions(useModalStore, ['showHideSchoolEdit']),
     onSubmit() {
       axios
-        .put(`/api/admin/school`, {
+        .put('/api/admin/school', {
           school_id: this.school.id,
           short_name: this.school.short_name,
           full_name: this.school.full_name,
@@ -498,7 +498,7 @@ export default {
         })
         .then((res) => {
           this.schools = res.data.data;
-          this.countrySelect = "";
+          this.countrySelect = '';
         })
         .catch((err) => console.log(err))
         .finally(() => {

@@ -20,8 +20,8 @@
 </template>
 
 <script setup>
-import { format, isToday } from "date-fns";
-import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
+import { format, isToday } from 'date-fns';
+import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
 
 const props = defineProps({
   day: {

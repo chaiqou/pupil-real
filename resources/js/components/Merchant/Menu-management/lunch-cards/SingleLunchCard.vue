@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
 
 const props = defineProps({
   name: {
@@ -43,10 +43,10 @@ const onClickShowCard = (cardName) => {
   store.lunchName = props.name;
   store.lunchId = props.lunchId;
 
-  cardName === "Fixed"
+  cardName === 'Fixed'
     ? (store.toggleFixedCard = true)
     : (store.toggleChoicesCard = true);
 };
 
-const options = ["Fixed", "Choices"];
+const options = ['Fixed', 'Choices'];
 </script>

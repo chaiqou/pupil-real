@@ -111,12 +111,13 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from "pinia";
-import { useMerchantStore } from "@/stores/useMerchantStore";
-import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
-import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
-import { useModalStore } from "@/stores/useModalStore";
-import { useInviteStore } from "@/stores/useInviteStore";
+import { mapActions, mapWritableState } from 'pinia';
+import { useMerchantStore } from '@/stores/useMerchantStore';
+import InvitesNotFound from '@/components/not-found/InvitesNotFound.vue';
+import MerchantEditModal from '@/components/admin/Merchants/MerchantEditModal.vue';
+import { useModalStore } from '@/stores/useModalStore';
+import { useInviteStore } from '@/stores/useInviteStore';
+
 export default {
   components: {
     InvitesNotFound,
@@ -136,17 +137,17 @@ export default {
   },
   computed: {
     ...mapWritableState(useMerchantStore, [
-      "isMerchantsLoaded",
-      "merchants",
-      "merchantId",
+      'isMerchantsLoaded',
+      'merchants',
+      'merchantId',
     ]),
 
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
-    ...mapWritableState(useInviteStore, ["isInvitesLoaded", "invites"]),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
+    ...mapWritableState(useInviteStore, ['isInvitesLoaded', 'invites']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideMerchantEdit"]),
-    ...mapActions(useMerchantStore, ["currentMerchantEdit"]),
+    ...mapActions(useModalStore, ['showHideMerchantEdit']),
+    ...mapActions(useMerchantStore, ['currentMerchantEdit']),
     handleGetMerchantInvitesRequest() {
       axios
         .get(
@@ -159,10 +160,10 @@ export default {
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
           });
         })
         .finally(() => (this.isInvitesLoaded = true));

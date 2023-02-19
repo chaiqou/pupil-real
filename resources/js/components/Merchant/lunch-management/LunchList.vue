@@ -97,20 +97,20 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { differenceInCalendarDays, format, parseISO } from "date-fns";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { onMounted } from 'vue';
+import { differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
 
 const store = useLunchFormStore();
 
 onMounted(() => {
-  axios.get("/api/school/lunch").then((response) => {
+  axios.get('/api/school/lunch').then((response) => {
     store.lunches.push(...response.data.data);
   });
 });
 
 const currentLunchEditId = (id) => {
-  localStorage.setItem("lunchId", id);
-  window.location.href = "/school/lunch-management/" + id + "/edit";
+  localStorage.setItem('lunchId', id);
+  window.location.href = `/school/lunch-management/${id}/edit`;
 };
 </script>

@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import { BuildingOffice2Icon } from "@heroicons/vue/24/outline";
+import { BuildingOffice2Icon } from '@heroicons/vue/24/outline';
+
 export default {
   components: {
     BuildingOffice2Icon,

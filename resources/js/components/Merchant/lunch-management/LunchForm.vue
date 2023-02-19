@@ -95,23 +95,23 @@
 </template>
 
 <script setup>
-import { useField, useForm } from "vee-validate";
-import { addYears, format, eachDayOfInterval } from "date-fns";
-import { ref, watch, computed } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { useField, useForm } from 'vee-validate';
+import { addYears, format, eachDayOfInterval } from 'date-fns';
+import { ref, watch, computed } from 'vue';
+import Multiselect from '@vueform/multiselect';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
 
-import axios from "@/config/axios/index";
-import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
-import Multiselect from "@vueform/multiselect";
-import VatMultiselect from "./VatMultiselect.vue";
-import WeekdaysChechkbox from "@/components/Merchant/lunch-management/WeekdaysCechkbox.vue";
-import ExtrasAndHolds from "@/components/Merchant/lunch-management/ExtrasAndHolds.vue";
-import Button from "@/components/Ui/Button.vue";
-import Toast from "@/components/Ui/Toast.vue";
+import axios from '@/config/axios/index';
+import BaseInput from '@/components/Ui/form-components/BaseInput.vue';
+import VatMultiselect from './VatMultiselect.vue';
+import WeekdaysChechkbox from '@/components/Merchant/lunch-management/WeekdaysCechkbox.vue';
+import ExtrasAndHolds from '@/components/Merchant/lunch-management/ExtrasAndHolds.vue';
+import Button from '@/components/Ui/Button.vue';
+import Toast from '@/components/Ui/Toast.vue';
 
 const store = useLunchFormStore();
 const { handleSubmit } = useForm();
-const { value } = useField("Price Period");
+const { value } = useField('Price Period');
 
 const multiselectRef = ref(null);
 const activeRange = ref(null);
@@ -126,9 +126,7 @@ const afterFeesCalculate = () => {
   value.value = store.price_period;
 };
 
-const calculateAvailable = computed(() => {
-  return !!store.price_period;
-});
+const calculateAvailable = computed(() => !!store.price_period);
 
 watch(
   () => store.price_period,
@@ -136,7 +134,7 @@ watch(
     if (store.after_fees !== store.price_period) {
       afterFeeCanBeCalculated.value = true;
     }
-    store.after_fees = "";
+    store.after_fees = '';
   },
 );
 
@@ -154,10 +152,10 @@ const addActiveRange = (modelData) => {
 
   // format each day to YYYY-MM-DD'
 
-  let formatedDate = [];
+  const formatedDate = [];
 
   for (let i = 0; i < eachDay.length; i++) {
-    formatedDate.push(format(new Date(eachDay[i]), "yyyy-MM-dd"));
+    formatedDate.push(format(new Date(eachDay[i]), 'yyyy-MM-dd'));
   }
 
   // if marked days doesnot contain any of the days in the range, remove all marked days
@@ -174,8 +172,8 @@ const addActiveRange = (modelData) => {
   eachDay.map((day) => {
     if (store.weekdays) {
       store.weekdays.map((weekday) => {
-        if (weekday === format(day, "EEEE")) {
-          store.marked_days.push(format(day, "yyyy-MM-dd"));
+        if (weekday === format(day, 'EEEE')) {
+          store.marked_days.push(format(day, 'yyyy-MM-dd'));
         }
       });
     }
@@ -184,14 +182,14 @@ const addActiveRange = (modelData) => {
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
   axios
-    .post("/school/lunch", {
+    .post('/school/lunch', {
       title: store.title,
       description: store.description,
       period_length: store.period_length,
       weekdays: store.weekdays,
       active_range: [
-        format(store.active_range[0], "yyyy-MM-dd"),
-        format(store.active_range[1], "yyyy-MM-dd"),
+        format(store.active_range[0], 'yyyy-MM-dd'),
+        format(store.active_range[1], 'yyyy-MM-dd'),
       ],
       claimables: store.claimables,
       holds: store.holds,
@@ -204,9 +202,9 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
     .then(() => {
       resetForm();
       multiselectRef.value.clear();
-      childrenToast.value.showToaster("Lunch created successfully");
+      childrenToast.value.showToaster('Lunch created successfully');
       setTimeout(() => {
-        window.location.href = "/school/lunch-management/";
+        window.location.href = '/school/lunch-management/';
       }, 1000);
     });
 
@@ -217,23 +215,23 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 });
 
 const multiselectOptions = [
-  "Breakfast",
-  "Lunch",
-  "Dinner",
-  "Snack",
-  "Dessert",
-  "Drink",
-  "Appetizer",
-  "Salad",
-  "Bread",
-  "Cereal",
-  "Soup",
-  "Beverage",
-  "Sauce",
-  "Marinade",
-  "Fingerfood",
-  "Salsa",
-  "Dip",
+  'Breakfast',
+  'Lunch',
+  'Dinner',
+  'Snack',
+  'Dessert',
+  'Drink',
+  'Appetizer',
+  'Salad',
+  'Bread',
+  'Cereal',
+  'Soup',
+  'Beverage',
+  'Sauce',
+  'Marinade',
+  'Fingerfood',
+  'Salsa',
+  'Dip',
 ];
 </script>
 

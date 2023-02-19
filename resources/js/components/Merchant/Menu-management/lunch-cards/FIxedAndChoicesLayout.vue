@@ -24,11 +24,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { onClickOutside } from "@vueuse/core";
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import SaveAndDiscardButtons from "@/components/Merchant/Menu-management/components/SaveAndDiscardButtons.vue";
-import useSaveButtonIsDisabled from "@/composables/menu-management/useSaveButtonIsDisabled";
+import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
+import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
+import SaveAndDiscardButtons from '@/components/Merchant/Menu-management/components/SaveAndDiscardButtons.vue';
+import useSaveButtonIsDisabled from '@/composables/menu-management/useSaveButtonIsDisabled';
 
 const props = defineProps({
   menus: {

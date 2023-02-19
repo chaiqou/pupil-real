@@ -247,19 +247,25 @@
 </template>
 
 <script setup>
-import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
-import { ref, onMounted, watch, computed } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { Field, ErrorMessage, useForm, useField } from "vee-validate";
+import {
+  addYears, format, eachDayOfInterval, parseISO,
+} from 'date-fns';
+import {
+  ref, onMounted, watch, computed,
+} from 'vue';
+import {
+  Field, ErrorMessage, useForm, useField,
+} from 'vee-validate';
+import Multiselect from '@vueform/multiselect';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
 
-import axios from "@/config/axios/index";
-import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
-import Multiselect from "@vueform/multiselect";
-import Button from "@/components/Ui/Button.vue";
-import ExtrasIcon from "@/components/icons/ExtrasIcon.vue";
-import HoldsIcon from "@/components/icons/HoldsIcon.vue";
-import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";
-import VatMultiselect from "./VatMultiselect.vue";
+import axios from '@/config/axios/index';
+import BaseInput from '@/components/Ui/form-components/BaseInput.vue';
+import Button from '@/components/Ui/Button.vue';
+import ExtrasIcon from '@/components/icons/ExtrasIcon.vue';
+import HoldsIcon from '@/components/icons/HoldsIcon.vue';
+import ConfirmationModal from '@/components/Merchant/lunch-management/ConfirmationModal.vue';
+import VatMultiselect from './VatMultiselect.vue';
 
 const { setFieldValue } = useForm();
 // Composables
@@ -274,7 +280,7 @@ const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
 const afterFeeCanBeCalculated = ref(false);
 
-const { value } = useField("Price Period");
+const { value } = useField('Price Period');
 
 const afterFeesCalculate = () => {
   store.after_fees = Math.round(
@@ -285,9 +291,7 @@ const afterFeesCalculate = () => {
   value.value = store.price_period;
 };
 
-const calculateAvailable = computed(() => {
-  return !!store.price_period;
-});
+const calculateAvailable = computed(() => !!store.price_period);
 
 watch(
   () => store.price_period,
@@ -295,13 +299,13 @@ watch(
     if (store.after_fees !== store.price_period) {
       afterFeeCanBeCalculated.value = true;
     }
-    store.after_fees = "";
+    store.after_fees = '';
   },
 );
 
 onMounted(() => {
   axios
-    .get("/school/lunch/" + localStorage.getItem("lunchId"))
+    .get(`/school/lunch/${localStorage.getItem('lunchId')}`)
     .then((response) => {
       dataIsLoaded.value = true;
       store.title = response.data.data.title;
@@ -324,18 +328,18 @@ onMounted(() => {
 const removeExtra = (extraIdx, extra) => {
   store.extras.splice(extraIdx, 1);
 
-  let dates = [];
-  let startDate = new Date(extra[0]);
-  let endDate = new Date(extra[1]);
+  const dates = [];
+  const startDate = new Date(extra[0]);
+  const endDate = new Date(extra[1]);
 
   while (startDate <= endDate) {
     dates.push(new Date(startDate));
     startDate.setDate(startDate.getDate() + 1);
   }
 
-  let formattedDates = dates.map((date) => format(date, "yyyy-MM-dd"));
+  const formattedDates = dates.map((date) => format(date, 'yyyy-MM-dd'));
 
-  store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
+  store.formatDateForHumans('disabled_extra_days', store.disabled_extra_days);
 
   store.disabled_extra_days = store.disabled_extra_days.filter(
     (date) => !formattedDates.includes(date),
@@ -348,8 +352,8 @@ const removeExtra = (extraIdx, extra) => {
 
 const handleExtrasDate = (modelData) => {
   store.extras.push([
-    format(modelData[0], "yyyy-MM-dd"),
-    format(modelData[1], "yyyy-MM-dd"),
+    format(modelData[0], 'yyyy-MM-dd'),
+    format(modelData[1], 'yyyy-MM-dd'),
   ]);
 
   store.disabledDaysDate(modelData[0], modelData[1]).forEach((data) => {
@@ -358,9 +362,9 @@ const handleExtrasDate = (modelData) => {
 
   // add extras to marked days
 
-  store.findMiddleRangeDates("add_extras", store.extras);
+  store.findMiddleRangeDates('add_extras', store.extras);
   let deUnique = store.add_marked_extras;
-  let uniqueValues = new Set(deUnique);
+  const uniqueValues = new Set(deUnique);
   deUnique = Array.from(uniqueValues);
 
   store.remove_marked_holds.map((hold) => {
@@ -381,18 +385,18 @@ const handleExtrasDate = (modelData) => {
 const removeHold = (holdIdx, hold) => {
   store.holds.splice(holdIdx, 1);
 
-  let dates = [];
-  let startDate = new Date(hold[0]);
-  let endDate = new Date(hold[1]);
+  const dates = [];
+  const startDate = new Date(hold[0]);
+  const endDate = new Date(hold[1]);
 
   while (startDate <= endDate) {
-    dates.push(format(new Date(startDate), "yyyy-MM-dd"));
+    dates.push(format(new Date(startDate), 'yyyy-MM-dd'));
     startDate.setDate(startDate.getDate() + 1);
   }
 
   store.marked_days = [...store.marked_days, ...dates];
 
-  store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
+  store.formatDateForHumans('disabled_hold_days', store.disabled_hold_days);
 
   store.disabled_hold_days = store.disabled_hold_days.filter(
     (date) => !dates.includes(date),
@@ -401,8 +405,8 @@ const removeHold = (holdIdx, hold) => {
 
 const handleHoldsDate = (modelData) => {
   store.holds.push([
-    format(modelData[0], "yyyy-MM-dd"),
-    format(modelData[1], "yyyy-MM-dd"),
+    format(modelData[0], 'yyyy-MM-dd'),
+    format(modelData[1], 'yyyy-MM-dd'),
   ]);
 
   store.disabledDaysDate(modelData[0], modelData[1]).forEach((date) => {
@@ -411,8 +415,8 @@ const handleHoldsDate = (modelData) => {
 
   // Remove holds from marked days
 
-  store.findMiddleRangeDates("remove_holds", store.holds);
-  let daysToDelete = new Set(store.remove_marked_holds);
+  store.findMiddleRangeDates('remove_holds', store.holds);
+  const daysToDelete = new Set(store.remove_marked_holds);
 
   store.add_marked_extras.map((extra) => {
     if (daysToDelete.has(extra)) {
@@ -420,9 +424,7 @@ const handleHoldsDate = (modelData) => {
     }
   });
 
-  const removedDaysArray = store.marked_days.filter((day) => {
-    return !daysToDelete.has(day);
-  });
+  const removedDaysArray = store.marked_days.filter((day) => !daysToDelete.has(day));
 
   store.marked_days = removedDaysArray;
 };
@@ -441,13 +443,13 @@ const toggleWeekdays = (day) => {
 
   eachDay.map((date) => {
     if (date.getDay() === day.index && store.weekdays.includes(day.fullName)) {
-      store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
+      store.marked_days.push(format(new Date(date), 'yyyy-MM-dd'));
     } else if (
-      date.getDay() === day.index &&
-      !store.weekdays.includes(day.fullName)
+      date.getDay() === day.index
+      && !store.weekdays.includes(day.fullName)
     ) {
-      let filteredDays = store.marked_days.filter(
-        (item) => item !== format(new Date(date), "yyyy-MM-dd"),
+      const filteredDays = store.marked_days.filter(
+        (item) => item !== format(new Date(date), 'yyyy-MM-dd'),
       );
       store.marked_days = [...filteredDays, ...store.add_marked_extras];
     }
@@ -455,13 +457,13 @@ const toggleWeekdays = (day) => {
 };
 
 const dayOptions = [
-  { name: "M", fullName: "Monday", index: 1 },
-  { name: "T", fullName: "Tuesday", index: 2 },
-  { name: "W", fullName: "Wednesday", index: 3 },
-  { name: "T", fullName: "Thursday", index: 4 },
-  { name: "F", fullName: "Friday", index: 5 },
-  { name: "S", fullName: "Saturday", index: 6 },
-  { name: "S", fullName: "Sunday", index: 0 },
+  { name: 'M', fullName: 'Monday', index: 1 },
+  { name: 'T', fullName: 'Tuesday', index: 2 },
+  { name: 'W', fullName: 'Wednesday', index: 3 },
+  { name: 'T', fullName: 'Thursday', index: 4 },
+  { name: 'F', fullName: 'Friday', index: 5 },
+  { name: 'S', fullName: 'Saturday', index: 6 },
+  { name: 'S', fullName: 'Sunday', index: 0 },
 ];
 
 // Active range part
@@ -480,10 +482,10 @@ const addActiveRange = (modelData) => {
 
   // format each day to YYYY-MM-DD'
 
-  let formatedDate = [];
+  const formatedDate = [];
 
   for (let i = 0; i < eachDay.length; i++) {
-    formatedDate.push(format(new Date(eachDay[i]), "yyyy-MM-dd"));
+    formatedDate.push(format(new Date(eachDay[i]), 'yyyy-MM-dd'));
   }
 
   // if marked days doesnot contain any of the days in the range, remove all marked days
@@ -500,8 +502,8 @@ const addActiveRange = (modelData) => {
   eachDay.map((day) => {
     if (store.weekdays) {
       store.weekdays.map((weekday) => {
-        if (weekday === format(day, "EEEE")) {
-          store.marked_days.push(format(day, "yyyy-MM-dd"));
+        if (weekday === format(day, 'EEEE')) {
+          store.marked_days.push(format(day, 'yyyy-MM-dd'));
         }
       });
     }
@@ -511,23 +513,23 @@ const addActiveRange = (modelData) => {
 // Multiselect options and styles
 
 const multiselectOptions = [
-  "Breakfast",
-  "Lunch",
-  "Dinner",
-  "Snack",
-  "Dessert",
-  "Drink",
-  "Appetizer",
-  "Salad",
-  "Bread",
-  "Cereal",
-  "Soup",
-  "Beverage",
-  "Sauce",
-  "Marinade",
-  "Fingerfood",
-  "Salsa",
-  "Dip",
+  'Breakfast',
+  'Lunch',
+  'Dinner',
+  'Snack',
+  'Dessert',
+  'Drink',
+  'Appetizer',
+  'Salad',
+  'Bread',
+  'Cereal',
+  'Soup',
+  'Beverage',
+  'Sauce',
+  'Marinade',
+  'Fingerfood',
+  'Salsa',
+  'Dip',
 ];
 </script>
 

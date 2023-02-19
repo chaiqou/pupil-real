@@ -171,9 +171,8 @@
 </template>
 
 <script>
-import { mapWritableState, mapActions } from "pinia";
-import { useModalStore } from "@/stores/useModalStore";
-import { OnClickOutside } from "@vueuse/components";
+import { mapWritableState, mapActions } from 'pinia';
+import { OnClickOutside } from '@vueuse/components';
 import {
   HomeIcon,
   ListBulletIcon,
@@ -184,7 +183,9 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-} from "@heroicons/vue/24/outline";
+} from '@heroicons/vue/24/outline';
+import { useModalStore } from '@/stores/useModalStore';
+
 export default {
   components: {
     OnClickOutside,
@@ -200,8 +201,8 @@ export default {
   },
   computed: {
     ...mapWritableState(useModalStore, [
-      "isNavbarVisible",
-      "isMobileSwitchAccountVisible",
+      'isNavbarVisible',
+      'isMobileSwitchAccountVisible',
     ]),
   },
   props: {
@@ -224,25 +225,24 @@ export default {
   },
   methods: {
     ...mapActions(useModalStore, [
-      "showHideNavbar",
-      "showHideMobileSwitchAccount",
+      'showHideNavbar',
+      'showHideMobileSwitchAccount',
     ]),
 
     findCurrent() {
       let cleanedCurrent = this.current;
-      cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
-      let navigation = this.navigation.find(
-        (col) =>
-          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
-          cleanedCurrent
+      cleanedCurrent = cleanedCurrent.split('.').splice(1).join('.');
+      const navigation = this.navigation.find(
+        (col) => col.name.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.')
+          === cleanedCurrent
             .toLowerCase()
-            .replaceAll(" ", ".")
-            .replaceAll("-", "."),
+            .replaceAll(' ', '.')
+            .replaceAll('-', '.'),
       );
       navigation.current = true;
 
       if (navigation.parentPage) {
-        let parentNavigation = this.navigation.find(
+        const parentNavigation = this.navigation.find(
           (col) => col.name === navigation.parentPage,
         );
         parentNavigation.current = true;

@@ -35,10 +35,10 @@
 </template>
 
 <script setup>
-import MerchantErrorMessage from "./MerchantErrorMessage.vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 import { Field } from "vee-validate";
+import MerchantErrorMessage from "./MerchantErrorMessage.vue";
+import { useMerchantFormStore } from "../../stores/useMerchantFormStore";
 
 const dayOptions = [
   { name: "M", fullName: "monday", validOption: true },

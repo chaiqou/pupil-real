@@ -79,10 +79,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { useModalStore } from "@/stores/useModalStore";
-import { mapActions, mapWritableState } from "pinia";
+} from '@headlessui/vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { useModalStore } from '@/stores/useModalStore';
 
 export default {
   components: {
@@ -95,10 +95,10 @@ export default {
     XMarkIcon,
   },
   computed: {
-    ...mapWritableState(useModalStore, ["isChangePasswordVisible"]),
+    ...mapWritableState(useModalStore, ['isChangePasswordVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideChangePassword"]),
+    ...mapActions(useModalStore, ['showHideChangePassword']),
   },
 };
 </script>

@@ -14,11 +14,11 @@
 </template>
 
 <script setup>
-import { CheckCircleIcon } from "@heroicons/vue/20/solid";
-import { ref } from "vue";
+import { CheckCircleIcon } from '@heroicons/vue/20/solid';
+import { ref } from 'vue';
 
 const isVisible = ref(false);
-const toasterMessage = ref("");
+const toasterMessage = ref('');
 
 const showToaster = (message) => {
   toasterMessage.value = message;

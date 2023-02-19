@@ -130,10 +130,10 @@
 </template>
 
 <script>
-import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
-import TransactionSlideOver from "@/components/school/Transactions/TransactionSlideOver.vue";
-import { mapActions, mapWritableState } from "pinia";
-import { useTransactionStore } from "@/stores/useTransactionStore";
+import { mapActions, mapWritableState } from 'pinia';
+import TransactionsNotFound from '@/components/not-found/TransactionsNotFound.vue';
+import TransactionSlideOver from '@/components/school/Transactions/TransactionSlideOver.vue';
+import { useTransactionStore } from '@/stores/useTransactionStore';
 
 export default {
   components: {
@@ -158,15 +158,15 @@ export default {
   },
   computed: {
     ...mapWritableState(useTransactionStore, [
-      "isTransactionsLoaded",
-      "isSlideOverOpen",
-      "transactions",
+      'isTransactionsLoaded',
+      'isSlideOverOpen',
+      'transactions',
     ]),
   },
   methods: {
     ...mapActions(useTransactionStore, [
-      "showHideSlideOver",
-      "currentTransactionDetails",
+      'showHideSlideOver',
+      'currentTransactionDetails',
     ]),
     handleGetTransactionsRequest() {
       axios

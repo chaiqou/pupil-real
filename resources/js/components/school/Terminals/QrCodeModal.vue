@@ -65,12 +65,13 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import QrcodeVue from "qrcode.vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { mapWritableState } from "pinia";
-import { useModalStore } from "@/stores/useModalStore";
-import { useTerminalStore } from "@/stores/useTerminalStore";
+} from '@headlessui/vue';
+import QrcodeVue from 'qrcode.vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapWritableState } from 'pinia';
+import { useModalStore } from '@/stores/useModalStore';
+import { useTerminalStore } from '@/stores/useTerminalStore';
+
 export default {
   components: {
     Dialog,
@@ -83,8 +84,8 @@ export default {
     QrcodeVue,
   },
   computed: {
-    ...mapWritableState(useModalStore, ["isQrCodeVisible"]),
-    ...mapWritableState(useTerminalStore, ["QRKeys"]),
+    ...mapWritableState(useModalStore, ['isQrCodeVisible']),
+    ...mapWritableState(useTerminalStore, ['QRKeys']),
   },
 };
 </script>

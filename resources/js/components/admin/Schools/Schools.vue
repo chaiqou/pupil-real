@@ -152,11 +152,12 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from "pinia";
-import { useSchoolStore } from "@/stores/useSchoolStore";
-import SchoolsNotFound from "@/components/not-found/SchoolsNotFound.vue";
-import SchoolEditModal from "@/components/admin/Schools/SchoolEditModal.vue";
-import { useModalStore } from "@/stores/useModalStore";
+import { mapActions, mapWritableState } from 'pinia';
+import { useSchoolStore } from '@/stores/useSchoolStore';
+import SchoolsNotFound from '@/components/not-found/SchoolsNotFound.vue';
+import SchoolEditModal from '@/components/admin/Schools/SchoolEditModal.vue';
+import { useModalStore } from '@/stores/useModalStore';
+
 export default {
   components: {
     SchoolsNotFound,
@@ -170,16 +171,16 @@ export default {
   },
   computed: {
     ...mapWritableState(useSchoolStore, [
-      "isSchoolsLoaded",
-      "schools",
-      "schoolId",
+      'isSchoolsLoaded',
+      'schools',
+      'schoolId',
     ]),
 
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideSchoolEdit"]),
-    ...mapActions(useSchoolStore, ["currentSchoolEdit"]),
+    ...mapActions(useModalStore, ['showHideSchoolEdit']),
+    ...mapActions(useSchoolStore, ['currentSchoolEdit']),
     handleGetSchoolsRequest() {
       axios
         .get(`/api/admin/schools?page=${this.currentPage}`)

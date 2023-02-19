@@ -114,10 +114,11 @@
 </template>
 
 <script>
-import DropdownAnimated from "@/components/Ui/Invites/DropdownAnimated.vue";
-import { mapWritableState } from "pinia";
-import { useInviteStore } from "@/stores/useInviteStore";
-import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
+import { mapWritableState } from 'pinia';
+import DropdownAnimated from '@/components/Ui/Invites/DropdownAnimated.vue';
+import { useInviteStore } from '@/stores/useInviteStore';
+import InvitesNotFound from '@/components/not-found/InvitesNotFound.vue';
+
 export default {
   components: {
     InvitesNotFound,
@@ -137,9 +138,9 @@ export default {
   },
   computed: {
     ...mapWritableState(useInviteStore, [
-      "isInvitesLoaded",
-      "invites",
-      "invite_from",
+      'isInvitesLoaded',
+      'invites',
+      'invite_from',
     ]),
   },
   methods: {
@@ -153,10 +154,10 @@ export default {
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
           });
         })
         .finally(() => {

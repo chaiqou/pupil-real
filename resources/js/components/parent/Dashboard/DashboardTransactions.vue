@@ -90,7 +90,8 @@
 </template>
 
 <script>
-import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
+import TransactionsNotFound from '@/components/not-found/TransactionsNotFound.vue';
+
 export default {
   components: {
     TransactionsNotFound,

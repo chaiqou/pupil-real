@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import { BuildingStorefrontIcon } from "@heroicons/vue/24/outline";
+import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline';
+
 export default {
   components: {
     BuildingStorefrontIcon,

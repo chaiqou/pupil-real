@@ -602,12 +602,12 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapWritableState } from "pinia";
-import { useStudentStore } from "@/stores/useStudentStore";
-import { useModalStore } from "@/stores/useModalStore";
-import { Form, Field, ErrorMessage } from "vee-validate";
+} from '@headlessui/vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import { useStudentStore } from '@/stores/useStudentStore';
+import { useModalStore } from '@/stores/useModalStore';
 
 export default {
   data() {
@@ -629,17 +629,17 @@ export default {
   },
   computed: {
     ...mapWritableState(useStudentStore, [
-      "studentForEdit",
-      "studentId",
-      "students",
+      'studentForEdit',
+      'studentId',
+      'students',
     ]),
-    ...mapWritableState(useModalStore, ["isStudentEditVisible"]),
+    ...mapWritableState(useModalStore, ['isStudentEditVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideStudentEdit"]),
+    ...mapActions(useModalStore, ['showHideStudentEdit']),
     onSubmit() {
       axios
-        .post(`/api/parent/update-student`, {
+        .post('/api/parent/update-student', {
           student_id: this.studentForEdit.id,
           first_name: this.studentForEdit.first_name,
           last_name: this.studentForEdit.last_name,
