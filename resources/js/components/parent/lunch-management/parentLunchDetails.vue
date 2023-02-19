@@ -2,7 +2,7 @@
   <div class="min-w-[30vw] xl:px-4">
     <template v-if="hideTableInformation">
       <div>
-        <h3 class="text-lg font-medium mt-20 leading-6 text-gray-900">
+        <h3 class="mt-20 text-lg font-medium leading-6 text-gray-900">
           Lunch Information
         </h3>
         <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -86,7 +86,7 @@
               :key="extras"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="flex mt-4" v-for="extra in extras">
+              <template class="mt-4 flex" v-for="extra in extras">
                 <br />
                 {{ format(parseISO(extra), "yyyy MMM dd") }}
               </template>
@@ -124,7 +124,7 @@
           <button
             @click="startOrderingLunch"
             :disabled="disableIfDatesLessThenPeriodLength"
-            class="flex w-full justify-center mt-4 rounded-md px-4 py-2 bg-indigo-600 text-base font-medium text-white"
+            class="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-base font-medium text-white"
           >
             <p v-if="disableIfDatesLessThenPeriodLength">
               Period not enough for ordering lunch
@@ -158,16 +158,20 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
-import Toast from "@/components/Ui/Toast.vue";
-import OrderDetailsCard from "./OrderDetailsCard.vue";
+import {
+  onMounted, ref, watch, computed,
+} from 'vue';
+import {
+  format, parseISO, addHours, isAfter, isEqual,
+} from 'date-fns';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import Toast from '@/components/Ui/Toast.vue';
+import OrderDetailsCard from './OrderDetailsCard.vue';
 
 const store = useLunchFormStore();
 
 const availableDays = ref([]);
-const lunchTitle = ref("");
+const lunchTitle = ref('');
 const bufferTime = ref();
 const childrenToast = ref();
 const availableOrders = ref([]);
@@ -181,7 +185,7 @@ const props = defineProps({
 });
 
 const startOrderingLunch = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   hideTableInformation.value = false;
 };
 
@@ -189,32 +193,26 @@ watch(availableOrders, () => {
   // Foreach each available order
   availableOrders.value.forEach((order) => {
     // claims is a JSON we need parse it to get it as a javascript object
-    let parsedClaims = JSON.parse(order.claims);
+    const parsedClaims = JSON.parse(order.claims);
     // get keys from claims
-    let claimsKeys = Object.keys(parsedClaims);
+    const claimsKeys = Object.keys(parsedClaims);
 
     // Assign all dates in one state
     claimsKeys.forEach((claim) => {
       store.disabledDaysForLunchOrdering.push(parseISO(claim)),
-        disabledDaysForLunchOrder.value.push(parseISO(claim));
+      disabledDaysForLunchOrder.value.push(parseISO(claim));
     });
   });
 });
 
-const disableIfDatesLessThenPeriodLength = computed(() => {
-  return +store.availableDatesForStartOrdering.length < +store.period_length
-    ? true
-    : false;
-});
+const disableIfDatesLessThenPeriodLength = computed(() => (+store.availableDatesForStartOrdering.length < +store.period_length));
 
 watch(bufferTime, (newValue) => {
-  let currentDate = addHours(new Date(), newValue); // add buffer time in hours
+  const currentDate = addHours(new Date(), newValue); // add buffer time in hours
 
   // Removela all days which is before currentDate
 
-  let firstAvailableLunchDate = availableDays.value.filter((day) =>
-    isAfter(parseISO(day), currentDate)
-  );
+  let firstAvailableLunchDate = availableDays.value.filter((day) => isAfter(parseISO(day), currentDate));
 
   // If this date does not available apply first one in array
 
@@ -224,22 +222,18 @@ watch(bufferTime, (newValue) => {
 
   // Format from ISO string to 2022-13-13 format
 
-  const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-    format(date, "yyyy-MM-dd")
-  );
+  const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) => format(date, 'yyyy-MM-dd'));
 
   // Remove all days from availableDays which includes inside formattedDisabledDays array
   // Also remove days which is before firstAvailableLunchDate
   // And format back to ISO string
 
-  let removeDisabledDays = availableDays.value
-    .filter((x) => {
-      return (
-        (!formattedDisabledDays.includes(x) &&
-          isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0]))) ||
-        isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0]))
-      );
-    })
+  const removeDisabledDays = availableDays.value
+    .filter((x) => (
+      (!formattedDisabledDays.includes(x)
+          && isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0])))
+        || isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0]))
+    ))
     .map((day) => parseISO(day));
 
   // Assign first correct day
@@ -253,16 +247,16 @@ onMounted(async () => {
   try {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
-      `/api/parent/available-orders/${props.studentId}`
+      `/api/parent/available-orders/${props.studentId}`,
     );
     availableOrders.value = availableOrdersResponse.data.orders;
 
     // Fetch concrette order based lunch id
     const lunchDetailsResponse = await axios.get(
-      "/api/school/lunch/" + localStorage.getItem("lunchId")
+      `/api/school/lunch/${localStorage.getItem('lunchId')}`,
     );
     availableDays.value = lunchDetailsResponse.data.data.available_days.sort(
-      (a, b) => parseISO(a) - parseISO(b)
+      (a, b) => parseISO(a) - parseISO(b),
     );
     bufferTime.value = lunchDetailsResponse.data.data.buffer_time;
     store.period_length = lunchDetailsResponse.data.data.period_length;

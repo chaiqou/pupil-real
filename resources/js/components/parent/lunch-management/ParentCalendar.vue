@@ -1,7 +1,7 @@
 <template>
   <div v-if="claimDays">
     <div
-      class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
+      class="bg-inherit md:h-[70vh] md:w-[30vw] xl:h-[50vh] xl:w-[40vw] 2xl:h-[100vh] 2xl:w-[50vw]"
     >
       <div
         class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -47,7 +47,7 @@
             >
               <time
                 :datetime="format(day, 'yyyy-MM-dd')"
-                class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
+                class="mx-auto flex h-6 w-6 items-center justify-center rounded-md p-4"
               >
                 <div class="flex-col">
                   <h1>
@@ -55,11 +55,11 @@
                   </h1>
                   <div
                     v-if="ifDaysMatch(day) && isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-white"
                   ></div>
                   <div
                     v-if="ifDaysMatch(day) && !isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-white"
                   ></div>
                 </div>
               </time>
@@ -72,12 +72,12 @@
 </template>
 
 <script setup>
-import { format, isToday, parseISO } from "date-fns";
-import { computed } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
-import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
+import { format, isToday, parseISO } from 'date-fns';
+import { computed } from 'vue';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
+import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
+import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
@@ -95,45 +95,33 @@ const props = defineProps({
   },
 });
 
-const markAllDisabledDays = (day) => {
-  return store.disabledDaysForLunchOrdering.map((highlight) =>
-    format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
-      ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
-      : ""
-  );
-};
+const markAllDisabledDays = (day) => store.disabledDaysForLunchOrdering.map((highlight) => (format(highlight, 'yyy-MM-dd') == format(day, 'yyyy-MM-dd')
+  ? 'bg-indigo-400 hover:bg-indigo-500 !text-white'
+  : ''));
 
-const markAllPossibleDays = (day, month) => {
-  return claimDays.value.length > 0
-    ? claimDays.value.map((claim) => {
-        return format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-          month.name !== getMonthByIndex(day.getMonth()) &&
-          month.name === monthFullNames[day.getMonth()]
-          ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
-          : "";
-      })
-    : "";
-};
+const markAllPossibleDays = (day, month) => (claimDays.value.length > 0
+  ? claimDays.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
+          && month.name !== getMonthByIndex(day.getMonth())
+          && month.name === monthFullNames[day.getMonth()]
+    ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
+    : ''))
+  : '');
 
 const markAllPossibleDaysForStripe = (day, month) => {
   if (dates.value) {
     return dates.value.length > 0
-      ? dates.value.map((claim) => {
-          return format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-            month.name !== getMonthByIndex(day.getMonth()) &&
-            month.name === monthFullNames[day.getMonth()]
-            ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
-            : "";
-        })
-      : "";
+      ? dates.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
+            && month.name !== getMonthByIndex(day.getMonth())
+            && month.name === monthFullNames[day.getMonth()]
+        ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
+        : ''))
+      : '';
   }
 };
 
 const claimDays = computed(() => {
   const days = store.availableDatesForStartOrdering
-    .filter((date) => {
-      return new Date(date) >= new Date(store.first_day);
-    })
+    .filter((date) => new Date(date) >= new Date(store.first_day))
     .slice(0, store.period_length);
 
   store.claim_days = days;
@@ -142,7 +130,7 @@ const claimDays = computed(() => {
 
 let dates = computed(() => {
   if (props.stripeDays) {
-    let getDays = Object.keys(JSON.parse(props.stripeDays.claims));
+    const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
     return getDays.map((day) => parseISO(day));
   }
 });

@@ -1,9 +1,9 @@
 <template>
-  <div class="grid grid-template-areas-2x2 mt-10">
+  <div class="grid-template-areas-2x2 mt-10 grid">
     <div class="grid-area-1">1</div>
     <div class="grid-area-2">
-      <div class="lg:w-[45rem] w-full">
-        <h1 class="text-xl my-5 p-5">Last transactions</h1>
+      <div class="w-full lg:w-[45rem]">
+        <h1 class="my-5 p-5 text-xl">Last transactions</h1>
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
@@ -22,7 +22,7 @@
     <div class="grid-area-3">3</div>
     <div class="grid-area-4">
       <div class="grid-area-1">
-        <h1 class="mt-5 text-xl p-5">Spendings</h1>
+        <h1 class="mt-5 p-5 text-xl">Spendings</h1>
         <dl
           v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded"
           class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"
@@ -60,24 +60,24 @@
             class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
           >
             <dt class="truncate text-sm font-medium text-gray-500">
-              <div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div>
+              <div class="mt-3 h-2.5 animate-pulse rounded bg-slate-300"></div>
             </dt>
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"
             >
-              <div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div>
+              <div class="mt-3 h-2.5 animate-pulse rounded bg-slate-300"></div>
             </dd>
           </div>
           <div
             class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
           >
             <dt class="truncate text-sm font-medium text-gray-500">
-              <div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div>
+              <div class="mt-3 h-2.5 animate-pulse rounded bg-slate-300"></div>
             </dt>
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"
             >
-              <div class="mt-3 h-2.5 bg-slate-300 rounded animate-pulse"></div>
+              <div class="mt-3 h-2.5 animate-pulse rounded bg-slate-300"></div>
             </dd>
           </div>
         </dl>
@@ -130,9 +130,7 @@ export default {
         .get(`/api/parent/${this.studentId}/week-spending`)
         .then((res) => {
           this.weekSpending = res.data.data;
-          this.weekSumAmount = this.weekSpending.reduce((a, b) => {
-            return a + b.amount;
-          }, 0);
+          this.weekSumAmount = this.weekSpending.reduce((a, b) => a + b.amount, 0);
         })
         .finally(() => (this.isWeekSpendingLoaded = true));
     },
@@ -142,9 +140,7 @@ export default {
         .get(`/api/parent/${this.studentId}/month-spending`)
         .then((res) => {
           this.monthSpending = res.data.data;
-          this.monthSumAmount = this.monthSpending.reduce((a, b) => {
-            return a + b.amount;
-          }, 0);
+          this.monthSumAmount = this.monthSpending.reduce((a, b) => a + b.amount, 0);
         })
         .finally(() => (this.isMonthSpendingLoaded = true));
     },

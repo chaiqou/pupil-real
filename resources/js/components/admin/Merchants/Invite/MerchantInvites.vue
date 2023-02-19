@@ -3,12 +3,12 @@
     @scroll="onScroll"
     :class="
       this.isInvitesLoaded && this.invites
-        ? 'overflow-hidden overflow-y-scroll max-h-[17.5rem] md:max-h-[19.3rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+        ? 'max-h-[17.5rem] overflow-hidden overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:max-h-[19.3rem] md:rounded-lg'
         : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
     "
   >
     <table
-      class="min-w-full divide-y divide-gray-300 border-separate"
+      class="min-w-full border-separate divide-y divide-gray-300"
       style="border-spacing: 0"
     >
       <thead class="bg-gray-50">
@@ -86,19 +86,19 @@
           <td
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
         </tr>
       </tbody>
@@ -111,12 +111,13 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from "pinia";
-import { useMerchantStore } from "@/stores/useMerchantStore";
-import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
-import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
-import { useModalStore } from "@/stores/useModalStore";
-import { useInviteStore } from "@/stores/useInviteStore";
+import { mapActions, mapWritableState } from 'pinia';
+import { useMerchantStore } from '@/stores/useMerchantStore';
+import InvitesNotFound from '@/components/not-found/InvitesNotFound.vue';
+import MerchantEditModal from '@/components/admin/Merchants/MerchantEditModal.vue';
+import { useModalStore } from '@/stores/useModalStore';
+import { useInviteStore } from '@/stores/useInviteStore';
+
 export default {
   components: {
     InvitesNotFound,
@@ -136,21 +137,21 @@ export default {
   },
   computed: {
     ...mapWritableState(useMerchantStore, [
-      "isMerchantsLoaded",
-      "merchants",
-      "merchantId",
+      'isMerchantsLoaded',
+      'merchants',
+      'merchantId',
     ]),
 
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
-    ...mapWritableState(useInviteStore, ["isInvitesLoaded", "invites"]),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
+    ...mapWritableState(useInviteStore, ['isInvitesLoaded', 'invites']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideMerchantEdit"]),
-    ...mapActions(useMerchantStore, ["currentMerchantEdit"]),
+    ...mapActions(useModalStore, ['showHideMerchantEdit']),
+    ...mapActions(useMerchantStore, ['currentMerchantEdit']),
     handleGetMerchantInvitesRequest() {
       axios
         .get(
-          `/api/admin/school/${this.school.id}/merchant-invites/?page=${this.currentPage}`
+          `/api/admin/school/${this.school.id}/merchant-invites/?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;
@@ -159,10 +160,10 @@ export default {
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
           });
         })
         .finally(() => (this.isInvitesLoaded = true));

@@ -69,8 +69,8 @@
                         autocomplete="name"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
-                      <ErrorMessage name="name" class="text-red-500 text-sm">
-                        <p class="text-red-500 text-sm">name is required</p>
+                      <ErrorMessage name="name" class="text-sm text-red-500">
+                        <p class="text-sm text-red-500">name is required</p>
                       </ErrorMessage>
                     </div>
                   </div>
@@ -93,9 +93,9 @@
                       />
                       <ErrorMessage
                         name="serial_number"
-                        class="text-red-500 text-sm"
+                        class="text-sm text-red-500"
                       >
-                        <p class="text-red-500 text-sm">
+                        <p class="text-sm text-red-500">
                           serial number is required
                         </p>
                       </ErrorMessage>
@@ -117,8 +117,8 @@
                         autocomplete="note"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
-                      <ErrorMessage name="note" class="text-red-500 text-sm">
-                        <p class="text-red-500 text-sm">
+                      <ErrorMessage name="note" class="text-sm text-red-500">
+                        <p class="text-sm text-red-500">
                           this field is required
                         </p>
                       </ErrorMessage>
@@ -126,7 +126,7 @@
                   </div>
                 </div>
                 <button
-                  class="mt-10 px-3 py-2 text-white bg-indigo-600 rounded-md w-full hover:bg-indigo-700"
+                  class="mt-10 w-full rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700"
                 >
                   Create
                 </button>
@@ -146,12 +146,13 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapWritableState } from "pinia";
-import { useModalStore } from "@/stores/useModalStore";
-import { useTerminalStore } from "@/stores/useTerminalStore";
-import { Field, Form as ValidationForm, ErrorMessage } from "vee-validate";
+} from '@headlessui/vue';
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { Field, Form as ValidationForm, ErrorMessage } from 'vee-validate';
+import { useModalStore } from '@/stores/useModalStore';
+import { useTerminalStore } from '@/stores/useTerminalStore';
+
 export default {
   components: {
     Dialog,
@@ -167,26 +168,26 @@ export default {
   },
   data() {
     return {
-      name: "",
-      serial_number: "",
-      note: "",
+      name: '',
+      serial_number: '',
+      note: '',
     };
   },
   computed: {
     ...mapWritableState(useModalStore, [
-      "isTerminalCreateVisible",
-      "isQrCodeVisible",
-      "isTerminalCreateVisible",
+      'isTerminalCreateVisible',
+      'isQrCodeVisible',
+      'isTerminalCreateVisible',
     ]),
-    ...mapWritableState(useTerminalStore, ["QRKeys", "terminals"]),
+    ...mapWritableState(useTerminalStore, ['QRKeys', 'terminals']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideTerminalCreate"]),
+    ...mapActions(useModalStore, ['showHideTerminalCreate']),
     onSubmit(values, actions) {
       axios
-        .post("/api/school/terminal", {
-          public_key: "public_key",
-          private_key: "private_key",
+        .post('/api/school/terminal', {
+          public_key: 'public_key',
+          private_key: 'private_key',
           name: this.name,
           serial_number: this.serial_number,
           note: this.note,
@@ -196,7 +197,7 @@ export default {
           this.isQrCodeVisible = true;
           this.terminals = res.data[1].data;
           this.QRKeys = JSON.stringify(res.data[0]);
-          actions.setValues("");
+          actions.setValues('');
         })
         .catch((err) => console.log(err));
     },

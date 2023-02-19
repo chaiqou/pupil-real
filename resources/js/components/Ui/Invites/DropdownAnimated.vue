@@ -12,7 +12,7 @@
         aria-activedescendant="listbox-option-0"
       >
         <li
-          class="select-none p-2.5 cursor-pointer py-1.5 hover:bg-gray-200 text-sm text-gray-900"
+          class="cursor-pointer select-none p-2.5 py-1.5 text-sm text-gray-900 hover:bg-gray-200"
           id="listbox-option-0"
           role="option"
         >
@@ -32,8 +32,9 @@
 </template>
 
 <script>
-import { mapWritableState } from "pinia";
-import { useInviteStore } from "@/stores/useInviteStore";
+import { mapWritableState } from 'pinia';
+import { useInviteStore } from '@/stores/useInviteStore';
+
 export default {
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useInviteStore, ["invites"]),
+    ...mapWritableState(useInviteStore, ['invites']),
   },
   methods: {
     showHideDropdown() {
@@ -55,10 +56,10 @@ export default {
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
           });
         })
         .catch((err) => console.log(err));

@@ -4,17 +4,17 @@
       v-for="(claimable, index) in store.parsedClaimables(claimables)"
       :key="index"
     >
-      <h2 class="text-gray-700 m-2 font-semibold">
+      <h2 class="m-2 font-semibold text-gray-700">
         {{ claimable }}
       </h2>
       <button
-        class="flex w-full justify-center rounded-md mt-4 mb-4 bg-indigo-700 px-4 py-2 text-base font-medium text-white"
+        class="mt-4 mb-4 flex w-full justify-center rounded-md bg-indigo-700 px-4 py-2 text-base font-medium text-white"
         @click="onClickAddInput(claimable)"
       >
         Add Input
       </button>
       <div
-        class="flex justify-center items-center space-x-2 space-y-2"
+        class="flex items-center justify-center space-x-2 space-y-2"
         v-for="(input, index) in inputCounts[claimable]"
         :key="index"
       >
@@ -24,7 +24,7 @@
           class="w-full"
         />
         <button
-          class="basis-1/2 text-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          class="basis-1/2 rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           @click="onClickRemoveInput(claimable, index)"
         >
           Remove Input
@@ -35,10 +35,10 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import { ref, computed, onMounted } from "vue";
-import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
-import FIxedAndChoicesLayout from "./FIxedAndChoicesLayout.vue";
+import { ref, computed, onMounted } from 'vue';
+import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
+import BaseInput from '@/components/Ui/form-components/BaseInput.vue';
+import FIxedAndChoicesLayout from './FIxedAndChoicesLayout.vue';
 
 const store = useMenuManagementStore();
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="text-md mt-10 flex font-bold text-gray-600 whitespace-normal"
+    <label class="text-md mt-10 flex whitespace-normal font-bold text-gray-600"
       >{{ this.label }}
     </label>
     <Multiselect
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import Multiselect from "@vueform/multiselect";
-import { useInviteStore } from "@/stores/useInviteStore";
-import { mapWritableState } from "pinia";
+import Multiselect from '@vueform/multiselect';
+import { mapWritableState } from 'pinia';
+import { useInviteStore } from '@/stores/useInviteStore';
 
 export default {
   components: {
@@ -44,12 +44,12 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useInviteStore, ["schools", "chosenSchool"]),
+    ...mapWritableState(useInviteStore, ['schools', 'chosenSchool']),
   },
   methods: {
     handleGetSchoolsRequest() {
       axios
-        .get("/api/admin/schools-for-invites")
+        .get('/api/admin/schools-for-invites')
         .then((res) => {
           this.schools = res.data;
         })

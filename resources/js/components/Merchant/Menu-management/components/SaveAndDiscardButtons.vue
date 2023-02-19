@@ -1,16 +1,16 @@
 <template>
-  <div class="flex gap-4 mt-4">
+  <div class="mt-4 flex gap-4">
     <button
       @click="onClickDiscard"
-      class="basis-1/2 text-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      class="basis-1/2 rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
     >
       Discard
     </button>
     <button
       :disabled="isDisabled"
       @click="onClickSaveMenu"
-      class="basis-1/2 text-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      :class="[isDisabled ? 'opacity-50 cursor-not-allowed' : '']"
+      class="basis-1/2 rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      :class="[isDisabled ? 'cursor-not-allowed opacity-50' : '']"
     >
       Save
     </button>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
 
 const store = useMenuManagementStore();
 
@@ -51,7 +51,7 @@ const onClickDiscard = () => {
 
 const onClickSaveMenu = () => {
   axios
-    .post("/api/merchant/create-menu", {
+    .post('/api/merchant/create-menu', {
       menu_type: props.menuType,
       menus: props.menus,
       day: props.day,

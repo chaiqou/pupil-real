@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="text-md font-bold text-gray-600">Weekdays</label>
-    <div class="grid grid-cols-3 gap-3 sm:grid-cols-7 text-center">
+    <div class="grid grid-cols-3 gap-3 text-center sm:grid-cols-7">
       <ul v-for="day in dayOptions" :key="day">
         <li>
           <Field
@@ -11,14 +11,14 @@
             @input="toggleWeekdays(day)"
             rules="required"
             :id="day.fullName"
-            class="hidden peer"
+            class="peer hidden"
             v-model="store.weekdays"
           />
           <label
             :for="day.fullName"
-            class="flex items-center text-left text-md font-semibold px-3 py-2 xl:w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer peer-checked:bg-indigo-600 peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-indigo-500 hover:text-gray-600 peer-checked:text-white hover:bg-gray-50"
+            class="text-md flex cursor-pointer items-center rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-left font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:ring-2 peer-checked:ring-indigo-500 peer-checked:ring-offset-2 xl:w-full"
           >
-            <h1 class="flex text-center mx-auto md:-mx-1 lg:mx-auto">
+            <h1 class="mx-auto flex text-center md:-mx-1 lg:mx-auto">
               {{ day.name }}
             </h1>
           </label>
@@ -32,9 +32,9 @@
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import { format, eachDayOfInterval } from "date-fns";
+import { Field, ErrorMessage } from 'vee-validate';
+import { format, eachDayOfInterval } from 'date-fns';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
 
 const store = useLunchFormStore();
 
@@ -46,17 +46,17 @@ const toggleWeekdays = (day) => {
 
   eachDay.map((date) => {
     if (
-      date.getDay() === day.index &&
-      store.weekdays.includes(day.fullName) &&
-      store.holds.length === 0
+      date.getDay() === day.index
+      && store.weekdays.includes(day.fullName)
+      && store.holds.length === 0
     ) {
-      store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
+      store.marked_days.push(format(new Date(date), 'yyyy-MM-dd'));
     } else if (
-      date.getDay() === day.index &&
-      !store.weekdays.includes(day.fullName)
+      date.getDay() === day.index
+      && !store.weekdays.includes(day.fullName)
     ) {
-      let filteredDays = store.marked_days.filter(
-        (item) => item !== format(new Date(date), "yyyy-MM-dd")
+      const filteredDays = store.marked_days.filter(
+        (item) => item !== format(new Date(date), 'yyyy-MM-dd'),
       );
       store.marked_days = [...filteredDays, ...store.add_marked_extras];
     }
@@ -64,12 +64,12 @@ const toggleWeekdays = (day) => {
 };
 
 const dayOptions = [
-  { name: "M", fullName: "Monday", index: 1 },
-  { name: "T", fullName: "Tuesday", index: 2 },
-  { name: "W", fullName: "Wednesday", index: 3 },
-  { name: "T", fullName: "Thursday", index: 4 },
-  { name: "F", fullName: "Friday", index: 5 },
-  { name: "S", fullName: "Saturday", index: 6 },
-  { name: "S", fullName: "Sunday", index: 0 },
+  { name: 'M', fullName: 'Monday', index: 1 },
+  { name: 'T', fullName: 'Tuesday', index: 2 },
+  { name: 'W', fullName: 'Wednesday', index: 3 },
+  { name: 'T', fullName: 'Thursday', index: 4 },
+  { name: 'F', fullName: 'Friday', index: 5 },
+  { name: 'S', fullName: 'Saturday', index: 6 },
+  { name: 'S', fullName: 'Sunday', index: 0 },
 ];
 </script>

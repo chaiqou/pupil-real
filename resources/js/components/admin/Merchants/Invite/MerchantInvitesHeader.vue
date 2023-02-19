@@ -1,7 +1,7 @@
 <template>
-  <div class="px-4 sm:px-6 lg:px-8 mt-32">
+  <div class="mt-32 px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto flex items-end justify-between">
+      <div class="flex items-end justify-between sm:flex-auto">
         <div>
           <h1 class="text-xl font-semibold text-gray-900">
             All Merchant Invites belonging to school #{{
@@ -15,7 +15,7 @@
         </div>
         <span
           @click="showHideInviteMerchant()"
-          class="cursor-pointer hidden bg-blue-600 hover:bg-blue-700 rounded-md text-white px-4 py-2 md:flex items-center"
+          class="hidden cursor-pointer items-center rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 md:flex"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-6 w-6"
           >
             <path
               stroke-linecap="round"
@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { useModalStore } from "@/stores/useModalStore";
-import { mapWritableState, mapActions } from "pinia";
-import InviteMerchantModal from "@/components/admin/Merchants/Invite/InviteMerchantModal.vue";
+import { mapWritableState, mapActions } from 'pinia';
+import { useModalStore } from '@/stores/useModalStore';
+import InviteMerchantModal from '@/components/admin/Merchants/Invite/InviteMerchantModal.vue';
 
 export default {
   components: {
@@ -55,10 +55,10 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
+    ...mapWritableState(useModalStore, ['isInviteMerchantVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideInviteMerchant"]),
+    ...mapActions(useModalStore, ['showHideInviteMerchant']),
   },
 };
 </script>

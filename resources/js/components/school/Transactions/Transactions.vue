@@ -3,12 +3,12 @@
     @scroll="onScroll"
     :class="
       this.isTransactionsLoaded && this.transactions
-        ? 'overflow-hidden max-h-[17.5rem] md:max-h-[19.3rem] overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+        ? 'max-h-[17.5rem] overflow-hidden overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:max-h-[19.3rem] md:rounded-lg'
         : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
     "
   >
     <table
-      class="min-w-full divide-y divide-gray-300 border-separate"
+      class="min-w-full border-separate divide-y divide-gray-300"
       style="border-spacing: 0"
     >
       <thead class="bg-gray-50">
@@ -105,22 +105,22 @@
           <td
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
         </tr>
       </tbody>
@@ -130,10 +130,10 @@
 </template>
 
 <script>
-import TransactionsNotFound from "@/components/not-found/TransactionsNotFound.vue";
-import TransactionSlideOver from "@/components/school/Transactions/TransactionSlideOver.vue";
-import { mapActions, mapWritableState } from "pinia";
-import { useTransactionStore } from "@/stores/useTransactionStore";
+import { mapActions, mapWritableState } from 'pinia';
+import TransactionsNotFound from '@/components/not-found/TransactionsNotFound.vue';
+import TransactionSlideOver from '@/components/school/Transactions/TransactionSlideOver.vue';
+import { useTransactionStore } from '@/stores/useTransactionStore';
 
 export default {
   components: {
@@ -158,20 +158,20 @@ export default {
   },
   computed: {
     ...mapWritableState(useTransactionStore, [
-      "isTransactionsLoaded",
-      "isSlideOverOpen",
-      "transactions",
+      'isTransactionsLoaded',
+      'isSlideOverOpen',
+      'transactions',
     ]),
   },
   methods: {
     ...mapActions(useTransactionStore, [
-      "showHideSlideOver",
-      "currentTransactionDetails",
+      'showHideSlideOver',
+      'currentTransactionDetails',
     ]),
     handleGetTransactionsRequest() {
       axios
         .get(
-          `/api/school/${this.schoolId}/transactions?page=${this.currentPage}`
+          `/api/school/${this.schoolId}/transactions?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;

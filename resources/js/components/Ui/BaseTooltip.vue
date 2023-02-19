@@ -9,13 +9,13 @@
     <div
       ref="floatingRef"
       :class="[
-        'absolute  z-50 bg-gray-700 text-sm text-white px-3 py-1.5 rounded-md cursor-default',
+        'absolute  z-50 cursor-default rounded-md bg-gray-700 px-3 py-1.5 text-sm text-white',
         !isHidden && 'hidden',
       ]"
     >
       {{ props.content }}
       <div
-        class="absolute bg-gray-700 h-[8px] w-[8px] rotate-45"
+        class="absolute h-[8px] w-[8px] rotate-45 bg-gray-700"
         ref="arrowRef"
       ></div>
     </div>
@@ -23,8 +23,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { computePosition, flip, shift, offset, arrow } from "@floating-ui/dom";
+import { ref } from 'vue';
+import {
+  computePosition, flip, shift, offset, arrow,
+} from '@floating-ui/dom';
 
 const props = defineProps({
   content: {
@@ -43,7 +45,9 @@ const arrowRef = ref();
 const isHidden = ref(false);
 
 const calculatePosition = async () => {
-  const { x, y, middlewareData, placement } = await computePosition(
+  const {
+    x, y, middlewareData, placement,
+  } = await computePosition(
     referenceRef.value,
     floatingRef.value,
     {
@@ -54,7 +58,7 @@ const calculatePosition = async () => {
         shift({ padding: 50 }),
         arrow({ element: arrowRef.value }),
       ],
-    }
+    },
   );
 
   Object.assign(floatingRef.value.style, {
@@ -65,18 +69,18 @@ const calculatePosition = async () => {
   const { x: arrowX, y: arrowY } = middlewareData.arrow;
 
   const opposedSide = {
-    left: "right",
-    right: "left",
-    top: "bottom",
-    bottom: "top",
+    left: 'right',
+    right: 'left',
+    top: 'bottom',
+    bottom: 'top',
   }[placement];
 
   Object.assign(arrowRef.value.style, {
-    left: arrowX ? `${arrowX}px` : "",
-    top: arrowY ? `${arrowY}px` : "",
-    bottom: "",
-    right: "",
-    [opposedSide]: "-4px",
+    left: arrowX ? `${arrowX}px` : '',
+    top: arrowY ? `${arrowY}px` : '',
+    bottom: '',
+    right: '',
+    [opposedSide]: '-4px',
   });
 };
 

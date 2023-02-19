@@ -61,7 +61,7 @@
                 <ValidationForm @submit="onSubmit">
                   <div class="flex flex-col">
                     <label
-                      class="text-md flex font-bold text-gray-600 whitespace-normal"
+                      class="text-md flex whitespace-normal font-bold text-gray-600"
                       for="email"
                       >Email</label
                     >
@@ -76,7 +76,7 @@
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
                     </Field>
-                    <ErrorMessage name="email" class="text-red-500 mt-2">
+                    <ErrorMessage name="email" class="mt-2 text-red-500">
                     </ErrorMessage>
 
                     <p class="mt-1 text-sm text-red-500">
@@ -88,13 +88,13 @@
                       type="submit"
                       :class="
                         disabledCalculator
-                          ? 'bg-indigo-600 hover:bg-indigo-700 opacity-60 rounded-md text-white px-5 py-2 w-full mt-10'
-                          : 'bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-5 py-2 w-full mt-10'
+                          ? 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white opacity-60 hover:bg-indigo-700'
+                          : 'mt-10 w-full rounded-md bg-indigo-600 px-5 py-2 text-white hover:bg-indigo-700'
                       "
                     >
                       <svg
                         v-if="this.isSuccessfullySent === 'pending'"
-                        class="inline mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        class="mr-2 inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@
                       </svg>
                       <CheckIcon
                         v-if="this.isSuccessfullySent === 'yes'"
-                        class="inline mr-2 w-6 h-6"
+                        class="mr-2 inline h-6 w-6"
                       ></CheckIcon>
                       {{ buttonTextGenerator }}
                     </button>
@@ -132,17 +132,18 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
+} from '@headlessui/vue';
 import {
   ExclamationTriangleIcon,
   XMarkIcon,
   CheckIcon,
-} from "@heroicons/vue/24/outline";
-import { mapActions, mapWritableState } from "pinia";
-import { useModalStore } from "@/stores/useModalStore";
-import { useMerchantStore } from "@/stores/useMerchantStore";
-import { useInviteStore } from "@/stores/useInviteStore";
-import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+} from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { Form as ValidationForm, Field, ErrorMessage } from 'vee-validate';
+import { useModalStore } from '@/stores/useModalStore';
+import { useMerchantStore } from '@/stores/useMerchantStore';
+import { useInviteStore } from '@/stores/useInviteStore';
+
 export default {
   components: {
     Dialog,
@@ -159,10 +160,10 @@ export default {
   },
   data() {
     return {
-      email: "",
+      email: '',
       isSent: false,
       isSuccessfullySent: null,
-      backResponse: "",
+      backResponse: '',
     };
   },
   props: {
@@ -172,67 +173,65 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ["isInviteMerchantVisible"]),
-    ...mapWritableState(useMerchantStore, ["inviteEmail"]),
-    ...mapWritableState(useInviteStore, ["invites"]),
+    ...mapWritableState(useModalStore, ['isInviteMerchantVisible']),
+    ...mapWritableState(useMerchantStore, ['inviteEmail']),
+    ...mapWritableState(useInviteStore, ['invites']),
     buttonTextGenerator() {
-      return this.isSuccessfullySent === "pending"
-        ? "Sending..."
-        : this.isSuccessfullySent === "yes"
-        ? "Sent"
-        : this.isSuccessfullySent === "no"
-        ? "Failed"
-        : "Send";
+      return this.isSuccessfullySent === 'pending'
+        ? 'Sending...'
+        : this.isSuccessfullySent === 'yes'
+          ? 'Sent'
+          : this.isSuccessfullySent === 'no'
+            ? 'Failed'
+            : 'Send';
     },
     disabledCalculator() {
       if (this.isSent === true) {
         return true;
-      } else return false;
+      } return false;
     },
     axiosResponseGenerator() {
       const text = this.isSuccessfullySent;
-      if (text === "pending") {
-        return "Please wait, we are sending invites.";
-      } else if (text === "yes") {
-        return "Invites send successfully!";
-      } else if (text === "no") {
-        return "Could not send invites at the moment, please try again later, or text to support.";
+      if (text === 'pending') {
+        return 'Please wait, we are sending invites.';
+      } if (text === 'yes') {
+        return 'Invites send successfully!';
+      } if (text === 'no') {
+        return 'Could not send invites at the moment, please try again later, or text to support.';
       }
     },
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideInviteMerchant"]),
+    ...mapActions(useModalStore, ['showHideInviteMerchant']),
     onSubmit(values, actions) {
-      actions.setFieldValue("email", "");
+      actions.setFieldValue('email', '');
       this.isSent = true;
-      this.isSuccessfullySent = "pending";
-      this.backResponse = "";
+      this.isSuccessfullySent = 'pending';
+      this.backResponse = '';
       axios
         .post(`/api/admin/school/${this.schoolId}/merchant/send-invite`, {
           email: this.email,
         })
         .then((res) => {
-          this.isSuccessfullySent = "yes";
+          this.isSuccessfullySent = 'yes';
           this.invites = res.data.data;
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll("T", " ");
+              .replaceAll('T', ' ');
           });
         })
         .catch((err) => {
-          this.isSuccessfullySent = "no";
+          this.isSuccessfullySent = 'no';
           this.backResponse = err.response.data.message;
         })
-        .finally(() =>
-          setTimeout(() => {
-            this.isSent = false;
-            this.isSuccessfullySent = null;
-          }, 5000)
-        );
+        .finally(() => setTimeout(() => {
+          this.isSent = false;
+          this.isSuccessfullySent = null;
+        }, 5000));
     },
   },
 };

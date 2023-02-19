@@ -121,10 +121,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { useTransactionStore } from "@/stores/useTransactionStore";
-import { mapActions, mapWritableState } from "pinia";
+} from '@headlessui/vue';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { useTransactionStore } from '@/stores/useTransactionStore';
 
 export default {
   components: {
@@ -137,12 +137,12 @@ export default {
   },
   computed: {
     ...mapWritableState(useTransactionStore, [
-      "isSlideOverOpen",
-      "transaction",
+      'isSlideOverOpen',
+      'transaction',
     ]),
   },
   methods: {
-    ...mapActions(useTransactionStore, ["showHideSlideOver"]),
+    ...mapActions(useTransactionStore, ['showHideSlideOver']),
   },
 };
 </script>

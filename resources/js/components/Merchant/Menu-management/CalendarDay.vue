@@ -1,7 +1,7 @@
 <template>
   <time
     :datetime="format(day, 'yyyy-MM-dd')"
-    class="mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md"
+    class="mx-auto flex h-6 w-6 items-center justify-center rounded-md p-4"
   >
     <div class="flex-col">
       <h1>
@@ -9,19 +9,19 @@
       </h1>
       <div
         v-if="ifDaysMatch(day) && isToday(day)"
-        class="w-4 h-0.5 mx-auto bg-white rounded-full"
+        class="mx-auto h-0.5 w-4 rounded-full bg-white"
       ></div>
       <div
         v-if="ifDaysMatch(day) && !isToday(day)"
-        class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
+        class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
       ></div>
     </div>
   </time>
 </template>
 
 <script setup>
-import { format, isToday } from "date-fns";
-import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
+import { format, isToday } from 'date-fns';
+import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
 
 const props = defineProps({
   day: {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="bg-inherit md:w-[30vw] md:h-[70vh] xl:w-[40vw] xl:h-[50vh] 2xl:w-[50vw] 2xl:h-[100vh]"
+      class="bg-inherit md:h-[70vh] md:w-[30vw] xl:h-[50vh] xl:w-[40vw] 2xl:h-[100vh] 2xl:w-[50vw]"
       :class="classes"
     >
       <div
@@ -49,10 +49,10 @@
                   isToday(day) && [
                     getMonthByIndex(day.getMonth()) &&
                     month.name === monthFullNames[day.getMonth()]
-                      ? 'bg-indigo-600 font-semibold text-white  border-b-2 border-indigo-600 aspect-auto'
-                      : 'bg-indigo-400 text-gray-50   border-b-2 border-indigo-600 aspect-auto',
+                      ? 'aspect-auto border-b-2 border-indigo-600  bg-indigo-600 font-semibold text-white'
+                      : 'aspect-auto border-b-2   border-indigo-600 bg-indigo-400 text-gray-50',
                   ],
-                  'mx-auto flex h-6 w-6 p-4 items-center justify-center rounded-md',
+                  'mx-auto flex h-6 w-6 items-center justify-center rounded-md p-4',
                 ]"
               >
                 <div class="flex-col">
@@ -61,11 +61,11 @@
                   </h1>
                   <div
                     v-if="ifDaysMatch(day) && isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-white rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-white"
                   ></div>
                   <div
                     v-if="ifDaysMatch(day) && !isToday(day)"
-                    class="w-4 h-0.5 mx-auto bg-indigo-600 rounded-full"
+                    class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
                   ></div>
                 </div>
               </time>
@@ -78,12 +78,12 @@
 </template>
 
 <script setup>
-import { format, isToday } from "date-fns";
-import { onBeforeMount } from "vue";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
-import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
-import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
+import { format, isToday } from 'date-fns';
+import { onBeforeMount } from 'vue';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
+import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
+import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
@@ -99,20 +99,20 @@ const props = defineProps({
   classes: {
     type: Array,
     required: false,
-    default: "",
+    default: '',
   },
 });
 
 onBeforeMount(() => {
   const targetPath = `/school/lunch-management/${localStorage.getItem(
-    "lunchId"
+    'lunchId',
   )}/edit`;
   const currentPath = window.location.pathname;
 
   if (currentPath == targetPath) {
-    axios.get("/api/school/lunch").then((response) => {
+    axios.get('/api/school/lunch').then((response) => {
       response.data.data.map((data) => {
-        if (localStorage.getItem("lunchId") == data.id) {
+        if (localStorage.getItem('lunchId') == data.id) {
           store.marked_days.push(...data.available_days);
         }
       });

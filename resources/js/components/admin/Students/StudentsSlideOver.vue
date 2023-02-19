@@ -110,10 +110,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { useStudentStore } from "@/stores/useStudentStore";
-import { mapActions, mapWritableState } from "pinia";
+} from '@headlessui/vue';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { mapActions, mapWritableState } from 'pinia';
+import { useStudentStore } from '@/stores/useStudentStore';
 
 export default {
   components: {
@@ -125,10 +125,10 @@ export default {
     XMarkIcon,
   },
   computed: {
-    ...mapWritableState(useStudentStore, ["isSlideOverOpen", "student"]),
+    ...mapWritableState(useStudentStore, ['isSlideOverOpen', 'student']),
   },
   methods: {
-    ...mapActions(useStudentStore, ["showHideSlideOver"]),
+    ...mapActions(useStudentStore, ['showHideSlideOver']),
   },
 };
 </script>

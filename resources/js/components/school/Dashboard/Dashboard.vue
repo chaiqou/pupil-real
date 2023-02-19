@@ -1,8 +1,8 @@
 <template>
-  <div class="xl:flex gap-2">
-    <div class="xl:w-1/2 lg:mt-10">
+  <div class="gap-2 xl:flex">
+    <div class="lg:mt-10 xl:w-1/2">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
-      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 w-full">
+      <dl class="mt-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
         <div
           v-for="item in statsBottom"
           :key="item.name"
@@ -26,7 +26,7 @@
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800',
-                'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0',
+                'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
             >
               <ArrowUpIcon
@@ -73,7 +73,7 @@
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800',
-                'inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0',
+                'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
             >
               <ArrowUpIcon
@@ -97,7 +97,7 @@
       </dl>
     </div>
 
-    <div class="xl:w-2/3 mt-10">
+    <div class="mt-10 xl:w-2/3">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
       <dashboard-transactions
         class="mt-5"
@@ -105,9 +105,9 @@
       ></dashboard-transactions>
     </div>
   </div>
-  <div class="xl:flex md:mt-32 md:mb-32 px-1 my-12">
+  <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      class="xl:w-1/2 bg-white lg:mr-3 mb-5 rounded-lg shadow-2xl flex items-center justify-center"
+      class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
       <Pie
         width="100%"
@@ -117,7 +117,7 @@
       ></Pie>
     </div>
     <div
-      class="xl:w-2/3 bg-white rounded-lg shadow-2xl flex items-center justify-center"
+      class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
     >
       <div class="w-full">
         <ApexChart
@@ -131,16 +131,17 @@
 </template>
 
 <script>
-import VueApexCharts from "vue3-apexcharts";
-import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
-import Pie from "@/components/Ui/Charts/Pie.vue";
-import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
+import VueApexCharts from 'vue3-apexcharts';
+import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid';
 import {
   CursorArrowRaysIcon,
   EnvelopeOpenIcon,
   UsersIcon,
-} from "@heroicons/vue/24/outline";
-import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
+} from '@heroicons/vue/24/outline';
+import Pie from '@/components/Ui/Charts/Pie.vue';
+import DashboardTransactions from '@/components/school/Dashboard/DashboardTransactions.vue';
+
 export default {
   components: {
     ApexChart: VueApexCharts,
@@ -157,52 +158,52 @@ export default {
       statsTop: [
         {
           id: 1,
-          name: "Total Subscribers",
-          stat: "71,897",
+          name: 'Total Subscribers',
+          stat: '71,897',
           icon: UsersIcon,
-          change: "122",
-          changeType: "increase",
+          change: '122',
+          changeType: 'increase',
         },
         {
           id: 2,
-          name: "Avg. Open Rate",
-          stat: "58.16%",
+          name: 'Avg. Open Rate',
+          stat: '58.16%',
           icon: EnvelopeOpenIcon,
-          change: "5.4%",
-          changeType: "increase",
+          change: '5.4%',
+          changeType: 'increase',
         },
       ],
       statsBottom: [
         {
-          name: "Total Subscribers",
-          stat: "71,897",
-          previousStat: "70,946",
-          change: "12%",
-          changeType: "increase",
+          name: 'Total Subscribers',
+          stat: '71,897',
+          previousStat: '70,946',
+          change: '12%',
+          changeType: 'increase',
         },
         {
-          name: "Avg. Open Rate",
-          stat: "58.16%",
-          previousStat: "56.14%",
-          change: "2.02%",
-          changeType: "increase",
+          name: 'Avg. Open Rate',
+          stat: '58.16%',
+          previousStat: '56.14%',
+          change: '2.02%',
+          changeType: 'increase',
         },
       ],
       currentMonthDates: [],
-      labels: ["example1", "example2"],
+      labels: ['example1', 'example2'],
       chartData: [40, 50, 12],
       series: [
         {
-          name: "Session Duration",
-          type: "area",
+          name: 'Session Duration',
+          type: 'area',
           data: [
             45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
           ],
         },
         {
-          name: "Page Views",
-          type: "line",
+          name: 'Page Views',
+          type: 'line',
           data: [
             null,
             null,
@@ -238,8 +239,8 @@ export default {
           ],
         },
         {
-          type: "line",
-          name: "Total Visits",
+          type: 'line',
+          name: 'Total Visits',
           data: [
             87,
             57,
@@ -272,15 +273,15 @@ export default {
         },
       ],
       chartOptions: {
-        colors: ["#0061F2", "#6900C7", "#cac8cb"],
+        colors: ['#0061F2', '#6900C7', '#cac8cb'],
         fill: {
-          type: "solid",
+          type: 'solid',
           opacity: [0.25, 1],
         },
         chart: {
           height: 350,
-          type: "line",
-          width: "100%",
+          type: 'line',
+          width: '100%',
           zoom: {
             enabled: false,
           },
@@ -295,19 +296,19 @@ export default {
         },
         stroke: {
           width: [5, 7, 5],
-          curve: "smooth",
+          curve: 'smooth',
           dashArray: [0, 0, 2],
         },
         title: {
           show: false,
         },
         legend: {
-          tooltipHoverFormatter: function (val, opts) {
+          tooltipHoverFormatter(val, opts) {
             return (
-              val +
-              " - " +
-              opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-              ""
+              `${val
+              } - ${
+                opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
+              }`
             );
           },
         },
@@ -321,21 +322,21 @@ export default {
           y: [
             {
               title: {
-                formatter: function (val) {
-                  return val + " (mins)";
+                formatter(val) {
+                  return `${val} (mins)`;
                 },
               },
             },
             {
               title: {
-                formatter: function (val) {
-                  return val + " per session";
+                formatter(val) {
+                  return `${val} per session`;
                 },
               },
             },
             {
               title: {
-                formatter: function (val) {
+                formatter(val) {
                   return val;
                 },
               },
@@ -343,7 +344,7 @@ export default {
           ],
         },
         grid: {
-          borderColor: "#f1f1f1",
+          borderColor: '#f1f1f1',
         },
       },
     };
@@ -351,9 +352,7 @@ export default {
   mounted() {
     const start = startOfMonth(new Date());
     const end = endOfMonth(new Date());
-    this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) =>
-      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" })
-    );
+    this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) => date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' }));
     console.log(this.currentMonthDates);
   },
 };

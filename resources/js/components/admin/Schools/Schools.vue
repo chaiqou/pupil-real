@@ -3,12 +3,12 @@
     @scroll="onScroll"
     :class="
       this.isSchoolsLoaded && this.schools
-        ? 'overflow-hidden overflow-y-scroll max-h-[17.5rem] md:max-h-[19.3rem] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
+        ? 'max-h-[17.5rem] overflow-hidden overflow-y-scroll shadow ring-1 ring-black ring-opacity-5 md:max-h-[19.3rem] md:rounded-lg'
         : 'overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg'
     "
   >
     <table
-      class="min-w-full divide-y divide-gray-300 border-separate"
+      class="min-w-full border-separate divide-y divide-gray-300"
       style="border-spacing: 0"
     >
       <thead class="bg-gray-50">
@@ -110,11 +110,11 @@
             </button>
           </td>
           <td
-            class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium pl-2 pr-6"
+            class="relative whitespace-nowrap border-b border-gray-200 pl-2 pr-6 text-right text-sm font-medium"
           >
             <a
               :href="'/admin/school/' + school.id + '/merchants'"
-              class="text-white hover:text-gray-100 hover:bg-blue-700 px-2 py-1.5 rounded-md bg-blue-600"
+              class="rounded-md bg-blue-600 px-2 py-1.5 text-white hover:bg-blue-700 hover:text-gray-100"
             >
               Merchants
             </a>
@@ -124,25 +124,25 @@
           <td
             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
           >
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 bg-slate-300 rounded animate-pulse"></div>
+            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
           </td>
         </tr>
       </tbody>
@@ -152,11 +152,12 @@
 </template>
 
 <script>
-import { mapActions, mapWritableState } from "pinia";
-import { useSchoolStore } from "@/stores/useSchoolStore";
-import SchoolsNotFound from "@/components/not-found/SchoolsNotFound.vue";
-import SchoolEditModal from "@/components/admin/Schools/SchoolEditModal.vue";
-import { useModalStore } from "@/stores/useModalStore";
+import { mapActions, mapWritableState } from 'pinia';
+import { useSchoolStore } from '@/stores/useSchoolStore';
+import SchoolsNotFound from '@/components/not-found/SchoolsNotFound.vue';
+import SchoolEditModal from '@/components/admin/Schools/SchoolEditModal.vue';
+import { useModalStore } from '@/stores/useModalStore';
+
 export default {
   components: {
     SchoolsNotFound,
@@ -170,16 +171,16 @@ export default {
   },
   computed: {
     ...mapWritableState(useSchoolStore, [
-      "isSchoolsLoaded",
-      "schools",
-      "schoolId",
+      'isSchoolsLoaded',
+      'schools',
+      'schoolId',
     ]),
 
-    ...mapWritableState(useModalStore, ["isSchoolEditVisible"]),
+    ...mapWritableState(useModalStore, ['isSchoolEditVisible']),
   },
   methods: {
-    ...mapActions(useModalStore, ["showHideSchoolEdit"]),
-    ...mapActions(useSchoolStore, ["currentSchoolEdit"]),
+    ...mapActions(useModalStore, ['showHideSchoolEdit']),
+    ...mapActions(useSchoolStore, ['currentSchoolEdit']),
     handleGetSchoolsRequest() {
       axios
         .get(`/api/admin/schools?page=${this.currentPage}`)

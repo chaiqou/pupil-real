@@ -85,7 +85,7 @@
 
             <div class="mt-6">
               <button
-                class="w-full items-center justify-center inline-flex rounded-md border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg border hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:shadow-md transition-all focus:ring-offset-gray-50"
+                class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-lg transition-all hover:bg-indigo-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 @click="payWithOnlineHandler"
               >
                 <CardIcon />
@@ -95,7 +95,7 @@
             <div class="mt-2">
               <button
                 @click="payWithTransferHandler"
-                class="inline-flex w-full justify-center items-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <BankIcon />
                 Pay with transfer
@@ -124,7 +124,7 @@
         </OrderFeedbackCard>
       </template>
       <template v-if="loading">
-        <div class="w-1/2 mx-auto">
+        <div class="mx-auto w-1/2">
           <Loading />
         </div>
       </template>
@@ -133,18 +133,18 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { format } from "date-fns";
-import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import { computed, ref } from 'vue';
+import { format } from 'date-fns';
+import { useLunchFormStore } from '@/stores/useLunchFormStore';
 
-import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
-import CardIcon from "@/components/icons/CardIcon.vue";
-import BankIcon from "@/components/icons/BankIcon.vue";
-import BaseTooltip from "@/components/Ui/BaseTooltip.vue";
-import OrderFeedbackCard from "@/components/parent/lunch-management/OrderFeedbackCard.vue";
-import SuccessResponseIcon from "@/components/icons/SuccessResponseIcon.vue";
-import ErrorResponseIcon from "@/components/icons/ErrorResponseIcon.vue";
-import Loading from "@/components/icons/Loading.vue";
+import QuestionMarkIcon from '@/components/icons/QuestionMarkIcon.vue';
+import CardIcon from '@/components/icons/CardIcon.vue';
+import BankIcon from '@/components/icons/BankIcon.vue';
+import BaseTooltip from '@/components/Ui/BaseTooltip.vue';
+import OrderFeedbackCard from '@/components/parent/lunch-management/OrderFeedbackCard.vue';
+import SuccessResponseIcon from '@/components/icons/SuccessResponseIcon.vue';
+import ErrorResponseIcon from '@/components/icons/ErrorResponseIcon.vue';
+import Loading from '@/components/icons/Loading.vue';
 
 const props = defineProps({
   periodLength: {
@@ -174,17 +174,13 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const weekdayNames = computed(() => {
-  return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
-});
+const weekdayNames = computed(() => props.weekdays.map((weekday) => weekday.substring(0, 1)).join(' '));
 
 const firstAndLastDay = computed(() => {
-  const formattedDays = props.lunchDays.map((lunchDay) =>
-    format(lunchDay, "yyyy.MM.dd")
-  );
+  const formattedDays = props.lunchDays.map((lunchDay) => format(lunchDay, 'yyyy.MM.dd'));
 
-  let firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
-    " - "
+  const firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
+    ' - ',
   );
 
   return firstAndLastDays;
@@ -197,7 +193,7 @@ const loading = ref(false);
 const payWithTransferHandler = () => {
   loading.value = true;
   axios
-    .post("/api/parent/lunch-order/" + props.studentId, {
+    .post(`/api/parent/lunch-order/${props.studentId}`, {
       student_id: props.studentId,
       available_days: store.lunch_details[0].available_days,
       claimables: store.lunch_details[0].claimables,
@@ -221,7 +217,7 @@ const payWithOnlineHandler = () => {
   loading.value = true;
 
   axios
-    .post("/api/parent/checkout", {
+    .post('/api/parent/checkout', {
       student_id: props.studentId,
       claimables: store.lunch_details[0].claimables,
       lunch_id: store.lunch_details[0].id,

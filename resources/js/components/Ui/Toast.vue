@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isVisible" class="rounded-md mt-4 bg-green-50 p-4">
+  <div v-if="isVisible" class="mt-4 rounded-md bg-green-50 p-4">
     <div class="flex">
       <div class="flex-shrink-0">
         <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
@@ -14,11 +14,11 @@
 </template>
 
 <script setup>
-import { CheckCircleIcon } from "@heroicons/vue/20/solid";
-import { ref } from "vue";
+import { CheckCircleIcon } from '@heroicons/vue/20/solid';
+import { ref } from 'vue';
 
 const isVisible = ref(false);
-const toasterMessage = ref("");
+const toasterMessage = ref('');
 
 const showToaster = (message) => {
   toasterMessage.value = message;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="text-md flex font-bold text-gray-600 whitespace-normal"
+    <label class="text-md flex whitespace-normal font-bold text-gray-600"
       >{{ label }}
     </label>
     <Field
@@ -15,14 +15,14 @@
       v-bind="$attrs"
       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
     />
-    <span class="mt-2 text-sm text-red-500 whitespace-nowrap">
+    <span class="mt-2 whitespace-nowrap text-sm text-red-500">
       <ErrorMessage :name="name" />
     </span>
   </div>
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
+import { Field, ErrorMessage } from 'vee-validate';
 
 const props = defineProps({
   name: {
@@ -40,7 +40,7 @@ const props = defineProps({
   type: {
     type: String,
     required: false,
-    default: "text",
+    default: 'text',
   },
   min: {
     type: [Number, String],
@@ -53,11 +53,11 @@ const props = defineProps({
   inputType: {
     type: String,
     required: false,
-    default: "input",
+    default: 'input',
   },
   modelValue: {
     type: [String, Number, Array],
-    default: "",
+    default: '',
   },
 });
 </script>
