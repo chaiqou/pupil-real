@@ -150,7 +150,7 @@ export default {
     handleGetMerchantInvitesRequest() {
       axios
         .get(
-          `/api/admin/school/${this.school.id}/merchant-invites/?page=${this.currentPage}`
+          `/api/admin/school/${this.school.id}/merchant-invites/?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;

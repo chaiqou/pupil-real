@@ -156,7 +156,7 @@ export default {
     handleGetMerchantsRequest() {
       axios
         .get(
-          `/api/admin/school/${this.school.id}/merchants/?page=${this.currentPage}`
+          `/api/admin/school/${this.school.id}/merchants/?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;

@@ -172,7 +172,7 @@ export default {
     handleGetTransactionsRequest() {
       axios
         .get(
-          `/api/parent/${this.studentId}/transactions?page=${this.currentPage}`
+          `/api/parent/${this.studentId}/transactions?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;

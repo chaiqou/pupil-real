@@ -99,7 +99,7 @@ const markAllDisabledDays = (day) => {
   return store.disabledDaysForLunchOrdering.map((highlight) =>
     format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
       ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
-      : ""
+      : "",
   );
 };
 

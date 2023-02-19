@@ -119,7 +119,7 @@ const childrenToast = ref();
 const afterFeeCanBeCalculated = ref(false);
 const afterFeesCalculate = () => {
   store.after_fees = Math.round(
-    (Number(store.price_period) + 85) / (1 - 7 / 500)
+    (Number(store.price_period) + 85) / (1 - 7 / 500),
   );
   store.price_period = store.after_fees;
   afterFeeCanBeCalculated.value = false;
@@ -137,7 +137,7 @@ watch(
       afterFeeCanBeCalculated.value = true;
     }
     store.after_fees = "";
-  }
+  },
 );
 
 const addActiveRange = (modelData) => {

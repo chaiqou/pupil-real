@@ -234,13 +234,16 @@ export default {
       let navigation = this.navigation.find(
         (col) =>
           col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
-          cleanedCurrent.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".")
+          cleanedCurrent
+            .toLowerCase()
+            .replaceAll(" ", ".")
+            .replaceAll("-", "."),
       );
       navigation.current = true;
 
       if (navigation.parentPage) {
         let parentNavigation = this.navigation.find(
-          (col) => col.name === navigation.parentPage
+          (col) => col.name === navigation.parentPage,
         );
         parentNavigation.current = true;
       }

@@ -213,7 +213,7 @@ watch(bufferTime, (newValue) => {
   // Removela all days which is before currentDate
 
   let firstAvailableLunchDate = availableDays.value.filter((day) =>
-    isAfter(parseISO(day), currentDate)
+    isAfter(parseISO(day), currentDate),
   );
 
   // If this date does not available apply first one in array
@@ -225,7 +225,7 @@ watch(bufferTime, (newValue) => {
   // Format from ISO string to 2022-13-13 format
 
   const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
-    format(date, "yyyy-MM-dd")
+    format(date, "yyyy-MM-dd"),
   );
 
   // Remove all days from availableDays which includes inside formattedDisabledDays array
@@ -253,16 +253,16 @@ onMounted(async () => {
   try {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
-      `/api/parent/available-orders/${props.studentId}`
+      `/api/parent/available-orders/${props.studentId}`,
     );
     availableOrders.value = availableOrdersResponse.data.orders;
 
     // Fetch concrette order based lunch id
     const lunchDetailsResponse = await axios.get(
-      "/api/school/lunch/" + localStorage.getItem("lunchId")
+      "/api/school/lunch/" + localStorage.getItem("lunchId"),
     );
     availableDays.value = lunchDetailsResponse.data.data.available_days.sort(
-      (a, b) => parseISO(a) - parseISO(b)
+      (a, b) => parseISO(a) - parseISO(b),
     );
     bufferTime.value = lunchDetailsResponse.data.data.buffer_time;
     store.period_length = lunchDetailsResponse.data.data.period_length;

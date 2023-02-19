@@ -352,7 +352,7 @@ export default {
     const start = startOfMonth(new Date());
     const end = endOfMonth(new Date());
     this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) =>
-      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" })
+      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
     );
     console.log(this.currentMonthDates);
   },

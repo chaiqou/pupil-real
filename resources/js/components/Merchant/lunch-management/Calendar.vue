@@ -105,7 +105,7 @@ const props = defineProps({
 
 onBeforeMount(() => {
   const targetPath = `/school/lunch-management/${localStorage.getItem(
-    "lunchId"
+    "lunchId",
   )}/edit`;
   const currentPath = window.location.pathname;
 

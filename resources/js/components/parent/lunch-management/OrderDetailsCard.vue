@@ -180,11 +180,11 @@ const weekdayNames = computed(() => {
 
 const firstAndLastDay = computed(() => {
   const formattedDays = props.lunchDays.map((lunchDay) =>
-    format(lunchDay, "yyyy.MM.dd")
+    format(lunchDay, "yyyy.MM.dd"),
   );
 
   let firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
-    " - "
+    " - ",
   );
 
   return firstAndLastDays;

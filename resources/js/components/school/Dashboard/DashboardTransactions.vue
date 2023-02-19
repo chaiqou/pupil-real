@@ -99,7 +99,7 @@ export default {
     handleGetLastFiveTransactions() {
       axios
         .get(
-          `/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`
+          `/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`,
         )
         .then((res) => {
           this.transactions = res.data.data;

@@ -54,7 +54,7 @@ const calculatePosition = async () => {
         shift({ padding: 50 }),
         arrow({ element: arrowRef.value }),
       ],
-    }
+    },
   );
 
   Object.assign(floatingRef.value.style, {

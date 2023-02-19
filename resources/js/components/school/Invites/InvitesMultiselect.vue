@@ -237,7 +237,7 @@ export default {
       } else {
         const checkIfExists = this.mainEmailsArray.find(
           (element) =>
-            element.existsInInvites === true || element.existsInUsers === true
+            element.existsInInvites === true || element.existsInUsers === true,
         );
         return !!checkIfExists;
       }
@@ -348,7 +348,7 @@ export default {
           setTimeout(() => {
             this.isSent = false;
             this.isSuccessfullySent = null;
-          }, 5000)
+          }, 5000),
         );
     },
     handleUpdateInvitesTableRequest() {

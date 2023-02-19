@@ -56,7 +56,7 @@ const toggleWeekdays = (day) => {
       !store.weekdays.includes(day.fullName)
     ) {
       let filteredDays = store.marked_days.filter(
-        (item) => item !== format(new Date(date), "yyyy-MM-dd")
+        (item) => item !== format(new Date(date), "yyyy-MM-dd"),
       );
       store.marked_days = [...filteredDays, ...store.add_marked_extras];
     }

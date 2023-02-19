@@ -143,7 +143,7 @@ export default {
     handleGetStudentRequest() {
       axios
         .get(
-          `/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`
+          `/api/school/${this.schoolId}/dashboard-students?page=${this.currentPage}`,
         )
         .then((res) => {
           this.currentPage++;

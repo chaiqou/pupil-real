@@ -231,7 +231,7 @@ export default {
           setTimeout(() => {
             this.isSent = false;
             this.isSuccessfullySent = null;
-          }, 5000)
+          }, 5000),
         );
     },
   },

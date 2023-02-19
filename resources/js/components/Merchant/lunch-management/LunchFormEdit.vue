@@ -278,7 +278,7 @@ const { value } = useField("Price Period");
 
 const afterFeesCalculate = () => {
   store.after_fees = Math.round(
-    (Number(store.price_period) + 85) / (1 - 7 / 500)
+    (Number(store.price_period) + 85) / (1 - 7 / 500),
   );
   store.price_period = store.after_fees;
   afterFeeCanBeCalculated.value = false;
@@ -296,7 +296,7 @@ watch(
       afterFeeCanBeCalculated.value = true;
     }
     store.after_fees = "";
-  }
+  },
 );
 
 onMounted(() => {
@@ -338,7 +338,7 @@ const removeExtra = (extraIdx, extra) => {
   store.formatDateForHumans("disabled_extra_days", store.disabled_extra_days);
 
   store.disabled_extra_days = store.disabled_extra_days.filter(
-    (date) => !formattedDates.includes(date)
+    (date) => !formattedDates.includes(date),
   );
 
   store.removeDaysFromMarkedDays(extra);
@@ -395,7 +395,7 @@ const removeHold = (holdIdx, hold) => {
   store.formatDateForHumans("disabled_hold_days", store.disabled_hold_days);
 
   store.disabled_hold_days = store.disabled_hold_days.filter(
-    (date) => !dates.includes(date)
+    (date) => !dates.includes(date),
   );
 };
 
@@ -447,7 +447,7 @@ const toggleWeekdays = (day) => {
       !store.weekdays.includes(day.fullName)
     ) {
       let filteredDays = store.marked_days.filter(
-        (item) => item !== format(new Date(date), "yyyy-MM-dd")
+        (item) => item !== format(new Date(date), "yyyy-MM-dd"),
       );
       store.marked_days = [...filteredDays, ...store.add_marked_extras];
     }

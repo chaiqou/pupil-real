@@ -52,7 +52,7 @@
                 >{{
                   differenceInCalendarDays(
                     new Date(lunch.active_range.at(-1)),
-                    new Date()
+                    new Date(),
                   )
                 }}
                 days left</span
