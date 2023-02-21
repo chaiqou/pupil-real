@@ -133,7 +133,7 @@ class BillingoController extends Controller
 
     public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $type, string $fulfillment_date,
     string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
-    string $unit, string $vat, string $billing_comment, bool $should_send_email
+    string $unit, string $vat, string $comment, bool $should_send_email
     ): JsonResponse
     {
         $date = strtotime($fulfillment_date);
@@ -158,7 +158,7 @@ class BillingoController extends Controller
                     'quantity' => $quantity,
                     'unit' => $unit,
                     'vat' => $vat,
-                    'comment' => $billing_comment,
+                    'comment' => $comment,
                 ], ],
             'settings' => [
                 'should_send_email' => $should_send_email,
@@ -175,7 +175,7 @@ class BillingoController extends Controller
         return response()->json($request);
     }
 
-    public static function proformaToInvoice($document, string $api_key, $billing_comment): JsonResponse
+    public static function proformaToInvoice($document, string $api_key, $comment): JsonResponse
     {
         Http::withHeaders([
             'X-API-KEY' => $api_key,
@@ -184,7 +184,7 @@ class BillingoController extends Controller
             'fulfillment_date' => $document['fulfillment_date'],
             'due_date' => $document['due_date'],
             'document_format' => '',
-            'comment' => $billing_comment,
+            'comment' => $comment,
             'settings' => [
                 'should_send_email' => true,
             ],
