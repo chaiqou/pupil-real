@@ -38,7 +38,7 @@ export default {
       default: '100%',
     },
     chartData: {
-      type: Array, // notice that data should be Array of integers/numbers
+      type: Array, // Array of numbers (not string)
       required: true,
     },
     labels: {

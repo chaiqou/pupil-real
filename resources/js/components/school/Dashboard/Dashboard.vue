@@ -106,15 +106,15 @@
     </div>
   </div>
   <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
-    <div
+    <div v-if="this.chartData"
       class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
-      <Pie
-        width="100%"
-        id="RandomChart"
-        :chartData="this.chartData"
-        :labels="this.labels"
-      ></Pie>
+        <Pie
+            width="100%"
+            id="RandomChart"
+            :chartData="this.chartData"
+            :labels="this.pieChartLabels"
+        ></Pie>
     </div>
     <div
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
@@ -131,11 +131,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 import VueApexCharts from 'vue3-apexcharts';
 import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid';
 import {
-  CursorArrowRaysIcon,
   EnvelopeOpenIcon,
   UsersIcon,
 } from '@heroicons/vue/24/outline';
@@ -148,9 +148,6 @@ export default {
     Pie,
     ArrowDownIcon,
     ArrowUpIcon,
-    CursorArrowRaysIcon,
-    EnvelopeOpenIcon,
-    UsersIcon,
     DashboardTransactions,
   },
   data() {
@@ -190,8 +187,8 @@ export default {
         },
       ],
       currentMonthDates: [],
-      labels: ['example1', 'example2'],
-      chartData: [40, 50, 12],
+      pieChartLabels: [],
+      chartData: null,
       series: [
         {
           name: 'Session Duration',
@@ -349,11 +346,27 @@ export default {
       },
     };
   },
+    methods: {
+       handleGetPieChartDataRequest() {
+           console.log('yes');
+           axios.get('/api/school/pie-chart-data').then((res) => {
+               const data = res.data;
+
+             this.chartData = data.map((item) => item.share_count);
+             this.pieChartLabels = data.map((item) => item.title);
+           })
+               .catch((err) => console.log(err));
+       },
+    },
   mounted() {
-    const start = startOfMonth(new Date());
-    const end = endOfMonth(new Date());
-    this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) => date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' }));
-    console.log(this.currentMonthDates);
-  },
+      const start = startOfMonth(new Date());
+      const end = endOfMonth(new Date());
+      this.currentMonthDates = eachDayOfInterval({
+          start,
+          end
+      }).map((date) => date.toLocaleDateString('en-US', {day: '2-digit', month: 'short'}));
+      console.log(this.currentMonthDates);
+      this.handleGetPieChartDataRequest();
+  }
 };
 </script>
