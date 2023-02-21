@@ -52,14 +52,14 @@
 </template>
 
 <script setup>
-import { format } from 'date-fns';
-import { ref, onBeforeMount } from 'vue';
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
-import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
-import MenuCalendarDays from '@/components/Merchant/Menu-management/MenuCalendarDays.vue';
-import RenderDifferentCards from '@/components/Merchant/Menu-management/RenderDifferentCards.vue';
+import { format } from "date-fns";
+import { ref, onBeforeMount } from "vue";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
+import MenuCalendarDays from "@/components/Merchant/Menu-management/MenuCalendarDays.vue";
+import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
@@ -67,7 +67,7 @@ const menuManagementStore = useMenuManagementStore();
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 
-const props = defineProps({
+defineProps({
   months: {
     type: Number,
     required: true,
@@ -80,10 +80,11 @@ const props = defineProps({
 const lunches = ref([]);
 
 const onClickCalendar = (day) => {
-  const formatedDay = format(day, 'yyyy-MM-dd');
+  const formatedDay = format(day, "yyyy-MM-dd");
 
   if (store.marked_days.includes(formatedDay)) {
-    menuManagementStore.toggleMenuManagementCard = !menuManagementStore.toggleMenuManagementCard;
+    menuManagementStore.toggleMenuManagementCard =
+      !menuManagementStore.toggleMenuManagementCard;
     menuManagementStore.selectedDay = day;
   }
 };
@@ -91,7 +92,7 @@ const onClickCalendar = (day) => {
 // Fetch all existing lunch for merchant and mark it on calendar
 
 onBeforeMount(() => {
-  axios.get('/api/school/lunch').then((response) => {
+  axios.get("/api/school/lunch").then((response) => {
     lunches.value = response.data.data;
     response.data.data.map((data) => {
       store.marked_days.push(...data.available_days);

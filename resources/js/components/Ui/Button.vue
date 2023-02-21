@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   text: {
     type: String,
     required: true,
@@ -16,7 +16,7 @@ const props = defineProps({
   type: {
     type: String,
     required: false,
-    default: 'submit',
+    default: "submit",
   },
 });
 </script>

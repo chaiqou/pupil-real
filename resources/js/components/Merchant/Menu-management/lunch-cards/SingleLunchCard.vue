@@ -4,7 +4,7 @@
     <div
       class="my-4 flex w-full flex-wrap justify-between space-y-4 sm:flex-nowrap sm:space-y-0 sm:space-x-12"
     >
-      <template v-for="option in options">
+      <template v-for="option in options" :key="option">
         <button
           type="button"
           @click="onClickShowCard(option)"
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
 const props = defineProps({
   name: {
@@ -43,10 +43,10 @@ const onClickShowCard = (cardName) => {
   store.lunchName = props.name;
   store.lunchId = props.lunchId;
 
-  cardName === 'Fixed'
+  cardName === "Fixed"
     ? (store.toggleFixedCard = true)
     : (store.toggleChoicesCard = true);
 };
 
-const options = ['Fixed', 'Choices'];
+const options = ["Fixed", "Choices"];
 </script>

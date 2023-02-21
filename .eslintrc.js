@@ -10,5 +10,8 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["vue"],
-  rules: {},
+  rules: {
+    "no-undef": "off",
+    "vue/multi-word-component-names": "off",
+  },
 };

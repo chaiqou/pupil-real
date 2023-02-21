@@ -13,14 +13,14 @@
 </template>
 
 <script setup>
-import { format } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import BaseTooltip from '@/components/Ui/BaseTooltip.vue';
-import CalendarDay from '@/components/Merchant/Menu-management/CalendarDay.vue';
+import { format } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import BaseTooltip from "@/components/Ui/BaseTooltip.vue";
+import CalendarDay from "@/components/Merchant/Menu-management/CalendarDay.vue";
 
 const store = useLunchFormStore();
 
-const props = defineProps({
+defineProps({
   day: {
     type: Date,
     required: true,
