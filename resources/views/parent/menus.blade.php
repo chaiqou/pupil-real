@@ -1,4 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-   <h1>Parent Menus</h1>
+  <parent-menu-calendar></parent-menu-calendar>
 @endsection
