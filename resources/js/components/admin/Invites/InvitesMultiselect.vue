@@ -154,11 +154,11 @@
 </template>
 
 <script>
-import { Form as ValidationForm, Field, ErrorMessage } from 'vee-validate';
-import { mapWritableState } from 'pinia';
-import { ExclamationTriangleIcon, CheckIcon } from '@heroicons/vue/24/outline';
-import { useInviteStore } from '@/stores/useInviteStore';
-import InvitesSchoolMultiselect from '@/components/admin/InvitesSchoolMultiselect.vue';
+import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+import { mapWritableState } from "pinia";
+import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
+import { useInviteStore } from "@/stores/useInviteStore";
+import InvitesSchoolMultiselect from "@/components/admin/InvitesSchoolMultiselect.vue";
 
 export default {
   components: {
@@ -172,8 +172,8 @@ export default {
   data() {
     return {
       emails: [],
-      error: '',
-      inputValue: '',
+      error: "",
+      inputValue: "",
       emailsPaste: [],
       isSent: false,
       isSuccessfullySent: null,
@@ -189,21 +189,22 @@ export default {
   },
   computed: {
     buttonTextGenerator() {
-      return this.isSuccessfullySent === 'pending'
-        ? 'Sending...'
-        : this.isSuccessfullySent === 'yes'
-          ? 'Sent'
-          : this.isSuccessfullySent === 'no'
-            ? 'Failed'
-            : 'Send';
+      return this.isSuccessfullySent === "pending"
+        ? "Sending..."
+        : this.isSuccessfullySent === "yes"
+        ? "Sent"
+        : this.isSuccessfullySent === "no"
+        ? "Failed"
+        : "Send";
     },
     errorShowing() {
       if (this.showInviteError) {
-        return 'This email is already has a pending invite';
-      } if (this.showEmailError) {
-        return 'This email is already signed up';
+        return "This email is already has a pending invite";
       }
-      return '';
+      if (this.showEmailError) {
+        return "This email is already signed up";
+      }
+      return "";
     },
     emailData() {
       const formData = new FormData();
@@ -212,29 +213,33 @@ export default {
       }
       return formData;
     },
-    ...mapWritableState(useInviteStore, ['invites', 'chosenSchool']),
+    ...mapWritableState(useInviteStore, ["invites", "chosenSchool"]),
     disabledCalculator() {
       if (!this.chosenSchool.length) {
         return true;
       }
       if (this.isSent) {
         return true;
-      } if (this.emails.length === 0) {
+      }
+      if (this.emails.length === 0) {
         return true;
       }
       const checkIfExists = this.mainEmailsArray.find(
-        (element) => element.existsInInvites === true || element.existsInUsers === true,
+        (element) =>
+          element.existsInInvites === true || element.existsInUsers === true,
       );
       return !!checkIfExists;
     },
     axiosResponseGenerator() {
       const text = this.isSuccessfullySent;
-      if (text === 'pending') {
-        return 'Please wait, we are sending invites.';
-      } if (text === 'yes') {
-        return 'Invites send successfully!';
-      } if (text === 'no') {
-        return 'Could not send invites at the moment, please try again later, or text to support.';
+      if (text === "pending") {
+        return "Please wait, we are sending invites.";
+      }
+      if (text === "yes") {
+        return "Invites send successfully!";
+      }
+      if (text === "no") {
+        return "Could not send invites at the moment, please try again later, or text to support.";
       }
     },
   },
@@ -242,7 +247,7 @@ export default {
     addTag(event) {
       const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-      if (event.code === 'Comma' || event.code === 'Enter') {
+      if (event.code === "Comma" || event.code === "Enter") {
         event.preventDefault();
         const emailTag = event.target.value.trim().toLowerCase();
         if (emailTag.length > 0) {
@@ -251,9 +256,11 @@ export default {
           }
           if (!regexEmail.test(emailTag)) {
             return;
-          } this.emails.push(emailTag[0] + emailTag.slice(1).split(' ')[0]);
+          }
+          this.emails.push(emailTag[0] + emailTag.slice(1).split(" ")[0]);
           this.mainEmailsArray = this.emails.reduce((element, current) => {
-            const includesInviteEmail = this.existedInviteEmails.includes(current);
+            const includesInviteEmail =
+              this.existedInviteEmails.includes(current);
             const includesUserEmail = this.existedUserEmails.includes(current);
             const newValue = {
               email: current,
@@ -262,20 +269,21 @@ export default {
             };
             return [...element, newValue];
           }, []);
-          event.target.value = '';
+          event.target.value = "";
         }
       }
     },
     pasteTags(event) {
       setTimeout(() => {
-        this.emailsPaste = this.inputValue.replaceAll(',', '').split(' ');
+        this.emailsPaste = this.inputValue.replaceAll(",", "").split(" ");
         if (this.mainEmailsArray.includes(this.emailsPaste)) {
           return;
         }
         this.emails = this.emails.concat(this.emailsPaste);
 
         this.mainEmailsArray = this.emails.reduce((element, current) => {
-          const includesInviteEmail = this.existedInviteEmails.includes(current);
+          const includesInviteEmail =
+            this.existedInviteEmails.includes(current);
           const includesUserEmail = this.existedUserEmails.includes(current);
           const newValue = {
             email: current,
@@ -285,7 +293,7 @@ export default {
           return [...element, newValue];
         }, []);
 
-        event.target.value = '';
+        event.target.value = "";
       }, 50);
     },
     removeTag(index) {
@@ -302,46 +310,48 @@ export default {
     },
     resetOnPaste() {
       setTimeout(() => {
-        document.getElementById('form').reset();
+        document.getElementById("form").reset();
       }, 5);
     },
     onSubmit() {
       this.isSent = true;
       this.mainEmailsArray = [];
-      this.isSuccessfullySent = 'pending';
+      this.isSuccessfullySent = "pending";
       axios
         .post(`/api/admin/${this.chosenSchool}/send-invite`, this.emailData, {
           headers: {
-            'Content-Type': 'multipart/form-formData',
+            "Content-Type": "multipart/form-formData",
           },
         })
         .then((res) => {
           this.emails = [];
-          this.isSuccessfullySent = 'yes';
+          this.isSuccessfullySent = "yes";
           this.handleGetInviteEmailsRequest();
           this.handleGetUserEmailsRequest();
           this.invites = res.data.data;
           this.invites.map((item) => {
             item.created_at = item.created_at
               .substring(0, 16)
-              .replaceAll('T', ' ');
+              .replaceAll("T", " ");
             item.updated_at = item.updated_at
               .substring(0, 16)
-              .replaceAll('T', ' ');
+              .replaceAll("T", " ");
           });
         })
         .catch(() => {
-          this.isSuccessfullySent = 'no';
+          this.isSuccessfullySent = "no";
           this.emails = [];
         })
-        .finally(() => setTimeout(() => {
-          this.isSent = false;
-          this.isSuccessfullySent = null;
-        }, 5000));
+        .finally(() =>
+          setTimeout(() => {
+            this.isSent = false;
+            this.isSuccessfullySent = null;
+          }, 5000),
+        );
     },
     handleGetInviteEmailsRequest() {
       axios
-        .get('/api/admin/invite-emails')
+        .get("/api/admin/invite-emails")
         .then((res) => {
           this.existedInviteEmails = res.data;
         })
@@ -349,7 +359,7 @@ export default {
     },
     handleGetUserEmailsRequest() {
       axios
-        .get('/api/admin/user-emails')
+        .get("/api/admin/user-emails")
         .then((res) => {
           this.existedUserEmails = res.data;
         })
@@ -357,7 +367,7 @@ export default {
     },
   },
   created() {
-    window.addEventListener('paste', this.resetOnPaste);
+    window.addEventListener("paste", this.resetOnPaste);
     this.handleGetInviteEmailsRequest();
     this.handleGetUserEmailsRequest();
   },

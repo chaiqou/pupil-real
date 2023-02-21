@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
+import { mapActions } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
 
 export default {
   methods: {
-    ...mapActions(useModalStore, ['showHideNavbar']),
+    ...mapActions(useModalStore, ["showHideNavbar"]),
   },
 };
 </script>

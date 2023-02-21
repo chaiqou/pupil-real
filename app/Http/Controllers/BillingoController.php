@@ -11,6 +11,7 @@ use App\Models\Merchant;
 use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -127,5 +128,31 @@ class BillingoController extends Controller
         TransactionController::updateComment($pending_transaction, $transactionComment->comment);
 
         return new PendingTransactionResource($pending_transaction);
+    }
+
+
+    public static function getBillingDocument(int $documentId, string $api_key): JsonResponse
+    {
+        return Http::withHeaders([
+            'X-API-KEY' => $api_key,
+        ])->get('https://api.billingo.hu/v3/documents/'.$documentId)->json();
+    }
+
+    public static function proformaToInvoice(object $document, string $api_key, $billing_comment)
+    {
+        Http::withHeaders([
+            'X-API-KEY' => $api_key,
+        ])->post('https://api.billingo.hu/v3/documents/'.$document->id.'/create-from-proforma', [
+            'document_type' => 'invoice',
+            'fulfillment_date' => $document->fulfillment_date,
+            'due_date' => $document->due_date,
+            'document_format' => '',
+            'comment' => $billing_comment,
+            'settings' => [
+                'should_send_email' => true,
+            ],
+        ])->json();
+
+        return response()->json('Invoice successfully created');
     }
 }

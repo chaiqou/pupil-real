@@ -133,18 +133,18 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
-import { format } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import { computed, ref } from "vue";
+import { format } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
-import QuestionMarkIcon from '@/components/icons/QuestionMarkIcon.vue';
-import CardIcon from '@/components/icons/CardIcon.vue';
-import BankIcon from '@/components/icons/BankIcon.vue';
-import BaseTooltip from '@/components/Ui/BaseTooltip.vue';
-import OrderFeedbackCard from '@/components/parent/lunch-management/OrderFeedbackCard.vue';
-import SuccessResponseIcon from '@/components/icons/SuccessResponseIcon.vue';
-import ErrorResponseIcon from '@/components/icons/ErrorResponseIcon.vue';
-import Loading from '@/components/icons/Loading.vue';
+import QuestionMarkIcon from "@/components/icons/QuestionMarkIcon.vue";
+import CardIcon from "@/components/icons/CardIcon.vue";
+import BankIcon from "@/components/icons/BankIcon.vue";
+import BaseTooltip from "@/components/Ui/BaseTooltip.vue";
+import OrderFeedbackCard from "@/components/parent/lunch-management/OrderFeedbackCard.vue";
+import SuccessResponseIcon from "@/components/icons/SuccessResponseIcon.vue";
+import ErrorResponseIcon from "@/components/icons/ErrorResponseIcon.vue";
+import Loading from "@/components/icons/Loading.vue";
 
 const props = defineProps({
   periodLength: {
@@ -174,13 +174,17 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const weekdayNames = computed(() => props.weekdays.map((weekday) => weekday.substring(0, 1)).join(' '));
+const weekdayNames = computed(() =>
+  props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" "),
+);
 
 const firstAndLastDay = computed(() => {
-  const formattedDays = props.lunchDays.map((lunchDay) => format(lunchDay, 'yyyy.MM.dd'));
+  const formattedDays = props.lunchDays.map((lunchDay) =>
+    format(lunchDay, "yyyy.MM.dd"),
+  );
 
   const firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
-    ' - ',
+    " - ",
   );
 
   return firstAndLastDays;
@@ -217,7 +221,7 @@ const payWithOnlineHandler = () => {
   loading.value = true;
 
   axios
-    .post('/api/parent/checkout', {
+    .post("/api/parent/checkout", {
       student_id: props.studentId,
       claimables: store.lunch_details[0].claimables,
       lunch_id: store.lunch_details[0].id,

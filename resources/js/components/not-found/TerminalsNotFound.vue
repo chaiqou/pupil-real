@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { CommandLineIcon } from '@heroicons/vue/24/outline';
+import { CommandLineIcon } from "@heroicons/vue/24/outline";
 
 export default {
   components: {

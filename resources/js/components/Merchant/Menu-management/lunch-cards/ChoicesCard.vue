@@ -35,10 +35,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
-import BaseInput from '@/components/Ui/form-components/BaseInput.vue';
-import FIxedAndChoicesLayout from './FIxedAndChoicesLayout.vue';
+import { ref, computed, onMounted } from "vue";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import BaseInput from "@/components/Ui/form-components/BaseInput.vue";
+import FIxedAndChoicesLayout from "./FIxedAndChoicesLayout.vue";
 
 const store = useMenuManagementStore();
 

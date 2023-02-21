@@ -106,15 +106,16 @@
     </div>
   </div>
   <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
-    <div v-if="this.chartData"
+    <div
+      v-if="this.chartData"
       class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
-        <Pie
-            width="100%"
-            id="RandomChart"
-            :chartData="this.chartData"
-            :labels="this.pieChartLabels"
-        ></Pie>
+      <Pie
+        width="100%"
+        id="RandomChart"
+        :chartData="this.chartData"
+        :labels="this.pieChartLabels"
+      ></Pie>
     </div>
     <div
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
@@ -131,16 +132,13 @@
 </template>
 
 <script>
-import axios from 'axios';
-import VueApexCharts from 'vue3-apexcharts';
-import { startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid';
-import {
-  EnvelopeOpenIcon,
-  UsersIcon,
-} from '@heroicons/vue/24/outline';
-import Pie from '@/components/Ui/Charts/Pie.vue';
-import DashboardTransactions from '@/components/school/Dashboard/DashboardTransactions.vue';
+import axios from "axios";
+import VueApexCharts from "vue3-apexcharts";
+import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
+import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
+import Pie from "@/components/Ui/Charts/Pie.vue";
+import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
 
 export default {
   components: {
@@ -155,35 +153,35 @@ export default {
       statsTop: [
         {
           id: 1,
-          name: 'Total Subscribers',
-          stat: '71,897',
+          name: "Total Subscribers",
+          stat: "71,897",
           icon: UsersIcon,
-          change: '122',
-          changeType: 'increase',
+          change: "122",
+          changeType: "increase",
         },
         {
           id: 2,
-          name: 'Avg. Open Rate',
-          stat: '58.16%',
+          name: "Avg. Open Rate",
+          stat: "58.16%",
           icon: EnvelopeOpenIcon,
-          change: '5.4%',
-          changeType: 'increase',
+          change: "5.4%",
+          changeType: "increase",
         },
       ],
       statsBottom: [
         {
-          name: 'Total Subscribers',
-          stat: '71,897',
-          previousStat: '70,946',
-          change: '12%',
-          changeType: 'increase',
+          name: "Total Subscribers",
+          stat: "71,897",
+          previousStat: "70,946",
+          change: "12%",
+          changeType: "increase",
         },
         {
-          name: 'Avg. Open Rate',
-          stat: '58.16%',
-          previousStat: '56.14%',
-          change: '2.02%',
-          changeType: 'increase',
+          name: "Avg. Open Rate",
+          stat: "58.16%",
+          previousStat: "56.14%",
+          change: "2.02%",
+          changeType: "increase",
         },
       ],
       currentMonthDates: [],
@@ -191,16 +189,16 @@ export default {
       chartData: null,
       series: [
         {
-          name: 'Session Duration',
-          type: 'area',
+          name: "Session Duration",
+          type: "area",
           data: [
             45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
           ],
         },
         {
-          name: 'Page Views',
-          type: 'line',
+          name: "Page Views",
+          type: "line",
           data: [
             null,
             null,
@@ -236,8 +234,8 @@ export default {
           ],
         },
         {
-          type: 'line',
-          name: 'Total Visits',
+          type: "line",
+          name: "Total Visits",
           data: [
             87,
             57,
@@ -270,15 +268,15 @@ export default {
         },
       ],
       chartOptions: {
-        colors: ['#0061F2', '#6900C7', '#cac8cb'],
+        colors: ["#0061F2", "#6900C7", "#cac8cb"],
         fill: {
-          type: 'solid',
+          type: "solid",
           opacity: [0.25, 1],
         },
         chart: {
           height: 350,
-          type: 'line',
-          width: '100%',
+          type: "line",
+          width: "100%",
           zoom: {
             enabled: false,
           },
@@ -293,7 +291,7 @@ export default {
         },
         stroke: {
           width: [5, 7, 5],
-          curve: 'smooth',
+          curve: "smooth",
           dashArray: [0, 0, 2],
         },
         title: {
@@ -301,12 +299,9 @@ export default {
         },
         legend: {
           tooltipHoverFormatter(val, opts) {
-            return (
-              `${val
-              } - ${
-                opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
-              }`
-            );
+            return `${val} - ${
+              opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
+            }`;
           },
         },
         markers: {
@@ -341,32 +336,36 @@ export default {
           ],
         },
         grid: {
-          borderColor: '#f1f1f1',
+          borderColor: "#f1f1f1",
         },
       },
     };
   },
-    methods: {
-       handleGetPieChartDataRequest() {
-           console.log('yes');
-           axios.get('/api/school/pie-chart-data').then((res) => {
-               const data = res.data;
+  methods: {
+    handleGetPieChartDataRequest() {
+      console.log("yes");
+      axios
+        .get("/api/school/pie-chart-data")
+        .then((res) => {
+          const data = res.data;
 
-             this.chartData = data.map((item) => item.share_count);
-             this.pieChartLabels = data.map((item) => item.title);
-           })
-               .catch((err) => console.log(err));
-       },
+          this.chartData = data.map((item) => item.share_count);
+          this.pieChartLabels = data.map((item) => item.title);
+        })
+        .catch((err) => console.log(err));
     },
+  },
   mounted() {
-      const start = startOfMonth(new Date());
-      const end = endOfMonth(new Date());
-      this.currentMonthDates = eachDayOfInterval({
-          start,
-          end
-      }).map((date) => date.toLocaleDateString('en-US', {day: '2-digit', month: 'short'}));
-      console.log(this.currentMonthDates);
-      this.handleGetPieChartDataRequest();
-  }
+    const start = startOfMonth(new Date());
+    const end = endOfMonth(new Date());
+    this.currentMonthDates = eachDayOfInterval({
+      start,
+      end,
+    }).map((date) =>
+      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
+    );
+    console.log(this.currentMonthDates);
+    this.handleGetPieChartDataRequest();
+  },
 };
 </script>
