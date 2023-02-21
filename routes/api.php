@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
+use App\Http\Controllers\Parent\Api\ParentMenuController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
 use App\Http\Controllers\Parent\SettingController;
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('lunch-order/{student_id}/', [OrderLunchController::class, 'orderLunch'])->name('parent.order_lunch');
             Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
             Route::post('checkout', [StripeCheckoutController::class, 'checkout'])->name('parent.checkout');
+            Route::get('menu-retrieve/{student_id}', [ParentMenuController::class, 'menuRetrieve'])->name('parent.menu_retrieve');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {

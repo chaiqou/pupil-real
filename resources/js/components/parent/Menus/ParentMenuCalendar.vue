@@ -53,9 +53,23 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import MenuCalendarDays from "@/components/Merchant/Menu-management/MenuCalendarDays.vue";
 import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
+import { onBeforeMount, ref } from "vue";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
 
 const onClickCalendar = () => {};
+
+const props = defineProps({
+  studentId: {
+    type: Number,
+    required: true,
+  },
+});
+
+onBeforeMount(() => {
+  axios
+    .get(`/api/parent/menu-retrieve/${props.studentId}`)
+    .then((response) => console.log(response.data));
+});
 </script>
