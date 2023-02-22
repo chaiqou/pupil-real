@@ -39,7 +39,7 @@
               getLunchesDays(day)
                 ? 'bg-purple-700 text-white hover:bg-purple-600'
                 : '',
-              getMenusDays(day) ? '!bg-red-500' : '',
+              getMenusDays(day) ? ' !bg-white bg-gray-50 !text-gray-900' : '',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
@@ -51,6 +51,10 @@
                 <h2>
                   {{ format(day, "d") }}
                 </h2>
+                <div
+                  v-if="getMenusDays(day)"
+                  class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
+                ></div>
               </div>
             </time>
           </button>
