@@ -39,6 +39,7 @@
               getLunchesDays(day)
                 ? 'bg-purple-700 text-white hover:bg-purple-600'
                 : '',
+              getMenusDays(day) ? '!bg-red-500' : '',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
@@ -78,6 +79,9 @@ const props = defineProps({
   },
 });
 
+const lunches = ref([]);
+const choicesMenu = ref([]);
+
 onBeforeMount(async () => {
   try {
     const response = await axios.get(
@@ -91,9 +95,6 @@ onBeforeMount(async () => {
 });
 
 // Create function which detects days on which user have a lunch
-
-const lunches = ref([]);
-const choicesMenu = ref([]);
 
 const getLunchesDays = (day) => {
   if (!lunches.value) {
@@ -112,5 +113,27 @@ const getLunchesDays = (day) => {
   );
 
   return determineIfLunchDayMatch;
+};
+
+// Create function which detects days on which we have a choices for lunches
+
+const getMenusDays = (day) => {
+  if (!choicesMenu.value) {
+    return [];
+  }
+
+  let menus = [];
+  for (let obj of Object.values(choicesMenu.value)) {
+    let menusObj = JSON.parse(obj.menus);
+    let menusKeys = Object.keys(menusObj);
+    menus.push(...menusKeys);
+  }
+
+  let determineIfManuDayMatch = menus.some(
+    (menuDay) =>
+      format(parseISO(menuDay), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
+  );
+
+  return determineIfManuDayMatch;
 };
 </script>
