@@ -107,13 +107,13 @@
   </div>
   <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      v-if="this.chartData"
+      v-if="this.pieChartData"
       class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
       <Pie
         width="100%"
         id="RandomChart"
-        :chartData="this.chartData"
+        :pieChartData="this.pieChartData"
         :labels="this.pieChartLabels"
       ></Pie>
     </div>
@@ -186,15 +186,12 @@ export default {
       ],
       currentMonthDates: [],
       pieChartLabels: [],
-      chartData: null,
+      pieChartData: null,
       series: [
         {
-          name: "Session Duration",
+          name: "blue",
           type: "area",
-          data: [
-            45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-          ],
+          data: [],
         },
         {
           name: "Page Views",
@@ -343,17 +340,26 @@ export default {
   },
   methods: {
     handleGetPieChartDataRequest() {
-      console.log("yes");
       axios
         .get("/api/school/pie-chart-data")
         .then((res) => {
           const data = res.data;
-
-          this.chartData = data.map((item) => item.share_count);
+          this.pieChartData = data.map((item) => item.share_count);
           this.pieChartLabels = data.map((item) => item.title);
         })
         .catch((err) => console.log(err));
     },
+      handleGetLineChartDataRequest() {
+          axios
+              .get("/api/school/line-chart-data")
+              .then((res) => {
+                  console.log(res.data);
+                  const blue = this.series.find((item) => item.name === '1');
+
+                  blue.data = res.data;
+              })
+              .catch((err) => console.log(err));
+      },
   },
   mounted() {
     const start = startOfMonth(new Date());
@@ -366,6 +372,7 @@ export default {
     );
     console.log(this.currentMonthDates);
     this.handleGetPieChartDataRequest();
+    this.handleGetLineChartDataRequest();
   },
 };
 </script>
