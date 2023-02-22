@@ -32,6 +32,10 @@
               month.name !== getMonthByIndex(day.getMonth())
                 ? 'bg-white text-gray-900'
                 : 'bg-gray-50 text-gray-400',
+              dayIdx === 0 && 'rounded-tl-lg',
+              dayIdx === 6 && 'rounded-tr-lg',
+              dayIdx === month.days.length - 7 && 'rounded-bl-lg',
+              dayIdx === month.days.length - 1 && 'rounded-br-lg',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
