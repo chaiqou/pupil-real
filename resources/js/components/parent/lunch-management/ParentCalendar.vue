@@ -34,8 +34,7 @@
                 markAllDisabledDays(day),
                 markAllPossibleDays(day, month),
                 markAllPossibleDaysForStripe(day, month),
-                month.name !== getMonthByIndex(day.getMonth()) &&
-                month.name === monthFullNames[day.getMonth()]
+                month.name !== getMonthByIndex(day.getMonth())
                   ? 'bg-white text-gray-900'
                   : 'bg-gray-50 text-gray-400',
                 dayIdx === 0 && 'rounded-tl-lg',
@@ -72,15 +71,15 @@
 </template>
 
 <script setup>
-import { format, isToday, parseISO } from 'date-fns';
-import { computed } from 'vue';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
-import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
-import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
+import { format, isToday, parseISO } from "date-fns";
+import { computed } from "vue";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
@@ -95,27 +94,33 @@ const props = defineProps({
   },
 });
 
-const markAllDisabledDays = (day) => store.disabledDaysForLunchOrdering.map((highlight) => (format(highlight, 'yyy-MM-dd') == format(day, 'yyyy-MM-dd')
-  ? 'bg-indigo-400 hover:bg-indigo-500 !text-white'
-  : ''));
+const markAllDisabledDays = (day) =>
+  store.disabledDaysForLunchOrdering.map((highlight) =>
+    format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
+      ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
+      : "",
+  );
 
-const markAllPossibleDays = (day, month) => (claimDays.value.length > 0
-  ? claimDays.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
-          && month.name !== getMonthByIndex(day.getMonth())
-          && month.name === monthFullNames[day.getMonth()]
-    ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
-    : ''))
-  : '');
+const markAllPossibleDays = (day, month) =>
+  claimDays.value.length > 0
+    ? claimDays.value.map((claim) =>
+        format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
+        month.name !== getMonthByIndex(day.getMonth())
+          ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
+          : "",
+      )
+    : "";
 
 const markAllPossibleDaysForStripe = (day, month) => {
   if (dates.value) {
     return dates.value.length > 0
-      ? dates.value.map((claim) => (format(claim, 'yyyy-MM-dd') == format(day, 'yyyy-MM-dd')
-            && month.name !== getMonthByIndex(day.getMonth())
-            && month.name === monthFullNames[day.getMonth()]
-        ? '!bg-indigo-600 text-white hover:!bg-indigo-800'
-        : ''))
-      : '';
+      ? dates.value.map((claim) =>
+          format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
+          month.name !== getMonthByIndex(day.getMonth())
+            ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
+            : "",
+        )
+      : "";
   }
 };
 

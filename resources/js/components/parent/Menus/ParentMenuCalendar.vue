@@ -36,10 +36,22 @@
               dayIdx === 6 && 'rounded-tr-lg',
               dayIdx === month.days.length - 7 && 'rounded-bl-lg',
               dayIdx === month.days.length - 1 && 'rounded-br-lg',
+              getLunchesDays(day)
+                ? 'bg-purple-700 text-white hover:bg-purple-600'
+                : '',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
-            <MenuCalendarDays :day="day" />
+            <time
+              :datetime="format(day, 'yyyy-MM-dd')"
+              class="mx-auto flex h-6 w-6 items-center justify-center rounded-md p-4"
+            >
+              <div class="flex-col">
+                <h2>
+                  {{ format(day, "d") }}
+                </h2>
+              </div>
+            </time>
           </button>
         </div>
       </section>
@@ -50,7 +62,7 @@
 <script setup>
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
-import MenuCalendarDays from "@/components/Merchant/Menu-management/MenuCalendarDays.vue";
+import { format, parseISO } from "date-fns";
 import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
 import { onBeforeMount, ref } from "vue";
 
@@ -66,9 +78,6 @@ const props = defineProps({
   },
 });
 
-const lunches = ref();
-const menus = ref();
-
 onBeforeMount(async () => {
   try {
     const response = await axios.get(
@@ -80,4 +89,28 @@ onBeforeMount(async () => {
     console.log(error);
   }
 });
+
+// Create function which detects days on which user have a lunch
+
+const lunches = ref([]);
+const menus = ref([]);
+
+const getLunchesDays = (day) => {
+  if (!lunches.value) {
+    return [];
+  }
+
+  const dates = [];
+  for (let i = 0; i < lunches.value.length; i++) {
+    const claimsObject = JSON.parse(lunches.value[i].claims);
+    const objectKeys = Object.keys(claimsObject);
+    dates.push(...objectKeys);
+  }
+
+  let determineIfLunchDayMatch = dates.some(
+    (date) => format(parseISO(date), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
+  );
+
+  return determineIfLunchDayMatch;
+};
 </script>
