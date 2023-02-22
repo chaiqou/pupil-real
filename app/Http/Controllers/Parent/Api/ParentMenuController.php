@@ -18,6 +18,19 @@ class ParentMenuController extends Controller
         $periodic_lunch_ids = $periodic_lunch->pluck('id')->toArray();
         $menu = LunchMenu::whereIn('lunch_id', $periodic_lunch_ids)->get();
 
-        return response()->json(['menu' => $menu, 'lunch' => $periodic_lunch]);
+        $choicesMenu = $menu->filter(function ($item) {
+            $menus = json_decode($item->menus, true);
+            foreach ($menus as $menuItems) {
+                foreach ($menuItems as $menuItem) {
+                    if (isset($menuItem['menu_type']) && $menuItem['menu_type'] === 'choices') {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        });
+
+        return response()->json(['choices_menu' =>  $choicesMenu, 'lunch' => $periodic_lunch]);
     }
 }

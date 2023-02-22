@@ -84,7 +84,7 @@ onBeforeMount(async () => {
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
     lunches.value = response.data.lunch;
-    menus.value = response.data.menu;
+    choicesMenu.value = response.data.choices_menu;
   } catch (error) {
     console.log(error);
   }
@@ -93,7 +93,7 @@ onBeforeMount(async () => {
 // Create function which detects days on which user have a lunch
 
 const lunches = ref([]);
-const menus = ref([]);
+const choicesMenu = ref([]);
 
 const getLunchesDays = (day) => {
   if (!lunches.value) {
