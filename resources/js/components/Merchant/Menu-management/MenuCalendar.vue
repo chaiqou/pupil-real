@@ -29,8 +29,7 @@
             @click="onClickCalendar(day)"
             :key="dayIdx"
             :class="[
-              month.name !== getMonthByIndex(day.getMonth()) &&
-              month.name === monthFullNames[day.getMonth()]
+              month.name !== getMonthByIndex(day.getMonth())
                 ? 'bg-white text-gray-900'
                 : 'bg-gray-50 text-gray-400',
               dayIdx === 0 && 'rounded-tl-lg',
@@ -62,7 +61,7 @@ const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
 
 const { monthsDays } = useFindMonthDays(11);
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 
 const lunches = ref([]);
 

@@ -29,14 +29,9 @@
             @click="onClickCalendar(day)"
             :key="dayIdx"
             :class="[
-              month.name !== getMonthByIndex(day.getMonth()) &&
-              month.name === monthFullNames[day.getMonth()]
+              month.name !== getMonthByIndex(day.getMonth())
                 ? 'bg-white text-gray-900'
                 : 'bg-gray-50 text-gray-400',
-              dayIdx === 0 && 'rounded-tl-lg',
-              dayIdx === 6 && 'rounded-tr-lg',
-              dayIdx === month.days.length - 7 && 'rounded-bl-lg',
-              dayIdx === month.days.length - 1 && 'rounded-br-lg',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
@@ -56,7 +51,7 @@ import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDi
 import { onBeforeMount, ref } from "vue";
 
 const { monthsDays } = useFindMonthDays(11);
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 
 const onClickCalendar = () => {};
 
@@ -67,9 +62,18 @@ const props = defineProps({
   },
 });
 
-onBeforeMount(() => {
-  axios
-    .get(`/api/parent/menu-retrieve/${props.studentId}`)
-    .then((response) => console.log(response.data));
+const lunches = ref();
+const menus = ref();
+
+onBeforeMount(async () => {
+  try {
+    const response = await axios.get(
+      `/api/parent/menu-retrieve/${props.studentId}`,
+    );
+    lunches.value = response.data.lunch;
+    menus.value = response.data.menu;
+  } catch (error) {
+    console.log(error);
+  }
 });
 </script>
