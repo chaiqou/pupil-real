@@ -66,7 +66,7 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import { format, parseISO } from "date-fns";
 import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, computed } from "vue";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
@@ -81,13 +81,15 @@ const props = defineProps({
 });
 
 const menus = ref([]);
+const computedMenus = computed(() => menus.value);
 
 onBeforeMount(async () => {
   try {
     const response = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
-    menus.value = response.data.menus;
+    console.log(response.data.data);
+    menus.value = response.data.data;
   } catch (error) {
     console.log(error);
   }
@@ -96,14 +98,15 @@ onBeforeMount(async () => {
 // Create function which detects days on which we have a choices for lunches
 
 const getMenusDays = (day) => {
-  if (!menus.value) {
+  if (!computedMenus.value) {
     return [];
   }
 
   let menuArray = [];
-  for (let obj of Object.values(menus.value)) {
-    let menusObj = JSON.parse(obj.menus);
-    let menusKeys = Object.keys(menusObj);
+
+  for (let obj of Object.values(computedMenus.value)) {
+    let menusObject = JSON.parse(obj.menus);
+    let menusKeys = Object.keys(menusObject);
     menuArray.push(...menusKeys);
   }
 
