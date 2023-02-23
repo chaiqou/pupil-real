@@ -68,7 +68,7 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import { format, parseISO } from "date-fns";
 import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
-import { onBeforeMount, ref, computed } from "vue";
+import { onBeforeMount, ref, computed, watch } from "vue";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
@@ -84,6 +84,8 @@ const props = defineProps({
 
 const menus = ref([]);
 const computedMenus = computed(() => menus.value);
+const availableOrders = ref();
+const availableOrderDays = ref();
 
 onBeforeMount(async () => {
   try {
@@ -91,12 +93,29 @@ onBeforeMount(async () => {
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
     menus.value = response.data.data;
+
+    // Fetch existing all orders and save to availableOrders
+    const availableOrdersResponse = await axios.get(
+      `/api/parent/available-orders/${props.studentId}`,
+    );
+    availableOrders.value = availableOrdersResponse.data.orders;
   } catch (error) {
     console.log(error);
   }
 });
 
-// Create function which detects days on which we have a choices for lunches
+watch(availableOrders, () => {
+  availableOrders.value.forEach((order) => {
+    // claims is a JSON we need parse it to get it as a javascript object
+    const parsedClaims = JSON.parse(order.claims);
+    const claimsKeys = Object.keys(parsedClaims);
+
+    // loop and save all order days in one variable
+    claimsKeys.forEach((claim) => {
+      availableOrderDays.value = claim;
+    });
+  });
+});
 
 const loopOverMenusArray = computed(() => {
   if (!computedMenus.value) {
@@ -110,6 +129,8 @@ const loopOverMenusArray = computed(() => {
 
   return menusArray;
 });
+
+// determine which type of menu we have based on menu type and style it differently returns boolean
 
 const determineIfMenuExists = (day, menuType) => {
   return loopOverMenusArray.value.some((menu) =>
