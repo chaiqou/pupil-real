@@ -105,17 +105,16 @@
       ></dashboard-transactions>
     </div>
   </div>
-  <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
+  <div v-if="this.pieChartData" class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      v-if="this.pieChartData"
       class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
-      <Pie
-        width="100%"
-        id="RandomChart"
-        :pieChartData="this.pieChartData"
-        :labels="this.pieChartLabels"
-      ></Pie>
+          <Pie
+              width="100%"
+              id="RandomChart"
+              :pieChartData="this.pieChartData"
+              :labels="this.pieChartLabels"
+          ></Pie>
     </div>
     <div
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
@@ -189,80 +188,48 @@ export default {
       pieChartData: null,
       series: [
         {
-          name: "blue",
+          name: "Blue",
           type: "area",
           data: [],
         },
         {
-          name: "Page Views",
+          name: "Purple",
           type: "line",
-          data: [
-            null,
-            null,
-            null,
-            7,
-            4,
-            5,
-            6,
-            29,
-            37,
-            36,
-            51,
-            32,
-            35,
-            20,
-            21,
-            22,
-            31,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ],
+          data: [],
         },
-        {
-          type: "line",
-          name: "Total Visits",
-          data: [
-            87,
-            57,
-            74,
-            99,
-            75,
-            38,
-            62,
-            47,
-            82,
-            56,
-            45,
-            47,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ],
-        },
+        // {
+        //   type: "line",
+        //   name: "Total Visits",
+        //   data: [
+        //     87,
+        //     57,
+        //     74,
+        //     99,
+        //     75,
+        //     38,
+        //     62,
+        //     47,
+        //     82,
+        //     56,
+        //     45,
+        //     47,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //   ],
+        // },
       ],
       chartOptions: {
         colors: ["#0061F2", "#6900C7", "#cac8cb"],
@@ -287,7 +254,7 @@ export default {
           enabled: false,
         },
         stroke: {
-          width: [5, 7, 5],
+          width: [3, 3, 2],
           curve: "smooth",
           dashArray: [0, 0, 2],
         },
@@ -354,9 +321,10 @@ export default {
               .get("/api/school/line-chart-data")
               .then((res) => {
                   console.log(res.data);
-                  const blue = this.series.find((item) => item.name === '1');
-
-                  blue.data = res.data;
+                  const blue = this.series.find((item) => item.name === 'Blue');
+                  const purple = this.series.find((item) => item.name === 'Purple');
+                  blue.data = res.data.previous;
+                  purple.data = res.data.current;
               })
               .catch((err) => console.log(err));
       },
