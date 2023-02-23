@@ -102,15 +102,13 @@ const getMenusDays = (day) => {
     return [];
   }
 
-  let menuArray = [];
+  let menuDates = [];
 
-  for (let obj of Object.values(computedMenus.value)) {
-    let menusObject = JSON.parse(obj.menus);
-    let menusKeys = Object.keys(menusObject);
-    menuArray.push(...menusKeys);
+  for (let obj of computedMenus.value) {
+    menuDates.push(obj.menus[0].date);
   }
 
-  let determineIfManuDayMatch = menuArray.some(
+  let determineIfManuDayMatch = menuDates.some(
     (menuDay) =>
       format(parseISO(menuDay), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
   );
