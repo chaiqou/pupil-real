@@ -129,14 +129,14 @@ const claimDays = computed(() => {
     .filter((date) => new Date(date) >= new Date(store.first_day))
     .slice(0, store.period_length);
 
-  store.claim_days = days;
   return days;
 });
 
 let dates = computed(() => {
-  if (props.stripeDays) {
-    const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
-    return getDays.map((day) => parseISO(day));
+  if (!props.stripeDays) {
+    return [];
   }
+  const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
+  return getDays.map((day) => parseISO(day));
 });
 </script>
