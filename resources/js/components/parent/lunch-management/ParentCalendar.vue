@@ -72,7 +72,7 @@
 
 <script setup>
 import { format, isToday, parseISO } from "date-fns";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
@@ -130,6 +130,10 @@ const claimDays = computed(() => {
     .slice(0, store.period_length);
 
   return days;
+});
+
+watch(claimDays, (days) => {
+  store.claim_days = days;
 });
 
 let dates = computed(() => {
