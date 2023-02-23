@@ -51,6 +51,8 @@ class LineAreaChartController extends Controller
             'current' => $transactionsByDayCurrent
         ];
 
+
         return response()->json($transactionsByMonth);
+
     }
 }

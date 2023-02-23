@@ -197,39 +197,11 @@ export default {
           type: "line",
           data: [],
         },
-        // {
-        //   type: "line",
-        //   name: "Total Visits",
-        //   data: [
-        //     87,
-        //     57,
-        //     74,
-        //     99,
-        //     75,
-        //     38,
-        //     62,
-        //     47,
-        //     82,
-        //     56,
-        //     45,
-        //     47,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //   ],
-        // },
+        {
+          name: "Grey",
+          type: "line",
+          data: [1,2]
+        },
       ],
       chartOptions: {
         colors: ["#0061F2", "#6900C7", "#cac8cb"],
@@ -323,8 +295,11 @@ export default {
                   console.log(res.data);
                   const blue = this.series.find((item) => item.name === 'Blue');
                   const purple = this.series.find((item) => item.name === 'Purple');
+                   const grey = this.series.find((item) => item.name === 'Grey');
                   blue.data = res.data.previous;
                   purple.data = res.data.current;
+                  grey.data = res.data.prediction;
+                  console.log(grey.data, '123');
               })
               .catch((err) => console.log(err));
       },
