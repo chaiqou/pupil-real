@@ -36,7 +36,9 @@
               dayIdx === 6 && 'rounded-tr-lg',
               dayIdx === month.days.length - 7 && 'rounded-bl-lg',
               dayIdx === month.days.length - 1 && 'rounded-br-lg',
-              getMenusDays(day) ? 'bg-gray-50 bg-white text-gray-900' : '',
+              determineIfMenuExists(day, 'fixed')
+                ? 'bg-purple-700 text-white hover:bg-purple-600'
+                : '',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
@@ -49,7 +51,7 @@
                   {{ format(day, "d") }}
                 </h2>
                 <div
-                  v-if="getMenusDays(day)"
+                  v-if="determineIfMenuExists(day, 'choices')"
                   class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
                 ></div>
               </div>
@@ -88,7 +90,6 @@ onBeforeMount(async () => {
     const response = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
-    console.log(response.data.data);
     menus.value = response.data.data;
   } catch (error) {
     console.log(error);
@@ -97,22 +98,25 @@ onBeforeMount(async () => {
 
 // Create function which detects days on which we have a choices for lunches
 
-const getMenusDays = (day) => {
+const loopOverMenusArray = computed(() => {
   if (!computedMenus.value) {
     return [];
   }
 
-  let menuDates = [];
-
+  let menusArray = [];
   for (let obj of computedMenus.value) {
-    menuDates.push(obj.menus[0].date);
+    menusArray.push(obj.menus[0]);
   }
 
-  let determineIfManuDayMatch = menuDates.some(
-    (menuDay) =>
-      format(parseISO(menuDay), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
-  );
+  return menusArray;
+});
 
-  return determineIfManuDayMatch;
+const determineIfMenuExists = (day, menuType) => {
+  return loopOverMenusArray.value.some((menu) =>
+    format(parseISO(menu.date), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
+    menu.menu_type === menuType
+      ? true
+      : false,
+  );
 };
 </script>
