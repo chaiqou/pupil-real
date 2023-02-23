@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { useMenuManagementStore } from '@/stores/useMenuManagementStore';
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
 const store = useMenuManagementStore();
 
@@ -51,7 +51,7 @@ const onClickDiscard = () => {
 
 const onClickSaveMenu = () => {
   axios
-    .post('/api/merchant/create-menu', {
+    .post("/api/merchant/create-menu", {
       menu_type: props.menuType,
       menus: props.menus,
       day: props.day,

@@ -171,8 +171,8 @@
 </template>
 
 <script>
-import { mapWritableState, mapActions } from 'pinia';
-import { OnClickOutside } from '@vueuse/components';
+import { mapWritableState, mapActions } from "pinia";
+import { OnClickOutside } from "@vueuse/components";
 import {
   HomeIcon,
   ListBulletIcon,
@@ -183,8 +183,8 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-} from '@heroicons/vue/24/outline';
-import { useModalStore } from '@/stores/useModalStore';
+} from "@heroicons/vue/24/outline";
+import { useModalStore } from "@/stores/useModalStore";
 
 export default {
   components: {
@@ -201,8 +201,8 @@ export default {
   },
   computed: {
     ...mapWritableState(useModalStore, [
-      'isNavbarVisible',
-      'isMobileSwitchAccountVisible',
+      "isNavbarVisible",
+      "isMobileSwitchAccountVisible",
     ]),
   },
   props: {
@@ -225,19 +225,20 @@ export default {
   },
   methods: {
     ...mapActions(useModalStore, [
-      'showHideNavbar',
-      'showHideMobileSwitchAccount',
+      "showHideNavbar",
+      "showHideMobileSwitchAccount",
     ]),
 
     findCurrent() {
       let cleanedCurrent = this.current;
-      cleanedCurrent = cleanedCurrent.split('.').splice(1).join('.');
+      cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
       const navigation = this.navigation.find(
-        (col) => col.name.toLowerCase().replaceAll(' ', '.').replaceAll('-', '.')
-          === cleanedCurrent
+        (col) =>
+          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
+          cleanedCurrent
             .toLowerCase()
-            .replaceAll(' ', '.')
-            .replaceAll('-', '.'),
+            .replaceAll(" ", ".")
+            .replaceAll("-", "."),
       );
       navigation.current = true;
 

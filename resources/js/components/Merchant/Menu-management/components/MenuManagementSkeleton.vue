@@ -31,5 +31,5 @@
 </template>
 
 <script setup>
-import AnimatedPlaceholder from '@/components/Ui/AnimatedPlaceholder.vue';
+import AnimatedPlaceholder from "@/components/Ui/AnimatedPlaceholder.vue";
 </script>

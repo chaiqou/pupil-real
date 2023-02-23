@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import Multiselect from '@vueform/multiselect';
-import { mapWritableState } from 'pinia';
-import { useInviteStore } from '@/stores/useInviteStore';
+import Multiselect from "@vueform/multiselect";
+import { mapWritableState } from "pinia";
+import { useInviteStore } from "@/stores/useInviteStore";
 
 export default {
   components: {
@@ -44,12 +44,12 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useInviteStore, ['schools', 'chosenSchool']),
+    ...mapWritableState(useInviteStore, ["schools", "chosenSchool"]),
   },
   methods: {
     handleGetSchoolsRequest() {
       axios
-        .get('/api/admin/schools-for-invites')
+        .get("/api/admin/schools-for-invites")
         .then((res) => {
           this.schools = res.data;
         })

@@ -96,10 +96,10 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
 
 export default {
   components: {
@@ -117,10 +117,10 @@ export default {
     },
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isTwoFactorVisible']),
+    ...mapWritableState(useModalStore, ["isTwoFactorVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideTwoFactor']),
+    ...mapActions(useModalStore, ["showHideTwoFactor"]),
   },
 };
 </script>
