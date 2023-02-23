@@ -85,7 +85,7 @@ const props = defineProps({
 const menus = ref([]);
 const computedMenus = computed(() => menus.value);
 const availableOrders = ref();
-const availableOrderDays = ref();
+const availableOrderDays = ref([]);
 
 onBeforeMount(async () => {
   try {
@@ -110,10 +110,9 @@ watch(availableOrders, () => {
     const parsedClaims = JSON.parse(order.claims);
     const claimsKeys = Object.keys(parsedClaims);
 
-    // loop and save all order days in one variable
-    claimsKeys.forEach((claim) => {
-      availableOrderDays.value = claim;
-    });
+    claimsKeys.map((claim) =>
+      availableOrderDays.value.push(format(parseISO(claim), "yyyy-MM-dd")),
+    );
   });
 });
 
@@ -133,9 +132,15 @@ const loopOverMenusArray = computed(() => {
 // determine which type of menu we have based on menu type and style it differently returns boolean
 
 const determineIfMenuExists = (day, menuType) => {
+  if (!availableOrderDays.value) {
+    return [];
+  }
+
   return loopOverMenusArray.value.some((menu) =>
     format(parseISO(menu.date), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
-    menu.menu_type === menuType
+    menu.menu_type === menuType &&
+    // MARK MENU ONLY IF MATCHES ORDER DAY
+    availableOrderDays.value.includes(format(day, "yyyy-MM-dd"))
       ? true
       : false,
   );
