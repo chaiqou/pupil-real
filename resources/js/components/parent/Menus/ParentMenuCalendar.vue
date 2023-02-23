@@ -36,10 +36,7 @@
               dayIdx === 6 && 'rounded-tr-lg',
               dayIdx === month.days.length - 7 && 'rounded-bl-lg',
               dayIdx === month.days.length - 1 && 'rounded-br-lg',
-              getLunchesDays(day)
-                ? 'bg-purple-700 text-white hover:bg-purple-600'
-                : '',
-              getMenusDays(day) ? ' !bg-white bg-gray-50 !text-gray-900' : '',
+              getMenusDays(day) ? 'bg-gray-50 bg-white text-gray-900' : '',
               'py-1.5 hover:bg-gray-100',
             ]"
           >
@@ -83,7 +80,6 @@ const props = defineProps({
   },
 });
 
-const lunches = ref([]);
 const menus = ref([]);
 
 onBeforeMount(async () => {
@@ -91,33 +87,11 @@ onBeforeMount(async () => {
     const response = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
-    lunches.value = response.data.lunches;
     menus.value = response.data.menus;
   } catch (error) {
     console.log(error);
   }
 });
-
-// Create function which detects days on which user have a lunch
-
-const getLunchesDays = (day) => {
-  if (!lunches.value) {
-    return [];
-  }
-
-  const dates = [];
-  for (let i = 0; i < lunches.value.length; i++) {
-    const claimsObject = JSON.parse(lunches.value[i].claims);
-    const objectKeys = Object.keys(claimsObject);
-    dates.push(...objectKeys);
-  }
-
-  let determineIfLunchDayMatch = dates.some(
-    (date) => format(parseISO(date), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
-  );
-
-  return determineIfLunchDayMatch;
-};
 
 // Create function which detects days on which we have a choices for lunches
 
