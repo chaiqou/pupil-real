@@ -84,15 +84,15 @@ const props = defineProps({
 });
 
 const lunches = ref([]);
-const choicesMenu = ref([]);
+const menus = ref([]);
 
 onBeforeMount(async () => {
   try {
     const response = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
-    lunches.value = response.data.lunch;
-    choicesMenu.value = response.data.choices_menu;
+    lunches.value = response.data.lunches;
+    menus.value = response.data.menus;
   } catch (error) {
     console.log(error);
   }
@@ -122,18 +122,18 @@ const getLunchesDays = (day) => {
 // Create function which detects days on which we have a choices for lunches
 
 const getMenusDays = (day) => {
-  if (!choicesMenu.value) {
+  if (!menus.value) {
     return [];
   }
 
-  let menus = [];
-  for (let obj of Object.values(choicesMenu.value)) {
+  let menuArray = [];
+  for (let obj of Object.values(menus.value)) {
     let menusObj = JSON.parse(obj.menus);
     let menusKeys = Object.keys(menusObj);
-    menus.push(...menusKeys);
+    menuArray.push(...menusKeys);
   }
 
-  let determineIfManuDayMatch = menus.some(
+  let determineIfManuDayMatch = menuArray.some(
     (menuDay) =>
       format(parseISO(menuDay), "yyyy-MM-dd") == format(day, "yyyy-MM-dd"),
   );
