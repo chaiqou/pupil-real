@@ -36,19 +36,19 @@
 </template>
 
 <script>
-import { mapWritableState, mapActions } from 'pinia';
-import SchoolCreateModal from '@/components/admin/Schools/SchoolCreateModal.vue';
-import { useModalStore } from '@/stores/useModalStore';
+import { mapWritableState, mapActions } from "pinia";
+import SchoolCreateModal from "@/components/admin/Schools/SchoolCreateModal.vue";
+import { useModalStore } from "@/stores/useModalStore";
 
 export default {
   components: {
     SchoolCreateModal,
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isCreateSchoolVisible']),
+    ...mapWritableState(useModalStore, ["isCreateSchoolVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideSchoolCreate']),
+    ...mapActions(useModalStore, ["showHideSchoolCreate"]),
   },
 };
 </script>

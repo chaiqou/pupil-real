@@ -130,7 +130,10 @@ export default {
         .get(`/api/parent/${this.studentId}/week-spending`)
         .then((res) => {
           this.weekSpending = res.data.data;
-          this.weekSumAmount = this.weekSpending.reduce((a, b) => a + b.amount, 0);
+          this.weekSumAmount = this.weekSpending.reduce(
+            (a, b) => a + b.amount,
+            0,
+          );
         })
         .finally(() => (this.isWeekSpendingLoaded = true));
     },
@@ -140,7 +143,10 @@ export default {
         .get(`/api/parent/${this.studentId}/month-spending`)
         .then((res) => {
           this.monthSpending = res.data.data;
-          this.monthSumAmount = this.monthSpending.reduce((a, b) => a + b.amount, 0);
+          this.monthSumAmount = this.monthSpending.reduce(
+            (a, b) => a + b.amount,
+            0,
+          );
         })
         .finally(() => (this.isMonthSpendingLoaded = true));
     },

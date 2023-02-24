@@ -12,20 +12,5 @@ export default function useFindMonthDays() {
     return month;
   };
 
-  const monthFullNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  return { getMonthByIndex, monthFullNames };
+  return { getMonthByIndex };
 }

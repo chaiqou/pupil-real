@@ -73,10 +73,10 @@
               :key="holds"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="flex" v-for="hold in holds">
+              <div class="flex" v-for="(hold, holdIdx) in holds" :key="holdIdx">
                 <br />
                 {{ format(parseISO(hold), "yyyy MMM dd") }}
-              </template>
+              </div>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -86,10 +86,14 @@
               :key="extras"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="mt-4 flex" v-for="extra in extras">
+              <div
+                class="mt-4 flex"
+                v-for="(extra, extraIdx) in extras"
+                :key="extraIdx"
+              >
                 <br />
                 {{ format(parseISO(extra), "yyyy MMM dd") }}
-              </template>
+              </div>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -158,20 +162,16 @@
   </div>
 </template>
 <script setup>
-import {
-  onMounted, ref, watch, computed,
-} from 'vue';
-import {
-  format, parseISO, addHours, isAfter, isEqual,
-} from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import Toast from '@/components/Ui/Toast.vue';
-import OrderDetailsCard from './OrderDetailsCard.vue';
+import { onMounted, ref, watch, computed } from "vue";
+import { format, parseISO, addHours, isAfter } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import Toast from "@/components/Ui/Toast.vue";
+import OrderDetailsCard from "./OrderDetailsCard.vue";
 
 const store = useLunchFormStore();
 
 const availableDays = ref([]);
-const lunchTitle = ref('');
+const lunchTitle = ref("");
 const bufferTime = ref();
 const childrenToast = ref();
 const availableOrders = ref([]);
@@ -185,7 +185,7 @@ const props = defineProps({
 });
 
 const startOrderingLunch = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
   hideTableInformation.value = false;
 };
 
@@ -200,19 +200,23 @@ watch(availableOrders, () => {
     // Assign all dates in one state
     claimsKeys.forEach((claim) => {
       store.disabledDaysForLunchOrdering.push(parseISO(claim)),
-      disabledDaysForLunchOrder.value.push(parseISO(claim));
+        disabledDaysForLunchOrder.value.push(parseISO(claim));
     });
   });
 });
 
-const disableIfDatesLessThenPeriodLength = computed(() => (+store.availableDatesForStartOrdering.length < +store.period_length));
+const disableIfDatesLessThenPeriodLength = computed(
+  () => +store.availableDatesForStartOrdering.length < +store.period_length,
+);
 
 watch(bufferTime, (newValue) => {
   const currentDate = addHours(new Date(), newValue); // add buffer time in hours
 
   // Removela all days which is before currentDate
 
-  let firstAvailableLunchDate = availableDays.value.filter((day) => isAfter(parseISO(day), currentDate));
+  let firstAvailableLunchDate = availableDays.value.filter((day) =>
+    isAfter(parseISO(day), currentDate),
+  );
 
   // If this date does not available apply first one in array
 
@@ -222,18 +226,20 @@ watch(bufferTime, (newValue) => {
 
   // Format from ISO string to 2022-13-13 format
 
-  const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) => format(date, 'yyyy-MM-dd'));
+  const formattedDisabledDays = disabledDaysForLunchOrder.value.map((date) =>
+    format(date, "yyyy-MM-dd"),
+  );
 
   // Remove all days from availableDays which includes inside formattedDisabledDays array
   // Also remove days which is before firstAvailableLunchDate
   // And format back to ISO string
 
   const removeDisabledDays = availableDays.value
-    .filter((x) => (
-      (!formattedDisabledDays.includes(x)
-          && isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0])))
-        || isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0]))
-    ))
+    .filter(
+      (x) =>
+        !formattedDisabledDays.includes(x) &&
+        isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0])),
+    )
     .map((day) => parseISO(day));
 
   // Assign first correct day
@@ -253,7 +259,7 @@ onMounted(async () => {
 
     // Fetch concrette order based lunch id
     const lunchDetailsResponse = await axios.get(
-      `/api/school/lunch/${localStorage.getItem('lunchId')}`,
+      `/api/school/lunch/${localStorage.getItem("lunchId")}`,
     );
     availableDays.value = lunchDetailsResponse.data.data.available_days.sort(
       (a, b) => parseISO(a) - parseISO(b),

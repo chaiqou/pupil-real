@@ -32,8 +32,7 @@
               :key="day.date"
               type="button"
               :class="[
-                month.name !== getMonthByIndex(day.getMonth()) &&
-                month.name === monthFullNames[day.getMonth()]
+                month.name !== getMonthByIndex(day.getMonth())
                   ? 'bg-white text-gray-900'
                   : 'bg-gray-50 text-gray-400',
                 dayIdx === 0 && 'rounded-tl-lg',
@@ -47,8 +46,7 @@
                 :datetime="format(day, 'yyyy-MM-dd')"
                 :class="[
                   isToday(day) && [
-                    getMonthByIndex(day.getMonth()) &&
-                    month.name === monthFullNames[day.getMonth()]
+                    getMonthByIndex(day.getMonth())
                       ? 'aspect-auto border-b-2 border-indigo-600  bg-indigo-600 font-semibold text-white'
                       : 'aspect-auto border-b-2   border-indigo-600 bg-indigo-400 text-gray-50',
                   ],
@@ -78,41 +76,40 @@
 </template>
 
 <script setup>
-import { format, isToday } from 'date-fns';
-import { onBeforeMount } from 'vue';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
-import useFindMonthDays from '@/composables/calendar/useFindMonthDays';
-import useFindMonthByIndex from '@/composables/calendar/useFindMonthByIndex';
-import useCheckIfDaysMatches from '@/composables/calendar/useCheckIfDaysMatches';
+import { format, isToday } from "date-fns";
+import { onBeforeMount } from "vue";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
+import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
+import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
+import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
 
-const props = defineProps({
+defineProps({
   months: {
     type: Number,
     required: true,
   },
   classes: {
-    type: Array,
+    type: [Array, Function],
     required: false,
-    default: '',
   },
 });
 
 onBeforeMount(() => {
   const targetPath = `/school/lunch-management/${localStorage.getItem(
-    'lunchId',
+    "lunchId",
   )}/edit`;
   const currentPath = window.location.pathname;
 
   if (currentPath == targetPath) {
-    axios.get('/api/school/lunch').then((response) => {
+    axios.get("/api/school/lunch").then((response) => {
       response.data.data.map((data) => {
-        if (localStorage.getItem('lunchId') == data.id) {
+        if (localStorage.getItem("lunchId") == data.id) {
           store.marked_days.push(...data.available_days);
         }
       });

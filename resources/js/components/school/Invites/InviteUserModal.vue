@@ -66,11 +66,11 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from '@headlessui/vue';
-import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { mapActions, mapWritableState } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
-import InvitesMultiselect from '@/components/school/Invites/InvitesMultiselect.vue';
+} from "@headlessui/vue";
+import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { mapActions, mapWritableState } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
+import InvitesMultiselect from "@/components/school/Invites/InvitesMultiselect.vue";
 
 export default {
   components: {
@@ -84,10 +84,10 @@ export default {
     InvitesMultiselect,
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isInviteUserVisible']),
+    ...mapWritableState(useModalStore, ["isInviteUserVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideInviteUser']),
+    ...mapActions(useModalStore, ["showHideInviteUser"]),
   },
 };
 </script>

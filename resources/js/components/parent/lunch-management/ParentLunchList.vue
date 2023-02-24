@@ -82,9 +82,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { differenceInCalendarDays, format, parseISO } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import { onMounted } from "vue";
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
@@ -95,13 +95,13 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  axios.get('/api/school/lunch').then((response) => {
+  axios.get("/api/school/lunch").then((response) => {
     store.lunches.push(...response.data.data);
   });
 });
 
 const currentLunchEditId = (lunchId) => {
-  localStorage.setItem('lunchId', lunchId);
+  localStorage.setItem("lunchId", lunchId);
   window.location.href = `/parent/lunch-details/${props.studentId}`;
 };
 </script>

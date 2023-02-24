@@ -32,9 +32,9 @@
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from 'vee-validate';
-import { format, eachDayOfInterval } from 'date-fns';
-import { useLunchFormStore } from '@/stores/useLunchFormStore';
+import { Field, ErrorMessage } from "vee-validate";
+import { format, eachDayOfInterval } from "date-fns";
+import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
@@ -46,17 +46,17 @@ const toggleWeekdays = (day) => {
 
   eachDay.map((date) => {
     if (
-      date.getDay() === day.index
-      && store.weekdays.includes(day.fullName)
-      && store.holds.length === 0
+      date.getDay() === day.index &&
+      store.weekdays.includes(day.fullName) &&
+      store.holds.length === 0
     ) {
-      store.marked_days.push(format(new Date(date), 'yyyy-MM-dd'));
+      store.marked_days.push(format(new Date(date), "yyyy-MM-dd"));
     } else if (
-      date.getDay() === day.index
-      && !store.weekdays.includes(day.fullName)
+      date.getDay() === day.index &&
+      !store.weekdays.includes(day.fullName)
     ) {
       const filteredDays = store.marked_days.filter(
-        (item) => item !== format(new Date(date), 'yyyy-MM-dd'),
+        (item) => item !== format(new Date(date), "yyyy-MM-dd"),
       );
       store.marked_days = [...filteredDays, ...store.add_marked_extras];
     }
@@ -64,12 +64,12 @@ const toggleWeekdays = (day) => {
 };
 
 const dayOptions = [
-  { name: 'M', fullName: 'Monday', index: 1 },
-  { name: 'T', fullName: 'Tuesday', index: 2 },
-  { name: 'W', fullName: 'Wednesday', index: 3 },
-  { name: 'T', fullName: 'Thursday', index: 4 },
-  { name: 'F', fullName: 'Friday', index: 5 },
-  { name: 'S', fullName: 'Saturday', index: 6 },
-  { name: 'S', fullName: 'Sunday', index: 0 },
+  { name: "M", fullName: "Monday", index: 1 },
+  { name: "T", fullName: "Tuesday", index: 2 },
+  { name: "W", fullName: "Wednesday", index: 3 },
+  { name: "T", fullName: "Thursday", index: 4 },
+  { name: "F", fullName: "Friday", index: 5 },
+  { name: "S", fullName: "Saturday", index: 6 },
+  { name: "S", fullName: "Sunday", index: 0 },
 ];
 </script>

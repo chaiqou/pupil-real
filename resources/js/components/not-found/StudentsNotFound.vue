@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { UsersIcon } from '@heroicons/vue/24/outline';
+import { UsersIcon } from "@heroicons/vue/24/outline";
 
 export default {
   components: {

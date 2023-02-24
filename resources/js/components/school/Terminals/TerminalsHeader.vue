@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import { mapWritableState, mapActions } from 'pinia';
-import { useModalStore } from '@/stores/useModalStore';
-import TerminalCreateModal from '@/components/school/Terminals/TerminalCreateModal.vue';
-import QrCodeModal from '@/components/school/Terminals/QrCodeModal.vue';
+import { mapWritableState, mapActions } from "pinia";
+import { useModalStore } from "@/stores/useModalStore";
+import TerminalCreateModal from "@/components/school/Terminals/TerminalCreateModal.vue";
+import QrCodeModal from "@/components/school/Terminals/QrCodeModal.vue";
 
 export default {
   components: {
@@ -48,10 +48,10 @@ export default {
     TerminalCreateModal,
   },
   computed: {
-    ...mapWritableState(useModalStore, ['isTerminalCreateVisible']),
+    ...mapWritableState(useModalStore, ["isTerminalCreateVisible"]),
   },
   methods: {
-    ...mapActions(useModalStore, ['showHideTerminalCreate']),
+    ...mapActions(useModalStore, ["showHideTerminalCreate"]),
   },
 };
 </script>
