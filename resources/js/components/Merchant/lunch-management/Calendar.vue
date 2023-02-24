@@ -32,8 +32,7 @@
               :key="day.date"
               type="button"
               :class="[
-                month.name !== getMonthByIndex(day.getMonth()) &&
-                month.name === monthFullNames[day.getMonth()]
+                month.name !== getMonthByIndex(day.getMonth())
                   ? 'bg-white text-gray-900'
                   : 'bg-gray-50 text-gray-400',
                 dayIdx === 0 && 'rounded-tl-lg',
@@ -47,8 +46,7 @@
                 :datetime="format(day, 'yyyy-MM-dd')"
                 :class="[
                   isToday(day) && [
-                    getMonthByIndex(day.getMonth()) &&
-                    month.name === monthFullNames[day.getMonth()]
+                    getMonthByIndex(day.getMonth())
                       ? 'aspect-auto border-b-2 border-indigo-600  bg-indigo-600 font-semibold text-white'
                       : 'aspect-auto border-b-2   border-indigo-600 bg-indigo-400 text-gray-50',
                   ],
@@ -86,7 +84,7 @@ import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
