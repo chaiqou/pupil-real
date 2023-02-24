@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('lunch_menus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('lunch_id')->constrained();
+            $table->string('date');
             $table->json('menus');
             $table->timestamps();
         });
