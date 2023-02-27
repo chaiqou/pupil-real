@@ -12,6 +12,8 @@
         type="radio"
         :name="propName"
         :value="propValue"
+        :id="propValue"
+        v-model="radioValue"
         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
       />
       <span class="ml-3 font-medium">{{ propName }}</span>
@@ -20,6 +22,10 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
+const radioValue = ref("");
+
 defineProps({
   propName: {
     type: String,
