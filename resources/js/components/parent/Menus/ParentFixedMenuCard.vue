@@ -1,8 +1,6 @@
 <template>
   <ParentCardsLayout>
-    <BaseRadio />
-    <BaseRadio />
-    <BaseRadio />
+    <BaseRadio name="Kebab" lunch-value="Kebab" lunch-name="Kebab" />
   </ParentCardsLayout>
 </template>
 
