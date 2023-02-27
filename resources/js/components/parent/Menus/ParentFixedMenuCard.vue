@@ -1,6 +1,6 @@
 <template>
   <ParentCardsLayout>
-    <BaseRadio name="Kebab" lunch-value="Kebab" lunch-name="Kebab" />
+    <BaseRadio prop-name="Egg" prop-value="Egg" />
   </ParentCardsLayout>
 </template>
 
