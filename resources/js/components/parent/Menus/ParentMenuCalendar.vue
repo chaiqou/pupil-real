@@ -1,5 +1,4 @@
 <template>
-  <RenderDifferentCards />
   <div class="w-full">
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -67,8 +66,7 @@
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import { format, parseISO } from "date-fns";
-import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
-import { onBeforeMount, ref, computed, watch } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
@@ -83,11 +81,10 @@ const props = defineProps({
 });
 
 const menus = ref([]);
-const computedMenus = computed(() => menus.value);
 const availableOrders = ref();
 const availableOrderDays = ref([]);
 
-onBeforeMount(async () => {
+onMounted(async () => {
   try {
     const response = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
@@ -117,12 +114,12 @@ watch(availableOrders, () => {
 });
 
 const loopOverMenusArray = computed(() => {
-  if (!computedMenus.value) {
+  if (!menus.value) {
     return [];
   }
 
   let menusArray = [];
-  for (let obj of computedMenus.value) {
+  for (let obj of menus.value) {
     menusArray.push(obj.menus[0]);
   }
 
