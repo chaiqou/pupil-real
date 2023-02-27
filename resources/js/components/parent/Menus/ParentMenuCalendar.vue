@@ -1,4 +1,5 @@
 <template>
+  <ParentFixedCard />
   <div class="w-full">
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -67,11 +68,15 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import { format, parseISO } from "date-fns";
 import { onMounted, ref, computed, watch } from "vue";
+import ParentFixedCard from "@/components/parent/Menus/ParentFixedCard.vue";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
 
-const onClickCalendar = () => {};
+const onClickCalendar = (day) => {
+  const formatedDay = format(day, "yyyy-MM-dd");
+  console.log(formatedDay);
+};
 
 const props = defineProps({
   studentId: {
