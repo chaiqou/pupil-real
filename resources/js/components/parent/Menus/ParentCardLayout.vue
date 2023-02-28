@@ -27,5 +27,7 @@ const target = ref(null);
 onClickOutside(target, () => {
   store.toggleFixedCard = false;
   store.toggleChoicesCard = false;
+  store.fixedMenus = [];
+  store.choicesMenus = [];
 });
 </script>

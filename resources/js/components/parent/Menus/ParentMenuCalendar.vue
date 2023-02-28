@@ -1,6 +1,6 @@
 <template>
   <template v-if="store.toggleFixedCard">
-    <ParentMenuCard :menu="fixedMenu" :value="true" />
+    <ParentMenuCard :menus="store.fixedMenus" :value="true" />
   </template>
 
   <div class="w-full">
@@ -148,8 +148,6 @@ const determineIfMenuExists = (day, menuType) => {
 };
 
 // Fixed menu card
-const fixedMenu = ref();
-const choicesMenu = ref();
 
 const store = useMenuManagementStore();
 
@@ -159,10 +157,10 @@ const onClickCalendar = (day) => {
   return loopOverMenusArray.value.filter((menu) => {
     if (formatedDay === menu.date && menu.menu_type === "fixed") {
       store.toggleFixedCard = true;
-      fixedMenu.value = menu;
+      store.fixedMenus.push(menu);
     } else if (formatedDay === menu.date && menu.menu_type === "choices") {
       store.toggleChoicesCard = true;
-      choicesMenu.value = menu;
+      store.choicesMenus.push(menu);
     }
   });
 };
