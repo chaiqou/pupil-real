@@ -197,10 +197,11 @@ watch(availableOrders, () => {
     // get keys from claims
     const claimsKeys = Object.keys(parsedClaims);
 
+    console.log(claimsKeys);
     // Assign all dates in one state
     claimsKeys.forEach((claim) => {
-      store.disabledDaysForLunchOrdering.push(parseISO(claim)),
-        disabledDaysForLunchOrder.value.push(parseISO(claim));
+      store.disabledDaysForLunchOrdering.push(parseISO(claim));
+      disabledDaysForLunchOrder.value.push(parseISO(claim));
     });
   });
 });
@@ -254,6 +255,12 @@ onMounted(async () => {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
       `/api/parent/available-orders/${props.studentId}`,
+      {
+        params: {
+          lunchId: localStorage.getItem("lunchId"),
+          studentId: props.studentId,
+        },
+      },
     );
     availableOrders.value = availableOrdersResponse.data.orders;
 
