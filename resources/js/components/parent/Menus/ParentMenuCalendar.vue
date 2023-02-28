@@ -1,6 +1,6 @@
 <template>
   <template v-if="toggleFixedCard">
-    <ParentFixedMenuCard :menu="fixedMenu" />
+    <ParentFixedMenuCard :menu="fixedMenu" :value="true" />
   </template>
 
   <div class="w-full">

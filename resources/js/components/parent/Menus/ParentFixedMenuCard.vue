@@ -1,10 +1,6 @@
 <template>
   <ParentCardsLayout>
-    <BaseRadio
-      :prop-name="menu.menu_name"
-      :prop-value="menu.name"
-      :prop-date="menu.date"
-    />
+    <BaseRadio :name="menu.menu_name" :value="value" :date="menu.date" />
   </ParentCardsLayout>
 </template>
 
@@ -15,6 +11,10 @@ import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 defineProps({
   menu: {
     type: Object,
+    required: true,
+  },
+  value: {
+    type: [Boolean, String],
     required: true,
   },
 });

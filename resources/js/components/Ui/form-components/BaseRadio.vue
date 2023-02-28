@@ -2,7 +2,7 @@
   <slot>
     <template class="flex flex-wrap justify-between">
       <h1 class="mb-2 font-semibold text-gray-700">
-        {{ `${propDate} - ${propValue}` }}
+        {{ `${date} - ${value}` }}
       </h1>
     </template>
   </slot>
@@ -12,13 +12,13 @@
     <span class="flex items-center text-sm">
       <input
         type="radio"
-        :name="propName"
-        :value="propValue"
-        :id="propValue"
+        :name="name"
+        :value="value"
+        :id="value"
         v-model="radioValue"
         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
       />
-      <span class="ml-3 font-medium">{{ propName }}</span>
+      <span class="ml-3 font-medium">{{ name }}</span>
     </span>
   </label>
 </template>
@@ -26,20 +26,20 @@
 <script setup>
 import { ref } from "vue";
 
-const radioValue = ref("");
-
-defineProps({
-  propName: {
+const props = defineProps({
+  name: {
     type: String,
     required: true,
   },
-  propValue: {
-    type: String,
+  value: {
+    type: [Boolean, String],
     required: true,
   },
-  propDate: {
+  date: {
     type: String,
     required: true,
   },
 });
+
+const radioValue = ref(props.value);
 </script>
