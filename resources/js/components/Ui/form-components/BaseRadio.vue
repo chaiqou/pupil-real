@@ -1,7 +1,9 @@
 <template>
   <slot>
     <template class="flex flex-wrap justify-between">
-      <h1 class="mb-2 font-semibold text-gray-700">{{ propName }}</h1>
+      <h1 class="mb-2 font-semibold text-gray-700">
+        {{ `${propDate} - ${propValue}` }}
+      </h1>
     </template>
   </slot>
   <label
@@ -32,6 +34,10 @@ defineProps({
     required: true,
   },
   propValue: {
+    type: String,
+    required: true,
+  },
+  propDate: {
     type: String,
     required: true,
   },

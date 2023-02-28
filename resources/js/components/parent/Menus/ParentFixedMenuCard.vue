@@ -1,6 +1,10 @@
 <template>
   <ParentCardsLayout>
-    <BaseRadio :prop-name="menu.name" :prop-value="menu.menu_type" />
+    <BaseRadio
+      :prop-name="menu.menu_name"
+      :prop-value="menu.name"
+      :prop-date="menu.date"
+    />
   </ParentCardsLayout>
 </template>
 

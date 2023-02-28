@@ -22,6 +22,7 @@ class LunchMenuResource extends JsonResource
                     'date' => $date,
                     'name' => $item['name'],
                     'menu_type' => $item['menu_type'],
+                    'menu_name' => $item['menus'],
                 ];
             });
         });
