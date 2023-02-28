@@ -1,5 +1,8 @@
 <template>
-  <ParentFixedMenuCard />
+  <template v-if="toggleFixedCard">
+    <ParentFixedMenuCard :menu="fixedMenu" />
+  </template>
+
   <div class="w-full">
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
@@ -73,11 +76,6 @@ import ParentFixedMenuCard from "@/components/parent/Menus/ParentFixedMenuCard.v
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
 
-const onClickCalendar = (day) => {
-  const formatedDay = format(day, "yyyy-MM-dd");
-  console.log(formatedDay);
-};
-
 const props = defineProps({
   studentId: {
     type: Number,
@@ -146,5 +144,25 @@ const determineIfMenuExists = (day, menuType) => {
       ? true
       : false,
   );
+};
+
+// Fixed menu card
+const toggleFixedCard = ref(false);
+const toggleChoicesCard = ref(false);
+const fixedMenu = ref();
+const choicesMenu = ref();
+
+const onClickCalendar = (day) => {
+  const formatedDay = format(day, "yyyy-MM-dd");
+
+  return loopOverMenusArray.value.filter((menu) => {
+    if (formatedDay === menu.date && menu.menu_type === "fixed") {
+      toggleFixedCard.value = true;
+      fixedMenu.value = menu;
+    } else if (formatedDay === menu.date && menu.menu_type === "choices") {
+      toggleChoicesCard.value = true;
+      choicesMenu.value = menu;
+    }
+  });
 };
 </script>
