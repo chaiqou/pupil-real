@@ -1,11 +1,11 @@
 <template>
-  <ParentCardsLayout>
+  <ParentCardLayout>
     <BaseRadio :name="menu.menu_name" :value="value" :date="menu.date" />
-  </ParentCardsLayout>
+  </ParentCardLayout>
 </template>
 
 <script setup>
-import ParentCardsLayout from "@/components/parent/Menus/ParentCardsLayout.vue";
+import ParentCardLayout from "@/components/parent/Menus/ParentCardLayout.vue";
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 
 defineProps({

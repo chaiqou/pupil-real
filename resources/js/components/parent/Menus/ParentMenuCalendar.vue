@@ -1,6 +1,6 @@
 <template>
-  <template v-if="toggleFixedCard">
-    <ParentFixedMenuCard :menu="fixedMenu" :value="true" />
+  <template v-if="store.toggleFixedCard">
+    <ParentMenuCard :menu="fixedMenu" :value="true" />
   </template>
 
   <div class="w-full">
@@ -71,7 +71,8 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import { format, parseISO } from "date-fns";
 import { onMounted, ref, computed, watch } from "vue";
-import ParentFixedMenuCard from "@/components/parent/Menus/ParentFixedMenuCard.vue";
+import ParentMenuCard from "@/components/parent/Menus/ParentMenuCard.vue";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
@@ -147,20 +148,20 @@ const determineIfMenuExists = (day, menuType) => {
 };
 
 // Fixed menu card
-const toggleFixedCard = ref(false);
-const toggleChoicesCard = ref(false);
 const fixedMenu = ref();
 const choicesMenu = ref();
+
+const store = useMenuManagementStore();
 
 const onClickCalendar = (day) => {
   const formatedDay = format(day, "yyyy-MM-dd");
 
   return loopOverMenusArray.value.filter((menu) => {
     if (formatedDay === menu.date && menu.menu_type === "fixed") {
-      toggleFixedCard.value = true;
+      store.toggleFixedCard = true;
       fixedMenu.value = menu;
     } else if (formatedDay === menu.date && menu.menu_type === "choices") {
-      toggleChoicesCard.value = true;
+      store.toggleChoicesCard = true;
       choicesMenu.value = menu;
     }
   });
