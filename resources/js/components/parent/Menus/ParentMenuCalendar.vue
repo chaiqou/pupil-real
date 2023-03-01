@@ -74,9 +74,6 @@ import { onMounted, ref, computed, watch } from "vue";
 import ParentMenuCard from "@/components/parent/Menus/ParentMenuCard.vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
-const { monthsDays } = useFindMonthDays(11);
-const { getMonthByIndex } = useFindMonthByIndex();
-
 const props = defineProps({
   studentId: {
     type: Number,
@@ -84,18 +81,22 @@ const props = defineProps({
   },
 });
 
+const { monthsDays } = useFindMonthDays(11);
+const { getMonthByIndex } = useFindMonthByIndex();
+
 const menus = ref([]);
 const availableOrders = ref();
 const availableOrderDays = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await axios.get(
+    const availableMenusResponse = await axios.get(
       `/api/parent/menu-retrieve/${props.studentId}`,
     );
-    menus.value = response.data.data;
+    menus.value = availableMenusResponse.data.data;
 
     // Fetch existing all orders and save to availableOrders
+
     const availableOrdersResponse = await axios.get(
       `/api/parent/available-orders/${props.studentId}`,
       {
@@ -123,11 +124,9 @@ watch(availableOrders, () => {
   });
 });
 
-const loopOverMenusArray = computed(() => {
-  if (!menus.value) {
-    return [];
-  }
+// determine which type of menu we have based on menu type and style it differently returns boolean
 
+const loopOverMenusArray = computed(() => {
   let menusArray = [];
   for (let obj of menus.value) {
     menusArray.push(obj.menus);
@@ -136,20 +135,15 @@ const loopOverMenusArray = computed(() => {
   return menusArray;
 });
 
-// determine which type of menu we have based on menu type and style it differently returns boolean
-
 const determineIfMenuExists = (day, menuType) => {
-  if (!availableOrderDays.value) {
-    return [];
-  }
-
-  return loopOverMenusArray.value.some((menu) =>
-    format(parseISO(menu.date), "yyyy-MM-dd") === format(day, "yyyy-MM-dd") &&
-    menu.menu_type === menuType &&
-    // MARK MENU ONLY IF MATCHES ORDER DAY
-    availableOrderDays.value.includes(format(day, "yyyy-MM-dd"))
-      ? true
-      : false,
+  return loopOverMenusArray.value.some((menusArray) =>
+    menusArray.some(
+      (menu) =>
+        format(parseISO(menu.date), "yyyy-MM-dd") ===
+          format(day, "yyyy-MM-dd") &&
+        menu.menu_type === menuType &&
+        availableOrderDays.value.includes(format(day, "yyyy-MM-dd")),
+    ),
   );
 };
 
@@ -160,14 +154,16 @@ const store = useMenuManagementStore();
 const onClickCalendar = (day) => {
   const formatedDay = format(day, "yyyy-MM-dd");
 
-  return loopOverMenusArray.value.filter((menu) => {
-    if (formatedDay === menu.date && menu.menu_type === "fixed") {
-      store.toggleFixedCard = true;
-      store.fixedMenus.push(menu);
-    } else if (formatedDay === menu.date && menu.menu_type === "choices") {
-      store.toggleChoicesCard = true;
-      store.choicesMenus.push(menu);
-    }
+  return loopOverMenusArray.value.filter((menusArray) => {
+    menusArray.filter((menu) => {
+      if (formatedDay === menu.date && menu.menu_type === "fixed") {
+        store.toggleFixedCard = true;
+        store.fixedMenus.push(menu);
+      } else if (formatedDay === menu.date && menu.menu_type === "choices") {
+        store.toggleChoicesCard = true;
+        store.choicesMenus.push(menu);
+      }
+    });
   });
 };
 </script>

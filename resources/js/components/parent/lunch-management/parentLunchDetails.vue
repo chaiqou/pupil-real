@@ -251,7 +251,6 @@ watch(bufferTime, (newValue) => {
 });
 
 onMounted(async () => {
-  localStorage.setItem("studentId", props.studentId);
   try {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
