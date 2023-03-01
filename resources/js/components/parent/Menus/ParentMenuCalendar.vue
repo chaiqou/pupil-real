@@ -136,6 +136,10 @@ const loopOverMenusArray = computed(() => {
 });
 
 const determineIfMenuExists = (day, menuType) => {
+  if (!availableOrderDays.value) {
+    return [];
+  }
+
   return loopOverMenusArray.value.some((menusArray) =>
     menusArray.some(
       (menu) =>
