@@ -7,7 +7,7 @@
     </template>
   </slot>
   <label
-    class="relative flex cursor-pointer flex-col rounded-tl-md rounded-tr-md border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
+    class="relative flex cursor-pointer flex-col rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
   >
     <span class="flex items-center text-sm">
       <input
