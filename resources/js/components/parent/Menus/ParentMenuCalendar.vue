@@ -99,11 +99,6 @@ onMounted(async () => {
 
     const availableOrdersResponse = await axios.get(
       `/api/parent/available-orders/${props.studentId}`,
-      {
-        params: {
-          lunchId: localStorage.getItem("lunchId"),
-        },
-      },
     );
     availableOrders.value = availableOrdersResponse.data.orders;
   } catch (error) {

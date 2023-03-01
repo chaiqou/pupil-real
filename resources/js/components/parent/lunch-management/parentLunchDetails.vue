@@ -255,12 +255,6 @@ onMounted(async () => {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
       `/api/parent/available-orders/${props.studentId}`,
-      {
-        params: {
-          lunchId: localStorage.getItem("lunchId"),
-          studentId: props.studentId,
-        },
-      },
     );
     availableOrders.value = availableOrdersResponse.data.orders;
 

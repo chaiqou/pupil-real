@@ -18,8 +18,8 @@ class OrderLunchController extends Controller
 {
     public function availableOrders(Request $request): JsonResponse
     {
-        $studentId = $request->query('studentId');
-        $orders = PeriodicLunch::where('student_id', $studentId)->get();
+        $student_id = $request->route('student_id');
+        $orders = PeriodicLunch::where('student_id', $student_id)->get();
 
         return response()->json(['orders' => $orders]);
     }
