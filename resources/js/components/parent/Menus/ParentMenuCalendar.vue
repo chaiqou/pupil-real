@@ -98,6 +98,12 @@ onMounted(async () => {
     // Fetch existing all orders and save to availableOrders
     const availableOrdersResponse = await axios.get(
       `/api/parent/available-orders/${props.studentId}`,
+      {
+        params: {
+          lunchId: localStorage.getItem("lunchId"),
+          studentId: props.studentId,
+        },
+      },
     );
     availableOrders.value = availableOrdersResponse.data.orders;
   } catch (error) {
@@ -124,7 +130,7 @@ const loopOverMenusArray = computed(() => {
 
   let menusArray = [];
   for (let obj of menus.value) {
-    menusArray.push(obj.menus[0]);
+    menusArray.push(obj.menus);
   }
 
   return menusArray;
