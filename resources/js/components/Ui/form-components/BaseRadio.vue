@@ -2,7 +2,7 @@
   <slot>
     <template class="flex flex-wrap justify-between">
       <h1 class="mb-2 font-semibold text-gray-700">
-        {{ `${date} - ${value}` }}
+        {{ `${date} - ${name}` }}
       </h1>
     </template>
   </slot>

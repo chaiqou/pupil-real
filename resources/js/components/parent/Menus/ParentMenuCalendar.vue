@@ -102,7 +102,6 @@ onMounted(async () => {
       {
         params: {
           lunchId: localStorage.getItem("lunchId"),
-          studentId: props.studentId,
         },
       },
     );
