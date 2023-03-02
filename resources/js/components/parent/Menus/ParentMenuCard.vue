@@ -1,7 +1,7 @@
 <template>
   <ParentCardLayout>
     <div v-for="menu in menus" :key="menu">
-      <BaseRadio
+      <ParentMenuOptions
         :name="menu"
         :value="value"
         :menu_name="menu.menu_name"
@@ -13,7 +13,7 @@
 
 <script setup>
 import ParentCardLayout from "@/components/parent/Menus/ParentCardLayout.vue";
-import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
+import ParentMenuOptions from "@/components/parent/Menus/ParentMenuOptions.vue";
 
 defineProps({
   menus: {
