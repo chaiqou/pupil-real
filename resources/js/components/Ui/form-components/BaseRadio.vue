@@ -9,6 +9,7 @@
         :value="modelValue"
         :name="label"
         :id="label"
+        :checked="name"
         @change="$emit('update:modelValue', name)"
       />
 
