@@ -33,13 +33,13 @@
       <span class="flex items-center text-sm">
         <input
           type="radio"
-          :name="menu_name"
-          :value="menu_name"
-          :id="menu_name"
+          :name="name"
+          :value="value"
+          :id="name"
           v-model="radioValue"
           class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
         />
-        <span class="ml-3 font-medium">{{ name }}</span>
+        <span class="ml-3 font-medium">{{ name.menu_name }}</span>
       </span>
     </label>
   </div>
