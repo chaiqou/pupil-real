@@ -198,18 +198,13 @@ export default {
           data: [],
         },
         {
-          name: "Grey",
-          type: "line",
-          data: []
-        },
-        {
               name: "Dashed",
               type: "line",
               data: []
         },
       ],
       chartOptions: {
-        colors: ["#0061F2", "#6900C7", "#cac8cb", "#cac8cb"],
+        colors: ["#0061F2", "#6900C7", "#cac8cb"],
         fill: {
           type: "solid",
           opacity: [0.25, 1],
@@ -231,9 +226,9 @@ export default {
           enabled: false,
         },
         stroke: {
-          width: [3, 3, 2, 2],
+          width: [3, 3, 2],
           curve: "smooth",
-          dashArray: [0, 0, 0, 2],
+          dashArray: [0, 0, 2],
         },
         title: {
           show: false,
@@ -300,12 +295,10 @@ export default {
                   console.log(res.data);
                   const blue = this.series.find((item) => item.name === 'Blue');
                   const purple = this.series.find((item) => item.name === 'Purple');
-                  const grey = this.series.find((item) => item.name === 'Grey');
                   const dashed = this.series.find((item) => item.name === 'Dashed');
                   blue.data = res.data.previous;
                   purple.data = res.data.current;
-                  grey.data = res.data.prediction_start;
-                  dashed.data = res.data.prediction_end;
+                  dashed.data = res.data.prediction;
               })
               .catch((err) => console.log(err));
       },

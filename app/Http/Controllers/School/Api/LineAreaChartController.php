@@ -288,56 +288,24 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent[$dayOfMonth] += $transaction->transaction_amount;
         }
 
-// Calculate the predicted transactions
-        $transactionsByDayPredictionStart = array_fill(0, $numberOfDays, 0);
 
-        for ($i = 0; $i < $numberOfDays; $i++) {
-            for ($j = 0; $j <= $i; $j++) {
-                $transactionsByDayPredictionStart[$i] += $transactionsByDayCurrent[$j];
-            }
+        $transactionsByDayPrediction = array_fill(0, $numberOfDaysPrevious, 0);
+        if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
+            $transactionsByDayPrediction = array_slice($transactionsByDayPrediction, 0, $numberOfDaysPrevious);
         }
 
-// Calculate the predicted transactions for the end of the month
-        // Determine the number of days to use for initializing the arrays
-        $numberOfDays = min($numberOfDaysPrevious, $numberOfDaysCurrent);
-
-// Calculate the predicted transactions for the end of the month
-        $averageCurrentMonth = array_sum($transactionsByDayCurrent) / $numberOfDays;
-        $transactionsByDayPredictionEnd = array_fill(0, $numberOfDaysCurrent - $numberOfDays, 0);
-
-        if ($numberOfDaysPrevious >= $numberOfDaysCurrent) {
-            // If the previous month has more or equal number of days compared to the current month
-            // Calculate the predicted transactions for the remaining days of the current month
-            $transactionsByDayPredictionEnd[0] = $transactionsByDayPredictionStart[$numberOfDays - 1];
-            for ($i = 1; $i < count($transactionsByDayPredictionEnd); $i++) {
-                $transactionsByDayPredictionEnd[$i] = $transactionsByDayPredictionEnd[$i - 1] + $averageCurrentMonth;
-            }
-        } else {
-            // If the previous month has less numb of days compared to the current month
-            // Calculate the predicted transactions for the remaining days of the current month
-            $daysToCalculate = $numberOfDaysCurrent - $numberOfDaysPrevious;
-            $transactionsByDayPredictionEnd[0] = $transactionsByDayPredictionStart[$numberOfDays - 1];
-            for ($i = 1; $i < $daysToCalculate; $i++) {
-                $previousValue = $transactionsByDayPredictionEnd[$i - 1];
-                if ($i <= $numberOfDays) {
-                    $transactionsByDayPredictionEnd[$i] = $previousValue + $averageCurrentMonth;
-                } else {
-                    $transactionsByDayPredictionEnd[$i] = $previousValue + $averageCurrentMonth * ($numberOfDaysCurrent - $numberOfDays - $i + 1) / ($daysToCalculate - $numberOfDays);
-                }
-            }
-        }
-
-// Fill the remaining array with zeros
-        $transactionsByDayPredictionEnd = array_pad($transactionsByDayPredictionEnd, $numberOfDaysCurrent, 0);
 
         $transactionsByMonth = [
             'previous' => $transactionsByDayPrevious,
             'current' => $transactionsByDayCurrent,
-            'prediction_start' => $transactionsByDayPredictionStart,
-            'prediction_end' => $transactionsByDayPredictionEnd
+            'prediction' => $transactionsByDayPrediction
         ];
 
         return response()->json($transactionsByMonth);
 
     }
 }
+
+
+
+
