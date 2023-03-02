@@ -5,13 +5,14 @@
     <span class="flex items-center text-sm">
       <input
         type="radio"
-        :value="modelValue"
         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-        :name="name"
-        :id="name"
+        :value="modelValue"
+        :name="label"
+        :id="label"
+        @change="$emit('update:modelValue', name)"
       />
 
-      <span class="ml-3 font-medium">{{ label }}</span>
+      <span class="ml-3 font-medium">{{ name }}</span>
     </span>
   </label>
 </template>
@@ -19,7 +20,7 @@
 <script setup>
 defineProps({
   modelValue: {
-    type: [String, Boolean],
+    type: String,
   },
   name: {
     type: String,

@@ -6,11 +6,11 @@
   </template>
   <div v-if="menu.menu_type === 'choices'">
     <template v-for="menu in menu.menu_name" :key="menu">
-      <BaseRadio v-model="choicesValue" :label="menu" name="choices" />
+      <BaseRadio v-model="choicesValue" label="choices" :name="menu" />
     </template>
   </div>
   <div v-if="menu.menu_type === 'fixed'">
-    <BaseRadio v-model="fixedValue" :label="menu.menu_name" name="fixed" />
+    <BaseRadio v-model="fixedValue" label="fixed" :name="menu.menu_name" />
   </div>
 </template>
 
@@ -26,5 +26,5 @@ defineProps({
 });
 
 const choicesValue = ref("");
-const fixedValue = ref(true);
+const fixedValue = ref("");
 </script>
