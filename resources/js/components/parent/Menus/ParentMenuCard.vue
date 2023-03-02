@@ -1,12 +1,7 @@
 <template>
   <ParentCardLayout>
-    <div v-for="menu in menus" :key="menu">
-      <ParentMenuOptions
-        :name="menu"
-        :value="value"
-        :menu_name="menu.menu_name"
-        :date="menu.date"
-      />
+    <div v-for="menu in menus" :key="menu.menu_name">
+      <ParentMenuOptions :menu="menu" />
     </div>
   </ParentCardLayout>
 </template>
@@ -18,10 +13,6 @@ import ParentMenuOptions from "@/components/parent/Menus/ParentMenuOptions.vue";
 defineProps({
   menus: {
     type: Object,
-    required: true,
-  },
-  value: {
-    type: [Boolean, String],
     required: true,
   },
 });

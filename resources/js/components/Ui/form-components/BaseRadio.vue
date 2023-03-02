@@ -8,7 +8,7 @@
         :value="modelValue"
         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
         :name="name"
-        :id="menuName"
+        :id="name"
       />
 
       <span class="ml-3 font-medium">{{ label }}</span>
@@ -20,16 +20,14 @@
 defineProps({
   modelValue: {
     type: [String, Boolean],
-    default: "",
-  },
-  menuName: {
-    type: [String, Object],
   },
   name: {
     type: String,
+    required: true,
   },
   label: {
     type: String,
+    required: true,
   },
 });
 </script>

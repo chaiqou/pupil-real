@@ -1,10 +1,10 @@
 <template>
   <template v-if="store.toggleFixedCard">
-    <ParentMenuCard :menus="store.fixedMenus" :value="true" />
+    <ParentMenuCard :menus="store.fixedMenus" />
   </template>
 
   <template v-if="store.toggleChoicesCard">
-    <ParentMenuCard :menus="store.choicesMenus" :value="true" />
+    <ParentMenuCard :menus="store.choicesMenus" />
   </template>
 
   <div class="w-full">

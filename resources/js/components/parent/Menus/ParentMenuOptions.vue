@@ -1,21 +1,16 @@
 <template>
   <template class="flex flex-wrap justify-between">
     <h1 class="mb-2 font-semibold text-gray-700">
-      {{ `${date}` }}
+      {{ `${menu.date} - ${menu.menu_type}` }}
     </h1>
   </template>
-  <div v-if="name.menu_type == 'choices'">
-    <template v-for="menu in menu_name" :key="menu">
-      <BaseRadio
-        v-model="choicesValue"
-        :menu-name="menu"
-        :label="menu"
-        name="choices"
-      />
+  <div v-if="menu.menu_type === 'choices'">
+    <template v-for="menu in menu.menu_name" :key="menu">
+      <BaseRadio v-model="choicesValue" :label="menu" name="choices" />
     </template>
   </div>
-  <div v-if="name.menu_type == 'fixed'">
-    <BaseRadio :menu-name="name" name="fixed" :label="name.menu_name" />
+  <div v-if="menu.menu_type === 'fixed'">
+    <BaseRadio v-model="fixedValue" :label="menu.menu_name" name="fixed" />
   </div>
 </template>
 
@@ -24,22 +19,12 @@ import { ref } from "vue";
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 
 defineProps({
-  name: {
+  menu: {
     type: Object,
     required: true,
-  },
-  value: {
-    type: [Boolean, String],
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  menu_name: {
-    type: [Array, String],
   },
 });
 
 const choicesValue = ref("");
+const fixedValue = ref(true);
 </script>
