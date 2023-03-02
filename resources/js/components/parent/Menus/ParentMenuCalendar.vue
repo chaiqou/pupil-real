@@ -3,6 +3,10 @@
     <ParentMenuCard :menus="store.fixedMenus" :value="true" />
   </template>
 
+  <template v-if="store.toggleChoicesCard">
+    <ParentMenuCard :menus="store.choicesMenus" :value="true" />
+  </template>
+
   <div class="w-full">
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"

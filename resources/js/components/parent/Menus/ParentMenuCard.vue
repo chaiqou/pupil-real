@@ -1,7 +1,12 @@
 <template>
   <ParentCardLayout>
-    <div v-for="menu in menus" :key="menu.menu_name">
-      <BaseRadio :name="menu.menu_name" :value="value" :date="menu.date" />
+    <div v-for="menu in menus" :key="menu">
+      <BaseRadio
+        :name="menu"
+        :value="value"
+        :menu_name="menu.menu_name"
+        :date="menu.date"
+      />
     </div>
   </ParentCardLayout>
 </template>
