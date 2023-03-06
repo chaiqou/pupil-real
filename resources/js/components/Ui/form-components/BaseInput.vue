@@ -24,7 +24,7 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 
-const props = defineProps({
+defineProps({
   name: {
     type: String,
     required: true,

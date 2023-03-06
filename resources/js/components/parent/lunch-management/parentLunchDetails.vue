@@ -197,10 +197,11 @@ watch(availableOrders, () => {
     // get keys from claims
     const claimsKeys = Object.keys(parsedClaims);
 
+    console.log(claimsKeys);
     // Assign all dates in one state
     claimsKeys.forEach((claim) => {
-      store.disabledDaysForLunchOrdering.push(parseISO(claim)),
-        disabledDaysForLunchOrder.value.push(parseISO(claim));
+      store.disabledDaysForLunchOrdering.push(parseISO(claim));
+      disabledDaysForLunchOrder.value.push(parseISO(claim));
     });
   });
 });

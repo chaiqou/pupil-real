@@ -15,7 +15,7 @@ class ParentMenuController extends Controller
         $studentId = request('student_id');
 
         $periodic_lunch = PeriodicLunch::where('student_id', $studentId)->get();
-        $periodic_lunch_ids = $periodic_lunch->pluck('id')->toArray();
+        $periodic_lunch_ids = $periodic_lunch->pluck('lunch_id')->toArray();
         $menu = LunchMenu::whereIn('lunch_id', $periodic_lunch_ids)->get();
 
         return LunchMenuResource::collection($menu);
