@@ -1,7 +1,7 @@
 <template>
   <template class="flex flex-wrap justify-between">
     <h1 class="mb-2 font-semibold text-gray-700">
-      {{ `${menu.date} - ${menu.menu_type}` }}
+      {{ `${menu.date} - ${menu.menu_name}` }}
     </h1>
   </template>
   <div v-if="menu.menu_type === 'choices'">
