@@ -13,12 +13,13 @@
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :menu="menu.menu_name" />
     </div>
-    <button type="submit">Submit</button>
+    <Button />
   </Form>
 </template>
 
 <script setup>
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
+import Button from "@/components/Ui/Button.vue";
 import { Form } from "vee-validate";
 
 defineProps({

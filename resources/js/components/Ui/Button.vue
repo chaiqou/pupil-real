@@ -12,6 +12,7 @@ defineProps({
   text: {
     type: String,
     required: true,
+    default: "Submit",
   },
   type: {
     type: String,
