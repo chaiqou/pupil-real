@@ -4,19 +4,22 @@
       {{ `${menu.date} - ${menu.menu_name}` }}
     </h1>
   </template>
-  <div v-if="menu.menu_type === 'choices'">
-    <template v-for="menu in menu.menu_name" :key="menu">
-      <BaseRadio v-model="choicesValue" label="choices" :name="menu" />
-    </template>
-  </div>
-  <div v-if="menu.menu_type === 'fixed'">
-    <BaseRadio v-model="fixedValue" label="fixed" :name="menu.menu_name" />
-  </div>
+  <Form :validation-schema="schema" @submit="onSubmit">
+    <div v-if="menu.menu_type === 'choices'">
+      <template v-for="menu in menu.menu_name" :key="menu">
+        <BaseRadio name="choices" :menu="menu" />
+      </template>
+    </div>
+    <div v-if="menu.menu_type === 'fixed'">
+      <BaseRadio name="fixed" :menu="menu.menu_name" />
+    </div>
+    <button type="submit">Submit</button>
+  </Form>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
+import { Form } from "vee-validate";
 
 defineProps({
   menu: {
@@ -25,6 +28,24 @@ defineProps({
   },
 });
 
-const choicesValue = ref("");
-const fixedValue = ref("");
+function onSubmit(values) {
+  console.log(values);
+}
+
+const schema = {
+  choices: (value) => {
+    if (value && value.length) {
+      return true;
+    }
+
+    return "You must choose one choice";
+  },
+  fixed: (value) => {
+    if (value && value.length) {
+      return true;
+    }
+
+    return "You must choose a fixed menu";
+  },
+};
 </script>

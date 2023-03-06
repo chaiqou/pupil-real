@@ -3,30 +3,22 @@
     class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
   >
     <span class="flex items-center text-sm">
-      <input
-        type="radio"
-        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-        :value="modelValue"
-        :name="label"
-        :id="label"
-        @change="$emit('update:modelValue', name)"
-      />
-
-      <span class="ml-3 font-medium">{{ name }}</span>
+      <Field :name="name" type="radio" :value="menu" />
+      <span class="ml-3 font-medium">{{ menu }}</span>
     </span>
+    <ErrorMessage :name="name" />
   </label>
 </template>
 
 <script setup>
+import { Field, ErrorMessage } from "vee-validate";
+
 defineProps({
-  modelValue: {
-    type: String,
-  },
   name: {
     type: String,
     required: true,
   },
-  label: {
+  menu: {
     type: String,
     required: true,
   },
