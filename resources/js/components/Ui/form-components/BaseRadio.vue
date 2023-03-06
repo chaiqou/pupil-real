@@ -3,13 +3,19 @@
     class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
   >
     <span class="flex items-center text-sm">
-      <Field :name="name" type="radio" :value="value" v-model="selectedvalue" />
+      <Field
+        :name="name"
+        type="radio"
+        :value="value"
+        v-model="selectedvalue"
+        class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
+      />
       <span class="ml-3 font-medium">{{ value }}</span>
     </span>
   </label>
 
   <ErrorMessage
-    class="text-center font-sans text-base font-medium text-red-500 subpixel-antialiased"
+    class="text-center font-sans text-base font-medium text-indigo-700 subpixel-antialiased"
     :name="name"
   />
 </template>

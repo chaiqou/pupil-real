@@ -13,7 +13,7 @@
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
-    <Button />
+    <Button class="ml-auto w-1/2" />
   </Form>
 </template>
 
