@@ -16,7 +16,7 @@
 
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   name: {
@@ -29,5 +29,11 @@ const props = defineProps({
   },
 });
 
-let selectedvalue = ref(props.value);
+let selectedvalue = ref(null);
+
+onMounted(() => {
+  if (selectedvalue.value === null) {
+    selectedvalue.value = props.value;
+  }
+});
 </script>
