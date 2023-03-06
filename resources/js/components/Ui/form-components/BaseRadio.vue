@@ -6,8 +6,12 @@
       <Field :name="name" type="radio" :value="menu" />
       <span class="ml-3 font-medium">{{ menu }}</span>
     </span>
-    <ErrorMessage :name="name" />
   </label>
+
+  <ErrorMessage
+    class="text-center font-sans text-base font-medium text-red-500 subpixel-antialiased"
+    :name="name"
+  />
 </template>
 
 <script setup>

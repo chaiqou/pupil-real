@@ -38,7 +38,7 @@ const schema = {
       return true;
     }
 
-    return "You must choose one choice";
+    return "You must choose one lunch";
   },
   fixed: (value) => {
     if (value && value.length) {
