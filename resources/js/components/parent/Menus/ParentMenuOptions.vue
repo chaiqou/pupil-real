@@ -7,11 +7,11 @@
   <Form :validation-schema="schema" @submit="onSubmit">
     <div v-if="menu.menu_type === 'choices'">
       <template v-for="menu in menu.menu_name" :key="menu">
-        <BaseRadio name="choices" :menu="menu" />
+        <BaseRadio name="choices" :value="menu" />
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
-      <BaseRadio name="fixed" :menu="menu.menu_name" />
+      <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
     <Button />
   </Form>
