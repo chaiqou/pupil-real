@@ -38,6 +38,8 @@ class CalculateClaims
                     'name' => $claimable,
                     'claimed' => false,
                     'claimed_date' => null,
+                    'menu' => '',
+                    'menu_code' => null,
                 ];
             }
 
