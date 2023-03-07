@@ -288,17 +288,40 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent[$dayOfMonth] += $transaction->transaction_amount;
         }
 
+        $next_day_index = (int)date('j', strtotime('+2 days')) - 1;
+        $today_day_index = (int)date('j') - 1;
+
+
 
         $transactionsByDayPrediction = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
             $transactionsByDayPrediction = array_slice($transactionsByDayPrediction, 0, $numberOfDaysPrevious);
         }
 
+        $averagePrevious = array_sum($transactionsByDayPrevious) / count($transactionsByDayPrevious);
+        $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
+        $difference = ( (($averageCurrent / 100) / $averagePrevious) / 100);
+        $sumsOfCurrent = [];
+        $runningSum = 0;
+        foreach ($transactionsByDayCurrent as $value) {
+            $runningSum += $value;
+            $sumsOfCurrent[] = $runningSum;
+        }
+
+        for ($i = $next_day_index; $i < count($transactionsByDayPrediction); $i++) {
+            $transactionsByDayPrediction[$i] =  end($sumsOfCurrent) + ($transactionsByDayPrevious[$i] * $difference);
+        }
+
+        $transactionsByDayPrediction = array_map(function($value) {
+            return ($value === 0) ? null : $value;
+        }, $transactionsByDayPrediction);
+
 
         $transactionsByMonth = [
             'previous' => $transactionsByDayPrevious,
             'current' => $transactionsByDayCurrent,
-            'prediction' => $transactionsByDayPrediction
+            'prediction' => $transactionsByDayPrediction,
+            $difference,
         ];
 
         return response()->json($transactionsByMonth);
