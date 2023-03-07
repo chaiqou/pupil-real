@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 use App\Helpers\CreateMenuJson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
+use App\Http\Requests\Parent\SaveMenuRequest;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class MenuManagementController extends Controller
 {
@@ -31,19 +32,21 @@ class MenuManagementController extends Controller
         }
     }
 
-    public function saveMenu(Request $request)
+    public function saveMenu(SaveMenuRequest $request): JsonResponse
     {
+        $validated = $request->validated();
+
         $model = PeriodicLunch::where(function ($query) {
-            $query->where('claims', 'like', '%"'.request('date').'"%');
+            $query->where('claims', 'like', '%"'.$validated['date'].'"%');
         })->first();
 
         // check if model exists and if so, update the JSON column
         if ($model) {
             $json = json_decode($model->claims, true);
 
-            foreach ($json[request('date')] as &$element) {
-                $element['menu'] = request('values.fixed') ?? request('values.choices');
-                $element['menu_code'] = request('values.fixed') ? 0 : 2;
+            foreach ($json[$validated['date']] as &$element) {
+                $element['menu'] = $validated['values']['fixed'] ?? $validated['values']['choices'];
+                $element['menu_code'] = $validated['values']['fixed'] ? 0 : 2;
             }
 
             $model->claims = json_encode($json);
