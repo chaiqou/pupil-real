@@ -29,24 +29,10 @@ defineProps({
   },
 });
 
-function onSubmit(values) {
+const onSubmit = function (values) {
   console.log(values);
-}
-
-const schema = {
-  choices: (value) => {
-    if (value && value.length) {
-      return true;
-    }
-
-    return "You must choose one lunch";
-  },
-  fixed: (value) => {
-    if (value && value.length) {
-      return true;
-    }
-
-    return "You must choose a fixed menu";
-  },
+  axios.post("/api/parent/save-menu", {
+    values: values,
+  });
 };
 </script>

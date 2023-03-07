@@ -13,15 +13,10 @@
       <span class="ml-3 font-medium">{{ value }}</span>
     </span>
   </label>
-
-  <ErrorMessage
-    class="text-center font-sans text-base font-medium text-indigo-700 subpixel-antialiased"
-    :name="name"
-  />
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
+import { Field } from "vee-validate";
 import { ref, onMounted } from "vue";
 
 const props = defineProps({

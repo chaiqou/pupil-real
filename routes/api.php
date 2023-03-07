@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('available-orders/{student_id}', [OrderLunchController::class, 'availableOrders'])->name('parent.available-orders');
             Route::post('checkout', [StripeCheckoutController::class, 'checkout'])->name('parent.checkout');
             Route::get('menu-retrieve/{student_id}', [ParentMenuController::class, 'menuRetrieve'])->name('parent.menu_retrieve');
+            Route::post('save-menu', [MenuManagementController::class, 'saveMenu'])->name('parent.save_menu');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {

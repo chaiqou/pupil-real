@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
+use App\Models\LunchMenu;
+use Illuminate\Http\Request;
 use App\Helpers\CreateMenuJson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
-use App\Models\LunchMenu;
 
 class MenuManagementController extends Controller
 {
@@ -27,5 +28,10 @@ class MenuManagementController extends Controller
         if ($menu) {
             return response()->json(['error' => 'Menu for this lunch already exists']);
         }
+    }
+
+    public function saveMenu(Request $request)
+    {
+         dd($request);
     }
 }
