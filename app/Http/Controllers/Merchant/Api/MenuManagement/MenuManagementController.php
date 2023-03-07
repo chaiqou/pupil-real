@@ -33,8 +33,9 @@ class MenuManagementController extends Controller
 
     public function saveMenu(Request $request)
     {
-        // dd(request('values.choices'));
-        $model = PeriodicLunch::where('start_date', request('date'))->first();
+        $model = PeriodicLunch::where(function ($query) {
+            $query->where('claims', 'like', '%"'.request('date').'"%');
+        })->first();
 
         // check if model exists and if so, update the JSON column
         if ($model) {
