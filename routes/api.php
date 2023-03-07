@@ -13,7 +13,9 @@ use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionCo
 use App\Http\Controllers\Parent\SettingController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
+use App\Http\Controllers\School\Api\LineAreaChartController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
+use App\Http\Controllers\School\Api\PieChartController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
 use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
@@ -105,6 +107,12 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(TerminalController::class)->group(function () {
                 Route::get('terminals', 'get')->name('terminal.get');
                 Route::post('terminal', 'store')->name('terminal.store');
+            });
+            Route::controller(PieChartController::class)->group(function () {
+                Route::get('pie-chart-data', 'calculateChartInfo')->name('school.pie-chart-data');
+            });
+            Route::controller(LineAreaChartController::class)->group(function () {
+                Route::get('line-chart-data', 'calculateChartInfo')->name('school.line-chart-data');
             });
         });
     });

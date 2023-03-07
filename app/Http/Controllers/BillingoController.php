@@ -11,6 +11,7 @@ use App\Models\Merchant;
 use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -127,5 +128,68 @@ class BillingoController extends Controller
         TransactionController::updateComment($pending_transaction, $transactionComment->comment);
 
         return new PendingTransactionResource($pending_transaction);
+    }
+
+
+    public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $type, string $fulfillment_date,
+    string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
+    string $unit, string $vat, string $comment, bool $should_send_email
+    ): JsonResponse
+    {
+        $date = strtotime($fulfillment_date);
+        $date = strtotime('+7 days', $date);
+        $due_date = date('Y-m-d', $date);
+        $request = Http::withHeaders([
+            'X-API-KEY' => $api_key,
+        ])->post('https://api.billingo.hu/v3/documents', [
+            'partner_id' => $partner_id,
+            'block_id' => $block_id,
+            'type' => $type,
+            'fulfillment_date' => $fulfillment_date,
+            'due_date' => $due_date,
+            'payment_method' => $payment_method,
+            'language' => $language,
+            'currency' => $currency,
+            'items' => [
+                [
+                    'name' => $name,
+                    'unit_price' => $unit_price,
+                    'unit_price_type' => $unit_price_type,
+                    'quantity' => $quantity,
+                    'unit' => $unit,
+                    'vat' => $vat,
+                    'comment' => $comment,
+                ], ],
+            'settings' => [
+                'should_send_email' => $should_send_email,
+            ],
+        ])->json();
+        return response()->json($request);
+    }
+
+    public static function getBillingDocument(int $documentId, string $api_key): JsonResponse
+    {
+        $request =  Http::withHeaders([
+            'X-API-KEY' => $api_key,
+        ])->get('https://api.billingo.hu/v3/documents/'.$documentId)->json();
+        return response()->json($request);
+    }
+
+    public static function proformaToInvoice($document, string $api_key, $comment): JsonResponse
+    {
+        Http::withHeaders([
+            'X-API-KEY' => $api_key,
+        ])->post('https://api.billingo.hu/v3/documents/'.$document['id'].'/create-from-proforma', [
+            'document_type' => 'invoice',
+            'fulfillment_date' => $document['fulfillment_date'],
+            'due_date' => $document['due_date'],
+            'document_format' => '',
+            'comment' => $comment,
+            'settings' => [
+                'should_send_email' => true,
+            ],
+        ])->json();
+
+        return response()->json('Invoice successfully created');
     }
 }

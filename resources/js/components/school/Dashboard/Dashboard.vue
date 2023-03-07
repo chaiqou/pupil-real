@@ -105,16 +105,16 @@
       ></dashboard-transactions>
     </div>
   </div>
-  <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
+  <div v-if="this.pieChartData" class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
       class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
     >
-      <Pie
-        width="100%"
-        id="RandomChart"
-        :chartData="this.chartData"
-        :labels="this.labels"
-      ></Pie>
+          <Pie
+              width="100%"
+              id="RandomChart"
+              :pieChartData="this.pieChartData"
+              :labels="this.pieChartLabels"
+          ></Pie>
     </div>
     <div
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
@@ -131,14 +131,11 @@
 </template>
 
 <script>
+import axios from "axios";
 import VueApexCharts from "vue3-apexcharts";
 import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
-import {
-  CursorArrowRaysIcon,
-  EnvelopeOpenIcon,
-  UsersIcon,
-} from "@heroicons/vue/24/outline";
+import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import Pie from "@/components/Ui/Charts/Pie.vue";
 import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
 
@@ -148,9 +145,6 @@ export default {
     Pie,
     ArrowDownIcon,
     ArrowUpIcon,
-    CursorArrowRaysIcon,
-    EnvelopeOpenIcon,
-    UsersIcon,
     DashboardTransactions,
   },
   data() {
@@ -190,86 +184,23 @@ export default {
         },
       ],
       currentMonthDates: [],
-      labels: ["example1", "example2"],
-      chartData: [40, 50, 12],
+      pieChartLabels: [],
+      pieChartData: null,
       series: [
         {
-          name: "Session Duration",
+          name: "Blue",
           type: "area",
-          data: [
-            45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-          ],
+          data: [],
         },
         {
-          name: "Page Views",
+          name: "Purple",
           type: "line",
-          data: [
-            null,
-            null,
-            null,
-            7,
-            4,
-            5,
-            6,
-            29,
-            37,
-            36,
-            51,
-            32,
-            35,
-            20,
-            21,
-            22,
-            31,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ],
+          data: [],
         },
         {
-          type: "line",
-          name: "Total Visits",
-          data: [
-            87,
-            57,
-            74,
-            99,
-            75,
-            38,
-            62,
-            47,
-            82,
-            56,
-            45,
-            47,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ],
+              name: "Dashed",
+              type: "line",
+              data: []
         },
       ],
       chartOptions: {
@@ -295,7 +226,7 @@ export default {
           enabled: false,
         },
         stroke: {
-          width: [5, 7, 5],
+          width: [3, 3, 2],
           curve: "smooth",
           dashArray: [0, 0, 2],
         },
@@ -346,13 +277,44 @@ export default {
       },
     };
   },
+  methods: {
+    handleGetPieChartDataRequest() {
+      axios
+        .get("/api/school/pie-chart-data")
+        .then((res) => {
+          const data = res.data;
+          this.pieChartData = data.map((item) => item.share_count);
+          this.pieChartLabels = data.map((item) => item.title);
+        })
+        .catch((err) => console.log(err));
+    },
+      handleGetLineChartDataRequest() {
+          axios
+              .get("/api/school/line-chart-data")
+              .then((res) => {
+                  console.log(res.data);
+                  const blue = this.series.find((item) => item.name === 'Blue');
+                  const purple = this.series.find((item) => item.name === 'Purple');
+                  const dashed = this.series.find((item) => item.name === 'Dashed');
+                  blue.data = res.data.previous;
+                  purple.data = res.data.current;
+                  dashed.data = res.data.prediction;
+              })
+              .catch((err) => console.log(err));
+      },
+  },
   mounted() {
     const start = startOfMonth(new Date());
     const end = endOfMonth(new Date());
-    this.currentMonthDates = eachDayOfInterval({ start, end }).map((date) =>
+    this.currentMonthDates = eachDayOfInterval({
+      start,
+      end,
+    }).map((date) =>
       date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
     );
     console.log(this.currentMonthDates);
+    this.handleGetPieChartDataRequest();
+    this.handleGetLineChartDataRequest();
   },
 };
 </script>
