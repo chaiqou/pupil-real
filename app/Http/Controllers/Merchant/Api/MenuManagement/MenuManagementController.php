@@ -15,6 +15,17 @@ class MenuManagementController extends Controller
         $createMenuInstance = new CreateMenuJson($validated);
         $createdMenuJson = $createMenuInstance->calculateMenu();
 
-        LunchMenu::create(['menus' => json_encode($createdMenuJson), 'lunch_id' => $validated['lunch_id']]);
+        // If a Menu with the same date and lunch_id already exists in the database, model will not be created
+        $menu = LunchMenu::firstOrCreate([
+            'date' => array_keys($createdMenuJson)[0],
+            'lunch_id' => $validated['lunch_id'],
+        ], [
+            // This array contains the default values to use when creating a new Menu
+            'menus' => json_encode($createdMenuJson),
+        ]);
+
+        if ($menu) {
+            return response()->json(['error' => 'Menu for this lunch already exists']);
+        }
     }
 }

@@ -204,7 +204,6 @@
         required
         autocomplete
         appendNewOption
-        searchable
         :createOption="true"
         :close-on-select="false"
         :searchable="true"
@@ -249,7 +248,7 @@
 <script setup>
 import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
 import { ref, onMounted, watch, computed } from "vue";
-import { Field, ErrorMessage, useForm, useField } from "vee-validate";
+import { Field, ErrorMessage, useField } from "vee-validate";
 import Multiselect from "@vueform/multiselect";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
@@ -261,7 +260,6 @@ import HoldsIcon from "@/components/icons/HoldsIcon.vue";
 import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";
 import VatMultiselect from "./VatMultiselect.vue";
 
-const { setFieldValue } = useForm();
 // Composables
 
 const store = useLunchFormStore();

@@ -4,7 +4,7 @@
     <div
       class="my-4 flex w-full flex-wrap justify-between space-y-4 sm:flex-nowrap sm:space-y-0 sm:space-x-12"
     >
-      <template v-for="option in options">
+      <template v-for="option in options" :key="option">
         <button
           type="button"
           @click="onClickShowCard(option)"

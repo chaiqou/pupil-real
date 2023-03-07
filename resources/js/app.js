@@ -48,6 +48,7 @@ import SchoolTerminalsHeader from "@/components/school/Terminals/TerminalsHeader
 import ParentCalendar from "@/components/parent/lunch-management/ParentCalendar.vue";
 import MenuCalendar from "@/components/Merchant/Menu-management/MenuCalendar.vue";
 import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
+import ParentMenuCalendar from "@/components/parent/Menus/ParentMenuCalendar.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -66,6 +67,7 @@ app.component("parent-students-mobile", ParentStudentsMobile);
 app.component("parent-lunch-list", ParentLunchList);
 app.component("parent-lunch-details", ParentLunchDetails);
 app.component("parent-calendar", ParentCalendar);
+app.component("parent-menu-calendar", ParentMenuCalendar);
 
 // School global components
 app.component("school-terminals", SchoolTerminals);

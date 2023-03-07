@@ -128,7 +128,7 @@ import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
 const store = useLunchFormStore();
 
-const props = defineProps({
+defineProps({
   extras: {
     type: String,
     required: true,

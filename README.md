@@ -1,109 +1,97 @@
-<p align="center">
-<picture width="500">
-  <source width="500" media="(prefers-color-scheme: dark)" srcset="/public/img/dash-color-darkmode.svg">
-  <img width="500" alt="Hubble logo" src="/public/img/dash-color.svg">
-</picture>
-</p>
+# 1.0 clone Project with PHP Version 8.2
 
-# Dash Starter
+## Prerequisites
+### Before you begin, you must have the following installed on your system:
 
-### Laravel dashboard template
+##### Git 
+##### PHP 
+##### Composer
+##### Redis
+##### MySQL
 
-## Deployment
 
-Clone the repository
-
-```
-git clone https://github.com/leventdev/dash-starter.git
-```
-
-Go into the cloned repository
+## Clone the Project by running the following command:
 
 ```
-cd dash-starter
+git clone https://github.com/<username>/<project-name>.git
 ```
 
-Install composer dependancies
+## if you'r PHP version is 8.2 update php-gd package by running the following command:
+
+```
+sudo apt-get install php-gd
+```
+
+## Install the project dependencies by running the following command:
 
 ```
 composer install
 ```
-
-Install npm dependancies
-
-```
-npm install
-```
-
-Make an environment configuration based on the example and set it up
+## Create a copy of the .env.example file and rename it to .env by running the following command:
 
 ```
 cp .env.example .env
-nano .env
 ```
 
-Set the app key
+## Generate a new Laravel application key by running the following command:
 
 ```
 php artisan key:generate
 ```
 
-Set up the tables
+## Update .env Credentials
+
+## Migrate and Seed DB by running the following command:
 
 ```
-php artisan migrate
+php artisan migrate --seed
 ```
 
-Set up permissions for the app
+## Run Octane Server by running the following command:
 
 ```
-sudo chown -R www-data:www-data /root/to/dash
+php artisan ocnate:start --watch
 ```
 
-Set up the web server of your choice
-
-And finish off by building the app
-
-```
-npm run prod
-```
-
-Add command to crontab  
-Replace /var/www/dash to Dash's location
-
-```
-* * * * * cd /var/www/dash && php artisan schedule:run
-
-```
-
-# Redis and Horizon configuration
-
-1. Install the Predis package
-
-```
-composer require predis/predis
-
-```
-
-2. Always set QUEUE_CONNECTION to redis in the .env file
-
-```
-QUEUE_CONNECTION=redis
-
-```
-
-3. Start the Horizon dashboard and queue by running the following command (instead of php artisan queue:work)
+## Run Horizon dashboard for queues by running the following command:
 
 ```
 php artisan horizon
-
 ```
 
-4. You should add your email to access Horizon dashboard in gate inside HorizonServiceProvider.php file
+## Run Vite by running the following command:
 
 ```
+npm run dev
+```
 
-  protected function gate(): void
+
+
+
+# 2.0 Redis and Horizon configuration
+
+## Install the Predis package
+
+```
+composer require predis/predis
+```
+
+## Always set QUEUE_CONNECTION to redis in the .env file
+
+```
+QUEUE_CONNECTION=redis
+```
+
+## Start the Horizon dashboard and queue by running the following command (instead of php artisan queue:work)
+
+```
+php artisan horizon
+```
+
+## You should add your email to access Horizon dashboard in gate inside HorizonServiceProvider.php file
+
+```
+ protected function gate(): void
     {
         Gate::define('viewHorizon', function ($user) {
             return in_array($user->email, [
@@ -113,4 +101,4 @@ php artisan horizon
     }
 ```
 
-4. That's it! You should now be able to access the Horizon dashboard at http://your-app-url/horizon.
+### That's it! You should now be able to access the Horizon dashboard at http://your-app-url/horizon.

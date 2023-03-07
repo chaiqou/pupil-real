@@ -107,6 +107,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('dashboard/{student_id}', 'parent')->name('parent.dashboard');
                 Route::get('available-lunches/{student_id}', 'parent')->name('parent.available-lunches');
                 Route::get('lunch-details/{student_id}', 'parent')->name('parent.lunch-details');
+                Route::get('menus/{student_id}', 'parent')->name('parent.menus');
             });
             Route::get('checkout/success', [StripeCheckoutController::class, 'success'])->name('parent.checkout_success');
             Route::get('checkout/cancel', [StripeCheckoutController::class, 'cancel'])->name('parent.checkout_cancel');

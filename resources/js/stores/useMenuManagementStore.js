@@ -11,6 +11,8 @@ export const useMenuManagementStore = defineStore("menu_management", {
       claimables: [],
       lunchName: "",
       lunchId: null,
+      fixedMenus: [],
+      choicesMenus: [],
     };
   },
 

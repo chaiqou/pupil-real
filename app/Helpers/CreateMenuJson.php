@@ -29,7 +29,7 @@ class CreateMenuJson
         // Group the menus by date
 
         $result = $menus->groupBy(function () {
-            return Carbon::parse($this->validate['day'])->format('Y-m-d 23:00:00');
+            return Carbon::parse($this->validate['day'])->addDay()->format('Y-m-d');
         })->toArray();
 
         return $result;

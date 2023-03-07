@@ -1,9 +1,6 @@
 <template>
   <RenderDifferentCards />
-  <div
-    class="bg-inherit md:h-[70vh] md:w-[30vw] xl:h-[50vh] xl:w-[40vw] 2xl:h-[100vh] 2xl:w-[50vw]"
-    :class="classes"
-  >
+  <div class="w-full">
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
     >
@@ -32,8 +29,7 @@
             @click="onClickCalendar(day)"
             :key="dayIdx"
             :class="[
-              month.name !== getMonthByIndex(day.getMonth()) &&
-              month.name === monthFullNames[day.getMonth()]
+              month.name !== getMonthByIndex(day.getMonth())
                 ? 'bg-white text-gray-900'
                 : 'bg-gray-50 text-gray-400',
               dayIdx === 0 && 'rounded-tl-lg',
@@ -65,17 +61,7 @@ const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
 
 const { monthsDays } = useFindMonthDays(11);
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
-
-const props = defineProps({
-  months: {
-    type: Number,
-    required: true,
-  },
-  classes: {
-    type: Array,
-  },
-});
+const { getMonthByIndex } = useFindMonthByIndex();
 
 const lunches = ref([]);
 

@@ -73,10 +73,10 @@
               :key="holds"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="flex" v-for="hold in holds">
+              <div class="flex" v-for="(hold, holdIdx) in holds" :key="holdIdx">
                 <br />
                 {{ format(parseISO(hold), "yyyy MMM dd") }}
-              </template>
+              </div>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -86,10 +86,14 @@
               :key="extras"
               class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
             >
-              <template class="mt-4 flex" v-for="extra in extras">
+              <div
+                class="mt-4 flex"
+                v-for="(extra, extraIdx) in extras"
+                :key="extraIdx"
+              >
                 <br />
                 {{ format(parseISO(extra), "yyyy MMM dd") }}
-              </template>
+              </div>
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -159,7 +163,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
-import { format, parseISO, addHours, isAfter, isEqual } from "date-fns";
+import { format, parseISO, addHours, isAfter } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import Toast from "@/components/Ui/Toast.vue";
 import OrderDetailsCard from "./OrderDetailsCard.vue";
@@ -193,10 +197,11 @@ watch(availableOrders, () => {
     // get keys from claims
     const claimsKeys = Object.keys(parsedClaims);
 
+    console.log(claimsKeys);
     // Assign all dates in one state
     claimsKeys.forEach((claim) => {
-      store.disabledDaysForLunchOrdering.push(parseISO(claim)),
-        disabledDaysForLunchOrder.value.push(parseISO(claim));
+      store.disabledDaysForLunchOrdering.push(parseISO(claim));
+      disabledDaysForLunchOrder.value.push(parseISO(claim));
     });
   });
 });
@@ -233,9 +238,8 @@ watch(bufferTime, (newValue) => {
   const removeDisabledDays = availableDays.value
     .filter(
       (x) =>
-        (!formattedDisabledDays.includes(x) &&
-          isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0]))) ||
-        isEqual(parseISO(x), parseISO(firstAvailableLunchDate[0])),
+        !formattedDisabledDays.includes(x) &&
+        isAfter(parseISO(x), parseISO(firstAvailableLunchDate[0])),
     )
     .map((day) => parseISO(day));
 

@@ -20,7 +20,7 @@ import CalendarDay from "@/components/Merchant/Menu-management/CalendarDay.vue";
 
 const store = useLunchFormStore();
 
-const props = defineProps({
+defineProps({
   day: {
     type: Date,
     required: true,

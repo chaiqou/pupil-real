@@ -52,7 +52,6 @@
         required
         autocomplete
         appendNewOption
-        searchable
         :createOption="true"
         :close-on-select="false"
         :searchable="true"

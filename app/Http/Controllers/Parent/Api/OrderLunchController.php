@@ -10,15 +10,16 @@ use App\Models\Lunch;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderLunchController extends Controller
 {
-    public function availableOrders(): JsonResponse
+    public function availableOrders(Request $request): JsonResponse
     {
-        $orders = PeriodicLunch::whereDate('end_date', '>=', Carbon::now())->get();
+        $student_id = $request->route('student_id');
+        $orders = PeriodicLunch::where('student_id', $student_id)->get();
 
         return response()->json(['orders' => $orders]);
     }

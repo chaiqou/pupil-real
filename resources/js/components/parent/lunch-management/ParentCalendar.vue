@@ -34,8 +34,7 @@
                 markAllDisabledDays(day),
                 markAllPossibleDays(day, month),
                 markAllPossibleDaysForStripe(day, month),
-                month.name !== getMonthByIndex(day.getMonth()) &&
-                month.name === monthFullNames[day.getMonth()]
+                month.name !== getMonthByIndex(day.getMonth())
                   ? 'bg-white text-gray-900'
                   : 'bg-gray-50 text-gray-400',
                 dayIdx === 0 && 'rounded-tl-lg',
@@ -73,14 +72,14 @@
 
 <script setup>
 import { format, isToday, parseISO } from "date-fns";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import useCheckIfDaysMatches from "@/composables/calendar/useCheckIfDaysMatches";
 
 const { ifDaysMatch } = useCheckIfDaysMatches();
-const { getMonthByIndex, monthFullNames } = useFindMonthByIndex();
+const { getMonthByIndex } = useFindMonthByIndex();
 const { monthsDays } = useFindMonthDays(11);
 
 const store = useLunchFormStore();
@@ -106,8 +105,7 @@ const markAllPossibleDays = (day, month) =>
   claimDays.value.length > 0
     ? claimDays.value.map((claim) =>
         format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-        month.name !== getMonthByIndex(day.getMonth()) &&
-        month.name === monthFullNames[day.getMonth()]
+        month.name !== getMonthByIndex(day.getMonth())
           ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
           : "",
       )
@@ -118,8 +116,7 @@ const markAllPossibleDaysForStripe = (day, month) => {
     return dates.value.length > 0
       ? dates.value.map((claim) =>
           format(claim, "yyyy-MM-dd") == format(day, "yyyy-MM-dd") &&
-          month.name !== getMonthByIndex(day.getMonth()) &&
-          month.name === monthFullNames[day.getMonth()]
+          month.name !== getMonthByIndex(day.getMonth())
             ? "!bg-indigo-600 text-white hover:!bg-indigo-800"
             : "",
         )
@@ -132,14 +129,18 @@ const claimDays = computed(() => {
     .filter((date) => new Date(date) >= new Date(store.first_day))
     .slice(0, store.period_length);
 
-  store.claim_days = days;
   return days;
 });
 
+watch(claimDays, (days) => {
+  store.claim_days = days;
+});
+
 let dates = computed(() => {
-  if (props.stripeDays) {
-    const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
-    return getDays.map((day) => parseISO(day));
+  if (!props.stripeDays) {
+    return [];
   }
+  const getDays = Object.keys(JSON.parse(props.stripeDays.claims));
+  return getDays.map((day) => parseISO(day));
 });
 </script>
