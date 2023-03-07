@@ -4,7 +4,7 @@
       {{ `${menu.date} - ${menu.menu_name}` }}
     </h1>
   </template>
-  <Form :validation-schema="schema" @submit="onSubmit">
+  <Form @submit="onSubmit">
     <div v-if="menu.menu_type === 'choices'">
       <template v-for="menu in menu.menu_name" :key="menu">
         <BaseRadio name="choices" :value="menu" />
@@ -13,7 +13,7 @@
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
-    <Button class="ml-auto w-1/2" />
+    <Button text="Submit" class="ml-auto w-1/2" type="submit" />
   </Form>
 </template>
 
@@ -30,9 +30,8 @@ defineProps({
 });
 
 const onSubmit = function (values) {
-  console.log(values);
   axios.post("/api/parent/save-menu", {
-    values: values,
+    values,
   });
 };
 </script>

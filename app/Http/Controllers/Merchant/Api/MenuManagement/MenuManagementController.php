@@ -32,6 +32,6 @@ class MenuManagementController extends Controller
 
     public function saveMenu(Request $request)
     {
-         dd($request);
+         dd($request->all());
     }
 }
