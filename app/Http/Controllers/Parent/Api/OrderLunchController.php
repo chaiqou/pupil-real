@@ -74,8 +74,8 @@ class OrderLunchController extends Controller
                 'merchant_id' => $lunch->merchant_id,
                 'lunch_id' => $validate['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $claimResult['claimDates'][0],
-                'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
+                'start_date' => reset($claimResult['claimDates']),
+                'end_date' => end($claimResult['claimDates']),
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
