@@ -22,7 +22,7 @@ import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 import Button from "@/components/Ui/Button.vue";
 import { Form } from "vee-validate";
 
-defineProps({
+const props = defineProps({
   menu: {
     type: Object,
     required: true,
@@ -31,7 +31,8 @@ defineProps({
 
 const onSubmit = function (values) {
   axios.post("/api/parent/save-menu", {
-    values,
+    valeus: values,
+    date: props.menu.date,
   });
 };
 </script>

@@ -24,17 +24,18 @@ class LunchController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        if(auth()->user()->hasRole('school')) {
+        if (auth()->user()->hasRole('school')) {
             $merchant = Merchant::where('user_id', auth()->user()->id)->first();
             $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
         }
-            if(auth()->user()->hasRole('parent')) {
-                $student = Student::where('school_id', auth()->user()->school_id)->first();
-                $merchants = Merchant::where('school_id', $student->school_id)->get();
-                foreach($merchants as $merchant) {
-                  $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
-                }
-            };
+        if (auth()->user()->hasRole('parent')) {
+            $student = Student::where('school_id', auth()->user()->school_id)->first();
+            $merchants = Merchant::where('school_id', $student->school_id)->get();
+            foreach ($merchants as $merchant) {
+                $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
+            }
+        }
+
         return LunchResource::collection($lunches);
     }
 

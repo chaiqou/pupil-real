@@ -6,6 +6,7 @@ use App\Helpers\CreateMenuJson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Models\LunchMenu;
+use App\Models\PeriodicLunch;
 use Illuminate\Http\Request;
 
 class MenuManagementController extends Controller
@@ -32,6 +33,6 @@ class MenuManagementController extends Controller
 
     public function saveMenu(Request $request)
     {
-        dd($request->all());
+        $model = PeriodicLunch::where('start_date', request('date'))->first();
     }
 }
