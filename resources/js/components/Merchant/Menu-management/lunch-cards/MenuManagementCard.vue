@@ -1,10 +1,6 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
-  <div v-if="store.confirmationModal">
-    <ConfirmModal />
-  </div>
-
   <div
-    v-if="!store.confirmationModal"
     class="fixed z-50 flex min-h-screen w-screen flex-col items-center justify-center bg-black/50"
   >
     <div
@@ -34,7 +30,6 @@ import { format } from "date-fns";
 import { onClickOutside } from "@vueuse/core";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import SingleLunchCard from "./SingleLunchCard.vue";
-import ConfirmModal from "@/components/Ui/ConfirmModal.vue";
 
 const store = useMenuManagementStore();
 
@@ -54,7 +49,6 @@ const getLunchData = async () => {
   }
 };
 
-// eslint-disable-next-line no-unused-vars
 const lunchData = await getLunchData();
 
 // Close on click outside model
@@ -62,6 +56,8 @@ const lunchData = await getLunchData();
 const target = ref(null);
 
 onClickOutside(target, () => {
-  store.confirmationModal = true;
+  store.toggleMenuManagementCard = false;
+  store.suitableLunch = [];
+  store.selectedDay = "";
 });
 </script>
