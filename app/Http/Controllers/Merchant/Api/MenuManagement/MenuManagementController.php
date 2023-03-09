@@ -54,6 +54,8 @@ class MenuManagementController extends Controller
             $model->save();
 
             return response()->json('updated');
+        } else {
+            return response()->json('menu already saved');
         }
     }
 }
