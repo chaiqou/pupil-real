@@ -13,6 +13,7 @@ export const useMenuManagementStore = defineStore("menu_management", {
       lunchId: null,
       fixedMenus: [],
       choicesMenus: [],
+      confirmationModal: false,
     };
   },
 
