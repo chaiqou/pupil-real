@@ -36,7 +36,6 @@ class MenuManagementController extends Controller
     {
         $validated = $request->validated();
 
-
         $model = PeriodicLunch::where(function ($query) use ($validated) {
             $query->where('claims', 'like', '%"'.$validated['date'].'"%');
         })->first();
@@ -46,8 +45,14 @@ class MenuManagementController extends Controller
             $json = json_decode($model->claims, true);
 
             foreach ($json[$validated['date']] as &$element) {
-                $element['menu'] = $validated['values']['fixed'] ?? $validated['values']['choices'];
-                $element['menu_code'] = $validated['values']['fixed'] ? 0 : 2;
+                // set menu and menu_code values based on whether 'fixed' or 'choices' key exists
+                if (array_key_exists('fixed', $validated['values'])) {
+                    $element['menu'] = $validated['values']['fixed'];
+                    $element['menu_code'] = 0;
+                } else {
+                    $element['menu'] = $validated['values']['choices'];
+                    $element['menu_code'] = 2;
+                }
             }
 
             $model->claims = json_encode($json);
