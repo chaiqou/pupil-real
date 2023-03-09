@@ -21,6 +21,9 @@
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 import Button from "@/components/Ui/Button.vue";
 import { Form } from "vee-validate";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+
+const store = useMenuManagementStore();
 
 const props = defineProps({
   menu: {
@@ -30,9 +33,16 @@ const props = defineProps({
 });
 
 const onSubmit = function (values) {
-  axios.post("/api/parent/save-menu", {
-    values: values,
-    date: props.menu.date,
-  });
+  axios
+    .post("/api/parent/save-menu", {
+      values: values,
+      date: props.menu.date,
+    })
+    .then(() => {
+      store.toggleFixedCard = false;
+      store.toggleChoicesCard = false;
+      store.fixedMenus = [];
+      store.choicesMenus = [];
+    });
 };
 </script>

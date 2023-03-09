@@ -36,7 +36,8 @@ class MenuManagementController extends Controller
     {
         $validated = $request->validated();
 
-        $model = PeriodicLunch::where(function ($query) {
+
+        $model = PeriodicLunch::where(function ($query) use ($validated) {
             $query->where('claims', 'like', '%"'.$validated['date'].'"%');
         })->first();
 
