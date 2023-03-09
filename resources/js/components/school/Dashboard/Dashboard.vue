@@ -107,7 +107,7 @@
   </div>
   <div v-if="this.pieChartData" class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
+      class="mb-5 flex items-center justify-center rounded-lg bg-white xl:shadow-2xl lg:mr-3 xl:w-1/2"
     >
           <Pie
               width="100%"
@@ -117,6 +117,7 @@
           ></Pie>
     </div>
     <div
+      v-if="isLineChartDataCalculated"
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
     >
       <div class="w-full">
@@ -127,6 +128,13 @@
         ></ApexChart>
       </div>
     </div>
+      <div v-if="!isLineChartDataCalculated" class="border border-4 border-dashed rounded-md flex items-center justify-center xl:w-2/3">
+          <div class="flex items-center justify-center flex-col my-32">
+              <list-bullet-icon class="xl:w-32 w-24 text-gray-500"></list-bullet-icon>
+              <h1 class="xl:text-xl text-sm p-4 xl:p-0">You need to have some transactions before we can show you an overview</h1>
+          </div>
+      </div>
+
   </div>
 </template>
 
@@ -138,6 +146,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import Pie from "@/components/Ui/Charts/Pie.vue";
 import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
+import { ListBulletIcon }  from "@heroicons/vue/24/outline";
 
 export default {
   components: {
@@ -146,9 +155,11 @@ export default {
     ArrowDownIcon,
     ArrowUpIcon,
     DashboardTransactions,
+    ListBulletIcon,
   },
   data() {
     return {
+        isLineChartDataCalculated: false,
       statsTop: [
         {
           id: 1,
@@ -293,12 +304,15 @@ export default {
               .get("/api/school/line-chart-data")
               .then((res) => {
                   console.log(res.data);
-                  const blue = this.series.find((item) => item.name === 'Blue');
-                  const purple = this.series.find((item) => item.name === 'Purple');
-                  const dashed = this.series.find((item) => item.name === 'Dashed');
-                  blue.data = res.data.previous;
-                  purple.data = res.data.current;
-                  dashed.data = res.data.prediction;
+                  if(res.data !== 'Nothing is found') {
+                      const blue = this.series.find((item) => item.name === 'Blue');
+                      const purple = this.series.find((item) => item.name === 'Purple');
+                      const dashed = this.series.find((item) => item.name === 'Dashed');
+                      blue.data = res.data.previous;
+                      purple.data = res.data.current;
+                      dashed.data = res.data.prediction;
+                      this.isLineChartDataCalculated = true;
+                  }
               })
               .catch((err) => console.log(err));
       },
@@ -312,7 +326,6 @@ export default {
     }).map((date) =>
       date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
     );
-    console.log(this.currentMonthDates);
     this.handleGetPieChartDataRequest();
     this.handleGetLineChartDataRequest();
   },
