@@ -122,6 +122,21 @@ watch(availableOrders, () => {
   });
 });
 
+// if menu type is fixed send api requesdt to fill claims json
+
+watch(menus, (newValue) => {
+  newValue.forEach((menusArray) => {
+    menusArray.menus.forEach((menu) => {
+      if (menu.menu_type === "fixed") {
+        axios.post("/api/parent/save-menu", {
+          values: menu.menu_name,
+          date: menu.date,
+        });
+      }
+    });
+  });
+});
+
 // determine which type of menu we have based on menu type and style it differently returns boolean
 
 const loopOverMenusArray = computed(() => {
