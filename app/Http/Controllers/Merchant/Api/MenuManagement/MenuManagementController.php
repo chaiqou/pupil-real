@@ -46,12 +46,12 @@ class MenuManagementController extends Controller
 
             foreach ($json[$validated['date']] as &$element) {
                 // set menu and menu_code values based on whether 'fixed' or 'choices' key exists
-                if (array_key_exists('fixed', $validated['values'])) {
-                    $element['menu'] = $validated['values']['fixed'];
-                    $element['menu_code'] = 0;
-                } else {
+                if (is_array($validated['values']) && array_key_exists('choices', $validated['values'])) {
                     $element['menu'] = $validated['values']['choices'];
                     $element['menu_code'] = 2;
+                } else {
+                    $element['menu'] = $validated['values'];
+                    $element['menu_code'] = 0;
                 }
             }
 

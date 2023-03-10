@@ -122,7 +122,7 @@ watch(availableOrders, () => {
   });
 });
 
-// if menu type is fixed send api requesdt to fill claims json
+// if menu type is fixed send api request to fill claims json
 
 watch(menus, (newValue) => {
   newValue.forEach((menusArray) => {
