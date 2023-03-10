@@ -13,7 +13,9 @@
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
-    <Button text="Submit" class="ml-auto w-1/2" type="submit" />
+    <template v-if="menu.menu_type === 'choices'">
+      <Button text="Submit" class="ml-auto w-1/2" type="submit" />
+    </template>
   </Form>
 </template>
 
