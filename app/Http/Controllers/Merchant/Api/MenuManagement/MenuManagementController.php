@@ -8,6 +8,7 @@ use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\SaveMenuRequest;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class MenuManagementController extends Controller
@@ -17,6 +18,30 @@ class MenuManagementController extends Controller
         $validated = $request->validated();
         $createMenuInstance = new CreateMenuJson($validated);
         $createdMenuJson = $createMenuInstance->calculateMenu();
+
+        if ($validated['menu_type'] === 'Fixed') {
+            $formattedDay = Carbon::parse($validated['day'])->addDay()->format('Y-m-d');
+            $model = PeriodicLunch::where(function ($query) use ($formattedDay) {
+                $query->where('claims', 'like', '%"'.$formattedDay.'"%');
+            })->get();
+
+            if ($model) {
+                foreach ($model as $oneModel) {
+                    $claims = json_decode($oneModel['claims'], true);
+
+                    foreach ($claims as $date => $claimData) {
+                        if ($date == $formattedDay) {
+                            $claims[$date][0]['menu'] = 'New Menu';
+                            $claims[$date][0]['menu_code'] = 'New Menu Code';
+                        }
+                    }
+
+                    // Encode the updated array back into a string and save it to the model
+                    $oneModel['claims'] = json_encode($claims);
+                    $oneModel->save();
+                }
+            }
+        }
 
         // If a Menu with the same date and lunch_id already exists in the database, model will not be created
         $menu = LunchMenu::firstOrCreate([
