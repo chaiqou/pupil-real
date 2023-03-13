@@ -21,24 +21,18 @@ class MenuManagementController extends Controller
 
         if ($validated['menu_type'] === 'Fixed') {
             $formattedDay = Carbon::parse($validated['day'])->addDay()->format('Y-m-d');
-            $model = PeriodicLunch::where(function ($query) use ($formattedDay) {
-                $query->where('claims', 'like', '%"'.$formattedDay.'"%');
-            })->get();
+            $models = PeriodicLunch::where('claims', 'like', '%"'.$formattedDay.'"%')->get();
 
-            if ($model) {
-                foreach ($model as $oneModel) {
-                    $claims = json_decode($oneModel['claims'], true);
+            foreach ($models as $model) {
+                $claims = json_decode($model->claims, true);
 
-                    foreach ($claims as $date => $claimData) {
-                        if ($date == $formattedDay) {
-                            $claims[$date][0]['menu'] = 'New Menu';
-                            $claims[$date][0]['menu_code'] = 'New Menu Code';
-                        }
-                    }
+                if (isset($claims[$formattedDay])) {
+                    $claims[$formattedDay][0]['menu'] = 'New Menu';
+                    $claims[$formattedDay][0]['menu_code'] = 'New Menu Code';
 
                     // Encode the updated array back into a string and save it to the model
-                    $oneModel['claims'] = json_encode($claims);
-                    $oneModel->save();
+                    $model->claims = json_encode($claims);
+                    $model->save();
                 }
             }
         }
