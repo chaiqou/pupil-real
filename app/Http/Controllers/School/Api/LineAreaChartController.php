@@ -250,7 +250,7 @@ class LineAreaChartController extends Controller
         $currentMonth = Carbon::now();
         $previousMonth = $currentMonth->copy()->subMonth();
         $numberOfDaysPrevious = $previousMonth->daysInMonth;
-        $numberOfDaysCurrent = $currentMonth->day;
+        $numberOfDaysCurrent = $currentMonth->daysInMonth;
 
 // Determine the number of days to use for initializing the arrays
         $numberOfDays = $numberOfDaysCurrent;
@@ -260,7 +260,19 @@ class LineAreaChartController extends Controller
 
 // Create arrays with the specified number of days, initialized to zero
         $transactionsByDayPrevious = array_fill(0, $numberOfDaysPrevious, 0);
-        $transactionsByDayCurrent = array_fill(0, $numberOfDays, 0);
+       // $transactionsByDayCurrent = array_fill(0, $numberOfDaysCurrent, 0);
+        $transactionsByDayCurrent = array_fill(0, $numberOfDaysPrevious, 0);
+        if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
+            $transactionsByDayCurrent = array_slice($transactionsByDayCurrent, 0, $numberOfDaysPrevious);
+        }
+
+        $tomorrow_day_index = (int)date('j', strtotime('+1 days')) - 1;
+        //Calculate the formula and fill only the days after today
+        for ($i = $tomorrow_day_index; $i < count($transactionsByDayCurrent); $i++) {
+            $transactionsByDayCurrent[$i] = null;
+        }
+
+
 
 // Get the pending transactions for the previous month
         $pendingTransactionsPrevious = PendingTransaction::where('merchant_id', $merchant->id)
@@ -297,7 +309,7 @@ class LineAreaChartController extends Controller
 
 
 //Calculate the next day index to find the index of current day into the array
-        $next_day_index = (int)date('j', strtotime('+2 days')) - 1;
+        $next_day_index = (int)date('j', strtotime('+1 days')) - 1;
 
         $transactionsByDayPrediction = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
