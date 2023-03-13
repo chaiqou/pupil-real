@@ -174,20 +174,16 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const weekdayNames = computed(() =>
-  props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" "),
-);
+const weekdayNames = computed(() => {
+  return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
+});
 
 const firstAndLastDay = computed(() => {
   const formattedDays = props.lunchDays.map((lunchDay) =>
     format(lunchDay, "yyyy.MM.dd"),
   );
 
-  const firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
-    " - ",
-  );
-
-  return firstAndLastDays;
+  return `${formattedDays.shift()} - ${formattedDays.pop()}`;
 });
 
 const successFeedbackPayWithTransfer = ref(false);
