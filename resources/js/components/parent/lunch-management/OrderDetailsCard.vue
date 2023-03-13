@@ -198,42 +198,55 @@ const payWithTransferHandler = async () => {
   try {
     loading.value = true;
 
-    const response = await axios.post(
-      `/api/parent/lunch-ordr/${props.studentId}`,
-      {
-        student_id: props.studentId,
-        available_days: store.lunch_details[0].available_days,
-        claimables: store.lunch_details[0].claimables,
-        period_length: store.lunch_details[0].period_length,
-        lunch_id: store.lunch_details[0].id,
-        claims: store.claim_days,
-      },
+    const lunchOrder = {
+      student_id: props.studentId,
+      available_days: store.lunch_details[0].available_days,
+      claimables: store.lunch_details[0].claimables,
+      period_length: store.lunch_details[0].period_length,
+      lunch_id: store.lunch_details[0].id,
+      claims: store.claim_days,
+    };
+
+    // Send a POST request to the server to create a new lunch order
+    const lunchOrderResponse = await axios.post(
+      `/api/parent/lunch-order/${props.studentId}`,
+      lunchOrder,
     );
 
-    response.status === 200
-      ? (successFeedbackPayWithTransfer.value = true)
-      : (errorFeedbackPayWithTransfer.value = true);
+    // Show success or error feedback based on the response status
+    if (lunchOrderResponse.status === 200) {
+      successFeedbackPayWithTransfer.value = true;
+    } else {
+      errorFeedbackPayWithTransfer.value = true;
+    }
 
     loading.value = false;
-  } catch (error) {
+  } catch (postError) {
+    // Show loading spinner and handle any errors that occur during the POST request
     loading.value = true;
   }
 };
 
-const payWithOnlineHandler = () => {
+const payWithOnlineHandler = async () => {
   loading.value = true;
 
-  axios
-    .post("/api/parent/checkout", {
+  try {
+    const checkoutData = {
       student_id: props.studentId,
       claimables: store.lunch_details[0].claimables,
       lunch_id: store.lunch_details[0].id,
       claims: store.claim_days,
       price: props.price,
       title: props.title,
-    })
-    .then((response) => {
-      window.location.href = response.data.url;
-    });
+    };
+
+    const response = await axios.post("/api/parent/checkout", checkoutData);
+
+    window.location.href = response.data.url;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
