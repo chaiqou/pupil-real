@@ -194,27 +194,30 @@ const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
 
-const payWithTransferHandler = () => {
-  loading.value = true;
-  axios
-    .post(`/api/parent/lunch-order/${props.studentId}`, {
-      student_id: props.studentId,
-      available_days: store.lunch_details[0].available_days,
-      claimables: store.lunch_details[0].claimables,
-      period_length: store.lunch_details[0].period_length,
-      lunch_id: store.lunch_details[0].id,
-      claims: store.claim_days,
-    })
-    .then((response) => {
-      if (response.status == 200) {
-        successFeedbackPayWithTransfer.value = true;
-      } else {
-        errorFeedbackPayWithTransfer.value = true;
-      }
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+const payWithTransferHandler = async () => {
+  try {
+    loading.value = true;
+
+    const response = await axios.post(
+      `/api/parent/lunch-ordr/${props.studentId}`,
+      {
+        student_id: props.studentId,
+        available_days: store.lunch_details[0].available_days,
+        claimables: store.lunch_details[0].claimables,
+        period_length: store.lunch_details[0].period_length,
+        lunch_id: store.lunch_details[0].id,
+        claims: store.claim_days,
+      },
+    );
+
+    response.status === 200
+      ? (successFeedbackPayWithTransfer.value = true)
+      : (errorFeedbackPayWithTransfer.value = true);
+
+    loading.value = false;
+  } catch (error) {
+    loading.value = true;
+  }
 };
 
 const payWithOnlineHandler = () => {
