@@ -196,11 +196,9 @@ const payWithTransferHandler = async () => {
 
     const lunchOrder = {
       student_id: props.studentId,
-      available_days: store.lunch_details[0].available_days,
       claimables: store.lunch_details[0].claimables,
-      period_length: store.lunch_details[0].period_length,
       lunch_id: store.lunch_details[0].id,
-      claims: store.claim_days,
+      claim_days: store.claim_days,
     };
 
     // Send a POST request to the server to create a new lunch order
