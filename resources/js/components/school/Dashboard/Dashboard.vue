@@ -210,17 +210,17 @@ export default {
       pieChartData: null,
       series: [
         {
-          name: "Blue",
+          name: "Previous",
           type: "area",
           data: [],
         },
         {
-          name: "Purple",
+          name: "Current",
           type: "line",
           data: [],
         },
         {
-              name: "Dashed",
+              name: "Prediction",
               type: "line",
               data: []
         },
@@ -304,13 +304,13 @@ export default {
       axios
         .get("/api/school/pie-chart-data")
         .then((res) => {
-          const data = res.data;
-          if(data !== 'Nothing if found') {
-              this.pieChartData = data.map((item) => item.share_count);
-              this.pieChartLabels = data.map((item) => item.title);
-              this.isPieChartDataCalculated = true;
-          }
-
+            if(Array.isArray(res.data) && res.data.length > 0) {
+                console.log(res.data);
+                const data = res.data;
+                this.pieChartData = data.map((item) => item.share_count);
+                this.pieChartLabels = data.map((item) => item.title);
+                this.isPieChartDataCalculated = true;
+            }
         })
         .catch((err) => console.log(err));
     },
@@ -320,9 +320,9 @@ export default {
               .then((res) => {
                   console.log(res.data);
                   if(res.data !== 'Nothing is found') {
-                      const blue = this.series.find((item) => item.name === 'Blue');
-                      const purple = this.series.find((item) => item.name === 'Purple');
-                      const dashed = this.series.find((item) => item.name === 'Dashed');
+                      const blue = this.series.find((item) => item.name === 'Previous');
+                      const purple = this.series.find((item) => item.name === 'Current');
+                      const dashed = this.series.find((item) => item.name === 'Prediction');
                       blue.data = res.data.previous;
                       purple.data = res.data.current;
                       dashed.data = res.data.prediction;

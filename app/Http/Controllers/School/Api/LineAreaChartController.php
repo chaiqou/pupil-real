@@ -32,10 +32,10 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent = array_slice($transactionsByDayCurrent, 0, $numberOfDaysPrevious);
         }
 
-        //Calculate the today day index to find the index of current day into the array
-        $today_day_index = (int)date('j', strtotime('+1 days')) - 1;
+        //Calculate the tomorrow day index to find the index of next day into the array
+        $tomorrow_day_index = (int)date('j', strtotime('+1 days')) - 1;
         //Calculate the formula and fill only the days after today
-        for ($i = $today_day_index; $i < count($transactionsByDayCurrent); $i++) {
+        for ($i = $tomorrow_day_index; $i < count($transactionsByDayCurrent); $i++) {
             $transactionsByDayCurrent[$i] = null;
         }
 
@@ -96,9 +96,9 @@ class LineAreaChartController extends Controller
         $averagePrevious = array_sum($transactionsByDayPrevious) / count($transactionsByDayPrevious);
         $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
         $difference = (($averageCurrent * 100) / $averagePrevious) / 100;
-        $transactionsByDayPrediction[$today_day_index - 1] = end($sumsOfCurrent);
+        $transactionsByDayPrediction[$tomorrow_day_index - 1] = end($sumsOfCurrent);
 //Calculate the formula and fill only the days after today
-        for ($i = $today_day_index; $i < count($transactionsByDayPrediction); $i++) {
+        for ($i = $tomorrow_day_index; $i < count($transactionsByDayPrediction); $i++) {
             $transactionsByDayPrediction[$i] =  $transactionsByDayPrediction[$i-1] + ($transactionsByDayPrevious[$i] * $difference);
         }
 
@@ -107,10 +107,10 @@ class LineAreaChartController extends Controller
             return ($value === 0) ? null : $value;
         }, $transactionsByDayPrediction);
 
-        for ($i = $today_day_index; $i < count($sumsOfCurrent); $i++) {
+        for ($i = $tomorrow_day_index; $i < count($sumsOfCurrent); $i++) {
             $sumsOfCurrent[$i] = null;
         }
-        
+
         $transactionsByMonth = [
             'previous' => $sumsOfPrevious,
             'current' => $sumsOfCurrent,
