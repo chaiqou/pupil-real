@@ -41,8 +41,8 @@ class UpdateFixedLunchClaims implements ShouldQueue
                 $claims = json_decode($model->claims, true);
 
                 if (isset($claims[$formattedDay])) {
-                    $claims[$formattedDay][0]['menu'] = 'New Menu';
-                    $claims[$formattedDay][0]['menu_code'] = 'New Menu Code';
+                    $claims[$formattedDay][0]['menu'] = reset($this->validated['menus']);
+                    $claims[$formattedDay][0]['menu_code'] = 0;
 
                     // Encode the updated array back into a string and save it to the model
                     $model->claims = json_encode($claims);

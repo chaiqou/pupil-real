@@ -32,6 +32,8 @@ class MenuManagementController extends Controller
 
         if ($menu) {
             return response()->json(['error' => 'Menu for this lunch already exists']);
+        } else {
+            return repsonse()->json(['success' => 'Menu Created']);
         }
     }
 
