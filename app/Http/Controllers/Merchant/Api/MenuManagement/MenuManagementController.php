@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
-use App\Helpers\CreateMenuJson;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Merchant\CreateMenuRequest;
-use App\Http\Requests\Parent\SaveMenuRequest;
+use Carbon\Carbon;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
-use Carbon\Carbon;
+use App\Jobs\UpdateClaimsJson;
+use App\Helpers\CreateMenuJson;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Parent\SaveMenuRequest;
+use App\Http\Requests\Merchant\CreateMenuRequest;
 
 class MenuManagementController extends Controller
 {
@@ -19,23 +20,7 @@ class MenuManagementController extends Controller
         $createMenuInstance = new CreateMenuJson($validated);
         $createdMenuJson = $createMenuInstance->calculateMenu();
 
-        if ($validated['menu_type'] === 'Fixed') {
-            $formattedDay = Carbon::parse($validated['day'])->addDay()->format('Y-m-d');
-            $models = PeriodicLunch::where('claims', 'like', '%"'.$formattedDay.'"%')->get();
-
-            foreach ($models as $model) {
-                $claims = json_decode($model->claims, true);
-
-                if (isset($claims[$formattedDay])) {
-                    $claims[$formattedDay][0]['menu'] = 'New Menu';
-                    $claims[$formattedDay][0]['menu_code'] = 'New Menu Code';
-
-                    // Encode the updated array back into a string and save it to the model
-                    $model->claims = json_encode($claims);
-                    $model->save();
-                }
-            }
-        }
+        UpdateClaimsJson::dispatch($validated);
 
         // If a Menu with the same date and lunch_id already exists in the database, model will not be created
         $menu = LunchMenu::firstOrCreate([
