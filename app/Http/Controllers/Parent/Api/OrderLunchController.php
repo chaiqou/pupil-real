@@ -7,9 +7,11 @@ use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
+use App\Models\LunchMenu;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +80,25 @@ class OrderLunchController extends Controller
                 'end_date' => end($claimResult['claimDates']),
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
+
+            foreach ($validated['claim_days'] as &$date) {
+                $formattedDay = Carbon::parse($date)->addDay()->format('Y-m-d');
+                $models = PeriodicLunch::where('claims', 'like', '%"'.$formattedDay.'"%')->get();
+
+                foreach ($models as $model) {
+                    $claims = json_decode($model->claims, true);
+                    $menu = LunchMenu::where('lunch_id', $model->lunch_id)->first();
+
+                    if (isset($claims[$formattedDay]) && $menu['date'] === $formattedDay) {
+                        $claims[$formattedDay][0]['menu'] = 'MENU UPDATEEEEEEEEEEEED';
+                        $claims[$formattedDay][0]['menu_code'] = 0;
+
+                        // Encode the updated array back into a string and save it to the model
+                        $model->claims = json_encode($claims);
+                        $model->save();
+                    }
+                }
+            }
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
