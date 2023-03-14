@@ -248,9 +248,9 @@ export default {
           enabled: false,
         },
         stroke: {
-          width: [3, 3, 2],
+          width: [3, 3, 4],
           curve: "smooth",
-          dashArray: [0, 0, 2],
+          dashArray: [0, 0, 4],
         },
         title: {
           show: false,

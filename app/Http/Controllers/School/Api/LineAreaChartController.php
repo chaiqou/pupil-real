@@ -266,6 +266,7 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent = array_slice($transactionsByDayCurrent, 0, $numberOfDaysPrevious);
         }
 
+        //Calculate the tomorrow day index to find the index of tomorrow day into the array
         $tomorrow_day_index = (int)date('j', strtotime('+1 days')) - 1;
         //Calculate the formula and fill only the days after today
         for ($i = $tomorrow_day_index; $i < count($transactionsByDayCurrent); $i++) {
@@ -308,8 +309,8 @@ class LineAreaChartController extends Controller
         }
 
 
-//Calculate the next day index to find the index of current day into the array
-        $next_day_index = (int)date('j', strtotime('+1 days')) - 1;
+//Calculate the today day index to find the index of current day into the array
+        $today_day_index = (int)date('j', strtotime('+1 days')) - 2;
 
         $transactionsByDayPrediction = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
@@ -320,14 +321,21 @@ class LineAreaChartController extends Controller
         $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
         $difference = ( (($averageCurrent / 100) / $averagePrevious) / 100);
         $sumsOfCurrent = [];
-        $runningSum = 0;
+        $runningSumOfCurrent = 0;
         foreach ($transactionsByDayCurrent as $value) {
-            $runningSum += $value;
-            $sumsOfCurrent[] = $runningSum;
+            $runningSumOfCurrent += $value;
+            $sumsOfCurrent[] = $runningSumOfCurrent;
+        }
+
+        $sumsOfPrevious = [];
+        $runningSumOfPrevious = 0;
+        foreach ($transactionsByDayPrevious as $value) {
+            $runningSumOfPrevious += $value;
+            $sumsOfPrevious[] = $runningSumOfPrevious;
         }
 
 //Calculate the formula and fill only the days after today
-        for ($i = $next_day_index; $i < count($transactionsByDayPrediction); $i++) {
+        for ($i = $today_day_index; $i < count($transactionsByDayPrediction); $i++) {
             $transactionsByDayPrediction[$i] =  end($sumsOfCurrent) + ($transactionsByDayPrevious[$i] * $difference);
         }
 
@@ -336,10 +344,13 @@ class LineAreaChartController extends Controller
             return ($value === 0) ? null : $value;
         }, $transactionsByDayPrediction);
 
+        for ($i = $tomorrow_day_index; $i < count($sumsOfCurrent); $i++) {
+            $sumsOfCurrent[$i] = null;
+        }
 
         $transactionsByMonth = [
-            'previous' => $transactionsByDayPrevious,
-            'current' => $transactionsByDayCurrent,
+            'previous' => $sumsOfPrevious,
+            'current' => $sumsOfCurrent,
             'prediction' => $transactionsByDayPrediction,
             $difference,
         ];
