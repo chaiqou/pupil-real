@@ -30,10 +30,10 @@ class MenuManagementController extends Controller
             'menus' => json_encode($createdMenuJson),
         ]);
 
-        if ($menu) {
-            return response()->json(['error' => 'Menu for this lunch already exists']);
+        if ($menu->wasRecentlyCreated) {
+            return response()->json(['message' => 'Menu created']);
         } else {
-            return repsonse()->json(['success' => 'Menu Created']);
+            return response()->json(['message' => 'Menu on this day already exists']);
         }
     }
 
