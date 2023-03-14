@@ -87,15 +87,22 @@ class OrderLunchController extends Controller
 
                 foreach ($models as $model) {
                     $claims = json_decode($model->claims, true);
-                    $menu = LunchMenu::where('lunch_id', $model->lunch_id)->first();
+                    $menus = LunchMenu::where('lunch_id', $model->lunch_id)->get();
 
-                    if (isset($claims[$formattedDay]) && $menu['date'] === $formattedDay) {
-                        $claims[$formattedDay][0]['menu'] = 'MENU UPDATEEEEEEEEEEEED';
-                        $claims[$formattedDay][0]['menu_code'] = 0;
+                    foreach ($menus as $menu) {
+                        $menu_array = json_decode($menu['menus'], true);
+                        $menu_keys = array_keys($menu_array);
+                        $first_key = array_shift($menu_keys);
+                        $menu_name = $menu_array[$first_key][0]['menus'];
 
-                        // Encode the updated array back into a string and save it to the model
-                        $model->claims = json_encode($claims);
-                        $model->save();
+                        if (isset($claims[$formattedDay]) && $menu['date'] === $formattedDay) {
+                            $claims[$formattedDay][0]['menu'] = $menu_name;
+                            $claims[$formattedDay][0]['menu_code'] = 0;
+
+                            // Encode the updated array back into a string and save it to the model
+                            $model->claims = json_encode($claims);
+                            $model->save();
+                        }
                     }
                 }
             }
