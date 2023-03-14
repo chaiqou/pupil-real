@@ -317,9 +317,7 @@ class LineAreaChartController extends Controller
             $transactionsByDayPrediction = array_slice($transactionsByDayPrediction, 0, $numberOfDaysPrevious);
         }
 
-        $averagePrevious = array_sum($transactionsByDayPrevious) / count($transactionsByDayPrevious);
-        $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
-        $difference = ( (($averageCurrent / 100) / $averagePrevious) / 100);
+
         $sumsOfCurrent = [];
         $runningSumOfCurrent = 0;
         foreach ($transactionsByDayCurrent as $value) {
@@ -333,10 +331,13 @@ class LineAreaChartController extends Controller
             $runningSumOfPrevious += $value;
             $sumsOfPrevious[] = $runningSumOfPrevious;
         }
-
+        $averagePrevious = array_sum($transactionsByDayPrevious) / count($transactionsByDayPrevious);
+        $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
+        $difference = (($averageCurrent * 100) / $averagePrevious) / 100;
+        $transactionsByDayPrediction[$today_day_index - 1] = end($sumsOfCurrent);
 //Calculate the formula and fill only the days after today
         for ($i = $today_day_index; $i < count($transactionsByDayPrediction); $i++) {
-            $transactionsByDayPrediction[$i] =  end($sumsOfCurrent) + ($transactionsByDayPrevious[$i] * $difference);
+            $transactionsByDayPrediction[$i] =  $transactionsByDayPrediction[$i-1] + ($transactionsByDayPrevious[$i] * $difference);
         }
 
 //Replace all 0-s with nulls
@@ -347,6 +348,11 @@ class LineAreaChartController extends Controller
         for ($i = $tomorrow_day_index; $i < count($sumsOfCurrent); $i++) {
             $sumsOfCurrent[$i] = null;
         }
+
+
+        //Transition between prediction and current month
+       //$transactionsByDayPrediction[$today_day_index] = $sumsOfCurrent[$today_day_index];
+
 
         $transactionsByMonth = [
             'previous' => $sumsOfPrevious,

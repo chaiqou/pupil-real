@@ -250,7 +250,7 @@ export default {
         stroke: {
           width: [3, 3, 4],
           curve: "smooth",
-          dashArray: [0, 0, 4],
+          dashArray: [0, 0, 5],
         },
         title: {
           show: false,
