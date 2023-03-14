@@ -2,22 +2,19 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
 use App\Models\PeriodicLunch;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class UpdateClaimsJson implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     protected $validated;
-
 
     /**
      * Create a new job instance.
@@ -36,7 +33,6 @@ class UpdateClaimsJson implements ShouldQueue
      */
     public function handle()
     {
-
         if ($this->validated['menu_type'] === 'Fixed') {
             $formattedDay = Carbon::parse($this->validated['day'])->addDay()->format('Y-m-d');
             $models = PeriodicLunch::where('claims', 'like', '%"'.$formattedDay.'"%')->get();
