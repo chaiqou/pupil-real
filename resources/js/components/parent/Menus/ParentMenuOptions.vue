@@ -38,7 +38,7 @@ const props = defineProps({
 
 const onSubmit = function (values) {
   axios
-    .post("/api/parent/save-menu", {
+    .post("/api/parent/choice-claims", {
       claimables: values,
       date: props.menu.date,
     })

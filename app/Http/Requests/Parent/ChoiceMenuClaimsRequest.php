@@ -4,7 +4,7 @@ namespace App\Http\Requests\Parent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveMenuRequest extends FormRequest
+class ChoiceMenuClaimsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
