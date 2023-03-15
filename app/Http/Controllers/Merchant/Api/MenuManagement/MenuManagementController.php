@@ -46,23 +46,17 @@ class MenuManagementController extends Controller
             if ($date === $validated['date']) {
                 // loop through each claim for that date and checks if the "name" value matches the "claimable_type" value in $validated.
                 foreach ($claims as $index => $claim) {
-                    if ($claim['name'] === $validated['claimable_type']) {
+                    if ($claim['name'] === $validated['claimable_type'] && $claim['menu'] === '') {
                         $claims_array[$date][$index]['menu'] = $validated['claimable']['choices'];
+                        $claims_array[$date][$index]['menu_code'] = 2;
                     }
                 }
             }
         }
 
-        $updated_claims = json_encode($claims_array);
+        $periodic_lunch->claims = json_encode($claims_array);
+        $periodic_lunch->save();
 
-        // Compare the updated claims with the original claims from the $periodic_lunch object
-        if ($updated_claims !== $periodic_lunch->claims) {
-            $periodic_lunch->claims = $updated_claims;
-            $periodic_lunch->save();
-
-            return response()->json('Claims JSON updated successfuly');
-        } else {
-            return response()->json('Claims JSON does not updated');
-        }
+        return response()->json('Claims for choices updated');
     }
 }
