@@ -6,7 +6,6 @@ use App\Helpers\CalculateClaims;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
-use App\Jobs\UpdateClaimsAfterOrder;
 use App\Models\Lunch;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
@@ -79,8 +78,6 @@ class OrderLunchController extends Controller
                 'end_date' => end($claimResult['claimDates']),
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
-
-            UpdateClaimsAfterOrder::dispatch($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 

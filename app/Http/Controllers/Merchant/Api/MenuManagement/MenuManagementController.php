@@ -6,7 +6,6 @@ use App\Helpers\CreateMenuJson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\SaveMenuRequest;
-use App\Jobs\UpdateFixedLunchClaims;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
 use Illuminate\Http\JsonResponse;
@@ -18,8 +17,6 @@ class MenuManagementController extends Controller
         $validated = $request->validated();
         $createMenuInstance = new CreateMenuJson($validated);
         $createdMenuJson = $createMenuInstance->calculateMenu();
-
-        UpdateFixedLunchClaims::dispatch($validated);
 
         // If a Menu with the same date and lunch_id already exists in the database, model will not be created
         $menu = LunchMenu::firstOrCreate([
