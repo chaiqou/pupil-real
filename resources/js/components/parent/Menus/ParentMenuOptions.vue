@@ -39,7 +39,7 @@ const props = defineProps({
 const onSubmit = function (values) {
   axios
     .post("/api/parent/save-menu", {
-      values: values,
+      claimables: values,
       date: props.menu.date,
     })
     .then(() => {

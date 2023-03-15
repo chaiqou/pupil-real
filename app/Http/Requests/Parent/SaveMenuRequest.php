@@ -25,7 +25,7 @@ class SaveMenuRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'values' => 'required',
+            'claimables' => 'required',
         ];
     }
 }

@@ -38,31 +38,29 @@ class MenuManagementController extends Controller
     {
         $validated = $request->validated();
 
-        $model = PeriodicLunch::where(function ($query) use ($validated) {
-            $query->where('claims', 'like', '%"'.$validated['date'].'"%');
-        })->first();
+        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")->first();
 
-        // check if model exists and if so, update the JSON column
-        if ($model) {
-            $json = json_decode($model->claims, true);
+        // // check if periodic_lunch exists and if so, update the JSON column
+        // if ($periodic_lunch) {
+        //     $json = json_decode($periodic_lunch->claims, true);
 
-            foreach ($json[$validated['date']] as &$element) {
-                // set menu and menu_code values based on whether 'fixed' or 'choices' key exists
-                if (is_array($validated['values']) && array_key_exists('choices', $validated['values'])) {
-                    $element['menu'] = $validated['values']['choices'];
-                    $element['menu_code'] = 2;
-                } else {
-                    $element['menu'] = $validated['values'];
-                    $element['menu_code'] = 0;
-                }
-            }
+        //     foreach ($json[$validated['date']] as &$element) {
+        //         // set menu and menu_code values based on whether 'fixed' or 'choices' key exists
+        //         if (is_array($validated['values']) && array_key_exists('choices', $validated['values'])) {
+        //             $element['menu'] = $validated['values']['choices'];
+        //             $element['menu_code'] = 2;
+        //         } else {
+        //             $element['menu'] = $validated['values'];
+        //             $element['menu_code'] = 0;
+        //         }
+        //     }
 
-            $model->claims = json_encode($json);
-            $model->save();
+        //     $periodic_lunch->claims = json_encode($json);
+        //     $periodic_lunch->save();
 
-            return response()->json('updated');
-        } else {
-            return response()->json('menu already saved');
-        }
+        //     return response()->json('updated');
+        // } else {
+        //     return response()->json('menu already saved');
+        // }
     }
 }
