@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInv
 use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\InsightController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -112,6 +113,9 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::controller(LineAreaChartController::class)->group(function () {
                 Route::get('line-chart-data', 'calculateChartInfo')->name('school.line-chart-data');
+            });
+            Route::controller(InsightController::class)->group(function () {
+               Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
             });
         });
     });

@@ -305,7 +305,6 @@ export default {
         .get("/api/school/pie-chart-data")
         .then((res) => {
             if(Array.isArray(res.data) && res.data.length > 0) {
-                console.log(res.data);
                 const data = res.data;
                 this.pieChartData = data.map((item) => item.share_count);
                 this.pieChartLabels = data.map((item) => item.title);
@@ -318,7 +317,6 @@ export default {
           axios
               .get("/api/school/line-chart-data")
               .then((res) => {
-                  console.log(res.data);
                   if(res.data !== 'Nothing is found') {
                       const blue = this.series.find((item) => item.name === 'Previous');
                       const purple = this.series.find((item) => item.name === 'Current');
@@ -331,18 +329,19 @@ export default {
               })
               .catch((err) => console.log(err));
       },
+      handleGetActiveStudentsRequest() {
+          axios
+              .get("/api/school/active-students")
+              .then((res) => {
+                 console.log(res.data);
+              })
+              .catch((err) => console.log(err));
+      },
   },
   mounted() {
-    const start = startOfMonth(new Date());
-    const end = endOfMonth(new Date());
-    this.currentMonthDates = eachDayOfInterval({
-      start,
-      end,
-    }).map((date) =>
-      date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
-    );
     this.handleGetPieChartDataRequest();
     this.handleGetLineChartDataRequest();
+    this.handleGetActiveStudentsRequest();
   },
 };
 </script>
