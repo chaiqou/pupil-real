@@ -26,20 +26,17 @@ class LineAreaChartController extends Controller
 
 // Create arrays with the specified number of days, initialized to zero
         $transactionsByDayPrevious = array_fill(0, $numberOfDaysPrevious, 0);
-       // $transactionsByDayCurrent = array_fill(0, $numberOfDaysCurrent, 0);
         $transactionsByDayCurrent = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
             $transactionsByDayCurrent = array_slice($transactionsByDayCurrent, 0, $numberOfDaysPrevious);
         }
 
-        //Calculate the tomorrow day index to find the index of next day into the array
+//Calculate the tomorrow day index to find the index of next day into the array
         $tomorrow_day_index = (int)date('j', strtotime('+1 days')) - 1;
-        //Calculate the formula and fill only the days after today
+//Calculate the formula and fill only the days after today
         for ($i = $tomorrow_day_index; $i < count($transactionsByDayCurrent); $i++) {
             $transactionsByDayCurrent[$i] = null;
         }
-
-
 
 // Get the pending transactions for the previous month
         $pendingTransactionsPrevious = PendingTransaction::where('merchant_id', $merchant->id)
