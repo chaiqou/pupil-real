@@ -33,7 +33,6 @@ class InsightController extends Controller
 
     public function activeStudents(): JsonResponse
     {
-        $currentMonth = Carbon::now();
         $user = auth()->user();
         $students = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
         $studentsWithActiveStatus = [];
@@ -47,7 +46,7 @@ class InsightController extends Controller
                 ->where('transaction_date', '<=', $startDate)
                 ->count();
             $orders = $student->orders()
-                ->where('end_date', '>=', Carbon::now()->format('Y-m-d H:i:s'))
+                ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
                 ->count();
             if ($pendingTransactions > 0 || $transactions > 0 || $orders > 0) {
                 $activeStatus = true;
@@ -56,6 +55,27 @@ class InsightController extends Controller
                 $studentsWithActiveStatus[] = $student;
             }
         }
-        return response()->json($studentsWithActiveStatus);
+        $studentsWithActiveStatus2 = [];
+        $students2 = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
+        foreach ($students2 as $student) {
+            $activeStatus2 = false;
+            $startDate2 = Carbon::now()->subDays(60)->startOfDay();
+            $pendingTransactions2 = $student->pendingTransactions()
+                ->where('transaction_date', '<=', $startDate2)
+                ->count();
+            $transactions2 = $student->transactions()
+                ->where('transaction_date', '<=', $startDate2)
+                ->count();
+            $orders2 = $student->orders()
+                ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
+                ->count();
+            if ($pendingTransactions2 > 0 || $transactions2 > 0 || $orders2 > 0) {
+                $activeStatus2 = true;
+            }
+            if ($activeStatus2) {
+                $studentsWithActiveStatus2[] = $student;
+            }
+        }
+        return response()->json([$studentsWithActiveStatus, $studentsWithActiveStatus2]);
     }
 }
