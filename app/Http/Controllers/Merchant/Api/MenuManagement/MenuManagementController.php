@@ -40,6 +40,9 @@ class MenuManagementController extends Controller
 
         $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")->first();
 
+        $claims_array = json_decode($periodic_lunch->claims, true);
+
+
         // // check if periodic_lunch exists and if so, update the JSON column
         // if ($periodic_lunch) {
         //     $json = json_decode($periodic_lunch->claims, true);

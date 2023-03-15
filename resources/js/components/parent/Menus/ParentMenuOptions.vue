@@ -39,8 +39,9 @@ const props = defineProps({
 const onSubmit = function (values) {
   axios
     .post("/api/parent/choice-claims", {
-      claimables: values,
       date: props.menu.date,
+      claimable: values,
+      claimable_type: props.menu.name,
     })
     .then(() => {
       store.toggleFixedCard = false;

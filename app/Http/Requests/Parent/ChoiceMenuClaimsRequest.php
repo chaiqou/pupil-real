@@ -25,7 +25,8 @@ class ChoiceMenuClaimsRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'claimables' => 'required',
+            'claimable' => 'required',
+            'claimable_type' => 'required|string',
         ];
     }
 }
