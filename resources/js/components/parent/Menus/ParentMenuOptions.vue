@@ -1,8 +1,10 @@
 <template>
   <template class="flex flex-wrap justify-between">
-    <h1 class="mb-2 font-semibold text-gray-700">
+    <h2
+      class="whitespace-wrap mb-2 w-64 overflow-hidden break-words font-semibold text-gray-700"
+    >
       {{ `${menu.date} - ${menu.menu_name}` }}
-    </h1>
+    </h2>
   </template>
   <Form @submit="onSubmit">
     <div v-if="menu.menu_type === 'choices'">
