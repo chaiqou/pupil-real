@@ -8,7 +8,6 @@ use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
-use Illuminate\Http\JsonResponse;
 
 class MenuManagementController extends Controller
 {
@@ -34,7 +33,7 @@ class MenuManagementController extends Controller
         }
     }
 
-    public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request): JsonResponse
+    public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request)
     {
         $validated = $request->validated();
 
@@ -52,6 +51,18 @@ class MenuManagementController extends Controller
                     }
                 }
             }
+        }
+
+        $updated_claims = json_encode($claims_array);
+
+        // Compare the updated claims with the original claims from the $periodic_lunch object
+        if ($updated_claims !== $periodic_lunch->claims) {
+            $periodic_lunch->claims = $updated_claims;
+            $periodic_lunch->save();
+
+            return response()->json('Claims JSON updated successfuly');
+        } else {
+            return response()->json('Claims JSON does not updated');
         }
     }
 }
