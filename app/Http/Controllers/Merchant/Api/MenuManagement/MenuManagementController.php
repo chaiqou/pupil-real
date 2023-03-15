@@ -42,28 +42,16 @@ class MenuManagementController extends Controller
 
         $claims_array = json_decode($periodic_lunch->claims, true);
 
-
-        // // check if periodic_lunch exists and if so, update the JSON column
-        // if ($periodic_lunch) {
-        //     $json = json_decode($periodic_lunch->claims, true);
-
-        //     foreach ($json[$validated['date']] as &$element) {
-        //         // set menu and menu_code values based on whether 'fixed' or 'choices' key exists
-        //         if (is_array($validated['values']) && array_key_exists('choices', $validated['values'])) {
-        //             $element['menu'] = $validated['values']['choices'];
-        //             $element['menu_code'] = 2;
-        //         } else {
-        //             $element['menu'] = $validated['values'];
-        //             $element['menu_code'] = 0;
-        //         }
-        //     }
-
-        //     $periodic_lunch->claims = json_encode($json);
-        //     $periodic_lunch->save();
-
-        //     return response()->json('updated');
-        // } else {
-        //     return response()->json('menu already saved');
-        // }
+        //  loop through each date in the $claims_array and checks if it matches the "date" value in $validated
+        foreach ($claims_array as $date => $claims) {
+            if ($date === $validated['date']) {
+                // loop through each claim for that date and checks if the "name" value matches the "claimable_type" value in $validated.
+                foreach ($claims as $index => $claim) {
+                    if ($claim['name'] === $validated['claimable_type']) {
+                        $claims_array[$date][$index]['menu'] = $validated['claimable']['choices'];
+                    }
+                }
+            }
+        }
     }
 }
