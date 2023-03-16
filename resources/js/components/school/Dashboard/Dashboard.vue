@@ -4,7 +4,7 @@
       <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
       <dl class="mt-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
         <div
-          v-for="item in statsBottom"
+          v-for="item in statsTop"
           :key="item.name"
           class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
         >
@@ -24,8 +24,8 @@
             <div
               :class="[
                 item.changeType === 'increase'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-red-100 text-red-800',
+                  ? 'bg-green-100 text-green-800' : item.changeType === 'decrease' ? 'bg-red-100 text-red-800' :
+                  item.changeType === 'nothing' ? 'bg-gray-100 text-black' : '',
                 'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
             >
@@ -34,11 +34,16 @@
                 class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500"
                 aria-hidden="true"
               />
-              <ArrowDownIcon
-                v-else
-                class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
-                aria-hidden="true"
-              />
+                <ArrowDownIcon
+                    v-else-if="item.changeType === 'decrease'"
+                    class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
+                    aria-hidden="true"
+                />
+                <ArrowsUpDownIcon
+                    v-else-if="item.changeType === 'nothing'"
+                    class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-gray-500"
+                    aria-hidden="true"
+                />
               <span class="sr-only">
                 {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
                 by
@@ -82,9 +87,14 @@
                 aria-hidden="true"
               />
               <ArrowDownIcon
-                v-else
+                v-else-if="item.changeType === 'decrease'"
                 class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
                 aria-hidden="true"
+              />
+              <ArrowsUpDownIcon
+                    v-else-if="item.changeType === 'nothing'"
+                    class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-gray-500"
+                    aria-hidden="true"
               />
               <span class="sr-only">
                 {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
@@ -150,8 +160,7 @@
 <script>
 import axios from "axios";
 import VueApexCharts from "vue3-apexcharts";
-import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
-import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
+import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/vue/20/solid";
 import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import Pie from "@/components/Ui/Charts/Pie.vue";
 import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
@@ -165,7 +174,8 @@ export default {
     ArrowUpIcon,
     DashboardTransactions,
     ListBulletIcon,
-    ClipboardDocumentListIcon
+    ClipboardDocumentListIcon,
+    ArrowsUpDownIcon
   },
   data() {
     return {
@@ -174,24 +184,25 @@ export default {
       statsTop: [
         {
           id: 1,
-          name: "Total Subscribers",
-          stat: "71,897",
+          name: "Active Students",
+          stat: "",
+          previousStat: "",
           icon: UsersIcon,
-          change: "122",
-          changeType: "increase",
+          change: "",
+          changeType: "",
         },
         {
           id: 2,
           name: "Avg. Open Rate",
-          stat: "58.16%",
+          stat: "",
           icon: EnvelopeOpenIcon,
-          change: "5.4%",
-          changeType: "increase",
+          change: "",
+          changeType: "",
         },
       ],
       statsBottom: [
         {
-          name: "Total Subscribers",
+          name: "Total Subscribers1",
           stat: "71,897",
           previousStat: "70,946",
           change: "12%",
@@ -334,6 +345,15 @@ export default {
               .get("/api/school/active-students")
               .then((res) => {
                  console.log(res.data);
+                 const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
+                 activeStudents.stat = res.data.thirty;
+                 activeStudents.previousStat = res.data.sixty;
+                 activeStudents.change = res.data.difference + '%';
+                if (res.data.difference === 0) {
+                    activeStudents.changeType = 'nothing';
+                  } else {
+                    res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
+                }
               })
               .catch((err) => console.log(err));
       },
