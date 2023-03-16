@@ -15,15 +15,11 @@
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
-    <template v-if="menu.menu_type === 'choices'">
-      <Button text="Submit" class="ml-auto w-1/2" type="submit" />
-    </template>
   </Form>
 </template>
 
 <script setup>
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
-import Button from "@/components/Ui/Button.vue";
 import { Form } from "vee-validate";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 
