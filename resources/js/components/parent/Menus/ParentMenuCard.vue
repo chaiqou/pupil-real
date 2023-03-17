@@ -7,7 +7,7 @@
       text="Submit"
       class="ml-auto w-1/2"
       type="submit"
-      @click="submitfromparent"
+      @click="submitFromParent"
     />
   </ParentCardLayout>
 </template>
@@ -19,7 +19,8 @@ import Button from "@/components/Ui/Button.vue";
 import { ref } from "vue";
 
 const childRef = ref([]);
-const submitfromparent = () => {
+
+const submitFromParent = () => {
   childRef.value.forEach((child) => {
     child.onSubmitForm();
   });

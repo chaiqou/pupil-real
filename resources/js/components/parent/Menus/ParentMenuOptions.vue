@@ -7,46 +7,18 @@
   <Form @submit="onSubmitForm">
     <div v-if="menu.menu_type === 'choices'">
       <template v-for="menu in menu.menu_name" :key="menu">
-        <!-- <BaseRadio name="choices" :value="menu" /> -->
-        <label
-          class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
-        >
-          <span class="flex items-center text-sm">
-            <input
-              name="choices"
-              type="radio"
-              :value="menu"
-              v-model="selectedvalue"
-              class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
-            />
-            <span class="ml-3 font-medium">{{ menu }}</span>
-          </span>
-        </label>
+        <BaseRadio v-model="selectedvalue" name="choices" :value="menu" />
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
-      <!-- <BaseRadio name="fixed" :value="menu.menu_name" /> -->
-      <label
-        class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
-      >
-        <span class="flex items-center text-sm">
-          <Field
-            name="fixed"
-            type="radio"
-            :value="menu.menu_name[0]"
-            v-model="selectedvalue"
-            class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
-          />
-          <span class="ml-3 font-medium">{{ menu.menu_name }}</span>
-        </span>
-      </label>
+      <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
   </Form>
 </template>
 
 <script setup>
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
-import { Form, Field } from "vee-validate";
+import { Form } from "vee-validate";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { ref } from "vue";
 
@@ -59,7 +31,7 @@ const props = defineProps({
   },
 });
 
-const selectedvalue = ref(props.menu.menu_name[0]);
+const selectedvalue = ref(null);
 
 const onSubmitForm = function () {
   axios
