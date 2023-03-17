@@ -36,7 +36,6 @@ class MenuManagementController extends Controller
     public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request)
     {
         $validated = $request->validated();
-
         $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")->first();
 
         $claims_array = json_decode($periodic_lunch->claims, true);
