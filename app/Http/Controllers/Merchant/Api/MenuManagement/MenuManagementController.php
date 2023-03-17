@@ -46,7 +46,7 @@ class MenuManagementController extends Controller
                 // loop through each claim for that date and checks if the "name" value matches the "claimable_type" value in $validated.
                 foreach ($claims as $index => $claim) {
                     if ($claim['name'] === $validated['claimable_type'] && $claim['menu'] === '') {
-                        $claims_array[$date][$index]['menu'] = $validated['claimable']['choices'];
+                        $claims_array[$date][$index]['menu'] = $validated['claimable'];
                         $claims_array[$date][$index]['menu_code'] = 2;
                     }
                 }

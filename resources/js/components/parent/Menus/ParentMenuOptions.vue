@@ -12,7 +12,7 @@
           class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
         >
           <span class="flex items-center text-sm">
-            <Field
+            <input
               name="choices"
               type="radio"
               :value="menu"
@@ -25,7 +25,21 @@
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
-      <BaseRadio name="fixed" :value="menu.menu_name" />
+      <!-- <BaseRadio name="fixed" :value="menu.menu_name" /> -->
+      <label
+        class="relative mb-2 flex cursor-pointer flex-col whitespace-nowrap rounded-lg border p-4 focus:outline-none md:grid md:grid-cols-3 md:pl-4 md:pr-6"
+      >
+        <span class="flex items-center text-sm">
+          <Field
+            name="fixed"
+            type="radio"
+            :value="menu.menu_name[0]"
+            v-model="selectedvalue"
+            class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
+          />
+          <span class="ml-3 font-medium">{{ menu.menu_name }}</span>
+        </span>
+      </label>
     </div>
   </Form>
 </template>
@@ -45,9 +59,9 @@ const props = defineProps({
   },
 });
 
-const selectedvalue = ref(null);
+const selectedvalue = ref(props.menu.menu_name[0]);
 
-const onSubmitForm = function (values) {
+const onSubmitForm = function () {
   axios
     .post("/api/parent/choice-claims", {
       date: props.menu.date,
