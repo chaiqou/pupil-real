@@ -7,8 +7,7 @@
         :name="name"
         type="radio"
         :value="value"
-        :checked="selectedvalue === value"
-        @click="select"
+        @click="$emit('update:modelValue', $props.value)"
         class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
       />
       <span class="ml-3 font-medium">{{ value }}</span>
@@ -18,11 +17,11 @@
 
 <script setup>
 import { Field } from "vee-validate";
-import { ref, onMounted, defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits } from "vue";
 
-const emits = defineEmits(["update:modelValue"]);
+defineEmits(["update:modelValue"]);
 
-const props = defineProps({
+defineProps({
   name: {
     type: String,
     required: true,
@@ -31,19 +30,5 @@ const props = defineProps({
     type: String,
     required: true,
   },
-});
-
-let selectedvalue = ref(null);
-
-function select() {
-  selectedvalue.value = props.value;
-  emits("update:modelValue", props.value);
-}
-
-onMounted(() => {
-  if (selectedvalue.value === null) {
-    selectedvalue.value = props.value;
-    emits("update:modelValue", props.value);
-  }
 });
 </script>
