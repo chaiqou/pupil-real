@@ -7,11 +7,11 @@
   <Form @submit="onSubmitForm">
     <div v-if="menu.menu_type === 'choices'">
       <template v-for="menu in menu.menu_name" :key="menu">
-        <BaseRadio v-model="selectedvalue" name="choices" :value="menu" />
+        <BaseRadio name="choices" :value="menu" @update:radio="radioUpdated" />
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
-      <BaseRadio v-model="selectedvalue" name="fixed" :value="menu.menu_name" />
+      <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
   </Form>
 </template>
@@ -20,7 +20,7 @@
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
 import { Form } from "vee-validate";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const store = useMenuManagementStore();
 
@@ -31,13 +31,23 @@ const props = defineProps({
   },
 });
 
-const selectedvalue = ref(null);
+let selectedValue = ref(null);
+
+let radioUpdated = function (value) {
+  selectedValue.value = value;
+};
+
+onMounted(() => {
+  if (selectedValue.value === null) {
+    selectedValue.value = props.menu.menu_name[0];
+  }
+});
 
 const onSubmitForm = function () {
   axios
     .post("/api/parent/choice-claims", {
       date: props.menu.date,
-      claimable: selectedvalue.value,
+      claimable: selectedValue.value,
       claimable_type: props.menu.name,
     })
     .then(() => {

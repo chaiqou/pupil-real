@@ -4,10 +4,11 @@
   >
     <span class="flex items-center text-sm">
       <Field
+        @change="radioChanged"
         :name="name"
         type="radio"
         :value="value"
-        @click="$emit('update:modelValue', $props.value)"
+        v-model="selectedValue"
         class="form-checkbox checked:foucs:border-indigo-700 checked:border-indigo-700 checked:bg-indigo-700 checked:outline-indigo-500 checked:hover:bg-indigo-700 checked:focus:bg-indigo-700"
       />
       <span class="ml-3 font-medium">{{ value }}</span>
@@ -17,11 +18,12 @@
 
 <script setup>
 import { Field } from "vee-validate";
-import { defineProps, defineEmits } from "vue";
+import { ref, onMounted } from "vue";
+import { defineEmits } from "vue";
 
-defineEmits(["update:modelValue"]);
+const emits = defineEmits(["update:radio"]);
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     required: true,
@@ -31,4 +33,16 @@ defineProps({
     required: true,
   },
 });
+
+let selectedValue = ref(null);
+
+onMounted(() => {
+  if (selectedValue.value === null) {
+    selectedValue.value = props.value;
+  }
+});
+
+let radioChanged = () => {
+  emits("update:radio", selectedValue.value);
+};
 </script>
