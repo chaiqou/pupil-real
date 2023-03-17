@@ -31,15 +31,15 @@ const props = defineProps({
   },
 });
 
-let selectedValue = ref(null);
+let selectedRadio = ref(null);
 
 let radioUpdated = function (value) {
-  selectedValue.value = value;
+  selectedRadio.value = value;
 };
 
 onMounted(() => {
-  if (selectedValue.value === null) {
-    selectedValue.value = props.menu.menu_name[0];
+  if (selectedRadio.value === null) {
+    selectedRadio.value = props.menu.menu_name[0];
   }
 });
 
@@ -47,7 +47,7 @@ const onSubmitForm = function () {
   axios
     .post("/api/parent/choice-claims", {
       date: props.menu.date,
-      claimable: selectedValue.value,
+      claimable: selectedRadio.value,
       claimable_type: props.menu.name,
     })
     .then(() => {

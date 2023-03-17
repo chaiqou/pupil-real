@@ -1,13 +1,13 @@
 <template>
   <ParentCardLayout>
     <div v-for="menu in menus" :key="menu.name">
-      <ParentMenuOptions :menu="menu" ref="childRef" />
+      <ParentMenuOptions :menu="menu" ref="childFormRef" />
     </div>
     <Button
       text="Submit"
       class="ml-auto w-1/2"
       type="submit"
-      @click="submitFromParent"
+      @click="submitChildForm"
     />
   </ParentCardLayout>
 </template>
@@ -18,11 +18,11 @@ import ParentMenuOptions from "@/components/parent/Menus/ParentMenuOptions.vue";
 import Button from "@/components/Ui/Button.vue";
 import { ref } from "vue";
 
-const childRef = ref([]);
+const childFormRef = ref([]);
 
-const submitFromParent = () => {
-  childRef.value.forEach((child) => {
-    child.onSubmitForm();
+const submitChildForm = () => {
+  childFormRef.value.forEach((singleForm) => {
+    singleForm.onSubmitForm();
   });
 };
 
