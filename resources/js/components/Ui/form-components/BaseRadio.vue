@@ -43,7 +43,6 @@ function select() {
 onMounted(() => {
   if (selectedvalue.value === null) {
     selectedvalue.value = props.value;
-    console.log(selectedvalue.value);
     emits("update:modelValue", props.value);
   }
 });

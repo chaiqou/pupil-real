@@ -11,7 +11,7 @@
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
-      <BaseRadio name="fixed" :value="menu.menu_name" />
+      <BaseRadio v-model="selectedvalue" name="fixed" :value="menu.menu_name" />
     </div>
   </Form>
 </template>
