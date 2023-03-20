@@ -6,11 +6,12 @@ use App\Helpers\CalculateClaims;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
-use App\Jobs\UpdateFixedMenuIfMenuExists;
 use App\Models\Lunch;
+use App\Models\LunchMenu;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -80,7 +81,36 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
-            UpdateFixedMenuIfMenuExists::dispatch($validated);
+            foreach ($validated['claim_days'] as $date) {
+                $day = Carbon::parse($date)->addDay()->format('Y-m-d');
+                $lunch_menu = LunchMenu::where('date', $day)->first();
+                $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")->first();
+
+                if ($lunch_menu && $periodic_lunch) {
+                    $claims_array = json_decode($periodic_lunch->claims, true);
+                    $menus_array = json_decode($lunch_menu['menus'], true);
+
+                    // Loop through each date in the $claims_array and check if it matches the "day" value in $validated
+                    foreach ($claims_array as $date => $claims) {
+                        if ($date === $day) {
+                            // Loop through each claim for that date and check if the "name" value matches the "menu_type" value in $this->validated.
+                            foreach ($claims as $index => $claim) {
+                                foreach ($menus_array as $menu_key => $menu) {
+                                    foreach ($menu as $menu_name) {
+                                        if ($claim['name'] === $menu_name['name']) {
+                                            $claims_array[$date][$index]['menu'] = $menu_name['menus'];
+                                            $claims_array[$date][$index]['menu_code'] = 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $periodic_lunch->claims = json_encode($claims_array);
+                    $periodic_lunch->save();
+                }
+            }
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
