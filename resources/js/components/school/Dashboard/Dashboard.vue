@@ -204,15 +204,15 @@ export default {
             statsBottom: [
                 {
                     name: "Pending Transactions Value",
-                    stat: "71,897",
-                    previousStat: "70,946",
+                    stat: "",
+                    previousStat: "",
                 },
                 {
-                    name: "Avg. Open Rate",
-                    stat: "58.16%",
-                    previousStat: "56.14%",
-                    change: "2.02%",
-                    changeType: "increase",
+                    name: "Avg. Student weekly spending",
+                    stat: "",
+                    previousStat: "",
+                    change: "",
+                    changeType: "",
                 },
             ],
             currentMonthDates: [],
@@ -356,7 +356,7 @@ export default {
                 })
                 .catch((err) => console.log(err));
         },
-        handleGetAverageTransactionsRequest() {
+        handleGetAvgTransactionsRequest() {
             axios
                 .get("/api/school/average-transactions")
                 .then((res) => {
@@ -382,13 +382,31 @@ export default {
                     })
                         .catch((err) => console.log(err))
         },
+        handleGetAvgStudentWeeklySpendingRequest() {
+            axios
+                .get("/api/school/average-student-weekly-spending")
+                .then((res) => {
+                    console.log(res.data);
+                    const avgTransactionsPerStudent = this.statsBottom.find((item) => item.name === 'Avg. Student weekly spending');
+                    avgTransactionsPerStudent.stat = res.data.previous;
+                    avgTransactionsPerStudent.previousStat = res.data.past;
+                    avgTransactionsPerStudent.change = res.data.difference + '%';
+                    if (res.data.difference === 0) {
+                        avgTransactionsPerStudent.changeType = 'nothing';
+                    } else {
+                        res.data.difference > 0 ? avgTransactionsPerStudent.changeType = 'increase' : avgTransactionsPerStudent.changeType = 'decrease';
+                    }
+                })
+                .catch((err) => console.log(err))
+        },
     },
         mounted() {
             this.handleGetPieChartDataRequest();
             this.handleGetLineChartDataRequest();
             this.handleGetActiveStudentsRequest();
-            this.handleGetAverageTransactionsRequest();
+            this.handleGetAvgTransactionsRequest();
             this.handleGetPendingTransactionsValueRequest();
+            this.handleGetAvgStudentWeeklySpendingRequest();
         },
     }
 </script>

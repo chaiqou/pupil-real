@@ -118,6 +118,7 @@ Route::middleware(['auth'])->group(function () {
                Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
                Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
                Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
+               Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
         });
     });
