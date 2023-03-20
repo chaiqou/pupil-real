@@ -6,6 +6,7 @@ use App\Helpers\CreateMenuJson;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
+use App\Jobs\UpdateFixedMenuClaims;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
 
@@ -26,11 +27,9 @@ class MenuManagementController extends Controller
             'menus' => json_encode($createdMenuJson),
         ]);
 
-        if ($menu->wasRecentlyCreated) {
-            return response()->json(['message' => 'Menu created']);
-        } else {
-            return response()->json(['message' => 'Menu on this day already exists']);
-        }
+        UpdateFixedMenuClaims::dispatch($validated);
+
+        return response()->json('Menu Created');
     }
 
     public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request)
