@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use App\Helpers\CalculateClaims;
-use App\Http\Controllers\BillingoController;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
-use App\Models\PendingTransaction;
-use App\Models\PeriodicLunch;
 use App\Models\Student;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\PeriodicLunch;
+use App\Helpers\CalculateClaims;
+use Illuminate\Http\JsonResponse;
+use App\Models\PendingTransaction;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Jobs\UpdateFixedMenuIfMenuExists;
+use App\Http\Controllers\BillingoController;
+use App\Http\Requests\Parent\LunchOrderRequest;
 
 class OrderLunchController extends Controller
 {
@@ -78,6 +79,8 @@ class OrderLunchController extends Controller
                 'end_date' => end($claimResult['claimDates']),
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
+
+            UpdateFixedMenuIfMenuExists::dispatch($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
