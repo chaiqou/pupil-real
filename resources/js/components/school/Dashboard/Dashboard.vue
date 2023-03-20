@@ -73,35 +73,35 @@
               >
             </div>
 
-            <div
-              :class="[
+              <div v-if="item.change"
+                  :class="[
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800',
                 'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0',
               ]"
-            >
-              <ArrowUpIcon
-                v-if="item.changeType === 'increase'"
-                class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500"
-                aria-hidden="true"
-              />
-              <ArrowDownIcon
-                v-else-if="item.changeType === 'decrease'"
-                class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
-                aria-hidden="true"
-              />
-              <ArrowsUpDownIcon
-                    v-else-if="item.changeType === 'nothing'"
-                    class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-gray-500"
-                    aria-hidden="true"
-              />
-              <span class="sr-only">
+              >
+                  <ArrowUpIcon
+                      v-if="item.changeType === 'increase'"
+                      class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500"
+                      aria-hidden="true"
+                  />
+                  <ArrowDownIcon
+                      v-else-if="item.changeType === 'decrease'"
+                      class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
+                      aria-hidden="true"
+                  />
+                  <ArrowsUpDownIcon
+                      v-else-if="item.changeType === 'nothing'"
+                      class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-gray-500"
+                      aria-hidden="true"
+                  />
+                  <span class="sr-only">
                 {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
                 by
               </span>
-              {{ item.change }}
-            </div>
+                  {{ item.change }}
+              </div>
           </dd>
         </div>
       </dl>
@@ -167,201 +167,228 @@ import DashboardTransactions from "@/components/school/Dashboard/DashboardTransa
 import { ListBulletIcon, ClipboardDocumentListIcon }  from "@heroicons/vue/24/outline";
 
 export default {
-  components: {
-    ApexChart: VueApexCharts,
-    Pie,
-    ArrowDownIcon,
-    ArrowUpIcon,
-    DashboardTransactions,
-    ListBulletIcon,
-    ClipboardDocumentListIcon,
-    ArrowsUpDownIcon
-  },
-  data() {
-    return {
-      isLineChartDataCalculated: false,
-      isPieChartDataCalculated: false,
-      statsTop: [
-        {
-          id: 1,
-          name: "Active Students",
-          stat: "",
-          previousStat: "",
-          icon: UsersIcon,
-          change: "",
-          changeType: "",
-        },
-        {
-          id: 2,
-          name: "Avg. Open Rate",
-          stat: "",
-          icon: EnvelopeOpenIcon,
-          change: "",
-          changeType: "",
-        },
-      ],
-      statsBottom: [
-        {
-          name: "Total Subscribers1",
-          stat: "71,897",
-          previousStat: "70,946",
-          change: "12%",
-          changeType: "increase",
-        },
-        {
-          name: "Avg. Open Rate",
-          stat: "58.16%",
-          previousStat: "56.14%",
-          change: "2.02%",
-          changeType: "increase",
-        },
-      ],
-      currentMonthDates: [],
-      pieChartLabels: [],
-      pieChartData: null,
-      series: [
-        {
-          name: "Previous",
-          type: "area",
-          data: [],
-        },
-        {
-          name: "Current",
-          type: "line",
-          data: [],
-        },
-        {
-              name: "Prediction",
-              type: "line",
-              data: []
-        },
-      ],
-      chartOptions: {
-        colors: ["#0061F2", "#6900C7", "#cac8cb"],
-        fill: {
-          type: "solid",
-          opacity: [0.25, 1],
-        },
-        chart: {
-          height: 350,
-          type: "line",
-          width: "100%",
-          zoom: {
-            enabled: false,
-          },
-          toolbar: {
-            tools: {
-              download: false,
-            },
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        stroke: {
-          width: [3, 3, 4],
-          curve: "smooth",
-          dashArray: [0, 0, 5],
-        },
-        title: {
-          show: false,
-        },
-        legend: {
-          tooltipHoverFormatter(val, opts) {
-            return `${val} - ${
-              opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
-            }`;
-          },
-        },
-        markers: {
-          size: 0,
-        },
-        xaxis: {
-          categories: this.currentMonthDates,
-        },
-        tooltip: {
-          y: [
-            {
-              title: {
-                formatter(val) {
-                  return `${val} (mins)`;
-                },
-              },
-            },
-            {
-              title: {
-                formatter(val) {
-                  return `${val} per session`;
-                },
-              },
-            },
-            {
-              title: {
-                formatter(val) {
-                  return val;
-                },
-              },
-            },
-          ],
-        },
-        grid: {
-          borderColor: "#f1f1f1",
-        },
-      },
-    };
-  },
-  methods: {
-    handleGetPieChartDataRequest() {
-      axios
-        .get("/api/school/pie-chart-data")
-        .then((res) => {
-            if(Array.isArray(res.data) && res.data.length > 0) {
-                const data = res.data;
-                this.pieChartData = data.map((item) => item.share_count);
-                this.pieChartLabels = data.map((item) => item.title);
-                this.isPieChartDataCalculated = true;
-            }
-        })
-        .catch((err) => console.log(err));
+    components: {
+        ApexChart: VueApexCharts,
+        Pie,
+        ArrowDownIcon,
+        ArrowUpIcon,
+        DashboardTransactions,
+        ListBulletIcon,
+        ClipboardDocumentListIcon,
+        ArrowsUpDownIcon
     },
-      handleGetLineChartDataRequest() {
-          axios
-              .get("/api/school/line-chart-data")
-              .then((res) => {
-                  if(res.data !== 'Nothing is found') {
-                      const blue = this.series.find((item) => item.name === 'Previous');
-                      const purple = this.series.find((item) => item.name === 'Current');
-                      const dashed = this.series.find((item) => item.name === 'Prediction');
-                      blue.data = res.data.previous;
-                      purple.data = res.data.current;
-                      dashed.data = res.data.prediction;
-                      this.isLineChartDataCalculated = true;
-                  }
-              })
-              .catch((err) => console.log(err));
-      },
-      handleGetActiveStudentsRequest() {
-          axios
-              .get("/api/school/active-students")
-              .then((res) => {
-                 console.log(res.data);
-                 const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
-                 activeStudents.stat = res.data.thirty;
-                 activeStudents.previousStat = res.data.sixty;
-                 activeStudents.change = res.data.difference + '%';
-                if (res.data.difference === 0) {
-                    activeStudents.changeType = 'nothing';
-                  } else {
-                    res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
-                }
-              })
-              .catch((err) => console.log(err));
-      },
-  },
-  mounted() {
-    this.handleGetPieChartDataRequest();
-    this.handleGetLineChartDataRequest();
-    this.handleGetActiveStudentsRequest();
-  },
-};
+    data() {
+        return {
+            isLineChartDataCalculated: false,
+            isPieChartDataCalculated: false,
+            statsTop: [
+                {
+                    id: 1,
+                    name: "Active Students",
+                    stat: "",
+                    previousStat: "",
+                    icon: UsersIcon,
+                    change: "",
+                    changeType: "",
+                },
+                {
+                    id: 2,
+                    name: "Avg. Transactions Value",
+                    stat: "",
+                    previousStat: "",
+                    icon: EnvelopeOpenIcon,
+                    change: "",
+                    changeType: "",
+                },
+            ],
+            statsBottom: [
+                {
+                    name: "Pending Transactions Value",
+                    stat: "71,897",
+                    previousStat: "70,946",
+                },
+                {
+                    name: "Avg. Open Rate",
+                    stat: "58.16%",
+                    previousStat: "56.14%",
+                    change: "2.02%",
+                    changeType: "increase",
+                },
+            ],
+            currentMonthDates: [],
+            pieChartLabels: [],
+            pieChartData: null,
+            series: [
+                {
+                    name: "Previous",
+                    type: "area",
+                    data: [],
+                },
+                {
+                    name: "Current",
+                    type: "line",
+                    data: [],
+                },
+                {
+                    name: "Prediction",
+                    type: "line",
+                    data: []
+                },
+            ],
+            chartOptions: {
+                colors: ["#0061F2", "#6900C7", "#cac8cb"],
+                fill: {
+                    type: "solid",
+                    opacity: [0.25, 1],
+                },
+                chart: {
+                    height: 350,
+                    type: "line",
+                    width: "100%",
+                    zoom: {
+                        enabled: false,
+                    },
+                    toolbar: {
+                        tools: {
+                            download: false,
+                        },
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    width: [3, 3, 4],
+                    curve: "smooth",
+                    dashArray: [0, 0, 5],
+                },
+                title: {
+                    show: false,
+                },
+                legend: {
+                    tooltipHoverFormatter(val, opts) {
+                        return `${val} - ${
+                            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
+                        }`;
+                    },
+                },
+                markers: {
+                    size: 0,
+                },
+                xaxis: {
+                    categories: this.currentMonthDates,
+                },
+                tooltip: {
+                    y: [
+                        {
+                            title: {
+                                formatter(val) {
+                                    return `${val} (mins)`;
+                                },
+                            },
+                        },
+                        {
+                            title: {
+                                formatter(val) {
+                                    return `${val} per session`;
+                                },
+                            },
+                        },
+                        {
+                            title: {
+                                formatter(val) {
+                                    return val;
+                                },
+                            },
+                        },
+                    ],
+                },
+                grid: {
+                    borderColor: "#f1f1f1",
+                },
+            },
+        };
+    },
+    methods: {
+        handleGetPieChartDataRequest() {
+            axios
+                .get("/api/school/pie-chart-data")
+                .then((res) => {
+                    if (Array.isArray(res.data) && res.data.length > 0) {
+                        const data = res.data;
+                        this.pieChartData = data.map((item) => item.share_count);
+                        this.pieChartLabels = data.map((item) => item.title);
+                        this.isPieChartDataCalculated = true;
+                    }
+                })
+                .catch((err) => console.log(err));
+        },
+        handleGetLineChartDataRequest() {
+            axios
+                .get("/api/school/line-chart-data")
+                .then((res) => {
+                    if (res.data !== 'Nothing is found') {
+                        const blue = this.series.find((item) => item.name === 'Previous');
+                        const purple = this.series.find((item) => item.name === 'Current');
+                        const dashed = this.series.find((item) => item.name === 'Prediction');
+                        blue.data = res.data.previous;
+                        purple.data = res.data.current;
+                        dashed.data = res.data.prediction;
+                        this.isLineChartDataCalculated = true;
+                    }
+                })
+                .catch((err) => console.log(err));
+        },
+        handleGetActiveStudentsRequest() {
+            axios
+                .get("/api/school/active-students")
+                .then((res) => {
+                    console.log(res.data);
+                    const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
+                    activeStudents.stat = res.data.thirty;
+                    activeStudents.previousStat = res.data.sixty;
+                    activeStudents.change = res.data.difference + '%';
+                    if (res.data.difference === 0) {
+                        activeStudents.changeType = 'nothing';
+                    } else {
+                        res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
+                    }
+                })
+                .catch((err) => console.log(err));
+        },
+        handleGetAverageTransactionsRequest() {
+            axios
+                .get("/api/school/average-transactions")
+                .then((res) => {
+                    const avgTransactions = this.statsTop.find((item) => item.name === 'Avg. Transactions Value');
+                    avgTransactions.stat = res.data.thirty;
+                    avgTransactions.previousStat = res.data.sixty;
+                    avgTransactions.change = res.data.difference + '%';
+                    if (res.data.difference === 0) {
+                        avgTransactions.changeType = 'nothing';
+                    } else {
+                        res.data.difference > 0 ? avgTransactions.changeType = 'increase' : avgTransactions.changeType = 'decrease';
+                    }
+                })
+                .catch((err) => console.log(err))
+        },
+        handleGetPendingTransactionsValueRequest() {
+            axios
+                .get("/api/school/pending-transactions-value")
+                .then((res) => {
+                        const pendingTransactions = this.statsBottom.find((item) => item.name === 'Pending Transactions Value');
+                        pendingTransactions.stat = res.data.total;
+                        pendingTransactions.previousStat = res.data.date;
+                    })
+                        .catch((err) => console.log(err))
+        },
+    },
+        mounted() {
+            this.handleGetPieChartDataRequest();
+            this.handleGetLineChartDataRequest();
+            this.handleGetActiveStudentsRequest();
+            this.handleGetAverageTransactionsRequest();
+            this.handleGetPendingTransactionsValueRequest();
+        },
+    }
 </script>

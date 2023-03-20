@@ -116,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::controller(InsightController::class)->group(function () {
                Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
+               Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
+               Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
             });
         });
     });

@@ -3,74 +3,115 @@
 namespace App\Http\Controllers;
 
 use App\Models\Merchant;
+use App\Models\PendingTransaction;
+use App\Models\Transaction;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 
 class InsightController extends Controller
 {
-//    public function activeStudents(Request $request)
-//    {
-//        $currentMonth = Carbon::now();
-//        $previousMonth = $currentMonth->copy()->subMonth();
-//        $user = auth()->user();
-//        $students = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
-//        $studentsWithActiveStatus = [];
-//        foreach($students as $student) {
-//            if(count($student->pendingTransactions) || count($student->transactions) || count($student->orders))
-//            {
-//                $student->pendingTransactions
-//                    ->whereBetween('transaction_date', [$previousMonth->startOfMonth()->format('Y-m-d'), $previousMonth->endOfMonth()->format('Y-m-d')])
-//                    ->get();
-//                $studentsWithActiveStatus[] = $student;
-//               // array_push($pending, $studentsWithActiveStatus);
-//            }
-//        }
-//        return response()->json($studentsWithActiveStatus);
-//    }
-
     public function activeStudents(): JsonResponse
     {
         $user = auth()->user();
         $students = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
-        $studentsWithActiveStatus = [];
+        $studentsWithActiveStatusThirty = [];
         foreach ($students as $student) {
-            $startDate = Carbon::now()->subDays(30)->startOfDay();
-            $pendingTransactions = $student->pendingTransactions()
-                ->whereBetween('transaction_date', [$startDate, Carbon::now()->endOfMonth()->format('Y-m-d')])
+            $pastThirtyDays = Carbon::now()->subDays(30)->startOfDay();
+            $pendingTransactionsThirty = $student->pendingTransactions()
+                ->whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')])
                 ->count();
-            $transactions = $student->transactions()
-                ->whereBetween('transaction_date', [$startDate, Carbon::now()->endOfMonth()->format('Y-m-d')])
+            $transactionsThirty = $student->transactions()
+                ->whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')])
                 ->count();
-            $orders = $student->orders()
+            $ordersThirty = $student->orders()
                 ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
                 ->count();
-            if ($pendingTransactions > 0 || $transactions > 0 || $orders > 0) {
-                $studentsWithActiveStatus[] = $student;
+            if ($pendingTransactionsThirty > 0 || $transactionsThirty > 0 || $ordersThirty > 0) {
+                $studentsWithActiveStatusThirty[] = $student;
             }
         }
-        $studentsWithActiveStatus2 = [];
+        $studentsWithActiveStatusSixty = [];
         foreach ($students as $student) {
-            $startDate2 = Carbon::now()->subDays(60)->startOfDay();
-            $pendingTransactions2 = $student->pendingTransactions()
-                ->whereBetween('transaction_date', [$startDate2, Carbon::now()->subDays(30)])
+            $pastSixtyDays = Carbon::now()->subDays(60)->startOfDay();
+            $pendingTransactionsSixty = $student->pendingTransactions()
+                ->whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)])
                 ->count();
-            $transactions2 = $student->transactions()
-                ->whereBetween('transaction_date', [$startDate2, Carbon::now()->subDays(30)])
+            $transactionsSixty = $student->transactions()
+                ->whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)])
                 ->count();
-            $orders2 = $student->orders()
+            $ordersSixty = $student->orders()
                 ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
                 ->count();
-            if ($pendingTransactions2 > 0 || $transactions2 > 0 || $orders2 > 0) {
-                $studentsWithActiveStatus2[] = $student;
+            if ($pendingTransactionsSixty > 0 || $transactionsSixty > 0 || $ordersSixty > 0) {
+                $studentsWithActiveStatusSixty[] = $student;
             }
         }
 
-        $countedActiveStudents = count($studentsWithActiveStatus);
-        $countedActiveStudents2 = count($studentsWithActiveStatus2);
-        $difference = (($countedActiveStudents - $countedActiveStudents2) / $countedActiveStudents2) * 100;
-        return response()->json(['thirty' => $countedActiveStudents, 'sixty' => $countedActiveStudents2, 'difference' => $difference]);
+        $countedActiveStudentsThirty = count($studentsWithActiveStatusThirty);
+        $countedActiveStudentsSixty = count($studentsWithActiveStatusSixty);
+        $difference = round((($countedActiveStudentsThirty - $countedActiveStudentsSixty) / $countedActiveStudentsSixty) * 100);
+        return response()->json(['thirty' => $countedActiveStudentsThirty, 'sixty' => $countedActiveStudentsSixty, 'difference' => $difference]);
+    }
+
+    public function averageTransactionValue(): JsonResponse
+    {
+        $merchant = Merchant::where('user_id', auth()->user()->id)->first();
+        $pastThirtyDays = Carbon::now()->subDays(30)->startOfDay();
+        $transactionsThirty = Transaction::where('merchant_id', $merchant->id)
+            ->whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')])
+            ->get();
+        $transactionAmountsThirty = [];
+        if(!count($transactionAmountsThirty)) {
+            return response()->json('no');
+        }
+        foreach($transactionsThirty as $transaction)
+        {
+           $transactionAmountsThirty[] = $transaction->transaction_amount;
+        }
+        $sumOfTransactionValuesThirty = array_sum($transactionAmountsThirty);
+        $frequencyOfTransactionValuesThirty = count($transactionAmountsThirty);
+        $avgTransactionsPastThirty = $sumOfTransactionValuesThirty/$frequencyOfTransactionValuesThirty;
+
+
+        $pastSixtyDays = Carbon::now()->subDays(60)->startOfDay();
+        $transactionsSixty = Transaction::where('merchant_id', $merchant->id)
+            ->whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)])
+            ->get();
+        $transactionAmountsSixty = [];
+        foreach($transactionsSixty as $transaction)
+        {
+            $transactionAmountsSixty[] = $transaction->transaction_amount;
+        }
+        $sumOfTransactionValuesSixty = array_sum($transactionAmountsSixty);
+        $frequencyOfTransactionValuesSixty = count($transactionAmountsSixty);
+        $avgTransactionsPastSixty = $sumOfTransactionValuesSixty/$frequencyOfTransactionValuesSixty;
+        $difference = round((($avgTransactionsPastThirty - $avgTransactionsPastSixty) / $avgTransactionsPastSixty) * 100);
+        return response()->json(['thirty' => $avgTransactionsPastThirty, 'sixty' => $avgTransactionsPastSixty, 'difference' => $difference]);
+    }
+
+    public function pendingTransactionValue(): JsonResponse
+    {
+        $merchant = Merchant::where('user_id', auth()->user()->id)->first();
+        $pendingTransactions = PendingTransaction::where('merchant_id', $merchant->id)
+            ->get();
+        $pendingTransactionAmounts = [];
+        $pendingTransactionDates = [];
+        foreach($pendingTransactions as $transaction)
+        {
+            $pendingTransactionAmounts[] = $transaction->transaction_amount;
+            $pendingTransactionDates[] = $transaction->transaction_date;
+        }
+        $sumOfTransactionValues = array_sum($pendingTransactionAmounts);
+
+        $timestamps = array_map(function($date) {
+            return strtotime($date);
+        }, $pendingTransactionDates);
+
+        $averageTimestamp = array_sum($timestamps) / count($timestamps);
+        $averageDate = date('Y-m-d', $averageTimestamp);
+
+
+        return response()->json(['total' => $sumOfTransactionValues, 'date' => $averageDate]);
     }
 }
