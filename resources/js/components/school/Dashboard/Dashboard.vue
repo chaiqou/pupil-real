@@ -12,7 +12,7 @@
             {{ item.name }}
           </dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-            <div
+            <div v-if="item.unavailable === false"
               class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600"
             >
               {{ item.stat }}
@@ -66,7 +66,7 @@
             {{ item.name }}
           </dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-            <div
+            <div v-if="item.unavailable === false"
               class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600"
             >
               {{ item.stat }}
@@ -127,7 +127,7 @@
     >
           <Pie
               width="100%"
-              id="RandomChart"
+              id="PieChartDashboard"
               :pieChartData="this.pieChartData"
               :labels="this.pieChartLabels"
           ></Pie>
@@ -144,11 +144,12 @@
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
     >
       <div class="w-full">
-        <ApexChart
+          <LineArea
           width="100%"
-          :options="chartOptions"
-          :series="series"
-        ></ApexChart>
+          id="LineChartDashboard"
+          :lineAreaChartData="this.lineAreaChartData"
+          >
+          </LineArea>
       </div>
     </div>
 
@@ -164,23 +165,23 @@
 
 <script>
 import axios from "axios";
-import VueApexCharts from "vue3-apexcharts";
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/vue/20/solid";
 import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import Pie from "@/components/Ui/Charts/Pie.vue";
+import LineArea from "@/components/Ui/Charts/LineArea.vue";
 import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
 import { ListBulletIcon, ClipboardDocumentListIcon }  from "@heroicons/vue/24/outline";
 
 export default {
     components: {
-        ApexChart: VueApexCharts,
         Pie,
         ArrowDownIcon,
         ArrowUpIcon,
         DashboardTransactions,
         ListBulletIcon,
         ClipboardDocumentListIcon,
-        ArrowsUpDownIcon
+        ArrowsUpDownIcon,
+        LineArea
     },
     data() {
         return {
@@ -227,7 +228,7 @@ export default {
             currentMonthDates: [],
             pieChartLabels: [],
             pieChartData: null,
-            series: [
+            lineAreaChartData: [
                 {
                     name: "Previous",
                     type: "area",
@@ -244,78 +245,6 @@ export default {
                     data: []
                 },
             ],
-            chartOptions: {
-                colors: ["#0061F2", "#6900C7", "#cac8cb"],
-                fill: {
-                    type: "solid",
-                    opacity: [0.25, 1],
-                },
-                chart: {
-                    height: 350,
-                    type: "line",
-                    width: "100%",
-                    zoom: {
-                        enabled: false,
-                    },
-                    toolbar: {
-                        tools: {
-                            download: false,
-                        },
-                    },
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                stroke: {
-                    width: [3, 3, 4],
-                    curve: "smooth",
-                    dashArray: [0, 0, 5],
-                },
-                title: {
-                    show: false,
-                },
-                legend: {
-                    tooltipHoverFormatter(val, opts) {
-                        return `${val} - ${
-                            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
-                        }`;
-                    },
-                },
-                markers: {
-                    size: 0,
-                },
-                xaxis: {
-                    categories: this.currentMonthDates,
-                },
-                tooltip: {
-                    y: [
-                        {
-                            title: {
-                                formatter(val) {
-                                    return `${val} (mins)`;
-                                },
-                            },
-                        },
-                        {
-                            title: {
-                                formatter(val) {
-                                    return `${val} per session`;
-                                },
-                            },
-                        },
-                        {
-                            title: {
-                                formatter(val) {
-                                    return val;
-                                },
-                            },
-                        },
-                    ],
-                },
-                grid: {
-                    borderColor: "#f1f1f1",
-                },
-            },
         };
     },
     methods: {
@@ -337,9 +266,9 @@ export default {
                 .get("/api/school/line-chart-data")
                 .then((res) => {
                     if (res.data !== 'Nothing is found') {
-                        const blue = this.series.find((item) => item.name === 'Previous');
-                        const purple = this.series.find((item) => item.name === 'Current');
-                        const dashed = this.series.find((item) => item.name === 'Prediction');
+                        const blue = this.lineAreaChartData.find((item) => item.name === 'Previous');
+                        const purple = this.lineAreaChartData.find((item) => item.name === 'Current');
+                        const dashed = this.lineAreaChartData.find((item) => item.name === 'Prediction');
                         blue.data = res.data.previous;
                         purple.data = res.data.current;
                         dashed.data = res.data.prediction;
@@ -352,7 +281,6 @@ export default {
             axios
                 .get("/api/school/active-students")
                 .then((res) => {
-                    console.log(res.data);
                     const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
                         if(res.data !== 'unavailable to calculate')
                         {
@@ -404,7 +332,6 @@ export default {
             axios
                 .get("/api/school/average-student-weekly-spending")
                 .then((res) => {
-                    console.log(res.data);
                     const avgTransactionsPerStudent = this.statsBottom.find((item) => item.name === 'Avg. Student weekly spending');
                     if(res.data !== 'unavailable to calculate')
                     {
