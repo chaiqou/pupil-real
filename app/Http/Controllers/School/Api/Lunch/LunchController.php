@@ -188,7 +188,6 @@ class LunchController extends Controller
                             if ($key == $checkDate) {
                                 //Filter "claims" out of $lunch
                                 //Get the student's data from the lunch student_id
-                                $student = Student::where('id', $lunch->student_id)->first();
                                 $lunch->student = $student->only(['id', 'first_name', 'last_name', 'middle_name']);
                                 $originalPlan = Lunch::where('id', $lunch->lunch_id)->first();
                                 $lunch->original_plan = $originalPlan->only(['id', 'title', 'description', 'period_length', 'weekdays', 'active_range', 'claimables', 'buffer_item', 'price_period', 'created_at', 'updated_at']);
