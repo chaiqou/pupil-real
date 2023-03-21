@@ -20,8 +20,7 @@
                 >from {{ item.previousStat }}</span
               >
             </div>
-
-            <div
+            <div v-if="item.unavailable === false"
               :class="[
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800' : item.changeType === 'decrease' ? 'bg-red-100 text-red-800' :
@@ -50,6 +49,9 @@
               </span>
               {{ item.change }}
             </div>
+              <div class="text-xl items-center mt-5 justify-center flex flex-col" v-else>
+                  <h1>Unavailable</h1>
+              </div>
           </dd>
         </div>
       </dl>
@@ -101,6 +103,9 @@
                 by
               </span>
                   {{ item.change }}
+              </div>
+              <div class="text-xl items-center mt-5 justify-center flex flex-col" v-if="item.unavailable === true">
+                  <h1>Unavailable</h1>
               </div>
           </dd>
         </div>
@@ -190,6 +195,7 @@ export default {
                     icon: UsersIcon,
                     change: "",
                     changeType: "",
+                    unavailable: false,
                 },
                 {
                     id: 2,
@@ -199,6 +205,7 @@ export default {
                     icon: EnvelopeOpenIcon,
                     change: "",
                     changeType: "",
+                    unavailable: false,
                 },
             ],
             statsBottom: [
@@ -206,6 +213,7 @@ export default {
                     name: "Pending Transactions Value",
                     stat: "",
                     previousStat: "",
+                    unavailable: false,
                 },
                 {
                     name: "Avg. Student weekly spending",
@@ -213,6 +221,7 @@ export default {
                     previousStat: "",
                     change: "",
                     changeType: "",
+                    unavailable: false,
                 },
             ],
             currentMonthDates: [],
@@ -345,14 +354,17 @@ export default {
                 .then((res) => {
                     console.log(res.data);
                     const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
-                    activeStudents.stat = res.data.thirty;
-                    activeStudents.previousStat = res.data.sixty;
-                    activeStudents.change = res.data.difference + '%';
-                    if (res.data.difference === 0) {
-                        activeStudents.changeType = 'nothing';
-                    } else {
-                        res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
-                    }
+                        if(res.data !== 'unavailable to calculate')
+                        {
+                            activeStudents.stat = res.data.thirty;
+                            activeStudents.previousStat = res.data.sixty;
+                            activeStudents.change = res.data.difference + '%';
+                            if (res.data.difference === 0) {
+                                activeStudents.changeType = 'nothing';
+                            } else {
+                                res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
+                            }
+                        } else activeStudents.unavailable = true;
                 })
                 .catch((err) => console.log(err));
         },
@@ -361,14 +373,17 @@ export default {
                 .get("/api/school/average-transactions")
                 .then((res) => {
                     const avgTransactions = this.statsTop.find((item) => item.name === 'Avg. Transactions Value');
-                    avgTransactions.stat = res.data.thirty;
-                    avgTransactions.previousStat = res.data.sixty;
-                    avgTransactions.change = res.data.difference + '%';
-                    if (res.data.difference === 0) {
-                        avgTransactions.changeType = 'nothing';
-                    } else {
-                        res.data.difference > 0 ? avgTransactions.changeType = 'increase' : avgTransactions.changeType = 'decrease';
-                    }
+                   if(res.data !== 'unavailable to calculate')
+                   {
+                       avgTransactions.stat = res.data.thirty;
+                       avgTransactions.previousStat = res.data.sixty;
+                       avgTransactions.change = res.data.difference + '%';
+                       if (res.data.difference === 0) {
+                           avgTransactions.changeType = 'nothing';
+                       } else {
+                           res.data.difference > 0 ? avgTransactions.changeType = 'increase' : avgTransactions.changeType = 'decrease';
+                       }
+                   } else avgTransactions.unavailable = true;
                 })
                 .catch((err) => console.log(err))
         },
@@ -376,9 +391,12 @@ export default {
             axios
                 .get("/api/school/pending-transactions-value")
                 .then((res) => {
-                        const pendingTransactions = this.statsBottom.find((item) => item.name === 'Pending Transactions Value');
+                    const pendingTransactions = this.statsBottom.find((item) => item.name === 'Pending Transactions Value');
+                    if(res.data !== 'unavailable to calculate')
+                    {
                         pendingTransactions.stat = res.data.total;
                         pendingTransactions.previousStat = res.data.date;
+                    } else pendingTransactions.unavailable = true;
                     })
                         .catch((err) => console.log(err))
         },
@@ -388,14 +406,17 @@ export default {
                 .then((res) => {
                     console.log(res.data);
                     const avgTransactionsPerStudent = this.statsBottom.find((item) => item.name === 'Avg. Student weekly spending');
-                    avgTransactionsPerStudent.stat = res.data.previous;
-                    avgTransactionsPerStudent.previousStat = res.data.past;
-                    avgTransactionsPerStudent.change = res.data.difference + '%';
-                    if (res.data.difference === 0) {
-                        avgTransactionsPerStudent.changeType = 'nothing';
-                    } else {
-                        res.data.difference > 0 ? avgTransactionsPerStudent.changeType = 'increase' : avgTransactionsPerStudent.changeType = 'decrease';
-                    }
+                    if(res.data !== 'unavailable to calculate')
+                    {
+                        avgTransactionsPerStudent.stat = res.data.previous;
+                        avgTransactionsPerStudent.previousStat = res.data.past;
+                        avgTransactionsPerStudent.change = res.data.difference + '%';
+                        if (res.data.difference === 0) {
+                            avgTransactionsPerStudent.changeType = 'nothing';
+                        } else {
+                            res.data.difference > 0 ? avgTransactionsPerStudent.changeType = 'increase' : avgTransactionsPerStudent.changeType = 'decrease';
+                        }
+                    } else avgTransactionsPerStudent.unavailable = true;
                 })
                 .catch((err) => console.log(err))
         },
