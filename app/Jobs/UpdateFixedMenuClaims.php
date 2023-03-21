@@ -34,7 +34,7 @@ class UpdateFixedMenuClaims implements ShouldQueue
         if ($periodic_lunch) {
             $claims_array = json_decode($periodic_lunch->claims, true);
 
-            if ($claims_array[$day][0]['menu_type'] === 'Fixed') {
+            if ($this->validated['menu_type'] === 'Fixed') {
                 // Loop through each date in the $claims_array and check if it matches the "day" value in $this->validated
                 foreach ($claims_array as $date => $claims) {
                     if ($date === $day) {
