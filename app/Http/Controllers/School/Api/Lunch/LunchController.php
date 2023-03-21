@@ -169,7 +169,11 @@ class LunchController extends Controller
         if ($validSignature !== strtoupper($validated['signature'])) {
             return response()->json(['error' => 'Invalid signature.'], 401);
         } else {
-            $lunches = PeriodicLunch::where('card_data', $validated['card_data'])->get();
+            $student = Student::where('card_data', $validated['card_data'])->first();
+            if (! $student) {
+                return response()->json(['error' => 'Student not found.'], 404);
+            }
+            $lunches = PeriodicLunch::where('student_id', $student->id)->get();
             if ($lunches) {
                 foreach ($lunches as $lunch) {
                     //Convert the lunch start and end date to "YYYY.MM.DD" format
