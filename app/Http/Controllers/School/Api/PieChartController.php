@@ -25,6 +25,10 @@ class PieChartController extends Controller
             }
         }
 
-        return response()->json($lunchData);
+        if (count($lunchData) > 1) {
+            return response()->json($lunchData);
+        }
+
+        return response()->json('Nothing is found');
     }
 }

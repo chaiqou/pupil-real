@@ -105,9 +105,10 @@
       ></dashboard-transactions>
     </div>
   </div>
-  <div v-if="this.pieChartData" class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
+  <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
     <div
-      class="mb-5 flex items-center justify-center rounded-lg bg-white shadow-2xl lg:mr-3 xl:w-1/2"
+        v-if="isPieChartDataCalculated"
+      class="mb-5 flex items-center justify-center rounded-lg bg-white xl:shadow-2xl lg:mr-3 xl:w-1/2"
     >
           <Pie
               width="100%"
@@ -116,7 +117,15 @@
               :labels="this.pieChartLabels"
           ></Pie>
     </div>
+      <div v-if="!isPieChartDataCalculated" class="border border-4 mb-5 xl:mr-3 sm:my-5 xl:my-0 border-dashed rounded-md flex items-center justify-center xl:w-2/3">
+          <div class="flex items-center justify-center flex-col my-32">
+              <clipboard-document-list-icon class="xl:w-32 w-24 text-gray-500"></clipboard-document-list-icon>
+              <h1 class="xl:text-xl text-sm p-4 xl:p-0">No lunch orders yet</h1>
+          </div>
+      </div>
+
     <div
+      v-if="isLineChartDataCalculated"
       class="flex items-center justify-center rounded-lg bg-white shadow-2xl xl:w-2/3"
     >
       <div class="w-full">
@@ -127,6 +136,14 @@
         ></ApexChart>
       </div>
     </div>
+
+      <div v-if="!isLineChartDataCalculated" class="border border-4 border-dashed rounded-md flex items-center justify-center xl:w-2/3">
+          <div class="flex items-center justify-center flex-col my-32">
+              <list-bullet-icon class="xl:w-32 w-24 text-gray-500"></list-bullet-icon>
+              <h1 class="xl:text-xl text-sm p-4 xl:p-0">You need to have some transactions before we can show you an overview</h1>
+          </div>
+      </div>
+
   </div>
 </template>
 
@@ -138,6 +155,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 import { EnvelopeOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 import Pie from "@/components/Ui/Charts/Pie.vue";
 import DashboardTransactions from "@/components/school/Dashboard/DashboardTransactions.vue";
+import { ListBulletIcon, ClipboardDocumentListIcon }  from "@heroicons/vue/24/outline";
 
 export default {
   components: {
@@ -146,9 +164,13 @@ export default {
     ArrowDownIcon,
     ArrowUpIcon,
     DashboardTransactions,
+    ListBulletIcon,
+    ClipboardDocumentListIcon
   },
   data() {
     return {
+      isLineChartDataCalculated: false,
+      isPieChartDataCalculated: false,
       statsTop: [
         {
           id: 1,
@@ -188,17 +210,17 @@ export default {
       pieChartData: null,
       series: [
         {
-          name: "Blue",
+          name: "Previous",
           type: "area",
           data: [],
         },
         {
-          name: "Purple",
+          name: "Current",
           type: "line",
           data: [],
         },
         {
-              name: "Dashed",
+              name: "Prediction",
               type: "line",
               data: []
         },
@@ -226,9 +248,9 @@ export default {
           enabled: false,
         },
         stroke: {
-          width: [3, 3, 2],
+          width: [3, 3, 4],
           curve: "smooth",
-          dashArray: [0, 0, 2],
+          dashArray: [0, 0, 5],
         },
         title: {
           show: false,
@@ -282,9 +304,13 @@ export default {
       axios
         .get("/api/school/pie-chart-data")
         .then((res) => {
-          const data = res.data;
-          this.pieChartData = data.map((item) => item.share_count);
-          this.pieChartLabels = data.map((item) => item.title);
+            if(Array.isArray(res.data) && res.data.length > 0) {
+                console.log(res.data);
+                const data = res.data;
+                this.pieChartData = data.map((item) => item.share_count);
+                this.pieChartLabels = data.map((item) => item.title);
+                this.isPieChartDataCalculated = true;
+            }
         })
         .catch((err) => console.log(err));
     },
@@ -293,12 +319,15 @@ export default {
               .get("/api/school/line-chart-data")
               .then((res) => {
                   console.log(res.data);
-                  const blue = this.series.find((item) => item.name === 'Blue');
-                  const purple = this.series.find((item) => item.name === 'Purple');
-                  const dashed = this.series.find((item) => item.name === 'Dashed');
-                  blue.data = res.data.previous;
-                  purple.data = res.data.current;
-                  dashed.data = res.data.prediction;
+                  if(res.data !== 'Nothing is found') {
+                      const blue = this.series.find((item) => item.name === 'Previous');
+                      const purple = this.series.find((item) => item.name === 'Current');
+                      const dashed = this.series.find((item) => item.name === 'Prediction');
+                      blue.data = res.data.previous;
+                      purple.data = res.data.current;
+                      dashed.data = res.data.prediction;
+                      this.isLineChartDataCalculated = true;
+                  }
               })
               .catch((err) => console.log(err));
       },
@@ -312,7 +341,6 @@ export default {
     }).map((date) =>
       date.toLocaleDateString("en-US", { day: "2-digit", month: "short" }),
     );
-    console.log(this.currentMonthDates);
     this.handleGetPieChartDataRequest();
     this.handleGetLineChartDataRequest();
   },
