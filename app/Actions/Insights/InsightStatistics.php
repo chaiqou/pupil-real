@@ -4,58 +4,34 @@
 namespace App\Actions\Insights;
 
      use App\Models\PendingTransaction;
+     use App\Models\PeriodicLunch;
      use App\Models\Transaction;
      use Carbon\Carbon;
 
      class InsightStatistics {
-         public function activeStudents($students): array|string
+         public function activeStudents($pendingTransactionsThirty, $pendingTransactionsSixty, $transactionsThirty, $transactionsSixty, $orders): array|string
          {
-             $studentsWithActiveStatusThirty = [];
-             foreach ($students as $student) {
-                 $pastThirtyDays = Carbon::now()->subDays(30)->startOfDay();
-                 $pendingTransactionsThirty = $student->pendingTransactions()
-                     ->whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')])
-                     ->count();
-                 $transactionsThirty = $student->transactions()
-                     ->whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')])
-                     ->count();
-                 $ordersThirty = $student->orders()
-                     ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
-                     ->count();
-                 if ($pendingTransactionsThirty > 0 || $transactionsThirty > 0 || $ordersThirty > 0) {
-                     $studentsWithActiveStatusThirty[] = $student;
-                 }
-             }
-             $studentsWithActiveStatusSixty = [];
-             foreach ($students as $student) {
-                 $pastSixtyDays = Carbon::now()->subDays(60)->startOfDay();
-                 $pendingTransactionsSixty = $student->pendingTransactions()
-                     ->whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)])
-                     ->count();
-                 $transactionsSixty = $student->transactions()
-                     ->whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)])
-                     ->count();
-                 $ordersSixty = $student->orders()
-                     ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))
-                     ->count();
-                 if ($pendingTransactionsSixty > 0 || $transactionsSixty > 0 || $ordersSixty > 0) {
-                     $studentsWithActiveStatusSixty[] = $student;
-                 }
-             }
+// Calculate active students for past 30 days
+             $countPendingTransactionsThirty = $pendingTransactionsThirty->distinct('student_id')->count('student_id');
+             $countTransactionsThirty = $transactionsThirty->distinct('student_id')->count('student_id');
+             $countOrders = $orders->distinct('student_id')->count('student_id');
+             $activeStudentsForPastThirtyDays = $countPendingTransactionsThirty + $countTransactionsThirty + $countOrders;
+// Calculate active students for past 60 days
+             $countPendingTransactionsSixty = $pendingTransactionsSixty->distinct('student_id')->count('student_id');
+             $countTransactionsSixty = $transactionsSixty->distinct('student_id')->count('student_id');
+             $activeStudentsForPastSixtyDays = $countPendingTransactionsSixty + $countTransactionsSixty + $countOrders;
 
-             $countedActiveStudentsThirty = count($studentsWithActiveStatusThirty);
-             $countedActiveStudentsSixty = count($studentsWithActiveStatusSixty);
-             if(!$countedActiveStudentsThirty || !$countedActiveStudentsSixty)
+             if(!$activeStudentsForPastThirtyDays || !$activeStudentsForPastSixtyDays)
              {
                  return 'unavailable to calculate';
              }
-             $difference = round((($countedActiveStudentsThirty - $countedActiveStudentsSixty) / $countedActiveStudentsSixty) * 100);
+             $difference = round((($activeStudentsForPastThirtyDays - $activeStudentsForPastSixtyDays) / $activeStudentsForPastSixtyDays) * 100);
              return
-                 [
-                     'thirty' => $countedActiveStudentsThirty,
-                     'sixty' => $countedActiveStudentsSixty,
-                     'difference' => $difference
-                 ];
+               [
+                 'thirty' => $activeStudentsForPastThirtyDays,
+                 'sixty' => $activeStudentsForPastSixtyDays,
+                 'difference' => $difference
+               ];
          }
 
          public function averageTransactionValue($merchant): array|string
@@ -128,12 +104,13 @@ namespace App\Actions\Insights;
 
              $averageTimestamp = array_sum($timestamps) / count($timestamps);
              $averageDate = date('Y-m-d', $averageTimestamp);
-
+             $averageDateCarbon = Carbon::parse($averageDate);
+             $averageDateAgeFormat = $averageDateCarbon->diffForHumans();
 
              return
               [
                  'total' => $sumOfTransactionValues,
-                 'date' => $averageDate
+                 'date' => $averageDateAgeFormat
               ];
          }
 
