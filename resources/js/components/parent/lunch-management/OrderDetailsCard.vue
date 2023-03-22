@@ -174,63 +174,73 @@ const props = defineProps({
 
 const store = useLunchFormStore();
 
-const weekdayNames = computed(() =>
-  props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" "),
-);
+const weekdayNames = computed(() => {
+  return props.weekdays.map((weekday) => weekday.substring(0, 1)).join(" ");
+});
 
 const firstAndLastDay = computed(() => {
   const formattedDays = props.lunchDays.map((lunchDay) =>
     format(lunchDay, "yyyy.MM.dd"),
   );
 
-  const firstAndLastDays = [formattedDays.shift(), formattedDays.pop()].join(
-    " - ",
-  );
-
-  return firstAndLastDays;
+  return `${formattedDays.shift()} - ${formattedDays.pop()}`;
 });
 
 const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
 
-const payWithTransferHandler = () => {
-  loading.value = true;
-  axios
-    .post(`/api/parent/lunch-order/${props.studentId}`, {
+const payWithTransferHandler = async () => {
+  try {
+    loading.value = true;
+
+    const lunchOrder = {
       student_id: props.studentId,
-      available_days: store.lunch_details[0].available_days,
       claimables: store.lunch_details[0].claimables,
-      period_length: store.lunch_details[0].period_length,
       lunch_id: store.lunch_details[0].id,
-      claims: store.claim_days,
-    })
-    .then((response) => {
-      if (response.status == 200) {
-        successFeedbackPayWithTransfer.value = true;
-      } else {
-        errorFeedbackPayWithTransfer.value = true;
-      }
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+      claim_days: store.claim_days,
+    };
+
+    // Send a POST request to the server to create a new lunch order
+    const lunchOrderResponse = await axios.post(
+      `/api/parent/lunch-order/${props.studentId}`,
+      lunchOrder,
+    );
+
+    // Show success or error feedback based on the response status
+    if (lunchOrderResponse.status === 200) {
+      successFeedbackPayWithTransfer.value = true;
+    } else {
+      errorFeedbackPayWithTransfer.value = true;
+    }
+
+    loading.value = false;
+  } catch (postError) {
+    // Show loading spinner and handle any errors that occur during the POST request
+    loading.value = true;
+  }
 };
 
-const payWithOnlineHandler = () => {
+const payWithOnlineHandler = async () => {
   loading.value = true;
 
-  axios
-    .post("/api/parent/checkout", {
+  try {
+    const checkoutData = {
       student_id: props.studentId,
       claimables: store.lunch_details[0].claimables,
       lunch_id: store.lunch_details[0].id,
       claims: store.claim_days,
       price: props.price,
       title: props.title,
-    })
-    .then((response) => {
-      window.location.href = response.data.url;
-    });
+    };
+
+    const response = await axios.post("/api/parent/checkout", checkoutData);
+
+    window.location.href = response.data.url;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 };
 </script>

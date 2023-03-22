@@ -10,6 +10,7 @@ use App\Models\Lunch;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
+use App\Services\ClaimService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,16 +27,16 @@ class OrderLunchController extends Controller
 
     public function orderLunch(LunchOrderRequest $request): JsonResponse
     {
-        $validate = $request->validated();
+        $validated = $request->validated();
 
-        $student = Student::where('id', $validate['student_id'])->first();
-        $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
-        $lunch = Lunch::where('id', $validate['lunch_id'])->first();
+        $student = Student::where('id', $validated['student_id'])->first();
+        $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
+        $lunch = Lunch::where('id', $validated['lunch_id'])->first();
 
-        $calculateClaims = new CalculateClaims(['claims' => $validate['claims'], 'claimables' => $validate['claimables']]);
+        $calculateClaims = new CalculateClaims(['claims' => $validated['claim_days'], 'claimables' => $validated['claimables']]);
         $claimResult = $calculateClaims->calculateClaimsJson();
 
-        DB::transaction(function () use ($student, $validate, $claimResult, $pricePeriod, $lunch) {
+        DB::transaction(function () use ($student, $validated, $claimResult, $pricePeriod, $lunch) {
             $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
@@ -72,12 +73,14 @@ class OrderLunchController extends Controller
                 'student_id' => $student->id,
                 'pending_transaction_id' => $pending_transaction->id,
                 'merchant_id' => $lunch->merchant_id,
-                'lunch_id' => $validate['lunch_id'],
+                'lunch_id' => $validated['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $claimResult['claimDates'][0],
-                'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
+                'start_date' => reset($claimResult['claimDates']),
+                'end_date' => end($claimResult['claimDates']),
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
+
+            (new ClaimService())->updateFixedClaims($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 

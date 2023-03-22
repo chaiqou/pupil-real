@@ -1,52 +1,64 @@
 <template>
-  <template class="flex flex-wrap justify-between">
-    <h1 class="mb-2 font-semibold text-gray-700">
-      {{ `${menu.date} - ${menu.menu_name}` }}
-    </h1>
-  </template>
-  <Form :validation-schema="schema" @submit="onSubmit">
+  <h2
+    class="whitespace-wrap mb-2 w-64 overflow-hidden break-words font-semibold text-gray-700"
+  >
+    {{ `${menu.name} - ${menu.date}` }}
+  </h2>
+  <Form @submit="onSubmitForm">
     <div v-if="menu.menu_type === 'choices'">
       <template v-for="menu in menu.menu_name" :key="menu">
-        <BaseRadio name="choices" :value="menu" />
+        <BaseRadio name="choices" :value="menu" @update:radio="radioUpdated" />
       </template>
     </div>
     <div v-if="menu.menu_type === 'fixed'">
       <BaseRadio name="fixed" :value="menu.menu_name" />
     </div>
-    <Button class="ml-auto w-1/2" />
   </Form>
 </template>
 
 <script setup>
 import BaseRadio from "@/components/Ui/form-components/BaseRadio.vue";
-import Button from "@/components/Ui/Button.vue";
 import { Form } from "vee-validate";
+import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
+import { ref, onMounted } from "vue";
 
-defineProps({
+const store = useMenuManagementStore();
+
+const props = defineProps({
   menu: {
     type: Object,
     required: true,
   },
 });
 
-function onSubmit(values) {
-  console.log(values);
-}
+let selectedRadio = ref(null);
 
-const schema = {
-  choices: (value) => {
-    if (value && value.length) {
-      return true;
-    }
-
-    return "You must choose one lunch";
-  },
-  fixed: (value) => {
-    if (value && value.length) {
-      return true;
-    }
-
-    return "You must choose a fixed menu";
-  },
+let radioUpdated = function (value) {
+  selectedRadio.value = value;
 };
+
+onMounted(() => {
+  if (selectedRadio.value === null) {
+    selectedRadio.value = props.menu.menu_name[0];
+  }
+});
+
+const onSubmitForm = function () {
+  axios
+    .post("/api/parent/choice-claims", {
+      date: props.menu.date,
+      claimable: selectedRadio.value,
+      claimable_type: props.menu.name,
+    })
+    .then(() => {
+      store.toggleFixedCard = false;
+      store.toggleChoicesCard = false;
+      store.fixedMenus = [];
+      store.choicesMenus = [];
+    });
+};
+
+defineExpose({
+  onSubmitForm,
+});
 </script>

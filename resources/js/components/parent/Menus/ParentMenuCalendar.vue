@@ -43,7 +43,7 @@
               dayIdx === 6 && 'rounded-tr-lg',
               dayIdx === month.days.length - 7 && 'rounded-bl-lg',
               dayIdx === month.days.length - 1 && 'rounded-br-lg',
-              determineIfMenuExists(day, 'fixed')
+              menuIsSaved(day)
                 ? 'bg-purple-700 text-white hover:bg-purple-600'
                 : '',
               'py-1.5 hover:bg-gray-100',
@@ -58,7 +58,10 @@
                   {{ format(day, "d") }}
                 </h2>
                 <div
-                  v-if="determineIfMenuExists(day, 'choices')"
+                  v-if="
+                    determineIfMenuIsChoices(day, 'choices') &&
+                    !menuIsSaved(day)
+                  "
                   class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
                 ></div>
               </div>
@@ -133,7 +136,7 @@ const loopOverMenusArray = computed(() => {
   return menusArray;
 });
 
-const determineIfMenuExists = (day, menuType) => {
+const determineIfMenuIsChoices = (day, menuType) => {
   if (!availableOrderDays.value) {
     return [];
   }
@@ -147,6 +150,37 @@ const determineIfMenuExists = (day, menuType) => {
         availableOrderDays.value.includes(format(day, "yyyy-MM-dd")),
     ),
   );
+};
+
+// Determine if menu is already saved or not
+
+const menuIsSaved = function (calendarDay) {
+  if (!availableOrderDays.value && !availableOrders.value) {
+    return [];
+  }
+
+  let menuIsSavedBoolean = false;
+
+  if (availableOrders.value) {
+    availableOrders.value.map((order) => {
+      let objectClaims = JSON.parse(order.claims);
+
+      for (const day in objectClaims) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (objectClaims.hasOwnProperty(day)) {
+          if (format(calendarDay, "yyyy-MM-dd") === day) {
+            objectClaims[day].map((ord) => {
+              if (ord.menu_code !== null) {
+                menuIsSavedBoolean = true;
+              }
+            });
+          }
+        }
+      }
+    });
+
+    return menuIsSavedBoolean;
+  }
 };
 
 // Fixed menu card

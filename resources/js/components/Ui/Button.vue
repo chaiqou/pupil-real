@@ -12,12 +12,10 @@ defineProps({
   text: {
     type: String,
     required: false,
-    default: "Submit",
   },
   type: {
     type: String,
     required: false,
-    default: "submit",
   },
 });
 </script>

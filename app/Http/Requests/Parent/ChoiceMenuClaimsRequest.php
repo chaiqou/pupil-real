@@ -4,7 +4,7 @@ namespace App\Http\Requests\Parent;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LunchOrderRequest extends FormRequest
+class ChoiceMenuClaimsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class LunchOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_id' => 'required',
-            'claimables' => 'required|array',
-            'lunch_id' => 'required',
-            'claim_days' => 'required|array|unique:periodic_lunches,claims',
+            'date' => 'required|date',
+            'claimable' => 'required',
+            'claimable_type' => 'required|string',
         ];
     }
 }
