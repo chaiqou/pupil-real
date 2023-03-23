@@ -17,12 +17,11 @@ use App\Models\Terminal;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
 class LunchController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
         if (auth()->user()->hasRole('school')) {
             $merchant = Merchant::where('user_id', auth()->user()->id)->first();
@@ -36,7 +35,22 @@ class LunchController extends Controller
             }
         }
 
-        return LunchResource::collection($lunches);
+        // Group the available days of each lunch by the week they belong to, starting from the first week of January.
+
+        $firstDayOfYear = Carbon::parse('first day of January');
+
+        foreach ($lunches as $lunch) {
+            $groupedByWeeks = collect($lunch['available_days'])->map(function ($day) use ($firstDayOfYear) {
+                $weekNumber = Carbon::parse($day)->diffInWeeks($firstDayOfYear) + 1;
+
+                return [
+                    'date' => $day,
+                    'week' => $weekNumber,
+                ];
+            })->groupBy('week')->toArray();
+        }
+
+        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks]);
     }
 
     public function store(LunchRequest $request): JsonResponse

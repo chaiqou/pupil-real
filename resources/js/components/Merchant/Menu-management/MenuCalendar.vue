@@ -64,6 +64,7 @@ const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
 
 const lunches = ref([]);
+const weeks = ref([]);
 
 const onClickCalendar = (day) => {
   const formatedDay = format(day, "yyyy-MM-dd");
@@ -79,8 +80,9 @@ const onClickCalendar = (day) => {
 
 onBeforeMount(() => {
   axios.get("/api/school/lunch").then((response) => {
-    lunches.value = response.data.data;
-    response.data.data.map((data) => {
+    lunches.value = response.data.lunches.data;
+    weeks.value = response.data.weeks;
+    response.data.lunches.data.map((data) => {
       store.marked_days.push(...data.available_days);
     });
   });
