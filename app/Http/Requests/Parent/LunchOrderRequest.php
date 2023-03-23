@@ -28,6 +28,7 @@ class LunchOrderRequest extends FormRequest
             'claimables' => 'required|array',
             'lunch_id' => 'required',
             'claim_days' => 'required|array|unique:periodic_lunches,claims',
+            'price' => 'required|integer',
         ];
     }
 }
