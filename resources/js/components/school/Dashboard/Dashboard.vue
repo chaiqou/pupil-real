@@ -248,6 +248,16 @@ export default {
         };
     },
     methods: {
+        insightBoxDataPlaceholderInsertion(boxName, previousMonthData, previousToPreviousMonthData, difference) {
+            boxName.stat = previousMonthData;
+            boxName.previousStat = previousToPreviousMonthData;
+            boxName.change = difference + '%';
+            if(difference === 0) {
+                boxName.changeType = 'nothing';
+            } else {
+                difference > 0 ? boxName.changeType = 'increase' : boxName.changeType = 'decrease'
+            }
+        },
         handleGetPieChartDataRequest() {
             axios
                 .get("/api/school/pie-chart-data")
@@ -282,16 +292,9 @@ export default {
                 .get("/api/school/active-students")
                 .then((res) => {
                     const activeStudents = this.statsTop.find((item) => item.name === 'Active Students');
-                        if(res.data !== 'unavailable to calculate')
-                        {
-                            activeStudents.stat = res.data.thirty;
-                            activeStudents.previousStat = res.data.sixty;
-                            activeStudents.change = res.data.difference + '%';
-                            if (res.data.difference === 0) {
-                                activeStudents.changeType = 'nothing';
-                            } else {
-                                res.data.difference > 0 ? activeStudents.changeType = 'increase' : activeStudents.changeType = 'decrease';
-                            }
+                        if(res.data !== 'unavailable to calculate') {
+                            const data = res.data;
+                            this.insightBoxDataPlaceholderInsertion(activeStudents, data.thirty, data.sixty, data.difference);
                         } else activeStudents.unavailable = true;
                 })
                 .catch((err) => console.log(err));
@@ -303,14 +306,8 @@ export default {
                     const avgTransactions = this.statsTop.find((item) => item.name === 'Avg. Transactions Value');
                    if(res.data !== 'unavailable to calculate')
                    {
-                       avgTransactions.stat = res.data.thirty;
-                       avgTransactions.previousStat = res.data.sixty;
-                       avgTransactions.change = res.data.difference + '%';
-                       if (res.data.difference === 0) {
-                           avgTransactions.changeType = 'nothing';
-                       } else {
-                           res.data.difference > 0 ? avgTransactions.changeType = 'increase' : avgTransactions.changeType = 'decrease';
-                       }
+                       const data = res.data;
+                       this.insightBoxDataPlaceholderInsertion(avgTransactions, data.thirty, data.sixty, data.difference)
                    } else avgTransactions.unavailable = true;
                 })
                 .catch((err) => console.log(err))
@@ -335,14 +332,8 @@ export default {
                     const avgTransactionsPerStudent = this.statsBottom.find((item) => item.name === 'Avg. Student weekly spending');
                     if(res.data !== 'unavailable to calculate')
                     {
-                        avgTransactionsPerStudent.stat = res.data.previous;
-                        avgTransactionsPerStudent.previousStat = res.data.past;
-                        avgTransactionsPerStudent.change = res.data.difference + '%';
-                        if (res.data.difference === 0) {
-                            avgTransactionsPerStudent.changeType = 'nothing';
-                        } else {
-                            res.data.difference > 0 ? avgTransactionsPerStudent.changeType = 'increase' : avgTransactionsPerStudent.changeType = 'decrease';
-                        }
+                       const data = res.data;
+                       this.insightBoxDataPlaceholderInsertion(avgTransactionsPerStudent, data.previous, data.past, data.difference);
                     } else avgTransactionsPerStudent.unavailable = true;
                 })
                 .catch((err) => console.log(err))
