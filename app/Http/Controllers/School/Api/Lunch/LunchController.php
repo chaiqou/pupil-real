@@ -14,6 +14,7 @@ use App\Models\PeriodicLunch;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\Terminal;
+use App\Services\CalendarService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,6 +22,13 @@ use Illuminate\Support\Facades\DB;
 
 class LunchController extends Controller
 {
+    protected $calendarService;
+
+    public function __construct(CalendarService $calendarService)
+    {
+        $this->calendarService = $calendarService;
+    }
+
     public function index()
     {
         if (auth()->user()->hasRole('school')) {
@@ -35,20 +43,7 @@ class LunchController extends Controller
             }
         }
 
-        // Group the available days of each lunch by the week they belong to, starting from the first week of January.
-
-        $firstDayOfYear = Carbon::parse('first day of January');
-
-        foreach ($lunches as $lunch) {
-            $groupedByWeeks = collect($lunch['available_days'])->map(function ($day) use ($firstDayOfYear) {
-                $weekNumber = Carbon::parse($day)->diffInWeeks($firstDayOfYear) + 1;
-
-                return [
-                    'date' => $day,
-                    'week' => $weekNumber,
-                ];
-            })->groupBy('week')->toArray();
-        }
+        $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($lunches);
 
         return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks]);
     }

@@ -25,6 +25,7 @@
           <div class="mt-2 space-y-6">
             <div
               v-for="(week, weekIdx) in weeks"
+              :class="[computedWeeks]"
               :key="weekIdx"
               class="flex items-center justify-end"
             >
@@ -62,7 +63,7 @@
 
 <script setup>
 import { format } from "date-fns";
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
@@ -89,6 +90,10 @@ const onClickCalendar = (day) => {
     menuManagementStore.selectedDay = day;
   }
 };
+
+const computedWeeks = computed(() => {
+  console.log(weeks.value);
+});
 
 // Fetch all existing lunch for merchant and mark it on calendar
 
