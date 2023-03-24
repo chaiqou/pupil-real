@@ -130,12 +130,10 @@ class BillingoController extends Controller
         return new PendingTransactionResource($pending_transaction);
     }
 
-
     public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $type, string $fulfillment_date,
     string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
     string $unit, string $vat, string $comment, bool $should_send_email
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $date = strtotime($fulfillment_date);
         $date = strtotime('+7 days', $date);
         $due_date = date('Y-m-d', $date);
@@ -164,14 +162,16 @@ class BillingoController extends Controller
                 'should_send_email' => $should_send_email,
             ],
         ])->json();
+
         return response()->json($request);
     }
 
     public static function getBillingDocument(int $documentId, string $api_key): JsonResponse
     {
-        $request =  Http::withHeaders([
+        $request = Http::withHeaders([
             'X-API-KEY' => $api_key,
         ])->get('https://api.billingo.hu/v3/documents/'.$documentId)->json();
+
         return response()->json($request);
     }
 

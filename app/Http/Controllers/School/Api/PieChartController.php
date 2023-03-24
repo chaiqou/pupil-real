@@ -14,10 +14,9 @@ class PieChartController extends Controller
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $lunches = Lunch::where('merchant_id', $merchant->id)->get();
-        foreach($lunches as $lunch)
-        {
+        foreach ($lunches as $lunch) {
             $count = PeriodicLunch::where('lunch_id', $lunch->id)->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $lunchData[] = [
                     'id' => $lunch->id,
                     'title' => $lunch->title,
@@ -26,9 +25,10 @@ class PieChartController extends Controller
             }
         }
 
-        if(count($lunchData) > 1) {
+        if (count($lunchData) > 1) {
             return response()->json($lunchData);
         }
+
         return response()->json('Nothing is found');
     }
 }

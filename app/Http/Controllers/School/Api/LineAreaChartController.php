@@ -18,13 +18,13 @@ class LineAreaChartController extends Controller
         $numberOfDaysPrevious = $previousMonth->daysInMonth;
         $numberOfDaysCurrent = $currentMonth->daysInMonth;
 
-// Determine the number of days to use for initializing the arrays
+        // Determine the number of days to use for initializing the arrays
         $numberOfDays = $numberOfDaysCurrent;
         if ($numberOfDaysPrevious < $numberOfDaysCurrent) {
             $numberOfDays = $numberOfDaysPrevious;
         }
 
-// Create arrays with the specified number of days, initialized to zero
+        // Create arrays with the specified number of days, initialized to zero
         $transactionsByDayPrevious = array_fill(0, $numberOfDaysPrevious, 0);
         $transactionsByDayCurrent = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {
@@ -38,15 +38,18 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent[$i] = null;
         }
 
+
 // Get the transactions for the previous month
         $transactionsPrevious = Transaction::where('merchant_id', $merchant->id)
             ->whereBetween('transaction_date', [$previousMonth->startOfMonth()->format('Y-m-d'), $previousMonth->endOfMonth()->format('Y-m-d')])
             ->get();
 
+
 // Get the transactions for the current month
         $transactionsCurrent = Transaction::where('merchant_id', $merchant->id)
             ->whereBetween('transaction_date', [Carbon::now()->startOfMonth()->format('Y-m-d'), $currentMonth->format('Y-m-d')])
             ->get();
+
 
 
 // Nothing if transactions for previous or current month is not found by the way we need for the calculations below
@@ -76,7 +79,6 @@ class LineAreaChartController extends Controller
             $transactionsByDayPrediction = array_slice($transactionsByDayPrediction, 0, $numberOfDaysPrevious);
         }
 
-
         $sumsOfCurrent = [];
         $runningSumOfCurrent = 0;
         foreach ($transactionsByDayCurrent as $value) {
@@ -94,6 +96,7 @@ class LineAreaChartController extends Controller
         $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
         $difference = (($averageCurrent * 100) / $averagePrevious) / 100;
         $transactionsByDayPrediction[$tomorrow_day_index - 1] = end($sumsOfCurrent);
+
 // Calculate the formula and fill only the days after today
         for ($i = $tomorrow_day_index; $i < count($transactionsByDayPrediction); $i++) {
             $transactionsByDayPrediction[$i] =  round($transactionsByDayPrediction[$i-1] + ($transactionsByDayPrevious[$i] * $difference));
@@ -116,10 +119,5 @@ class LineAreaChartController extends Controller
         ];
 
         return response()->json($transactionsByMonth);
-
     }
 }
-
-
-
-

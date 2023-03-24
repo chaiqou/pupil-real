@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
   <div
     class="fixed z-50 flex min-h-screen w-screen flex-col items-center justify-center bg-black/50"

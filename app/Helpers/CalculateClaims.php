@@ -23,7 +23,7 @@ class CalculateClaims
         foreach ($this->validate['claims'] as $date) {
             $date = new DateTime($date);
             $date->add(new DateInterval('P1D'));
-            $claimDates[] = $date->format('Y-m-d H:i:s');
+            $claimDates[] = $date->format('Y-m-d');
         }
 
         // Generates claims json for each days and also loops over claimables
@@ -38,6 +38,8 @@ class CalculateClaims
                     'name' => $claimable,
                     'claimed' => false,
                     'claimed_date' => null,
+                    'menu' => '',
+                    'menu_code' => null,
                 ];
             }
 
