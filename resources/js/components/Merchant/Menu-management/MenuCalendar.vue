@@ -22,15 +22,15 @@
           <div>S</div>
         </div>
         <div class="flex space-x-2">
-          <div class="mt-2 space-y-6">
+          <div class="mt-4">
             <div
               v-for="(week, weekIdx) in computedWeeks"
               :key="weekIdx"
               class="flex items-center justify-end"
             >
-              <div v-if="month.name == week.month">
+              <div class="pb-4" v-if="month.name == week.month">
                 <DownloadIcon
-                  class="cursor-pointer rounded-xl bg-purple-700 p-2 hover:bg-purple-600"
+                  class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
                 />
               </div>
             </div>
