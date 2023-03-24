@@ -16,7 +16,7 @@
               class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600"
             >
               {{ item.stat }}
-              <span class="ml-2 text-sm font-medium text-gray-500"
+              <span class="text-sm font-medium text-gray-500"
                 >from {{ item.previousStat }}</span
               >
             </div>
@@ -70,7 +70,7 @@
               class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600"
             >
               {{ item.stat }}
-              <span class="ml-2 text-sm font-medium text-gray-500"
+              <span class="text-sm font-medium text-gray-500"
                 >from {{ item.previousStat }}</span
               >
             </div>
