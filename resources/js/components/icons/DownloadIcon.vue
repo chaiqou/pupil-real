@@ -3,9 +3,9 @@
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    stroke-width="1.5"
+    stroke-width="3"
     stroke="currentColor"
-    class="h-6 w-6"
+    style="color: white; height: 30px; width: 30px"
   >
     <path
       stroke-linecap="round"

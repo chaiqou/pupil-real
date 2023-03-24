@@ -28,7 +28,9 @@
               :key="weekIdx"
               class="flex items-center justify-end"
             >
-              <DownloadIcon />
+              <DownloadIcon
+                class="cursor-pointer rounded-xl bg-purple-700 p-2 hover:bg-purple-600"
+              />
             </div>
           </div>
           <div
