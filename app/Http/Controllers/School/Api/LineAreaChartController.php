@@ -31,29 +31,34 @@ class LineAreaChartController extends Controller
             $transactionsByDayCurrent = array_slice($transactionsByDayCurrent, 0, $numberOfDaysPrevious);
         }
 
-        // Calculate the tomorrow day index to find the index of next day into the array
-        $tomorrow_day_index = (int) date('j', strtotime('+1 days')) - 1;
-        // Calculate the formula and fill only the days after today
+// Calculate the tomorrow day index to find the index of next day into the array
+        $tomorrow_day_index = (int)date('j', strtotime('+1 days')) - 1;
+// Calculate the formula and fill only the days after today
         for ($i = $tomorrow_day_index; $i < count($transactionsByDayCurrent); $i++) {
             $transactionsByDayCurrent[$i] = null;
         }
 
-        // Get the transactions for the previous month
+
+// Get the transactions for the previous month
         $transactionsPrevious = Transaction::where('merchant_id', $merchant->id)
             ->whereBetween('transaction_date', [$previousMonth->startOfMonth()->format('Y-m-d'), $previousMonth->endOfMonth()->format('Y-m-d')])
             ->get();
 
-        // Get the transactions for the current month
+
+// Get the transactions for the current month
         $transactionsCurrent = Transaction::where('merchant_id', $merchant->id)
             ->whereBetween('transaction_date', [Carbon::now()->startOfMonth()->format('Y-m-d'), $currentMonth->format('Y-m-d')])
             ->get();
 
-        // Nothing if transactions for previous or current month is not found by the way we need for the calculations below
-        if (! count($transactionsPrevious) || ! count($transactionsCurrent)) {
+
+
+// Nothing if transactions for previous or current month is not found by the way we need for the calculations below
+        if(!count($transactionsPrevious) || !count($transactionsCurrent))
+        {
             return response()->json('Nothing is found');
         }
 
-        // Loop through the transactions and update the corresponding day's value in the array
+// Loop through the transactions and update the corresponding day's value in the array
         foreach ($transactionsPrevious as $transaction) {
             $dayOfMonth = (int) Carbon::parse($transaction->transaction_date)->format('j') - 1; // Subtract 1 to get a zero-based index
             $transactionsByDayPrevious[$dayOfMonth] += $transaction->transaction_amount;
@@ -91,13 +96,14 @@ class LineAreaChartController extends Controller
         $averageCurrent = array_sum($transactionsByDayCurrent) / count($transactionsByDayCurrent);
         $difference = (($averageCurrent * 100) / $averagePrevious) / 100;
         $transactionsByDayPrediction[$tomorrow_day_index - 1] = end($sumsOfCurrent);
-        // Calculate the formula and fill only the days after today
+
+// Calculate the formula and fill only the days after today
         for ($i = $tomorrow_day_index; $i < count($transactionsByDayPrediction); $i++) {
-            $transactionsByDayPrediction[$i] = round($transactionsByDayPrediction[$i - 1] + ($transactionsByDayPrevious[$i] * $difference));
+            $transactionsByDayPrediction[$i] =  round($transactionsByDayPrediction[$i-1] + ($transactionsByDayPrevious[$i] * $difference));
         }
 
-        // Replace all 0-s with nulls
-        $transactionsByDayPrediction = array_map(function ($value) {
+// Replace all 0-s with nulls
+        $transactionsByDayPrediction = array_map(function($value) {
             return ($value === 0) ? null : $value;
         }, $transactionsByDayPrediction);
 
