@@ -93,19 +93,22 @@ const onClickCalendar = (day) => {
 };
 
 const computedWeeks = computed(() => {
-  const result = [];
+  const correctMonthes = [];
 
   weeks.value.forEach((week) => {
+    // Loop over weeks array and for each weeks create new array in which we have week index , month name , and days array
+
     for (const key in week) {
+      // Find correct month name
       const monthName = getMonthByIndex(
         parseISO(week[key][0].date).getMonth() + 1,
       );
 
-      result.push({ week: key, month: monthName, days: week[key] });
+      correctMonthes.push({ week: key, month: monthName, days: week[key] });
     }
   });
 
-  return result;
+  return correctMonthes;
 });
 
 // Fetch all existing lunch for merchant and mark it on calendar
