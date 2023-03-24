@@ -24,14 +24,15 @@
         <div class="flex space-x-2">
           <div class="mt-2 space-y-6">
             <div
-              v-for="(week, weekIdx) in weeks"
-              :class="[computedWeeks]"
+              v-for="(week, weekIdx) in computedWeeks"
               :key="weekIdx"
               class="flex items-center justify-end"
             >
-              <DownloadIcon
-                class="cursor-pointer rounded-xl bg-purple-700 p-2 hover:bg-purple-600"
-              />
+              <div v-if="month.name == week.month">
+                <DownloadIcon
+                  class="cursor-pointer rounded-xl bg-purple-700 p-2 hover:bg-purple-600"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -96,7 +97,7 @@ const computedWeeks = computed(() => {
 
   for (const key in weeks.value) {
     const monthName = getMonthByIndex(
-      parseISO(weeks.value[key][0].date).getMonth(),
+      parseISO(weeks.value[key][0].date).getMonth() + 1,
     );
 
     result.push({ week: key, month: monthName, days: weeks.value[key] });
