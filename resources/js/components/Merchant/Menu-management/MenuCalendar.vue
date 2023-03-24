@@ -21,26 +21,37 @@
           <div>S</div>
           <div>S</div>
         </div>
-        <div
-          class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
-        >
-          <button
-            v-for="(day, dayIdx) in month.days"
-            @click="onClickCalendar(day)"
-            :key="dayIdx"
-            :class="[
-              month.name !== getMonthByIndex(day.getMonth())
-                ? 'bg-white text-gray-900'
-                : 'bg-gray-50 text-gray-400',
-              dayIdx === 0 && 'rounded-tl-lg',
-              dayIdx === 6 && 'rounded-tr-lg',
-              dayIdx === month.days.length - 7 && 'rounded-bl-lg',
-              dayIdx === month.days.length - 1 && 'rounded-br-lg',
-              'py-1.5 hover:bg-gray-100',
-            ]"
+        <div class="flex space-x-2">
+          <div class="mt-2 space-y-6">
+            <div
+              v-for="(week, weekIdx) in weeks"
+              :key="weekIdx"
+              class="flex items-center justify-end"
+            >
+              <DownloadIcon />
+            </div>
+          </div>
+          <div
+            class="relative isolate mt-2 grid grow grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
           >
-            <MenuCalendarDays :day="day" />
-          </button>
+            <button
+              v-for="(day, dayIdx) in month.days"
+              @click="onClickCalendar(day)"
+              :key="dayIdx"
+              :class="[
+                month.name !== getMonthByIndex(day.getMonth())
+                  ? 'bg-white text-gray-900'
+                  : 'bg-gray-50 text-gray-400',
+                dayIdx === 0 && 'rounded-tl-lg',
+                dayIdx === 6 && 'rounded-tr-lg',
+                dayIdx === month.days.length - 7 && 'rounded-bl-lg',
+                dayIdx === month.days.length - 1 && 'rounded-br-lg',
+                'py-1.5 hover:bg-gray-100',
+              ]"
+            >
+              <MenuCalendarDays :day="day" />
+            </button>
+          </div>
         </div>
       </section>
     </div>
@@ -56,6 +67,7 @@ import useFindMonthDays from "@/composables/calendar/useFindMonthDays";
 import useFindMonthByIndex from "@/composables/calendar/useFindMonthByIndex";
 import MenuCalendarDays from "@/components/Merchant/Menu-management/MenuCalendarDays.vue";
 import RenderDifferentCards from "@/components/Merchant/Menu-management/RenderDifferentCards.vue";
+import DownloadIcon from "@/components/icons/DownloadIcon.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
