@@ -95,13 +95,15 @@ const onClickCalendar = (day) => {
 const computedWeeks = computed(() => {
   const result = [];
 
-  for (const key in weeks.value) {
-    const monthName = getMonthByIndex(
-      parseISO(weeks.value[key][0].date).getMonth() + 1,
-    );
+  weeks.value.forEach((week) => {
+    for (const key in week) {
+      const monthName = getMonthByIndex(
+        parseISO(week[key][0].date).getMonth() + 1,
+      );
 
-    result.push({ week: key, month: monthName, days: weeks.value[key] });
-  }
+      result.push({ week: key, month: monthName, days: week[key] });
+    }
+  });
 
   return result;
 });
