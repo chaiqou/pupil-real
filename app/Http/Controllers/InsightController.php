@@ -15,17 +15,11 @@ class InsightController extends Controller
 {
     public function activeStudents(): JsonResponse
     {
-        $pastThirtyDays = Carbon::now()->subDays(30)->startOfDay();
-        $pendingTransactionsThirty = PendingTransaction::whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')]);
-        $transactionsThirty = Transaction::whereBetween('transaction_date', [$pastThirtyDays, Carbon::now()->endOfMonth()->format('Y-m-d')]);
-        $orders = PeriodicLunch::where('end_date', '>=', Carbon::now()->format('Y-m-d'));
-
-        $pastSixtyDays = Carbon::now()->subDays(60)->startOfDay();
-        $pendingTransactionsSixty = PendingTransaction::whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)]);
-        $transactionsSixty = Transaction::whereBetween('transaction_date', [$pastSixtyDays, Carbon::now()->subDays(30)]);
+        $user = auth()->user();
+        $students = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
 
         $insightClass = new InsightStatistics();
-        $activeStudentsData = $insightClass->activeStudents($pendingTransactionsThirty, $pendingTransactionsSixty, $transactionsThirty, $transactionsSixty, $orders);
+        $activeStudentsData = $insightClass->activeStudents($students);
         return response()->json($activeStudentsData);
     }
 
