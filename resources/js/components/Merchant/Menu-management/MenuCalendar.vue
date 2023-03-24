@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { ref, onBeforeMount, computed } from "vue";
 import { useMenuManagementStore } from "@/stores/useMenuManagementStore";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
@@ -92,7 +92,17 @@ const onClickCalendar = (day) => {
 };
 
 const computedWeeks = computed(() => {
-  console.log(weeks.value);
+  const result = [];
+
+  for (const key in weeks.value) {
+    const monthName = getMonthByIndex(
+      parseISO(weeks.value[key][0].date).getMonth(),
+    );
+
+    result.push({ week: key, month: monthName, days: weeks.value[key] });
+  }
+
+  return result;
 });
 
 // Fetch all existing lunch for merchant and mark it on calendar
