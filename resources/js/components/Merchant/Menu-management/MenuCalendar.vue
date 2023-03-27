@@ -29,9 +29,11 @@
               class="flex items-center justify-end"
             >
               <div class="pb-4" v-if="month.name == week.month">
-                <DownloadIcon
-                  class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
-                />
+                <button @click="sendAppropiateDays(week.days)">
+                  <DownloadIcon
+                    class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
+                  />
+                </button>
               </div>
             </div>
           </div>
@@ -110,6 +112,10 @@ const computedWeeks = computed(() => {
 
   return correctMonthes;
 });
+
+const sendAppropiateDays = async function (weekdays) {
+  const response = await axios.post("/api/merchant/export-menu", weekdays);
+};
 
 // Fetch all existing lunch for merchant and mark it on calendar
 
