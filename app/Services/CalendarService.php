@@ -19,7 +19,7 @@ class CalendarService
         foreach ($lunches as $lunch) {
             $weeks = collect($lunch['available_days'])->map(function ($day) use ($firstDayOfYear) {
                 // Find correct week number from January (if now is 21 january week number will be 3)
-                $weekNumber = Carbon::parse($day)->diffInWeeks($firstDayOfYear) + 1;
+                $weekNumber = Carbon::parse($day)->diffInWeeks($firstDayOfYear);
 
                 return [
                     'date' => $day,
