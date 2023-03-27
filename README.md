@@ -50,8 +50,14 @@ php artisan migrate --seed
 ## Run Octane Server by running the following command:
 
 ```
-php artisan ocnate:start --watch
+php artisan octane:start --watch
 ```
+## Run queue with default and custom queue by running the following command:
+
+```
+ php artisan queue:work --queue="invite-users","default"
+```
+
 
 ## Run Horizon dashboard for queues by running the following command:
 
