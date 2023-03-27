@@ -4,11 +4,7 @@
     <div
       class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
     >
-      <section
-        v-for="month in monthsDays"
-        :key="month.name"
-        class="text-center"
-      >
+      <section v-for="month in monthsDays" :key="month.name" class="text-right">
         <h2 class="font-semibold text-gray-900">
           {{ month.name }} {{ month.year }}
         </h2>
@@ -28,7 +24,7 @@
               :key="weekIdx"
               class="flex items-center justify-end"
             >
-              <div class="pb-4" v-if="month.name == week.month">
+              <div class="pb-2" v-if="month.name == week.month">
                 <button @click="sendAppropiateDays(week.days)">
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
@@ -114,6 +110,7 @@ const computedWeeks = computed(() => {
 });
 
 const sendAppropiateDays = async function (weekdays) {
+  // eslint-disable-next-line no-unused-vars
   const response = await axios.post("/api/merchant/export-menu", weekdays);
 };
 
