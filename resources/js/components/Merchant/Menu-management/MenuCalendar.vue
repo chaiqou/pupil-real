@@ -2,7 +2,7 @@
   <RenderDifferentCards />
   <div class="w-full">
     <div
-      class="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:max-w-none xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
+      class="grid gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-1 sm:px-6 xl:grid-cols-2 xl:px-8 2xl:grid-cols-3"
     >
       <section v-for="month in monthsDays" :key="month.name" class="text-right">
         <h2 class="font-semibold text-gray-900">
@@ -19,13 +19,9 @@
         </div>
         <div class="flex">
           <div class="mt-4 grow-0 basis-1/12">
-            <div
-              v-for="(week, weekIdx) in computedWeeks"
-              :key="weekIdx"
-              class="flex items-center justify-end"
-            >
+            <div v-for="(week, weekIdx) in computedWeeks" :key="weekIdx">
               <div class="pb-2" v-if="month.name == week.month">
-                <button @click="sendAppropiateDays(week.days)">
+                <button @click="sendCorrectWeekNumber(week.days)">
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
                   />
@@ -34,7 +30,7 @@
             </div>
           </div>
           <div
-            class="relative isolate mt-2 ml-4 grid grow basis-11/12 grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+            class="mt-2 ml-4 grid basis-11/12 grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
           >
             <button
               v-for="(day, dayIdx) in month.days"
@@ -73,7 +69,6 @@ import DownloadIcon from "@/components/icons/DownloadIcon.vue";
 
 const store = useLunchFormStore();
 const menuManagementStore = useMenuManagementStore();
-
 const { monthsDays } = useFindMonthDays(11);
 const { getMonthByIndex } = useFindMonthByIndex();
 
@@ -91,7 +86,7 @@ const onClickCalendar = (day) => {
 };
 
 const computedWeeks = computed(() => {
-  const correctMonthes = [];
+  const computedWeekdays = [];
 
   weeks.value.forEach((week) => {
     // Loop over weeks array and for each weeks create new array in which we have week index , month name , and days array
@@ -102,14 +97,14 @@ const computedWeeks = computed(() => {
         parseISO(week[key][0].date).getMonth() + 1,
       );
 
-      correctMonthes.push({ week: key, month: monthName, days: week[key] });
+      computedWeekdays.push({ month: monthName, days: week[key] });
     }
   });
 
-  return correctMonthes;
+  return computedWeekdays;
 });
 
-const sendAppropiateDays = async function (weekdays) {
+const sendCorrectWeekNumber = async function (weekdays) {
   // eslint-disable-next-line no-unused-vars
   const response = await axios.post("/api/merchant/export-menu", weekdays);
 };
