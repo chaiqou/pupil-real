@@ -116,7 +116,7 @@
 
 <script>
 import {
-  DialogComponent,
+  Dialog as DialogComponent,
   DialogPanel,
   DialogTitle,
   TransitionChild,

@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.1.0",
-    "@headlessui/vue": "^1.7.4",
+    "@headlessui/vue": "^1.7.12",
     "@heroicons/vue": "^2.0.13",
     "@sentry/tracing": "^7.30.0",
     "@sentry/vue": "^7.30.0",

@@ -116,7 +116,7 @@
 
 <script>
 import {
-  Dialog as DialogComponent,
+  Dialog,
   DialogPanel,
   DialogTitle,
   TransitionChild,
@@ -128,7 +128,7 @@ import { useTransactionStore } from "@/stores/useTransactionStore";
 
 export default {
   components: {
-    DialogComponent,
+    DialogComponent: Dialog,
     DialogPanel,
     DialogTitle,
     TransitionChild,
