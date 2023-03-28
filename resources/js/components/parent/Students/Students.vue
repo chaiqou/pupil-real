@@ -153,12 +153,8 @@
 import { mapActions, mapWritableState } from "pinia";
 import { useStudentStore } from "@/stores/useStudentStore";
 import { useModalStore } from "@/stores/useModalStore";
-import StudentEditModal from "@/components/parent/Students/StudentEditModal.vue";
 
 export default {
-  components: {
-    StudentEditModal,
-  },
   props: {
     userId: {
       type: Number,
