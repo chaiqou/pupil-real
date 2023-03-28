@@ -17,8 +17,8 @@
           <div>S</div>
           <div>S</div>
         </div>
-        <div class="flex space-x-2">
-          <div class="mt-4">
+        <div class="flex">
+          <div class="mt-4 grow-0 basis-1/12">
             <div
               v-for="(week, weekIdx) in computedWeeks"
               :key="weekIdx"
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div
-            class="relative isolate mt-2 grid grow grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+            class="relative isolate mt-2 ml-4 grid grow basis-11/12 grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
           >
             <button
               v-for="(day, dayIdx) in month.days"
