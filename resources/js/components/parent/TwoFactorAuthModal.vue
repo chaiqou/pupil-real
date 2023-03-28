@@ -13,7 +13,7 @@
   </div>
 
   <TransitionRoot as="template" :show="this.isTwoFactorVisible">
-    <Dialog as="div" class="relative z-10" @close="showHideTwoFactor()">
+    <DialogComponent as="div" class="relative z-10" @close="showHideTwoFactor()">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -85,13 +85,13 @@
           </TransitionChild>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
   DialogTitle,
   TransitionChild,
@@ -103,7 +103,7 @@ import { useModalStore } from "@/stores/useModalStore";
 
 export default {
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
     DialogTitle,
     TransitionChild,

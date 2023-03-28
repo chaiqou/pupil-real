@@ -18,13 +18,13 @@ class LineAreaChartController extends Controller
         $numberOfDaysPrevious = $previousMonth->daysInMonth;
         $numberOfDaysCurrent = $currentMonth->daysInMonth;
 
-        // Determine the number of days to use for initializing the arrays
+// Determine the number of days to use for initializing the arrays
         $numberOfDays = $numberOfDaysCurrent;
         if ($numberOfDaysPrevious < $numberOfDaysCurrent) {
             $numberOfDays = $numberOfDaysPrevious;
         }
 
-        // Create arrays with the specified number of days, initialized to zero
+// Create arrays with the specified number of days, initialized to zero
         $transactionsByDayPrevious = array_fill(0, $numberOfDaysPrevious, 0);
         $transactionsByDayCurrent = array_fill(0, $numberOfDaysPrevious, 0);
         if ($numberOfDaysCurrent < $numberOfDaysPrevious) {

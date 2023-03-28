@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="this.isSlideOverOpen">
-    <Dialog
+    <DialogComponent
       as="div"
       class="relative z-10"
       @close="this.isSlideOverOpen = false"
@@ -110,13 +110,13 @@
           </div>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
   DialogTitle,
   TransitionChild,
@@ -128,7 +128,7 @@ import { useTransactionStore } from "@/stores/useTransactionStore";
 
 export default {
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
     DialogTitle,
     TransitionChild,

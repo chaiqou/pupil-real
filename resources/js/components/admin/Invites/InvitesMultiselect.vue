@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+import { Form as ValidationForm, Field, } from "vee-validate";
 import { mapWritableState } from "pinia";
 import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import { useInviteStore } from "@/stores/useInviteStore";
@@ -164,7 +164,6 @@ export default {
   components: {
     ValidationForm,
     Field,
-    ErrorMessage,
     ExclamationTriangleIcon,
     CheckIcon,
     InvitesSchoolMultiselect,
@@ -235,12 +234,10 @@ export default {
       if (text === "pending") {
         return "Please wait, we are sending invites.";
       }
-      if (text === "yes") {
+      else if (text === "yes") {
         return "Invites send successfully!";
       }
-      if (text === "no") {
-        return "Could not send invites at the moment, please try again later, or text to support.";
-      }
+     else return "Could not send invites at the moment, please try again later, or text to support.";
     },
   },
   methods: {
