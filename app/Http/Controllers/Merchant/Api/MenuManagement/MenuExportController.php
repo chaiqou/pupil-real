@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Merchant\MenuExportRequest;
 use App\Services\ExcelService;
-use Illuminate\Http\Request;
 
 class MenuExportController extends Controller
 {
@@ -15,8 +15,9 @@ class MenuExportController extends Controller
         $this->excelService = $excelService;
     }
 
-    public function exportMenu(Request $request)
+    public function exportMenu(MenuExportRequest $request)
     {
-        $appropiateLunches = $this->excelService->findLunchesForExcelFile($request[0]['week']);
+        $validated = $request->validated();
+        $appropiateLunches = $this->excelService->findLunchesForExcelFile($validated['dayAndWeek'][0]['week']);
     }
 }

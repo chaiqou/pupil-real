@@ -104,9 +104,11 @@ const computedWeeks = computed(() => {
   return computedWeekdays;
 });
 
-const sendCorrectWeekNumber = async function (weekdays) {
+const sendCorrectWeekNumber = async function (dayAndWeek) {
   // eslint-disable-next-line no-unused-vars
-  const response = await axios.post("/api/merchant/export-menu", weekdays);
+  const response = await axios.post("/api/merchant/export-menu", {
+    dayAndWeek: dayAndWeek,
+  });
 };
 
 // Fetch all existing lunch for merchant and mark it on calendar
