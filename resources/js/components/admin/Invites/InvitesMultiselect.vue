@@ -242,7 +242,7 @@ export default {
   },
   methods: {
     addTag(event) {
-      const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const regexEmail = /^\w+(-?\w+)*@\w+(-?\w+)*(\.\w{2,3})+$/;
 
       if (event.code === "Comma" || event.code === "Enter") {
         event.preventDefault();

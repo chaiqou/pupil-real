@@ -51,64 +51,67 @@
             <MerchantsNotFound></MerchantsNotFound>
           </td>
         </tr>
-        <tr
-          v-if="this.isMerchantsLoaded && this.merchants.length"
-          v-for="merchant in merchants"
-          :key="merchant.id"
-        >
-          <td
-            class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
-          >
-            {{ merchant.merchant_nick }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ merchant.company_legal_name }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ merchant.company_details }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ merchant.activated }}
-          </td>
-          <td
-            class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
-          >
-            <button
-              @click="
+        <template v-if="this.isMerchantsLoaded && this.merchants.length">
+            <tr
+                v-for="merchant in merchants"
+                :key="merchant.id"
+            >
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
+                >
+                    {{ merchant.merchant_nick }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ merchant.company_legal_name }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ merchant.company_details }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ merchant.activated }}
+                </td>
+                <td
+                    class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
+                >
+                    <button
+                        @click="
                 showHideMerchantEdit();
                 currentMerchantEdit(merchant.id);
               "
-              class="pr-6 text-indigo-600 hover:text-indigo-900"
-            >
-              Edit
-            </button>
-          </td>
-        </tr>
-        <tr v-if="!this.isMerchantsLoaded" v-for="n in 7">
-          <td
-            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-          >
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-        </tr>
+                        class="pr-6 text-indigo-600 hover:text-indigo-900"
+                    >
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </template>
+      <template v-if="!this.isMerchantsLoaded">
+          <tr v-for="n in 7" :key="n">
+              <td
+                  class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+              >
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+          </tr>
+      </template>
       </tbody>
     </table>
   </div>

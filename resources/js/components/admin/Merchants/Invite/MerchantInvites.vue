@@ -51,56 +51,60 @@
             <InvitesNotFound></InvitesNotFound>
           </td>
         </tr>
-        <tr
-          v-if="this.isInvitesLoaded && this.invites.length"
-          v-for="invite in invites"
-          :key="invite.id"
-        >
-          <td
-            class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
-          >
-            {{ invite.email }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ invite.state }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ invite.school.school_code }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ invite.created_at }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ invite.updated_at }}
-          </td>
-        </tr>
-        <tr v-if="!this.isInvitesLoaded" v-for="n in 7">
-          <td
-            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-          >
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-        </tr>
+
+        <template v-if="this.isInvitesLoaded && this.invites.length">
+            <tr
+                v-for="invite in invites"
+                :key="invite.id"
+            >
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
+                >
+                    {{ invite.email }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ invite.state }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ invite.school.school_code }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ invite.created_at }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ invite.updated_at }}
+                </td>
+            </tr>
+        </template>
+        <template v-if="!this.isInvitesLoaded">
+            <tr v-for="n in 7" :key="n">
+                <td
+                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                >
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+            </tr>
+        </template>
       </tbody>
     </table>
   </div>

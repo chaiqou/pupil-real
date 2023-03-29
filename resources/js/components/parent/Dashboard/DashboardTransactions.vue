@@ -40,51 +40,55 @@
           <TransactionsNotFound role="school"></TransactionsNotFound>
         </td>
       </tr>
-      <tr
-        v-if="this.isTransactionsLoaded && this.transactions.length"
-        v-for="transaction in transactions"
-        :key="transaction.id"
-      >
-        <td
-          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-        >
-          {{ transaction.student.first_name }}
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{ transaction.amount }}
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{ transaction.transaction_type }}
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{ transaction.transaction_date }}
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{ transaction.merchant.merchant_nick }}
-        </td>
-        <td
-          class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
-        ></td>
-      </tr>
-      <tr v-if="!this.isTransactionsLoaded" v-for="n in 7">
-        <td
-          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-        >
-          <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-        </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-        </td>
-      </tr>
+
+      <template v-if="this.isTransactionsLoaded && this.transactions.length">
+          <tr
+              v-for="transaction in transactions"
+              :key="transaction.id"
+          >
+              <td
+                  class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+              >
+                  {{ transaction.student.first_name }}
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{ transaction.amount }}
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{ transaction.transaction_type }}
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{ transaction.transaction_date }}
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{ transaction.merchant.merchant_nick }}
+              </td>
+              <td
+                  class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+              ></td>
+          </tr>
+      </template>
+   <template v-if="!this.isTransactionsLoaded">
+       <tr  v-for="n in 7" :key="n">
+           <td
+               class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+           >
+               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+           </td>
+           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+           </td>
+           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+           </td>
+           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+           </td>
+           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+           </td>
+       </tr>
+   </template>
     </tbody>
   </table>
 </template>

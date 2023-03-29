@@ -42,51 +42,54 @@
       <tbody class="divide-y divide-gray-200 bg-white">
         <tr v-if="this.isTerminalsLoaded && !this.terminals.length">
           <td class="bg-white" colspan="4">
-            <TerminalsNotFound role="school"></TerminalsNotFound>
+            <TerminalsNotFound></TerminalsNotFound>
           </td>
         </tr>
-        <tr
-          v-if="this.isTerminalsLoaded && this.terminals.length"
-          v-for="terminal in terminals"
-          :key="terminal.id"
-        >
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ terminal.name }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ terminal.serial_number }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ terminal.note || "NONE" }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ terminal.public_key }}
-          </td>
-        </tr>
-        <tr v-if="!this.isTerminalsLoaded" v-for="n in 7">
-          <td
-            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-          >
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-        </tr>
+        <template v-if="this.isTerminalsLoaded && this.terminals.length">
+            <tr
+                v-for="terminal in terminals"
+                :key="terminal.id"
+            >
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ terminal.name }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ terminal.serial_number }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ terminal.note || "NONE" }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ terminal.public_key }}
+                </td>
+            </tr>
+        </template>
+      <template v-if="!this.isTerminalsLoaded">
+          <tr v-for="n in 7" :key="n">
+              <td
+                  class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+              >
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+              </td>
+          </tr>
+      </template>
       </tbody>
     </table>
   </div>
