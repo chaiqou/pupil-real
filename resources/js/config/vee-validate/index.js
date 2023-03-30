@@ -1,5 +1,4 @@
 import { defineRule, configure } from "vee-validate";
-
 configure({
   validateOnBlur: true,
   validateOnChange: true,
@@ -65,4 +64,17 @@ defineRule("phone", (value) => {
     return;
   }
   return true;
+});
+
+defineRule('confirmed', (value, { target }) => {
+    if(value !== target){
+        return `Password doesn't match`
+    } else return true;
+});
+
+defineRule('upperAndLower', (value) => {
+    const regex = /^(?=.*?[A-Z])(?=.*?[a-z]).+$/;
+    if(!regex.test(value)) {
+      return 'The field must contain at least one uppercase and one lowercase character.';
+    } else return true;
 });

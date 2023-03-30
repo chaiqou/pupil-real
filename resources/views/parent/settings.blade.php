@@ -89,7 +89,9 @@
             </div>
         </form>
       <div>
+
           <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
+
           <two-factor-auth-modal :two-fa="{{$twoFa}}">
               <form method="POST" action="{{route('parent.two-fa', ['user_id' => $user->id])}}">
                   @csrf
@@ -98,29 +100,9 @@
               </form>
           </two-factor-auth-modal>
 
+          <change-password-modal :user-id="{{$user->id}}"></change-password-modal>
 
-          <change-password-modal>
-              <form method="POST" class="flex justify-center flex-col items-center" action="{{route('parent.update-password', ['user_id' => $user->id])}}">
-                  @csrf
-                  <div class="flex flex-col justify-around h-[10rem]">
-                      <div>
-                          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                          <div class="mt-1">
-                              <input type="password" name="password" id="password" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                          </div>
-                      </div>
-
-                      <div>
-                          <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repeat password</label>
-                          <div class="mt-1">
-                              <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="family-name" class="block  rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                          </div>
-                      </div>
-                  </div>
-                  <button class="inline-flex mt-4 w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Save</button>
-              </form>
-          </change-password-modal>
-<div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
+         <div class="underline w-full h-[1px] bg-gray-400 opacity-30 my-3"></div>
 
           <div>
               <h1 class="px-3">Student management</h1>

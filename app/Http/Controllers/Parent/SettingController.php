@@ -34,16 +34,6 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
-    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
-    {
-        $user = auth()->user();
-        $user->update([
-            'password' => bcrypt($request->password),
-        ]);
-
-        return redirect()->back();
-    }
-
     public function changeTwoFa(): RedirectResponse
     {
         $user = auth()->user();

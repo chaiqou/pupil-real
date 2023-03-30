@@ -11,7 +11,7 @@ use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
-use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\Parent\Api\SettingController as ParentSettingController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
@@ -36,7 +36,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
-            Route::post('update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api');
             Route::controller(ParentStudentController::class)->group(function () {
                 Route::get('{user_id}/students', 'get')->name('parent.students_api');
                 Route::get('student/{student_id}', 'show')->name('parent.student_api');
@@ -53,6 +52,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('checkout', [StripeCheckoutController::class, 'checkout'])->name('parent.checkout');
             Route::get('menu-retrieve/{student_id}', [ParentMenuController::class, 'menuRetrieve'])->name('parent.menu_retrieve');
             Route::post('choice-claims', [MenuManagementController::class, 'updateChoiceMenuClaims'])->name('parent.update_chpice_menu_claims');
+            Route::controller(ParentSettingController::class)->group(function () {
+                Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password');
+                Route::post('update-student', [ParentSettingController::class, 'updateStudent'])->name('parent.update-student_api');
+            });
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
