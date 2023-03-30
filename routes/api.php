@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantC
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -20,7 +21,6 @@ use App\Http\Controllers\School\Api\PieChartController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
 use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
-use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -117,10 +117,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('line-chart-data', 'calculateChartInfo')->name('school.line-chart-data');
             });
             Route::controller(InsightController::class)->group(function () {
-               Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
-               Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
-               Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
-               Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
+                Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
+                Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
+                Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
+                Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
         });
     });

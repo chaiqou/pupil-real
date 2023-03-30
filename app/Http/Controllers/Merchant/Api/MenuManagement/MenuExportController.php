@@ -19,5 +19,9 @@ class MenuExportController extends Controller
     {
         $validated = $request->validated();
         $appropiateLunches = $this->excelService->findLunchesForExcelFile($validated['dayAndWeek'][0]['week']);
+
+        foreach ($appropiateLunches as $lunch) {
+            $ordersCount = $lunch->periodicLunches->count();
+        }
     }
 }

@@ -96,7 +96,7 @@ const props = defineProps({
 
 onMounted(() => {
   axios.get("/api/school/lunch").then((response) => {
-    store.lunches.push(...response.data.data);
+    store.lunches.push(...response.data.lunches.data);
   });
 });
 
