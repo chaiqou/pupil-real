@@ -5,6 +5,7 @@ namespace App\Http\Controllers\School\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\School\InviteRequest;
 use App\Http\Resources\InviteResource;
+use App\Jobs\InviteUserJob;
 use App\Mail\InviteUserMail;
 use App\Models\Invite;
 use App\Models\User;
@@ -57,7 +58,7 @@ class InviteController extends Controller
                 'school_id' => auth()->user()->school_id,
                 'role' => 'parent',
             ]);
-            Mail::to($email)->send(new InviteUserMail($invite));
+            InviteUserJob::dispatch($invite, $email)->onQueue('invite-users');
             $invite->update(['state' => 1]);
         }
 
