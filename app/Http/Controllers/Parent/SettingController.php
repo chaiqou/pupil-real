@@ -48,25 +48,4 @@ class SettingController extends Controller
 
         return redirect()->back();
     }
-
-    public function updateStudent(UpdateStudentRequest $request): ResourceCollection
-    {
-        $student = Student::where('id', $request->student_id)->first();
-        $student->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'middle_name' => $request->middle_name,
-            'user_information' => [
-                'country' => $request->country,
-                'city' => $request->city,
-                'state' => $request->state,
-                'street_address' => $request->street_address,
-                'zip' => $request->zip,
-            ],
-        ]);
-        $parent = User::where('id', $student->user_id)->first();
-        $students = Student::where('user_id', $parent->id)->latest('created_at')->get();
-
-        return StudentResource::collection($students);
-    }
 }

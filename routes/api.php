@@ -53,8 +53,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('menu-retrieve/{student_id}', [ParentMenuController::class, 'menuRetrieve'])->name('parent.menu_retrieve');
             Route::post('choice-claims', [MenuManagementController::class, 'updateChoiceMenuClaims'])->name('parent.update_chpice_menu_claims');
             Route::controller(ParentSettingController::class)->group(function () {
-                Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password');
-                Route::post('update-student', [ParentSettingController::class, 'updateStudent'])->name('parent.update-student_api');
+                Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
+                Route::post('update-student','updateStudent')->name('parent.update-student_api');
             });
         });
     });
