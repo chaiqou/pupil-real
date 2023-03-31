@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -49,7 +50,6 @@ class InviteController extends Controller
                 ->with(['header' => 'Invalid', 'description' => 'Your request is either missing, using an invalid or expired token.', 'title' => 'Invalid', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
         $invite->update(['state' => 2]);
-
         return view('invite.parent.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,
@@ -67,10 +67,12 @@ class InviteController extends Controller
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'language' => $request->language
         ]) : $user = User::create([
             'email' => $request->email,
             'school_id' => $invite->school_id,
             'password' => bcrypt($request->password),
+            'language' => $request->language
         ])->assignRole('parent');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,

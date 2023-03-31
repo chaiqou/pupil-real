@@ -9,6 +9,18 @@
 </head>
 
 <body class="h-full">
+{{--<div style="float:right; margin-top:10px; margin-right:10px;">--}}
+{{--    <form method="GET" id="language-form">--}}
+{{--        @csrf--}}
+{{--        <label for="language" class="sr-only">Country</label>--}}
+{{--        <select id="language" name="language" autocomplete="language" class="relative block appearance-none border border-gray-300 px-8 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm rounded rounded-md"--}}
+{{--                onchange="submitLanguageForm(this.value)"--}}
+{{--        >--}}
+{{--            <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>--}}
+{{--            <option value="hu" {{ app()->getLocale() == 'hu' ? 'selected' : '' }}>Hungary</option>--}}
+{{--        </select>--}}
+{{--    </form>--}}
+{{--</div>--}}
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8 flex items-center justify-center flex-col" data-sal="slide-up" data-sal-duration="500" data-sal-delay="200">
             <nav aria-label="Progress">
@@ -19,7 +31,7 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
                                     <span class="text-indigo-600">01</span>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-indigo-600">Setup Account</span>
+                                <span class="ml-4 text-sm font-medium text-indigo-600">{{__('setup_account')}}</span>
                             </span>
                         </div>
                     </li>
@@ -87,7 +99,7 @@
             </div>
             @enderror
         <div class="w-full">
-            <form id="form" method="POST" action="{{route('parent-setup.account_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
+            <form id="aa" method="POST" action="{{route('parent-setup.account_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6">
                 @csrf
                 <input type="hidden" name="remember" value="true" />
                 <div class="-space-y-px rounded-md shadow-sm">
@@ -98,7 +110,7 @@
                     <div class="flex">
                         <div class="w-full">
                             <label for="password" class="sr-only">Password</label>
-                            <input id="password" name="password" type="password" autocomplete="new-password" required class="relative block w-full appearance-none rounded-none rounded-bl-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
+                            <input id="password" name="password" type="password" autocomplete="new-password" required class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
                         </div>
                         <button onmouseover="document.getElementById('password').type='text'" onmouseleave="document.getElementById('password').type='password'" type="button" class="relative -ml-px inline-flex items-center space-x-2 rounded-br-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <!-- Heroicon name: mini/eye -->
@@ -108,6 +120,28 @@
                             </svg>
                         </button>
                     </div>
+
+{{--                        <div class="w-full">--}}
+{{--                            <label for="language" class="sr-only">Country</label>--}}
+{{--                            <select id="language" value="{{old('language')}}" name="language" autocomplete="language" class="rounded-b-md relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" >--}}
+{{--                                <option selected value="en">English</option>--}}
+{{--                                <option value="hu">Hungary</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+
+                    <div class="w-full">
+                        <form method="GET" id="ab">
+                            @csrf
+                            <label for="language" class="sr-only">Country</label>
+                            <select id="language" name="language" autocomplete="language" class="relative block appearance-none border border-gray-300 px-8 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm rounded rounded-md"
+                                    onchange="submitLanguageForm(this.value)"
+                            >
+                                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>
+                                <option value="hu" {{ app()->getLocale() == 'hu' ? 'selected' : '' }}>Hungary</option>
+                            </select>
+                        </form>
+                    </div>
+
                 </div>
                 <div>
                     <button type="submit" id="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -131,6 +165,13 @@
             threshold: 0,
             once: true,
         });
+        function submitLanguageForm(language) {
+            const former = document.querySelectorAll('form');
+            console.log(former);
+            former.action = "{{ route('set-language', ['locale' => ':locale']) }}".replace(':locale', language);
+            former.submit();
+        }
+
     </script>
 </body>
 
