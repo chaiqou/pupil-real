@@ -28,6 +28,7 @@ class OrderLunchController extends Controller
     public function orderLunch(LunchOrderRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        dd($validated);
 
         $student = Student::where('id', $validated['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
@@ -80,6 +81,7 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
+            // This service method updates fixed claims if we have menu and after this we are ordering lunch
             (new ClaimService())->updateFixedClaims($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
