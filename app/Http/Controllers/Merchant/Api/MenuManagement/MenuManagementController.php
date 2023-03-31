@@ -27,6 +27,8 @@ class MenuManagementController extends Controller
             'menus' => json_encode($createdMenuJson),
         ]);
 
+        // This updates fixed menu claims when we are creating menu
+
         UpdateFixedMenuClaims::dispatch($validated);
 
         return response()->json('Menu Created');

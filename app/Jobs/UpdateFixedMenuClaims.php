@@ -29,7 +29,9 @@ class UpdateFixedMenuClaims implements ShouldQueue
     public function handle()
     {
         $day = Carbon::parse($this->validated['day'])->addDay()->format('Y-m-d');
-        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")->first();
+        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")
+        ->where('student_id', $this->validated['student_id'])
+        ->first();
 
         if ($periodic_lunch) {
             $claims_array = json_decode($periodic_lunch->claims, true);
