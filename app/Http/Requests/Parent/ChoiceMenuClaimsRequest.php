@@ -24,6 +24,7 @@ class ChoiceMenuClaimsRequest extends FormRequest
     public function rules()
     {
         return [
+            'student_id' => 'required|integer',
             'date' => 'required|date',
             'claimable' => 'required',
             'claimable_type' => 'required|string',

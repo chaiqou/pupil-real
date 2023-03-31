@@ -41,7 +41,14 @@ onMounted(() => {
   if (selectedRadio.value === null) {
     selectedRadio.value = props.menu.menu_name[0];
   }
+
+  const url = window.location.href;
+  const eachUrlSegment = url.split("/");
+  const userId = eachUrlSegment[eachUrlSegment.length - 1];
+  studentId.value = userId;
 });
+
+const studentId = ref();
 
 const onSubmitForm = function () {
   axios
@@ -49,6 +56,7 @@ const onSubmitForm = function () {
       date: props.menu.date,
       claimable: selectedRadio.value,
       claimable_type: props.menu.name,
+      student_id: studentId.value,
     })
     .then(() => {
       store.toggleFixedCard = false;

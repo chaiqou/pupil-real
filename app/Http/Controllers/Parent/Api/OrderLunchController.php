@@ -28,7 +28,6 @@ class OrderLunchController extends Controller
     public function orderLunch(LunchOrderRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        dd($validated);
 
         $student = Student::where('id', $validated['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
