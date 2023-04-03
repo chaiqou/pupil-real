@@ -22,13 +22,13 @@ class MenuExportController extends Controller
         $dayAndWeekJson = $request->query('dayAndWeek');
         $dayAndWeek = json_decode($dayAndWeekJson);
 
-        $appropiateLunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
+        $lunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
 
         // Total count
-        foreach ($appropiateLunches as $lunch) {
+        foreach ($lunches as $lunch) {
             $totalOrders = $lunch->periodicLunches->count();
         }
 
-        return Excel::download(new LunchOrdersExport, 'lunches_total.xlsx');
+        return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
     }
 }
