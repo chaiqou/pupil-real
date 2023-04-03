@@ -23,10 +23,12 @@ class LunchOrdersExport implements FromCollection, WithHeadings, ShouldAutoSize
         $data = [];
 
         foreach ($this->lunches as $lunch) {
+            $totalOrders = isset($this->totalOrders[$lunch->id]) ? $this->totalOrders[$lunch->id] : 0;
+
             $data[] = [
                 'Lunch ID' => $lunch->id,
                 'Lunch Name' => $lunch->title,
-                'Total Orders' => $this->totalOrders[$lunch->id] ?? 0,
+                'Total Orders' =>  $totalOrders ?: 'Not Ordered yet',
             ];
         }
 
