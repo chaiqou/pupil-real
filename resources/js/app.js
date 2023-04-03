@@ -49,9 +49,13 @@ import ParentCalendar from "@/components/parent/lunch-management/ParentCalendar.
 import MenuCalendar from "@/components/Merchant/Menu-management/MenuCalendar.vue";
 import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
 import ParentMenuCalendar from "@/components/parent/Menus/ParentMenuCalendar.vue";
+import ParentSetupAccount from "@/components/invite/parent/SetupAccount.vue";
 
 const pinia = createPinia();
 const app = createApp({});
+
+// Parent Onboarding global components
+app.component("parent-setup-account", ParentSetupAccount);
 
 // Navigation global components
 app.component("dashboard-navigation", DashboardNavigation);

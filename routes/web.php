@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Dashboard\NavigationController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\Parent\InviteController as UserInviteController;
+use App\Http\Controllers\Parent\InviteController as ParentInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
@@ -16,18 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUser'])->name('resend-verification');
-    Route::controller(UserInviteController::class)->group(function () {
+    Route::controller(ParentInviteController::class)->group(function () {
         Route::get('/parent-setup-account/{uniqueID}', 'setupAccount')->name('parent-setup.account');
-        Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
 
         Route::get('/parent-personal-form/{uniqueID}', 'personalForm')->name('parent-personal.form');
-        Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
 
         Route::get('/parent-setup-cards/{uniqueID}', 'setupCards')->name('parent-setup.cards');
-        Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
 
         Route::get('/parent-verify-email/{uniqueID}', 'verifyEmail')->name('parent-verify.email');
-        Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
     });
 
     Route::controller(MerchantInviteController::class)->group(function () {

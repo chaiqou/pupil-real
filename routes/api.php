@@ -9,9 +9,10 @@ use App\Http\Controllers\InsightController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
+use App\Http\Controllers\Parent\Api\SettingController as ParentSettingController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
-use App\Http\Controllers\Parent\Api\SettingController as ParentSettingController;
+use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
@@ -139,3 +140,15 @@ Route::controller()->group(function () {
     Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
 });
 Route::apiResource('school/lunch', LunchController::class);
+
+Route::middleware(['guest'])->group(function () {
+    Route::controller(ApiParentInviteController::class)->group(function () {
+        Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
+
+        Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
+
+        Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
+
+        Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
+    });
+    });
