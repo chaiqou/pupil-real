@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInv
 use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\InsightController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
@@ -142,6 +143,7 @@ Route::controller()->group(function () {
 Route::apiResource('school/lunch', LunchController::class);
 
 Route::middleware(['guest'])->group(function () {
+    Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUserApi'])->name('resend-verification_api');
     Route::controller(ApiParentInviteController::class)->group(function () {
         Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
 

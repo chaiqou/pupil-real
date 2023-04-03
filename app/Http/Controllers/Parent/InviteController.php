@@ -43,7 +43,7 @@ class InviteController extends Controller
 
     public function setupAccount($uniqueID): View
     {
-        // Check if the invite exists
+// Check if the invite exists
         $invite = Invite::where('uniqueID', $uniqueID)->first();
         if (! $invite) {
             return view('auth.redirect-template')

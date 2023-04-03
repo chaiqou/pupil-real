@@ -8,6 +8,7 @@ use App\Jobs\Send2FAAuthenticationEmail;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -62,5 +63,13 @@ class TwoFactorAuthenticationController extends Controller
         $user = User::where('email', $invite->email)->first();
 
         return $user->sendVerificationEmail($request->route);
+    }
+
+    public function resendForOnboardingUserApi(Request $request): JsonResponse
+    {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
+
+        return $user->sendVerificationEmailApi($request->route);
     }
 }

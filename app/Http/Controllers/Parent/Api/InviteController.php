@@ -136,7 +136,7 @@ class InviteController extends Controller
     }
 
 
-    public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
+    public function submitVerifyEmail(VerificationCodeRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
@@ -150,10 +150,11 @@ class InviteController extends Controller
         if ($verification_code->code === $email_verification_integer_code) {
             BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
-
-            return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
+            $url = route('default');
+            return response()->json(['url' => $url]);
+            // return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
 
-        return back()->withErrors(['code' => 'These credentials do not match our records.']);
+        return response()->json(['message' => 'These credentials do not match our records.'], 404);
     }
 }
