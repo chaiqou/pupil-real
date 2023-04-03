@@ -51,6 +51,7 @@ import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
 import ParentMenuCalendar from "@/components/parent/Menus/ParentMenuCalendar.vue";
 import ParentSetupAccount from "@/components/invite/parent/SetupAccount.vue";
 import ParentPersonalForm from "@/components/invite/parent/PersonalForm.vue";
+import ParentSetupCards from "@/components/invite/parent/SetupCards.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -58,6 +59,7 @@ const app = createApp({});
 // Parent Onboarding global components
 app.component("parent-setup-account", ParentSetupAccount);
 app.component("parent-personal-form", ParentPersonalForm);
+app.component("parent-setup-cards", ParentSetupCards);
 
 // Navigation global components
 app.component("dashboard-navigation", DashboardNavigation);

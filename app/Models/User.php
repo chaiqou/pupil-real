@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
@@ -56,5 +57,18 @@ class User extends Authenticatable implements CanResetPassword
         Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
 
         return redirect()->route($route, ['uniqueID' => request()->uniqueID]);
+    }
+
+    public function sendVerificationEmailApi($route): JsonResponse
+    {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
+        $verificationCode = VerificationCode::updateOrCreate(['invite_id' => $invite->id], [
+            'invite_id' => $invite->id,
+            'code' => random_int(100000, 999999),
+        ]);
+        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
+        $url = route($route, ['uniqueID' => request()->uniqueID]);
+        return response()->json(['url' => $url]);
     }
 }

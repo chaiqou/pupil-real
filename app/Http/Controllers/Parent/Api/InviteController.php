@@ -92,7 +92,7 @@ class InviteController extends Controller
         return response()->json(['url' => $url]);
     }
 
-    public function submitSetupCards(SetupCardRequest $request): RedirectResponse
+    public function submitSetupCards(SetupCardRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
@@ -111,29 +111,28 @@ class InviteController extends Controller
                     'cancel_url' => $cancel_url,
                 ]);
             } catch(\Stripe\Exception\CardException $e) {
-                return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+                return response()->json("A payment error occurred: {$e->getError()->message}");
             } catch (\Stripe\Exception\InvalidRequestException $e) {
-                return redirect()->back()->withErrors('An invalid request occurred.');
+                return response()->json('An invalid request occurred.');
             } catch (\Stripe\Exception\ApiConnectionException) {
-                return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+                return response()->json('There was a network problem between your server and Stripe.');
             } catch (\Stripe\Exception\ApiErrorException) {
-                return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+                return response()->json('Something went wrong on Stripe’s end.');
             }
             $user->update([
                 'stripe_session_id' => $stripeCreateSessionRequest->id,
             ]);
             $invite->update(['state' => 5]);
 
-            return redirect()->to($stripeCreateSessionRequest->url);
+            return response()->json(['url' => $stripeCreateSessionRequest->url]);
         } if ($request->user_response === 'dont_save_card') {
         $invite->update(['state' => 5]);
 
-        return $user->sendVerificationEmail('parent-verify.email');
+        return $user->sendVerificationEmailApi('parent-verify.email');
     } else {
         $invite->update(['state' => 5]);
     }
-
-        return redirect()->back()->withErrors('Please select you answer');
+        return response()->json(['message' => 'Please select your answer'], 404);
     }
 
 
