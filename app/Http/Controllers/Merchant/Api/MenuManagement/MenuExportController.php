@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
+use App\Exports\LunchOrdersExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Merchant\MenuExportRequest;
 use App\Services\ExcelService;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MenuExportController extends Controller
 {
@@ -15,14 +17,18 @@ class MenuExportController extends Controller
         $this->excelService = $excelService;
     }
 
-    public function exportMenu(MenuExportRequest $request)
+    public function exportMenu(Request $request)
     {
-        $validated = $request->validated();
-        $appropiateLunches = $this->excelService->findLunchesForExcelFile($validated['dayAndWeek'][0]['week']);
+        $dayAndWeekJson = $request->query('dayAndWeek');
+        $dayAndWeek = json_decode($dayAndWeekJson);
+
+        $appropiateLunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
 
         // Total count
         foreach ($appropiateLunches as $lunch) {
-            $ordersCount = $lunch->periodicLunches->count();
+            $totalOrders = $lunch->periodicLunches->count();
         }
+
+        return Excel::download(new LunchOrdersExport, 'users.xlsx');
     }
 }

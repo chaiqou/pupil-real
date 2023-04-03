@@ -106,8 +106,10 @@ const computedWeeks = computed(() => {
 
 const sendCorrectWeekNumber = async function (dayAndWeek) {
   // eslint-disable-next-line no-unused-vars
-  const response = await axios.post("/api/merchant/export-menu", {
-    dayAndWeek: dayAndWeek,
+  const response = await axios.get("/api/merchant/request-export-menu", {
+    params: {
+      dayAndWeek: JSON.stringify(dayAndWeek),
+    },
   });
 };
 

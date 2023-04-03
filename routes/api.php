@@ -127,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Here should be defended routes
     Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
-    Route::post('merchant/export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
+    Route::get('merchant/request-export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
 });
 
 Route::controller()->group(function () {
