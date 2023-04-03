@@ -24,9 +24,10 @@ class MenuExportController extends Controller
 
         $lunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
 
-        // Total count
+        $totalOrders = [];
+
         foreach ($lunches as $lunch) {
-            $totalOrders = $lunch->periodicLunches->count();
+            $totalOrders[$lunch->id] = $lunch->periodicLunches->count();
         }
 
         return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
