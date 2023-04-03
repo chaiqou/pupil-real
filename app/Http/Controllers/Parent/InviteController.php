@@ -22,9 +22,8 @@ class InviteController extends Controller
 {
     public static function continueOnboarding($user)
     {
-        //Get the invite
         $invite = Invite::where('email', $user->email)->first();
-        //Log out the user (So they don't have access to the dashboard)
+// Log out the user (So they don't have access to the dashboard)
         Auth::logout();
         if ($invite->state == 3) {
             return route('parent-personal.form', ['uniqueID' => $invite->uniqueID]);

@@ -38,5 +38,8 @@ export default {
   computed: {
     ...mapWritableState(useGlobalStore, ["countrySelect"]),
   },
+    mounted() {
+      this.countrySelect = "HU";
+    },
 };
 </script>

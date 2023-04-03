@@ -45,7 +45,7 @@ class InviteController extends Controller
         return response()->json(['url' => $url]);
     }
 
-    public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
+    public function submitPersonalForm(PersonalFormRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
@@ -75,22 +75,21 @@ class InviteController extends Controller
                 'name' => $user->last_name.' '.$user->first_name.' '.$user->middle_name,
             ]);
         } catch(\Stripe\Exception\CardException $e) {
-            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+            return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
-            return redirect()->back()->withErrors('An invalid request occurred.');
+            return response()->json('An invalid request occurred.');
         } catch (\Stripe\Exception\ApiConnectionException) {
-            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+            return response()->json('There was a network problem between your server and Stripe.');
         } catch (\Stripe\Exception\ApiErrorException) {
-            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+            return response()->json('Something went wrong on Stripe’s end.');
         }
         $user->update([
             'stripe_customer_id' => $stripeCustomerRequest->id,
         ]);
         $invite->update(['state' => 4]);
 
-        return redirect()->route('parent-setup.cards', [
-            'uniqueID' => request()->uniqueID,
-        ]);
+        $url = route('parent-setup.cards', ['uniqueID' => request()->uniqueID]);
+        return response()->json(['url' => $url]);
     }
 
     public function submitSetupCards(SetupCardRequest $request): RedirectResponse
