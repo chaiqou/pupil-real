@@ -117,7 +117,7 @@ const sendCorrectWeekNumber = async function (dayAndWeek) {
   const url = URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement("a");
   link.href = url;
-  link.setAttribute("download", "users.xlsx");
+  link.setAttribute("download", "lunches_total.xlsx");
 
   // Add the link to the DOM and trigger a click event to download the file
   document.body.appendChild(link);

@@ -29,6 +29,6 @@ class MenuExportController extends Controller
             $totalOrders = $lunch->periodicLunches->count();
         }
 
-        return Excel::download(new LunchOrdersExport, 'users.xlsx');
+        return Excel::download(new LunchOrdersExport, 'lunches_total.xlsx');
     }
 }
