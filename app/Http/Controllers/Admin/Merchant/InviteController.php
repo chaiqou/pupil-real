@@ -20,7 +20,7 @@ use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-    public static function continueOnboarding($user)
+    public static function continueOnboarding($user): string
     {
         //Get the invite
         $invite = Invite::where('email', $user->email)->first();

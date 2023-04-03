@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -20,7 +22,7 @@ use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-    public static function continueOnboarding($user)
+    public static function continueOnboarding($user): string
     {
         $invite = Invite::where('email', $user->email)->first();
 // Log out the user (So they don't have access to the dashboard)
@@ -54,87 +56,12 @@ class InviteController extends Controller
         ]);
     }
 
-//    public function submitSetupAccount(Request $request): RedirectResponse
-//    {
-//        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
-//        $foundUser = User::where('email', $invite->email)->first();
-//        $request->validate([
-//            'email' => ['required', 'email', isset($foundUser) ? 'unique:users,email,'.$foundUser->id : 'unique:users,email'],
-//            'password' => [Password::min(8)->mixedCase()->numbers(), 'required'],
-//        ]);
-//        isset($foundUser) ? $foundUser->update([
-//            'email' => $request->email,
-//            'password' => bcrypt($request->password),
-//            'language' => $request->language
-//        ]) : $user = User::create([
-//            'email' => $request->email,
-//            'school_id' => $invite->school_id,
-//            'password' => bcrypt($request->password),
-//            'language' => $request->language
-//        ])->assignRole('parent');
-//        $invite->update([
-//            'email' => isset($foundUser) ? $foundUser->email : $user->email,
-//            'state' => 3,
-//        ]);
-//
-//        return redirect()->route('parent-personal.form', ['uniqueID' => request()->uniqueID]);
-//    }
-
     public function personalForm(): View
     {
         return view('invite.parent.personal-form', [
             'uniqueID' => request()->uniqueID,
         ]);
     }
-
-//    public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
-//    {
-//        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
-//        $user = User::where('email', $invite->email)->firstOrFail();
-//        $user->update([
-//            'last_name' => $request->last_name,
-//            'first_name' => $request->first_name,
-//            'middle_name' => $request->middle_name,
-//            'user_information' => json_encode([
-//                'country' => $request->country,
-//                'street_address' => $request->street_address,
-//                'city' => $request->city,
-//                'state' => $request->state,
-//                'zip' => (int) $request->zip,
-//            ]),
-//        ]);
-//        $userInformation = json_decode($user->user_information);
-//        try {
-//            $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
-//            $stripeCustomerRequest = $stripe->customers->create([
-//                'address' => [
-//                    'city' => $userInformation->city,
-//                    'line1' => $userInformation->street_address,
-//                    'postal_code' => $userInformation->zip,
-//                    'state' => $userInformation->state,
-//                ],
-//                'email' => $user->email,
-//                'name' => $user->last_name.' '.$user->first_name.' '.$user->middle_name,
-//            ]);
-//        } catch(\Stripe\Exception\CardException $e) {
-//            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
-//        } catch (\Stripe\Exception\InvalidRequestException $e) {
-//            return redirect()->back()->withErrors('An invalid request occurred.');
-//        } catch (\Stripe\Exception\ApiConnectionException) {
-//            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
-//        } catch (\Stripe\Exception\ApiErrorException) {
-//            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
-//        }
-//        $user->update([
-//            'stripe_customer_id' => $stripeCustomerRequest->id,
-//        ]);
-//        $invite->update(['state' => 4]);
-//
-//        return redirect()->route('parent-setup.cards', [
-//            'uniqueID' => request()->uniqueID,
-//        ]);
-//    }
-
     public function setupCards(): View
     {
         return view('invite.parent.setup-cards', [
