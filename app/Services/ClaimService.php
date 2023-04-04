@@ -33,7 +33,7 @@ class ClaimService
                                     foreach ($menu as $menu_name) {
                                         if ($claim['name'] === $menu_name['name']) {
                                             $claims_array[$date][$index]['menu'] = $menu_name['menus'];
-                                            $claims_array[$date][$index]['menu_code'] = 0;
+                                            $claims_array[$date][$index]['menu_code'] = "{$lunch_menu['id']}-{$periodic_lunch['id']}-{$date}-{$claim['name']}-{$index}";
                                         }
                                     }
                                 }
