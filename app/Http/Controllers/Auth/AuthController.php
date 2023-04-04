@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Jobs\Send2FAAuthenticationEmail;

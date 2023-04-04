@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Merchant;
+namespace App\Http\Controllers\Merchant\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invite\CompanyDetailRequest;
@@ -10,9 +10,9 @@ use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\User;
 use App\Models\VerificationCode;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
@@ -20,49 +20,7 @@ use Illuminate\View\View;
 
 class InviteController extends Controller
 {
-    public static function continueOnboarding($user): string
-    {
-        //Get the invite
-        $invite = Invite::where('email', $user->email)->first();
-        //Log out the user (So they don't have access to the dashboard)
-        Auth::logout();
-        if ($invite->state == 3) {
-            return route('merchant-personal.form', ['uniqueID' => $invite->uniqueID]);
-        }
-        if ($invite->state == 4) {
-            //If the invite is in state 4, redirect to company details
-            return route('merchant-company.details', ['uniqueID' => $invite->uniqueID]);
-        }
-        if ($invite->state == 5) {
-            return route('merchant-setup.stripe', ['uniqueID' => $invite->uniqueID]);
-        }
-        if ($invite->state == 6) {
-            return route('merchant-billingo.verify', ['uniqueID' => $invite->uniqueID]);
-        }
-        if ($invite->state == 7) {
-            return route('merchant-verify.email', ['uniqueID' => $invite->uniqueID]);
-        }
-
-        return route('merchant-setup.account', ['uniqueID' => $invite->uniqueID]);
-    }
-
-    public function setupAccount($uniqueID): View
-    {
-        // Check if the invite exists
-        $invite = Invite::where('uniqueID', $uniqueID)->first();
-        if (! $invite) {
-            return view('auth.redirect-template')
-                ->with(['header' => 'Invalid', 'description' => 'Your request is either missing, using an invalid or expired token.', 'title' => 'Invalid', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
-        }
-        $invite->update(['state' => 2]);
-
-        return view('invite.merchant.setup-account', [
-            'uniqueID' => $uniqueID,
-            'email' => $invite->email,
-        ]);
-    }
-
-    public function submitSetupAccount(Request $request): RedirectResponse
+    public function submitSetupAccount(Request $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $foundUser = User::where('email', $invite->email)->first();
@@ -73,26 +31,22 @@ class InviteController extends Controller
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'language' => $request->language
         ]) : $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'language' => $request->language
         ])->assignRole('school');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
 
-        return redirect()->route('merchant-personal.form', ['uniqueID' => request()->uniqueID]);
+        $url = route('merchant-personal.form', ['uniqueID' => request()->uniqueID]);
+        return response()->json(['url' => $url]);
     }
 
-    public function personalForm(): View
-    {
-        return view('invite.merchant.personal-form', [
-            'uniqueID' => request()->uniqueID,
-        ]);
-    }
-
-    public function submitPersonalForm(PersonalFormRequest $request): RedirectResponse
+    public function submitPersonalForm(PersonalFormRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
@@ -111,19 +65,11 @@ class InviteController extends Controller
         ]);
         $invite->update(['state' => 4]);
 
-        return redirect()->route('merchant-company.details', [
-            'uniqueID' => request()->uniqueID,
-        ]);
+        $url = route('merchant-company.details', ['uniqueID' => request()->uniqueID]);
+        return response()->json(['url' => $url]);
     }
 
-    public function companyDetails(): View
-    {
-        return view('invite.merchant.company-details', [
-            'uniqueID' => request()->uniqueID,
-        ]);
-    }
-
-    public function submitCompanyDetails(CompanyDetailRequest $request): RedirectResponse
+    public function submitCompanyDetails(CompanyDetailRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
@@ -205,30 +151,23 @@ class InviteController extends Controller
                 ]);
             }
         } catch(\Stripe\Exception\CardException $e) {
-            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+            return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
-            return redirect()->back()->withErrors('An invalid request occurred.');
+            return response()->json('An invalid request occurred.');
         } catch (\Stripe\Exception\ApiConnectionException) {
-            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+            return response()->json('There was a network problem between your server and Stripe.');
         } catch (\Stripe\Exception\ApiErrorException) {
-            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+            return response()->json('Something went wrong on Stripe’s end.');
         }
         $merchant->update([
             'stripe_account_id' => $stripeAccount->id,
         ]);
         $invite->update(['state' => 5]);
-
-        return redirect()->route('merchant-setup.stripe', ['uniqueID' => request()->uniqueID]);
+        $url = route('merchant-setup.stripe', ['uniqueID' => request()->uniqueID]);
+        return response()->json(['url' => $url]);
     }
 
-    public function setupStripe(): View
-    {
-        return view('invite.merchant.setup-stripe', [
-            'uniqueID' => request()->uniqueID,
-        ]);
-    }
-
-    public function submitSetupStripe(): RedirectResponse
+    public function submitSetupStripe(): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
@@ -246,57 +185,19 @@ class InviteController extends Controller
                 'type' => 'account_onboarding',
             ]);
         } catch(\Stripe\Exception\CardException $e) {
-            return redirect()->back()->withErrors("A payment error occurred: {$e->getError()->message}");
+            return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
-            return redirect()->back()->withErrors('An invalid request occurred.');
+            return response()->json('An invalid request occurred.');
         } catch (\Stripe\Exception\ApiConnectionException) {
-            return redirect()->back()->withErrors('There was a network problem between your server and Stripe.');
+            return response()->json('There was a network problem between your server and Stripe.');
         } catch (\Stripe\Exception\ApiErrorException) {
-            return redirect()->back()->withErrors('Something went wrong on Stripe’s end.');
+            return response()->json('Something went wrong on Stripe’s end.');
         }
 
-          return redirect()->to($stripeAccountLink->url);
+        return response()->json(['url' => $stripeAccountLink->url]);
     }
 
-    public function billingoVerify(): View|RedirectResponse  // just a simple note that function for submitting/verifying billingo will be into the billingo controller
-    {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
-        $user = User::where('email', $invite->email)->first();
-        $merchant = Merchant::where('user_id', $user->id)->first();
-        if (! isset($merchant->stripe_account_id)) {
-            return redirect()->back();
-        }
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-        $stripeAccountRetrieve = $stripe->accounts->retrieve(
-            $merchant->stripe_account_id
-        );
-        $invite->update(['state' => 6]);
-        if ($stripeAccountRetrieve->charges_enabled) {
-            $merchant->stripe_completed = true;
-
-            return view('invite.merchant.billingo-verify', [
-                'uniqueID' => request()->uniqueID,
-            ]);
-        } else {
-            return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
-        }
-    }
-
-    public function verifyEmail(): View
-    {
-        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
-        if (! $invite) {
-            return view('auth.redirect-template')
-                ->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
-        }
-
-        return view('invite.merchant.verify-email', [
-            'uniqueID' => request()->uniqueID,
-            'email' => $invite->email,
-        ]);
-    }
-
-    public function submitVerifyEmail(VerificationCodeRequest $request): RedirectResponse
+    public function submitVerifyEmail(VerificationCodeRequest $request): JsonResponse
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
@@ -313,9 +214,9 @@ class InviteController extends Controller
             $merchant->update(['finished_onboarding' => 1]);
             $invite->delete();
 
-            return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
+            return response()->json(['url' => route('default')]);
+           // return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
-
-        return back()->withErrors(['code' => 'These credentials do not match our records.']);
+        return response()->json(['message' => 'These credentials do not match our records.'], 404);
     }
 }

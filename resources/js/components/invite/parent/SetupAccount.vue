@@ -80,16 +80,6 @@
                                 <option value="hu">Hungary</option>
                             </select>
                         </div>
-<!--                        <form id="b" method="GET">-->
-<!--                            @csrf-->
-<!--                            <label for="language" class="sr-only">Country</label>-->
-<!--                            <select id="language" name="language" autocomplete="language" class="relative block appearance-none border border-gray-300 px-8 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm rounded rounded-md"-->
-<!--                                    onchange="submitLanguageForm(this.value)"-->
-<!--                            >-->
-<!--                                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>-->
-<!--                                <option value="hu" {{ app()->getLocale() == 'hu' ? 'selected' : '' }}>Hungary</option>-->
-<!--                            </select>-->
-<!--                        </form>-->
                     </div>
                     <div>
                         <button type="submit" id="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -139,7 +129,6 @@ export default {
             password: this.password,
             language: this.language
         }).then((res) => {
-            console.log(res.data);
             window.location.href = res.data.url;
         }).catch((err) => {
             console.log(err);

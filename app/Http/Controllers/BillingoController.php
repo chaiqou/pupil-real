@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Http;
 
 class BillingoController extends Controller
 {
-    public function submitBillingoVerify(BillingoVerificationRequest $request): RedirectResponse
+    public function submitBillingoVerify(BillingoVerificationRequest $request): JsonResponse
     {
         $requestBillingo = Http::withHeaders([
             'X-API-KEY' => $request->api_key,
@@ -27,13 +27,13 @@ class BillingoController extends Controller
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
 
         if ($requestBillingo->status() === 401) {
-            return redirect()->back()->withErrors('You provided wrong API key');
+            return response()->json('You provided wrong API key');
         }
         if ($requestBillingo->status() === 402) {
-            return redirect()->back()->withErrors("You dont have an active Billingo's subscription");
+            return response()->json("You dont have an active Billingo's subscription");
         }
         if ($requestBillingo->status() === 500) {
-            return redirect()->back()->withErrors("Something went wrong at Billingo's side");
+            return response()->json("Something went wrong at Billingo's side");
         }
         if ($requestBillingo->status() === 200) {
             $invite = Invite::where('uniqueID', request()->uniqueID)->first();
@@ -47,9 +47,9 @@ class BillingoController extends Controller
             ]);
             $merchant->update(['billingo_api_key' => $request->api_key]);
 
-            return $user->sendVerificationEmail('merchant-verify.email');
+            return $user->sendVerificationEmailApi('merchant-verify.email');
         } else {
-            return redirect()->back()->withErrors("Something went wrong from pupilpay's side");
+            return response()->json(['message' => "Something went wrong from pupilpay's side"], 404);
         }
     }
 

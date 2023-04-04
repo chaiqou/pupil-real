@@ -161,7 +161,6 @@ export default {
     },
     methods: {
         onSubmit() {
-            console.log(this.countrySelect);
             axios.post(`/api/parent-personal-form/${this.uniqueId}`, {
                 last_name: this.last_name,
                 first_name: this.first_name,
@@ -172,7 +171,6 @@ export default {
                 state: this.state,
                 zip: this.zip,
             }).then((res) => {
-                console.log(res.data);
                 window.location.href = res.data.url;
             }).catch((err) => {
                 console.log(err);

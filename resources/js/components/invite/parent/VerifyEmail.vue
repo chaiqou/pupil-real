@@ -60,7 +60,6 @@
             If you can't find the email in a few minutes, check your spam folder.
         </p>
         <div class="flex mt-6 items-center justify-center">
-<!--            <form action="{{ route('resend-verification', ['uniqueID' => $uniqueID]) }}" method="POST">-->
                 <button @click="handleResendVerificationCodeRequest()"
                         class="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
@@ -71,7 +70,6 @@
         </div>
     </div>
     <div class="w-full">
-<!--        <form id="form" name="inviteTwoFaForm" method="POST" action="{{route('parent-verify.email_submit',['uniqueID'=>$uniqueID])}}" class="mt-8 space-y-6 w-full">-->
             <ValidationForm v-slot="{ errors }" @submit="onSubmit()" @paste="handlePaste" id="form" name="inviteTwoFaForm" class="mt-8 space-y-6 w-full">
         <div class="-space-y-px rounded-md shadow-sm border border-gray-200 p-4">
                 <div class="row-start-2 grid grid-cols-6">
@@ -88,7 +86,6 @@
             <div>
                 <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <!-- Heroicon name: mini/identification -->
               <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M1 6a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3H4a3 3 0 01-3-3V6zm4 1.5a2 2 0 114 0 2 2 0 01-4 0zm2 3a4 4 0 00-3.665 2.395.75.75 0 00.416 1A8.98 8.98 0 007 14.5a8.98 8.98 0 003.249-.604.75.75 0 00.416-1.001A4.001 4.001 0 007 10.5zm5-3.75a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm0 6.5a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm.75-4a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z" clip-rule="evenodd" />
               </svg>

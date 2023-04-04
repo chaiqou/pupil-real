@@ -85,15 +85,11 @@ export default {
             axios.post(`/api/parent-setup-cards/${this.uniqueId}`, {
                 user_response: 'dont_save_card'
             }).then((res) => {
-                console.log(res.data);
                 window.location.href = res.data.url;
             }).catch((err) => {
                 console.log(err);
             })
         },
     },
-    mounted(){
-        this.email = this.inviteEmail;
-    }
 }
 </script>

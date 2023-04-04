@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantC
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -152,5 +154,21 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
 
         Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
+    });
+    Route::controller(ApiMerchantInviteController::class)->group(function () {
+        Route::post('/merchant-setup-account/{uniqueID}', 'submitSetupAccount')->name('merchant-setup.account_submit');
+
+        Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
+
+        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
+
+        Route::get('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
+
+        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
+
+        Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
+    });
+    Route::controller(BillingoController::class)->group(function () {
+        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });
     });
