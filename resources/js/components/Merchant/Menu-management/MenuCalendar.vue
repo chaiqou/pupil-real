@@ -21,7 +21,7 @@
           <div class="mt-4 grow-0 basis-1/12">
             <div v-for="(week, weekIdx) in computedWeeks" :key="weekIdx">
               <div class="pb-2" v-if="month.name == week.month">
-                <button @click="sendCorrectWeekNumber(week.days)">
+                <button @click="handleLunchesExport(week.days)">
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
                   />
@@ -104,26 +104,26 @@ const computedWeeks = computed(() => {
   return computedWeekdays;
 });
 
-const sendCorrectWeekNumber = async function (dayAndWeek) {
-  // eslint-disable-next-line no-unused-vars
-  const response = await axios.get("/api/merchant/request-export-menu", {
-    params: {
-      dayAndWeek: JSON.stringify(dayAndWeek),
-    },
-    responseType: "blob",
-  });
+const handleLunchesExport = async (dayAndWeek) => {
+  try {
+    const { data } = await axios.get("/api/merchant/request-export-menu", {
+      params: {
+        dayAndWeek: JSON.stringify(dayAndWeek),
+      },
+      responseType: "blob",
+    });
 
-  // Create a download link for the file
-  const url = URL.createObjectURL(new Blob([response.data]));
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", "lunches_total.xlsx");
+    const url = URL.createObjectURL(new Blob([data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "lunches_total.xlsx");
 
-  // Add the link to the DOM and trigger a click event to download the file
-  document.body.appendChild(link);
-  link.click();
-  // remove link from the DOM
-  document.body.removeChild(link);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Fetch all existing lunch for merchant and mark it on calendar
