@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
 use App\Exports\LunchOrdersExport;
 use App\Http\Controllers\Controller;
+use App\Models\LunchMenu;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,8 +25,11 @@ class MenuExportController extends Controller
 
         $lunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
 
-        $totalOrders = [];
+        // convert array to collection
+        $lunchesCollection = collect($lunches);
+        $menus = LunchMenu::whereIn('lunch_id', $lunchesCollection->pluck('id'))->get();
 
+        $totalOrders = [];
         foreach ($lunches as $lunch) {
             $totalOrders[$lunch->id] = $lunch->periodicLunches->count();
         }

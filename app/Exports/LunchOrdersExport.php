@@ -28,7 +28,7 @@ class LunchOrdersExport implements FromCollection, WithHeadings, ShouldAutoSize
             $data[] = [
                 'Lunch ID' => $lunch->id,
                 'Lunch Name' => $lunch->title,
-                'Total Orders' =>  $totalOrders ?: 'Not Ordered yet',
+                'Total Orders' => $totalOrders ?: 'Not Ordered yet',
             ];
         }
 
