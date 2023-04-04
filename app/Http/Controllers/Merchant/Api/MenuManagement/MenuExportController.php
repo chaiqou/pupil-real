@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
 use App\Exports\LunchOrdersExport;
 use App\Http\Controllers\Controller;
-use App\Models\LunchMenu;
+use App\Models\Lunch;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -27,13 +27,21 @@ class MenuExportController extends Controller
 
         // convert array to collection
         $lunchesCollection = collect($lunches);
-        $menus = LunchMenu::whereIn('lunch_id', $lunchesCollection->pluck('id'))->get();
+
+        // eager load menus for each lunch
+        $lunchesWithMenus = Lunch::with('menus')->whereIn('id', $lunchesCollection->pluck('id'))->get();
 
         $totalOrders = [];
         foreach ($lunches as $lunch) {
             $totalOrders[$lunch->id] = $lunch->periodicLunches->count();
         }
 
-        return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
+        foreach ($lunches as $lunch) {
+            if ($lunch->menus->count() == 0) {
+                return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
+            } else {
+                return Excel::download(new LunchOrdersExport($lunchesWithMenus, $totalOrders), 'lunches_total.xlsx');
+            }
+        }
     }
 }
