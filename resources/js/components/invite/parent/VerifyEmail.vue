@@ -60,13 +60,15 @@
             If you can't find the email in a few minutes, check your spam folder.
         </p>
         <div class="flex mt-6 items-center justify-center">
-                <button @click="handleResendVerificationCodeRequest()"
-                        class="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                    </svg>
-                    Resend Code
-                </button>
+            <ButtonForAxios @click="handleResendVerificationCodeRequest()" :globalStoreSolution="false" :status="axiosResendEmailStatus"
+            classOngoing="flex opacity-30 items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900"
+            classDefault="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                Resend Code
+            </ButtonForAxios>
         </div>
     </div>
     <div class="w-full">
@@ -84,7 +86,7 @@
                 <p class="text-red-500 text-sm" v-if="Object.keys(errors).length">Please fill all fields</p>
                 <p class="text-red-500 text-sm"> {{axiosResponse}}</p>
             <div>
-                <ButtonForAxios classOngoing="group opacity-30 relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                <ButtonForAxios :globalStoreSolution="true" classOngoing="group opacity-30 relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     classDefault="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -113,6 +115,7 @@ export default {
         return {
          axiosResponse: "",
          verification_code: [""],
+         axiosResendEmailStatus: "",
         }
     },
     props: {
@@ -127,16 +130,31 @@ export default {
     },
     methods: {
         ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+        setAxiosStatusResendEmail(status) {
+            this.axiosResendEmailStatus = status;
+            if (status === 'updated') {
+                setTimeout(() => {
+                    this.resetAxiosStatusResendEmail();
+                }, 2300);
+            } else if (status === 'error') {
+                setTimeout(() => {
+                    this.resetAxiosStatusResendEmail();
+                }, 2300);
+            }
+        },
+        resetAxiosStatusResendEmail() {
+            this.axiosResendEmailStatus = '';
+        },
         handleResendVerificationCodeRequest() {
-            this.setAxiosStatus("ongoing");
+            this.setAxiosStatusResendEmail("ongoing");
             axios.post(`/api/resend-onboarding-verification/${this.uniqueId}`, {
                 route: 'parent-verify.email'
             })
                 .then((res) => {
-                    this.setAxiosStatus("updated");
+                    this.setAxiosStatusResendEmail("updated");
                     console.log(res.data);
                 }).catch((err) => {
-                this.setAxiosStatus("error");
+                this.setAxiosStatusResendEmail("error");
                 console.log(err);
             });
         },

@@ -56,9 +56,9 @@
     </div>
     <div class="w-full">
             <div class="flex w-full justify-between">
-                <ButtonForAxios @click="saveCard()" classOngoing="inline-flex opacity-30 justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                <ButtonForAxios :globalStoreSolution="true" @click="saveCard()" classOngoing="inline-flex opacity-30 justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 classDefault="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save card for faster checkout</ButtonForAxios>
-                <ButtonForAxios @click="dontSaveCard()" classOngoing="inline-flex opacity-30 justify-center rounded-md border border-[1px] bg-white py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-100 focus:outline-none"
+                <ButtonForAxios :globalStoreSolution="false" :status="axiosStatusDontSave" @click="dontSaveCard()" classOngoing="inline-flex opacity-30 justify-center rounded-md border border-[1px] bg-white py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-100 focus:outline-none"
                                 classDefault="inline-flex justify-center rounded-md border border-[1px] bg-white py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-100 focus:outline-none">Don't save card</ButtonForAxios>
             </div>
     </div>
@@ -72,6 +72,11 @@ export default {
     components: {
       ButtonForAxios
     },
+    data() {
+        return {
+         axiosStatusDontSave: ""
+        }
+    },
     props: {
         uniqueId: {
             type: String,
@@ -80,13 +85,28 @@ export default {
     },
     methods: {
         ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+        setAxiosStatusDontSave(status) {
+            this.axiosStatusDontSave = status;
+            if (status === 'updated') {
+                setTimeout(() => {
+                    this.resetAxiosStatusDontSave();
+                }, 2300);
+            } else if (status === 'error') {
+                setTimeout(() => {
+                    this.resetAxiosStatusDontSave();
+                }, 2300);
+            }
+        },
+        resetAxiosStatusDontSave() {
+            this.axiosStatusDontSave = '';
+        },
         saveCard() {
             this.setAxiosStatus("ongoing");
             axios.post(`/api/parent-setup-cards/${this.uniqueId}`, {
                 user_response: 'save_card'
             }).then((res) => {
-                console.log(res.data);
                 this.setAxiosStatus("updated");
+                console.log(res.data);
                 window.location.href = res.data.url;
             }).catch((err) => {
                 this.setAxiosStatus("error");
@@ -94,14 +114,14 @@ export default {
             })
         },
         dontSaveCard() {
-            this.setAxiosStatus("ongoing");
+            this.setAxiosStatusDontSave("ongoing");
             axios.post(`/api/parent-setup-cards/${this.uniqueId}`, {
                 user_response: 'dont_save_card'
             }).then((res) => {
-                this.setAxiosStatus("updated");
+                this.setAxiosStatusDontSave("ongoing");
                 window.location.href = res.data.url;
             }).catch((err) => {
-                this.setAxiosStatus("error");
+                this.setAxiosStatusDontSave("error");
                 console.log(err);
             })
         },

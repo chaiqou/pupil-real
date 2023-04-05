@@ -80,13 +80,15 @@
                 If you can't find the email in a few minutes, check your spam folder.
             </p>
             <div class="flex mt-6 items-center justify-center">
-                <button @click="handleResendVerificationCodeRequest()"
-                        class="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900">
+                <ButtonForAxios @click="handleResendVerificationCodeRequest()" :globalStoreSolution="false" :status="axiosResendEmailStatus"
+                                classOngoing="flex opacity-30 items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900"
+                                classDefault="flex items-center w-fit justify-center rounded-md border border-transparent text-sm font-medium text-indigo-600 hover:text-indigo-900"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                     Resend Code
-                </button>
+                </ButtonForAxios>
             </div>
         </div>
         <div class="w-full">
@@ -134,6 +136,7 @@
                 return {
                     axiosResponse: "",
                     verification_code: [""],
+                    axiosResendEmailStatus: ""
                 }
             },
             props: {
@@ -148,13 +151,31 @@
             },
             methods: {
                 ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+                setAxiosStatusResendEmail(status) {
+                    this.axiosResendEmailStatus = status;
+                    if (status === 'updated') {
+                        setTimeout(() => {
+                            this.resetAxiosStatusResendEmail();
+                        }, 2300);
+                    } else if (status === 'error') {
+                        setTimeout(() => {
+                            this.resetAxiosStatusResendEmail();
+                        }, 2300);
+                    }
+                },
+                resetAxiosStatusResendEmail() {
+                    this.axiosResendEmailStatus = '';
+                },
                 handleResendVerificationCodeRequest() {
+                    this.setAxiosStatusResendEmail("ongoing");
                     axios.post(`/api/resend-onboarding-verification/${this.uniqueId}`, {
                         route: 'merchant-verify.email'
                     })
                         .then((res) => {
+                            this.setAxiosStatusResendEmail("updated");
                             console.log(res.data);
                         }).catch((err) => {
+                        this.setAxiosStatusResendEmail("error");
                             console.log(err);
                     });
                 },
