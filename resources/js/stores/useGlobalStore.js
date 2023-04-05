@@ -4,6 +4,24 @@ export const useGlobalStore = defineStore("global", {
   state: () => {
     return {
       countrySelect: "",
+      axiosStatus: "",
     };
   },
+    actions: {
+        setAxiosStatus(status) {
+            this.axiosStatus = status;
+            if (status === 'updated') {
+                setTimeout(() => {
+                    this.resetAxiosStatus();
+                }, 2300);
+            } else if (status === 'error') {
+                setTimeout(() => {
+                    this.resetAxiosStatus();
+                }, 2300);
+            }
+        },
+        resetAxiosStatus() {
+            this.axiosStatus = '';
+        },
+    },
 });

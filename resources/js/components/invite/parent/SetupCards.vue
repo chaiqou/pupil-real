@@ -55,7 +55,6 @@
         <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Setup your cards</h2>
     </div>
     <div class="w-full">
-<!--        <form id="form" method="POST" action="{{route('parent-setup.cards_submit',['uniqueID'=>$uniqueID])}}" class="space-y-6">-->
             <div class="flex w-full justify-between">
                 <button @click="saveCard()" name="user_response" value="save_card" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save card for faster checkout</button>
                 <button @click="dontSaveCard()" name="user_response" value="dont_save_card" class="inline-flex justify-center rounded-md border border-[1px] bg-white py-2 px-4 text-sm font-medium shadow-sm hover:bg-gray-100 focus:outline-none">Don't save card</button>
