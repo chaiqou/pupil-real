@@ -6,6 +6,7 @@ use App\Exports\LunchOrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Lunch;
 use App\Models\LunchMenu;
+use App\Models\PeriodicLunch;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,6 +38,7 @@ class MenuExportController extends Controller
                 foreach ($menusArray as $date => $menuItems) {
                     foreach ($menuItems as $index => $menuItem) {
                         $menuKey = "{$lunchMenu['id']}-{$lunch['id']}-{$date}-{$menuItem['name']}-{$index}";
+                        $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$menuKey.'%')->count();
                     }
                 }
             }
