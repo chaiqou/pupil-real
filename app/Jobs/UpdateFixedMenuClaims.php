@@ -18,10 +18,13 @@ class UpdateFixedMenuClaims implements ShouldQueue
 
     private $menuId;
 
-    public function __construct($validated, $menuId)
+    private $lunchId;
+
+    public function __construct($validated, $menuId, $lunchId)
     {
         $this->validated = $validated;
         $this->menuId = $menuId;
+        $this->lunchId = $lunchId;
     }
 
     /**
@@ -48,7 +51,7 @@ class UpdateFixedMenuClaims implements ShouldQueue
                             foreach ($this->validated['menus'] as $menu_key => $menu) {
                                 if ($claim['name'] === $menu_key) {
                                     $claims_array[$date][$index]['menu'] = $menu;
-                                    $claims_array[$date][$index]['menu_code'] = "{$this->menuId}-{$periodic_lunch['id']}-{$date}-{$claim['name']}-{$index}";
+                                    $claims_array[$date][$index]['menu_code'] = "{$this->menuId}-{$this->lunchId}-{$date}-{$claim['name']}-{$index}";
                                 }
                             }
                         }

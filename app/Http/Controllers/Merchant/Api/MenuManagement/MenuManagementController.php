@@ -29,8 +29,7 @@ class MenuManagementController extends Controller
 
         // This updates fixed menu claims when we are creating menu AND student already have ordered lunch for this day
 
-        $menuId = $menu['id'];
-        UpdateFixedMenuClaims::dispatch($validated, $menuId);
+        UpdateFixedMenuClaims::dispatch($validated, $menu['id'], $menu['lunch_id']);
 
         return response()->json('Menu Created');
     }
@@ -53,7 +52,7 @@ class MenuManagementController extends Controller
                 foreach ($claims as $index => $claim) {
                     if ($claim['name'] === $validated['claimable_type'] && $claim['menu'] === '') {
                         $claims_array[$date][$index]['menu'] = $validated['claimable'];
-                        $claims_array[$date][$index]['menu_code'] = "{$lunch_menu['id']}-{$periodic_lunch['id']}-{$date}-{$validated['claimable']}-{$index}";
+                        $claims_array[$date][$index]['menu_code'] = "{$lunch_menu['id']}-{$lunch_menu['lunch_id']}-{$date}-{$validated['claimable']}-{$index}";
                     }
                 }
             }
