@@ -99,24 +99,27 @@
                 </div>
             </div>
             <div>
-                <button type="submit" id="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <!-- Heroicon name: mini/user-circle -->
+                <ButtonForAxios classOngoing="group relative opacity-30 flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                classDefault="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd" />
                             </svg>
-
                         </span>
                     Sign up
-                </button>
+                </ButtonForAxios>
             </div>
         </ValidationForm>
     </div>
 </template>
 <script>
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+import {mapActions} from "pinia";
+import {useGlobalStore} from "@/stores/useGlobalStore";
+import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
 export default {
     components: {
+        ButtonForAxios,
         ValidationForm,
         Field,
         ErrorMessage
@@ -139,14 +142,18 @@ export default {
         }
     },
     methods: {
+        ...mapActions(useGlobalStore, ["setAxiosStatus"]),
         onSubmit() {
+            this.setAxiosStatus("ongoing");
             axios.post(`/api/merchant-setup-account/${this.uniqueId}`, {
                 email: this.email,
                 password: this.password,
                 language: this.language
             }).then((res) => {
+                this.setAxiosStatus("updated");
                 window.location.href = res.data.url;
             }).catch((err) => {
+                this.setAxiosStatus("error");
                 console.log(err);
             })
         },

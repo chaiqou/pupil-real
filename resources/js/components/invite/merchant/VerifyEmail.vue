@@ -104,15 +104,15 @@
                 <p class="text-red-500 text-sm" v-if="Object.keys(errors).length">Please fill all fields</p>
                 <p class="text-red-500 text-sm"> {{axiosResponse}}</p>
                 <div>
-                    <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M1 6a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3H4a3 3 0 01-3-3V6zm4 1.5a2 2 0 114 0 2 2 0 01-4 0zm2 3a4 4 0 00-3.665 2.395.75.75 0 00.416 1A8.98 8.98 0 007 14.5a8.98 8.98 0 003.249-.604.75.75 0 00.416-1.001A4.001 4.001 0 007 10.5zm5-3.75a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm0 6.5a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm.75-4a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z" clip-rule="evenodd" />
-              </svg>
-
-            </span>
+                    <ButtonForAxios classOngoing="group opacity-30 relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    classDefault="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M1 6a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3H4a3 3 0 01-3-3V6zm4 1.5a2 2 0 114 0 2 2 0 01-4 0zm2 3a4 4 0 00-3.665 2.395.75.75 0 00.416 1A8.98 8.98 0 007 14.5a8.98 8.98 0 003.249-.604.75.75 0 00.416-1.001A4.001 4.001 0 007 10.5zm5-3.75a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm0 6.5a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm.75-4a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z" clip-rule="evenodd" />
+                  </svg>
+              </span>
                         Verify
-                    </button>
+                    </ButtonForAxios>
                 </div>
             </ValidationForm>
         </div>
@@ -120,9 +120,13 @@
 
     <script>
         import { Form as ValidationForm, Field } from "vee-validate";
+        import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
+        import {mapActions} from "pinia";
+        import {useGlobalStore} from "@/stores/useGlobalStore";
 
         export default {
             components: {
+                ButtonForAxios,
                 ValidationForm,
                 Field,
             },
@@ -143,16 +147,19 @@
                 }
             },
             methods: {
+                ...mapActions(useGlobalStore, ["setAxiosStatus"]),
                 handleResendVerificationCodeRequest() {
                     axios.post(`/api/resend-onboarding-verification/${this.uniqueId}`, {
                         route: 'merchant-verify.email'
                     })
                         .then((res) => {
                             console.log(res.data);
-                        }).catch((err) => console.log(err));
+                        }).catch((err) => {
+                            console.log(err);
+                    });
                 },
                 onSubmit() {
-                    console.log('hi');
+                    this.setAxiosStatus("ongoing");
                     axios.post(`/api/merchant-verify-email/${this.uniqueId}`, {
                         verification_code: [
                             document.forms["inviteTwoFaForm"]["verification_code[0]"].value,
@@ -164,9 +171,11 @@
                         ]
                     })
                         .then((res) => {
+                            this.setAxiosStatus('updated');
                             window.location.href = res.data.url;
                         })
                         .catch((error) => {
+                            this.setAxiosStatus("error");
                             console.log(error);
                             this.axiosResponse = error.response.data.message;
                         });
@@ -230,8 +239,13 @@
                     clearTimeout(window.onPasteTimeout);
                     clearTimeout(window.onInputTimeout);
                     if (evtobj.keyCode === 8) {
-                        document.getElementById('sc-' + i).value = ''
-                        document.getElementById('sc-' + (i - 1)).focus()
+                        document.getElementById('sc-' + i).value = '';
+                        if (i > 1) {
+                            const prevInput = document.getElementById('sc-' + (i - 1));
+                            if (prevInput) {
+                                prevInput.focus();
+                            }
+                        }
                     }
                 }
             },

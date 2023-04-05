@@ -85,7 +85,10 @@
                     <ErrorMessage name="billing_api_key"></ErrorMessage>
                 </div>
             </div>
-            <button type="submit" class="bg-indigo-600 text-white px-3 py-2 w-full rounded-md hover:bg-indigo-700">Submit</button>
+            <ButtonForAxios classOngoing="bg-indigo-600 flex justify-center opacity-30 text-white px-3 py-2 w-full rounded-md hover:bg-indigo-700"
+                classDefault="bg-indigo-600 text-white flex justify-center px-3 py-2 w-full rounded-md hover:bg-indigo-700">
+                Submit
+            </ButtonForAxios>
         </ValidationForm>
     </div>
 </template>
@@ -93,8 +96,12 @@
 
 <script>
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
+import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
+import {mapActions} from "pinia";
+import {useGlobalStore} from "@/stores/useGlobalStore";
 export default {
     components: {
+        ButtonForAxios,
         ValidationForm,
         Field,
         ErrorMessage
@@ -111,12 +118,16 @@ export default {
         },
     },
     methods: {
+        ...mapActions(useGlobalStore, ["setAxiosStatus"]),
         onSubmit() {
+            this.setAxiosStatus("ongoing");
             axios.post(`/api/merchant-billingo-verify/${this.uniqueId}`, {
                 api_key: this.billingo_api_key
             }).then((res) => {
+                this.setAxiosStatus("updated");
                 window.location.href = res.data.url;
             }).catch((err) => {
+                this.setAxiosStatus("error");
                 console.log(err);
             })
         },
