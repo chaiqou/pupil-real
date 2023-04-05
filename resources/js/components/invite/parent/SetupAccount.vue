@@ -98,7 +98,7 @@
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
 import { useGlobalStore } from "@/stores/useGlobalStore";
-import {mapActions, mapWritableState} from "pinia";
+import {mapActions} from "pinia";
 export default {
     components: {
         ButtonForAxios,

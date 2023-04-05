@@ -119,7 +119,10 @@
                         </div>
                         <div class="pt-5">
                             <div class="flex justify-end">
-                                <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                                <ButtonForAxios classOngoing="ml-3 opacity-30 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                classDefault="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    Save
+                                </ButtonForAxios>
                             </div>
                         </div>
                     </div>
@@ -131,9 +134,12 @@
 import { Form as ValidationForm, Field, ErrorMessage } from 'vee-validate';
 import CountriesSelect from "@/components/Ui/CountriesSelect.vue";
 import {useGlobalStore} from "@/stores/useGlobalStore";
-import {mapWritableState} from "pinia";
+import {mapWritableState, mapActions} from "pinia";
+import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
+
 export default {
     components: {
+        ButtonForAxios,
         CountriesSelect,
         ValidationForm,
         Field,
@@ -160,7 +166,9 @@ export default {
         ...mapWritableState(useGlobalStore, ["countrySelect"]),
     },
     methods: {
+        ...mapActions(useGlobalStore, ["setAxiosStatus"]),
         onSubmit() {
+            this.setAxiosStatus("ongoing");
             axios.post(`/api/parent-personal-form/${this.uniqueId}`, {
                 last_name: this.last_name,
                 first_name: this.first_name,
@@ -171,8 +179,10 @@ export default {
                 state: this.state,
                 zip: this.zip,
             }).then((res) => {
+                this.setAxiosStatus("updated");
                 window.location.href = res.data.url;
             }).catch((err) => {
+                this.setAxiosStatus("error");
                 console.log(err);
             })
         },
