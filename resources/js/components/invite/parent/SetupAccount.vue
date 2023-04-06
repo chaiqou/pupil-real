@@ -7,7 +7,7 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
                                     <span class="text-indigo-600">01</span>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-indigo-600">Setup Account</span>
+                                <span class="ml-4 text-sm font-medium text-indigo-600">{{$t('message.set_up_account')}}</span>
                             </span>
                         </div>
                     </li>
@@ -17,7 +17,7 @@
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                 <span class="text-gray-500">02</span>
                             </span>
-                            <span class="ml-4 text-sm font-medium text-gray-500">Personal Form</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">{{$t('message.personal_information')}}</span>
                         </div>
                     </li>
 
@@ -26,7 +26,7 @@
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                 <span class="text-gray-500">03</span>
                             </span>
-                            <span class="ml-4 text-sm font-medium text-gray-500">Setup Card</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500">{{$t('message.setup_card')}}</span>
                         </div>
                     </li>
 
@@ -36,7 +36,7 @@
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                     <span class="text-gray-500">04</span>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-gray-500">Verify Account</span>
+                                <span class="ml-4 text-sm font-medium text-gray-500">{{$t('message.verify_account')}}</span>
                             </span>
                         </div>
                     </li>
@@ -46,7 +46,7 @@
 
             <div>
                 <img class="mx-auto h-16 w-auto" src="@/components/images/pupilpay-black-color.png" alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Setup your account</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{$t('message.set_up_your_account')}}</h2>
             </div>
 
             <div class="w-full">
@@ -55,13 +55,13 @@
                     <div class="-space-y-px rounded-md shadow-sm">
                         <div>
                             <label for="email" class="sr-only">Email address</label>
-                            <Field v-model="email" rules="required|email" id="email-address" name="email" type="email" autocomplete="email" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Email address" />
+                            <Field v-model="email" rules="required|email" id="email-address" name="email" type="email" autocomplete="email" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" :placeholder="$t('message.email_address')" />
                             <ErrorMessage class="mt-2 text-red-500 text-sm" name="email"></ErrorMessage>
                         </div>
                         <div class="flex">
                             <div class="w-full">
                                 <label for="password" class="sr-only">Password</label>
-                                <Field v-model="password" rules="required|min:8|upperAndLower" id="password" name="password" type="password" autocomplete="new-password" class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
+                                <Field v-model="password" rules="required|min:8|upperAndLower" id="password" name="password" type="password" autocomplete="new-password" class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" :placeholder="$t('message.password')" />
                             </div>
                             <button onmouseover="document.getElementById('password').type='text'" onmouseleave="document.getElementById('password').type='password'" type="button" class="relative -ml-px inline-flex items-center space-x-2 border border-gray-300 bg-gray-50 px-4 py-2 focus:z-10 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500  focus:ring-1 focus:ring-indigo-500">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -73,9 +73,9 @@
                         <ErrorMessage class="text-red-500 text-sm" name="password"></ErrorMessage>
                         <div class="w-full">
                             <label for="language" class="sr-only">Country</label>
-                            <select v-model="language" required id="language" name="language" autocomplete="language" class="rounded-b-md relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" >
-                                <option selected value="en">English</option>
-                                <option value="hu">Hungary</option>
+                            <select v-model="language" @change="storeLocaleInLocalStorage(language); setLocale()" required id="language" name="language" autocomplete="language" class="rounded-b-md relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" >
+                                <option selected value="en">{{$t('message.english')}}</option>
+                                <option value="hu">{{$t('message.hungary')}}</option>
                             </select>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd" />
                             </svg>
                         </span>
-                            Sign up
+                            {{$t('message.sign_up')}}
                         </ButtonForAxios>
                     </div>
                 </ValidationForm>
@@ -124,7 +124,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+        ...mapActions(useGlobalStore, ["setAxiosStatus", "storeLocaleInLocalStorage"]),
+        setLocale() {
+            this.$i18n.locale = this.language;
+        },
       onSubmit() {
         this.setAxiosStatus('ongoing');
         axios.post(`/api/parent-setup-account/${this.uniqueId}`, {
@@ -142,6 +145,7 @@ export default {
     },
     mounted(){
         this.email = this.inviteEmail;
+        this.language = localStorage.getItem("i18n");
     }
 }
 </script>

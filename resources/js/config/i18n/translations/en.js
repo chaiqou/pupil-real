@@ -51,7 +51,11 @@ const en = {
         if_you_cant_find_the_email_in_a_few_minutes_check_your_spam_folder: "If you can't find the email in a few minutes, check your spam folder",
         resend_code: "Resend code",
         please_fill_all_fields: "Please fill all fields",
-        verify: 'Verify'
+        verify: 'Verify',
+        setup_card: "Setup card",
+        setup_your_card: "Setup your card",
+        save_card_for_faster_checkout: "Save card for faster checkout",
+        dont_save_card: "Don't save card"
 
     },
 };

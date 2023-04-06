@@ -51,7 +51,11 @@ const hu = {
         if_you_cant_find_the_email_in_a_few_minutes_check_your_spam_folder: "If you can't find the email in a few minutes, check your spam folder HU",
         resend_code: "Resend code HU",
         please_fill_all_fields: "Please fill all fields HU",
-        verify: "Verify HU"
+        verify: "Verify HU",
+        setup_card: "Setup card HU",
+        setup_your_card: "Setup your card HU",
+        save_card_for_faster_checkout: "Save card for faster checkout HU",
+        dont_save_card: "Don't save card HU"
     },
 };
 
