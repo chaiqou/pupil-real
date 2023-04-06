@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 export const useGlobalStore = defineStore("global", {
   state: () => {
     return {
@@ -22,6 +21,9 @@ export const useGlobalStore = defineStore("global", {
         },
         resetAxiosStatus() {
             this.axiosStatus = '';
+        },
+        storeLocaleInLocalStorage(locale) {
+            localStorage.setItem("i18n", locale);
         },
     },
 });

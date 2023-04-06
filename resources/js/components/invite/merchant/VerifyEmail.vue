@@ -9,7 +9,7 @@
                                         <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <span class="ml-4 text-sm font-medium text-gray-900">Set up Account</span>
+                                <span class="ml-4 text-sm font-medium text-gray-900">{{$t('message.set_up_account')}}</span>
                             </span>
                 </div>
             </li>
@@ -21,7 +21,7 @@
                                     <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                 </svg>
                             </span>
-                    <span class="ml-4 text-sm font-medium text-gray-900">Personal Form</span>
+                    <span class="ml-4 text-sm font-medium text-gray-900">{{$t('message.personal_information')}}</span>
                 </div>
             </li>
 
@@ -32,7 +32,7 @@
                                     <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                 </svg>
                             </span>
-                    <span class="ml-4 text-sm font-medium text-gray-900">Company details</span>
+                    <span class="ml-4 text-sm font-medium text-gray-900">{{$t('message.company_details')}}</span>
                 </div>
             </li>
 
@@ -43,7 +43,7 @@
                                     <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                 </svg>
                             </span>
-                    <span class="ml-4 text-sm font-medium text-gray-900">Stripe</span>
+                    <span class="ml-4 text-sm font-medium text-gray-900">{{$t('message.stripe')}}</span>
                 </div>
             </li>
 
@@ -54,7 +54,7 @@
                                     <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
                                 </svg>
                             </span>
-                    <span class="ml-4 text-sm font-medium text-gray-900">Verify Billingo</span>
+                    <span class="ml-4 text-sm font-medium text-gray-900">{{$t('message.verify_billingo')}}</span>
                 </div>
             </li>
 
@@ -63,21 +63,21 @@
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
                                 <span class="text-indigo-600">06</span>
                             </span>
-                    <span class="ml-4 text-sm font-medium text-indigo-600">Verify Account</span>
+                    <span class="ml-4 text-sm font-medium text-indigo-600">{{$t('message.verify_account')}}</span>
                 </div>
             </li>
         </ol>
     </nav>
         <div class="mt-8">
             <img class="mx-auto h-16 w-auto" src="@/components/images/pupilpay-black-color.png" alt="PupilPay" />
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Verify your email</h2>
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{$t('message.verify_your_email')}}</h2>
             <p class="mt-2 text-center text-sm text-gray-600">
-                Enter the
-                <span class="font-semibold text-indigo-600 hover:text-indigo-500">6-digit</span>
-                verification code sent to {{this.inviteEmail}}.
+                {{$t('message.enter_the')}}
+                <span class="font-semibold text-indigo-600 hover:text-indigo-500">6-{{$t('message.digit')}}</span>
+                {{$t('message.verification_code_sent_to')}} {{this.inviteEmail}}.
             </p>
             <p class="mt-2 text-center text-xs text-gray-600">
-                If you can't find the email in a few minutes, check your spam folder.
+                {{$t('message.if_you_cant_find_the_email_in_a_few_minutes_check_your_spam_folder')}}.
             </p>
             <div class="flex mt-6 items-center justify-center">
                 <ButtonForAxios @click="handleResendVerificationCodeRequest()" :globalStoreSolution="false" :status="axiosResendEmailStatus"
@@ -87,7 +87,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
-                    Resend Code
+                    {{$t('message.resend_code')}}
                 </ButtonForAxios>
             </div>
         </div>
@@ -103,7 +103,7 @@
                         <Field type="text" rules="required" @keyup="stepForward(6)" @keydown.delete="stepBack($event, 6)" @click="resetValue(6)" id="sc-6" name="verification_code[5]" @input="checkInputLengths()" class="bg-gray-50 uppercase h-14 w-10 border mx-2 rounded-lg flex items-center text-center font-mono text-xl" placeholder="6" v-model="verification_code[5]"/>
                     </div>
                 </div>
-                <p class="text-red-500 text-sm" v-if="Object.keys(errors).length">Please fill all fields</p>
+                <p class="text-red-500 text-sm" v-if="Object.keys(errors).length">{{$t('message.please_fill_all_fields')}}</p>
                 <p class="text-red-500 text-sm"> {{axiosResponse}}</p>
                 <div>
                     <ButtonForAxios classOngoing="group opacity-30 relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -113,7 +113,7 @@
                   <path fill-rule="evenodd" d="M1 6a3 3 0 013-3h12a3 3 0 013 3v8a3 3 0 01-3 3H4a3 3 0 01-3-3V6zm4 1.5a2 2 0 114 0 2 2 0 01-4 0zm2 3a4 4 0 00-3.665 2.395.75.75 0 00.416 1A8.98 8.98 0 007 14.5a8.98 8.98 0 003.249-.604.75.75 0 00.416-1.001A4.001 4.001 0 007 10.5zm5-3.75a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm0 6.5a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75zm.75-4a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5z" clip-rule="evenodd" />
                   </svg>
               </span>
-                        Verify
+                        {{$t('message.verify')}}
                     </ButtonForAxios>
                 </div>
             </ValidationForm>

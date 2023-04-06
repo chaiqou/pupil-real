@@ -1,7 +1,7 @@
 <template>
   <div class="sm:col-span-6">
     <label for="country" class="block text-sm font-medium text-gray-700"
-      >Country</label
+      >{{$t('message.country')}}</label
     >
     <div class="mt-1">
       <Field v-model="this.countrySelect" rules="required" name="country">

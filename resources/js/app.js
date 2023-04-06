@@ -2,7 +2,7 @@ import "@/bootstrap";
 import "../css/app.css";
 import { createApp } from "vue/dist/vue.esm-bundler";
 import { createPinia } from "pinia";
-
+import i18n from "@/config/i18n/index.js";
 import "@vuepic/vue-datepicker/dist/main.css";
 import "@/config/axios/index.js";
 import "@/config/vee-validate/index.js";
@@ -134,4 +134,5 @@ app.component("lunch-edit-page", LunchEditPage);
 app.component("confirmation-modal", ConfirmationModal);
 
 app.use(pinia);
+app.use(i18n);
 app.mount("#app");
