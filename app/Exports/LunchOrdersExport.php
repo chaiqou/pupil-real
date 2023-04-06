@@ -24,10 +24,13 @@ class LunchOrdersExport implements FromCollection, WithHeadings, ShouldAutoSize
 
         foreach ($this->lunches as $lunch) {
             $menusArray = []; // define an empty array before the inner loop
-            // loop over the lunch menus
-            foreach ($lunch['menus'] as $lunchMenu) {
-                $lunchMenusDecoded = json_decode($lunchMenu->menus, true);
-                $menusArray[] = $lunchMenusDecoded; // add the decoded menus to the array
+
+          // Check if lunch have a menus and if have loop over the lunch menus
+            if (isset($lunch['menus'])) {
+                foreach ($lunch['menus'] as $lunchMenu) {
+                    $lunchMenusDecoded = json_decode($lunchMenu->menus, true);
+                    $menusArray[] = $lunchMenusDecoded; // add the decoded menus to the array
+                }
             }
 
             $totalOrders = isset($this->totalOrders[$lunch->id]) ? $this->totalOrders[$lunch->id] : 0;
