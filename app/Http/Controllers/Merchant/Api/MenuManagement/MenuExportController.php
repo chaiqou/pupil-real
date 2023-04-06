@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 use App\Exports\LunchOrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Lunch;
-use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
@@ -27,12 +26,16 @@ class MenuExportController extends Controller
 
         $lunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
 
+        // convert array to collection
+        $lunchesCollection = collect($lunches);
+
+        // eager load menus for each lunch
+        $lunchesWithMenus = Lunch::with('menus')->whereIn('id', $lunchesCollection->pluck('id'))->get();
+
         // Calculate menu_key as it is in periodic_lunch , based on this i have to count orders
 
-        foreach ($lunches as $lunch) {
-            $lunchMenus = LunchMenu::where('lunch_id', $lunch->id)->get();
-
-            foreach ($lunchMenus as $lunchMenu) {
+        foreach ($lunchesWithMenus  as $lunch) {
+            foreach ($lunch->menus as $lunchMenu) {
                 $menusArray = json_decode($lunchMenu->menus, true);
 
                 foreach ($menusArray as $date => $menuItems) {
@@ -43,12 +46,6 @@ class MenuExportController extends Controller
                 }
             }
         }
-
-        // convert array to collection
-        $lunchesCollection = collect($lunches);
-
-        // eager load menus for each lunch
-        $lunchesWithMenus = Lunch::with('menus')->whereIn('id', $lunchesCollection->pluck('id'))->get();
 
         $totalOrders = [];
         foreach ($lunches as $lunch) {
