@@ -33,19 +33,23 @@ class MenuExportController extends Controller
         $lunchesWithMenus = Lunch::with('menus')->whereIn('id', $lunchesCollection->pluck('id'))->get();
 
         // Calculate menu_key as it is in periodic_lunch , based on this i have to count orders
-
         foreach ($lunchesWithMenus  as $lunch) {
             foreach ($lunch->menus as $lunchMenu) {
                 $menusArray = json_decode($lunchMenu->menus, true);
 
-                foreach ($menusArray as $date => $menuItems) {
-                    foreach ($menuItems as $index => $menuItem) {
+                foreach ($menusArray as $date => &$menuItems) {
+                    foreach ($menuItems as $index => &$menuItem) {
                         $menuKey = "{$lunchMenu['id']}-{$lunch['id']}-{$date}-{$menuItem['name']}-{$index}";
                         $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$menuKey.'%')->count();
+                        $menuItem['menu_count'] = $menuCount; // add menu_count for each lunch option
                     }
                 }
+
+                $lunchMenu->menus = json_encode($menusArray); // update the modified menus back to the database
             }
         }
+
+        // Total orders for each lunch
 
         $totalOrders = [];
         foreach ($lunches as $lunch) {
