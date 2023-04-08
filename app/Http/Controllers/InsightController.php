@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Insights\InsightStatistics;
 use App\Models\Merchant;
-use App\Models\PendingTransaction;
-use App\Models\PeriodicLunch;
-use App\Models\Transaction;
 use App\Models\Student;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class InsightController extends Controller
@@ -20,6 +16,7 @@ class InsightController extends Controller
 
         $insightClass = new InsightStatistics();
         $activeStudentsData = $insightClass->activeStudents($students);
+
         return response()->json($activeStudentsData);
     }
 
@@ -28,6 +25,7 @@ class InsightController extends Controller
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $insightClass = new InsightStatistics();
         $avgTransactionValueData = $insightClass->averageTransactionValue($merchant);
+
         return response()->json($avgTransactionValueData);
     }
 
@@ -36,6 +34,7 @@ class InsightController extends Controller
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $insightClass = new InsightStatistics();
         $pendingTransactionValueData = $insightClass->pendingTransactionValue($merchant);
+
         return response()->json($pendingTransactionValueData);
     }
 
@@ -46,6 +45,7 @@ class InsightController extends Controller
         $students = Student::where('school_id', $user->school_id)->count();
         $insightClass = new InsightStatistics();
         $avgStudentWeeklySpendingData = $insightClass->averageStudentWeeklySpending($merchant, $students);
+
         return response()->json($avgStudentWeeklySpendingData);
     }
 }
