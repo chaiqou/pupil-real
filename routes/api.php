@@ -116,10 +116,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('line-chart-data', 'calculateChartInfo')->name('school.line-chart-data');
             });
             Route::controller(InsightController::class)->group(function () {
-               Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
-               Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
-               Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
-               Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
+                Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
+                Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
+                Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
+                Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
         });
     });
