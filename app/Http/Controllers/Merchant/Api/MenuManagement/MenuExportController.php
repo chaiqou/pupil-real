@@ -24,7 +24,12 @@ class MenuExportController extends Controller
         $dayAndWeekJson = $request->query('dayAndWeek');
         $dayAndWeek = json_decode($dayAndWeekJson);
 
-        $lunches = $this->excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
+        $excelService = new ExcelService();
+        $result = $excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
+
+        // Get the weekdays and filteredLunches
+        $weekDays = $result['weekDays'];
+        $lunches = $result['filteredLunches'];
 
         // convert array to collection
         $lunchesCollection = collect($lunches);

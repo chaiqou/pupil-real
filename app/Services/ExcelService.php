@@ -30,6 +30,9 @@ class ExcelService
             return $lunch->active_range[0] <= $endDate && $startDate <= $lunch->active_range[1];
         })->all();
 
-        return $filteredLunches;
+        return [
+            'weekDays' => $weekDays,
+            'filteredLunches' => $filteredLunches,
+        ];
     }
 }
