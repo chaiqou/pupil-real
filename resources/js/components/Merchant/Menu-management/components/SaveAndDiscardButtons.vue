@@ -56,6 +56,7 @@ const onClickSaveMenu = () => {
       menus: props.menus,
       day: props.day,
       lunch_id: store.lunchId,
+      student_id: localStorage.getItem("studentId"),
     })
     .then(() => {
       store.toggleFixedCard = false;

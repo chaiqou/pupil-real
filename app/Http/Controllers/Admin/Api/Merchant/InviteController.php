@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Api\Merchant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InviteMerchantRequest;
 use App\Http\Resources\Admin\MerchantInviteResource;
-use App\Jobs\InviteMerchantJob;
 use App\Mail\InviteMerchantMail;
 use App\Models\Invite;
 use App\Models\User;

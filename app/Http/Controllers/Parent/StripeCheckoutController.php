@@ -32,7 +32,6 @@ class StripeCheckoutController extends Controller
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
         $validate = $request->validated();
-
         $student = Student::where('id', $validate['student_id'])->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
@@ -117,7 +116,7 @@ class StripeCheckoutController extends Controller
                 'merchant_id' => $lunch->merchant_id,
                 'transaction_identifier' => 'here_should_be_some_hash',
                 'transaction_date' => now()->format('Y-m-d'),
-                'transaction_amount' => 1,
+                'transaction_amount' => $validate->price,
                 'transaction_type' => 'payment',
                 'comments' => json_encode([
                     'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
@@ -184,7 +183,7 @@ class StripeCheckoutController extends Controller
                     'merchant_id' => $pending_transaction->merchant_id,
                     'transaction_identifier' => 'here_should_be_some_hash',
                     'transaction_date' => now()->format('Y-m-d'),
-                    'transaction_amount' => 1,
+                    'transaction_amount' => $validate['price'],
                     'transaction_type' => 'payment',
                     'comments' => json_encode([
                         'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),

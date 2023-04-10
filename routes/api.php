@@ -10,6 +10,7 @@ use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LanguageController as ApiLanguageController;
 use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -124,15 +125,17 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('line-chart-data', 'calculateChartInfo')->name('school.line-chart-data');
             });
             Route::controller(InsightController::class)->group(function () {
-               Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
-               Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
-               Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
-               Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
+                Route::get('active-students', 'activeStudents')->name('school.active-students_insights');
+                Route::get('average-transactions', 'averageTransactionValue')->name('school.average-transactions_insights');
+                Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
+                Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
         });
     });
 
+    // Here should be defended routes
     Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
+    Route::get('merchant/request-export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
 });
 
 Route::controller()->group(function () {

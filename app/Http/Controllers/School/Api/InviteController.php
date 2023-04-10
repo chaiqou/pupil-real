@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\School\InviteRequest;
 use App\Http\Resources\InviteResource;
 use App\Jobs\InviteUserJob;
-use App\Mail\InviteUserMail;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class InviteController extends Controller

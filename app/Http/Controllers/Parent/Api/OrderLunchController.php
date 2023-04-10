@@ -43,7 +43,7 @@ class OrderLunchController extends Controller
                 'merchant_id' => $lunch->merchant_id,
                 'transaction_identifier' => 'here_should_be_some_hash',
                 'transaction_date' => now()->format('Y-m-d'),
-                'transaction_amount' => 1,
+                'transaction_amount' => $validated['price'],
                 'transaction_type' => 'payment',
                 'comments' => json_encode([
                     'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
@@ -80,6 +80,7 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
+            // This service method updates fixed claims if we have menu and after this we are ordering lunch
             (new ClaimService())->updateFixedClaims($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);

@@ -16,4 +16,9 @@ class PeriodicLunch extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function lunch(): BelongsTo
+    {
+        return $this->belongsTo(Lunch::class);
+    }
 }
