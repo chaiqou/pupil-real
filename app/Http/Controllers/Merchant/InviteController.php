@@ -51,6 +51,7 @@ class InviteController extends Controller
         return view('invite.merchant.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,
+            'user' => auth()->user()
         ]);
     }
 

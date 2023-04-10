@@ -41,6 +41,7 @@ class InviteController extends Controller
         return view('invite.parent.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,
+            'user' => auth()->user()
         ]);
     }
 
