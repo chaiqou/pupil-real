@@ -31,4 +31,9 @@ class Lunch extends Model
     {
         return $this->hasMany(LunchMenu::class);
     }
+
+    public function periodicLunches(): HasMany
+    {
+        return $this->hasMany(PeriodicLunch::class);
+    }
 }

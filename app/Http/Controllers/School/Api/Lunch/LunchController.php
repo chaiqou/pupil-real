@@ -14,15 +14,22 @@ use App\Models\PeriodicLunch;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\Terminal;
+use App\Services\CalendarService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
 class LunchController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    protected $calendarService;
+
+    public function __construct(CalendarService $calendarService)
+    {
+        $this->calendarService = $calendarService;
+    }
+
+    public function index()
     {
         if (auth()->user()->hasRole('school')) {
             $merchant = Merchant::where('user_id', auth()->user()->id)->first();
@@ -36,7 +43,9 @@ class LunchController extends Controller
             }
         }
 
-        return LunchResource::collection($lunches);
+        $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($lunches);
+
+        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks]);
     }
 
     public function store(LunchRequest $request): JsonResponse

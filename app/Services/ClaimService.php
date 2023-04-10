@@ -15,7 +15,9 @@ class ClaimService
         foreach ($validated['claim_days'] as $date) {
             $day = Carbon::parse($date)->addDay()->format('Y-m-d');
             $lunch_menu = LunchMenu::where('date', $day)->first();
-            $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")->first();
+            $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")
+            ->where('student_id', $validated['student_id'])
+            ->first();
 
             if ($lunch_menu && $periodic_lunch) {
                 $claims_array = json_decode($periodic_lunch->claims, true);
@@ -31,7 +33,7 @@ class ClaimService
                                     foreach ($menu as $menu_name) {
                                         if ($claim['name'] === $menu_name['name']) {
                                             $claims_array[$date][$index]['menu'] = $menu_name['menus'];
-                                            $claims_array[$date][$index]['menu_code'] = 0;
+                                            $claims_array[$date][$index]['menu_code'] = "{$lunch_menu['id']}-{$lunch_menu['lunch_id']}-{$date}-{$claim['name']}-{$index}";
                                         }
                                     }
                                 }

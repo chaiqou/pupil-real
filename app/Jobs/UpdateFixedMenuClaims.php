@@ -16,9 +16,15 @@ class UpdateFixedMenuClaims implements ShouldQueue
 
     private $validated;
 
-    public function __construct($validated)
+    private $menuId;
+
+    private $lunchId;
+
+    public function __construct($validated, $menuId, $lunchId)
     {
         $this->validated = $validated;
+        $this->menuId = $menuId;
+        $this->lunchId = $lunchId;
     }
 
     /**
@@ -29,7 +35,9 @@ class UpdateFixedMenuClaims implements ShouldQueue
     public function handle()
     {
         $day = Carbon::parse($this->validated['day'])->addDay()->format('Y-m-d');
-        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")->first();
+        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")
+        ->where('student_id', $this->validated['student_id'])
+        ->first();
 
         if ($periodic_lunch) {
             $claims_array = json_decode($periodic_lunch->claims, true);
@@ -43,7 +51,7 @@ class UpdateFixedMenuClaims implements ShouldQueue
                             foreach ($this->validated['menus'] as $menu_key => $menu) {
                                 if ($claim['name'] === $menu_key) {
                                     $claims_array[$date][$index]['menu'] = $menu;
-                                    $claims_array[$date][$index]['menu_code'] = 0;
+                                    $claims_array[$date][$index]['menu_code'] = "{$this->menuId}-{$this->lunchId}-{$date}-{$claim['name']}-{$index}";
                                 }
                             }
                         }

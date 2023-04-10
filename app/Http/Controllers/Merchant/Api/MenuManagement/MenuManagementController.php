@@ -27,15 +27,21 @@ class MenuManagementController extends Controller
             'menus' => json_encode($createdMenuJson),
         ]);
 
-        UpdateFixedMenuClaims::dispatch($validated);
+        // This updates fixed menu claims when we are creating menu AND student already have ordered lunch for this day
+
+        UpdateFixedMenuClaims::dispatch($validated, $menu['id'], $menu['lunch_id']);
 
         return response()->json('Menu Created');
     }
 
     public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request)
     {
+        // Updates choices menu claimables after order claimable menu
         $validated = $request->validated();
-        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")->first();
+        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")
+        ->where('student_id', $validated['student_id'])
+        ->first();
+        $lunch_menu = LunchMenu::where('date', 'like', "%$validated[date]%")->first();
 
         $claims_array = json_decode($periodic_lunch->claims, true);
 
@@ -46,7 +52,7 @@ class MenuManagementController extends Controller
                 foreach ($claims as $index => $claim) {
                     if ($claim['name'] === $validated['claimable_type'] && $claim['menu'] === '') {
                         $claims_array[$date][$index]['menu'] = $validated['claimable'];
-                        $claims_array[$date][$index]['menu_code'] = 2;
+                        $claims_array[$date][$index]['menu_code'] = "{$lunch_menu['id']}-{$lunch_menu['lunch_id']}-{$date}-{$validated['claimable']}-{$index}";
                     }
                 }
             }

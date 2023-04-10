@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Parent;
+namespace App\Http\Requests\Merchant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LunchOrderRequest extends FormRequest
+class MenuExportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class LunchOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_id' => 'required',
-            'claimables' => 'required|array',
-            'lunch_id' => 'required',
-            'claim_days' => 'required|array|unique:periodic_lunches,claims',
-            'price' => 'required|integer',
+            'dayAndWeek' => 'required|array',
         ];
     }
 }

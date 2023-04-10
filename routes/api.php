@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantC
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -124,7 +125,9 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    // Here should be defended routes
     Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
+    Route::get('merchant/request-export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
 });
 
 Route::controller()->group(function () {
