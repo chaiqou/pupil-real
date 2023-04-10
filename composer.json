@@ -12,6 +12,7 @@
         "doctrine/dbal": "^3.4",
         "guzzlehttp/guzzle": "^7.2",
         "hisorange/browser-detect": "^4.5",
+        "laracasts/utilities": "^3.2",
         "laravel/framework": "^9.2",
         "laravel/horizon": "^5.14",
         "laravel/octane": "^1.4",

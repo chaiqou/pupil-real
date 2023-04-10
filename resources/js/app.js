@@ -59,9 +59,13 @@ import MerchantCompanyDetails from "@/components/invite/merchant/CompanyDetails.
 import MerchantSetupStripe from "@/components/invite/merchant/SetupStripe.vue";
 import MerchantBillingoVerify from "@/components/invite/merchant/BillingoVerify.vue";
 import MerchantVerifyEmail from "@/components/invite/merchant/VerifyEmail.vue";
+import SetLanguage from "@/components/Ui/SetLanguage.vue";
 
 const pinia = createPinia();
 const app = createApp({});
+
+// Set language global component
+app.component("set-language", SetLanguage);
 
 // Parent Onboarding global components
 app.component("parent-setup-account", ParentSetupAccount);

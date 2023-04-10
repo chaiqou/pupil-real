@@ -56,22 +56,31 @@ class InviteController extends Controller
 
     public function personalForm(): View
     {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
         return view('invite.merchant.personal-form', [
             'uniqueID' => request()->uniqueID,
+            'user' => $user
         ]);
     }
 
     public function companyDetails(): View
     {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
         return view('invite.merchant.company-details', [
             'uniqueID' => request()->uniqueID,
+            'user' => $user
         ]);
     }
 
     public function setupStripe(): View
     {
+        $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
         return view('invite.merchant.setup-stripe', [
             'uniqueID' => request()->uniqueID,
+            'user' => $user
         ]);
     }
 
@@ -93,6 +102,7 @@ class InviteController extends Controller
 
             return view('invite.merchant.billingo-verify', [
                 'uniqueID' => request()->uniqueID,
+                'user' => $user
             ]);
         } else {
             return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
@@ -102,6 +112,7 @@ class InviteController extends Controller
     public function verifyEmail(): View
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
+        $user = User::where('email', $invite->email)->first();
         if (! $invite) {
             return view('auth.redirect-template')
                 ->with(['header' => 'Invalid Invite', 'title' => 'Invalid invite', 'description' => 'This invite has already been used, or never existed', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
@@ -110,6 +121,7 @@ class InviteController extends Controller
         return view('invite.merchant.verify-email', [
             'uniqueID' => request()->uniqueID,
             'email' => $invite->email,
+            'user' => $user
         ]);
     }
 }

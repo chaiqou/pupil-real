@@ -160,7 +160,7 @@ export default {
         uniqueId: {
             type: String,
             required: true
-        }
+        },
     },
     computed: {
         ...mapWritableState(useGlobalStore, ["countrySelect"]),

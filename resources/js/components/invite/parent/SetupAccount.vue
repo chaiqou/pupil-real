@@ -98,7 +98,7 @@
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
 import { useGlobalStore } from "@/stores/useGlobalStore";
-import {mapActions} from "pinia";
+import {mapActions, mapWritableState} from "pinia";
 export default {
     components: {
         ButtonForAxios,
@@ -110,7 +110,6 @@ export default {
         return {
          email: "",
          password: "",
-         language: "en",
         }
     },
     props: {
@@ -123,11 +122,14 @@ export default {
             required: true
         }
     },
+    computed: {
+      ...mapWritableState(useGlobalStore, ["language"])
+    },
     methods: {
         ...mapActions(useGlobalStore, ["setAxiosStatus", "storeLocaleInLocalStorage"]),
-        setLocale() {
-            this.$i18n.locale = this.language;
-        },
+      setLocale() {
+          this.$i18n.locale = this.language;
+      },
       onSubmit() {
         this.setAxiosStatus('ongoing');
         axios.post(`/api/parent-setup-account/${this.uniqueId}`, {
@@ -145,7 +147,6 @@ export default {
     },
     mounted(){
         this.email = this.inviteEmail;
-        this.language = localStorage.getItem("i18n");
     }
 }
 </script>

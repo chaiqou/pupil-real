@@ -4,6 +4,7 @@ export const useGlobalStore = defineStore("global", {
     return {
       countrySelect: "",
       axiosStatus: "",
+      language: localStorage.getItem("i18n") || "en"
     };
   },
     actions: {

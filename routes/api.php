@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\LanguageController as ApiLanguageController;
 use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
@@ -172,3 +173,5 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });
     });
+
+Route::get('{user}/set-language/{locale}', [ApiLanguageController::class, 'setLocale'])->name('set-language');

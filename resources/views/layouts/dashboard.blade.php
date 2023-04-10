@@ -35,7 +35,7 @@
                 <div class="flex items-center flex-row-reverse justify-between">
                     <img class="h-8 w-auto mr-5" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
                         alt="Your Company" />
-                    <navigation-menu-button ></navigation-menu-button>
+                    <navigation-menu-button></navigation-menu-button>
                 </div>
 
             </div>

@@ -30,7 +30,7 @@ class NavigationController extends Controller
                     ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                     ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
                     ['name' => 'Lunch Details', 'icon' => 'none', 'href' => '/parent/lunch-details/'.$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches'],
-                    ['name' => 'Menus', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menus/'.$student->id, 'curreunt' => false],
+                    ['name' => 'Menus', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menus/'.$student->id, 'current' => false],
                 ];
         }
 
@@ -43,6 +43,14 @@ class NavigationController extends Controller
         if (auth()->user()->hasRole('2fa')) {
             $twoFa = 1;
         }
+
+// Check the current chosen language of the user, set locale of current user-s language
+        if (auth()->user()->language === 'en') {
+            app()->setLocale("en");
+        } else if (auth()->user()->language === 'hu') {
+            app()->setLocale("ka");
+        } else app()->setLocale("en");
+
 
         return view($currentTab, [
             'current' => $currentTab,

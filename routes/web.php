@@ -119,4 +119,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/webhook/stripe', [StripeCheckoutController::class, 'webhook'])->name('parent.webhook');
-Route::get('set-language/{locale}', [LanguageController::class, 'setLocale'])->name('set-language');
