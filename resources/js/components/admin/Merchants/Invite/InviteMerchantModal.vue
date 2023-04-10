@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="this.isInviteMerchantVisible">
-    <Dialog
+    <DialogComponent
       as="div"
       class="relative z-10"
       @close="
@@ -66,7 +66,6 @@
                       >Email</label
                     >
                     <Field
-                      v-slot="{ resetField }"
                       name="email"
                       v-model="email"
                       placeholder="email"
@@ -121,20 +120,18 @@
           </TransitionChild>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
-  DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
 import {
-  ExclamationTriangleIcon,
   XMarkIcon,
   CheckIcon,
 } from "@heroicons/vue/24/outline";
@@ -146,12 +143,10 @@ import { useInviteStore } from "@/stores/useInviteStore";
 
 export default {
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
-    DialogTitle,
     TransitionChild,
     TransitionRoot,
-    ExclamationTriangleIcon,
     XMarkIcon,
     ValidationForm,
     Field,
@@ -196,12 +191,11 @@ export default {
       if (text === "pending") {
         return "Please wait, we are sending invites.";
       }
-      if (text === "yes") {
+      else if (text === "yes") {
         return "Invites send successfully!";
       }
-      if (text === "no") {
-        return "Could not send invites at the moment, please try again later, or text to support.";
-      }
+      else return "Could not send invites at the moment, please try again later, or text to support.";
+
     },
   },
   methods: {

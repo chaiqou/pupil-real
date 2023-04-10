@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="this.isTerminalCreateVisible">
-    <Dialog
+    <DialogComponent
       as="div"
       class="relative z-10"
       @close="this.isTerminalCreateVisible = false"
@@ -135,19 +135,18 @@
           </TransitionChild>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
-  DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { Field, Form as ValidationForm, ErrorMessage } from "vee-validate";
 import { useModalStore } from "@/stores/useModalStore";
@@ -155,12 +154,10 @@ import { useTerminalStore } from "@/stores/useTerminalStore";
 
 export default {
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
-    DialogTitle,
     TransitionChild,
     TransitionRoot,
-    ExclamationTriangleIcon,
     XMarkIcon,
     ValidationForm,
     Field,

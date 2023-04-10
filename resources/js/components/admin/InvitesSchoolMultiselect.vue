@@ -25,7 +25,6 @@ import { useInviteStore } from "@/stores/useInviteStore";
 
 export default {
   components: {
-    useInviteStore,
     Multiselect,
   },
   data() {

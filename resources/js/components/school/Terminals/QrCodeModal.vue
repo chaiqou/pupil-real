@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="this.isQrCodeVisible">
-    <Dialog
+    <DialogComponent
       as="div"
       class="relative z-10"
       @close="this.isQrCodeVisible = false"
@@ -54,33 +54,28 @@
           </TransitionChild>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
-  DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
 import QrcodeVue from "qrcode.vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapWritableState } from "pinia";
 import { useModalStore } from "@/stores/useModalStore";
 import { useTerminalStore } from "@/stores/useTerminalStore";
 
 export default {
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
-    DialogTitle,
     TransitionChild,
     TransitionRoot,
-    ExclamationTriangleIcon,
-    XMarkIcon,
     QrcodeVue,
   },
   computed: {

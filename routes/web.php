@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Dashboard\NavigationController;
-use App\Http\Controllers\Parent\InviteController as UserInviteController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
+use App\Http\Controllers\Parent\InviteController as ParentInviteController;
 use App\Http\Controllers\Parent\ParentController;
 use App\Http\Controllers\Parent\SettingController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
@@ -15,41 +16,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUser'])->name('resend-verification');
-    Route::controller(UserInviteController::class)->group(function () {
+    Route::controller(ParentInviteController::class)->group(function () {
         Route::get('/parent-setup-account/{uniqueID}', 'setupAccount')->name('parent-setup.account');
-        Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
 
         Route::get('/parent-personal-form/{uniqueID}', 'personalForm')->name('parent-personal.form');
-        Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
 
         Route::get('/parent-setup-cards/{uniqueID}', 'setupCards')->name('parent-setup.cards');
-        Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
 
         Route::get('/parent-verify-email/{uniqueID}', 'verifyEmail')->name('parent-verify.email');
-        Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
     });
 
     Route::controller(MerchantInviteController::class)->group(function () {
         Route::get('/merchant-setup-account/{uniqueID}', 'setupAccount')->name('merchant-setup.account');
-        Route::post('/merchant-setup-account/{uniqueID}', 'submitSetupAccount')->name('merchant-setup.account_submit');
 
         Route::get('/merchant-personal-form/{uniqueID}', 'personalForm')->name('merchant-personal.form');
-        Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
 
         Route::get('/merchant-company-details/{uniqueID}', 'companyDetails')->name('merchant-company.details');
-        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
 
         Route::get('/merchant-setup-stripe/{uniqueID}', 'setupStripe')->name('merchant-setup.stripe');
-        Route::post('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
 
         Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
 
         Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
-        Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
-    });
-
-    Route::controller(BillingoController::class)->group(function () {
-        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });
 
     Route::get('/', [AuthController::class, 'redirectIfLoggedIn'])->name('default');
@@ -97,7 +85,6 @@ Route::middleware(['auth'])->group(function () {
 
             Route::controller(SettingController::class)->group(function () {
                 Route::post('two-fa/{user_id}', 'changeTwoFa')->name('parent.two-fa');
-                Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password');
                 Route::post('settings/{student_id}', 'updatePersonal')->name('parent.settings_submit');
             });
 

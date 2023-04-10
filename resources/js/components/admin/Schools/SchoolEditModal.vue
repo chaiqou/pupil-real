@@ -4,7 +4,7 @@
     as="template"
     :show="this.isSchoolEditVisible"
   >
-    <Dialog
+    <DialogComponent
       as="div"
       class="relative z-10"
       @close="
@@ -55,7 +55,7 @@
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
-              <Form
+              <ValidationForm
                 id="form"
                 @submit="
                   onSubmit();
@@ -417,26 +417,25 @@
                     </div>
                   </div>
                 </div>
-              </Form>
+              </ValidationForm>
             </DialogPanel>
           </TransitionChild>
         </div>
       </div>
-    </Dialog>
+    </DialogComponent>
   </TransitionRoot>
 </template>
 
 <script>
 import {
-  Dialog,
+  Dialog as DialogComponent,
   DialogPanel,
-  DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
-import { Form, Field, ErrorMessage } from "vee-validate";
+import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import { useSchoolStore } from "@/stores/useSchoolStore";
 import { useModalStore } from "@/stores/useModalStore";
 import { useGlobalStore } from "@/stores/useGlobalStore";
@@ -458,14 +457,12 @@ export default {
     };
   },
   components: {
-    Dialog,
+    DialogComponent,
     DialogPanel,
-    DialogTitle,
     TransitionChild,
     TransitionRoot,
-    ExclamationTriangleIcon,
     XMarkIcon,
-    Form,
+    ValidationForm,
     Field,
     ErrorMessage,
     CountriesSelect,

@@ -182,7 +182,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default'],
+            'queue' => ['default', 'invite-users'],
             'balance' => 'auto',
             'maxProcesses' => 1,
             'maxTime' => 0,

@@ -2,7 +2,7 @@ import "@/bootstrap";
 import "../css/app.css";
 import { createApp } from "vue/dist/vue.esm-bundler";
 import { createPinia } from "pinia";
-
+import i18n from "@/config/i18n/index.js";
 import "@vuepic/vue-datepicker/dist/main.css";
 import "@/config/axios/index.js";
 import "@/config/vee-validate/index.js";
@@ -49,9 +49,37 @@ import ParentCalendar from "@/components/parent/lunch-management/ParentCalendar.
 import MenuCalendar from "@/components/Merchant/Menu-management/MenuCalendar.vue";
 import SchoolDashboard from "@/components/school/Dashboard/Dashboard.vue";
 import ParentMenuCalendar from "@/components/parent/Menus/ParentMenuCalendar.vue";
+import ParentSetupAccount from "@/components/invite/parent/SetupAccount.vue";
+import ParentPersonalForm from "@/components/invite/parent/PersonalForm.vue";
+import ParentSetupCards from "@/components/invite/parent/SetupCards.vue";
+import ParentVerifyEmail from "@/components/invite/parent/VerifyEmail.vue";
+import MerchantSetupAccount from "@/components/invite/merchant/SetupAccount.vue";
+import MerchantPersonalForm from "@/components/invite/merchant/PersonalForm.vue";
+import MerchantCompanyDetails from "@/components/invite/merchant/CompanyDetails.vue";
+import MerchantSetupStripe from "@/components/invite/merchant/SetupStripe.vue";
+import MerchantBillingoVerify from "@/components/invite/merchant/BillingoVerify.vue";
+import MerchantVerifyEmail from "@/components/invite/merchant/VerifyEmail.vue";
+import SetLanguage from "@/components/Ui/SetLanguage.vue";
 
 const pinia = createPinia();
 const app = createApp({});
+
+// Set language global component
+app.component("set-language", SetLanguage);
+
+// Parent Onboarding global components
+app.component("parent-setup-account", ParentSetupAccount);
+app.component("parent-personal-form", ParentPersonalForm);
+app.component("parent-setup-cards", ParentSetupCards);
+app.component("parent-verify-email", ParentVerifyEmail);
+
+// Merchant Onboarding global components
+app.component("merchant-setup-account", MerchantSetupAccount);
+app.component("merchant-personal-form", MerchantPersonalForm);
+app.component("merchant-company-details", MerchantCompanyDetails);
+app.component("merchant-setup-stripe", MerchantSetupStripe);
+app.component("merchant-billingo-verify", MerchantBillingoVerify);
+app.component("merchant-verify-email", MerchantVerifyEmail);
 
 // Navigation global components
 app.component("dashboard-navigation", DashboardNavigation);
@@ -110,4 +138,5 @@ app.component("lunch-edit-page", LunchEditPage);
 app.component("confirmation-modal", ConfirmationModal);
 
 app.use(pinia);
+app.use(i18n);
 app.mount("#app");

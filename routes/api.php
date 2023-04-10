@@ -5,14 +5,19 @@ use App\Http\Controllers\Admin\Api\Merchant\InviteController as AdminMerchantInv
 use App\Http\Controllers\Admin\Api\Merchant\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\Api\SchoolController as AdminSchoolController;
 use App\Http\Controllers\Admin\Api\StudentController as AdminStudentController;
+use App\Http\Controllers\Auth\TwoFactorAuthenticationController;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\LanguageController as ApiLanguageController;
+use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
+use App\Http\Controllers\Parent\Api\SettingController as ParentSettingController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
-use App\Http\Controllers\Parent\SettingController;
+use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
@@ -37,7 +42,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
-            Route::post('update-student', [SettingController::class, 'updateStudent'])->name('parent.update-student_api');
             Route::controller(ParentStudentController::class)->group(function () {
                 Route::get('{user_id}/students', 'get')->name('parent.students_api');
                 Route::get('student/{student_id}', 'show')->name('parent.student_api');
@@ -54,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('checkout', [StripeCheckoutController::class, 'checkout'])->name('parent.checkout');
             Route::get('menu-retrieve/{student_id}', [ParentMenuController::class, 'menuRetrieve'])->name('parent.menu_retrieve');
             Route::post('choice-claims', [MenuManagementController::class, 'updateChoiceMenuClaims'])->name('parent.update_chpice_menu_claims');
+            Route::controller(ParentSettingController::class)->group(function () {
+                Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
+                Route::post('update-student','updateStudent')->name('parent.update-student_api');
+            });
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -139,3 +147,34 @@ Route::controller()->group(function () {
     Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
 });
 Route::apiResource('school/lunch', LunchController::class);
+
+Route::middleware(['guest'])->group(function () {
+    Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUserApi'])->name('resend-verification_api');
+    Route::controller(ApiParentInviteController::class)->group(function () {
+        Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
+
+        Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
+
+        Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
+
+        Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
+    });
+    Route::controller(ApiMerchantInviteController::class)->group(function () {
+        Route::post('/merchant-setup-account/{uniqueID}', 'submitSetupAccount')->name('merchant-setup.account_submit');
+
+        Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
+
+        Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
+
+        Route::get('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
+
+        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
+
+        Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
+    });
+    Route::controller(BillingoController::class)->group(function () {
+        Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
+    });
+    });
+
+Route::get('{user}/set-language/{locale}', [ApiLanguageController::class, 'setLocale'])->name('set-language');

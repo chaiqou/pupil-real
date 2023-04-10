@@ -63,88 +63,91 @@
             <SchoolsNotFound></SchoolsNotFound>
           </td>
         </tr>
-        <tr
-          v-if="this.isSchoolsLoaded && this.schools.length"
-          v-for="school in schools"
-          :key="school.id"
-        >
-          <td
-            class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
-          >
-            {{ school.short_name }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ school.full_name }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ school.long_name }}
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            <p>
-              Street Address: {{ school.details.street_address }}; Country:
-              {{ school.details.country }}; ZIP: {{ school.details.zip }};
-            </p>
-          </td>
-          <td
-            class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-          >
-            {{ school.school_code }}
-          </td>
-          <td
-            class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
-          >
-            <button
-              @click="
+        <template v-if="this.isSchoolsLoaded && this.schools.length">
+            <tr
+                v-for="school in schools"
+                :key="school.id"
+            >
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900"
+                >
+                    {{ school.short_name }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ school.full_name }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ school.long_name }}
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    <p>
+                        Street Address: {{ school.details.street_address }}; Country:
+                        {{ school.details.country }}; ZIP: {{ school.details.zip }};
+                    </p>
+                </td>
+                <td
+                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ school.school_code }}
+                </td>
+                <td
+                    class="relative whitespace-nowrap border-b border-gray-200 text-right text-sm font-medium"
+                >
+                    <button
+                        @click="
                 showHideSchoolEdit();
                 currentSchoolEdit(school.id);
               "
-              class="text-indigo-600 hover:text-indigo-900"
-            >
-              Edit
-            </button>
-          </td>
-          <td
-            class="relative whitespace-nowrap border-b border-gray-200 pl-2 pr-6 text-right text-sm font-medium"
-          >
-            <a
-              :href="'/admin/school/' + school.id + '/merchants'"
-              class="rounded-md bg-blue-600 px-2 py-1.5 text-white hover:bg-blue-700 hover:text-gray-100"
-            >
-              Merchants
-            </a>
-          </td>
-        </tr>
-        <tr v-if="!this.isSchoolsLoaded" v-for="n in 7">
-          <td
-            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-          >
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-          </td>
-        </tr>
+                        class="text-indigo-600 hover:text-indigo-900"
+                    >
+                        Edit
+                    </button>
+                </td>
+                <td
+                    class="relative whitespace-nowrap border-b border-gray-200 pl-2 pr-6 text-right text-sm font-medium"
+                >
+                    <a
+                        :href="'/admin/school/' + school.id + '/merchants'"
+                        class="rounded-md bg-blue-600 px-2 py-1.5 text-white hover:bg-blue-700 hover:text-gray-100"
+                    >
+                        Merchants
+                    </a>
+                </td>
+            </tr>
+        </template>
+        <template v-if="!this.isSchoolsLoaded">
+            <tr v-for="n in 7" :key="n">
+                <td
+                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                >
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+                </td>
+            </tr>
+        </template>
       </tbody>
     </table>
   </div>

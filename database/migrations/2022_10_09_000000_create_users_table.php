@@ -27,6 +27,7 @@ return new class() extends Migration
             $table->tinyInteger('finished_onboarding')->default(0);
             $table->json('user_information')->nullable();
             $table->string('two_factor_code')->nullable()->unique();
+            $table->string('language')->default('en');
             $table->rememberToken();
             $table->timestamps();
         });
