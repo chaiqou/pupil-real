@@ -78,7 +78,7 @@
                 <div class="flex">
                     <div class="w-full">
                         <label for="password" class="sr-only">Password</label>
-                        <Field v-model="password" rules="required|min:8|upperAndLower" id="password" name="password" type="password" autocomplete="new-password" class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" :placeholder="$t('message.email_address')" />
+                        <Field v-model="password" rules="required|min:8|upperAndLower" id="password" name="password" type="password" autocomplete="new-password" class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" :placeholder="$t('message.password')" />
                     </div>
                     <button onmouseover="document.getElementById('password').type='text'" onmouseleave="document.getElementById('password').type='password'" type="button" class="relative -ml-px inline-flex items-center space-x-2 border border-gray-300 bg-gray-50 px-4 py-2 focus:z-10 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500  focus:ring-1 focus:ring-indigo-500">
                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
