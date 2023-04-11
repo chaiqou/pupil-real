@@ -172,10 +172,8 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->first();
         $merchant = Merchant::where('user_id', $user->id)->first();
-        Str::endsWith(env('APP_URL'), '/') ?
-            [$refresh_url = env('APP_URL').'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'merchant-billingo-verify/'.$invite->uniqueID]
-            : [$refresh_url = env('APP_URL').'/'.'merchant-setup-stripe/'.$invite->uniqueID, $return_url = env('APP_URL').'/'.'merchant-billingo-verify/'.$invite->uniqueID];
-
+        $refresh_url = route('merchant-setup.stripe', ['uniqueID' => $invite->uniqueID]);
+        $return_url = route('merchant-billingo.verify', ['uniqueID' => $invite->uniqueID]);;
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
             $stripeAccountLink = $stripe->accountLinks->create([

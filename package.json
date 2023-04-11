@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "prettier": "prettier --write 'resources/**/*.{vue,js}'",
     "lint": "eslint . --ext .vue --fix --ignore-path .gitignore"

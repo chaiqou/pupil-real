@@ -97,9 +97,8 @@ class InviteController extends Controller
         $invite = Invite::where('uniqueID', request()->uniqueID)->firstOrFail();
         $user = User::where('email', $invite->email)->firstOrFail();
         if ($request->user_response === 'save_card') {
-            Str::endsWith(env('APP_URL'), '/') ?
-                [$success_url = env('APP_URL').'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'parent-setup-cards/'.$invite->uniqueID]
-                : [$success_url = env('APP_URL').'/'.'parent-verify-email/'.$invite->uniqueID, $cancel_url = env('APP_URL').'/'.'parent-setup-cards/'.$invite->uniqueID];
+            $success_url = route('parent-verify.email', ['uniqueID' => $invite->uniqueID]);
+            $cancel_url = route('parent-setup.cards', ['uniqueID' => $invite->uniqueID]);
             try {
                 $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
                 $stripeCreateSessionRequest = $stripe->checkout->sessions->create([
