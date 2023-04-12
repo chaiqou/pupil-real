@@ -44,13 +44,14 @@ class NavigationController extends Controller
             $twoFa = 1;
         }
 
-// Check the current chosen language of the user, set locale of current user-s language
+        // Check the current chosen language of the user, set locale of current user-s language
         if (auth()->user()->language === 'en') {
-            app()->setLocale("en");
-        } else if (auth()->user()->language === 'hu') {
-            app()->setLocale("ka");
-        } else app()->setLocale("en");
-
+            app()->setLocale('en');
+        } elseif (auth()->user()->language === 'hu') {
+            app()->setLocale('ka');
+        } else {
+            app()->setLocale('en');
+        }
 
         return view($currentTab, [
             'current' => $currentTab,

@@ -27,7 +27,7 @@ class SetupAccountRequest extends FormRequest
         return [
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', Password::min(8)->mixedCase()->numbers()],
-            'language' => 'required'
+            'language' => 'required',
         ];
     }
 }
