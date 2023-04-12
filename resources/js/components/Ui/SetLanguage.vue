@@ -8,7 +8,7 @@
 <script>
 import {mapActions, mapWritableState} from "pinia";
 import {useGlobalStore} from "@/stores/useGlobalStore";
-
+import {setLocale as setVeeValidateLocale} from "@vee-validate/i18n";
 export default {
     computed: {
       ...mapWritableState(useGlobalStore, ["language"])
@@ -23,6 +23,7 @@ export default {
         ...mapActions(useGlobalStore, ["storeLocaleInLocalStorage"]),
         setLocale() {
             this.$i18n.locale = this.language;
+            setVeeValidateLocale(this.language);
             this.handleChangeLanguageRequest();
         },
        handleChangeLanguageRequest() {
@@ -33,5 +34,9 @@ export default {
             .catch((err) => console.log(err))
        }
     },
+
+    mounted() {
+        setVeeValidateLocale(localStorage.getItem("i18n") || 'en');
+    }
 }
 </script>

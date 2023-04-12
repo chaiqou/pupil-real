@@ -5,7 +5,8 @@ import { createPinia } from "pinia";
 import i18n from "@/config/i18n/index.js";
 import "@vuepic/vue-datepicker/dist/main.css";
 import "@/config/axios/index.js";
-import "@/config/vee-validate/index.js";
+import "@/config/vee-validate/rules.js";
+import "@/config/vee-validate/messages";
 
 import DashboardNavigation from "@/components/navigation/DashboardNavigation.vue";
 import DashboardNavigationMobile from "@/components/navigation/DashboardNavigationMobile.vue";
