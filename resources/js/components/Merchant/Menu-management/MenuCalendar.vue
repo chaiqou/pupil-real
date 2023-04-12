@@ -116,7 +116,7 @@ const handleLunchesExport = async (dayAndWeek) => {
     const url = URL.createObjectURL(new Blob([data]));
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "lunches_total.xlsx");
+    link.setAttribute("download", "weekly_orders.xlsx");
 
     document.body.appendChild(link);
     link.click();
