@@ -11,13 +11,13 @@ class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
 
     protected $totalOrders;
 
-    protected $lucnhes;
+    protected $lunches;
 
-    public function __construct($weekdays, $totalOrders, $lucnhes)
+    public function __construct($weekdays, $totalOrders, $lunches)
     {
         $this->weekdays = $weekdays;
         $this->totalOrders = $totalOrders;
-        $this->lucnhes = $lucnhes;
+        $this->lunches = $lunches;
     }
 
     public function collection()
