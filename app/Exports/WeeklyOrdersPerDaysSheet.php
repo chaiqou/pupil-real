@@ -4,6 +4,8 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Illuminate\Support\Collection;
+
 
 class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle
 {
@@ -17,20 +19,18 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle
         $this->weekdayName = $weekdayName;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
-        $weekdaysCollection = collect($this->weekdayDate);
-        $mergedOneRow = $weekdaysCollection->reduce(function ($carry, $weekdayDate) {
-            // Add each weekday as an array with 3 columns
-            return array_merge($carry, [$weekdayDate, null, null]);
-        }, []);
+        $meregWeekDates = collect($this->weekdayDate)->map(function ($weekdayDate) {
+            return $weekdayDate;
+        });
 
         // Wrap merged row in a collection
-        return collect([$mergedOneRow]);
+        return  collect([$meregWeekDates]);
     }
 
     public function title(): string
     {
-        return $this->weekdayName.' '.'|'.' '.$this->weekdayDate;
+        return "{$this->weekdayName} | {$this->weekdayDate}";
     }
 }
