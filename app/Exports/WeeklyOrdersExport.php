@@ -2,10 +2,13 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class TestExport implements FromCollection
+class WeeklyOrdersExport implements FromCollection
 {
+    use Exportable;
+
     private $lunches;
 
     private $totalOrders;
@@ -23,10 +26,12 @@ class TestExport implements FromCollection
     {
         $weekdaysCollection = collect($this->weekdays);
 
-        $mappedWeekdays = $weekdaysCollection->map(function ($weekday) {
-            return [$weekday];
-        });
+        // Merge weekdays into a single row
+        $mergedOneRow = $weekdaysCollection->reduce(function ($carry, $weekday) {
+            return array_merge($carry, [$weekday]);
+        }, []);
 
-        return $mappedWeekdays;
+        // Wrap merged row in a collection
+        return collect([$mergedOneRow]);
     }
 }
