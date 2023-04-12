@@ -7,19 +7,22 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle
 {
-    protected $weekday;
+    protected $weekdayDate;
 
-    public function __construct($weekday)
+    protected $weekdayName;
+
+    public function __construct($weekdayDate, $weekdayName)
     {
-        $this->weekday = $weekday;
+        $this->weekdayDate = $weekdayDate;
+        $this->weekdayName = $weekdayName;
     }
 
     public function collection()
     {
-        $weekdaysCollection = collect($this->weekday);
-        $mergedOneRow = $weekdaysCollection->reduce(function ($carry, $weekday) {
+        $weekdaysCollection = collect($this->weekdayDate);
+        $mergedOneRow = $weekdaysCollection->reduce(function ($carry, $weekdayDate) {
             // Add each weekday as an array with 3 columns
-            return array_merge($carry, [$weekday, null, null]);
+            return array_merge($carry, [$weekdayDate, null, null]);
         }, []);
 
         // Wrap merged row in a collection
@@ -28,6 +31,6 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle
 
     public function title(): string
     {
-        return $this->weekday;
+        return $this->weekdayName.' '.'|'.' '.$this->weekdayDate;
     }
 }

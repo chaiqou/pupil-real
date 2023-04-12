@@ -23,8 +23,11 @@ class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
     {
         $sheets = [];
 
-        foreach ($this->weekdays as $weekday) {
-            $sheets[$weekday] = new WeeklyOrdersPerDaysSheet($weekday);
+        $weekdayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        foreach ($this->weekdays as $index => $weekdayDate) {
+            $weekdayName = $weekdayNames[$index];
+            $sheets[$weekdayDate] = new WeeklyOrdersPerDaysSheet($weekdayDate, $weekdayName);
         }
 
         return $sheets;
