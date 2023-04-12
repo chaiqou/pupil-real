@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
-use App\Exports\LunchOrdersExport;
-use App\Exports\WeeklyOrderSheetsExport;
-use App\Http\Controllers\Controller;
 use App\Models\Lunch;
+use Illuminate\Http\Request;
 use App\Models\PeriodicLunch;
 use App\Services\ExcelService;
-use Illuminate\Http\Request;
+use App\Exports\LunchOrdersExport;
+use App\Exports\WeeklyOrdersExport;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\WeeklyOrderSheetsExport;
 
 class MenuExportController extends Controller
 {
@@ -70,6 +71,6 @@ class MenuExportController extends Controller
         //     }
         // }
 
-        return Excel::download(new WeeklyOrderSheetsExport($weekDays), 'weekly_orders.xlsx');
+        return Excel::download(new WeeklyOrdersExport($weekDays), 'weekly_orders.xlsx');
     }
 }

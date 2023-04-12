@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class WeeklyOrderExport implements FromCollection, WithTitle
+class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle
 {
     protected $weekday;
 

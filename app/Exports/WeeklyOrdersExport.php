@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class WeeklyOrderSheetsExport implements FromCollection, WithMultipleSheets
+class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
 {
     protected $weekdays;
 
@@ -24,7 +24,7 @@ class WeeklyOrderSheetsExport implements FromCollection, WithMultipleSheets
         $sheets = [];
 
         foreach ($this->weekdays as $weekday) {
-            $sheets[$weekday] = new WeeklyOrderExport($weekday);
+            $sheets[$weekday] = new WeeklyOrdersPerDaysSheet($weekday);
         }
 
         return $sheets;
