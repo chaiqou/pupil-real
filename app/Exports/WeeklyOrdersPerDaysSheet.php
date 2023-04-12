@@ -4,12 +4,13 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
+class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles, WithCustomStartCell
 {
     protected $weekdayDate;
 
@@ -34,7 +35,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
     public function styles(Worksheet $sheet)
     {
         return [
-            1 => [
+            2 => [
                 'font' => [
                     'bold' => true, // Set the font to bold
                     'size' => 16,
@@ -46,6 +47,11 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
             ],
 
         ];
+    }
+
+    public function startCell(): string
+    {
+        return 'K2';
     }
 
     public function title(): string
