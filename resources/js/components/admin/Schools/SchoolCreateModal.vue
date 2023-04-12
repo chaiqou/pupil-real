@@ -76,9 +76,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="short_name">
-                          <p class="text-sm text-red-500">
-                            short name field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -104,9 +101,6 @@
                           name="full_name"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            full name field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -154,9 +148,6 @@
                           name="address"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -178,9 +169,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="city" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            city field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -201,9 +189,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="state" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            state field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -225,9 +210,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="zip" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -249,9 +231,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="email" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            email field is required in email format
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -276,9 +255,6 @@
                           name="contact"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -303,9 +279,6 @@
                           name="phone_number"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            phone number is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -329,9 +302,6 @@
                           name="extension"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            extension is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -355,9 +325,6 @@
                           name="mobile_number"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            mobile number is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -370,7 +337,7 @@
                       >
                       <div class="mt-1">
                         <Field
-                          rules="required|min-words-3"
+                          rules="required|minWordsThree"
                           v-model="this.school_code"
                           type="text"
                           name="school_code"
@@ -382,9 +349,6 @@
                           name="school_code"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            school code is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>

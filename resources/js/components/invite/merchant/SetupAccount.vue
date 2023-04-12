@@ -115,6 +115,7 @@ import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import {mapActions} from "pinia";
 import {useGlobalStore} from "@/stores/useGlobalStore";
 import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
+import { setLocale as setVeeValidateLocale } from "@vee-validate/i18n";
 export default {
     components: {
         ButtonForAxios,
@@ -143,6 +144,7 @@ export default {
         ...mapActions(useGlobalStore, ["setAxiosStatus", "storeLocaleInLocalStorage"]),
         setLocale() {
           this.$i18n.locale = this.language;
+          setVeeValidateLocale(this.language);
         },
         onSubmit() {
             this.setAxiosStatus("ongoing");
@@ -162,6 +164,7 @@ export default {
     mounted(){
         this.email = this.inviteEmail;
         this.language = localStorage.getItem("i18n");
+        setVeeValidateLocale(localStorage.getItem("i18n") || 'en');
     }
 }
 </script>

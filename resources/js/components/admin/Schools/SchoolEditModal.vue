@@ -387,7 +387,7 @@
                       >
                       <div class="mt-1">
                         <Field
-                          rules="required|min-words-3"
+                          rules="required|minWordsThree"
                           v-model="this.school.school_code"
                           type="text"
                           name="school_code"
