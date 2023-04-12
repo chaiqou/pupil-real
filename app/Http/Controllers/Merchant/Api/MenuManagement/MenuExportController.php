@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
 use App\Exports\LunchOrdersExport;
+use App\Exports\WeeklyOrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Lunch;
 use App\Models\PeriodicLunch;
@@ -61,12 +62,14 @@ class MenuExportController extends Controller
             $totalOrders[$lunch->id] = $lunch->periodicLunches->count();
         }
 
-        foreach ($lunches as $lunch) {
-            if ($lunch->menus->count() == 0) {
-                return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
-            } else {
-                return Excel::download(new LunchOrdersExport($lunchesWithMenus, $totalOrders), 'lunches_total.xlsx');
-            }
-        }
+        // foreach ($lunches as $lunch) {
+        //     if ($lunch->menus->count() == 0) {
+        //         return Excel::download(new LunchOrdersExport($lunches, $totalOrders), 'lunches_total.xlsx');
+        //     } else {
+        //         return Excel::download(new LunchOrdersExport($lunchesWithMenus, $totalOrders), 'lunches_total.xlsx');
+        //     }
+        // }
+
+        return Excel::download(new WeeklyOrdersExport($lunches, $totalOrders, $weekDays), 'test_name.xlsx');
     }
 }
