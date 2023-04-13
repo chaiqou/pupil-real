@@ -36,7 +36,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         $lunchData = [];
 
         // Menu information
-        $menuData = [];
+        $menuRows = [];
 
         foreach ($this->lunches as $lunch) {
             // Format date like "start_date" and "end_date" format in DB for periodic lunches
@@ -54,11 +54,9 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             // Keys should match headings values
             $lunchData[] = [
                 'Lunch Date' => $lunchDateTitle,
-                'Lunch Name' => $lunch->title,
                 'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
+                'Lunch Name' => $lunch->title,
             ];
-
-            $menuRows = []; // define an empty array to hold the rows for the menus
 
             if (isset($lunch['menus'])) {
                 foreach ($lunch['menus'] as $lunchMenu) {
@@ -71,19 +69,19 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
                                     foreach ($menuItem['menus'] as $menuName) {
                                         $menuRows[] = [
                                             'Lunch Date' => '',
-                                            'Lunch Name' => '',
                                             'Total Orders' => '',
+                                            'Lunch Name' => $lunch->title,
                                             'Menu Name' => $menuName, // Loop over 'Menu Name' array and generate separate rows
-                                            'Menu Count' => $menuItem['menu_count'], // Use 'Menu Count' value from original array
+                                            'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
                                         ];
                                     }
                                 } else {
                                     $menuRows[] = [
                                         'Lunch Date' => '',
-                                        'Lunch Name' => '',
                                         'Total Orders' => '',
+                                        'Lunch Name' => $lunch->title,
                                         'Menu Name' => $menuItem['menus'],
-                                        'Menu Count' => $menuItem['menu_count'],
+                                        'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet',
                                     ];
                                 }
                             }
@@ -102,8 +100,8 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
     {
         return [
             'Lunch Date',
-            'Lunch Name',
             'Total Orders',
+            'Lunch Name',
             'Menu Name',
             'Menu Count',
         ];
