@@ -67,13 +67,15 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
                             if ($this->weekdayDate == $menuDate) { // Add the menu row only if $this->weekdayDate matches $menuDate
                                 if (is_array($menuItem['menus'])) { // Check if 'Menu Name' value is an array
                                     foreach ($menuItem['menus'] as $menuName) {
-                                        $menuRows[] = [
-                                            'Lunch Date' => '',
-                                            'Total Orders' => '',
-                                            'Lunch Name' => $lunch->title,
-                                            'Menu Name' => $menuName, // Loop over 'Menu Name' array and generate separate rows
-                                            'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
-                                        ];
+                                        if ($menuName) {
+                                            $menuRows[] = [
+                                                'Lunch Date' => '',
+                                                'Total Orders' => '',
+                                                'Lunch Name' => $lunch->title,
+                                                'Menu Name' => $menuName, // Loop over 'Menu Name' array and generate separate rows
+                                                'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
+                                            ];
+                                        }
                                     }
                                 } else {
                                     $menuRows[] = [
