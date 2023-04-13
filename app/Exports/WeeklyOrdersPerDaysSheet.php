@@ -36,7 +36,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         $lunchData = [];
 
         // Menu information
-        $menuRows = [];
+        $menuData = [];
 
         foreach ($this->lunches as $lunch) {
             // Format date like "start_date" and "end_date" format in DB for periodic lunches
@@ -68,22 +68,24 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
                                 if (is_array($menuItem['menus'])) { // Check if 'Menu Name' value is an array
                                     foreach ($menuItem['menus'] as $menuName) {
                                         if ($menuName) {
-                                            $menuRows[] = [
+                                            $menuData[] = [
                                                 'Lunch Date' => '',
                                                 'Total Orders' => '',
                                                 'Lunch Name' => $lunch->title,
                                                 'Menu Name' => $menuName, // Loop over 'Menu Name' array and generate separate rows
                                                 'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
+                                                'Menu Type' => $menuItem['name'] ?: 'Without Type',
                                             ];
                                         }
                                     }
                                 } else {
-                                    $menuRows[] = [
+                                    $menuData[] = [
                                         'Lunch Date' => '',
                                         'Total Orders' => '',
                                         'Lunch Name' => $lunch->title,
                                         'Menu Name' => $menuItem['menus'],
                                         'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet',
+                                        'Menu Type' => $menuItem['name'] ?: 'Without Type',
                                     ];
                                 }
                             }
@@ -93,7 +95,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             }
         }
 
-        $data = array_merge($lunchData, $menuRows);
+        $data = array_merge($lunchData, $menuData);
 
         return collect($data);
     }
@@ -106,6 +108,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             'Lunch Name',
             'Menu Name',
             'Menu Count',
+            'Menu Type',
         ];
     }
 
