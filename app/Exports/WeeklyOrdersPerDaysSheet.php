@@ -32,8 +32,11 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             return "{$weekdayDate} - {$this->weekdayName}";
         })->implode(', '); // Implode the array into a string
 
-        // Total lunch information
-        $data = [];
+        // Lunch information
+        $lunchData = [];
+
+        // Menu information
+        $menuData = [];
 
         foreach ($this->lunches as $lunch) {
             // Format date like "start_date" and "end_date" format in DB for periodic lunches
@@ -49,12 +52,48 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             $totalCountPerDay = $periodicLunches->count();
 
             // Keys should match headings values
-            $data[] = [
+            $lunchData[] = [
                 'Lunch Date' => $lunchDateTitle,
                 'Lunch Name' => $lunch->title,
                 'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
             ];
+
+            $menuRows = []; // define an empty array to hold the rows for the menus
+            if (isset($lunch['menus'])) {
+                foreach ($lunch['menus'] as $lunchMenu) {
+                    $lunchMenusDecoded = json_decode($lunchMenu->menus, true);
+
+                    foreach ($lunchMenusDecoded as $menuDate => $menuItems) {
+                        foreach ($menuItems as $menuItem) {
+                            if ($this->weekdayDate == $menuDate) { // Add the menu row only if $this->weekdayDate matches $menuDate
+                                $menuRows[] = [
+                                    'Menu Name' => $menuItem['menus'],
+                                    'Menu Count' => $menuItem['menu_count'],
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (! empty($menuRows)) { // only add the rows if there are any
+                $menuData[] = []; // add an empty row for spacing
+
+                $headers = [
+                    'Menu Name',
+                    'Menu Count',
+
+                ];
+                $menuData[] = $headers; // add the headers for the menu rows
+
+                foreach ($menuRows as $menuRow) {
+                    $menuData[] = $menuRow; // add each menu row
+                }
+            }
         }
+
+        // Combine the lunch and menu data arrays
+        $data = array_merge($lunchData, $menuData);
 
         return collect($data);
     }
