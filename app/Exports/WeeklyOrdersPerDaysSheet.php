@@ -3,12 +3,14 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
+class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSize, WithHeadings
 {
     protected $weekdayDate;
 
@@ -27,13 +29,16 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
     {
         // We are calculating for each sheet specific title like "2023-04-13 - Monday"
 
-        $title = collect($this->weekdayDate)->map(function ($weekdayDate) {
+        $lunchDateTitle = collect($this->weekdayDate)->map(function ($weekdayDate) {
             return "{$weekdayDate} - {$this->weekdayName}";
-        });
+        })->implode(', '); // Implode the array into a string;
 
         // Total order count for each day
 
         $totalCountPerDay = 0;
+
+        // Total lunch information
+        $data = [];
 
         foreach ($this->lunches as $lunch) {
             // Format date like "start_date" and "end_date" format in DB for periodic lunches
@@ -47,9 +52,23 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
 
             // Increment the totalCountPerDay with the number of periodic lunches retrieved for each lunch
             $totalCountPerDay += $periodicLunches->count();
+
+            // Keys should match headings values
+            $data[] = [
+                'Lunch Date' => $lunchDateTitle,
+                'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
+            ];
         }
 
-        return collect([['totalCountPerDay' => $totalCountPerDay], $title]);
+        return collect($data);
+    }
+
+    public function headings(): array
+    {
+        return [
+            'Lunch Date',
+            'Total Orders',
+        ];
     }
 
     public function styles(Worksheet $sheet)
