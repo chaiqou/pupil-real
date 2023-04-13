@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -24,14 +23,33 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles
         $this->lunches = $lunches;
     }
 
-    public function collection(): Collection
+    public function collection()
     {
-        $meregWeekDates = collect($this->weekdayDate)->map(function ($weekdayDate) {
+        // We are calculating for each sheet specific title like "2023-04-13 - Monday"
+
+        $title = collect($this->weekdayDate)->map(function ($weekdayDate) {
             return "{$weekdayDate} - {$this->weekdayName}";
         });
 
-        // Wrap merged row in a collection
-        return  collect([$meregWeekDates]);
+        // Total order count for each day
+
+        $totalCountPerDay = 0;
+
+        foreach ($this->lunches as $lunch) {
+            // Format date like "start_date" and "end_date" format in DB for periodic lunches
+            $formattedDate = date('Y-m-d H:i:s', strtotime($this->weekdayDate));
+
+            // Based on Lunches fetch specific periodic lunches which have start and end date based formatted date
+            $periodicLunches = $lunch->periodicLunches()
+                                     ->where('start_date', '<=', $formattedDate)
+                                     ->where('end_date', '>=', $formattedDate)
+                                     ->get();
+
+            // Increment the totalCountPerDay with the number of periodic lunches retrieved for each lunch
+            $totalCountPerDay += $periodicLunches->count();
+        }
+
+        return collect([['totalCountPerDay' => $totalCountPerDay], $title]);
     }
 
     public function styles(Worksheet $sheet)
