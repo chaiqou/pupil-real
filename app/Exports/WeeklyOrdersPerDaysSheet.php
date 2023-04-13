@@ -56,6 +56,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             // Keys should match headings values
             $data[] = [
                 'Lunch Date' => $lunchDateTitle,
+                'Lunch Name' => $lunch->title,
                 'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
             ];
         }
@@ -67,6 +68,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
     {
         return [
             'Lunch Date',
+            'Lunch Name',
             'Total Orders',
         ];
     }

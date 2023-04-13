@@ -54,18 +54,11 @@ class MenuExportController extends Controller
             }
         }
 
-        // Total orders for each lunch
-
-        $totalOrders = [];
-        foreach ($lunches as $lunch) {
-            $totalOrders[$lunch->id] = $lunch->periodicLunches->count();
-        }
-
         foreach ($lunches as $lunch) {
             if ($lunch->menus->count() == 0) {
-                return Excel::download(new WeeklyOrdersExport($weekDays, $totalOrders, $lunches), 'weekly_orders.xlsx');
+                return Excel::download(new WeeklyOrdersExport($weekDays, $lunches), 'weekly_orders.xlsx');
             } else {
-                return Excel::download(new WeeklyOrdersExport($weekDays, $totalOrders, $lunchesWithMenus), 'weekly_orders.xlsx');
+                return Excel::download(new WeeklyOrdersExport($weekDays, $lunchesWithMenus), 'weekly_orders.xlsx');
             }
         }
     }
