@@ -33,7 +33,7 @@ class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
 
         foreach ($this->weekdays as $index => $weekdayDate) {
             $weekdayName = $weekdayNames[$index];
-            $sheets[$weekdayDate] = new WeeklyOrdersPerDaysSheet($weekdayDate, $weekdayName);
+            $sheets[$weekdayDate] = new WeeklyOrdersPerDaysSheet($weekdayDate, $weekdayName, $this->lunches);
         }
 
         return $sheets;
