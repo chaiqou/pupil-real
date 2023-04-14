@@ -113,14 +113,14 @@ const handleLunchesExport = async (dayAndWeek) => {
       responseType: "blob",
     });
 
-    const url = URL.createObjectURL(new Blob([data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "weekly_orders.xlsx");
+    // const url = URL.createObjectURL(new Blob([data]));
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.setAttribute("download", "weekly_orders.xlsx");
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
   } catch (error) {
     console.log(error);
   }
