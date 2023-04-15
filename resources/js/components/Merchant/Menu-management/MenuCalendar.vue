@@ -20,7 +20,7 @@
         <div class="flex">
           <div class="mt-4 grow-0 basis-1/12">
             <div v-for="(week, weekIdx) in computedWeeks" :key="weekIdx">
-              <div class="pb-0.5" v-if="month.name == week.month">
+              <div class="pb-1" v-if="month.name == week.month">
                 <div v-if="week.blank" class="invisible p-2">
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
@@ -28,7 +28,7 @@
                 </div>
                 <button
                   v-if="week.blank == false"
-                  @click="sendCorrectWeekNumber(week.days)"
+                  @click="handleLunchesExport(week.days)"
                   :disabled="week.days.length < 1"
                 >
                   <DownloadIcon
@@ -119,8 +119,6 @@ const computedWeeks = computed(() => {
     }
   });
 
-  console.log(computedWeekdays);
-
   return computedWeekdays;
 });
 
@@ -149,7 +147,7 @@ const handleLunchesExport = async (dayAndWeek) => {
 // Fetch all existing lunch for merchant and mark it on calendar
 
 onBeforeMount(() => {
-  axios.get("/api/school/lunch").then((response) => {
+  axios.get("/api/school/download-excel-lunches").then((response) => {
     lunches.value = response.data.lunches.data;
     weeks.value = response.data.weeks;
 
@@ -199,7 +197,7 @@ onBeforeMount(() => {
     });
     weeks.value = newArr;
 
-    response.data.lunches.data.map((data) => {
+    response.data.lunches.map((data) => {
       store.marked_days.push(...data.available_days);
     });
   });

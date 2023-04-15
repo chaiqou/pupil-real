@@ -147,6 +147,7 @@ Route::controller()->group(function () {
     Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
 });
 Route::apiResource('school/lunch', LunchController::class);
+Route::get('school/download-excel-lunches', [LunchController::class, 'excelLunches'])->name('schoo.excel_lunches');
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUserApi'])->name('resend-verification_api');
