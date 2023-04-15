@@ -75,6 +75,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
                                                 'Menu Name' => $menuName['menus'], // Loop over 'Menu Name' array and generate separate rows
                                                 'Menu Count' => $menuName['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
                                                 'Menu Type' => $menuItem['name'] ?: 'Without Type',
+                                                "Menu's remainder" => $totalCountPerDay - $menuName['menu_count'] ?: 'All users have already made their choices.',
                                             ];
                                         }
                                     }
@@ -109,6 +110,7 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             'Menu Name',
             'Menu Count',
             'Menu Type',
+            "Menu's remainder",
         ];
     }
 
