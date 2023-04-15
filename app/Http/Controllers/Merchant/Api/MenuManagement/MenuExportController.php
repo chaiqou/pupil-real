@@ -48,7 +48,7 @@ class MenuExportController extends Controller
                         // if menu type is choices
                         if (is_array($menu['menus'])) {
                             foreach ($menu['menus'] as $subIndex => &$subMenu) {
-                                $choicesMenuKey = "{$wholeMenu['id']}-{$wholeMenu['lunch_id']}-{$date}-{$menu['name']}-{$subIndex}";
+                                $choicesMenuKey = "{$wholeMenu['id']}-{$wholeMenu['lunch_id']}-{$date}-{$subMenu}-{$subIndex}";
                                 $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$choicesMenuKey.'%')->count();
                                 $subMenu = [
                                     'menus' => $subMenu,

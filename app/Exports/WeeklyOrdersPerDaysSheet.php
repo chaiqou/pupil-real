@@ -72,8 +72,8 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
                                                 'Lunch Date' => '',
                                                 'Total Orders' => '',
                                                 'Lunch Name' => $lunch->title,
-                                                'Menu Name' => $menuItem['menus'][0]['menus'], // Loop over 'Menu Name' array and generate separate rows
-                                                'Menu Count' => $menuItem['menus'][0]['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
+                                                'Menu Name' => $menuName['menus'], // Loop over 'Menu Name' array and generate separate rows
+                                                'Menu Count' => $menuName['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
                                                 'Menu Type' => $menuItem['name'] ?: 'Without Type',
                                             ];
                                         }
