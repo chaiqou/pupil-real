@@ -65,7 +65,6 @@ class MenuExportController extends Controller
 
                 // Update the original "Menus" json with the modified array
                 $wholeMenu->menus = json_encode($menuArray);
-                $wholeMenu->save();
             }
         }
 
