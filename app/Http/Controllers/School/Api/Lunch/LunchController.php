@@ -44,8 +44,10 @@ class LunchController extends Controller
         }
 
         $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($lunches);
+        $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks]);
+
+        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function store(LunchRequest $request): JsonResponse
