@@ -138,16 +138,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('merchant/request-export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
 });
 
-Route::controller()->group(function () {
-    Route::get('{public_key}/verify', [TerminalController::class, 'getSignature'])->name('get.signature');
-    Route::post('{public_key}/verify', [TerminalController::class, 'verifySignature'])->name('verify.signature');
-    Route::get('lunch/retrieve', [LunchController::class, 'retrieveLunch'])->name('lunch.retrieve');
-    Route::post('lunch/claim', [LunchController::class, 'claimLunch'])->name('lunch.claim');
-    Route::get('lunch/students/retrieve', [LunchController::class, 'retrieveStudents'])->name('lunch.students.retrieve');
-    Route::get('lunch/suitable-lunch/date', [LunchController::class, 'suitableLunchForDate'])->name('lunch.suitable_date');
+Route::controller(TerminalController::class)->group(function () {
+    Route::get('{public_key}/verify', 'getSignature')->name('get.signature');
+    Route::post('{public_key}/verify', 'verifySignature')->name('verify.signature');
 });
+
+Route::controller(LunchController::class)->group(function () {
+    Route::get('lunch/retrieve', 'retrieveLunch')->name('lunch.retrieve');
+    Route::post('lunch/claim', 'claimLunch')->name('lunch.claim');
+    Route::get('lunch/students/retrieve', 'retrieveStudents')->name('lunch.students.retrieve');
+    Route::get('lunch/suitable-lunch/date', 'suitableLunchForDate')->name('lunch.suitable_date');
+    Route::get('school/download-excel-lunches', 'excelLunches')->name('schoo.excel_lunches');
+});
+
 Route::apiResource('school/lunch', LunchController::class);
-Route::get('school/download-excel-lunches', [LunchController::class, 'excelLunches'])->name('schoo.excel_lunches');
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUserApi'])->name('resend-verification_api');
