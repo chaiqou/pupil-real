@@ -51,7 +51,7 @@ class InviteController extends Controller
         return view('invite.merchant.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ]);
     }
 
@@ -59,9 +59,10 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
+
         return view('invite.merchant.personal-form', [
             'uniqueID' => request()->uniqueID,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -69,9 +70,10 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
+
         return view('invite.merchant.company-details', [
             'uniqueID' => request()->uniqueID,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -79,9 +81,10 @@ class InviteController extends Controller
     {
         $invite = Invite::where('uniqueID', request()->uniqueID)->first();
         $user = User::where('email', $invite->email)->first();
+
         return view('invite.merchant.setup-stripe', [
             'uniqueID' => request()->uniqueID,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -103,7 +106,7 @@ class InviteController extends Controller
 
             return view('invite.merchant.billingo-verify', [
                 'uniqueID' => request()->uniqueID,
-                'user' => $user
+                'user' => $user,
             ]);
         } else {
             return redirect()->back()->withErrors('You dont have an active stripe subscription, so you have to setup it first.');
@@ -122,7 +125,7 @@ class InviteController extends Controller
         return view('invite.merchant.verify-email', [
             'uniqueID' => request()->uniqueID,
             'email' => $invite->email,
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

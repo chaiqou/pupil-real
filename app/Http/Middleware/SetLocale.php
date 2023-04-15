@@ -16,15 +16,13 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session()->get('locale') !== null)
-        {
+        if (session()->get('locale') !== null) {
             app()->setLocale(session()->get('locale'));
-        }
-        else
-        {
+        } else {
             session()->put('locale', 'en');
             app()->setLocale(session()->get('locale'));
         }
+
         return $next($request);
     }
 }

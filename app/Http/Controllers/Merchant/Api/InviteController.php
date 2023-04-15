@@ -11,12 +11,9 @@ use App\Models\Merchant;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\View\View;
 
 class InviteController extends Controller
 {
@@ -31,11 +28,11 @@ class InviteController extends Controller
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'language' => $request->language
+            'language' => $request->language,
         ]) : $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'language' => $request->language
+            'language' => $request->language,
         ])->assignRole('school');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,
@@ -43,6 +40,7 @@ class InviteController extends Controller
         ]);
 
         $url = route('merchant-personal.form', ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 
@@ -66,6 +64,7 @@ class InviteController extends Controller
         $invite->update(['state' => 4]);
 
         $url = route('merchant-company.details', ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 
@@ -164,6 +163,7 @@ class InviteController extends Controller
         ]);
         $invite->update(['state' => 5]);
         $url = route('merchant-setup.stripe', ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 
@@ -173,7 +173,7 @@ class InviteController extends Controller
         $user = User::where('email', $invite->email)->first();
         $merchant = Merchant::where('user_id', $user->id)->first();
         $refresh_url = route('merchant-setup.stripe', ['uniqueID' => $invite->uniqueID]);
-        $return_url = route('merchant-billingo.verify', ['uniqueID' => $invite->uniqueID]);;
+        $return_url = route('merchant-billingo.verify', ['uniqueID' => $invite->uniqueID]);
         try {
             $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
             $stripeAccountLink = $stripe->accountLinks->create([
@@ -213,8 +213,9 @@ class InviteController extends Controller
             $invite->delete();
 
             return response()->json(['url' => route('default')]);
-           // return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
+            // return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
+
         return response()->json(['message' => 'These credentials do not match our records.'], 404);
     }
 }

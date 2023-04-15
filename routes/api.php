@@ -12,12 +12,12 @@ use App\Http\Controllers\LanguageController as ApiLanguageController;
 use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
+use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
 use App\Http\Controllers\Parent\Api\SettingController as ParentSettingController;
 use App\Http\Controllers\Parent\Api\StudentController as ParentStudentController;
 use App\Http\Controllers\Parent\Api\TransactionController as ParentTransactionController;
-use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\StripeCheckoutController;
 use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('choice-claims', [MenuManagementController::class, 'updateChoiceMenuClaims'])->name('parent.update_chpice_menu_claims');
             Route::controller(ParentSettingController::class)->group(function () {
                 Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
-                Route::post('update-student','updateStudent')->name('parent.update-student_api');
+                Route::post('update-student', 'updateStudent')->name('parent.update-student_api');
             });
         });
     });
@@ -175,6 +175,6 @@ Route::middleware(['guest'])->group(function () {
     Route::controller(BillingoController::class)->group(function () {
         Route::post('/merchant-billingo-verify/{uniqueID}', 'submitBillingoVerify')->name('merchant-billingo-verify_submit');
     });
-    });
+});
 
 Route::get('{user}/set-language/{locale}', [ApiLanguageController::class, 'setLocale'])->name('set-language');
