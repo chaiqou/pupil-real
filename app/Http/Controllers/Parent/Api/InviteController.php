@@ -73,7 +73,7 @@ class InviteController extends Controller
                 'email' => $user->email,
                 'name' => $user->last_name.' '.$user->first_name.' '.$user->middle_name,
             ]);
-        } catch(\Stripe\Exception\CardException $e) {
+        } catch (\Stripe\Exception\CardException $e) {
             return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             return response()->json('An invalid request occurred.');
@@ -109,7 +109,7 @@ class InviteController extends Controller
                     'success_url' => $success_url,
                     'cancel_url' => $cancel_url,
                 ]);
-            } catch(\Stripe\Exception\CardException $e) {
+            } catch (\Stripe\Exception\CardException $e) {
                 return response()->json("A payment error occurred: {$e->getError()->message}");
             } catch (\Stripe\Exception\InvalidRequestException $e) {
                 return response()->json('An invalid request occurred.');

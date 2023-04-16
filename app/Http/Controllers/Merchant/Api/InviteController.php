@@ -149,7 +149,7 @@ class InviteController extends Controller
                     ],
                 ]);
             }
-        } catch(\Stripe\Exception\CardException $e) {
+        } catch (\Stripe\Exception\CardException $e) {
             return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             return response()->json('An invalid request occurred.');
@@ -182,7 +182,7 @@ class InviteController extends Controller
                 'return_url' => $return_url,
                 'type' => 'account_onboarding',
             ]);
-        } catch(\Stripe\Exception\CardException $e) {
+        } catch (\Stripe\Exception\CardException $e) {
             return response()->json("A payment error occurred: {$e->getError()->message}");
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             return response()->json('An invalid request occurred.');

@@ -227,9 +227,9 @@ class StripeCheckoutController extends Controller
             $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
             return view('parent.success', compact('customer', 'order'));
-        } catch(NotFoundHttpException $exception) {
+        } catch (NotFoundHttpException $exception) {
             throw $exception;
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             return view('parent.cancel', compact('order'));
         }
     }
@@ -281,10 +281,10 @@ class StripeCheckoutController extends Controller
             $event = Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
             );
-        } catch(UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             http_response_code(401);
             exit();
-        } catch(SignatureVerificationException $e) {
+        } catch (SignatureVerificationException $e) {
             http_response_code(402);
             exit();
         }
