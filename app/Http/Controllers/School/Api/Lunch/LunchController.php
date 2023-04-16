@@ -44,8 +44,9 @@ class LunchController extends Controller
         }
 
         $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($lunches);
+        $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks]);
+        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function store(LunchRequest $request): JsonResponse
@@ -99,6 +100,35 @@ class LunchController extends Controller
         $lunches = Lunch::where('merchant_id', auth()->user()->id)->paginate(9);
 
         return LunchResource::collection($lunches);
+    }
+
+    public function excelLunches(): JsonResponse
+    {
+        $student = Student::where('school_id', auth()->user()->school_id)->first();
+        $merchants = Merchant::where('school_id', $student->school_id)->get();
+        $lunches = []; // Declare and initialize the variable $lunches as an empty array
+        foreach ($merchants as $merchant) {
+            $lunches = Lunch::where('merchant_id', $merchant->id)->get();
+
+            // Extract "active_range" values from lunches and compare for duplicates
+            $activeRanges = [];
+
+            $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
+                $activeRange = $lunch->active_range;
+                if (! in_array($activeRange, $activeRanges)) {
+                    $activeRanges[] = $activeRange;
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($filteredLunches);
+        $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
+
+        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function retrieveStudents(StudentListRequest $request)

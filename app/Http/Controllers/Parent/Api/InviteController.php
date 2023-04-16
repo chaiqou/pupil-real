@@ -11,10 +11,8 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
 class InviteController extends Controller
@@ -30,18 +28,19 @@ class InviteController extends Controller
         isset($foundUser) ? $foundUser->update([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'language' => $request->language
+            'language' => $request->language,
         ]) : $user = User::create([
             'email' => $request->email,
             'school_id' => $invite->school_id,
             'password' => bcrypt($request->password),
-            'language' => $request->language
+            'language' => $request->language,
         ])->assignRole('parent');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,
         ]);
         $url = route('parent-personal.form', ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 
@@ -89,6 +88,7 @@ class InviteController extends Controller
         $invite->update(['state' => 4]);
 
         $url = route('parent-setup.cards', ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 
@@ -125,15 +125,15 @@ class InviteController extends Controller
 
             return response()->json(['url' => $stripeCreateSessionRequest->url]);
         } if ($request->user_response === 'dont_save_card') {
-        $invite->update(['state' => 5]);
+            $invite->update(['state' => 5]);
 
-        return $user->sendVerificationEmailApi('parent-verify.email');
-    } else {
-        $invite->update(['state' => 5]);
-    }
+            return $user->sendVerificationEmailApi('parent-verify.email');
+        } else {
+            $invite->update(['state' => 5]);
+        }
+
         return response()->json(['message' => 'Please select your answer'], 404);
     }
-
 
     public function submitVerifyEmail(VerificationCodeRequest $request): JsonResponse
     {
@@ -150,6 +150,7 @@ class InviteController extends Controller
             BillingoController::createParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
             $url = route('default');
+
             return response()->json(['url' => $url]);
             // return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
