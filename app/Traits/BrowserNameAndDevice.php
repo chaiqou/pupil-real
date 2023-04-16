@@ -13,6 +13,6 @@ trait BrowserNameAndDevice
 
     public function getDeviceName(): string
     {
-        return  BrowserDetect::deviceFamily().' '.BrowserDetect::deviceModel();
+        return BrowserDetect::deviceFamily().' '.BrowserDetect::deviceModel();
     }
 }
