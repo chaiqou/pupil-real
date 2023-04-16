@@ -10,7 +10,7 @@ use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class MenuExportController extends Controller
+class TotalOrdersExcelController extends Controller
 {
     protected $excelService;
 
@@ -19,7 +19,7 @@ class MenuExportController extends Controller
         $this->excelService = $excelService;
     }
 
-    public function exportMenu(Request $request)
+    public function totalOrdersExcel(Request $request)
     {
         $dayAndWeekJson = $request->query('dayAndWeek');
         $dayAndWeek = json_decode($dayAndWeekJson);

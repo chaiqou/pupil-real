@@ -10,7 +10,7 @@ use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LanguageController as ApiLanguageController;
 use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
-use App\Http\Controllers\Merchant\Api\MenuManagement\MenuExportController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\TotalOrdersExcelController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
 use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
@@ -27,17 +27,6 @@ use App\Http\Controllers\School\Api\StudentController as SchoolStudentController
 use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
@@ -135,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Here should be defended routes
     Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
-    Route::get('merchant/request-export-menu', [MenuExportController::class, 'exportMenu'])->name('merchant.export_menu');
+    Route::get('merchant/request-export-menu', [TotalOrdersExcelController::class, 'totalOrdersExcel'])->name('merchant.export_total_orders');
 });
 
 Route::controller(TerminalController::class)->group(function () {
@@ -157,24 +146,16 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/resend-onboarding-verification/{uniqueID}', [TwoFactorAuthenticationController::class, 'resendForOnboardingUserApi'])->name('resend-verification_api');
     Route::controller(ApiParentInviteController::class)->group(function () {
         Route::post('/parent-setup-account/{uniqueID}', 'submitSetupAccount')->name('parent-setup.account_submit');
-
         Route::post('/parent-personal-form/{uniqueID}', 'submitPersonalForm')->name('parent-personal.form_submit');
-
         Route::post('/parent-setup-cards/{uniqueID}', 'submitSetupCards')->name('parent-setup.cards_submit');
-
         Route::post('/parent-verify-email/{uniqueID}', 'submitVerifyEmail')->name('parent-verify.email_submit');
     });
     Route::controller(ApiMerchantInviteController::class)->group(function () {
         Route::post('/merchant-setup-account/{uniqueID}', 'submitSetupAccount')->name('merchant-setup.account_submit');
-
         Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
-
         Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
-
         Route::get('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
-
         Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
-
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
     });
     Route::controller(BillingoController::class)->group(function () {
