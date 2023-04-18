@@ -4,11 +4,10 @@
       <div class="flex items-end justify-between sm:flex-auto">
         <div>
           <h1 class="text-xl font-semibold text-gray-900">
-            All Merchants belonging to school #{{ this.school.short_name }}
+              {{$t('message.all_merchants_belonging_to_school')}} #{{ this.school.short_name }}
           </h1>
           <p class="mt-2 text-sm text-gray-700">
-            A list of all the merchants including their nick, legal name and
-            details.
+         {{$t('message.a_list_of_all_the_merchants_including_their_nick_legal_name_and_details')}}.
           </p>
         </div>
         <span
@@ -31,7 +30,7 @@
           <a
             :href="'/admin/school/' + this.school.id + '/merchant-invites'"
             class="ml-1.5"
-            >Manage invites</a
+            > {{ $t('message.manage_invites') }}</a
           >
         </span>
       </div>

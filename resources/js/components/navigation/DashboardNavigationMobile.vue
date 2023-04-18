@@ -52,7 +52,7 @@
                 <div class="mr-3 w-5">
                   <component :is="item.icon"></component>
                 </div>
-                {{ item.name }}
+                  {{ $t('message.'+item.name) }}
               </a>
             </span>
           </nav>
@@ -238,7 +238,7 @@ export default {
           cleanedCurrent
             .toLowerCase()
             .replaceAll(" ", ".")
-            .replaceAll("-", "."),
+            .replaceAll("-", ".")
       );
       navigation.current = true;
 

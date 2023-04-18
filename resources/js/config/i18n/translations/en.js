@@ -55,8 +55,86 @@ const en = {
         setup_card: "Setup card",
         setup_your_card: "Setup your card",
         save_card_for_faster_checkout: "Save card for faster checkout",
-        dont_save_card: "Don't save card"
-
+        dont_save_card: "Don't save card",
+        settings: "Settings",
+        change_language: "Change language",
+        dashboard: "Dashboard",
+        students: "Students",
+        schools: "Schools",
+        all_schools: "All Schools",
+        a_list_of_all_the_schools_including_short_full_long_name_details_and_school_code:
+        "A list of all the schools including short/full/long name, details and school code",
+        create_new_school: "Create new School",
+        short_name: "Short name",
+        full_name: "Full name",
+        long_name: "Long name",
+        details: "Details",
+        school_code: "School code",
+        edit: "Edit",
+        merchants: "Merchants",
+        extension: "Extension",
+        mobile_number: "Mobile number",
+        contact_person: "Contact person",
+        phone_number: "Phone number",
+        all_merchant_invites_belonging_to_school:
+        "All Merchant Invites belonging to school",
+        a_list_of_all_merchant_invites_including_their_email_invite_state_and_send_date_update_date:
+        "A list of all merchant invites including their email, invite state and send date/update date",
+        email: "Email",
+        state: "State",
+        send_date: "Send date",
+        update_date: "Update date",
+        invite_merchants: "Invite merchants",
+        this_school_does_not_have_any_merchants_invited_invite_some_to_get_started:
+        "This school does not have any merchants invited, invite some to get started",
+        this_school_does_not_have_any_parents_invited_invite_some_to_get_started:
+            "This school does not have any parents invited, invite some to get started",
+        actions: "Actions",
+        all_invites: "All Invites",
+        a_list_of_all_parent_invites_including_their_email_invite_state_school_code_and__send_date_update_date:
+            "A list of all parent invites including their email, invite state, school code and send date/update date",
+        invite_people: "Invite People",
+        select_school: "Select school",
+        select_one: "Select one",
+        invite_users_by_their_email_addresses:
+        "Invite users by their email addresses",
+        email_addresses: "Email addresses",
+        be_careful: "Be careful",
+        dont_send_invite_to_wrong_email:
+        "dont send invite to wrong email",
+        sending_invites_to: "Sending invites to",
+        send: "Send",
+        sending: "Sending",
+        sent: "Sent",
+        failed: "Failed",
+        please_wait_we_are_sending_invites:
+        "Please wait, we are sending invites",
+        invites_send_successfully:
+        "Invites send successfully",
+        could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support:
+        "Could not send invites at the moment, please try again later, or text to support",
+        this_school_does_not_have_any_merchants:
+        "This school does not have any merchants",
+        check_invites_if_they_havent_onboarding_yet:
+        "check invites if they haven't onboarding yet",
+        all_merchants_belonging_to_school:
+        "All merchants belonging to school",
+        a_list_of_all_the_merchants_including_their_nick_legal_name_and_details:
+        "A list of all the merchants including their nick, legal name and details",
+        nickname: "Nickname",
+        activated: "Activated",
+        manage_invites: "Manage invites",
+        a_list_of_all_the_merchant_invites_including_their_email_invite_state_and_send_date_update_date:
+        "A list of all merchant invites including their email, invite state and send date/update date",
+        delete: "Delete",
+        card_number: "Card number",
+        parent_email: "Parent email",
+        no_students_available: "No students available",
+        user_information: "User information",
+        balances: "Balances",
+        parent: "Parent",
+        switch_student: "Switch student",
+        log_out: "Log out"
     },
 };
 

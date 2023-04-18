@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('schools', 'admin')->name('admin.schools');
                 Route::get('school/{school_id}/merchants', 'admin')->name('admin.merchants');
                 Route::get('/school/{school_id}/merchant-invites', 'admin')->name('admin.merchant-invites');
+                Route::get('settings', 'admin')->name('admin.settings');
             });
         });
     });

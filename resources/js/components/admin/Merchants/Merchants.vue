@@ -17,25 +17,25 @@
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Nickname
+              {{ $t('message.nickname') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Company legal name
+              {{ $t('message.company_legal_name') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Details
+              {{ $t('message.details') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Activated
+              {{ $t('message.activated') }}
           </th>
           <th
             scope="col"
@@ -86,7 +86,7 @@
               "
                         class="pr-6 text-indigo-600 hover:text-indigo-900"
                     >
-                        Edit
+                        {{ $t('message.edit') }}
                     </button>
                 </td>
             </tr>

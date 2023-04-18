@@ -55,7 +55,7 @@
                 </button>
               </div>
               <div class="absolute top-0 left-0 hidden pt-4 pl-4 sm:block">
-                <p>Invite merchant by email address.</p>
+                <p>{{$t('message.invite_merchant_by_email_address')}}.</p>
               </div>
               <div class="mt-10">
                 <ValidationForm @submit="onSubmit">
@@ -63,12 +63,12 @@
                     <label
                       class="text-md flex whitespace-normal font-bold text-gray-600"
                       for="email"
-                      >Email</label
+                      >{{$t('message.email')}}</label
                     >
                     <Field
                       name="email"
                       v-model="email"
-                      placeholder="email"
+                      :placeholder="$t('message.email')"
                       type="text"
                       rules="email"
                       autocomplete="email"
@@ -78,9 +78,18 @@
                     <ErrorMessage name="email" class="mt-2 text-red-500">
                     </ErrorMessage>
 
-                    <p class="mt-1 text-sm text-red-500">
-                      {{ this.backResponse }}
-                    </p>
+                      <p
+                          v-if="this.isSent"
+                          :class="
+        this.isSuccessfullySent === 'no'
+          ? 'text-red-500'
+          : this.isSuccessfullySent === 'pending'
+          ? 'text-yellow-500'
+          : 'text-green-500'
+      "
+                      >
+                          {{ $t('message.'+axiosResponseGenerator) }}.
+                      </p>
 
                     <button
                       :disabled="disabledCalculator"
@@ -111,7 +120,7 @@
                         v-if="this.isSuccessfullySent === 'yes'"
                         class="mr-2 inline h-6 w-6"
                       ></CheckIcon>
-                      {{ buttonTextGenerator }}
+                      {{ $t('message.'+buttonTextGenerator) }}
                     </button>
                   </div>
                 </ValidationForm>
@@ -173,12 +182,12 @@ export default {
     ...mapWritableState(useInviteStore, ["invites"]),
     buttonTextGenerator() {
       return this.isSuccessfullySent === "pending"
-        ? "Sending..."
+        ? "sending"
         : this.isSuccessfullySent === "yes"
-        ? "Sent"
+        ? "sent"
         : this.isSuccessfullySent === "no"
-        ? "Failed"
-        : "Send";
+        ? "failed"
+        : "send";
     },
     disabledCalculator() {
       if (this.isSent === true) {
@@ -189,12 +198,12 @@ export default {
     axiosResponseGenerator() {
       const text = this.isSuccessfullySent;
       if (text === "pending") {
-        return "Please wait, we are sending invites.";
+        return "please_wait_we_are_sending_invites";
       }
       else if (text === "yes") {
-        return "Invites send successfully!";
+        return "invites_send_successfully";
       }
-      else return "Could not send invites at the moment, please try again later, or text to support.";
+      else return "could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support";
 
     },
   },

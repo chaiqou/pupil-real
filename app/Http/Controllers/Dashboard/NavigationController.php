@@ -117,14 +117,16 @@ class NavigationController extends Controller
         $students = $user->students->all();
         if ($user->hasRole('admin')) {
             $role = 'admin';
+            // use lower case characters into the name, because in DashboardNavigation vue we use translates (localization)
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
-                    ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/admin/students', 'current' => false],
-                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
-                    ['name' => 'Schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false],
-                    ['name' => 'Merchants', 'icon' => 'nothing', 'href' => '/admin/school/{school_id}/merchants', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
-                    ['name' => 'Merchant Invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'Schools'],
+                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
+                    ['name' => 'students', 'icon' => 'UsersIcon', 'href' => '/admin/students', 'current' => false],
+                    ['name' => 'invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'students'],
+                    ['name' => 'schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false],
+                    ['name' => 'merchants', 'icon' => 'nothing', 'href' => '/admin/school/{school_id}/merchants', 'current' => false, 'hidden' => true, 'parentPage' => 'schools'],
+                    ['name' => 'merchant invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'schools'],
+                    ['name' => 'settings', 'icon' => 'Cog8ToothIcon', 'href' => '/admin/settings', 'current' => false],
                 ];
         }
         $currentTab = request()->route()->getName();

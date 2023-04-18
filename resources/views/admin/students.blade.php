@@ -4,8 +4,8 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto flex items-end justify-between">
                <div>
-                   <h1 class="text-xl font-semibold text-gray-900">All Students</h1>
-                   <p class="mt-2 text-sm text-gray-700">A list of all the students of all the schools including their name, transaction amount/type/date and merchant nickname.</p>
+                   <h1 class="text-xl font-semibold text-gray-900">{{__('all_students')}}</h1>
+                   <p class="mt-2 text-sm text-gray-700">{{__('a_list_of_all_the_students_of_all_the_schools_including_their_name_transaction_amount_type_date_and_merchant_nickname')}}.</p>
                </div>
                 <div>
                     <a href="{{route('admin.invite')}}" class="hidden md:flex bg-blue-600 hover:bg-blue-700 w-fit rounded-md text-white px-4 py-2 items-center">
@@ -14,7 +14,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                             </svg>
                         </div>
-                        <p class="ml-1.5">Manage invites</p>
+                        <p class="ml-1.5">{{__('manage_invites')}}</p>
                     </a>
                 </div>
             </div>

@@ -55,7 +55,87 @@ const hu = {
         setup_card: "Setup card HU",
         setup_your_card: "Setup your card HU",
         save_card_for_faster_checkout: "Save card for faster checkout HU",
-        dont_save_card: "Don't save card HU"
+        dont_save_card: "Don't save card HU",
+        settings: "Settings HU",
+        change_language: "Change language HU",
+        dashboard: "Dashboard HU",
+        students: "Students HU",
+        schools: "Schools HU",
+        all_schools: "All Schools HU",
+        a_list_of_all_the_schools_including_short_full_long_name_details_and_school_code:
+            "A list of all the schools including short/full/long name, details and school code HU",
+        create_new_school: "Create new School HU",
+        short_name: "Short name HU",
+        full_name: "Full name HU",
+        long_name: "Long name HU",
+        details: "Details HU",
+        school_code: "School code HU",
+        edit: "Edit HU",
+        merchants: "Merchants HU",
+        extension: "Extension HU",
+        mobile_number: "Mobile number HU",
+        contact_person: "Contact person HU",
+        phone_number: "Phone number HU",
+        all_merchant_invites_belonging_to_school:
+            "All Merchant Invites belonging to school HU",
+        a_list_of_all_merchant_invites_including_their_email_invite_state_and_send_date_update_date:
+            "A list of all merchant invites including their email, invite state and send date/update date HU",
+        email: "Email HU",
+        state: "State HU",
+        send_date: "Send date HU",
+        update_date: "Update date HU",
+        invite_merchants: "Invite merchants HU",
+        this_school_does_not_have_any_merchants_invited_invite_some_to_get_started:
+            "This school does not have any merchants invited, invite some to get started HU",
+        this_school_does_not_have_any_parents_invited_invite_some_to_get_started:
+            "This school does not have any parents invited, invite some to get started HU",
+        actions: "Actions HU",
+        all_invites: "All Invites HU",
+        a_list_of_all_parent_invites_including_their_email_invite_state_school_code_and__send_date_update_date:
+            "A list of all parent invites including their email, invite state, school code and send date/update date HU",
+        invite_people: "Invite People HU",
+        select_school: "Select school HU",
+        select_one: "Select one HU",
+        invite_users_by_their_email_addresses:
+            "Invite users by their email addresses HU",
+        email_addresses: "Email addresses HU",
+        be_careful: "Be careful HU",
+        dont_send_invite_to_wrong_email:
+            "dont send invite to wrong email HU",
+        sending_invites_to: "Sending invites to HU",
+        send: "Send HU",
+        sending: "Sending HU",
+        sent: "Sent HU",
+        failed: "Failed HU",
+        please_wait_we_are_sending_invites:
+            "Please wait, we are sending invites HU",
+        invites_send_successfully:
+            "Invites send successfully HU",
+        could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support:
+            "Could not send invites at the moment, please try again later, or text to support HU",
+        this_school_does_not_have_any_merchants:
+            "This school does not have any merchants HU",
+        check_invites_if_they_havent_onboarding_yet:
+            "check invites if they haven't onboarding yet HU",
+        all_merchants_belonging_to_school:
+            "All merchants belonging to school HU",
+        a_list_of_all_the_merchants_including_their_nick_legal_name_and_details:
+            "A list of all the merchants including their nick, legal name and details HU",
+        nickname: "Nickname HU",
+        activated: "Activated HU",
+        manage_invites: "Manage invites HU",
+        a_list_of_all_the_merchant_invites_including_their_email_invite_state_and_send_date_update_date:
+            "A list of all merchant invites including their email, invite state and send date/update date HU",
+        invite_merchant_by_email_address: "Invite merchant by email address HU",
+        delete: "Delete HU",
+        card_number: "Card number HU",
+        parent_email: "Parent email HU",
+        no_students_available: "No students available HU",
+        user_information: "User information HU",
+        balances: "Balances HU",
+        parent: "Parent HU",
+        switch_student: "Switch student HU",
+        log_out: "Log out HU",
     },
 };
 

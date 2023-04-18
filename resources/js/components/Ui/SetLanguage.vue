@@ -14,8 +14,8 @@ export default {
       ...mapWritableState(useGlobalStore, ["language"])
     },
     props: {
-        user: {
-            type: Object,
+        userId: {
+            type: String,
             required: true
         }
     },
@@ -27,7 +27,7 @@ export default {
             this.handleChangeLanguageRequest();
         },
        handleChangeLanguageRequest() {
-        axios.get(`/api/${this.user.id}/set-language/${this.language}`)
+        axios.get(`/api/${this.userId}/set-language/${this.language}`)
             .then((res) => {
                 console.log(res.data);
             })

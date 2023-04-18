@@ -15,7 +15,7 @@
         <!-- Do not render set-language component -->
     @else
         <div class="absolute top-0 right-0 mt-3 mr-4">
-            <set-language :user="{{json_encode($user)}}"></set-language>
+            <set-language :user-id="{{json_encode($user->id)}}"></set-language>
         </div>
     @endif
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

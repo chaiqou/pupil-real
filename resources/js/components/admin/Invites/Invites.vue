@@ -17,31 +17,31 @@
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
           >
-            Email
+              {{$t('message.email')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            State
+              {{$t('message.state')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            School Code
+              {{$t('message.school_code')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Send date
+              {{$t('message.send_date')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Update date
+              {{$t('message.update_date')}}
           </th>
           <th
             scope="col"
@@ -54,7 +54,7 @@
       <tbody class="divide-y divide-gray-200 bg-white">
         <tr v-if="this.isInvitesLoaded && !this.invites.length">
           <td class="bg-white" colspan="7">
-            <InvitesNotFound role="school"></InvitesNotFound>
+            <InvitesNotFound invite="parent"></InvitesNotFound>
           </td>
         </tr>
        <template v-if="this.isInvitesLoaded && this.invites.length">
@@ -93,9 +93,9 @@
                    <button class="text-indigo-600 hover:text-indigo-900">
                        <dropdown-animated
                            role="admin"
-                           :items="['Delete']"
+                           :items="['delete']"
                            :invite-id="invite.id"
-                       >Actions</dropdown-animated
+                       >    {{$t('message.actions')}}</dropdown-animated
                        >
                    </button>
                </td>

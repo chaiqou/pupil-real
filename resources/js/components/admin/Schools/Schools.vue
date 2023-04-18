@@ -17,31 +17,31 @@
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Short name
+              {{ $t('message.short_name') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Full name
+              {{ $t('message.full_name') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Long name
+              {{ $t('message.long_name') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Details
+              {{ $t('message.details') }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            School code
+              {{ $t('message.school_code') }}
           </th>
           <th
             scope="col"
@@ -106,7 +106,7 @@
               "
                         class="text-indigo-600 hover:text-indigo-900"
                     >
-                        Edit
+                        {{ $t('message.edit') }}
                     </button>
                 </td>
                 <td
@@ -116,7 +116,7 @@
                         :href="'/admin/school/' + school.id + '/merchants'"
                         class="rounded-md bg-blue-600 px-2 py-1.5 text-white hover:bg-blue-700 hover:text-gray-100"
                     >
-                        Merchants
+                        {{ $t('message.merchants') }}
                     </a>
                 </td>
             </tr>
