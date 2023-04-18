@@ -7,25 +7,9 @@ use Illuminate\Console\Command;
 
 class ChangePassword extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'dash:password';
+    protected $signature = 'user:change-password';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Change password of an already registered user';
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $email = $this->ask('What is the email of the user?');
