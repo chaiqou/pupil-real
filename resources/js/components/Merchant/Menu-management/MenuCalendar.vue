@@ -20,8 +20,17 @@
         <div class="flex">
           <div class="mt-4 grow-0 basis-1/12">
             <div v-for="(week, weekIdx) in computedWeeks" :key="weekIdx">
-              <div class="pb-2" v-if="month.name == week.month">
-                <button @click="handleLunchesExport(week.days)">
+              <div class="pb-1" v-if="month.name == week.month">
+                <div v-if="week.blank" class="invisible p-2">
+                  <DownloadIcon
+                    class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
+                  />
+                </div>
+                <button
+                  v-if="week.blank == false"
+                  @click="handleLunchesExport(week.days)"
+                  :disabled="week.days.length < 1"
+                >
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
                   />
@@ -97,7 +106,16 @@ const computedWeeks = computed(() => {
         parseISO(week[key][0].date).getMonth() + 1,
       );
 
-      computedWeekdays.push({ month: monthName, days: week[key] });
+      let blankState = week[key][0].blank;
+      if (blankState == null) {
+        blankState = false;
+      }
+
+      computedWeekdays.push({
+        month: monthName,
+        days: week[key],
+        blank: blankState,
+      });
     }
   });
 
@@ -116,7 +134,7 @@ const handleLunchesExport = async (dayAndWeek) => {
     const url = URL.createObjectURL(new Blob([data]));
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "lunches_total.xlsx");
+    link.setAttribute("download", "weekly_orders.xlsx");
 
     document.body.appendChild(link);
     link.click();
@@ -129,10 +147,57 @@ const handleLunchesExport = async (dayAndWeek) => {
 // Fetch all existing lunch for merchant and mark it on calendar
 
 onBeforeMount(() => {
-  axios.get("/api/school/lunch").then((response) => {
+  axios.get("/api/school/download-excel-lunches").then((response) => {
     lunches.value = response.data.lunches.data;
     weeks.value = response.data.weeks;
-    response.data.lunches.data.map((data) => {
+
+    let first = response.data.first_week;
+    let last = parseInt(
+      Object.keys(response.data.weeks.slice(-1)[0]).slice(-1),
+    );
+    let unsortedArr = weeks.value;
+    let newArr = [];
+    //Pop the parent elements, combine childs
+    for (var i = 0; i < unsortedArr.length; i++) {
+      let parent = unsortedArr[i];
+      for (var j = 0; j < Object.keys(parent).length; j++) {
+        let child = parent[Object.keys(parent)[j]];
+        newArr.push({ [Object.keys(parent)[j]]: child });
+      }
+    }
+    for (let i = first; i <= last; i++) {
+      if (!newArr.some((el) => Object.keys(el).includes(i.toString()))) {
+        let firstDate = new Date(new Date().getFullYear(), 0, 1);
+        firstDate.setDate(firstDate.getDate() + i * 7 - firstDate.getDay());
+        let lastDate = new Date(new Date().getFullYear(), 0, 1);
+        lastDate.setDate(lastDate.getDate() + i * 7 - lastDate.getDay() + 6);
+        //Array of dates between firstDate and lastDate
+        let dateArray = [];
+        let currentDate = firstDate;
+        while (currentDate <= lastDate) {
+          dateArray.push(new Date(currentDate));
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+        //Create an array of objects with date and week number
+        let dateAndWeekArray = [];
+        dateArray.forEach((date) => {
+          dateAndWeekArray.push({
+            date: format(date, "yyyy-MM-dd"),
+            week: i,
+            blank: true,
+          });
+        });
+        //Push the new object to the newArr
+        newArr.push({ [i]: dateAndWeekArray });
+      }
+    }
+    //sort weeks.value by week number
+    newArr.sort((a, b) => {
+      return Object.keys(a)[0] - Object.keys(b)[0];
+    });
+    weeks.value = newArr;
+
+    response.data.lunches.map((data) => {
       store.marked_days.push(...data.available_days);
     });
   });

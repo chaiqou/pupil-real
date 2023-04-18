@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'admin@admin.com',
             'password' => bcrypt('adminadmin'),
-            'language' => 'en'
+            'language' => 'en',
         ])->assignRole('admin');
     }
 }

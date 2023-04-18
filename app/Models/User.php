@@ -69,6 +69,7 @@ class User extends Authenticatable implements CanResetPassword
         ]);
         Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
         $url = route($route, ['uniqueID' => request()->uniqueID]);
+
         return response()->json(['url' => $url]);
     }
 }

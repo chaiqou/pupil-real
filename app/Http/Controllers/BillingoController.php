@@ -12,7 +12,6 @@ use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
 class BillingoController extends Controller

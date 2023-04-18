@@ -11,8 +11,9 @@ class LanguageController extends Controller
     {
         session()->put('locale', $locale);
         $user->update([
-            'language' => $locale
+            'language' => $locale,
         ]);
+
         return response()->json(['language' => $locale]);
     }
 }

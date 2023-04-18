@@ -237,7 +237,7 @@ const payWithOnlineHandler = async () => {
 
     const response = await axios.post("/api/parent/checkout", checkoutData);
 
-    window.location.href = response.data.url;
+    window.location.href = response.data;
   } catch (error) {
     console.error(error);
   } finally {
