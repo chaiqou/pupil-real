@@ -14,8 +14,7 @@ class InsightController extends Controller
         $user = auth()->user();
         $students = Student::where('school_id', $user->school_id)->with(['pendingTransactions', 'transactions', 'orders'])->get();
 
-        $insightClass = new InsightStatistics();
-        $activeStudentsData = $insightClass->activeStudents($students);
+        $activeStudentsData = InsightStatistics::activeStudents($students);
 
         return response()->json($activeStudentsData);
     }
@@ -23,17 +22,14 @@ class InsightController extends Controller
     public function averageTransactionValue(): JsonResponse
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
-        $insightClass = new InsightStatistics();
-        $avgTransactionValueData = $insightClass->averageTransactionValue($merchant);
-
+        $avgTransactionValueData = InsightStatistics::averageTransactionValue($merchant);
         return response()->json($avgTransactionValueData);
     }
 
     public function pendingTransactionValue(): JsonResponse
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
-        $insightClass = new InsightStatistics();
-        $pendingTransactionValueData = $insightClass->pendingTransactionValue($merchant);
+        $pendingTransactionValueData = InsightStatistics::pendingTransactionValue($merchant);
 
         return response()->json($pendingTransactionValueData);
     }
@@ -43,8 +39,7 @@ class InsightController extends Controller
         $user = auth()->user();
         $merchant = Merchant::where('user_id', $user->id)->first();
         $students = Student::where('school_id', $user->school_id)->count();
-        $insightClass = new InsightStatistics();
-        $avgStudentWeeklySpendingData = $insightClass->averageStudentWeeklySpending($merchant, $students);
+        $avgStudentWeeklySpendingData = InsightStatistics::averageStudentWeeklySpending($merchant, $students);
 
         return response()->json($avgStudentWeeklySpendingData);
     }

@@ -68,14 +68,13 @@
                         <Field
                           rules="required"
                           type="text"
-                          required
                           v-model="this.short_name"
                           name="short_name"
                           id="short_name"
                           autocomplete="school-short-name"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="short_name">
+                        <ErrorMessage class="text-sm text-red-500" name="short_name">
                         </ErrorMessage>
                       </div>
                     </div>
@@ -91,9 +90,8 @@
                           rules="required"
                           type="text"
                           v-model="this.full_name"
-                          required
-                          name="first_name"
-                          id="first_name"
+                          name="full_name"
+                          id="full_name"
                           autocomplete="school-full-name"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -112,6 +110,7 @@
                       >
                       <div class="mt-1">
                         <Field
+                          rules="required"
                           type="text"
                           v-model="this.long_name"
                           name="long_name"
@@ -188,8 +187,7 @@
                           autocomplete="state"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage name="state" class="text-sm text-red-500">
-                        </ErrorMessage>
+
                       </div>
                     </div>
 

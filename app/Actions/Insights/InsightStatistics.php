@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class InsightStatistics
 {
-    public function activeStudents($students): array|string
+    public static function activeStudents($students): array|string
     {
         $studentsWithActiveStatusThirty = [];
         foreach ($students as $student) {
@@ -58,7 +58,7 @@ class InsightStatistics
         ];
     }
 
-    public function averageTransactionValue($merchant): array|string
+    public static function averageTransactionValue($merchant): array|string
     {
         $pastThirtyDays = Carbon::now()->subDays(30)->startOfDay();
         $transactionsThirty = Transaction::where('merchant_id', $merchant->id)
@@ -99,7 +99,7 @@ class InsightStatistics
             ];
     }
 
-    public function pendingTransactionValue($merchant): array|string
+    public static function pendingTransactionValue($merchant): array|string
     {
         $pendingTransactions = PendingTransaction::where('merchant_id', $merchant->id)
             ->get();
@@ -132,7 +132,7 @@ class InsightStatistics
          ];
     }
 
-    public function averageStudentWeeklySpending($merchant, $students): array|string
+    public static function averageStudentWeeklySpending($merchant, $students): array|string
     {
         $currentMonth = Carbon::now();
         $previousMonth = $currentMonth->copy()->subMonth();
