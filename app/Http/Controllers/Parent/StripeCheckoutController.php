@@ -68,6 +68,8 @@ class StripeCheckoutController extends Controller
                 'success_url' => route('parent.checkout_success', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
             ]);
+
+            session(['checkout_session' => $checkout_session->id]);
         } else {
             $customerAddressDetails = json_decode($customer->user_information);
 
@@ -103,20 +105,24 @@ class StripeCheckoutController extends Controller
                     'cancel_url' => route('parent.checkout_cancel', [], true).'?session_id={CHECKOUT_SESSION_ID}',
                 ]);
 
+                session(['checkout_session' => $checkout_session->id]);
+
                 if (! $stripeCustomer || ! $checkout_session) {
                     DB::rollBack();
                 }
             });
         }
 
-        DB::transaction(function () use ($checkout_session, $student, $lunch, $pricePeriod, $claimResult, $validate) {
+        DB::transaction(function () use ($student, $lunch, $pricePeriod, $claimResult, $validate) {
+            $checkout_session_id = session('checkout_session');
+
             $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
                 'merchant_id' => $lunch->merchant_id,
                 'transaction_identifier' => 'here_should_be_some_hash',
                 'transaction_date' => now()->format('Y-m-d'),
-                'transaction_amount' => $validate->price,
+                'transaction_amount' => $validate['price'],
                 'transaction_type' => 'payment',
                 'comments' => json_encode([
                     'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
@@ -125,7 +131,7 @@ class StripeCheckoutController extends Controller
                 'history' => json_encode([
                     'history' => [],
                 ]),
-                'stripe_session_id' => $checkout_session->id,
+                'stripe_session_id' => $checkout_session_id,
                 'payment_method' => 'stripe',
                 'billing_type' => 'invoice',
                 'billing_items' => json_encode([
@@ -159,7 +165,9 @@ class StripeCheckoutController extends Controller
             }
         });
 
-        return response()->json($checkout_session);
+        $checkout_session_id = session('checkout_session');
+
+        return response()->json(['url' => $checkout_session->url]);
     }
 
     public function success(Request $request): View
