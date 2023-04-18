@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Parent;
 
-use App\Events\TransactionCreated;
 use App\Helpers\CalculateClaims;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
@@ -113,7 +112,6 @@ class StripeCheckoutController extends Controller
             });
         }
 
-        DB::transaction(function () use ($student, $lunch, $pricePeriod, $claimResult, $validate) {
             $checkout_session_id = session('checkout_session');
 
             $pending_transaction = PendingTransaction::create([
@@ -163,7 +161,6 @@ class StripeCheckoutController extends Controller
             if (! $pending_transaction || ! $lunch) {
                 DB::rollBack();
             }
-        });
 
         $checkout_session_id = session('checkout_session');
 
@@ -179,6 +176,7 @@ class StripeCheckoutController extends Controller
             $session = Session::retrieve($session_id);
 
             $pending_transaction = PendingTransaction::query()->where('stripe_session_id', $session_id)->first();
+            // dd($pending_transaction);
             $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
             $customer = auth()->user();
 
@@ -191,7 +189,7 @@ class StripeCheckoutController extends Controller
                     'merchant_id' => $pending_transaction->merchant_id,
                     'transaction_identifier' => 'here_should_be_some_hash',
                     'transaction_date' => now()->format('Y-m-d'),
-                    'transaction_amount' => $validate['price'],
+                    'transaction_amount' => 1,
                     'transaction_type' => 'payment',
                     'comments' => json_encode([
                         'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
@@ -220,7 +218,6 @@ class StripeCheckoutController extends Controller
                     PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['transaction_id' => $transaction->id]);
                     PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['pending_transactions_id' => null]);
                     PendingTransaction::where('id', $pending_transaction->id)->delete();
-                    event(new TransactionCreated($transaction));
                 }
 
                 if (! $transaction) {
