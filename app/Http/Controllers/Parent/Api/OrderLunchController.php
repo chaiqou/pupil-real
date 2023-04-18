@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use App\Helpers\CalculateClaims;
-use App\Http\Controllers\BillingoController;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\Lunch;
-use App\Models\PendingTransaction;
-use App\Models\PeriodicLunch;
 use App\Models\Student;
-use App\Services\ClaimService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\PeriodicLunch;
+use App\Helpers\CalculateClaims;
+use Illuminate\Http\JsonResponse;
+use App\Models\PendingTransaction;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\BillingoController;
+use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Actions\Claims\UpdateFixedClaimIfMenuExistsAction;
 
 class OrderLunchController extends Controller
 {
@@ -80,8 +80,8 @@ class OrderLunchController extends Controller
                 'claims' => json_encode($claimResult['claimJson']),
             ]);
 
-            // This service method updates fixed claims if we have menu and after this we are ordering lunch
-            (new ClaimService())->updateFixedClaims($validated);
+            // updates fixed claims if we have menu and after this we are ordering lunch
+            UpdateFixedClaimIfMenuExistsAction::execute($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
