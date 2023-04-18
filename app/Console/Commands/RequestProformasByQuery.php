@@ -11,25 +11,10 @@ use Illuminate\Support\Facades\Http;
 
 class RequestProformasByQuery extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'request:paid-proformas';
+    protected $signature = 'billingo:request-paid-proformas';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    protected $description = 'Requesting data from billingo, which type is proforma, and payment_status is paid';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $this->info('Please wait..');

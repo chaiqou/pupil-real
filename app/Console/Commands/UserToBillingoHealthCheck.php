@@ -9,25 +9,9 @@ use Illuminate\Support\Facades\Mail;
 
 class UserToBillingoHealthCheck extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'check:user-partner-id';
+    protected $signature = 'billingo:user-partnerid-data-check';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
+    protected $description = 'Check if there is any user who is missing partnerI which is important';
     public function handle()
     {
         $users = User::with('partnerId')->get();

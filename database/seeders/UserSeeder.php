@@ -17,78 +17,6 @@ class UserSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $levente = User::create([
-            'first_name' => 'Levente',
-            'last_name' => 'Kazo',
-            'school_id' => 1,
-            'summary_frequency' => 1,
-            'finished_onboarding' => 1,
-            'user_information' => json_encode([
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random str.15',
-                'zip' => '99212',
-            ]),
-            'email' => 'klevente@pupilpay.hu',
-            'password' => bcrypt('pupilpay'),
-            'language' => 'en',
-        ])->assignRole('school');
-
-        $leventeParent = User::create([
-            'first_name' => 'Levente',
-            'last_name' => 'Kazo',
-            'school_id' => 1,
-            'summary_frequency' => 1,
-            'finished_onboarding' => 1,
-            'user_information' => json_encode([
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random str.15',
-                'zip' => '99212',
-            ]),
-            'email' => 'kazo.levente@gmail.com',
-            'password' => bcrypt('pupilpay'),
-            'language' => 'en',
-        ])->assignRole('parent');
-
-        $luka = User::create([
-            'first_name' => 'Luka',
-            'last_name' => 'Ramishvili',
-            'school_id' => 1,
-            'summary_frequency' => 1,
-            'finished_onboarding' => 1,
-            'user_information' => json_encode([
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random str.15',
-                'zip' => '99212',
-            ]),
-            'email' => 'jackrestler@gmail.com',
-            'password' => bcrypt('adminadmin'),
-            'language' => 'en',
-        ])->assignRole('school');
-
-        $nikoloz = User::create([
-            'first_name' => 'nika',
-            'last_name' => 'lomtadze',
-            'school_id' => 1,
-            'summary_frequency' => 1,
-            'finished_onboarding' => 1,
-            'user_information' => json_encode([
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random str.15',
-                'zip' => '99212',
-            ]),
-            'email' => 'lomtadzenikusha@gmail.com',
-            'password' => bcrypt('adminadmin'),
-            'language' => 'en',
-        ])->assignRole('school');
-
         $admin = User::create([
             'first_name' => 'Main',
             'last_name' => 'Admin',
@@ -103,6 +31,24 @@ class UserSeeder extends Seeder
                 'zip' => '9',
             ]),
             'email' => 'admin@gmail.com',
+            'password' => bcrypt('adminadmin'),
+            'language' => 'en'
+        ])->assignRole('admin');
+
+          $admin = User::create([
+            'first_name' => 'Main',
+            'last_name' => 'Admin',
+            'school_id' => null,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
+                'country' => 'HU',
+                'state' => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random btr.33',
+                'zip' => '9',
+            ]),
+            'email' => 'admin@admin.com',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
         ])->assignRole('admin');

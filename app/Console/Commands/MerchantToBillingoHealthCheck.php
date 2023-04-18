@@ -9,25 +9,10 @@ use Illuminate\Support\Facades\Mail;
 
 class MerchantToBillingoHealthCheck extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'check:merchant-billingo-data';
+    protected $signature = 'billingo:merchant-billingo-data-check';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    protected $description = 'Check if there is any user who is missing billingo_data which is important';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $merchants = Merchant::with('billingo_data')->get();
