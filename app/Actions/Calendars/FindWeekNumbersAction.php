@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Services;
+namespace App\Actions\Calendars;
 
 use Carbon\Carbon;
 
-class CalendarService
+class FindWeekNumbersAction
 {
-    public function groupAvailableDaysByWeek($lunches): array
+    public static function execute($lunches): array
     {
-        // Group the available days of each lunch by the week they belong to, starting from the first week of January.
 
-        // Find first day of year for calculating
+         // Group the available days of each lunch by the week they belong to, starting from the first week of January.
+
         $firstDayOfYear = Carbon::parse('first day of January')->startOfWeek(Carbon::MONDAY);
 
-        $allWeeks = [];
+        $weeksArray = [];
 
-        // Loop over the Lunches i want loop over the all lunch
         foreach ($lunches as $lunch) {
             $weeks = collect($lunch['available_days'])->map(function ($day) use ($firstDayOfYear) {
                 // Find correct week number from January (if now is 21 january week number will be 3)
@@ -27,10 +26,9 @@ class CalendarService
                 ];
             })->sortBy('date')->groupBy('week')->toArray();
 
-            // Save all weeks in array
-            $allWeeks[] = $weeks;
+            $weeksArray[] = $weeks;
         }
 
-        return $allWeeks;
+        return $weeksArray;
     }
 }
