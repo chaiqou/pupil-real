@@ -143,3 +143,10 @@ composer require laravel/sail --dev
 ```sh
 ./vendor/bin/sail up
 ```
+
+#
+
+## Service Interaction Map
+
+![Service Integration](./readme/applicationSchema.svg)
+<br />
