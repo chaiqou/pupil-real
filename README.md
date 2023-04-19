@@ -14,6 +14,7 @@ PupilPay can easily be compared to gift card systems, let's take Starbucks for e
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Development](#Development)
+- [Resources](#resources)
 - [Service Interaction Map](#service-interaction-map)
 
 #
@@ -190,6 +191,14 @@ To run a Composer command using Laravel Sail, run the following command:
 ```sh
 ./vendor/bin/sail composer {command}
 ```
+
+#
+
+## Resources
+
+- Drawsql - Work in progress
+- Documentation - [Documentation](https://pupilpay.youtrack.cloud/articles/PORTAL2)
+- Figma - Work in progress
 
 #
 
