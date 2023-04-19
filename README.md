@@ -1,3 +1,21 @@
+![PupilPay logo](https://pupilpay.hu/resc/img/landing-card-img.png)
+
+# Pupilpay
+
+PupilPay is a closed-loop payment, lunch order, and allergy checking system specifically for schools.
+
+Closed-loop makes the places where it can be used limited, in our case, it's restricted to the cafateria.
+PupilPay is mainly a data handling service, as payments are handled by Patikapénztár (Commonly refered to as just "Patika") for in-school transactions, or another payment processor (Stripe, or Billingo) where the money goes directly to the merchant's account (Cafeteria or in-school shop).
+PupilPay can easily be compared to gift card systems, let's take Starbucks for example. You open a card (open a PupilPay account), top up your balance in-store (cafeteria), and use then you can use your balance in Starbucks stores (In the cafeteria you topped up your balance).
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Development](#Development)
+- [Service Interaction Map](#service-interaction-map)
+
 #
 
 ## Prerequisites
