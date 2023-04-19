@@ -234,11 +234,12 @@ export default {
       cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
       const navigation = this.navigation.find(
         (col) =>
-          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".") ===
+          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".").replaceAll("_", ".") ===
           cleanedCurrent
             .toLowerCase()
             .replaceAll(" ", ".")
             .replaceAll("-", ".")
+              .replaceAll("_", ".")
       );
       navigation.current = true;
 

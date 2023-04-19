@@ -9,7 +9,7 @@
           class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
         >
           <dt class="text-base font-normal text-gray-900">
-            {{ item.name }}
+            {{ $t('message.'+item.name) }}
           </dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div v-if="item.unavailable === false"
@@ -17,7 +17,7 @@
             >
               {{ item.stat }}
               <span class="text-sm font-medium text-gray-500"
-                >from {{ item.previousStat }}</span
+                >{{$t('message.from')}} {{ item.previousStat }}</span
               >
             </div>
             <div v-if="item.unavailable === false"
@@ -45,12 +45,12 @@
                 />
               <span class="sr-only">
                 {{ item.changeType === "increase" ? "Increased" : "Decreased" }}
-                by
+                {{$t('message.by')}}
               </span>
               {{ item.change }}
             </div>
               <div class="text-xl items-center mt-5 justify-center flex flex-col" v-else>
-                  <h1>Unavailable</h1>
+                  <h1>{{$t('message.unavailable')}} </h1>
               </div>
           </dd>
         </div>
@@ -63,7 +63,7 @@
           class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
         >
           <dt class="text-base font-normal text-gray-900">
-            {{ item.name }}
+            {{ $t('message.'+item.name) }}
           </dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div v-if="item.unavailable === false"
@@ -71,7 +71,7 @@
             >
               {{ item.stat }}
               <span class="text-sm font-medium text-gray-500"
-                >from {{ item.previousStat }}</span
+                >{{$t('message.from')}} {{ item.previousStat }}</span
               >
             </div>
 
@@ -105,7 +105,7 @@
                   {{ item.change }}
               </div>
               <div class="text-xl items-center mt-5 justify-center flex flex-col" v-if="item.unavailable === true">
-                  <h1>Unavailable</h1>
+                  <h1>{{$t('message.unavailable')}}</h1>
               </div>
           </dd>
         </div>
@@ -135,7 +135,7 @@
       <div v-if="!isPieChartDataCalculated" class="border border-4 mb-5 xl:mr-3 sm:my-5 xl:my-0 border-dashed rounded-md flex items-center justify-center xl:w-2/3">
           <div class="flex items-center justify-center flex-col my-32">
               <clipboard-document-list-icon class="xl:w-32 w-24 text-gray-500"></clipboard-document-list-icon>
-              <h1 class="xl:text-xl text-sm p-4 xl:p-0">No lunch orders yet</h1>
+              <h1 class="xl:text-xl text-sm p-4 xl:p-0">{{$t('message.no_lunch_orders_yet')}}</h1>
           </div>
       </div>
 
@@ -156,7 +156,7 @@
       <div v-if="!isLineChartDataCalculated" class="border border-4 border-dashed rounded-md flex items-center justify-center xl:w-2/3">
           <div class="flex items-center justify-center flex-col my-32">
               <list-bullet-icon class="xl:w-32 w-24 text-gray-500"></list-bullet-icon>
-              <h1 class="xl:text-xl text-sm p-4 xl:p-0">You need to have some transactions before we can show you an overview</h1>
+              <h1 class="xl:text-xl text-sm p-4 xl:p-0">{{$t('message.you_need_to_have_some_transactions_before_we_can_show_you_an_overview')}}</h1>
           </div>
       </div>
 
@@ -190,39 +190,39 @@ export default {
             statsTop: [
                 {
                     id: 1,
-                    name: "Active Students",
+                    name: "active_students",
                     stat: "",
                     previousStat: "",
                     icon: UsersIcon,
                     change: "",
                     changeType: "",
-                    unavailable: false,
+                    unavailable: true,
                 },
                 {
                     id: 2,
-                    name: "Avg. Transactions Value",
+                    name: "avg_transactions_value",
                     stat: "",
                     previousStat: "",
                     icon: EnvelopeOpenIcon,
                     change: "",
                     changeType: "",
-                    unavailable: false,
+                    unavailable: true,
                 },
             ],
             statsBottom: [
                 {
-                    name: "Pending Transactions Value",
+                    name: "pending_transactions_value",
                     stat: "",
                     previousStat: "",
-                    unavailable: false,
+                    unavailable: true,
                 },
                 {
-                    name: "Avg. Student weekly spending",
+                    name: "avg_student_weekly_spending",
                     stat: "",
                     previousStat: "",
                     change: "",
                     changeType: "",
-                    unavailable: false,
+                    unavailable: true,
                 },
             ],
             currentMonthDates: [],
@@ -295,7 +295,8 @@ export default {
                         if(res.data !== 'unavailable to calculate') {
                             const data = res.data;
                             this.insightBoxDataPlaceholderInsertion(activeStudents, data.thirty, data.sixty, data.difference);
-                        } else activeStudents.unavailable = true;
+                            activeStudents.unavailable = false
+                        }
                 })
                 .catch((err) => console.log(err));
         },
@@ -308,7 +309,8 @@ export default {
                    {
                        const data = res.data;
                        this.insightBoxDataPlaceholderInsertion(avgTransactions, data.thirty, data.sixty, data.difference)
-                   } else avgTransactions.unavailable = true;
+                       avgTransactions.unavailable = false
+                   }
                 })
                 .catch((err) => console.log(err))
         },
@@ -321,7 +323,8 @@ export default {
                     {
                         pendingTransactions.stat = res.data.total;
                         pendingTransactions.previousStat = res.data.date;
-                    } else pendingTransactions.unavailable = true;
+                        pendingTransactions.unavailable = false
+                    }
                     })
                         .catch((err) => console.log(err))
         },
@@ -334,7 +337,8 @@ export default {
                     {
                        const data = res.data;
                        this.insightBoxDataPlaceholderInsertion(avgTransactionsPerStudent, data.previous, data.past, data.difference);
-                    } else avgTransactionsPerStudent.unavailable = true;
+                       avgTransactionsPerStudent.unavailable = false
+                    }
                 })
                 .catch((err) => console.log(err))
         },

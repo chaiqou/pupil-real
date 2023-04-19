@@ -134,7 +134,32 @@ const en = {
         balances: "Balances",
         parent: "Parent",
         switch_student: "Switch student",
-        log_out: "Log out"
+        log_out: "Log out",
+        lunch_management: "Lunch management",
+        menu_management: "Menu management",
+        transactions: "Transactions",
+        terminals: "Terminals",
+        knowledge_base: "Knowledge base",
+        active_students: "Active Students",
+        avg_transactions_value: "Avg. Transactions Value",
+        pending_transactions_value: "Pending Transactions Value",
+        avg_student_weekly_spending: "Avg. Student Weekly Spending",
+        unavailable: "Unavailable",
+        from: "from",
+        by: "by",
+        no_transactions: "No transactions",
+        none_available_transactions_at_the_moment: "None available transactions at the moment",
+        no_lunch_orders_yet: "No lunch orders yet",
+        you_need_to_have_some_transactions_before_we_can_show_you_an_overview:
+        "You need to have some transactions before we can show you an overview",
+        name: "Name",
+        amount: "Amount",
+        merchant: "Merchant",
+        get_started_by_making_a_new_transactions:
+        "Get started by making a new transaction",
+
+
+
     },
 };
 

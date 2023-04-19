@@ -22,6 +22,7 @@ class NavigationController extends Controller
         $twoFa = 0;
         if ($user->hasRole('parent')) {
             $role = 'parent';
+            // use lower case characters into the name with snake case (even if it is subpage, just for sure, even tho it is no need for it for subpages), because in DashboardNavigation vue we use translates (localization)
             $navigation =
                 [
                     ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/parent/dashboard/'.$student->id, 'current' => false],
@@ -75,19 +76,20 @@ class NavigationController extends Controller
         $lunchId = request()->lunch_id;
 
         if ($user->hasRole('school')) {
+            // use lower case characters into the name with snake case (even if it is subpage, just for sure, even tho it is no need for it for subpages), because in DashboardNavigation vue we use translates (localization)
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/school/dashboard', 'current' => false],
-                    ['name' => 'Lunch management', 'icon' => 'BuildingOffice2Icon', 'href' => '/school/lunch-management', 'current' => false],
-                    ['name' => 'Menu Management', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/school/menu-management', 'curreunt' => false],
-                    ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' => '/school/transactions', 'current' => false],
-                    ['name' => 'Students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
-                    ['name' => 'Terminals', 'icon' => 'CommandLineIcon', 'href' => '/school/terminals', 'current' => false],
-                    ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
-                    ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
-                    ['name' => 'Invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'Students'],
-                    ['name' => 'Add Lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false, 'hidden' => true, 'parentPage' => 'Lunch management'],
-                    ['name' => 'Lunch management edit', 'icon' => 'nothing', 'href' => '/school/lunch-management/{lunch_id}/edit', 'current' => false, 'hidden' => true, 'parentPage' => 'Lunch management'],
+                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '/school/dashboard', 'current' => false],
+                    ['name' => 'lunch_management', 'icon' => 'BuildingOffice2Icon', 'href' => '/school/lunch-management', 'current' => false],
+                    ['name' => 'menu_management', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/school/menu-management', 'current' => false],
+                    ['name' => 'transactions', 'icon' => 'ListBulletIcon', 'href' => '/school/transactions', 'current' => false],
+                    ['name' => 'students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
+                    ['name' => 'terminals', 'icon' => 'CommandLineIcon', 'href' => '/school/terminals', 'current' => false],
+                    ['name' => 'knowledge_base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
+                    ['name' => 'settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
+                    ['name' => 'invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'students'],
+                    ['name' => 'add_lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false, 'hidden' => true, 'parentPage' => 'lunch_management'],
+                    ['name' => 'lunch_management_edit', 'icon' => 'nothing', 'href' => '/school/lunch-management/{lunch_id}/edit', 'current' => false, 'hidden' => true, 'parentPage' => 'lunch_management'],
                 ];
             $role = 'school';
         }
@@ -104,6 +106,7 @@ class NavigationController extends Controller
             'role' => $role,
             'students' => $students,
             'student' => $user,
+            'user' => $user,
             'schoolId' => $user->school_id,
             'lunchId' => $lunchId,
         ])->with(['page', 'Dashboard']);
@@ -117,7 +120,7 @@ class NavigationController extends Controller
         $students = $user->students->all();
         if ($user->hasRole('admin')) {
             $role = 'admin';
-            // use lower case characters into the name, because in DashboardNavigation vue we use translates (localization)
+            // use lower case characters into the name with snake case (even if it is subpage, just for sure, even tho it is no need for it for subpages), because in DashboardNavigation vue we use translates (localization)
             $navigation =
                 [
                     ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '/admin/dashboard', 'current' => false],
@@ -125,7 +128,7 @@ class NavigationController extends Controller
                     ['name' => 'invite', 'icon' => 'nothing', 'href' => '/admin/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'students'],
                     ['name' => 'schools', 'icon' => 'BuildingOffice2Icon', 'href' => '/admin/schools', 'current' => false],
                     ['name' => 'merchants', 'icon' => 'nothing', 'href' => '/admin/school/{school_id}/merchants', 'current' => false, 'hidden' => true, 'parentPage' => 'schools'],
-                    ['name' => 'merchant invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'schools'],
+                    ['name' => 'merchant_invites', 'icon' => 'nothing', 'href' => '/admin/merchant-invites', 'current' => false, 'hidden' => true, 'parentPage' => 'schools'],
                     ['name' => 'settings', 'icon' => 'Cog8ToothIcon', 'href' => '/admin/settings', 'current' => false],
                 ];
         }

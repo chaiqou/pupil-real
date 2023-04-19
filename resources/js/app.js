@@ -62,6 +62,7 @@ import MerchantBillingoVerify from "@/components/invite/merchant/BillingoVerify.
 import MerchantVerifyEmail from "@/components/invite/merchant/VerifyEmail.vue";
 import SetLanguage from "@/components/Ui/SetLanguage.vue";
 import AdminSettings from "@/components/admin/Settings/Settings.vue";
+import SchoolSettings from "@/components/school/Settings/Settings.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -109,6 +110,7 @@ app.component("school-dashboard-transactions", SchoolDashboardTransactions);
 app.component("school-invites", SchoolInvites);
 app.component("school-invites-header", SchoolInvitesHeader);
 app.component("school-dashboard", SchoolDashboard);
+app.component("school-settings", SchoolSettings);
 
 // Admin global components
 app.component("admin-schools", AdminSchools);

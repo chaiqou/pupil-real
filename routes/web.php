@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('lunch-management/{lunch_id}/edit', 'school')->name('school.lunch-management-edit');
                 Route::get('terminals', 'school')->name('school.terminals');
                 Route::get('menu-management', 'school')->name('school.menu-management');
+                Route::get('settings', 'school')->name('school.settings');
             });
         });
     });

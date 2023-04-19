@@ -136,6 +136,29 @@ const hu = {
         parent: "Parent HU",
         switch_student: "Switch student HU",
         log_out: "Log out HU",
+        lunch_management: "Lunch management HU",
+        menu_management: "Menu management HU",
+        transactions: "Transactions HU",
+        terminals: "Terminals HU",
+        knowledge_base: "Knowledge base HU",
+        active_students: "Active Students HU",
+        avg_transactions_value: "Avg. Transactions Value HU",
+        pending_transactions_value: "Pending Transactions Value HU",
+        avg_student_weekly_spending: "Avg. Student Weekly Spending HU",
+        unavailable: "Unavailable HU",
+        from: "from HU",
+        by: "by HU",
+        no_transactions: "No transactions HU",
+        none_available_transactions_at_the_moment: "None available transactions at the moment HU",
+        no_lunch_orders_yet: "No lunch orders yet HU",
+        you_need_to_have_some_transactions_before_we_can_show_you_an_overview:
+            "You need to have some transactions before we can show you an overview HU",
+        name: "Name HU",
+        amount: "Amount HU",
+        merchant: "Merchant HU",
+        get_started_by_making_a_new_transactions:
+            "Get started by making a new transaction HU",
+
     },
 };
 
