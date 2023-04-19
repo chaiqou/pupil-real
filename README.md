@@ -152,14 +152,43 @@ when working on JS you may run:
     }
 ```
 
-#### Also you can run application with Laravel Sail
+### Also you can run application with Laravel Sail
+
+First, you need to install Laravel Sail as a development dependency in your Laravel application. To do this, run the following command in your terminal:
 
 ```sh
 composer require laravel/sail --dev
 ```
 
+Next, open the .env file and change the DB_HOST to mysql and REDIS_HOST to redis.
+
+```sh
+DB_HOST=mysql
+REDIS_HOST=redis
+```
+
+Run the following command to start Laravel Sail:
+
 ```sh
 ./vendor/bin/sail up
+```
+
+To stop Laravel Sail, run the following command:
+
+```sh
+./vendor/bin/sail down
+```
+
+To run an Artisan command using Laravel Sail, run the following command:
+
+```sh
+./vendor/bin/sail artisan {command}
+```
+
+To run a Composer command using Laravel Sail, run the following command:
+
+```sh
+./vendor/bin/sail composer {command}
 ```
 
 #
