@@ -55,7 +55,7 @@
                 </button>
               </div>
               <div class="absolute top-0 left-0 hidden pt-4 pl-4 sm:block">
-                <p>{{$t('message.invite_merchant_by_email_address')}}.</p>
+                <p>{{ $t("message.invite_merchant_by_email_address") }}.</p>
               </div>
               <div class="mt-10">
                 <ValidationForm @submit="onSubmit">
@@ -63,7 +63,7 @@
                     <label
                       class="text-md flex whitespace-normal font-bold text-gray-600"
                       for="email"
-                      >{{$t('message.email')}}</label
+                      >{{ $t("message.email") }}</label
                     >
                     <Field
                       name="email"
@@ -78,18 +78,18 @@
                     <ErrorMessage name="email" class="mt-2 text-red-500">
                     </ErrorMessage>
 
-                      <p
-                          v-if="this.isSent"
-                          :class="
-        this.isSuccessfullySent === 'no'
-          ? 'text-red-500'
-          : this.isSuccessfullySent === 'pending'
-          ? 'text-yellow-500'
-          : 'text-green-500'
-      "
-                      >
-                          {{ $t('message.'+axiosResponseGenerator) }}.
-                      </p>
+                    <p
+                      v-if="this.isSent"
+                      :class="
+                        this.isSuccessfullySent === 'no'
+                          ? 'text-red-500'
+                          : this.isSuccessfullySent === 'pending'
+                          ? 'text-yellow-500'
+                          : 'text-green-500'
+                      "
+                    >
+                      {{ $t("message." + axiosResponseGenerator) }}.
+                    </p>
 
                     <button
                       :disabled="disabledCalculator"
@@ -120,7 +120,7 @@
                         v-if="this.isSuccessfullySent === 'yes'"
                         class="mr-2 inline h-6 w-6"
                       ></CheckIcon>
-                      {{ $t('message.'+buttonTextGenerator) }}
+                      {{ $t("message." + buttonTextGenerator) }}
                     </button>
                   </div>
                 </ValidationForm>
@@ -140,10 +140,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import {
-  XMarkIcon,
-  CheckIcon,
-} from "@heroicons/vue/24/outline";
+import { XMarkIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import { mapActions, mapWritableState } from "pinia";
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import { useModalStore } from "@/stores/useModalStore";
@@ -199,12 +196,10 @@ export default {
       const text = this.isSuccessfullySent;
       if (text === "pending") {
         return "please_wait_we_are_sending_invites";
-      }
-      else if (text === "yes") {
+      } else if (text === "yes") {
         return "invites_send_successfully";
-      }
-      else return "could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support";
-
+      } else
+        return "could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support";
     },
   },
   methods: {

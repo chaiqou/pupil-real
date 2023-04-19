@@ -3,9 +3,15 @@
     <div class="sm:flex sm:items-center">
       <div class="flex items-end justify-between sm:flex-auto">
         <div>
-          <h1 class="text-xl font-semibold text-gray-900">{{ $t('message.all_schools') }}</h1>
+          <h1 class="text-xl font-semibold text-gray-900">
+            {{ $t("message.all_schools") }}
+          </h1>
           <p class="mt-2 text-sm text-gray-700">
-              {{ $t('message.a_list_of_all_the_schools_including_short_full_long_name_details_and_school_code') }}.
+            {{
+              $t(
+                "message.a_list_of_all_the_schools_including_short_full_long_name_details_and_school_code",
+              )
+            }}.
           </p>
         </div>
         <span
@@ -26,7 +32,7 @@
               d="M12 4.5v15m7.5-7.5h-15"
             />
           </svg>
-          <p class="ml-1.5">{{ $t('message.create_new_school') }}</p>
+          <p class="ml-1.5">{{ $t("message.create_new_school") }}</p>
         </span>
       </div>
     </div>

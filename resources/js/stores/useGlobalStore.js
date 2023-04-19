@@ -8,24 +8,24 @@ export const useGlobalStore = defineStore("global", {
       user: "",
     };
   },
-    actions: {
-        setAxiosStatus(status) {
-            this.axiosStatus = status;
-            if (status === 'updated') {
-                setTimeout(() => {
-                    this.resetAxiosStatus();
-                }, 2300);
-            } else if (status === 'error') {
-                setTimeout(() => {
-                    this.resetAxiosStatus();
-                }, 2300);
-            }
-        },
-        resetAxiosStatus() {
-            this.axiosStatus = '';
-        },
-        storeLocaleInLocalStorage(locale) {
-            localStorage.setItem("i18n", locale);
-        },
+  actions: {
+    setAxiosStatus(status) {
+      this.axiosStatus = status;
+      if (status === "updated") {
+        setTimeout(() => {
+          this.resetAxiosStatus();
+        }, 2300);
+      } else if (status === "error") {
+        setTimeout(() => {
+          this.resetAxiosStatus();
+        }, 2300);
+      }
     },
+    resetAxiosStatus() {
+      this.axiosStatus = "";
+    },
+    storeLocaleInLocalStorage(locale) {
+      localStorage.setItem("i18n", locale);
+    },
+  },
 });

@@ -45,14 +45,22 @@
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
-              <ValidationForm id="form" @submit="onSubmit" class="mt-8 w-full space-y-6">
+              <ValidationForm
+                id="form"
+                @submit="onSubmit"
+                class="mt-8 w-full space-y-6"
+              >
                 <div class="bg-white p-8">
                   <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">
-                        {{ $t('message.personal_information') }}
+                      {{ $t("message.personal_information") }}
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
-                        {{ $t('message.use_a_permanent_address_where_you_can_receive_mail') }}.
+                      {{
+                        $t(
+                          "message.use_a_permanent_address_where_you_can_receive_mail",
+                        )
+                      }}.
                     </p>
                   </div>
                   <div
@@ -62,7 +70,7 @@
                       <label
                         for="short-name"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.short_name') }}</label
+                        >{{ $t("message.short_name") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -74,7 +82,10 @@
                           autocomplete="school-short-name"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-                        <ErrorMessage class="text-sm text-red-500" name="short_name">
+                        <ErrorMessage
+                          class="text-sm text-red-500"
+                          name="short_name"
+                        >
                         </ErrorMessage>
                       </div>
                     </div>
@@ -83,7 +94,7 @@
                       <label
                         for="full-name"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.full_name') }}</label
+                        >{{ $t("message.full_name") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -106,7 +117,7 @@
                       <label
                         for="long-name"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.long_name') }}</label
+                        >{{ $t("message.long_name") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -131,7 +142,7 @@
                       <label
                         for="address"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.street_address') }}</label
+                        >{{ $t("message.street_address") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -155,7 +166,7 @@
                       <label
                         for="city"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.city') }}</label
+                        >{{ $t("message.city") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -176,7 +187,7 @@
                       <label
                         for="state"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.state_province') }}</label
+                        >{{ $t("message.state_province") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -187,7 +198,6 @@
                           autocomplete="state"
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
-
                       </div>
                     </div>
 
@@ -195,7 +205,7 @@
                       <label
                         for="zip"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.zip_postal_code') }}</label
+                        >{{ $t("message.zip_postal_code") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -216,7 +226,7 @@
                       <label
                         for="email"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.email_address') }}</label
+                        >{{ $t("message.email_address") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -237,7 +247,7 @@
                       <label
                         for="contact"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.contact_person') }}</label
+                        >{{ $t("message.contact_person") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -261,7 +271,7 @@
                       <label
                         for="phone-number"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.phone_number') }}</label
+                        >{{ $t("message.phone_number") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -285,7 +295,7 @@
                       <label
                         for="extension"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.extension') }}</label
+                        >{{ $t("message.extension") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -308,7 +318,7 @@
                       <label
                         for="mobile-number"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.mobile_number') }}</label
+                        >{{ $t("message.mobile_number") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -331,7 +341,7 @@
                       <label
                         for="school-code"
                         class="block text-sm font-medium text-gray-700"
-                        >{{ $t('message.school_code') }}</label
+                        >{{ $t("message.school_code") }}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -357,7 +367,7 @@
                         type="submit"
                         class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
-                          {{ $t('message.save') }}
+                        {{ $t("message.save") }}
                       </button>
                     </div>
                   </div>

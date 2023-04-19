@@ -44,49 +44,51 @@
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.full_name')}}:</p>
+                      <p class="font-bold">{{ $t("message.full_name") }}:</p>
                       <p class="ml-3">
                         {{ this.student.first_name }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.last_name')}}:</p>
+                      <p class="font-bold">{{ $t("message.last_name") }}:</p>
                       <p class="ml-3">
                         {{ this.student.last_name }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.middle_name')}}:</p>
+                      <p class="font-bold">{{ $t("message.middle_name") }}:</p>
                       <p class="ml-3">
                         {{ this.student.middle_name || "Not given" }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.card_number')}}:</p>
+                      <p class="font-bold">{{ $t("message.card_number") }}:</p>
                       <p class="ml-3">
                         {{ this.student.card_number }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.user_information')}}:</p>
+                      <p class="font-bold">
+                        {{ $t("message.user_information") }}:
+                      </p>
                       <p class="ml-3">
                         {{ this.student.user_information }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.balances')}}:</p>
+                      <p class="font-bold">{{ $t("message.balances") }}:</p>
                       <p class="ml-3">
                         {{ this.student.balances }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">{{$t('message.parent')}}:</p>
+                      <p class="font-bold">{{ $t("message.parent") }}:</p>
                       <p class="ml-3">
                         {{ this.student.user }}
                       </p>

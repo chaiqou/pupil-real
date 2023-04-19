@@ -17,25 +17,25 @@
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-              {{$t('message.name')}}
+            {{ $t("message.name") }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-              {{$t('message.serial_number')}}
+            {{ $t("message.serial_number") }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-              {{$t('message.note')}}
+            {{ $t("message.note") }}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-              {{$t('message.public_key')}}
+            {{ $t("message.public_key") }}
           </th>
         </tr>
       </thead>
@@ -46,50 +46,47 @@
           </td>
         </tr>
         <template v-if="this.isTerminalsLoaded && this.terminals.length">
-            <tr
-                v-for="terminal in terminals"
-                :key="terminal.id"
+          <tr v-for="terminal in terminals" :key="terminal.id">
+            <td
+              class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
             >
-                <td
-                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                >
-                    {{ terminal.name }}
-                </td>
-                <td
-                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                >
-                    {{ terminal.serial_number }}
-                </td>
-                <td
-                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                >
-                    {{ terminal.note || "NONE" }}
-                </td>
-                <td
-                    class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
-                >
-                    {{ terminal.public_key }}
-                </td>
-            </tr>
-        </template>
-      <template v-if="!this.isTerminalsLoaded">
-          <tr v-for="n in 7" :key="n">
-              <td
-                  class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-              >
-                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-              </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-              </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-              </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-              </td>
+              {{ terminal.name }}
+            </td>
+            <td
+              class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+            >
+              {{ terminal.serial_number }}
+            </td>
+            <td
+              class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+            >
+              {{ terminal.note || "NONE" }}
+            </td>
+            <td
+              class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"
+            >
+              {{ terminal.public_key }}
+            </td>
           </tr>
-      </template>
+        </template>
+        <template v-if="!this.isTerminalsLoaded">
+          <tr v-for="n in 7" :key="n">
+            <td
+              class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+            >
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>

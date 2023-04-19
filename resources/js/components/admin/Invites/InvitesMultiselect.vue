@@ -17,8 +17,7 @@
           : 'mb-5 hidden'
       "
     >
-      <p class="ml-7 text-sm">
-      {{$t('message.sending_invites_to')}}:</p>
+      <p class="ml-7 text-sm">{{ $t("message.sending_invites_to") }}:</p>
       <div class="flex flex-wrap pl-5">
         <div v-for="(element, index) in mainEmailsArray" :key="index">
           <div
@@ -86,7 +85,7 @@
     </div>
 
     <div :class="this.mainEmailsArray.length ? 'text-sm' : 'mt-10'">
-      <label for="emails">{{$t('message.email_addresses')}}</label>
+      <label for="emails">{{ $t("message.email_addresses") }}</label>
     </div>
     <div
       class="my-2 flex items-center justify-between rounded-md border-2 border-gray-600 px-1.5"
@@ -104,7 +103,11 @@
       </Field>
     </div>
     <p class="text-[10px] text-gray-400">
-        {{$t('message.be_careful')+', '+$t('message.dont_send_invite_to_wrong_email')}}.
+      {{
+        $t("message.be_careful") +
+        ", " +
+        $t("message.dont_send_invite_to_wrong_email")
+      }}.
     </p>
     <p
       v-if="this.isSent"
@@ -116,7 +119,7 @@
           : 'text-green-500'
       "
     >
-      {{ $t('message.'+axiosResponseGenerator) }}.
+      {{ $t("message." + axiosResponseGenerator) }}.
     </p>
     <div>
       <button
@@ -148,14 +151,14 @@
           v-if="this.isSuccessfullySent === 'yes'"
           class="mr-2 inline h-6 w-6"
         ></CheckIcon>
-        {{ $t('message.'+buttonTextGenerator) }}
+        {{ $t("message." + buttonTextGenerator) }}
       </button>
     </div>
   </ValidationForm>
 </template>
 
 <script>
-import { Form as ValidationForm, Field, } from "vee-validate";
+import { Form as ValidationForm, Field } from "vee-validate";
 import { mapWritableState } from "pinia";
 import { ExclamationTriangleIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import { useInviteStore } from "@/stores/useInviteStore";
@@ -234,11 +237,10 @@ export default {
       const text = this.isSuccessfullySent;
       if (text === "pending") {
         return "please_wait_we_are_sending_invites";
-      }
-      else if (text === "yes") {
+      } else if (text === "yes") {
         return "invites_send_successfully";
-      }
-     else return "could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support";
+      } else
+        return "could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support";
     },
   },
   methods: {

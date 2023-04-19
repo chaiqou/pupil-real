@@ -13,7 +13,7 @@
         <div class="mr-3 w-5">
           <component :is="item.icon"></component>
         </div>
-          {{ $t('message.'+item.name) }}
+        {{ $t("message." + item.name) }}
       </a>
     </span>
   </nav>
@@ -59,12 +59,16 @@ export default {
       cleanedCurrent = cleanedCurrent.split(".").splice(1).join(".");
       const navigation = this.navigation.find(
         (col) =>
-          col.name.toLowerCase().replaceAll(" ", ".").replaceAll("-", ".").replaceAll("_", ".") ===
+          col.name
+            .toLowerCase()
+            .replaceAll(" ", ".")
+            .replaceAll("-", ".")
+            .replaceAll("_", ".") ===
           cleanedCurrent
             .toLowerCase()
             .replaceAll(" ", ".")
             .replaceAll("-", ".")
-              .replaceAll("_", ".")
+            .replaceAll("_", "."),
       );
       navigation.current = true;
 

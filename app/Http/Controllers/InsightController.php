@@ -23,6 +23,7 @@ class InsightController extends Controller
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $avgTransactionValueData = InsightStatistics::averageTransactionValue($merchant);
+
         return response()->json($avgTransactionValueData);
     }
 

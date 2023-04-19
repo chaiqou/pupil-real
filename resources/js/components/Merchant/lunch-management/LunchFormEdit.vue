@@ -1,7 +1,9 @@
 <template>
   <div v-if="dataIsLoaded" class="min-w-[30vw] sm:mt-20 xl:px-4">
     <form>
-      <p class="mb-2 text-center text-xl font-black">{{$t('message.create_a_new_lunch_plan')}}</p>
+      <p class="mb-2 text-center text-xl font-black">
+        {{ $t("message.create_a_new_lunch_plan") }}
+      </p>
       <BaseInput
         v-model="store.title"
         name="Title"
@@ -16,7 +18,7 @@
         rules="required|min:3|max:100"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
-        >{{$t('message.active_range')}}
+        >{{ $t("message.active_range") }}
       </label>
       <Datepicker
         closeOnScroll
@@ -30,7 +32,9 @@
         :clearable="false"
       />
       <div>
-        <label class="text-md font-bold text-gray-600">{{$t('message.weekdays')}}</label>
+        <label class="text-md font-bold text-gray-600">{{
+          $t("message.weekdays")
+        }}</label>
         <div class="grid grid-cols-3 gap-3 text-center sm:grid-cols-7">
           <ul v-for="day in dayOptions" :key="day">
             <li>
@@ -49,7 +53,7 @@
                 class="text-md flex cursor-pointer items-center rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-left font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:ring-2 peer-checked:ring-indigo-500 peer-checked:ring-offset-2 xl:w-full"
               >
                 <h1 class="mx-auto flex text-center md:-mx-1 lg:mx-auto">
-                  {{ $t('message.'+day.name) }}
+                  {{ $t("message." + day.name) }}
                 </h1>
               </label>
             </li>
@@ -64,7 +68,7 @@
       >
         <label
           class="text-md mt-2 flex whitespace-normal font-bold text-gray-600"
-          >{{$t('message.extras_and_holds')}}
+          >{{ $t("message.extras_and_holds") }}
         </label>
         <div class="rounded-md bg-inherit">
           <div class="mt-6 flow-root">
@@ -84,7 +88,7 @@
                   </div>
                   <div class="min-w-0 flex-1">
                     <p class="truncate text-sm font-medium text-gray-900">
-                        {{$t('message.extra_period')}}
+                      {{ $t("message.extra_period") }}
                     </p>
                     <p class="truncate text-sm text-gray-500">
                       {{ `${extra[0]} - ${extra[1]}` }}
@@ -96,7 +100,7 @@
                       @click="removeExtra(extraIdx, extra)"
                       class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                     >
-                        {{$t('message.remove')}}
+                      {{ $t("message.remove") }}
                     </button>
                   </div>
                 </div>
@@ -116,7 +120,7 @@
                   </div>
                   <div class="min-w-0 flex-1">
                     <p class="truncate text-sm font-medium text-gray-900">
-                        {{$t('message.hold_period')}}
+                      {{ $t("message.hold_period") }}
                     </p>
                     <p class="truncate text-sm text-gray-500">
                       {{ `${hold[0]} - ${hold[1]}` }}
@@ -128,7 +132,7 @@
                       @click="removeHold(holdIdx, hold)"
                       class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                     >
-                        {{$t('message.remove')}}
+                      {{ $t("message.remove") }}
                     </button>
                   </div>
                 </div>
@@ -155,7 +159,7 @@
               <p
                 class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               >
-                  {{$t('message.add_extra')}}
+                {{ $t("message.add_extra") }}
               </p>
             </template>
           </Datepicker>
@@ -177,7 +181,7 @@
               <p
                 class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               >
-                  {{$t('message.add_holds')}}
+                {{ $t("message.add_holds") }}
               </p>
             </template>
           </Datepicker>
@@ -191,7 +195,7 @@
         rules="required"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
-        >{{$t('message.claimables')}}
+        >{{ $t("message.claimables") }}
       </label>
       <Multiselect
         :value="store.claimables"
@@ -214,7 +218,7 @@
       <BaseInput
         v-model="store.price_period"
         name="Price Period"
-        :label="$t('message.price_for_period')+` (${$t('message.gross')})`"
+        :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
         rules="required"
       />
@@ -229,7 +233,7 @@
               : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           "
         >
-          {{$t('message.calculate_after_fees')}}
+          {{ $t("message.calculate_after_fees") }}
         </button>
       </div>
       <BaseInput
@@ -239,7 +243,11 @@
         type="number"
         rules="required|min:3|max:100"
       />
-      <Button @click="isOpen = !isOpen" type="button" :text="$t('message.save_lunch')" />
+      <Button
+        @click="isOpen = !isOpen"
+        type="button"
+        :text="$t('message.save_lunch')"
+      />
       <ConfirmationModal v-if="isOpen" />
     </form>
   </div>

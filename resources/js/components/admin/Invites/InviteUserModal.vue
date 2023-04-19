@@ -47,7 +47,8 @@
               </div>
               <div class="absolute top-0 left-0 hidden pt-4 pl-4 sm:block">
                 <p>
-                {{$t('message.invite_users_by_their_email_addresses')}}.</p>
+                  {{ $t("message.invite_users_by_their_email_addresses") }}.
+                </p>
               </div>
               <div>
                 <invites-multiselect></invites-multiselect>

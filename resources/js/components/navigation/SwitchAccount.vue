@@ -66,7 +66,9 @@
             <div class="flex justify-between">
               <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
 
-              <h1 class="cursor-pointer font-normal">{{$t('message.log_out')}}</h1>
+              <h1 class="cursor-pointer font-normal">
+                {{ $t("message.log_out") }}
+              </h1>
 
               <span class="text-gray-900">
                 <!-- Heroicon name: mini/arrow-right-on-rectangle -->
@@ -102,7 +104,7 @@
           {{ student.first_name + " " + student.last_name }}
         </p>
         <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-          {{$t('message.switch_student')}}
+          {{ $t("message.switch_student") }}
         </p>
       </div>
     </div>

@@ -19,7 +19,7 @@
           <button @click="handleDeleteInviteRequest" class="flex flex-col">
             <div class="flex justify-between">
               <h1 v-for="item in items" :key="item" class="font-normal">
-                {{ $t('message.'+item) }}
+                {{ $t("message." + item) }}
               </h1>
               <span class="text-gray-900"> </span>
             </div>

@@ -12,6 +12,7 @@ class UserToBillingoHealthCheck extends Command
     protected $signature = 'billingo:user-partnerid-data-check';
 
     protected $description = 'Check if there is any user who is missing partnerI which is important';
+
     public function handle()
     {
         $users = User::with('partnerId')->get();

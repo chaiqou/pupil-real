@@ -46,7 +46,7 @@
                 </button>
               </div>
               <div class="absolute top-0 left-0 hidden pt-4 pl-4 sm:block">
-                <p>{{$t('message.create_a_new_terminal')}}.</p>
+                <p>{{ $t("message.create_a_new_terminal") }}.</p>
               </div>
 
               <ValidationForm @submit="onSubmit" class="mt-10">
@@ -57,7 +57,7 @@
                     <label
                       for="name"
                       class="block text-sm font-medium text-gray-700"
-                      >{{$t('message.name')}}</label
+                      >{{ $t("message.name") }}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -76,7 +76,7 @@
                     <label
                       for="serial-number"
                       class="block text-sm font-medium text-gray-700"
-                      >{{$t('message.serial_number')}}</label
+                      >{{ $t("message.serial_number") }}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -100,7 +100,7 @@
                     <label
                       for="note"
                       class="block text-sm font-medium text-gray-700"
-                      >{{$t('message.note')}}</label
+                      >{{ $t("message.note") }}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -119,7 +119,7 @@
                 <button
                   class="mt-10 w-full rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700"
                 >
-                    {{$t('message.create')}}
+                  {{ $t("message.create") }}
                 </button>
               </ValidationForm>
             </DialogPanel>

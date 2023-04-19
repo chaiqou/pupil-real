@@ -1,7 +1,9 @@
 <template>
   <div class="min-w-[30vw] sm:mt-20 xl:px-4">
     <form @submit.prevent="onSubmit">
-      <p class="mb-2 text-center text-xl font-black">{{$t('message.create_a_new_lunch_plan')}}</p>
+      <p class="mb-2 text-center text-xl font-black">
+        {{ $t("message.create_a_new_lunch_plan") }}
+      </p>
       <BaseInput
         v-model="store.title"
         name="Title"
@@ -16,7 +18,7 @@
         rules="required|min:3|max:100"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
-        >{{$t('message.active_range')}}
+        >{{ $t("message.active_range") }}
       </label>
       <Datepicker
         closeOnScroll
@@ -40,7 +42,7 @@
         rules="required"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
-        >{{$t('message.claimables')}}
+        >{{ $t("message.claimables") }}
       </label>
       <Multiselect
         v-model="store.claimables"
@@ -61,7 +63,7 @@
       <BaseInput
         v-model="store.price_period"
         name="Price Period"
-        :label="$t('message.price_for_period')+` (${$t('message.gross')})`"
+        :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
         rules="required"
       />
@@ -76,7 +78,7 @@
               : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           "
         >
-            {{$t('message.calculate_after_fees')}}
+          {{ $t("message.calculate_after_fees") }}
         </button>
       </div>
       <BaseInput
@@ -85,7 +87,13 @@
         :label="$t('message.buffer_time')"
         type="number"
         rules="required|minNumber:1|maxNumber:72"
-        :placeholder="$t('message.from')+' 1 '+$t('message.to')+' 72 '+$t('message.hours')"
+        :placeholder="
+          $t('message.from') +
+          ' 1 ' +
+          $t('message.to') +
+          ' 72 ' +
+          $t('message.hours')
+        "
       />
       <Button :text="$t('message.save_lunch')" />
     </form>
