@@ -166,5 +166,5 @@ composer require laravel/sail --dev
 
 ## Service Interaction Map
 
-![Service Integration](./readme/applicationSchema.svg)
+![Service Integration](./readme/applicationSchema.png)
 <br />
