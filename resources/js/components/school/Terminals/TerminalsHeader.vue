@@ -3,10 +3,9 @@
     <div class="sm:flex sm:items-center">
       <div class="flex items-end justify-between sm:flex-auto">
         <div>
-          <h1 class="text-xl font-semibold text-gray-900">All Terminals</h1>
+          <h1 class="text-xl font-semibold text-gray-900">{{$t('message.all_terminals')}}</h1>
           <p class="mt-2 text-sm text-gray-700">
-            A list of all terminals depend to your school including terminal
-            name, serial number, private and public keys.
+            {{$t('message.a_list_of_all_terminals_depend_to_your_school_including_terminal_name_serial_number_private_and_public_keys')}}.
           </p>
         </div>
         <span
@@ -27,7 +26,7 @@
               d="M12 6v12m6-6H6"
             />
           </svg>
-          <p class="ml-1.5">Create a new terminal</p>
+          <p class="ml-1.5">{{$t('message.create_a_new_terminal')}}</p>
         </span>
       </div>
     </div>

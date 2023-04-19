@@ -17,25 +17,25 @@
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Name
+              {{$t('message.name')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Serial number
+              {{$t('message.serial_number')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Note
+              {{$t('message.note')}}
           </th>
           <th
             scope="col"
             class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
           >
-            Public key
+              {{$t('message.public_key')}}
           </th>
         </tr>
       </thead>

@@ -186,6 +186,33 @@ const hu = {
         to: "to HU",
         hours: "hours HU",
         save_lunch: "Save Lunch HU",
+        type: "Type HU",
+        date: "Date HU",
+        transaction_type: "Transaction type HU",
+        transaction_date: "Transaction date HU",
+        merchant_nickname: "Merchant nickname HU",
+        pending: "Pending HU",
+        comment: "Comment HU",
+        a_list_of_all_invites_depend_to_your_school_including_their_email_invite_state_and_send_date_update_date:
+            "A list of all invites depend to your school including their email, invite state and send date/update date HU",
+        this_email_is_already_has_a_pending_invite:
+            "This email is already has a pending invite HU",
+        this_email_is_already_signed_up:
+            "This email is already signed up HU",
+        all_terminals: "All terminals HU",
+        a_list_of_all_terminals_depend_to_your_school_including_terminal_name_serial_number_private_and_public_keys:
+            "A list of all terminals depend to your school including terminal name, serial number, private and public keys HU",
+        create_a_new_terminal: "Create a new terminal HU",
+        note: "Note HU",
+        public_key: "Public key HU",
+        no_terminals: "No terminals HU",
+        no_available_terminals_at_the_moment: "No available terminals at the moment HU",
+        serial_number: "Serial number HU",
+        create: "Create HU",
+        open_pupilpos_on_your_terminal_or_soft_post_device:
+            "Open \"PupilPOS\" on your terminal or SoftPOS device HU",
+        scan_the_qr_code_visible_below: "Scan the QR Code visible below HU",
+        continue_in_the_pupilpos_app: "Continue in the PupilPOS App HU"
     },
 };
 

@@ -46,7 +46,7 @@
                 </button>
               </div>
               <div class="absolute top-0 left-0 hidden pt-4 pl-4 sm:block">
-                <p>Create a new terminal.</p>
+                <p>{{$t('message.create_a_new_terminal')}}.</p>
               </div>
 
               <ValidationForm @submit="onSubmit" class="mt-10">
@@ -57,7 +57,7 @@
                     <label
                       for="name"
                       class="block text-sm font-medium text-gray-700"
-                      >Name</label
+                      >{{$t('message.name')}}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -69,9 +69,6 @@
                         autocomplete="name"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
-                      <ErrorMessage name="name" class="text-sm text-red-500">
-                        <p class="text-sm text-red-500">name is required</p>
-                      </ErrorMessage>
                     </div>
                   </div>
 
@@ -79,7 +76,7 @@
                     <label
                       for="serial-number"
                       class="block text-sm font-medium text-gray-700"
-                      >Serial number</label
+                      >{{$t('message.serial_number')}}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -95,9 +92,6 @@
                         name="serial_number"
                         class="text-sm text-red-500"
                       >
-                        <p class="text-sm text-red-500">
-                          serial number is required
-                        </p>
                       </ErrorMessage>
                     </div>
                   </div>
@@ -106,7 +100,7 @@
                     <label
                       for="note"
                       class="block text-sm font-medium text-gray-700"
-                      >Note</label
+                      >{{$t('message.note')}}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -118,9 +112,6 @@
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                       <ErrorMessage name="note" class="text-sm text-red-500">
-                        <p class="text-sm text-red-500">
-                          this field is required
-                        </p>
                       </ErrorMessage>
                     </div>
                   </div>
@@ -128,7 +119,7 @@
                 <button
                   class="mt-10 w-full rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700"
                 >
-                  Create
+                    {{$t('message.create')}}
                 </button>
               </ValidationForm>
             </DialogPanel>

@@ -48,56 +48,56 @@
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
                     <div class="flex">
-                      <p class="font-bold">First name:</p>
+                      <p class="font-bold">{{$t('message.first_name')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.student.first_name }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Last name:</p>
+                      <p class="font-bold">{{$t('message.last_name')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.student.last_name }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Amount:</p>
+                      <p class="font-bold">{{$t('message.amount')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.amount }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Transaction type:</p>
+                      <p class="font-bold">{{$t('message.transaction_type')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.transaction_type }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Transaction date:</p>
+                      <p class="font-bold">{{$t('message.transaction_date')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.transaction_date }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Merchant Nickname:</p>
+                      <p class="font-bold">{{$t('message.merchant_nickname')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.merchant.merchant_nick }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Pending:</p>
+                      <p class="font-bold">{{$t('message.pending')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.pending }}
                       </p>
                     </div>
 
                     <div class="flex">
-                      <p class="font-bold">Comment:</p>
+                      <p class="font-bold">{{$t('message.comment')}}:</p>
                       <p class="ml-3">
                         {{ this.transaction.comment }}
                       </p>

@@ -185,6 +185,35 @@ const en = {
         to: "to",
         hours: "hours",
         save_lunch: "Save Lunch",
+        type: "Type",
+        date: "Date",
+        transaction_type: "Transaction type",
+        transaction_date: "Transaction date",
+        merchant_nickname: "Merchant nickname",
+        pending: "Pending",
+        comment: "Comment",
+        a_list_of_all_invites_depend_to_your_school_including_their_email_invite_state_and_send_date_update_date:
+        "A list of all invites depend to your school including their email, invite state and send date/update date",
+        this_email_is_already_has_a_pending_invite:
+        "This email is already has a pending invite",
+        this_email_is_already_signed_up:
+        "This email is already signed up",
+        all_terminals: "All Terminals",
+        a_list_of_all_terminals_depend_to_your_school_including_terminal_name_serial_number_private_and_public_keys:
+        "A list of all terminals depend to your school including terminal name, serial number, private and public keys",
+        create_a_new_terminal: "Create a new terminal",
+        note: "Note",
+        public_key: "Public key",
+        no_terminals: "No terminals",
+        no_available_terminals_at_the_moment: "No available terminals at the moment",
+        serial_number: "Serial number",
+        create: "Create",
+        open_pupilpos_on_your_terminal_or_soft_post_device:
+        "Open \"PupilPOS\" on your terminal or SoftPOS device",
+        scan_the_qr_code_visible_below: "Scan the QR Code visible below",
+        continue_in_the_pupilpos_app: "Continue in the PupilPOS App"
+
+
 
 
 
