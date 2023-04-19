@@ -1,6 +1,6 @@
 <template>
   <label class="text-md flex whitespace-normal font-bold text-gray-600"
-    >Vat %
+    >{{ $t("message.vat") }} %
   </label>
   <Multiselect
     v-model="store.vat"

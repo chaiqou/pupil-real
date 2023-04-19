@@ -9,19 +9,19 @@
             scope="col"
             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
           >
-            Name
+            {{ $t("message.name") }}
           </th>
           <th
             scope="col"
             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
           >
-            Amount
+            {{ $t("message.amount") }}
           </th>
           <th
             scope="col"
             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
           >
-            Merchant
+            {{ $t("message.merchant") }}
           </th>
         </tr>
       </thead>
@@ -32,47 +32,44 @@
           </td>
         </tr>
         <template v-if="this.isTransactionsLoaded && this.transactions.length">
-            <tr
-                v-for="transaction in transactions"
-                :key="transaction.id"
+          <tr v-for="transaction in transactions" :key="transaction.id">
+            <td
+              class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
             >
-                <td
-                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-                >
-                    {{ transaction.student.first_name }}
-                    <p class="text-[11px] text-gray-400">
-                        {{ transaction.transaction_date }}
-                    </p>
-                </td>
-                <td
-                    class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
-                >
-                    {{ transaction.amount || "none" }}
-                    <p class="text-[11px] text-gray-400">
-                        {{ transaction.transaction_type }}
-                    </p>
-                </td>
-                <td
-                    class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
-                >
-                    {{ transaction.merchant.merchant_nick }}
-                </td>
-            </tr>
+              {{ transaction.student.first_name }}
+              <p class="text-[11px] text-gray-400">
+                {{ transaction.transaction_date }}
+              </p>
+            </td>
+            <td
+              class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
+            >
+              {{ transaction.amount || "none" }}
+              <p class="text-[11px] text-gray-400">
+                {{ transaction.transaction_type }}
+              </p>
+            </td>
+            <td
+              class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900"
+            >
+              {{ transaction.merchant.merchant_nick }}
+            </td>
+          </tr>
         </template>
         <template v-if="!this.isTransactionsLoaded">
-            <tr v-for="n in 7" :key="n">
-                <td
-                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-                >
-                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <div class="h-2 animate-pulse rounded bg-slate-300"></div>
-                </td>
-            </tr>
+          <tr v-for="n in 7" :key="n">
+            <td
+              class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+            >
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+          </tr>
         </template>
       </tbody>
     </table>

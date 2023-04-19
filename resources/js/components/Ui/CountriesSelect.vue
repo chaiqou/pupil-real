@@ -1,8 +1,8 @@
 <template>
   <div class="sm:col-span-6">
-    <label for="country" class="block text-sm font-medium text-gray-700"
-      >{{$t('message.country')}}</label
-    >
+    <label for="country" class="block text-sm font-medium text-gray-700">{{
+      $t("message.country")
+    }}</label>
     <div class="mt-1">
       <Field v-model="this.countrySelect" rules="required" name="country">
         <select
@@ -12,7 +12,7 @@
           autocomplete="country-name"
           class="block w-full rounded-md border-gray-300 px-4 py-1.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         >
-        <CountryOptions></CountryOptions>
+          <CountryOptions></CountryOptions>
         </select>
       </Field>
 
@@ -31,15 +31,15 @@ import CountryOptions from "@/components/Ui/CountryOptions.vue";
 
 export default {
   components: {
-      CountryOptions,
+    CountryOptions,
     ErrorMessage,
     Field,
   },
   computed: {
     ...mapWritableState(useGlobalStore, ["countrySelect"]),
   },
-    mounted() {
-      this.countrySelect = "HU";
-    },
+  mounted() {
+    this.countrySelect = "HU";
+  },
 };
 </script>

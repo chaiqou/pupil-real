@@ -19,7 +19,7 @@
           <button @click="handleDeleteInviteRequest" class="flex flex-col">
             <div class="flex justify-between">
               <h1 v-for="item in items" :key="item" class="font-normal">
-                {{ item }}
+                {{ $t("message." + item) }}
               </h1>
               <span class="text-gray-900"> </span>
             </div>
@@ -75,7 +75,7 @@ export default {
       required: true,
     },
     role: {
-      // admin, school or parent
+      // admin, merchant or parent
       type: String,
       required: true,
     },

@@ -12,9 +12,9 @@
         v-if="store.lunches.length < 32"
         :class="[store.lunches.length === 0 ? 'h-68' : 'h-48']"
       >
-        <span class="text-md mt-6 block font-medium text-gray-900"
-          >Add Lunch</span
-        >
+        <span class="text-md mt-6 block font-medium text-gray-900">{{
+          $t("message.add_lunch")
+        }}</span>
       </a>
       <li
         v-for="lunch in store.lunches"
@@ -55,7 +55,7 @@
                     new Date(),
                   )
                 }}
-                days left</span
+                {{ $t("message.days_left") }}</span
               >
             </a>
           </div>

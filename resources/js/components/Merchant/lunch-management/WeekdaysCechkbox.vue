@@ -1,6 +1,8 @@
 <template>
   <div>
-    <label class="text-md font-bold text-gray-600">Weekdays</label>
+    <label class="text-md font-bold text-gray-600">{{
+      $t("message.weekdays")
+    }}</label>
     <div class="grid grid-cols-3 gap-3 text-center sm:grid-cols-7">
       <ul v-for="day in dayOptions" :key="day">
         <li>
@@ -19,7 +21,7 @@
             class="text-md flex cursor-pointer items-center rounded-lg border-2 border-gray-200 bg-white px-3 py-2 text-left font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:ring-2 peer-checked:ring-indigo-500 peer-checked:ring-offset-2 xl:w-full"
           >
             <h1 class="mx-auto flex text-center md:-mx-1 lg:mx-auto">
-              {{ day.name }}
+              {{ $t("message." + day.name) }}
             </h1>
           </label>
         </li>
@@ -64,12 +66,12 @@ const toggleWeekdays = (day) => {
 };
 
 const dayOptions = [
-  { name: "M", fullName: "Monday", index: 1 },
-  { name: "T", fullName: "Tuesday", index: 2 },
-  { name: "W", fullName: "Wednesday", index: 3 },
-  { name: "T", fullName: "Thursday", index: 4 },
-  { name: "F", fullName: "Friday", index: 5 },
-  { name: "S", fullName: "Saturday", index: 6 },
-  { name: "S", fullName: "Sunday", index: 0 },
+  { name: "m", fullName: "Monday", index: 1 },
+  { name: "t", fullName: "Tuesday", index: 2 },
+  { name: "w", fullName: "Wednesday", index: 3 },
+  { name: "t", fullName: "Thursday", index: 4 },
+  { name: "f", fullName: "Friday", index: 5 },
+  { name: "s", fullName: "Saturday", index: 6 },
+  { name: "s", fullName: "Sunday", index: 0 },
 ];
 </script>

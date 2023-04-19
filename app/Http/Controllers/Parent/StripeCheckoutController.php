@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Parent;
 
-use App\Events\TransactionCreated;
 use App\Helpers\CalculateClaims;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
@@ -41,7 +40,7 @@ class StripeCheckoutController extends Controller
         $claimResult = $calculateClaims->calculateClaimsJson();
 
         // STRIPE
-        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         $customer = auth()->user();
 
@@ -113,7 +112,10 @@ class StripeCheckoutController extends Controller
             });
         }
 
+<<<<<<< HEAD
+=======
         DB::transaction(function () use ($student, $lunch, $pricePeriod, $claimResult, $validate) {
+>>>>>>> main
             $checkout_session_id = session('checkout_session');
 
             $pending_transaction = PendingTransaction::create([
@@ -163,22 +165,26 @@ class StripeCheckoutController extends Controller
             if (! $pending_transaction || ! $lunch) {
                 DB::rollBack();
             }
-        });
 
         $checkout_session_id = session('checkout_session');
 
+<<<<<<< HEAD
+        return response()->json(['url' => $checkout_session->url]);
+=======
         return response()->json($checkout_session_id);
+>>>>>>> main
     }
 
     public function success(Request $request): View
     {
-        Stripe::setApiKey(config('stripe_secret_key'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
             $session_id = $request->get('session_id');
             $session = Session::retrieve($session_id);
 
             $pending_transaction = PendingTransaction::query()->where('stripe_session_id', $session_id)->first();
+            // dd($pending_transaction);
             $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
             $customer = auth()->user();
 
@@ -191,7 +197,7 @@ class StripeCheckoutController extends Controller
                     'merchant_id' => $pending_transaction->merchant_id,
                     'transaction_identifier' => 'here_should_be_some_hash',
                     'transaction_date' => now()->format('Y-m-d'),
-                    'transaction_amount' => $validate['price'],
+                    'transaction_amount' => 1,
                     'transaction_type' => 'payment',
                     'comments' => json_encode([
                         'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
@@ -220,7 +226,6 @@ class StripeCheckoutController extends Controller
                     PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['transaction_id' => $transaction->id]);
                     PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->update(['pending_transactions_id' => null]);
                     PendingTransaction::where('id', $pending_transaction->id)->delete();
-                    event(new TransactionCreated($transaction));
                 }
 
                 if (! $transaction) {
@@ -244,7 +249,7 @@ class StripeCheckoutController extends Controller
 
     public function cancel(Request $request)
     {
-        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('services.stripe.secret'));
         $session_id = $request->get('session_id');
         $session = Session::retrieve($session_id);
 
@@ -257,7 +262,7 @@ class StripeCheckoutController extends Controller
         $order->lunch_title = Lunch::where('id', $order->lunch_id)->first()->title;
 
         if ($pending_transaction && $session->status === 'open') {
-            $stripe = new StripeClient(getenv('STRIPE_SECRET_KEY'));
+            $stripe = new StripeClient(config('services.stripe.secret'));
 
             $stripe->checkout->sessions->expire(
                 $session_id,
@@ -278,7 +283,7 @@ class StripeCheckoutController extends Controller
 
     public function webhook()
     {
-        Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('services.stripe.secret'));
         $endpoint_secret = 'whsec_dba703edd0b062ce10cd089ef984e5b240e310e1dcb35bb50e962ebb83345c44';
 
         $payload = @file_get_contents('php://input');
