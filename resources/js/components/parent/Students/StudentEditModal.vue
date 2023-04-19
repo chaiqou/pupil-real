@@ -170,7 +170,7 @@
                             autocomplete="country-name"
                             class="block w-full rounded-md border-gray-300 px-4 py-1.5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           >
-                       <CountryOptions></CountryOptions>
+                            <CountryOptions></CountryOptions>
                           </select>
                         </Field>
 

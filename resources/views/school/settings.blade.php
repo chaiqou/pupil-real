@@ -1,4 +1,5 @@
 @extends('layouts.dashboard')
 @section('content')
-    <h1>Settings</h1>
+
+    <school-settings user-id="{{json_encode($user->id)}}"></school-settings>
 @endsection

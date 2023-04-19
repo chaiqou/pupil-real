@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('schools', 'admin')->name('admin.schools');
                 Route::get('school/{school_id}/merchants', 'admin')->name('admin.merchants');
                 Route::get('/school/{school_id}/merchant-invites', 'admin')->name('admin.merchant-invites');
+                Route::get('settings', 'admin')->name('admin.settings');
             });
         });
     });
@@ -103,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('lunch-management/{lunch_id}/edit', 'school')->name('school.lunch-management-edit');
                 Route::get('terminals', 'school')->name('school.terminals');
                 Route::get('menu-management', 'school')->name('school.menu-management');
+                Route::get('settings', 'school')->name('school.settings');
             });
         });
     });

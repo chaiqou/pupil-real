@@ -6,36 +6,29 @@ configure({
 });
 
 defineRule("required", (value, { field }) => {
-    return !(!value || !value.length);
-
+  return !(!value || !value.length);
 });
 
 defineRule("email", (value) => {
-    const regexEmail =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    return regexEmail.test(value);
-
+  const regexEmail =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return regexEmail.test(value);
 });
 
 defineRule("min", (value, [limit]) => {
   return value.length >= limit;
-
 });
 
 defineRule("max", (value, [limit]) => {
   return value.length <= limit;
-
 });
 
 defineRule("minNumber", (value, [limit]) => {
   return +value >= limit;
-
 });
 
 defineRule("maxNumber", (value, [limit]) => {
   return +value <= limit;
-
-
 });
 
 defineRule("minWordsThree", (value) => {
@@ -49,14 +42,13 @@ defineRule("minWordsThree", (value) => {
 defineRule("phone", (value) => {
   const regexPhoneNumber = /^\+(?:[0-9] ?){6,14}[0-9]$/;
   return regexPhoneNumber.test(value);
-
 });
 
-defineRule('confirmed', (value, { target }) => {
-    return value === target;
+defineRule("confirmed", (value, { target }) => {
+  return value === target;
 });
 
-defineRule('upperAndLower', (value) => {
-    const regex = /^(?=.*?[A-Z])(?=.*?[a-z]).+$/;
-    return regex.test(value);
+defineRule("upperAndLower", (value) => {
+  const regex = /^(?=.*?[A-Z])(?=.*?[a-z]).+$/;
+  return regex.test(value);
 });

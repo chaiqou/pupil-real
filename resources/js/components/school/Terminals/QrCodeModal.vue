@@ -36,11 +36,18 @@
               class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
             >
               <div>
-                <h1>Details:</h1>
+                <h1>{{ $t("message.details") }}:</h1>
                 <div class="mb-2 rounded-md bg-gray-400 p-3 text-sm text-white">
-                  <p>1. Open "PupilPOS" on your terminal or SoftPOS device.</p>
-                  <p>2. Scan the QR Code visible below.</p>
-                  <p>3. Continue in the PupilPOS App.</p>
+                  <p>
+                    1.
+                    {{
+                      $t(
+                        "message.open_pupilpos_on_your_terminal_or_soft_post_device",
+                      )
+                    }}.
+                  </p>
+                  <p>2. {{ $t("message.scan_the_qr_code_visible_below") }}.</p>
+                  <p>3. {{ $t("message.continue_in_the_pupilpos_app") }}.</p>
                 </div>
               </div>
               <div class="flex items-center justify-center">

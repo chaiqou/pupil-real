@@ -32,10 +32,10 @@ class UserSeeder extends Seeder
             ]),
             'email' => 'admin@gmail.com',
             'password' => bcrypt('adminadmin'),
-            'language' => 'en'
+            'language' => 'en',
         ])->assignRole('admin');
 
-          $admin = User::create([
+        $admin = User::create([
             'first_name' => 'Main',
             'last_name' => 'Admin',
             'school_id' => null,

@@ -13,7 +13,11 @@
   </div>
 
   <TransitionRoot as="template" :show="this.isTwoFactorVisible">
-    <DialogComponent as="div" class="relative z-10" @close="showHideTwoFactor()">
+    <DialogComponent
+      as="div"
+      class="relative z-10"
+      @close="showHideTwoFactor()"
+    >
       <TransitionChild
         as="template"
         enter="ease-out duration-300"

@@ -10,6 +10,7 @@ class ChangePassword extends Command
     protected $signature = 'user:change-password';
 
     protected $description = 'Change password of an already registered user';
+
     public function handle()
     {
         $email = $this->ask('What is the email of the user?');

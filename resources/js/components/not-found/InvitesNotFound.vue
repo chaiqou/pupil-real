@@ -1,14 +1,26 @@
 <template>
   <div class="flex w-full flex-col items-center justify-center py-10">
     <ListBulletIcon class="h-10 w-10"></ListBulletIcon>
-    <h3 class="mt-2 text-sm font-medium text-gray-900">
-      This school does not have any merchants invited, invite some to get
-      started
+    <h3
+      class="mt-2 text-sm font-medium text-gray-900"
+      v-if="invite === 'merchant'"
+    >
+      {{
+        $t(
+          "message.this_school_does_not_have_any_merchants_invited_invite_some_to_get_started",
+        )
+      }}
     </h3>
-    <p class="mt-1 text-sm text-gray-500" v-if="role === 'school'">
-      Your school does not have any merchants invited, invite some to get
-      started
-    </p>
+    <h3
+      class="mt-2 text-sm font-medium text-gray-900"
+      v-if="invite === 'parent'"
+    >
+      {{
+        $t(
+          "message.this_school_does_not_have_any_parents_invited_invite_some_to_get_started",
+        )
+      }}
+    </h3>
   </div>
 </template>
 
@@ -20,9 +32,9 @@ export default {
     ListBulletIcon,
   },
   props: {
-    role: {
+    invite: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 };

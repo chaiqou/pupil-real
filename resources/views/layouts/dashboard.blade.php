@@ -55,4 +55,12 @@
         threshold: 0,
         once: true,
     });
+    // We are getting the user param from the controller, and here we have checks to always have the same locale as we have in our DB
+    window.language = "{{$user ? $user->language : null}}"
+    if(!window.language) {
+        localStorage.getItem("i18n") ? window.language = localStorage.getItem("i18n") : 'en';
+    }
+    // We save this language param into the localstorage, so after this our language changers start to work, other function of this
+    // is into the useGlobalStore and i18n config
+    localStorage.setItem("i18n", language);
 </script>

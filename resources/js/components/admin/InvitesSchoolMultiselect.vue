@@ -9,7 +9,7 @@
       :max="1"
       :limit="-1"
       valueProp="id"
-      placeholder="Select one"
+      :placeholder="$t('message.select_one')"
       track-by="name"
       label="name"
       :searchable="true"

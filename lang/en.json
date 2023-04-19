@@ -5,5 +5,14 @@
     "The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter.",
     "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
     "setup_account": "Setup Account",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "all_students": "All Students",
+    "manage_invites": "Manage invites",
+    "a_list_of_all_the_students_of_all_the_schools_including_their_name_transaction_amount_type_date_and_merchant_nickname":
+        "A list of all the students of all the schools including their name, transaction amount/type/date and merchant nickname",
+    "all_transactions": "All transactions",
+    "a_list_of_all_the_transactions_depend_to_your_school_including_students_name_transaction_amount_type_date_and_merchant_nickname":
+        "A list of all the transactions depend to your school, including students name, transaction amount/type/date and merchant nickname",
+    "a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname":
+        "A list of all the students depend to your school including their name, transaction amount/type/date and merchant nickname",
 }

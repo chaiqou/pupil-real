@@ -4,8 +4,9 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto flex items-end justify-between">
                <div>
-                   <h1 class="text-xl font-semibold text-gray-900">All Students</h1>
-                   <p class="mt-2 text-sm text-gray-700">A list of all the students depend to your school including their name, transaction amount/type/date and merchant nickname.</p>
+                   <h1 class="text-xl font-semibold text-gray-900">{{__('all_students')}}</h1>
+                   <p class="mt-2 text-sm text-gray-700">
+                   {{__('a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname')}}.</p>
                </div>
                 <div>
                     <a href="{{route('school.invite')}}" class="hidden md:flex bg-blue-600 hover:bg-blue-700 w-fit rounded-md text-white px-4 py-2 items-center">
