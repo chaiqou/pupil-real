@@ -3,7 +3,7 @@
     class="flex max-h-screen flex-col justify-center overflow-hidden bg-inherit"
   >
     <label class="text-md mt-2 flex whitespace-normal font-bold text-gray-600"
-      >Extras and Holds
+      >{{$t('message.extras_and_holds')}}
     </label>
     <div class="rounded-md bg-inherit">
       <div class="mt-6 flow-root">
@@ -23,7 +23,7 @@
               </div>
               <div class="min-w-0 flex-1">
                 <p class="truncate text-sm font-medium text-gray-900">
-                  Extra period
+                    {{$t('message.extra_period')}}
                 </p>
                 <p class="truncate text-sm text-gray-500">
                   {{ `${extra[0]} - ${extra[1]}` }}
@@ -35,7 +35,7 @@
                   @click="removeExtra(extraIdx, extra)"
                   class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                 >
-                  Remove
+                    {{$t('message.remove')}}
                 </button>
               </div>
             </div>
@@ -51,7 +51,7 @@
               </div>
               <div class="min-w-0 flex-1">
                 <p class="truncate text-sm font-medium text-gray-900">
-                  Hold period
+                    {{$t('message.hold_period')}}
                 </p>
                 <p class="truncate text-sm text-gray-500">
                   {{ `${hold[0]} - ${hold[1]}` }}
@@ -63,7 +63,7 @@
                   @click="removeHold(holdIdx, hold)"
                   class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
                 >
-                  Remove
+                    {{$t('message.remove')}}
                 </button>
               </div>
             </div>
@@ -90,7 +90,7 @@
           <p
             class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
           >
-            Add extra
+              {{$t('message.add_extra')}}
           </p>
         </template>
       </Datepicker>
@@ -112,7 +112,7 @@
           <p
             class="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
           >
-            Add holds
+              {{$t('message.add_holds')}}
           </p>
         </template>
       </Datepicker>
