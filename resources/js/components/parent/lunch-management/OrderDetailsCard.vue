@@ -9,7 +9,7 @@
         <!-- Order summary -->
         <section aria-labelledby="summary-heading">
           <h2 id="summary-heading" class="text-lg font-medium text-gray-900">
-            Order summary
+            {{ $t("message.order_summary") }}
           </h2>
           <template
             v-if="
@@ -20,7 +20,9 @@
           >
             <dl class="mt-6 space-y-4">
               <div class="flex items-center justify-between">
-                <dt class="text-sm text-gray-600">Lunch Dates</dt>
+                <dt class="text-sm text-gray-600">
+                  {{ $t("message.lunch_dates") }}
+                </dt>
                 <dd class="text-sm font-medium text-gray-900">
                   {{ firstAndLastDay }}
                 </dd>
@@ -29,7 +31,7 @@
                 class="flex items-center justify-between border-t border-gray-200 pt-4"
               >
                 <dt class="flex items-center text-sm text-gray-600">
-                  <span>Period length</span>
+                  <span> {{ $t("message.period_length") }}</span>
                   <BaseTooltip
                     content="Big Content here Big Content here Big Content here Big Content here for testing"
                     placement="top"
@@ -45,7 +47,7 @@
                 class="flex items-center justify-between border-t border-gray-200 pt-4"
               >
                 <dt class="flex text-sm text-gray-600">
-                  <span>Claimables</span>
+                  <span> {{ $t("message.claimables") }}</span>
                   <BaseTooltip
                     content="Small content here for testing"
                     placement="top"
@@ -58,14 +60,14 @@
                   </BaseTooltip>
                 </dt>
                 <dd class="text-sm font-medium text-gray-900">
-                  {{ props.claimables.length }} / Day
+                  {{ props.claimables.length }} / {{ $t("message.day") }}
                 </dd>
               </div>
               <div
                 class="flex items-center justify-between border-t border-gray-200 pt-4"
               >
                 <dt class="flex items-center text-sm text-gray-600">
-                  Claimable days
+                  {{ $t("message.claimable_days") }}
                 </dt>
                 <dd class="text-sm font-medium text-gray-900">
                   <p>
@@ -76,7 +78,9 @@
               <div
                 class="flex items-center justify-between border-t border-gray-200 pt-4"
               >
-                <dt class="text-base font-medium text-gray-900">Order total</dt>
+                <dt class="text-base font-medium text-gray-900">
+                  {{ $t("message.order_total") }}
+                </dt>
                 <dd class="text-base font-medium text-gray-900">
                   ${{ props.price }}
                 </dd>
@@ -89,7 +93,7 @@
                 @click="payWithOnlineHandler"
               >
                 <CardIcon />
-                Pay Online
+                {{ $t("message.pay_online") }}
               </button>
             </div>
             <div class="mt-2">
@@ -98,13 +102,16 @@
                 class="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <BankIcon />
-                Pay with transfer
+                {{ $t("message.pay_with_transfer") }}
               </button>
             </div>
           </template>
           <p class="mt-2 text-sm text-gray-500 lg:mb-12">
-            Bank transfers usually take a few hours, or in some cases a few days
-            to process.
+            {{
+              $t(
+                "message.bank_transfers_usually_take_a_few_hours_or_in_some_cases_a_few_days_to_process",
+              )
+            }}.
           </p>
         </section>
       </div>

@@ -6,49 +6,49 @@
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
         >
-          Last name
+          {{ $t("message.last_name") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          First name
+          {{ $t("message.first_name") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          Middle name
+          {{ $t("message.middle_name") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          Country
+          {{ $t("message.country") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          State
+          {{ $t("message.state") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          City
+          {{ $t("message.city") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          Address
+          {{ $t("message.address") }}
         </th>
         <th
           scope="col"
           class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
         >
-          Zip
+          {{ $t("message.zip") }}
         </th>
         <th
           scope="col"
@@ -111,7 +111,7 @@
               "
               class="text-indigo-600 hover:text-indigo-900"
             >
-              Edit
+              {{ $t("message.edit") }}
             </button>
           </td>
         </tr>

@@ -15,13 +15,13 @@
             {{ month.name }} {{ month.year }}
           </h2>
           <div class="mt-6 grid grid-cols-7 text-xs leading-6 text-gray-500">
-            <div>M</div>
-            <div>T</div>
-            <div>W</div>
-            <div>T</div>
-            <div>F</div>
-            <div>S</div>
-            <div>S</div>
+            <div>{{ $t("message.m") }}</div>
+            <div>{{ $t("message.t") }}</div>
+            <div>{{ $t("message.w") }}</div>
+            <div>{{ $t("message.t") }}</div>
+            <div>{{ $t("message.f") }}</div>
+            <div>{{ $t("message.s") }}</div>
+            <div>{{ $t("message.s") }}</div>
           </div>
           <div
             class="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"

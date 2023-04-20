@@ -25,13 +25,13 @@ class NavigationController extends Controller
             // use lower case characters into the name with snake case (even if it is subpage, just for sure, even tho it is no need for it for subpages), because in DashboardNavigation vue we use translates (localization)
             $navigation =
                 [
-                    ['name' => 'Dashboard', 'icon' => 'HomeIcon', 'href' => '/parent/dashboard/'.$student->id, 'current' => false],
-                    ['name' => 'Transactions', 'icon' => 'ListBulletIcon', 'href' => '/parent/transactions/'.$student->id, 'current' => false],
-                    ['name' => 'Knowledge base', 'icon' => 'BookOpenIcon', 'href' => '/parent/knowledge-base/'.$student->id, 'current' => false],
-                    ['name' => 'Settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
-                    ['name' => 'Available Lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
-                    ['name' => 'Lunch Details', 'icon' => 'none', 'href' => '/parent/lunch-details/'.$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'Available Lunches'],
-                    ['name' => 'Menus', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menus/'.$student->id, 'current' => false],
+                    ['name' => 'dashboard', 'icon' => 'HomeIcon', 'href' => '/parent/dashboard/'.$student->id, 'current' => false],
+                    ['name' => 'transactions', 'icon' => 'ListBulletIcon', 'href' => '/parent/transactions/'.$student->id, 'current' => false],
+                    ['name' => 'knowledge_base', 'icon' => 'BookOpenIcon', 'href' => '/parent/knowledge-base/'.$student->id, 'current' => false],
+                    ['name' => 'available_lunches', 'icon' => 'CakeIcon', 'href' => '/parent/available-lunches/'.$student->id, 'current' => false],
+                    ['name' => 'lunch_details', 'icon' => 'none', 'href' => '/parent/lunch-details/'.$student->id, 'current' => false, 'hidden' => true, 'parentPage' => 'available_lunches'],
+                    ['name' => 'menus', 'icon' => 'ClipboardDocumentListIcon', 'href' => '/parent/menus/'.$student->id, 'current' => false],
+                    ['name' => 'settings', 'icon' => 'Cog8ToothIcon', 'href' => '/parent/settings/'.$student->id, 'current' => false],
                 ];
         }
 

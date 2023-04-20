@@ -4,7 +4,7 @@
       @click="showHideChangePassword()"
       class="rounded-md border border-transparent bg-red-600 p-2.5 shadow-sm hover:bg-red-700"
     >
-      Change Password
+      {{ $t("message.change_password") }}
     </button>
   </div>
 
@@ -56,11 +56,15 @@
               <DialogTitle
                 as="h3"
                 class="text-center text-lg font-medium leading-6 text-gray-900"
-                >Change password</DialogTitle
+                >{{ $t("message.change_password") }}</DialogTitle
               >
               <div class="mt-2 text-center">
                 <p class="text-sm text-gray-500">
-                  Always use a password that you can easily remember.
+                  {{
+                    $t(
+                      "message.always_use_a_password_that_you_can_easily_remember",
+                    )
+                  }}.
                 </p>
               </div>
               <ValidationForm
@@ -72,7 +76,7 @@
                     <label
                       for="password"
                       class="block text-sm font-medium text-gray-700"
-                      >Password</label
+                      >{{ $t("message.password") }}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -98,7 +102,7 @@
                     <label
                       for="confirmation"
                       class="block text-sm font-medium text-gray-700"
-                      >Repeat password</label
+                      >{{ $t("message.repeat_password") }}</label
                     >
                     <div class="mt-1">
                       <Field
@@ -129,7 +133,7 @@
                       class="mt-7 inline-flex min-w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       <span class="flex items-center">
-                        Save
+                        {{ $t("message.save") }}
                         <SpinnerAnimation
                           v-if="passwordUpdatingStatus === 'ongoing'"
                           class="absolute"

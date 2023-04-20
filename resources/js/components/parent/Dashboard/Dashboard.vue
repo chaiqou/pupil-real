@@ -3,7 +3,7 @@
     <div class="grid-area-1">1</div>
     <div class="grid-area-2">
       <div class="w-full lg:w-[45rem]">
-        <h1 class="my-5 p-5 text-xl">Last transactions</h1>
+        <h1 class="my-5 p-5 text-xl">{{ $t("message.last_transactions") }}</h1>
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
@@ -22,7 +22,7 @@
     <div class="grid-area-3">3</div>
     <div class="grid-area-4">
       <div class="grid-area-1">
-        <h1 class="mt-5 p-5 text-xl">Spendings</h1>
+        <h1 class="mt-5 p-5 text-xl">{{ $t("message.spendings") }}</h1>
         <dl
           v-if="this.isWeekSpendingLoaded && this.isMonthSpendingLoaded"
           class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"
@@ -31,7 +31,7 @@
             class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
           >
             <dt class="truncate text-sm font-medium text-gray-500">
-              Last week total spending
+              {{ $t("message.last_week_total_spending") }}
             </dt>
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"
@@ -43,7 +43,7 @@
             class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
           >
             <dt class="truncate text-sm font-medium text-gray-500">
-              Last month total spending
+              {{ $t("message.last_month_total_spending") }}
             </dt>
             <dd
               class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"

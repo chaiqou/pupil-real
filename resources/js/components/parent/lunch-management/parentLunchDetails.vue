@@ -3,10 +3,10 @@
     <template v-if="hideTableInformation">
       <div>
         <h3 class="mt-20 text-lg font-medium leading-6 text-gray-900">
-          Lunch Information
+          {{ $t("message.lunch_information") }}
         </h3>
         <p class="mt-1 max-w-2xl text-sm text-gray-500">
-          Current lunch details.
+          {{ $t("message.current_lunch_details") }}.
         </p>
       </div>
       <div class="mt-5 border-t border-gray-200">
@@ -16,25 +16,33 @@
           class="sm:divide-y sm:divide-gray-200"
         >
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Title</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.title") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{ lunch.title }}
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Description</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.description") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{ lunch.description }}
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Period length</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.period_length") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{ lunch.period_length }}
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Weekdays</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.weekdays") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <div
                 class="flex"
@@ -46,7 +54,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Active range</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.active_range") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{
                 `${format(parseISO(lunch.active_range.at(0)), "yyyy MMM dd")} -
@@ -55,7 +65,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Claimables</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.claimables") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <div
                 class="flex"
@@ -67,7 +79,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Holds</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.holds") }}
+            </dt>
             <dd
               v-for="holds in lunch.holds"
               :key="holds"
@@ -80,7 +94,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Extras</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.extras") }}
+            </dt>
             <dd
               v-for="extras in lunch.extras"
               :key="extras"
@@ -97,7 +113,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Available days</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.available_days") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <div
                 class="flex"
@@ -109,7 +127,9 @@
             </dd>
           </div>
           <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-            <dt class="text-sm font-medium text-gray-500">Price period</dt>
+            <dt class="text-sm font-medium text-gray-500">
+              {{ $t("message.price_period") }}
+            </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               {{ lunch.price_period }}
             </dd>
@@ -131,7 +151,7 @@
             class="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-base font-medium text-white"
           >
             <p v-if="disableIfDatesLessThenPeriodLength">
-              Period not enough for ordering lunch
+              {{ $t("message.period_not_enough_for_ordering_lunch") }}
             </p>
             <p
               v-if="
@@ -140,7 +160,9 @@
               class="text-center"
             >
               {{
-                "Order starting at " + format(store.first_day, "yyyy MMMM dd")
+                $t("message.order_starting_at") +
+                " " +
+                format(store.first_day, "yyyy MMMM dd")
               }}
             </p>
           </button>
