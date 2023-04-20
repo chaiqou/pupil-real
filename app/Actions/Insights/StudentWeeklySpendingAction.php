@@ -2,8 +2,8 @@
 
 namespace App\Actions\Insights;
 
-use Carbon\Carbon;
 use App\Models\PendingTransaction;
+use Carbon\Carbon;
 
 class StudentWeeklySpendingAction
 {

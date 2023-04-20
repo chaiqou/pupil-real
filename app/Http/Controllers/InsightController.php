@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\Merchant;
-use Illuminate\Http\JsonResponse;
-use App\Actions\Insights\InsightStatistics;
 use App\Actions\Insights\ActiveStudentsAction;
 use App\Actions\Insights\AverageTransactionAction;
 use App\Actions\Insights\PendingTransactionAction;
 use App\Actions\Insights\StudentWeeklySpendingAction;
+use App\Models\Merchant;
+use App\Models\Student;
+use Illuminate\Http\JsonResponse;
 
 class InsightController extends Controller
 {
