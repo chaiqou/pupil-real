@@ -4,7 +4,7 @@
   <div class="m-10">
     <h1>{{ $t("message.change_language") }}</h1>
     <div class="mt-2 w-32">
-      <SetLanguage :user-id="this.userId"></SetLanguage>
+      <SetLanguage :userId="userId"></SetLanguage>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   },
   props: {
     userId: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

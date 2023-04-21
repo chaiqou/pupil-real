@@ -1,5 +1,5 @@
 <template>
-  <label for="language" class="sr-only">Country</label>
+  <label for="language" class="sr-only">Language</label>
   <select
     v-model="language"
     @change="
@@ -26,7 +26,7 @@ export default {
   },
   props: {
     userId: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

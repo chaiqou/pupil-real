@@ -11,7 +11,7 @@ defineRule("required", (value, { field }) => {
 
 defineRule("email", (value) => {
   const regexEmail =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    /^(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~]+(?:\.[a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~]+)*@(?:(?!-)[a-zA-Z0-9\-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$/;
   return regexEmail.test(value);
 });
 
