@@ -24,7 +24,7 @@ class InviteController extends Controller
 
     public function getInviteEmails(Request $request): JsonResponse
     {
-        $invites = Invite::where('school_id', $request->school_id)->get();
+        $invites = Invite::all();
         $emails = [];
 
         foreach ($invites as $invite) {
@@ -36,7 +36,7 @@ class InviteController extends Controller
 
     public function getUserEmails(Request $request): JsonResponse
     {
-        $users = User::where('school_id', $request->school_id)->get();
+        $users = User::all();
         $emails = [];
 
         foreach ($users as $user) {
