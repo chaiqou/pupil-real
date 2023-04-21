@@ -418,21 +418,28 @@ export default {
         });
     },
     handlePaste(event) {
-      const pastedValue = event.clipboardData.getData("text");
-      if (pastedValue.length === 6 && /^\d+$/.test(pastedValue)) {
-        const codeArray = pastedValue.split("");
-        for (let i = 0; i < codeArray.length; i++) {
-          this.verification_code[i] = codeArray[i];
+      const inputs = document.querySelectorAll('input[id^="sc-"]');
+      const inputsFilled = Array.from(inputs).every((input) => input.value);
+
+      if (!inputsFilled) {
+        // Only allow paste if all inputs are empty
+        const pastedValue = event.clipboardData.getData("text");
+        if (pastedValue.length === 6 && /^\d+$/.test(pastedValue)) {
+          const codeArray = pastedValue.split("");
+          for (let i = 0; i < codeArray.length; i++) {
+            this.verification_code[i] = codeArray[i];
+            inputs[i].value = codeArray[i];
+          }
         }
-      }
-      document.getElementById("sc-6").focus();
-      // Check if all inputs are filled
-      if (this.verification_code.every((code) => code)) {
-        window.onPasteTimeout = setTimeout(() => {
-          this.onSubmit();
-        }, 2300);
-      } else {
-        document.getElementById("sc-1").focus();
+        document.getElementById("sc-6").focus();
+        // Check if all inputs are filled
+        if (this.verification_code.every((code) => code)) {
+          window.onPasteTimeout = setTimeout(() => {
+            this.onSubmit();
+          }, 2300);
+        } else {
+          document.getElementById("sc-1").focus();
+        }
       }
       event.preventDefault();
     },
@@ -481,11 +488,12 @@ export default {
     },
 
     stepBack(evtobj, i) {
-      //If sender pressed backspace, reset sc-i and focus on sc-i-1
+      // If sender pressed backspace, reset sc-i and focus on sc-i-1
       clearTimeout(window.onPasteTimeout);
       clearTimeout(window.onInputTimeout);
       if (evtobj.keyCode === 8) {
-        document.getElementById("sc-" + i).value = "";
+        const currentInput = document.getElementById("sc-" + i);
+        currentInput.value = "";
         if (i > 1) {
           const prevInput = document.getElementById("sc-" + (i - 1));
           if (prevInput) {
