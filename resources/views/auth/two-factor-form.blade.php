@@ -127,27 +127,31 @@
         }
 
         //Listen to paste event
-        document.addEventListener('paste', function(e) {
-            var pastedText = e.clipboardData.getData('text/plain');
-            //wait a second, then paste it
-            if (pastedText.length === 6) {
-                setTimeout(function() {
-                    var sc = document.getElementById("sc-1");
-                    sc.value = pastedText.substring(0, 1);
-                    sc = document.getElementById("sc-2");
-                    sc.value = pastedText.substring(1, 2);
-                    sc = document.getElementById("sc-3");
-                    sc.value = pastedText.substring(2, 3);
-                    sc = document.getElementById("sc-4");
-                    sc.value = pastedText.substring(3, 4);
-                    sc = document.getElementById("sc-5");
-                    sc.value = pastedText.substring(4, 5);
-                    sc = document.getElementById("sc-6");
-                    sc.value = pastedText.substring(5, 6);
-                }, 300);
-                window.onPasteTimeout = setTimeout(function () {
-                   document.twoFaForm.submit()
-                }, 2300);
+        document.addEventListener('paste', function (event) {
+            const inputs = document.querySelectorAll('input[id^="sc-"]');
+            const verificationCode = [];
+            const inputsFilled = Array.from(inputs).every((input) => input.value);
+
+            if (!inputsFilled) {
+                // Only allow paste if all inputs are empty
+                const pastedValue = event.clipboardData.getData("text");
+                if (pastedValue.length === 6 && /^\d+$/.test(pastedValue)) {
+                    const codeArray = pastedValue.split("");
+                    for (let i = 0; i < codeArray.length; i++) {
+                        verificationCode[i] = codeArray[i];
+                        inputs[i].value = codeArray[i];
+                    }
+                }
+                document.getElementById("sc-6").focus();
+                // Check if all inputs are filled
+                if (verificationCode.every((code) => code)) {
+                    window.onPasteTimeout = setTimeout(() => {
+                        onSubmit();
+                    }, 2300);
+                } else {
+                    document.getElementById("sc-1").focus();
+                }
+                event.preventDefault();
             }
         });
 
@@ -172,12 +176,18 @@
         }
 
         function stepBack(evtobj, i) {
-            //If sender pressed backspace, reset sc-i and focus on sc-i-1
-            clearTimeout(window.onInputTimeout);
+            // If sender pressed backspace, reset sc-i and focus on sc-i-1
             clearTimeout(window.onPasteTimeout);
+            clearTimeout(window.onInputTimeout);
             if (evtobj.keyCode === 8) {
-                document.getElementById('sc-' + i).value = ''
-                document.getElementById('sc-' + (i - 1)).focus()
+                const currentInput = document.getElementById("sc-" + i);
+                currentInput.value = "";
+                if (i > 1) {
+                    const prevInput = document.getElementById("sc-" + (i - 1));
+                    if (prevInput) {
+                        prevInput.focus();
+                    }
+                }
             }
         }
     </script>
