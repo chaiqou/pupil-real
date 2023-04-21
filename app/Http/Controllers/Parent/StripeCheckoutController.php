@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Parent;
 
-use App\Helpers\CalculateClaims;
+use App\Actions\Claims\CalculateClaimObjectAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
 use App\Models\Lunch;
@@ -35,9 +35,7 @@ class StripeCheckoutController extends Controller
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
 
-        // Claims
-        $calculateClaims = new CalculateClaims(['claims' => $validate['claims'], 'claimables' => $validate['claimables']]);
-        $claimResult = $calculateClaims->calculateClaimsJson();
+        $claimArray = CalculateClaimObjectAction::execute($validate);
 
         // STRIPE
         Stripe::setApiKey(config('services.stripe.secret'));
@@ -47,8 +45,8 @@ class StripeCheckoutController extends Controller
         $existingCustomer = User::where('id', $customer->id)->where('stripe_customer_id', '!=', null)->first();
 
         if ($existingCustomer != null) {
-            $formattedStartDate = new DateTime($claimResult['claimDates'][0]);
-            $formattedEndDate = new DateTime($claimResult['claimDates'][count($claimResult['claimDates']) - 1]);
+            $formattedStartDate = new DateTime($claimArray['claimDates'][0]);
+            $formattedEndDate = new DateTime($claimArray['claimDates'][count($claimArray['claimDates']) - 1]);
             $formattedStartDate = $formattedStartDate->format('Y-m-d');
             $formattedEndDate = $formattedEndDate->format('Y-m-d');
             $checkout_session = Session::create([
@@ -111,7 +109,7 @@ class StripeCheckoutController extends Controller
                 }
             });
         }
-        
+
             $checkout_session_id = session('checkout_session');
 
             $pending_transaction = PendingTransaction::create([
@@ -133,7 +131,7 @@ class StripeCheckoutController extends Controller
                 'payment_method' => 'stripe',
                 'billing_type' => 'invoice',
                 'billing_items' => json_encode([
-                    'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
+                    'name' => 'Test lunch '.$claimArray['claimDates'][0].' - '.$claimArray['claimDates'][count($claimArray['claimDates']) - 1],
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',
                     'quantity' => 1,
@@ -152,9 +150,9 @@ class StripeCheckoutController extends Controller
                 'merchant_id' => $lunch->merchant_id,
                 'lunch_id' => $validate['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $claimResult['claimDates'][0],
-                'end_date' => $claimResult['claimDates'][count($claimResult['claimDates']) - 1],
-                'claims' => json_encode($claimResult['claimJson']),
+                'start_date' => $claimArray['claimDates'][0],
+                'end_date' => $claimArray['claimDates'][count($claimArray['claimDates']) - 1],
+                'claims' => json_encode($claimArray['claimJson']),
                 'payment' => 'outstanding',
             ]);
 
