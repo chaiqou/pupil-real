@@ -111,11 +111,7 @@ class StripeCheckoutController extends Controller
                 }
             });
         }
-
-<<<<<<< HEAD
-=======
-        DB::transaction(function () use ($student, $lunch, $pricePeriod, $claimResult, $validate) {
->>>>>>> main
+        
             $checkout_session_id = session('checkout_session');
 
             $pending_transaction = PendingTransaction::create([
@@ -168,11 +164,7 @@ class StripeCheckoutController extends Controller
 
         $checkout_session_id = session('checkout_session');
 
-<<<<<<< HEAD
         return response()->json(['url' => $checkout_session->url]);
-=======
-        return response()->json($checkout_session_id);
->>>>>>> main
     }
 
     public function success(Request $request): View
