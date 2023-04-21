@@ -255,8 +255,8 @@ export default {
   },
   methods: {
     addTag(event) {
-      const regexEmail = /^\w+(-?\w+)*@\w+(-?\w+)*(\.\w{2,3})+$/;
-
+      const regexEmail =
+        /^(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~]+(?:\.[a-zA-Z0-9!#$%&'*+\-/=?^_`{|}~]+)*@(?:(?!-)[a-zA-Z0-9\-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$/;
       if (event.code === "Comma" || event.code === "Enter") {
         event.preventDefault();
         const emailTag = event.target.value.trim().toLowerCase();
