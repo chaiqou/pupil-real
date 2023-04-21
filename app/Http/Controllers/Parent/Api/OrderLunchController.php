@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use App\Actions\Claims\CalculateClaimObjectAction;
+use App\Actions\Claims\CalculateClaimsArrayAction;
 use App\Actions\Claims\UpdateFixedClaimIfMenuExistsAction;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
@@ -33,7 +33,7 @@ class OrderLunchController extends Controller
         $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validated['lunch_id'])->first();
 
-        $claimsArray = CalculateClaimObjectAction::execute([
+        $claimsArray = CalculateClaimsArrayAction::execute([
             'claims' => $validated['claim_days'],
             'claimables' => $validated['claimables'],
         ]);

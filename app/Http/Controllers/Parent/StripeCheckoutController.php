@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Parent;
 
-use App\Actions\Claims\CalculateClaimObjectAction;
+use App\Actions\Claims\CalculateClaimsArrayAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
 use App\Models\Lunch;
@@ -35,7 +35,7 @@ class StripeCheckoutController extends Controller
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
 
-        $claimArray = CalculateClaimObjectAction::execute($validate);
+        $claimArray = CalculateClaimsArrayAction::execute($validate);
 
         // STRIPE
         Stripe::setApiKey(config('services.stripe.secret'));

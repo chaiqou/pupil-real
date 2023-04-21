@@ -5,9 +5,9 @@ namespace App\Actions\Claims;
 use DateInterval;
 use DateTime;
 
-class CalculateClaimObjectAction
+class CalculateClaimsArrayAction
 {
-    public static function execute(array $validate)
+    public static function execute(array $validate): array
     {
 
         $claimDates = [];
