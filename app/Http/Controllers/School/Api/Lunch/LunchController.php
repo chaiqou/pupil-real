@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\School\Api\Lunch;
 
+use App\Actions\Calendars\FindWeekNumbersAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LunchRequest;
 use App\Http\Requests\School\ClaimLunchRequest;
@@ -14,7 +15,6 @@ use App\Models\PeriodicLunch;
 use App\Models\School;
 use App\Models\Student;
 use App\Models\Terminal;
-use App\Services\CalendarService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,13 +22,6 @@ use Illuminate\Support\Facades\DB;
 
 class LunchController extends Controller
 {
-    protected $calendarService;
-
-    public function __construct(CalendarService $calendarService)
-    {
-        $this->calendarService = $calendarService;
-    }
-
     public function index()
     {
         if (auth()->user()->hasRole('school')) {
@@ -43,10 +36,10 @@ class LunchController extends Controller
             }
         }
 
-        $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($lunches);
+        $weekNumbers = FindWeekNumbersAction::execute($lunches);
         $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks, 'first_week' => $firstWeekOfCurrentMonth]);
+        return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function store(LunchRequest $request): JsonResponse
@@ -125,10 +118,10 @@ class LunchController extends Controller
             });
         }
 
-        $groupedByWeeks = $this->calendarService->groupAvailableDaysByWeek($filteredLunches);
+        $weekNumbers = FindWeekNumbersAction::execute($filteredLunches);
         $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $lunches, 'weeks' => $groupedByWeeks, 'first_week' => $firstWeekOfCurrentMonth]);
+        return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function retrieveStudents(StudentListRequest $request)

@@ -1,26 +1,20 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Actions\Claims;
 
 use DateInterval;
 use DateTime;
 
-class CalculateClaims
+class CalculateClaimsArrayAction
 {
-    private $validate;
-
-    public function __construct($validate)
+    public static function execute(array $validate): array
     {
-        $this->validate = $validate;
-    }
 
-    public function calculateClaimsJson()
-    {
         $claimDates = [];
 
         // Get correct claims days and add each of them 1 day
 
-        foreach ($this->validate['claims'] as $date) {
+        foreach ($validate['claims'] as $date) {
             $date = new DateTime($date);
             $date->add(new DateInterval('P1D'));
             $claimDates[] = $date->format('Y-m-d');
@@ -33,7 +27,7 @@ class CalculateClaims
         foreach ($claimDates as $date) {
             $claimables = [];
 
-            foreach ($this->validate['claimables'] as $claimable) {
+            foreach ($validate['claimables'] as $claimable) {
                 $claimables[] = [
                     'name' => $claimable,
                     'claimed' => false,
@@ -50,5 +44,6 @@ class CalculateClaims
             'claimDates' => $claimDates,
             'claimJson' => $claimJson,
         ];
+
     }
 }

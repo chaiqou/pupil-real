@@ -2,34 +2,26 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
+use App\Actions\Excel\FindExcelLunchesAction;
 use App\Exports\WeeklyOrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Lunch;
 use App\Models\PeriodicLunch;
-use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TotalOrdersExcelController extends Controller
 {
-    protected $excelService;
-
-    public function __construct(ExcelService $excelService)
-    {
-        $this->excelService = $excelService;
-    }
-
     public function totalOrdersExcel(Request $request)
     {
         $dayAndWeekJson = $request->query('dayAndWeek');
         $dayAndWeek = json_decode($dayAndWeekJson);
 
-        $excelService = new ExcelService();
-        $result = $excelService->findLunchesForExcelFile($dayAndWeek[0]->week);
+        $lunches = FindExcelLunchesAction::execute($dayAndWeek[0]->week);
 
         // Get the weekdays and filteredLunches
-        $weekDays = $result['weekDays'];
-        $lunches = $result['filteredLunches'];
+        $weekDays = $lunches['weekDays'];
+        $lunches = $lunches['filteredLunches'];
 
         // convert array to collection
         $lunchesCollection = collect($lunches);

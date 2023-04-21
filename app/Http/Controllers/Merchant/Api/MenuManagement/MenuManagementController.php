@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
-use App\Helpers\CreateMenuJson;
+use App\Actions\MenuManagement\CalculateMenusArrayAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
@@ -15,16 +15,15 @@ class MenuManagementController extends Controller
     public function createMenu(CreateMenuRequest $request)
     {
         $validated = $request->validated();
-        $createMenuInstance = new CreateMenuJson($validated);
-        $createdMenuJson = $createMenuInstance->calculateMenu();
+        $menusArray = CalculateMenusArrayAction::execute($validated);
 
         // If a Menu with the same date and lunch_id already exists in the database, model will not be created
         $menu = LunchMenu::firstOrCreate([
-            'date' => array_keys($createdMenuJson)[0],
+            'date' => array_keys($menusArray)[0],
             'lunch_id' => $validated['lunch_id'],
         ], [
             // This array contains the default values to use when creating a new Menu
-            'menus' => json_encode($createdMenuJson),
+            'menus' => json_encode($menusArray),
         ]);
 
         // This updates fixed menu claims when we are creating menu AND student already have ordered lunch for this day
