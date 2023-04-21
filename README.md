@@ -196,7 +196,7 @@ To run a Composer command using Laravel Sail, run the following command:
 
 ## Resources
 
-- Drawsql - Work in progress
+- DrawSQL - [DrawSQL](https://drawsql.app/teams/redberry-llc/diagrams/pupilpay)
 - Documentation - [Documentation](https://pupilpay.youtrack.cloud/articles/PORTAL2)
 - Figma - Work in progress
 
