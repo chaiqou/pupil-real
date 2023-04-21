@@ -8,7 +8,11 @@
           : 'rounded-md bg-red-400 p-2.5 shadow-sm hover:bg-red-500'
       "
     >
-      {{ this.twoFa === 0 ? "Activate 2FA" : "Deactivate 2FA" }}
+      {{
+        this.twoFa === 0
+          ? $t("message.activate_2fa")
+          : $t("message.deactivate_2fa")
+      }}
     </button>
   </div>
 

@@ -45,7 +45,7 @@
                     new Date(),
                   )
                 }}
-                days left</span
+                {{ $t("message.days_left") }}</span
               >
             </a>
           </div>
@@ -57,7 +57,7 @@
                 class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-b-lg border border-transparent py-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-indigo-700 hover:text-white focus:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 @click="currentLunchEditId(lunch.id)"
               >
-                Details
+                {{ $t("message.details") }}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
