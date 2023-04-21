@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Parent\Api;
 
-use App\Helpers\CalculateClaims;
+use App\Actions\Claims\CalculateClaimsArrayAction;
+use App\Actions\Claims\UpdateFixedClaimIfMenuExistsAction;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
@@ -10,7 +11,6 @@ use App\Models\Lunch;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
-use App\Services\ClaimService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,10 +33,12 @@ class OrderLunchController extends Controller
         $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validated['lunch_id'])->first();
 
-        $calculateClaims = new CalculateClaims(['claims' => $validated['claim_days'], 'claimables' => $validated['claimables']]);
-        $claimResult = $calculateClaims->calculateClaimsJson();
+        $claimsArray = CalculateClaimsArrayAction::execute([
+            'claims' => $validated['claim_days'],
+            'claimables' => $validated['claimables'],
+        ]);
 
-        DB::transaction(function () use ($student, $validated, $claimResult, $pricePeriod, $lunch) {
+        DB::transaction(function () use ($student, $validated, $claimsArray, $pricePeriod, $lunch) {
             $pending_transaction = PendingTransaction::create([
                 'user_id' => $student->user_id,
                 'student_id' => $student->id,
@@ -55,7 +57,7 @@ class OrderLunchController extends Controller
                 'payment_method' => 'bank_transfer',
                 'billing_type' => 'proforma',
                 'billing_items' => json_encode([
-                    'name' => 'Test lunch '.$claimResult['claimDates'][0].' - '.$claimResult['claimDates'][count($claimResult['claimDates']) - 1],
+                    'name' => 'Test lunch '.$claimsArray['claimDates'][0].' - '.$claimsArray['claimDates'][count($claimsArray['claimDates']) - 1],
                     'unit_price' => $pricePeriod,
                     'unit_price_type' => 'gross',
                     'quantity' => 1,
@@ -75,13 +77,13 @@ class OrderLunchController extends Controller
                 'merchant_id' => $lunch->merchant_id,
                 'lunch_id' => $validated['lunch_id'],
                 'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => reset($claimResult['claimDates']),
-                'end_date' => end($claimResult['claimDates']),
-                'claims' => json_encode($claimResult['claimJson']),
+                'start_date' => reset($claimsArray['claimDates']),
+                'end_date' => end($claimsArray['claimDates']),
+                'claims' => json_encode($claimsArray['claimJson']),
             ]);
 
-            // This service method updates fixed claims if we have menu and after this we are ordering lunch
-            (new ClaimService())->updateFixedClaims($validated);
+            // updates fixed claims if we have menu and after this we are ordering lunch
+            UpdateFixedClaimIfMenuExistsAction::execute($validated);
 
             BillingoController::providePendingTransactionToBillingo($pending_transaction);
 
