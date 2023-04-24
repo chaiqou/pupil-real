@@ -56,7 +56,8 @@ class InviteController extends Controller
                 'school_id' => auth()->user()->school_id,
                 'role' => 'parent',
             ]);
-            InviteUserJob::dispatch($invite, $email)->onQueue('invite-users');
+            $language = config('app.locale');
+            InviteUserJob::dispatch($invite, $email, $language)->onQueue('invite-users');
             $invite->update(['state' => 1]);
         }
 

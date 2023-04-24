@@ -21,7 +21,7 @@ class InviteUserJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $invite, public $email)
+    public function __construct(public $invite, public $email, public $language)
     {
         //
     }
@@ -33,6 +33,6 @@ class InviteUserJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->email)->send(new InviteUserMail($this->invite));
+        Mail::to($this->email)->send(new InviteUserMail($this->invite, $this->language));
     }
 }

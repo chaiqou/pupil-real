@@ -17,7 +17,7 @@ class TwoFactorAuthenticationMail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year)
+    public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year, private string $language)
     {
     }
 
@@ -28,6 +28,10 @@ class TwoFactorAuthenticationMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mail.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
+        if ($this->language === 'hu') {
+            return $this->view('mail.hu.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
+        }
+
+        return $this->view('mail.en.two-factor-auth', ['code' => $this->code, 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device, 'year' => $this->year]);
     }
 }

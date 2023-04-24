@@ -54,7 +54,8 @@ class User extends Authenticatable implements CanResetPassword
             'invite_id' => $invite->id,
             'code' => random_int(100000, 999999),
         ]);
-        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
+        $language = $user->language;
+        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user, $language));
 
         return redirect()->route($route, ['uniqueID' => request()->uniqueID]);
     }
@@ -67,7 +68,8 @@ class User extends Authenticatable implements CanResetPassword
             'invite_id' => $invite->id,
             'code' => random_int(100000, 999999),
         ]);
-        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user));
+        $language = $user->language;
+        Mail::to($user->email)->send(new OnboardingVerification($verificationCode, $user, $language));
         $url = route($route, ['uniqueID' => request()->uniqueID]);
 
         return response()->json(['url' => $url]);
