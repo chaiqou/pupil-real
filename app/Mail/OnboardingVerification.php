@@ -17,7 +17,7 @@ class OnboardingVerification extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $inviteCode, public $user)
+    public function __construct(public $inviteCode, public $user, public $language)
     {
         //
     }
@@ -29,6 +29,10 @@ class OnboardingVerification extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mail.onboarding-verification')->subject('Verification for PupilPay');
+        if ($this->language === 'hu') {
+            return $this->view('mail.hu.onboarding-verification')->subject('Verification for PupilPay HU');
+        }
+
+        return $this->view('mail.en.onboarding-verification')->subject('Verification for PupilPay');
     }
 }

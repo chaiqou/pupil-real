@@ -56,7 +56,8 @@ class InviteController extends Controller
                 'school_id' => request('schoolId'),
                 'role' => 'parent',
             ]);
-            InviteUserJob::dispatch($invite, $email)->onQueue('invite-users');
+            $language = config('app.locale');
+            InviteUserJob::dispatch($invite, $email, $language)->onQueue('invite-users');
             $invite->update(['state' => 1]);
         }
         $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);

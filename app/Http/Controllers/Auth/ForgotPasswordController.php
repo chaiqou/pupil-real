@@ -37,7 +37,8 @@ class ForgotPasswordController extends Controller
         ]);
 
         $name = $user->first_name;
-        Mail::to($request->email)->send(new ForgotPasswordMail($token, $name, $this->getBrowserName(), $this->getDeviceName()));
+        $language = $user->language;
+        Mail::to($request->email)->send(new ForgotPasswordMail($token, $name, $this->getBrowserName(), $this->getDeviceName(), $language));
 
         return redirect()->route('forgot.redirect');
     }

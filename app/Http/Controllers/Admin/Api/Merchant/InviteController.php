@@ -39,7 +39,8 @@ class InviteController extends Controller
             'school_id' => request('schoolId'),
             'role' => 'merchant',
         ]);
-        Mail::to($invite->email)->send(new InviteMerchantMail($invite));
+        $language = config('app.locale');
+        Mail::to($invite->email)->send(new InviteMerchantMail($invite, $language));
         $invite->update(['state' => 1]);
         $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
 

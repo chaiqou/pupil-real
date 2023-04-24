@@ -16,7 +16,7 @@ class InviteMerchantMail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $invite)
+    public function __construct(public $invite, public $language)
     {
     }
 
@@ -27,6 +27,10 @@ class InviteMerchantMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('mail.invite-merchant')->subject('Invitation to PupilPay');
+        if ($this->language === 'hu') {
+            return $this->view('mail.hu.invite-merchant')->subject('Invitation to PupilPay HU');
+        }
+
+        return $this->view('mail.en.invite-merchant')->subject('Invitation to PupilPay');
     }
 }
