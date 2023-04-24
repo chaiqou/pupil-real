@@ -7,6 +7,7 @@
       <Field v-model="this.countrySelect" rules="required" name="country">
         <select
           v-model="this.countrySelect"
+          :disabled="!!this.isDisabled"
           id="country"
           name="country"
           autocomplete="country-name"
@@ -34,6 +35,12 @@ export default {
     CountryOptions,
     ErrorMessage,
     Field,
+  },
+  props: {
+    isDisabled: {
+      required: false,
+      default: false,
+    },
   },
   computed: {
     ...mapWritableState(useGlobalStore, ["countrySelect"]),

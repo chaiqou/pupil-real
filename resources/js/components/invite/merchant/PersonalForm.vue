@@ -204,7 +204,7 @@
           </div>
 
           <div class="sm:col-span-3">
-            <CountriesSelect></CountriesSelect>
+            <CountriesSelect :isDisabled="true"></CountriesSelect>
           </div>
 
           <div class="sm:col-span-6">

@@ -183,7 +183,10 @@
             id="billingo_api_key"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-          <ErrorMessage name="billing_api_key"></ErrorMessage>
+          <ErrorMessage
+            class="text-sm text-red-500"
+            name="billingo_api_key"
+          ></ErrorMessage>
         </div>
       </div>
       <ButtonForAxios
