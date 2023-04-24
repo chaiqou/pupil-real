@@ -48,7 +48,7 @@
       <tbody class="divide-y divide-gray-200 bg-white">
         <tr v-if="this.isInvitesLoaded && !this.invites.length">
           <td class="bg-white" colspan="7">
-            <InvitesNotFound role="parent"></InvitesNotFound>
+            <InvitesNotFound invite="parent"></InvitesNotFound>
           </td>
         </tr>
         <template v-if="this.isInvitesLoaded && this.invites.length">
