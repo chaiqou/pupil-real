@@ -105,6 +105,8 @@ import {
 import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
+const props = defineProps(["claimables"]);
+
 // Data
 
 const open = ref(true);
@@ -123,7 +125,7 @@ const saveWithShifting = () => {
       period_length: store.period_length,
       weekdays: store.weekdays,
       active_range: store.active_range,
-      claimables: store.claimables,
+      claimables: props.claimables,
       price_period: store.price_period,
       vat: store.vat,
       extras: store.extras,

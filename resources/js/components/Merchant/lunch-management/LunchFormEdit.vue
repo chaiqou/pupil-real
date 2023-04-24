@@ -240,7 +240,7 @@
         type="button"
         :text="$t('message.save_lunch')"
       />
-      <ConfirmationModal v-if="isOpen" />
+      <ConfirmationModal v-if="isOpen" :claimables="claimablesArray" />
     </form>
   </div>
 </template>
@@ -294,20 +294,7 @@ watch(
   },
 );
 
-// When we have custom values for claimables if we need fill input with custom values we need to update multiselectOptions array
-
 const claimablesArray = ref([]);
-
-watch(store, () => {
-  store.claimables.forEach((element) => {
-    claimablesArray.value = [...claimablesArray.value, ...element.split(" ")];
-  });
-
-  multiselectOptions.value = [
-    ...multiselectOptions.value,
-    ...claimablesArray.value,
-  ];
-});
 
 onMounted(() => {
   axios
@@ -327,6 +314,20 @@ onMounted(() => {
       store.lunch_id = response.data.data.id;
       store.buffer_time = response.data.data.buffer_time;
       store.vat = response.data.data.vat;
+
+      // When we have custom values for claimables if we need fill input with custom values we need to update multiselectOptions array
+
+      store.claimables.forEach((element) => {
+        claimablesArray.value = [
+          ...claimablesArray.value,
+          ...element.split(" "),
+        ];
+      });
+
+      multiselectOptions.value = [
+        ...multiselectOptions.value,
+        ...claimablesArray.value,
+      ];
     });
 });
 
