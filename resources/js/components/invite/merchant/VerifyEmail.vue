@@ -232,7 +232,7 @@
             name="verification_code[0]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="1"
+            placeholder="*"
             v-model="verification_code[0]"
           />
           <Field
@@ -245,7 +245,7 @@
             name="verification_code[1]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="2"
+            placeholder="*"
             v-model="verification_code[1]"
           />
           <Field
@@ -258,7 +258,7 @@
             name="verification_code[2]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="3"
+            placeholder="*"
             v-model="verification_code[2]"
           />
           <Field
@@ -271,7 +271,7 @@
             name="verification_code[3]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="4"
+            placeholder="*"
             v-model="verification_code[3]"
           />
           <Field
@@ -284,7 +284,7 @@
             name="verification_code[4]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="5"
+            placeholder="*"
             v-model="verification_code[4]"
           />
           <Field
@@ -297,7 +297,7 @@
             name="verification_code[5]"
             @input="checkInputLengths()"
             class="mx-2 flex h-14 w-10 items-center rounded-lg border bg-gray-50 text-center font-mono text-xl uppercase"
-            placeholder="6"
+            placeholder="*"
             v-model="verification_code[5]"
           />
         </div>

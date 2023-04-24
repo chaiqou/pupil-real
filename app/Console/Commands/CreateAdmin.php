@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-class CreateUser extends Command
+class CreateAdmin extends Command
 {
-    protected $signature = 'user:create';
+    protected $signature = 'make:admin';
 
-    protected $description = 'Creates a new user';
+    protected $description = 'Creates a new admin';
 
     public function handle()
     {
-        $name = $this->ask('What should the username be?');
-        $email = $this->ask('What should the email be?');
+        $name = $this->ask('What should the admin username be?');
+        $email = $this->ask('What should the admin email be?');
         $password = $this->secret('What should the password be? (The input is hidden)');
-        $this->info('Creating the user...');
+        $this->info('Creating the admin...');
 
         if (User::where('email', $email)->first()) {
-            $this->error('User already exists!');
+            $this->error('Admin already exists!');
 
             return 1;
         }
@@ -28,8 +28,9 @@ class CreateUser extends Command
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),
+            'finished_onboarding' => 1,
         ])->assignRole('admin');
 
-        $this->info('User created successfully.');
+        $this->info('Admin created successfully.');
     }
 }
