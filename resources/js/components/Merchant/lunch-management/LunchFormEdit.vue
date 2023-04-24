@@ -8,14 +8,12 @@
         v-model="store.title"
         name="Title"
         :label="$t('message.title')"
-        rules="required|min:3|max:100"
       />
       <BaseInput
         v-model="store.description"
         inputType="textarea"
         name="Description"
         :label="$t('message.description')"
-        rules="required|min:3|max:100"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >{{ $t("message.active_range") }}
@@ -43,7 +41,6 @@
                 type="checkbox"
                 :value="day.fullName"
                 @input="toggleWeekdays(day)"
-                rules="required"
                 :id="day.fullName"
                 class="peer hidden"
                 v-model="store.weekdays"
@@ -192,23 +189,19 @@
         name="Period Length"
         :label="$t('message.period_length')"
         type="number"
-        rules="required"
       />
       <label class="text-md flex whitespace-normal font-bold text-gray-600"
         >{{ $t("message.claimables") }}
       </label>
       <Multiselect
-        :value="store.claimables"
-        v-model="store.claimables"
+        :value="claimablesArray"
+        v-model="claimablesArray"
         mode="tags"
         name="claimables"
         :limit="10"
         :max="10"
-        ref="multiselectRef"
         required
         autocomplete
-        appendNewOption
-        :createOption="true"
         :close-on-select="false"
         :searchable="true"
         :options="multiselectOptions"
@@ -220,7 +213,6 @@
         name="Price Period"
         :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
-        rules="required"
       />
       <div class="my-5">
         <button
@@ -241,14 +233,14 @@
         name="Buffer Time"
         :label="$t('message.buffer_time')"
         type="number"
-        rules="required|min:3|max:100"
+        required
       />
       <Button
         @click="isOpen = !isOpen"
         type="button"
         :text="$t('message.save_lunch')"
       />
-      <ConfirmationModal v-if="isOpen" />
+      <ConfirmationModal v-if="isOpen" :claimables="claimablesArray" />
     </form>
   </div>
 </template>
@@ -274,7 +266,6 @@ const store = useLunchFormStore();
 
 // Data
 
-const multiselectRef = ref(null);
 const isOpen = ref(false);
 const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
@@ -305,6 +296,8 @@ watch(
   },
 );
 
+const claimablesArray = ref([]);
+
 onMounted(() => {
   axios
     .get(`/school/lunch/${localStorage.getItem("lunchId")}`)
@@ -315,6 +308,7 @@ onMounted(() => {
       store.period_length = response.data.data.period_length;
       store.weekdays = response.data.data.weekdays;
       store.active_range = response.data.data.active_range;
+      store.marked_days = response.data.data.available_days;
       store.claimables = response.data.data.claimables;
       store.price_period = response.data.data.price_period;
       store.extras = response.data.data.extras;
@@ -322,6 +316,20 @@ onMounted(() => {
       store.lunch_id = response.data.data.id;
       store.buffer_time = response.data.data.buffer_time;
       store.vat = response.data.data.vat;
+
+      // When we have custom values for claimables if we need fill input with custom values we need to update multiselectOptions array
+
+      store.claimables.forEach((element) => {
+        claimablesArray.value = [
+          ...claimablesArray.value,
+          ...element.split(" "),
+        ];
+      });
+
+      multiselectOptions.value = [
+        ...multiselectOptions.value,
+        ...claimablesArray.value,
+      ];
     });
 });
 
@@ -516,7 +524,7 @@ const addActiveRange = (modelData) => {
 
 // Multiselect options and styles
 
-const multiselectOptions = [
+const multiselectOptions = ref([
   "Breakfast",
   "Lunch",
   "Dinner",
@@ -534,7 +542,7 @@ const multiselectOptions = [
   "Fingerfood",
   "Salsa",
   "Dip",
-];
+]);
 </script>
 
 <style src="@vueform/multiselect/themes/default.css" />

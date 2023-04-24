@@ -1,26 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\School;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LunchRequest extends FormRequest
+class StoreLunchRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
@@ -34,7 +19,7 @@ class LunchRequest extends FormRequest
             'weekdays' => 'required',
             'claimables' => 'required',
             'available_days' => 'array',
-            'buffer_time' => 'required',
+            'buffer_time' => ['required', 'integer', 'min:1', 'max:72'],
             'vat' => 'required',
         ];
     }

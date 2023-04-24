@@ -4,9 +4,9 @@ namespace App\Http\Controllers\School\Api\Lunch;
 
 use App\Actions\Calendars\FindWeekNumbersAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LunchRequest;
 use App\Http\Requests\School\ClaimLunchRequest;
 use App\Http\Requests\School\RetrieveLunchRequest;
+use App\Http\Requests\School\StoreLunchRequest;
 use App\Http\Requests\School\StudentListRequest;
 use App\Http\Resources\LunchResource;
 use App\Models\Lunch;
@@ -42,7 +42,7 @@ class LunchController extends Controller
         return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
-    public function store(LunchRequest $request): JsonResponse
+    public function store(StoreLunchRequest $request): JsonResponse
     {
         $validate = $request->validated();
 
@@ -84,7 +84,7 @@ class LunchController extends Controller
         return response()->json(['lunches' => $lunches]);
     }
 
-    public function update(LunchRequest $request, Lunch $lunch)
+    public function update(StoreLunchRequest $request, Lunch $lunch)
     {
         $validatedData = $request->validated();
 
