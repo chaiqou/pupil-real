@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Http\Requests\Auth\ForgotPasswordRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -28,7 +27,7 @@ class ForgotPasswordMail extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build(ForgotPasswordRequest $request)
+    public function build()
     {
         $action_link = route('password.reset', ['token' => $this->token]);
 
