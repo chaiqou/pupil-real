@@ -256,7 +256,7 @@
 <script setup>
 import { addYears, format, eachDayOfInterval, parseISO } from "date-fns";
 import { ref, onMounted, watch, computed } from "vue";
-import { Field, ErrorMessage, useField } from "vee-validate";
+import { Field, ErrorMessage, useField, useForm } from "vee-validate";
 import Multiselect from "@vueform/multiselect";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
@@ -280,6 +280,8 @@ const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
 const afterFeeCanBeCalculated = ref(false);
 
+// Add handleSubmit so useField can work
+const { handleSubmit } = useForm();
 const { value } = useField("Price Period");
 
 const afterFeesCalculate = () => {
