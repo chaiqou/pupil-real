@@ -194,17 +194,14 @@
         >{{ $t("message.claimables") }}
       </label>
       <Multiselect
-        :value="store.claimables"
-        v-model="store.claimables"
+        :value="claimablesArray"
+        v-model="claimablesArray"
         mode="tags"
         name="claimables"
         :limit="10"
         :max="10"
-        ref="multiselectRef"
         required
         autocomplete
-        appendNewOption
-        :createOption="true"
         :close-on-select="false"
         :searchable="true"
         :options="multiselectOptions"
@@ -269,7 +266,6 @@ const store = useLunchFormStore();
 
 // Data
 
-const multiselectRef = ref(null);
 const isOpen = ref(false);
 const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
@@ -297,6 +293,21 @@ watch(
     store.after_fees = "";
   },
 );
+
+// When we have custom values for claimables if we need fill input with custom values we need to update multiselectOptions array
+
+const claimablesArray = ref([]);
+
+watch(store, () => {
+  store.claimables.forEach((element) => {
+    claimablesArray.value = [...claimablesArray.value, ...element.split(" ")];
+  });
+
+  multiselectOptions.value = [
+    ...multiselectOptions.value,
+    ...claimablesArray.value,
+  ];
+});
 
 onMounted(() => {
   axios
@@ -510,7 +521,7 @@ const addActiveRange = (modelData) => {
 
 // Multiselect options and styles
 
-const multiselectOptions = [
+const multiselectOptions = ref([
   "Breakfast",
   "Lunch",
   "Dinner",
@@ -528,7 +539,7 @@ const multiselectOptions = [
   "Fingerfood",
   "Salsa",
   "Dip",
-];
+]);
 </script>
 
 <style src="@vueform/multiselect/themes/default.css" />
