@@ -108,7 +108,7 @@ onBeforeMount(() => {
 
   if (currentPath == targetPath) {
     axios.get("/api/school/lunch").then((response) => {
-      response.data.data.map((data) => {
+      response.data.lunches.data.map((data) => {
         if (localStorage.getItem("lunchId") == data.id) {
           store.marked_days.push(...data.available_days);
         }
