@@ -86,12 +86,6 @@ composer install
 npm install
 ```
 
-and also:
-
-```sh
-npm run dev
-```
-
 4\. Now we need to set our env file. Go to the root of your project and execute this command.
 
 ```sh
@@ -100,15 +94,7 @@ cp .env.example .env
 
 And now you should provide **.env** file all the necessary environment variables , If you want to run it with Sail, the corresponding values are specified as comments in .env.example
 
-after setting up **.env** file, execute:
-
-```sh
-php artisan config:cache
-```
-
-in order to cache environment variables.
-
-4\. Now execute in the root of you project following:
+5\. Now execute in the root of you project following:
 
 ```sh
   php artisan key:generate
@@ -122,10 +108,10 @@ Which generates auth key.
 
 ## Development
 
-Run octane server
+Run server
 
 ```sh
-  php artisan octane:start --watch
+  php artisan serv
 ```
 
 Run horizon for queue work
