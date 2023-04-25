@@ -1,6 +1,6 @@
 @extends('layouts.invite.merchant.onboarding-layout')
 @section('title')
-    Set up account | PupilPay
+    Set up Account | PupilPay
 @endsection
 @section('hide-language')
 @endsection

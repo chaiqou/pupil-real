@@ -4,11 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reset Password | PupilPay</title>
+    <title>{{session()->get('locale') === 'en' ? 'Reset password | PupilPay' : 'Reset password | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
 <body class="h-full">
+<div class="absolute top-0 right-0 mt-3 mr-4">
+    <label for="language" class="sr-only">Country</label>
+    <select
+        required
+        id="language"
+        name="language"
+        autocomplete="language"
+        class="relative block w-full appearance-none rounded-md border border-gray-300 py-2 pr-8 pl-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+
+        onchange="setLanguage(this.value)"
+    >
+        <option value="en" {{ (old('language') ?? session()->get('locale')) === 'en' ? 'selected' : '' }}>{{__('english')}}</option>
+        <option value="hu" {{ (old('language') ?? session()->get('locale')) === 'hu' ? 'selected' : '' }}>{{__('hungary')}}</option>
+    </select>
+</div>
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 "
     data-sal="slide-up"
         data-sal-duration="500"
@@ -17,7 +32,7 @@
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Reset your password</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Reset your password' : 'Reset your password HU'}}</h2>
             </div>
             @error('password')
                     <div class="rounded-md bg-red-50 p-4">
@@ -45,14 +60,14 @@
                         <label for="password" class="sr-only">Email address</label>
                         <input id="password" name="password" type="password" autocomplete="password"
                             class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="New password" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'New password' : 'New password HU'}}" />
                     </div>
                     <div>
                         <label for="password_confirmation" class="sr-only">Password</label>
                         <input id="password_confirmation" name="password_confirmation" type="password"
                             autocomplete="password_confirmation"
                             class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="Repeat new password" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'Repeat new password' : 'Repeat new password HU'}}" />
                     </div>
 
                 </div>
@@ -70,18 +85,27 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        Set new password
+                        {{session()->get('locale') === 'en' ? 'Set new password' : 'Set new password HU'}}
                     </button>
                 </div>
             </form>
         </div>
     </div>
     <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 sal({
     threshold: 0,
     once: true,
 });
+function setLanguage(language) {
+    axios.get(`/api/set-language-for-guest/${language}`).then((res) => {
+        localStorage.setItem('i18n', res.data.language);
+        window.location.reload();
+    })
+        .catch((err) => console.log(err))
+}
+
 </script>
 </body>
 
