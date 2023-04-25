@@ -16,4 +16,11 @@ class LanguageController extends Controller
 
         return response()->json(['language' => $locale]);
     }
+
+    public function setLocaleGuest(string $locale): JsonResponse
+    {
+        session()->put('locale', $locale);
+
+        return response()->json(['language' => $locale]);
+    }
 }

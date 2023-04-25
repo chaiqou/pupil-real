@@ -1,9 +1,4 @@
 {
-  "The :attribute must contain at least one letter.": "The :attribute must contain at least one letter. HU",
-  "The :attribute must contain at least one number.": "The :attribute must contain at least one number. HU",
-  "The :attribute must contain at least one symbol.": "The :attribute must contain at least one symbol. HU",
-  "The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter. HU",
-  "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute. HU",
   "setup_account": "HU",
   "dashboard": "Dashboard HU",
   "all_students": "All Students HU",
@@ -11,5 +6,7 @@
   "a_list_of_all_the_students_of_all_the_schools_including_their_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the students of all the schools including their name, transaction amount/type/date and merchant nickname HU",
   "all_transactions": "All transactions HU",
   "a_list_of_all_the_transactions_depend_to_your_school_including_students_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the transactions depend to your school, including students name, transaction amount/type/date and merchant nickname HU",
-  "a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the students depend to your school including their name, transaction amount/type/date and merchant nickname HU"
+  "a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the students depend to your school including their name, transaction amount/type/date and merchant nickname HU",
+  "english": "English HU",
+  "hungary": "Hungary HU"
 }

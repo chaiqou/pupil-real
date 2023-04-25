@@ -4,11 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign in | PupilPay</title>
+    <title>Sign in | PupilPay {{session()->get('locale') === 'en' ? 'Sign in | PupilPay' : 'Sign in | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
 <body class="h-full">
+<div class="absolute top-0 right-0 mt-3 mr-4">
+    <label for="language" class="sr-only">Country</label>
+    <select
+        required
+        id="language"
+        name="language"
+        autocomplete="language"
+        class="relative block w-full appearance-none rounded-md border border-gray-300 py-2 pr-8 pl-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+
+        onchange="setLanguage(this.value)"
+    >
+        <option value="en" {{ (old('language') ?? session()->get('locale')) === 'en' ? 'selected' : '' }}>{{__('english')}}</option>
+        <option value="hu" {{ (old('language') ?? session()->get('locale')) === 'hu' ? 'selected' : '' }}>{{__('hungary')}}</option>
+    </select>
+</div>
     <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8"
         data-sal="slide-up"
@@ -17,7 +32,7 @@
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? "Sign in to your Account" : "Sign in to your Account HU"}}</h2>
             </div>
             @if (session()->has('warning'))
             <div class="rounded-md bg-yellow-50 p-4">
@@ -51,7 +66,7 @@
                             @if (session()->has('error_title'))
                             {{ session()->get('error_title') }}
                             @else
-                            Authentication failed
+                                {{session()->get('locale') === 'en' ? 'Authentication failed' : 'Authentication failed HU'}}
                             @endif
                         </h3>
                         <div class="mt-2 text-sm text-red-700">
@@ -59,7 +74,7 @@
                                 @if (session()->has('error_message'))
                                 {{ session()->get('error_message') }}
                                 @else
-                                The email address or password you entered is incorrect.
+                                    {{session()->get('locale') === 'en' ? 'The email address or password you entered is incorrect' : 'The email address or password you entered is incorrect HU'}}.
                                 @endif
                             </p>
                         </div>
@@ -94,12 +109,12 @@
                         <label for="email-address" class="sr-only">Email address</label>
                         <input id="email-address" name="email" type="email" autocomplete="email" required
                             class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="Email address" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'Email address' : 'Email address HU'}}" />
                     </div>
                     <div class="flex">
                         <div class="w-full">
                             <label for="password" class="sr-only">Password</label>
-                            <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none rounded-bl-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none rounded-bl-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="{{session()->get('locale') === 'en' ? 'Password' : 'Password HU'}}" />
                         </div>
                         <button onmouseover="document.getElementById('password').type='text'" onmouseleave="document.getElementById('password').type='password'" type="button" class="relative -ml-px inline-flex items-center space-x-2 rounded-br-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <!-- Heroicon name: mini/eye -->
@@ -115,13 +130,12 @@
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox"
                             class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{session()->get('locale') === 'en' ? 'Remember me' : 'Remember me HU'}}</label>
                     </div>
 
                     <div class="text-sm text-right">
                         <a href="{{ route('forgot.form') }}"
-                            class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your
-                            password?</a>
+                            class="font-medium text-indigo-600 hover:text-indigo-500">{{session()->get('locale') === 'en' ? 'Forgot your password' : 'Forgot your password HU'}}?</a>
                     </div>
                 </div>
 
@@ -139,7 +153,7 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        Sign in
+                        {{session()->get('locale') === 'en' ? 'Sign in' : 'Sign in HU'}}
                     </button>
                 </div>
             </form>
@@ -148,11 +162,21 @@
         </div>
     </div>
     <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 sal({
     threshold: 0,
     once: true,
 });
+
+function setLanguage(language) {
+    axios.get(`/api/set-language-for-guest/${language}`).then((res) => {
+        localStorage.setItem('i18n', res.data.language);
+        window.location.reload();
+    })
+        .catch((err) => console.log(err))
+}
+
 </script>
 </body>
 

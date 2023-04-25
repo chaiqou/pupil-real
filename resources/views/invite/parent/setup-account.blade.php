@@ -1,6 +1,6 @@
 @extends('layouts.invite.parent.onboarding-layout')
 @section('title')
-    Set up account | PupilPay
+    Set up Account | Pupilpay
 @endsection
 @section('hide-language', true)
 @section('content')
