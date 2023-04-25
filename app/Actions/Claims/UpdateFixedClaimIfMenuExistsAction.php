@@ -16,8 +16,8 @@ class UpdateFixedClaimIfMenuExistsAction
         $day = Carbon::parse($date)->addDay()->format('Y-m-d');
         $lunch_menu = LunchMenu::where('date', $day)->first();
         $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")
-        ->where('student_id', $validated['student_id'])
-        ->first();
+            ->where('student_id', $validated['student_id'])
+            ->first();
 
         if ($lunch_menu && $periodic_lunch) {
             $claims_array = json_decode($periodic_lunch->claims, true);

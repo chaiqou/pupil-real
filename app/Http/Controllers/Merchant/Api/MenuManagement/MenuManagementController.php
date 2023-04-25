@@ -38,8 +38,8 @@ class MenuManagementController extends Controller
         // Updates choices menu claimables after order claimable menu
         $validated = $request->validated();
         $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$validated[date]%")
-        ->where('student_id', $validated['student_id'])
-        ->first();
+            ->where('student_id', $validated['student_id'])
+            ->first();
         $lunch_menu = LunchMenu::where('date', 'like', "%$validated[date]%")->first();
 
         $claims_array = json_decode($periodic_lunch->claims, true);

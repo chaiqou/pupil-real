@@ -46,6 +46,6 @@ class ForgotPasswordController extends Controller
     public function forgotRedirect(): View
     {
         return view('auth.redirect-template')
-        ->with(['header' => 'Email sent', 'title' => 'Check your email', 'description' => 'Check your email address for instructions on how to reset your password', 'small_description' => "If you can't find the email in a few minutes, check your spam folder."]);
+            ->with(['header' => 'Email sent', 'title' => 'Check your email', 'description' => 'Check your email address for instructions on how to reset your password', 'small_description' => "If you can't find the email in a few minutes, check your spam folder."]);
     }
 }

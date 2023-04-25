@@ -10,7 +10,7 @@ class PendingTransactionAction
     public static function execute($merchant): array|string
     {
         $pendingTransactions = PendingTransaction::where('merchant_id', $merchant->id)
-        ->get();
+            ->get();
     $pendingTransactionAmounts = [];
     $pendingTransactionDates = [];
 

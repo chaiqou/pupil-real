@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         }
 
         return view('auth.redirect-template')
-        ->with(['header' => 'Invalid token', 'title' => 'Invalid token', 'description' => 'Your request is either missing, using an invalid or expired token.', 'small_description' => ' Try requesting a new password reset.']);
+            ->with(['header' => 'Invalid token', 'title' => 'Invalid token', 'description' => 'Your request is either missing, using an invalid or expired token.', 'small_description' => ' Try requesting a new password reset.']);
     }
 
     public function passwordUpdate(Request $request): RedirectResponse
@@ -30,8 +30,8 @@ class ResetPasswordController extends Controller
                 'confirmed',
                 'string',
                 Password::min(8)
-                ->mixedCase()
-                ->numbers(),
+                    ->mixedCase()
+                    ->numbers(),
             ],
         ]);
         DB::transaction(function () use ($request) {
@@ -53,7 +53,7 @@ class ResetPasswordController extends Controller
     protected function checkIfTokenExists($request)
     {
         return DB::table('password_resets')
-        ->where(['token' => $request->token])
-        ->first();
+            ->where(['token' => $request->token])
+            ->first();
     }
 }

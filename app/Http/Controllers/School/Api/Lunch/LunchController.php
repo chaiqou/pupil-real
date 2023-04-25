@@ -78,8 +78,8 @@ class LunchController extends Controller
         $formatted_date = date('Y-m-d', strtotime($date));
 
         $lunches = DB::table('lunches')
-                ->whereJsonContains('available_days', $formatted_date)
-                ->get();
+            ->whereJsonContains('available_days', $formatted_date)
+            ->get();
 
         return response()->json(['lunches' => $lunches]);
     }
