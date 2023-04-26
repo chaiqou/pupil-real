@@ -32,37 +32,37 @@ PupilPay can easily be compared to gift card systems, let's take Starbucks for e
 
 #### Back-End
 
-- Laravel 9 - PHP framework
-- spatie/laravel-permission - A package for managing permissions and roles,
-- maatwebsite/excel - A PHP package for reading and writing spreadsheets in Excel format
+- Laravel 9 - PHP framework.
+- spatie/laravel-permission - A package for managing permissions and roles.
+- maatwebsite/excel - A PHP package for reading and writing spreadsheets in Excel format.
 - stripe/stripe-php - Stripe PHP library, which makes it easy to integrate with Stripe's API.
 - spiral/roadrunner - A high-performance PHP application server.
-- simplesoftwareio/simple-qrcode - A PHP package for generating QR codes
-- predis/predis - A flexible and feature-complete Redis client for PHP
-- laravel/horizon - A beautiful dashboard and code-driven configuration for Laravel Redis queues,
-- laravel/octane - A high-performance PHP application server for Laravel,
+- simplesoftwareio/simple-qrcode - A PHP package for generating QR codes.
+- predis/predis - A flexible and feature-complete Redis client for PHP.
+- laravel/horizon - A beautiful dashboard and code-driven configuration for Laravel Redis queues.
+- laravel/octane - A high-performance PHP application server for Laravel.
 - hisorange/browser-detect - A PHP library that detects the browser and operating system of the client.
-- sentry/sentry-laravel - The official Sentry SDK for Laravel, which provides real-time error tracking and performance monitoring,
+- sentry/sentry-laravel - The official Sentry SDK for Laravel, which provides real-time error tracking and performance monitoring.
 
 ### Front-End
 
-- Vue.js 3 - JavaScript framework for building user interfaces
-- Tailwind CSS 3 - CSS framework
-- Vite 3 - Front-end build tool
-- ApexCharts - Modern charting library
-- Date-fns - Date utility library
-- Vue-I18n - Internationalization library for Vue.js
-- Vue-Multiselect - Vue.js component for multi-select fields
-- Pinia - Intuitive, type safe store for Vue.js
-- vueuse - Collection of essential Vue 3 composition functions
-- qrcode.vue - Vue.js component for generating QR codes
-- vee-validate - Template-based validation framework for Vue.js
-- axios - Promise-based HTTP client
-- eslint - JavaScript linter
-- floating-ui/dom - A minimal and customizable UI library
-- headlessui/vue - Completely unstyled, fully accessible UI components
-- heroicons/vue - Beautiful hand-crafted SVG icons, by the makers of Tailwind CSS
-- sentry/tracing - Application performance monitoring
+- Vue.js 3 - JavaScript framework for building user interfaces.
+- Tailwind CSS 3 - CSS framework.
+- Vite 3 - Front-end build tool.
+- ApexCharts - Modern charting library.
+- Date-fns - Date utility library.
+- Vue-I18n - Internationalization library for Vue.js.
+- Vue-Multiselect - Vue.js component for multi-select fields.
+- Pinia - Intuitive, type safe store for Vue.js.
+- vueuse - Collection of essential Vue 3 composition functions.
+- qrcode.vue - Vue.js component for generating QR codes.
+- vee-validate - Template-based validation framework for Vue.js.
+- axios - Promise-based HTTP client.
+- eslint - JavaScript linter.
+- floating-ui/dom - A minimal and customizable UI library.
+- headlessui/vue - Completely unstyled, fully accessible UI components.
+- heroicons/vue - Beautiful hand-crafted SVG icons, by the makers of Tailwind CSS.
+- sentry/tracing - Application performance monitoring.
 
 #
 
