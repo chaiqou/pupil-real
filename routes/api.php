@@ -155,7 +155,6 @@ Route::middleware(['guest'])->group(function () {
         Route::post('/merchant-personal-form/{uniqueID}', 'submitPersonalForm')->name('merchant-personal.form_submit');
         Route::post('/merchant-company-details/{uniqueID}', 'submitCompanyDetails')->name('merchant-company.details_submit');
         Route::get('/merchant-setup-stripe/{uniqueID}', 'submitSetupStripe')->name('merchant-setup.stripe_submit');
-        Route::get('/merchant-billingo-verify/{uniqueID}', 'billingoVerify')->name('merchant-billingo.verify');
         Route::post('/merchant-verify-email/{uniqueID}', 'submitVerifyEmail')->name('merchant-verify.email_submit');
     });
     Route::controller(BillingoController::class)->group(function () {
