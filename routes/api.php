@@ -98,8 +98,8 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::controller(SchoolInviteController::class)->group(function () {
                 Route::get('{school_id}/invites', 'get')->name('school.invites_api');
-                Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invites.get-emails');
-                Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_invites.get-emails');
+                Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invite-emails');
+                Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_user-emails');
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
                 Route::delete('invite/{invite_id}', 'delete')->name('school.delete-invite');
             });
