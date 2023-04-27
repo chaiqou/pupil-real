@@ -7,12 +7,6 @@
     <title>Personal form | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
     <script src="<?php echo asset('js/sal.js') ?>"></script>
-    <script>
-          sal({
-        threshold: 0,
-        once: true,
-    });
-    </script>
 </head>
 
 <body class="h-full">
@@ -94,6 +88,12 @@
 
     </div>
 </div>
+<script>
+    sal({
+  threshold: 0,
+  once: true,
+});
+</script>
 </body>
 
 

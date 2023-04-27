@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+
 
 </head>
 
@@ -28,7 +30,6 @@
 
 </html>
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script src="<?php echo asset('js/sal.js') ?>"></script>
 <script>
     sal({
         threshold: 0,

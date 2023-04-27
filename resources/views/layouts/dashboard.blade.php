@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
 
+    <script>
+            sal({
+        threshold: 0,
+        once: true,
+    });
+    </script>
 </head>
 
 <body class="h-full">
@@ -49,13 +56,8 @@
 
 </html>
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script src="<?php echo asset('js/sal.js') ?>"></script>
 <script>
 
-    sal({
-        threshold: 0,
-        once: true,
-    });
     // We are getting the user param from the controller, and here we have checks to always have the same locale as we have in our DB
     window.language = "{{$user ? $user->language : null}}"
     if(!window.language) {
