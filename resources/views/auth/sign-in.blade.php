@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in | PupilPay {{session()->get('locale') === 'en' ? 'Sign in | PupilPay' : 'Sign in | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script>
+          sal({
+        threshold: 0,
+        once: true,
+    });
+    </script>
 </head>
 
 <body class="h-full">
@@ -161,14 +168,8 @@
 
         </div>
     </div>
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-sal({
-    threshold: 0,
-    once: true,
-});
-
 function setLanguage(language) {
     axios.get(`/api/set-language-for-guest/${language}`).then((res) => {
         localStorage.setItem('i18n', res.data.language);

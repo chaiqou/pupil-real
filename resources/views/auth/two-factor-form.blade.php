@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{session()->get('locale') === 'en' ? 'Two Factor Authentication | PupilPay' : 'Two Factor Authentication | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
+    <script src="<?php echo asset('js/sal.js') ?>"></script>
+    <script>
+          sal({
+        threshold: 0,
+        once: true,
+    });
+    </script>
 </head>
 
 
@@ -114,13 +121,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{asset('js/sal.js')}}"></script>
-    <script>
-        sal({
-            threshold: 0,
-            once: true,
-        });
-    </script>
     <script>
         window.onload = function() {
             document.getElementById("sc-1").focus();
