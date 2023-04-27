@@ -46,6 +46,5 @@ class AverageTransactionAction
                 'sixty' => $avgTransactionsPastSixty,
                 'difference' => $difference,
             ];
-
     }
 }

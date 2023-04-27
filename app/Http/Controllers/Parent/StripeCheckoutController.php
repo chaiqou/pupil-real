@@ -110,55 +110,55 @@ class StripeCheckoutController extends Controller
             });
         }
 
-            $checkout_session_id = session('checkout_session');
+        $checkout_session_id = session('checkout_session');
 
-            $pending_transaction = PendingTransaction::create([
-                'user_id' => $student->user_id,
-                'student_id' => $student->id,
-                'merchant_id' => $lunch->merchant_id,
-                'transaction_identifier' => 'here_should_be_some_hash',
-                'transaction_date' => now()->format('Y-m-d'),
-                'transaction_amount' => $validate['price'],
-                'transaction_type' => 'payment',
-                'comments' => json_encode([
-                    'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
-                    'comment_history' => [],
-                ]),
-                'history' => json_encode([
-                    'history' => [],
-                ]),
-                'stripe_session_id' => $checkout_session_id,
-                'payment_method' => 'stripe',
-                'billing_type' => 'invoice',
-                'billing_items' => json_encode([
-                    'name' => 'Test lunch '.$claimArray['claimDates'][0].' - '.$claimArray['claimDates'][count($claimArray['claimDates']) - 1],
-                    'unit_price' => $pricePeriod,
-                    'unit_price_type' => 'gross',
-                    'quantity' => 1,
-                    'unit' => 'db',
-                    'vat' => '27%',
-                ]),
-                'billing_provider' => 'none',
-                'billing_comment' => json_encode([
-                    'comment' => 'hardcoded billing comment',
-                ]),
-            ]);
+        $pending_transaction = PendingTransaction::create([
+            'user_id' => $student->user_id,
+            'student_id' => $student->id,
+            'merchant_id' => $lunch->merchant_id,
+            'transaction_identifier' => 'here_should_be_some_hash',
+            'transaction_date' => now()->format('Y-m-d'),
+            'transaction_amount' => $validate['price'],
+            'transaction_type' => 'payment',
+            'comments' => json_encode([
+                'comment' => 'Placed lunch order on '.now()->format('Y-m-d'),
+                'comment_history' => [],
+            ]),
+            'history' => json_encode([
+                'history' => [],
+            ]),
+            'stripe_session_id' => $checkout_session_id,
+            'payment_method' => 'stripe',
+            'billing_type' => 'invoice',
+            'billing_items' => json_encode([
+                'name' => 'Test lunch '.$claimArray['claimDates'][0].' - '.$claimArray['claimDates'][count($claimArray['claimDates']) - 1],
+                'unit_price' => $pricePeriod,
+                'unit_price_type' => 'gross',
+                'quantity' => 1,
+                'unit' => 'db',
+                'vat' => '27%',
+            ]),
+            'billing_provider' => 'none',
+            'billing_comment' => json_encode([
+                'comment' => 'hardcoded billing comment',
+            ]),
+        ]);
 
-            $lunch = PeriodicLunch::create([
-                'student_id' => $student->id,
-                'pending_transactions_id' => $pending_transaction->id,
-                'merchant_id' => $lunch->merchant_id,
-                'lunch_id' => $validate['lunch_id'],
-                'card_data' => 'hardcoded instead of $student->card_data',
-                'start_date' => $claimArray['claimDates'][0],
-                'end_date' => $claimArray['claimDates'][count($claimArray['claimDates']) - 1],
-                'claims' => json_encode($claimArray['claimJson']),
-                'payment' => 'outstanding',
-            ]);
+        $lunch = PeriodicLunch::create([
+            'student_id' => $student->id,
+            'pending_transactions_id' => $pending_transaction->id,
+            'merchant_id' => $lunch->merchant_id,
+            'lunch_id' => $validate['lunch_id'],
+            'card_data' => 'hardcoded instead of $student->card_data',
+            'start_date' => $claimArray['claimDates'][0],
+            'end_date' => $claimArray['claimDates'][count($claimArray['claimDates']) - 1],
+            'claims' => json_encode($claimArray['claimJson']),
+            'payment' => 'outstanding',
+        ]);
 
-            if (! $pending_transaction || ! $lunch) {
-                DB::rollBack();
-            }
+        if (! $pending_transaction || ! $lunch) {
+            DB::rollBack();
+        }
 
         $checkout_session_id = session('checkout_session');
 

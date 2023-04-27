@@ -8,8 +8,7 @@ class FindWeekNumbersAction
 {
     public static function execute($lunches): array
     {
-
-         // Group the available days of each lunch by the week they belong to, starting from the first week of January.
+        // Group the available days of each lunch by the week they belong to, starting from the first week of January.
 
         $firstDayOfYear = Carbon::parse('first day of January')->startOfWeek(Carbon::MONDAY);
 

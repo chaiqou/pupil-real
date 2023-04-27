@@ -9,7 +9,6 @@ class CalculateClaimsArrayAction
 {
     public static function execute(array $validate): array
     {
-
         $claimDates = [];
 
         // Get correct claims days and add each of them 1 day
@@ -44,6 +43,5 @@ class CalculateClaimsArrayAction
             'claimDates' => $claimDates,
             'claimJson' => $claimJson,
         ];
-
     }
 }
