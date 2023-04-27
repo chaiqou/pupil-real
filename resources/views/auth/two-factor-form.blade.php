@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{session()->get('locale') === 'en' ? 'Two Factor Authentication | PupilPay' : 'Two Factor Authentication | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
 </head>
 
 
@@ -27,7 +26,7 @@
     </select>
 </div>
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+        <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
                     alt="PupilPay" />
@@ -115,12 +114,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        sal({
-      threshold: 0,
-      once: true,
-  });
-  </script>
     <script>
         window.onload = function() {
             document.getElementById("sc-1").focus();

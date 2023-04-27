@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{session()->get('locale') === 'en' ? 'Forgot password | PupilPay' : 'Forgot password | PupilPay HU'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
 </head>
 
 <body class="h-full">
@@ -25,9 +24,7 @@
         <option value="hu" {{ (old('language') ?? session()->get('locale')) === 'hu' ? 'selected' : '' }}>{{__('hungary')}}</option>
     </select>
 </div>
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8" data-sal="slide-up"
-        data-sal-duration="500"
-        data-sal-delay="200">
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
@@ -95,12 +92,6 @@ function setLanguage(language) {
             .catch((err) => console.log(err))
     }
 
-</script>
-<script>
-    sal({
-  threshold: 0,
-  once: true,
-});
 </script>
 </body>
 

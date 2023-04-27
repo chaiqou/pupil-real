@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Personal form | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
-    <script src="<?php echo asset('js/sal.js') ?>"></script>
 </head>
 
 <body class="h-full">
 <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="w-full max-w-xl space-y-8" data-sal="slide-left" data-sal-duration="500" data-sal-delay="200">
+    <div class="w-full max-w-xl space-y-8">
         <nav aria-label="Progress">
             <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0">
                 <li class="relative md:flex md:flex-1 justify-center">
@@ -136,12 +135,6 @@
 
     </div>
 </div>
-<script>
-    sal({
-  threshold: 0,
-  once: true,
-});
-</script>
 </body>
 
 </html>
