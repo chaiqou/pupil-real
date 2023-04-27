@@ -26,6 +26,5 @@ class CalculateMenusArrayAction
         })->toArray();
 
         return $result;
-
     }
 }

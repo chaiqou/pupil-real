@@ -45,6 +45,5 @@ class StudentWeeklySpendingAction
                 'past' => $avgPerStudentPreviousToPreviousMonth,
                 'difference' => $difference,
             ];
-
     }
 }

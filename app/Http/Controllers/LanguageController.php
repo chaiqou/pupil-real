@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 
 class LanguageController extends Controller
 {
-    public function setLocale(User $user, string $locale): JsonResponse
+    public function setLocaleUser(User $user, string $locale): JsonResponse
     {
         session()->put('locale', $locale);
         $user->update([
