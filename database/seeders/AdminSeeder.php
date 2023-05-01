@@ -6,7 +6,7 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,8 +17,26 @@ class UserSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $admin = User::create([
-            'first_name' => 'Main',
+        $nikoloz_admin = User::create([
+            'first_name' => 'Nikoloz',
+            'last_name' => 'Admin',
+            'school_id' => null,
+            'summary_frequency' => 1,
+            'finished_onboarding' => 1,
+            'user_information' => json_encode([
+                'country' => 'HU',
+                'state' => 'RansomState',
+                'city' => 'RandomCity',
+                'street_address' => 'Random btr.33',
+                'zip' => '9',
+            ]),
+            'email' => 'lomtadzenikusha@gmail.com',
+            'password' => bcrypt('adminadmin'),
+            'language' => 'en',
+        ])->assignRole('admin');
+
+        $levente_admin = User::create([
+            'first_name' => 'Levente',
             'last_name' => 'Admin',
             'school_id' => null,
             'summary_frequency' => 1,
@@ -34,8 +52,9 @@ class UserSeeder extends Seeder
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
         ])->assignRole('admin');
-        $admin = User::create([
-            'first_name' => 'Main',
+
+        $luka_admin = User::create([
+            'first_name' => 'Luka',
             'last_name' => 'Admin',
             'school_id' => null,
             'summary_frequency' => 1,
@@ -47,24 +66,7 @@ class UserSeeder extends Seeder
                 'street_address' => 'Random btr.33',
                 'zip' => '9',
             ]),
-            'email' => 'info+admin@pupilpay.hu',
-            'password' => bcrypt('adminadmin'),
-            'language' => 'en',
-        ])->assignRole('admin');
-        $admin = User::create([
-            'first_name' => 'Main',
-            'last_name' => 'Admin',
-            'school_id' => null,
-            'summary_frequency' => 1,
-            'finished_onboarding' => 1,
-            'user_information' => json_encode([
-                'country' => 'HU',
-                'state' => 'RansomState',
-                'city' => 'RandomCity',
-                'street_address' => 'Random btr.33',
-                'zip' => '9',
-            ]),
-            'email' => 'info+admin@pupilpay.hu',
+            'email' => 'jackrestler@gmail.com',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
         ])->assignRole('admin');
