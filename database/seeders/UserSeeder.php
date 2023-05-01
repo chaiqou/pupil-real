@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'street_address' => 'Random btr.33',
                 'zip' => '9',
             ]),
-            'email' => 'admin@gmail.com',
+            'email' => 'info+admin@pupilpay.hu',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
         ])->assignRole('admin');
