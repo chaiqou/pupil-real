@@ -96,7 +96,7 @@ class InviteController extends Controller
         if (! isset($merchant->stripe_account_id)) {
             return redirect()->back();
         }
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $stripeAccountRetrieve = $stripe->accounts->retrieve(
             $merchant->stripe_account_id
         );
