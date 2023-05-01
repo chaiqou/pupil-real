@@ -130,8 +130,8 @@ class BillingoController extends Controller
     }
 
     public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $type, string $fulfillment_date,
-    string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
-    string $unit, string $vat, string $comment, bool $should_send_email
+        string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
+        string $unit, string $vat, string $comment, bool $should_send_email
     ): JsonResponse {
         $date = strtotime($fulfillment_date);
         $date = strtotime('+7 days', $date);
