@@ -77,10 +77,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
                 Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
                 Route::post('{schoolId}/send-invite', 'store')->name('admin_send-invite_api');
-                Route::delete('invite/{invite_id}', 'delete')->name('admin.delete-invite');
+                Route::delete('{inviteUserRole}/invite/{invite_id}', 'delete')->name('admin.delete-invite');
+                Route::post('resend-invite/{invite_id}', 'resend')->name('admin.resend-invite_api');
             });
             Route::controller(AdminMerchantInviteController::class)->group(function () {
-                Route::get('/school/{school_id}/merchant-invites', 'get')->name('admin.merchant-invites-get_api');
+                Route::get('school/{school_id}/merchant-invites', 'get')->name('admin.merchant-invites-get_api');
                 Route::post('school/{schoolId}/merchant/send-invite', 'store')->name('admin_merchant-send-invite_api');
             });
         });
@@ -101,7 +102,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invite-emails');
                 Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_user-emails');
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
-                Route::delete('invite/{invite_id}', 'delete')->name('school.delete-invite');
+                Route::delete('{inviteUserRole}/invite/{invite_id}', 'delete')->name('school.delete-invite');
+                Route::post('resend-invite/{invite_id}', 'resend')->name('school.resend-invite_api');
             });
             Route::controller(TerminalController::class)->group(function () {
                 Route::get('terminals', 'get')->name('terminal.get');

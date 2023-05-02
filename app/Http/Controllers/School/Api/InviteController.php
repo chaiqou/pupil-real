@@ -72,4 +72,14 @@ class InviteController extends Controller
 
         return InviteResource::collection($invites);
     }
+
+    public function resend(Request $request): JsonResponse
+    {
+        $invite = Invite::where('id', $request->invite_id)->first();
+        $language = config('app.locale');
+        InviteUserJob::dispatch($invite, $invite->email, $language)->onQueue('invite-users');
+        $invite->update(['state' => 1]);
+
+        return response()->json('Resend sent successfully');
+    }
 }

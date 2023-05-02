@@ -42,7 +42,7 @@ class InviteController extends Controller
         $language = config('app.locale');
         Mail::to($invite->email)->send(new InviteMerchantMail($invite, $language));
         $invite->update(['state' => 1]);
-        $invites = Invite::with('school')->where('role', 'merchant')->latest()->paginate(5);
+        $invites = Invite::with('school')->where('role', 'merchant')->latest('created_at')->paginate(5);
 
         return MerchantInviteResource::collection($invites);
     }

@@ -43,6 +43,12 @@
           >
             {{ $t("message.update_date") }}
           </th>
+          <th
+            scope="col"
+            class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8"
+          >
+            <span class="sr-only">Actions</span>
+          </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
@@ -79,6 +85,20 @@
             >
               {{ invite.updated_at }}
             </td>
+            <td
+              class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+            >
+              <button class="text-indigo-600 hover:text-indigo-900">
+                <dropdown-animated
+                  role="admin"
+                  inviteUserRole="merchant"
+                  :items="['resend', 'delete']"
+                  :invite-id="invite.id"
+                >
+                  {{ $t("message.actions") }}</dropdown-animated
+                >
+              </button>
+            </td>
           </tr>
         </template>
         <template v-if="!this.isInvitesLoaded">
@@ -86,6 +106,9 @@
             <td
               class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
             >
+              <div class="h-2 animate-pulse rounded bg-slate-300"></div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
               <div class="h-2 animate-pulse rounded bg-slate-300"></div>
             </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -118,9 +141,11 @@ import InvitesNotFound from "@/components/not-found/InvitesNotFound.vue";
 import MerchantEditModal from "@/components/admin/Merchants/MerchantEditModal.vue";
 import { useModalStore } from "@/stores/useModalStore";
 import { useInviteStore } from "@/stores/useInviteStore";
+import DropdownAnimated from "@/components/Ui/Invites/DropdownAnimated.vue";
 
 export default {
   components: {
+    DropdownAnimated,
     InvitesNotFound,
     MerchantEditModal,
   },
