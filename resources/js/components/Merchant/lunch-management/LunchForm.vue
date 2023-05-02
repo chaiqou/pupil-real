@@ -65,7 +65,7 @@
         name="Price Period"
         :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
-        rules="required"
+        rules="required|minNumber:101|maxNumber:1000000"
       />
       <div class="my-5">
         <button
@@ -124,19 +124,22 @@ const multiselectRef = ref(null);
 const activeRange = ref(null);
 const childrenToast = ref();
 const afterFeeCanBeCalculated = ref(false);
+
 const afterFeesCalculate = () => {
-  store.after_fees = Math.round(
-    (Number(store.price_period) + 85) / (1 - 7 / 500),
-  );
-  store.price_period = store.after_fees;
-  afterFeeCanBeCalculated.value = false;
-  value.value = store.price_period;
+  if (Number(store.price_period) >= 101) {
+    store.after_fees = Math.round(
+      (Number(store.price_period) + 85) / (1 - 7 / 500),
+    );
+    store.price_period = store.after_fees;
+    afterFeeCanBeCalculated.value = false;
+    value.value = store.price_period;
+  }
 };
 
 const calculateAvailable = computed(() => !!store.price_period);
 
 watch(
-  () => store.price_period,
+  () => Number(store.price_period) >= 101,
   () => {
     if (store.after_fees !== store.price_period) {
       afterFeeCanBeCalculated.value = true;
