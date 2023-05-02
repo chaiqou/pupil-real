@@ -244,6 +244,7 @@ const en = {
     order_starting_at: "Order starting at",
     available_days: "Available days",
     invite_merchant_by_email_address: "Invite merchant by email address",
+    resend: "Resend",
   },
 };
 

@@ -245,6 +245,7 @@ const hu = {
       "Period not enough for ordering lunch HU",
     order_starting_at: "Order starting at HU",
     available_days: "Available days HU",
+    resend: "Resend HU",
   },
 };
 
