@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Mail;
 
 class UserToBillingoHealthCheck extends Command
 {
-    protected $signature = 'billingo:user-partnerid-data-check';
+    protected $signature = 'portal:user-partnerid-data-check';
 
-    protected $description = 'Check if there is any user who is missing partnerI which is important';
+    protected $description = 'Check if there is any user who is missing partnerId which is important';
 
     public function handle()
     {

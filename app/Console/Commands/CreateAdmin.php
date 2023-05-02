@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class CreateAdmin extends Command
 {
-    protected $signature = 'make:admin';
+    protected $signature = 'portal:create-admin';
 
     protected $description = 'Creates a new admin';
 

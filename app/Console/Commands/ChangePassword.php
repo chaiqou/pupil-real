@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ChangePassword extends Command
 {
-    protected $signature = 'user:change-password';
+    protected $signature = 'portal:change-password';
 
     protected $description = 'Change password of an already registered user';
 
