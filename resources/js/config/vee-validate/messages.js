@@ -13,7 +13,7 @@ configure({
         email: "Please write correct email",
         min: "The minimum value of this field is 0:{min} characters",
         max: "The maximum length of this field is 0:{max} characters",
-        minNumber: "`The minimum value of this field is 0:{min}",
+        minNumber: "The minimum value of this field is 0:{min}",
         maxNumber: "The maximum value of this field is 0:{max}",
         minWordsThree: "This field needs at least 3 words",
         phone: "Incorrect phone number format",
