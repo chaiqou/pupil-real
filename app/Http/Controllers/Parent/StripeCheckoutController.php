@@ -13,10 +13,12 @@ use App\Models\Transaction;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
+use Stripe\Account;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\SignatureVerificationException;
@@ -269,6 +271,20 @@ class StripeCheckoutController extends Controller
         } else {
             throw new NotFoundHttpException();
         }
+    }
+
+    public function expressDashboardLink(Request $request): RedirectResponse
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $connectedAccountID = $request->input('connected_account_id');
+
+        $loginLink = Account::createLoginLink(
+            $connectedAccountID,
+            ['redirect_url' => 'http://127.0.0.1:8000/express-dashboard']
+        );
+
+        return redirect($loginLink->url);
     }
 
     public function webhook()
