@@ -64,7 +64,7 @@ class LunchController extends Controller
             'vat' => $validate['vat'],
         ]);
 
-        return response()->json(['success' => 'Lunch created successfully'], 404);
+        return response()->json(['success' => 'Lunch created successfully'], 201);
     }
 
     public function show(Lunch $lunch): LunchResource
