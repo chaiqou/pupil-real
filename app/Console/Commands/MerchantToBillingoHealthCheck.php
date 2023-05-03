@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MerchantToBillingoHealthCheck extends Command
 {
-    protected $signature = 'billingo:merchant-billingo-data-check';
+    protected $signature = 'portal:merchant-billingo-data-check';
 
     protected $description = 'Check if there is any user who is missing billingo_data which is important';
 

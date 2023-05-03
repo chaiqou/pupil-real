@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class RequestProformasByQuery extends Command
 {
-    protected $signature = 'billingo:request-paid-proformas';
+    protected $signature = 'portal:request-paid-proformas';
 
     protected $description = 'Requesting data from billingo, which type is proforma, and payment_status is paid';
 
