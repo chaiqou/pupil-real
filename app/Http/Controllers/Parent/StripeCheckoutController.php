@@ -196,7 +196,7 @@ class StripeCheckoutController extends Controller
                     'history' => json_encode([
                         'history' => [],
                     ]),
-                    'stripe_payment_intent' => $session->payment_intent,
+                    //                    'stripe_payment_intent' => $session->payment_intent,
                     'payment_method' => 'stripe',
                     'billing_items' => json_encode([
                         'name' => 'Test lunch',
