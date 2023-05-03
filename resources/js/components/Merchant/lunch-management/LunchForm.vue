@@ -65,15 +65,20 @@
         name="Price Period"
         :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
-        rules="required"
+        rules="required|minNumber:101|maxNumber:1000000"
       />
       <div class="my-5">
         <button
-          :disabled="store.price_period && !afterFeeCanBeCalculated"
+          :disabled="
+            (store.price_period && !afterFeeCanBeCalculated) ||
+            +store.price_period < 101
+          "
           @click="afterFeesCalculate"
           type="button"
           :class="
-            calculateAvailable && afterFeeCanBeCalculated
+            calculateAvailable &&
+            afterFeeCanBeCalculated &&
+            store.price_period >= 101
               ? 'inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
               : 'inline-flex items-center rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           "
@@ -124,19 +129,22 @@ const multiselectRef = ref(null);
 const activeRange = ref(null);
 const childrenToast = ref();
 const afterFeeCanBeCalculated = ref(false);
+
 const afterFeesCalculate = () => {
-  store.after_fees = Math.round(
-    (Number(store.price_period) + 85) / (1 - 7 / 500),
-  );
-  store.price_period = store.after_fees;
-  afterFeeCanBeCalculated.value = false;
-  value.value = store.price_period;
+  if (Number(store.price_period) >= 101) {
+    store.after_fees = Math.round(
+      (Number(store.price_period) + 85) / (1 - 7 / 500),
+    );
+    store.price_period = store.after_fees;
+    afterFeeCanBeCalculated.value = false;
+    value.value = store.price_period;
+  }
 };
 
 const calculateAvailable = computed(() => !!store.price_period);
 
 watch(
-  () => store.price_period,
+  () => Number(store.price_period) >= 101,
   () => {
     if (store.after_fees !== store.price_period) {
       afterFeeCanBeCalculated.value = true;
