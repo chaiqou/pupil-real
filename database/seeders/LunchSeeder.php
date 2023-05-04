@@ -34,7 +34,7 @@ class LunchSeeder extends Seeder
             'merchant_id' => $lukaMerchant->id,
             'title' => 'LunchNumberOne',
             'description' => 'Some good lunch with good stuff',
-            'active_range' => ['2023-05-03', '2023-05-31'],
+            'active_range' => get_dates_until_end_of_month(),
             'period_length' => '1',
             'claimables' => ['Lunch'],
             'holds' => null,
@@ -50,6 +50,74 @@ class LunchSeeder extends Seeder
             'merchant_id' => $lukaMerchant->id,
             'title' => 'SuperBreakfast',
             'description' => 'Amazing lunch!',
+            'active_range' => get_dates_until_end_of_month(),
+            'period_length' => '1',
+            'claimables' => ['Lunch'],
+            'holds' => null,
+            'extras' => null,
+            'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'available_days' => get_dates_until_end_of_month(),
+            'price_period' => rand(176, 396),
+            'buffer_time' => 1,
+            'vat' => '5%',
+        ]);
+
+        $nikolozMerchantUser = User::where('email', 'nikolozlomtadze@redberry.ge')->first();
+        $nikolozMerchant = Merchant::where('user_id', $nikolozMerchantUser->id)->first();
+        $lunch_for_nikoloz_merchant_1 = Lunch::create([
+            'merchant_id' => $nikolozMerchant->id,
+            'title' => 'Super Lunch',
+            'description' => 'Order this !',
+            'active_range' => get_dates_until_end_of_month(),
+            'period_length' => '1',
+            'claimables' => ['Lunch'],
+            'holds' => null,
+            'extras' => null,
+            'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'available_days' => get_dates_until_end_of_month(),
+            'price_period' => rand(0, 396),
+            'buffer_time' => 1,
+            'vat' => '27%',
+        ]);
+
+        $lunch_for_nikoloz_merchant_2 = Lunch::create([
+            'merchant_id' => $nikolozMerchant->id,
+            'title' => 'Breakfast with Examples',
+            'description' => 'Some description is here',
+            'active_range' => get_dates_until_end_of_month(),
+            'period_length' => '1',
+            'claimables' => ['Lunch'],
+            'holds' => null,
+            'extras' => null,
+            'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'available_days' => get_dates_until_end_of_month(),
+            'price_period' => rand(176, 396),
+            'buffer_time' => 1,
+            'vat' => '5%',
+        ]);
+
+        $leventeMerchantUser = User::where('email', 'klevente@pupilpay.hu')->first();
+        $leventeMerchant = Merchant::where('user_id', $leventeMerchantUser->id)->first();
+        $lunch_for_levente_merchant_1 = Lunch::create([
+            'merchant_id' => $leventeMerchant->id,
+            'title' => 'Burger',
+            'description' => 'Mac cafe',
+            'active_range' => get_dates_until_end_of_month(),
+            'period_length' => '1',
+            'claimables' => ['Lunch'],
+            'holds' => null,
+            'extras' => null,
+            'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'available_days' => get_dates_until_end_of_month(),
+            'price_period' => rand(0, 396),
+            'buffer_time' => 1,
+            'vat' => '27%',
+        ]);
+
+        $lunch_for_levente_merchant_2 = Lunch::create([
+            'merchant_id' => $leventeMerchant->id,
+            'title' => 'Coca cola',
+            'description' => 'Some description is here',
             'active_range' => get_dates_until_end_of_month(),
             'period_length' => '1',
             'claimables' => ['Lunch'],
