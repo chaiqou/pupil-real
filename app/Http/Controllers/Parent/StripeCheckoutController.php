@@ -6,6 +6,7 @@ use App\Actions\Claims\CalculateClaimsArrayAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
 use App\Models\Lunch;
+use App\Models\Merchant;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
@@ -277,10 +278,11 @@ class StripeCheckoutController extends Controller
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        $connectedAccountID = $request->input('connected_account_id');
+        $user = auth()->user();
+        $merchant = Merchant::where('user_id', $user->id)->first();
 
         $loginLink = Account::createLoginLink(
-            $connectedAccountID,
+            $merchant->stripe_account_id,
             ['redirect_url' => 'http://127.0.0.1:8000/express-dashboard']
         );
 
