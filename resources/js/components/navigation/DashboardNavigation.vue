@@ -30,6 +30,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
+    ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
 
 export default {
@@ -43,6 +44,7 @@ export default {
     CakeIcon,
     CommandLineIcon,
     ClipboardDocumentListIcon,
+      ArrowRightIcon,
   },
   props: {
     navigation: {
