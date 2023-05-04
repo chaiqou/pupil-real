@@ -90,6 +90,7 @@ class NavigationController extends Controller
                     ['name' => 'invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'students'],
                     ['name' => 'add_lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false, 'hidden' => true, 'parentPage' => 'lunch_management'],
                     ['name' => 'lunch_management_edit', 'icon' => 'nothing', 'href' => '/school/lunch-management/{lunch_id}/edit', 'current' => false, 'hidden' => true, 'parentPage' => 'lunch_management'],
+                    ['name' => 'express', 'icon' => 'nothing', 'href' => '/school/express-dashboard', 'current' => false],
                 ];
             $role = 'school';
         }

@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('menu-management', 'school')->name('school.menu-management');
                 Route::get('settings', 'school')->name('school.settings');
             });
+            Route::get('express-dashboard', [StripeCheckoutController::class, 'expressDashboardLink'])->name('school.express_dashboard');
         });
     });
 });
