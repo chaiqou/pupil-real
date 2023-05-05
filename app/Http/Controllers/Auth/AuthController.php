@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\Auth\AttemptLoginAction;
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
+use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\OnboardingMerchantAction;
 use App\Actions\Auth\ParentCreateStudentAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
@@ -58,12 +59,7 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        auth()->user()->update(['two_factor_code' => null]);
-        session()->put('is_2fa_verified', false);
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
+        LogoutAction::execute($request);
         return redirect(route('default'));
     }
 }
