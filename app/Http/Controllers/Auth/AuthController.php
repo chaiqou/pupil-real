@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Auth\AttemptLoginAction;
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,9 @@ class AuthController extends Controller
     public function authenticate(AuthenticationRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $request->input('remember-me'))) {
+        $remember = $request->input('remember-me', false);
+
+        if (AttemptLoginAction::execute($validated,$remember)) {
             if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
                 Send2FAAuthenticationEmail::dispatch(auth()->user());
                 session()->put('is_2fa_verified', false);
