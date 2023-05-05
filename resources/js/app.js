@@ -63,6 +63,7 @@ import MerchantVerifyEmail from "@/components/invite/merchant/VerifyEmail.vue";
 import SetLanguage from "@/components/Ui/SetLanguage.vue";
 import AdminSettings from "@/components/admin/Settings/Settings.vue";
 import SchoolSettings from "@/components/school/Settings/Settings.vue";
+import AdminDashboard from "@/components/admin/Dashboard/Dashboard.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -123,6 +124,7 @@ app.component("admin-students", AdminStudents);
 app.component("admin-invites", AdminInvites);
 app.component("admin-invites-header", AdminInvitesHeader);
 app.component("admin-settings", AdminSettings);
+app.component("admin-dashboard", AdminDashboard);
 
 // Calendar parts components
 app.component("calendar", Calendar);

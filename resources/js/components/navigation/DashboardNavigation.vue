@@ -45,7 +45,7 @@ export default {
     CakeIcon,
     CommandLineIcon,
     ClipboardDocumentListIcon,
-      BanknotesIcon,
+    BanknotesIcon,
   },
   props: {
     navigation: {

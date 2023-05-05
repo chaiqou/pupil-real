@@ -183,7 +183,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-    BanknotesIcon,
+  BanknotesIcon,
 } from "@heroicons/vue/24/outline";
 import { useModalStore } from "@/stores/useModalStore";
 
