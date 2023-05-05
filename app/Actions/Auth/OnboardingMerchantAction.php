@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Actions\Auth;
+
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
 

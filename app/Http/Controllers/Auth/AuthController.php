@@ -10,15 +10,10 @@ use App\Actions\Auth\OnboardingMerchantAction;
 use App\Actions\Auth\ParentCreateStudentAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
-use App\Http\Controllers\Parent\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
-use App\Jobs\Send2FAAuthenticationEmail;
-use App\Models\Invite;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -29,12 +24,12 @@ class AuthController extends Controller
         $validated = $request->validated();
         $remember = $request->input('remember-me', false);
 
-        if (AttemptLoginAction::execute($validated,$remember)) {
-           TwoFactorAuthenticationAction::execute();
+        if (AttemptLoginAction::execute($validated, $remember)) {
+            TwoFactorAuthenticationAction::execute();
 
-          ParentCreateStudentAction::execute($validated);
+            ParentCreateStudentAction::execute($validated);
 
-          OnboardingMerchantAction::execute();
+            OnboardingMerchantAction::execute();
 
             if (CheckMultipleStudentsAction::execute()) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
@@ -60,6 +55,7 @@ class AuthController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         LogoutAction::execute($request);
+
         return redirect(route('default'));
     }
 }
