@@ -373,7 +373,7 @@ export default {
     },
     handleGetInviteEmailsRequest() {
       axios
-        .get(`/api/school/${this.invite_from}/invite-emails`)
+        .get(`/api/invite-emails`)
         .then((res) => {
           this.existedInviteEmails = res.data;
         })
@@ -381,7 +381,7 @@ export default {
     },
     handleGetUserEmailsRequest() {
       axios
-        .get(`/api/school/${this.invite_from}/user-emails`)
+        .get(`/api/user-emails`)
         .then((res) => {
           this.existedUserEmails = res.data;
         })

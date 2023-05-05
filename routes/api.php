@@ -94,13 +94,13 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
             });
             Route::controller(SchoolTransactionController::class)->group(function () {
-                Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
-                Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
+                Route::get('last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
+                Route::get('transactions', 'getTransactions')->name('school.transactions_api');
             });
             Route::controller(SchoolInviteController::class)->group(function () {
                 Route::get('{school_id}/invites', 'get')->name('school.invites_api');
-                Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invite-emails');
-                Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_user-emails');
+                Route::get('invite-emails', 'getInviteEmails')->name('school_invite-emails');
+                Route::get('user-emails', 'getUserEmails')->name('school_user-emails');
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
                 Route::delete('{inviteUserRole}/invite/{invite_id}', 'delete')->name('school.delete-invite');
                 Route::post('resend-invite/{invite_id}', 'resend')->name('school.resend-invite_api');
