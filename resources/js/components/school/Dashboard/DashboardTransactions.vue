@@ -89,19 +89,10 @@ export default {
       isTransactionsLoaded: false,
     };
   },
-
-  props: {
-    schoolId: {
-      type: Number,
-      required: true,
-    },
-  },
   methods: {
     handleGetLastFiveTransactions() {
       axios
-        .get(
-          `/api/school/${this.schoolId}/last-transactions?page=${this.currentPage}`,
-        )
+        .get(`/api/school/last-transactions?page=${this.currentPage}`)
         .then((res) => {
           this.transactions = res.data.data;
         })

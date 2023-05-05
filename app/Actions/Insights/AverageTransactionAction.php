@@ -42,8 +42,8 @@ class AverageTransactionAction
 
         return
             [
-                'thirty' => $avgTransactionsPastThirty,
-                'sixty' => $avgTransactionsPastSixty,
+                'thirty' => round($avgTransactionsPastThirty),
+                'sixty' => round($avgTransactionsPastSixty),
                 'difference' => $difference,
             ];
     }
