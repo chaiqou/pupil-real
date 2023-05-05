@@ -274,7 +274,7 @@ class StripeCheckoutController extends Controller
         }
     }
 
-    public function expressDashboardLink(Request $request)
+    public function payoutsDashboardLink(Request $request): JsonResponse
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 

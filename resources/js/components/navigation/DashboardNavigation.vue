@@ -4,7 +4,7 @@
       <a
         v-if="!item.hidden"
         :href="item.href && item.name !== 'payouts' ? item.href : null"
-        @click="item.name === 'payouts' ? payoutsClick() : null"
+        @click="item.name === 'payouts' ? onClickPayoutsDashboard() : null"
         :class="
           item.current
             ? 'group flex items-center cursor-pointer rounded-md bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300'
@@ -82,8 +82,8 @@ export default {
         parentNavigation.current = true;
       }
     },
-      payoutsClick() {
-        axios.get('/api/school/express-dashboard').then((response) => {
+      onClickPayoutsDashboard() {
+        axios.get('/api/school/payouts-dashboard').then((response) => {
             window.open(response.data, '_blank',);
         });
       }

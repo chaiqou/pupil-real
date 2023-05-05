@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:school']], function () {
         Route::prefix('/school/')->group(function () {
+            Route::get('/payouts-dashboard', [StripeCheckoutController::class, 'payoutsDashboardLink'])->name('school.payouts_dashboard');
             Route::controller(SchoolStudentController::class)->group(function () {
                 Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
                 Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
@@ -167,4 +168,3 @@ Route::middleware(['guest'])->group(function () {
 Route::get('{user}/set-language/{locale}', [ApiLanguageController::class, 'setLocaleUser'])->name('user.set-language');
 Route::get('set-language-for-guest/{locale}', [ApiLanguageController::class, 'setLocaleGuest'])->name('guest.set-language');
 
-Route::get('school/express-dashboard', [StripeCheckoutController::class, 'expressDashboardLink'])->name('school.express_dashboard');
