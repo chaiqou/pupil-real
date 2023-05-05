@@ -246,6 +246,7 @@ const en = {
     invite_merchant_by_email_address: "Invite merchant by email address",
     resend: "Resend",
     express: "Express Dashboard",
+    payouts: 'Payouts',
   },
 };
 
