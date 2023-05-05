@@ -89,13 +89,6 @@ export default {
       isTransactionsLoaded: false,
     };
   },
-
-  props: {
-    schoolId: {
-      type: Number,
-      required: true,
-    },
-  },
   methods: {
     handleGetLastFiveTransactions() {
       axios
