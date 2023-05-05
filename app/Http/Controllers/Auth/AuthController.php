@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\Auth\AttemptLoginAction;
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
+use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
@@ -26,12 +27,7 @@ class AuthController extends Controller
         $remember = $request->input('remember-me', false);
 
         if (AttemptLoginAction::execute($validated,$remember)) {
-            if (auth()->user()->hasRole(['2fa', 'school', 'admin']) && auth()->user()->finished_onboarding === 1) {
-                Send2FAAuthenticationEmail::dispatch(auth()->user());
-                session()->put('is_2fa_verified', false);
-
-                return redirect('two-factor-authentication');
-            }
+           TwoFactorAuthenticationAction::execute();
 
             if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0 && auth()->user()->hasRole('parent')) {
                 $invite = Invite::where('email', $request->email)->first();
