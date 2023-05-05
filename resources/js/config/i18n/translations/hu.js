@@ -246,7 +246,7 @@ const hu = {
     order_starting_at: "Order starting at HU",
     available_days: "Available days HU",
     resend: "Resend HU",
-      express: 'Express Dashboard HU',
+    express: "Express Dashboard HU",
   },
 };
 
