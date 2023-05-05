@@ -7,7 +7,7 @@ use App\Http\Controllers\Parent\InviteController;
 
 class OnboardingMerchantAction
 {
-    public function execute()
+    public static function execute()
     {
         if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
             $route = InviteController::continueOnboarding(auth()->user());

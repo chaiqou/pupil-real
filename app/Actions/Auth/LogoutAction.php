@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Actions\Auth;
@@ -8,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutAction
 {
-    public function execute(Request $request)
+    public static function execute(Request $request)
     {
         auth()->user()->update(['two_factor_code' => null]);
         session()->put('is_2fa_verified', false);

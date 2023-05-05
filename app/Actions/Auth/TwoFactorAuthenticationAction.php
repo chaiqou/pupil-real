@@ -6,7 +6,7 @@ use App\Jobs\Send2FAAuthenticationEmail;
 
 class TwoFactorAuthenticationAction
 {
-    public function execute()
+    public static function execute()
     {
         $user = auth()->user();
         $isOnboardingComplete = $user->finished_onboarding === 1;
