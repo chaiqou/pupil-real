@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Auth\CheckMultipleStudentsAction;
+use App\Actions\Auth\CheckSingleStudentAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
@@ -45,9 +47,9 @@ class AuthController extends Controller
                 return redirect($route);
             }
 
-            if (auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && session()->get('is_2fa_verified') === true) {
+            if (CheckMultipleStudentsAction::execute()) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-            } elseif (auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && session()->get('is_2fa_verified') === true) {
+            } elseif (CheckSingleStudentAction::execute()) {
                 return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
             }
         }
@@ -57,9 +59,9 @@ class AuthController extends Controller
 
     public function redirectIfLoggedIn()
     {
-        if (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() > 1 && session()->get('is_2fa_verified') === true) {
+        if (auth()->user() && CheckMultipleStudentsAction::execute()) {
             return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-        } elseif (auth()->user() && auth()->user()->hasRole('parent') && auth()->user()->students->count() === 1 && session()->get('is_2fa_verified') === true) {
+        } elseif (auth()->user() && CheckSingleStudentAction::execute()) {
             return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
         }
 
