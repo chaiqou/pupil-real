@@ -274,7 +274,7 @@ class StripeCheckoutController extends Controller
         }
     }
 
-    public function expressDashboardLink(Request $request): RedirectResponse
+    public function expressDashboardLink(Request $request)
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -286,7 +286,7 @@ class StripeCheckoutController extends Controller
             ['redirect_url' => 'http://127.0.0.1:8000/express-dashboard']
         );
 
-        return redirect($loginLink->url);
+        return response()->json($loginLink->url);
     }
 
     public function webhook()

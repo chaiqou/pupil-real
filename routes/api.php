@@ -166,3 +166,5 @@ Route::middleware(['guest'])->group(function () {
 
 Route::get('{user}/set-language/{locale}', [ApiLanguageController::class, 'setLocaleUser'])->name('user.set-language');
 Route::get('set-language-for-guest/{locale}', [ApiLanguageController::class, 'setLocaleGuest'])->name('guest.set-language');
+
+Route::get('school/express-dashboard', [StripeCheckoutController::class, 'expressDashboardLink'])->name('school.express_dashboard');
