@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\Auth\AttemptLoginAction;
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
+use App\Actions\Auth\OnboardingMerchantAction;
+use App\Actions\Auth\ParentCreateStudentAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
@@ -29,22 +31,9 @@ class AuthController extends Controller
         if (AttemptLoginAction::execute($validated,$remember)) {
            TwoFactorAuthenticationAction::execute();
 
-            if (auth()->user()->finished_onboarding === 1 && auth()->user()->students->count() === 0 && auth()->user()->hasRole('parent')) {
-                $invite = Invite::where('email', $request->email)->first();
-                $invite ? $invite->delete() : null;
+          ParentCreateStudentAction::execute($validated);
 
-                return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
-            }
-
-            if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
-                $route = InviteController::continueOnboarding(auth()->user());
-
-                return redirect($route);
-            } elseif (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
-                $route = MerchantInviteController::continueOnboarding(auth()->user());
-
-                return redirect($route);
-            }
+          OnboardingMerchantAction::execute();
 
             if (CheckMultipleStudentsAction::execute()) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
