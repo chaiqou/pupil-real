@@ -32,6 +32,7 @@ class LunchSeeder extends Seeder
         $lukaMerchant = Merchant::where('user_id', $lukaMerchantUser->id)->first();
         $lunch_for_luka_merchant_1 = Lunch::create([
             'merchant_id' => $lukaMerchant->id,
+            'school_id' => $lukaMerchantUser->school_id,
             'title' => 'LunchNumberOne',
             'description' => 'Some good lunch with good stuff',
             'active_range' => get_dates_until_end_of_month(),
@@ -48,6 +49,7 @@ class LunchSeeder extends Seeder
 
         $lunch_for_luka_merchant_2 = Lunch::create([
             'merchant_id' => $lukaMerchant->id,
+            'school_id' => $lukaMerchantUser->school_id,
             'title' => 'SuperBreakfast',
             'description' => 'Amazing lunch!',
             'active_range' => get_dates_until_end_of_month(),
@@ -66,6 +68,7 @@ class LunchSeeder extends Seeder
         $nikolozMerchant = Merchant::where('user_id', $nikolozMerchantUser->id)->first();
         $lunch_for_nikoloz_merchant_1 = Lunch::create([
             'merchant_id' => $nikolozMerchant->id,
+            'school_id' => $nikolozMerchantUser->school_id,
             'title' => 'Super Lunch',
             'description' => 'Order this !',
             'active_range' => get_dates_until_end_of_month(),
@@ -82,6 +85,7 @@ class LunchSeeder extends Seeder
 
         $lunch_for_nikoloz_merchant_2 = Lunch::create([
             'merchant_id' => $nikolozMerchant->id,
+            'school_id' => $nikolozMerchantUser->school_id,
             'title' => 'Breakfast with Examples',
             'description' => 'Some description is here',
             'active_range' => get_dates_until_end_of_month(),
@@ -100,6 +104,7 @@ class LunchSeeder extends Seeder
         $leventeMerchant = Merchant::where('user_id', $leventeMerchantUser->id)->first();
         $lunch_for_levente_merchant_1 = Lunch::create([
             'merchant_id' => $leventeMerchant->id,
+            'school_id' => $leventeMerchantUser->school_id,
             'title' => 'Burger',
             'description' => 'Mac cafe',
             'active_range' => get_dates_until_end_of_month(),
@@ -116,6 +121,7 @@ class LunchSeeder extends Seeder
 
         $lunch_for_levente_merchant_2 = Lunch::create([
             'merchant_id' => $leventeMerchant->id,
+            'school_id' => $leventeMerchantUser->school_id,
             'title' => 'Coca cola',
             'description' => 'Some description is here',
             'active_range' => get_dates_until_end_of_month(),
