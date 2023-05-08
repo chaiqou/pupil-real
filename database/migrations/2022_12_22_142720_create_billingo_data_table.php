@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('block_id');
             $table->string('billingo_api_key');
+            $table->boolean('billingo_suspended')->default(false);
             $table->foreignId('merchant_id')->constrained();
             $table->timestamps();
         });

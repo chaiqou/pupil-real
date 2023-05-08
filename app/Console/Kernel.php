@@ -15,9 +15,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('auth:clear-resets')->everyThirtyMinutes();
-        $schedule->command('request:paid-proformas')->everyTwoMinutes();
-        $schedule->command('check:user-partner-id')->daily();
-        $schedule->command('check:merchant-billingo-data')->daily();
+        $schedule->command('portal:request-paid-proformas')->everyTwoMinutes();
+        $schedule->command('portal:check-billingo-api-key')->everyMinute();
+        $schedule->command('portal:user-partnerid-data-check')->daily();
+        $schedule->command('portal:merchant-billingo-data-check')->daily();
     }
 
     /**
