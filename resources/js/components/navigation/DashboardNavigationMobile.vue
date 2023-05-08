@@ -199,7 +199,7 @@ export default {
     CakeIcon,
     CommandLineIcon,
     ClipboardDocumentListIcon,
-      BanknotesIcon,
+    BanknotesIcon,
   },
   computed: {
     ...mapWritableState(useModalStore, [

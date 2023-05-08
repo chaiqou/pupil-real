@@ -247,7 +247,7 @@ const hu = {
     available_days: "Available days HU",
     resend: "Resend HU",
     express: "Express Dashboard HU",
-    payouts: 'Payouts HU',
+    payouts: "Payouts HU",
   },
 };
 

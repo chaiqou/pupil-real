@@ -25,13 +25,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $lukaParent->id,
                 'school_id' => $lukaParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '123',
                     'state' => 'state',
-                ]),
+                ],
             ]);
 
         $student_for_lukaParent_2 =
@@ -43,13 +43,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $lukaParent->id,
                 'school_id' => $lukaParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '123',
                     'state' => 'state',
-                ]),
+                ],
             ]);
 
         $nikolozParent = User::where('email', 'nikolozlomtadze0@gmail.com')->first();
@@ -62,13 +62,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $nikolozParent->id,
                 'school_id' => $nikolozParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '123',
                     'state' => 'state',
-                ]),
+                ],
             ]);
 
         $student_for_nikolozParent_2 =
@@ -80,13 +80,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $nikolozParent->id,
                 'school_id' => $nikolozParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '123',
                     'state' => 'state',
-                ]),
+                ],
             ]);
 
         $leventeParent = User::where('email', 'kazo.levente@gmail.com')->first();
@@ -100,13 +100,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $leventeParent->id,
                 'school_id' => $leventeParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '323',
                     'state' => 'state',
-                ]),
+                ],
             ]);
 
         $student_for_leventeParent_2 =
@@ -118,13 +118,13 @@ class StudentSeeder extends Seeder
                 'card_data' => null,
                 'user_id' => $leventeParent->id,
                 'school_id' => $leventeParent->school_id,
-                'user_information' => json_encode([
+                'user_information' => [
                     'country' => 'HU',
                     'city' => 'City',
                     'street_address' => 'StreetAddress',
                     'zip' => '523',
                     'state' => 'state',
-                ]),
+                ],
             ]);
     }
 }
