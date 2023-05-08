@@ -6,19 +6,16 @@ use Illuminate\Console\Command;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CreateRolesAndPremissions extends Command
+class SyncRolesAndPermissions extends Command
 {
-
     protected $signature = 'portal:sync-roles-and-permissions';
 
-
-    protected $description = 'This command sync DB roles and premissions based on portal-permissions config file';
-
+    protected $description = 'This command sync DB roles and permissions based on portal-permissions config file';
 
     public function handle()
     {
-        $configPermissions = config('portal-premission.permissions');
-        $configRoles = config('portal-premission.roles');
+        $configPermissions = config('portal-permissions.permissions');
+        $configRoles = config('portal-permissions.roles');
 
         // Get the roles and permissions from the database
         $dbRoles = Role::pluck('name')->toArray();
@@ -37,7 +34,6 @@ class CreateRolesAndPremissions extends Command
             Permission::create(['name' => $permission]);
         }
 
-
         $deletedRoles = array_diff($dbRoles, $configRoles);
         $deletedPermissions = array_diff($dbPermissions, $configPermissions);
 
@@ -46,7 +42,6 @@ class CreateRolesAndPremissions extends Command
         Permission::whereIn('name', $deletedPermissions)->delete();
 
         $this->info('Roles and permissions updated successfully');
-
 
     }
 }
