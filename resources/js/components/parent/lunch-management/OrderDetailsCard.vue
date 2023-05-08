@@ -201,7 +201,7 @@ const firstAndLastDay = computed(() => {
 const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
-const billingoStatus = ref(false);
+const billingoStatus = ref(0);
 const merchantSuspendStatus = async () => {
   loading.value = true;
 
