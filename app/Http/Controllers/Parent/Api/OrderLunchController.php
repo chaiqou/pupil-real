@@ -7,6 +7,7 @@ use App\Actions\Claims\UpdateFixedClaimIfMenuExistsAction;
 use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
+use App\Models\BillingoData;
 use App\Models\Lunch;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
@@ -23,6 +24,14 @@ class OrderLunchController extends Controller
         $orders = PeriodicLunch::where('student_id', $student_id)->get();
 
         return response()->json(['orders' => $orders]);
+    }
+
+    public function merchantBillingoKeySuspendStatus(Request $request): JsonResponse
+    {
+        $merchantId = Lunch::where('id', $request->lunch_id)->first()->merchant_id;
+        $billingoData = BillingoData::where('merchant_id', $merchantId)->first();
+
+        return response()->json(['billingo_suspended' => $billingoData->billingo_suspended]);
     }
 
     public function orderLunch(LunchOrderRequest $request): JsonResponse

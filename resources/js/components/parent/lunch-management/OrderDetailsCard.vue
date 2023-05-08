@@ -98,8 +98,13 @@
             </div>
             <div class="mt-2">
               <button
+                :disabled="billingoStatus !== 0"
                 @click="payWithTransferHandler"
-                class="inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                :class="
+                  billingoStatus === 0
+                    ? 'inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                    : 'inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 opacity-60 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                "
               >
                 <BankIcon />
                 {{ $t("message.pay_with_transfer") }}
@@ -140,7 +145,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { format } from "date-fns";
 import { useLunchFormStore } from "@/stores/useLunchFormStore";
 
@@ -196,6 +201,24 @@ const firstAndLastDay = computed(() => {
 const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
+const billingoStatus = ref(false);
+const merchantSuspendStatus = async () => {
+  loading.value = true;
+
+  try {
+    const response = await axios.post(
+      "/api/parent/merchant-billingo-key-status",
+      {
+        lunch_id: store.lunch_details[0].id,
+      },
+    );
+    billingoStatus.value = response.data.billingo_suspended;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+};
 
 const payWithTransferHandler = async () => {
   try {
@@ -251,4 +274,8 @@ const payWithOnlineHandler = async () => {
     loading.value = false;
   }
 };
+
+onMounted(() => {
+  merchantSuspendStatus();
+});
 </script>

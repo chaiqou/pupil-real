@@ -34,7 +34,7 @@ class TransactionFactory extends Factory
             'merchant_id' => '',
             'transaction_identifier' => 'here_should_be_some_hash',
             'transaction_date' => $date,
-            'transaction_amount' => rand(1, 500),
+            'transaction_amount' => rand(175, 500),
             'transaction_type' => 'payment',
             'comments' => json_encode([
                 'comment' => 'Placed lunch order on '.$date,

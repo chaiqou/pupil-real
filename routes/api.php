@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
                 Route::post('update-student', 'updateStudent')->name('parent.update-student_api');
             });
+            Route::post('merchant-billingo-key-status', [OrderLunchController::class, 'merchantBillingoKeySuspendStatus'])->name('parent.merchant-billingo-key-status');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
