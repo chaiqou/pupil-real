@@ -18,8 +18,8 @@ class ParentCreateStudentAction
     }
 
     private static function deleteInviteByEmail($email): void
-      {
-          $invite = Invite::where('email', $email)->first();
-          $invite?->delete();
-      }
+    {
+        $invite = Invite::where('email', $email)->first();
+        $invite?->delete();
+    }
 }
