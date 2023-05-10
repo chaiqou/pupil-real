@@ -152,7 +152,6 @@ class InviteController extends Controller
             $url = route('default');
 
             return response()->json(['url' => $url]);
-            // return redirect()->route('default')->with(['success' => true, 'success_title' => 'You created your account!', 'success_description' => 'You can now login to your account.']);
         }
 
         return response()->json(['message' => 'These credentials do not match our records.'], 404);

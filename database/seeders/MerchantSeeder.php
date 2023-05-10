@@ -25,6 +25,8 @@ class MerchantSeeder extends Seeder
                 'email' => 'lukaramishvili@redberry.ge',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
+                'stripe_completed' => 1
+                'stripe_completed' => 1,,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Random Street',
@@ -113,6 +115,7 @@ class MerchantSeeder extends Seeder
                 'email' => 'nikolozlomtadze@redberry.ge',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
+                'stripe_completed' => 1,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Avenue 35',
@@ -201,6 +204,7 @@ class MerchantSeeder extends Seeder
                 'email' => 'klevente@pupilpay.hu',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
+                'stripe_completed' => 1,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Street 75',
