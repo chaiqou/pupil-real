@@ -247,6 +247,7 @@ const en = {
     resend: "Resend",
     express: "Express Dashboard",
     payouts: "Payouts",
+    enter_your_billingo_api_key_here: "Enter your Billingo api key here",
   },
 };
 

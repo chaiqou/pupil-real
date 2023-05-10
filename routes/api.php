@@ -23,6 +23,7 @@ use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\PieChartController;
+use App\Http\Controllers\School\Api\SettingController as SchoolSettingController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
 use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
@@ -123,6 +124,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
                 Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
+            Route::post('update-billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
         });
     });
 
