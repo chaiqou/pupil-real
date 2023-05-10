@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
+use App\Actions\Claims\UpdateFixedMenuClaimAction;
 use App\Actions\MenuManagement\CalculateMenusArrayAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
-use App\Jobs\UpdateFixedMenuClaims;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
 
@@ -28,7 +28,7 @@ class MenuManagementController extends Controller
 
         // This updates fixed menu claims when we are creating menu AND student already have ordered lunch for this day
 
-        UpdateFixedMenuClaims::dispatch($validated, $menu['id'], $menu['lunch_id']);
+        UpdateFixedMenuClaimAction::execute($validated, $menu['id'], $menu['lunch_id']);
 
         return response()->json('Menu Created');
     }

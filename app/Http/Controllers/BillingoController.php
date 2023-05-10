@@ -44,7 +44,7 @@ class BillingoController extends Controller
                 'billingo_api_key' => $request->api_key,
                 'merchant_id' => $merchant->id,
             ]);
-//            $merchant->update(['billingo_api_key' => $request->api_key]);
+            //            $merchant->update(['billingo_api_key' => $request->api_key]);
 
             return $user->sendVerificationEmailApi('merchant-verify.email');
         } else {

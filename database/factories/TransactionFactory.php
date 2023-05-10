@@ -19,9 +19,9 @@ class TransactionFactory extends Factory
      */
     public function definition()
     {
-//        $lukaParent = User::where('email', 'jackrestlertesting@gmail.com')->first();
-//        $lukaParentStudent = Student::where('user_id', $lukaParent->id)->first();
-//        $parent_merchant = PartnerId::where('user_id', $lukaParent->id)->first();
+        //        $lukaParent = User::where('email', 'jackrestlertesting@gmail.com')->first();
+        //        $lukaParentStudent = Student::where('user_id', $lukaParent->id)->first();
+        //        $parent_merchant = PartnerId::where('user_id', $lukaParent->id)->first();
         $current_month_dates = $this->get_dates_until_end_of_month_for_transaction(date('Y-m-01'));
         $previous_month_dates = $this->get_dates_until_end_of_month_for_transaction(date('Y-m-01', strtotime('-1 month')));
         $random_dates = array_merge(array_diff($current_month_dates, array_rand($current_month_dates, 3)), $previous_month_dates);
