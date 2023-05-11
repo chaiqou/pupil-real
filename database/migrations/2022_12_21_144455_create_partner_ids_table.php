@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('partner_id');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('merchant_id')->constrained();
+            $table->boolean('billingo_suspended')->default(false);
             $table->timestamps();
         });
     }
