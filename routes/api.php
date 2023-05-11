@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
                 Route::post('update-student', 'updateStudent')->name('parent.update-student_api');
             });
-            Route::post('merchant-billingo-key-status', [OrderLunchController::class, 'merchantBillingoKeySuspendStatus'])->name('parent.merchant-billingo-key-status');
+            Route::post('billingo-connection-status', [OrderLunchController::class, 'billingoConnectionStatus'])->name('parent.billingo-status');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -124,7 +124,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
                 Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
-            Route::post('update-billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
+            Route::put('billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
+            Route::get('billingo-api-key-status', [SchoolSettingController::class, 'billingoApiKeyStatus'])->name('school.billingo-api-key-status');
         });
     });
 

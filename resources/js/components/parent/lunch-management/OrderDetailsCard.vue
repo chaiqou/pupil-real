@@ -207,7 +207,7 @@ const merchantSuspendStatus = async () => {
 
   try {
     const response = await axios.post(
-      "/api/parent/merchant-billingo-key-status",
+      "/api/parent/billingo-connection-status",
       {
         lunch_id: store.lunch_details[0].id,
       },

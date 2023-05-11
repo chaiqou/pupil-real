@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\BillingoData;
 use App\Models\Lunch;
+use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
@@ -26,12 +27,25 @@ class OrderLunchController extends Controller
         return response()->json(['orders' => $orders]);
     }
 
-    public function merchantBillingoKeySuspendStatus(Request $request): JsonResponse
+    public function billingoConnectionStatus(Request $request): JsonResponse
     {
+        // Getting billingo data to check billingo_suspended for Merchant (check that everything is good from merchant side)
         $merchantId = Lunch::where('id', $request->lunch_id)->first()->merchant_id;
         $billingoData = BillingoData::where('merchant_id', $merchantId)->first();
 
-        return response()->json(['billingo_suspended' => $billingoData->billingo_suspended]);
+        // Getting partner id to check billingo_suspended for Parent (check that everything is good from parent side)
+        $partnerId = PartnerId::where('user_id', auth()->user()->id)->where('merchant_id', $merchantId)->first();
+
+        // billingo_suspended json response will be false no matter what if at least one (PartnerId suspend or BillingoData suspend is false)
+        $conclusion = null;
+        if ($billingoData->billingo_suspended || $partnerId->billingo_suspended) {
+            $conclusion = true;
+        } elseif (! $billingoData->billingo_suspended && ! $partnerId->billingo_suspended) {
+            $conclusion = false;
+        }
+
+        // Generate the message which will tell to user what happens on which side (from which side the problem was detected)
+        return response()->json(['billingo_suspended' => $conclusion]);
     }
 
     public function orderLunch(LunchOrderRequest $request): JsonResponse

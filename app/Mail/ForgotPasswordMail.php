@@ -12,21 +12,11 @@ class ForgotPasswordMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(private string $token, private string $name, private string $browser, private string $device, private string $language)
     {
         //
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         if ($this->language === 'hu') {
