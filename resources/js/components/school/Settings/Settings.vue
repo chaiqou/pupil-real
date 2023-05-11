@@ -7,7 +7,7 @@
       <SetLanguage :userId="userId"></SetLanguage>
     </div>
     <div class="mt-5 w-[15rem]">
-      <ValidationForm @submit="handleUpdateBillingoApiKeyRequest()">
+      <ValidationForm @submit="handleUpdateBillingoApiKeyRequest">
         <div>
           <label
             for="billingo-api-key"
@@ -28,6 +28,7 @@
               class="text-sm text-red-500"
               name="billingo_api_key"
             ></ErrorMessage>
+            <p class="text-sm text-red-500">{{ errorData }}</p>
           </div>
         </div>
         <ButtonForAxios
@@ -45,6 +46,8 @@
 import SetLanguage from "@/components/Ui/SetLanguage.vue";
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
 import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
+import { mapActions } from "pinia";
+import { useGlobalStore } from "@/stores/useGlobalStore";
 
 export default {
   components: {
@@ -57,6 +60,7 @@ export default {
   data() {
     return {
       billingo_api_key: "",
+      errorData: null,
     };
   },
   props: {
@@ -66,15 +70,24 @@ export default {
     },
   },
   methods: {
-    handleUpdateBillingoApiKeyRequest() {
+    ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+    handleUpdateBillingoApiKeyRequest(values, actions) {
+      this.setAxiosStatus("ongoing");
       axios
         .post("/api/school/update-billingo-api-key", {
           billingo_api_key: this.billingo_api_key,
         })
         .then((res) => {
+          actions.setFieldValue("billingo_api_key", "");
+          this.setAxiosStatus("updated");
+          this.errorData = null;
           console.log(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.setAxiosStatus("error");
+          console.log(err.response.data.message);
+          this.errorData = err.response.data.message;
+        });
     },
   },
 };
