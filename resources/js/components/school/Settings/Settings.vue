@@ -81,11 +81,9 @@ export default {
           actions.setFieldValue("billingo_api_key", "");
           this.setAxiosStatus("updated");
           this.errorData = null;
-          console.log(res);
         })
         .catch((err) => {
           this.setAxiosStatus("error");
-          console.log(err.response.data.message);
           this.errorData = err.response.data.message;
         });
     },
