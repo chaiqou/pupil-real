@@ -77,7 +77,7 @@ export default {
         .post("/api/school/update-billingo-api-key", {
           billingo_api_key: this.billingo_api_key,
         })
-        .then((res) => {
+        .then(() => {
           actions.setFieldValue("billingo_api_key", "");
           this.setAxiosStatus("updated");
           this.errorData = null;

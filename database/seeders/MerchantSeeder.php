@@ -25,7 +25,6 @@ class MerchantSeeder extends Seeder
                 'email' => 'lukaramishvili@redberry.ge',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
-                'stripe_completed' => 1,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Random Street',
@@ -43,6 +42,7 @@ class MerchantSeeder extends Seeder
                 'merchant_nick' => 'Merchant Nick',
                 'company_legal_name' => 'Company Legal Name',
                 'user_id' => $merchant_for_luka_school_is_oxford_part_1->id,
+                'stripe_completed' => 1,
                 'school_id' => $merchant_for_luka_school_is_oxford_part_1->school_id,
                 'company_details' => json_encode([
                     'country' => 'HU',
@@ -114,7 +114,6 @@ class MerchantSeeder extends Seeder
                 'email' => 'nikolozlomtadze@redberry.ge',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
-                'stripe_completed' => 1,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Avenue 35',
@@ -133,6 +132,7 @@ class MerchantSeeder extends Seeder
                 'company_legal_name' => 'LegalNameOOS',
                 'user_id' => $merchant_for_nikoloz_school_is_oxford_part_1->id,
                 'school_id' => $merchant_for_nikoloz_school_is_oxford_part_1->school_id,
+                'stripe_completed' => 1,
                 'company_details' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Random Street Address',
@@ -203,7 +203,6 @@ class MerchantSeeder extends Seeder
                 'email' => 'klevente@pupilpay.hu',
                 'password' => bcrypt('123123Aa'),
                 'school_id' => 1,
-                'stripe_completed' => 1,
                 'user_information' => json_encode([
                     'country' => 'HU',
                     'street_address' => 'Street 75',
@@ -221,6 +220,7 @@ class MerchantSeeder extends Seeder
                 'merchant_nick' => 'Maximal Cafeteria',
                 'company_legal_name' => 'Legal Company Name KLP',
                 'user_id' => $merchant_for_levente_school_is_oxford_part_1->id,
+                'stripe_completed' => 1,
                 'school_id' => $merchant_for_levente_school_is_oxford_part_1->school_id,
                 'company_details' => json_encode([
                     'country' => 'HU',

@@ -42,6 +42,5 @@ class SyncRolesAndPermissions extends Command
         Permission::whereIn('name', $deletedPermissions)->delete();
 
         $this->info('Roles and permissions updated successfully');
-
     }
 }
