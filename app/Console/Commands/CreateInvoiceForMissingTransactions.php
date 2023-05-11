@@ -26,7 +26,7 @@ class CreateInvoiceForMissingTransactions extends Command
             $transactionBillingItems = json_decode($transaction->billing_items);
             $transactionComment = json_decode($transaction->billing_comment);
             $user = User::where('id', $partnerId->user_id)->first();
-            if (! $merchantBillingoData->billingo_suspended) {
+            if (! $merchantBillingoData->billingo_suspended && ! $partnerId->billingo_suspended) {
                 BillingoController::createBillingDocument($merchantBillingoData->billingo_api_key, $partnerId->partner_id, $merchantBillingoData->block_id,
                     'invoice', $transaction->transaction_date, 'online_bankcard', $user->language,
                     'HUF', $transactionBillingItems->name, $transactionBillingItems->unit_price, $transactionBillingItems->unit_price_type,
