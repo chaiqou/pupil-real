@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('billingo_data', function (Blueprint $table) {
+        Schema::create('transaction_missing_actions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('block_id');
-            $table->string('billingo_api_key');
-            $table->boolean('billingo_suspended')->default(false);
-            $table->foreignId('merchant_id')->constrained();
+            $table->foreignId('transaction_id')->constrained()->cascadeOnDelete();
+            $table->enum('action', ['must_create_and_send_missing_invoice', 'must_resend_missing_invoice']);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billingo_data');
+        Schema::dropIfExists('transaction_missing_actions');
     }
 };

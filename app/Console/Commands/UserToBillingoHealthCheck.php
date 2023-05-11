@@ -13,7 +13,7 @@ class UserToBillingoHealthCheck extends Command
 
     protected $description = 'Check if there is any user who is missing partnerId which is important';
 
-    public function handle()
+    public function handle(): void
     {
         $users = User::with('partnerId')->get();
 

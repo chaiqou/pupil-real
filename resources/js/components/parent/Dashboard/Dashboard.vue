@@ -1,5 +1,5 @@
 <template>
-  <div class="md:flex md:justify-around">
+  <div class="md:justify-around xl:flex">
     <div class="mt-[6rem]">
       <DashboardNavigationTooltip
         :studentId="this.studentId"

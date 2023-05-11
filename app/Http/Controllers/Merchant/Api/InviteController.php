@@ -79,9 +79,6 @@ class InviteController extends Controller
             'company_legal_name' => $request->company_legal_name,
             'user_id' => $user->id,
             'school_id' => $invite->school_id,
-            //            'billingo_api_key' => null,
-            //            'private_key' => null,
-            //            'public_key' => null,
             'company_details' => json_encode([
                 'country' => $request->country,
                 'street_address' => $request->street_address,

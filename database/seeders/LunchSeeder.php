@@ -42,7 +42,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(0, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '27%',
         ]);
@@ -59,7 +59,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(176, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '5%',
         ]);
@@ -78,7 +78,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(0, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '27%',
         ]);
@@ -95,7 +95,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(176, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '5%',
         ]);
@@ -114,7 +114,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(0, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '27%',
         ]);
@@ -131,7 +131,7 @@ class LunchSeeder extends Seeder
             'extras' => null,
             'weekdays' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'available_days' => get_dates_until_end_of_month(),
-            'price_period' => rand(176, 396),
+            'price_period' => rand(175, 3396),
             'buffer_time' => 1,
             'vat' => '5%',
         ]);
