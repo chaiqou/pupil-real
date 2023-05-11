@@ -43,7 +43,7 @@ import AdminSchoolsHeader from "@/components/admin/Schools/SchoolsHeader.vue";
 import LunchFormEdit from "@/components/Merchant/lunch-management/LunchFormEdit.vue";
 import LunchEditPage from "@/components/Merchant/lunch-management/LunchEditPage.vue";
 import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";
-import ParentLunchDetails from "@/components/parent/lunch-management/parentLunchDetails.vue";
+import ParentLunchDetails from "@/components/parent/lunch-management/ParentLunchDetails.vue";
 import SchoolTerminals from "@/components/school/Terminals/Terminals.vue";
 import SchoolTerminalsHeader from "@/components/school/Terminals/TerminalsHeader.vue";
 import ParentCalendar from "@/components/parent/lunch-management/ParentCalendar.vue";

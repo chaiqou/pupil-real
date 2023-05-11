@@ -78,6 +78,21 @@
         </div>
       </li>
     </ul>
+      <div v-if="store.lunches.length < 1">
+          <div class="flex min-h-full mt-48 justify-center py-12 px-4 sm:px-6 lg:px-8">
+              <div class="w-full max-w-md space-y-8">
+                  <div>
+                      <img class="mx-auto h-16 w-auto"
+                           src="@/components/images/pupilpay-black-color.png"
+                           alt="PupilPay" />
+                      <h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">No lunch is currently available to order</h2>
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
+
   </div>
 </template>
 
