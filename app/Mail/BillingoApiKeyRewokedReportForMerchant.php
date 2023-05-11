@@ -11,20 +11,10 @@ class BillingoApiKeyRewokedReportForMerchant extends Mailable implements ShouldQ
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(public $merchant, public $language)
     {
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         if ($this->language === 'hu') {

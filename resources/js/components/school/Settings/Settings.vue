@@ -18,6 +18,7 @@
             <Field
               rules="required"
               type="text"
+              :disabled="billingoStatus === 0"
               v-model="billingo_api_key"
               name="billingo_api_key"
               id="billingo_api_key"
@@ -61,6 +62,7 @@ export default {
     return {
       billingo_api_key: "",
       errorData: null,
+      billingoStatus: false,
     };
   },
   props: {
@@ -71,10 +73,19 @@ export default {
   },
   methods: {
     ...mapActions(useGlobalStore, ["setAxiosStatus"]),
+    handleCheckBillingoApiKeyStatusRequest() {
+      axios
+        .get("/api/school/billingo-api-key-status")
+        .then((res) => {
+          this.billingoStatus = res.data.status;
+          console.log(res.data.status);
+        })
+        .catch((err) => console.log(err));
+    },
     handleUpdateBillingoApiKeyRequest(values, actions) {
       this.setAxiosStatus("ongoing");
       axios
-        .post("/api/school/update-billingo-api-key", {
+        .put("/api/school/billingo-api-key", {
           billingo_api_key: this.billingo_api_key,
         })
         .then(() => {
@@ -87,6 +98,9 @@ export default {
           this.errorData = err.response.data.message;
         });
     },
+  },
+  mounted() {
+    this.handleCheckBillingoApiKeyStatusRequest();
   },
 };
 </script>

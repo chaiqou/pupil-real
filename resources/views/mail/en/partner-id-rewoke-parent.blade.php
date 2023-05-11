@@ -13,10 +13,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet" media="screen">
   <style>
-    /*place styles here*/
+      /*place styles here*/
+  </style>
   </style>
 </head>
 <body class="page_bodyClass" style="word-break: break-word; -webkit-font-smoothing: antialiased; margin: 0; width: 100%; padding: 0">
-  <h1> Hello, the billingo api key for merchant which nick is {{$merchant->merchant_nick}} and id is #{{$merchant->id}} has probably been rewoked please check if it works now (recovered automatically).</h1>
+  <h1> Hello, {{$user->first_name}}, your partner_id on Billingo has been rewoked, however we updated it automatically so its fine now..</h1>
 </body>
 </html>

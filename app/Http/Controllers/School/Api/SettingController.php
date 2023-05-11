@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 
 class SettingController extends Controller
 {
-    public static function updateBillingoApiKey(Request $request): JsonResponse
+    public function updateBillingoApiKey(Request $request): JsonResponse
     {
         $user = User::where('id', auth()->user()->id)->first();
         $merchant = Merchant::where('user_id', $user->id)->first();
@@ -23,7 +23,7 @@ class SettingController extends Controller
 
         if ($response->status() === 401) {
             // API key is unauthorized, probably revoked or incorrect
-            return response()->json(['message' => 'Your api key is incorrect, please check again'], 404);
+            return response()->json(['message' => 'Your api key is incorrect, please check again'], 422);
         } else {
             $billingoData->update([
                 'billingo_api_key' => $request->billingo_api_key,
@@ -32,5 +32,14 @@ class SettingController extends Controller
 
             return response()->json('Billingo api key accepted and updated successfully');
         }
+    }
+
+    public function billingoApiKeyStatus(): JsonResponse
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        $merchant = Merchant::where('user_id', $user->id)->first();
+        $billingoData = BillingoData::where('merchant_id', $merchant->id)->first();
+
+        return response()->json(['status' => $billingoData->billingo_suspended]);
     }
 }

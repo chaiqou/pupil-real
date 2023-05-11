@@ -111,12 +111,15 @@
               </button>
             </div>
           </template>
-          <p class="mt-2 text-sm text-gray-500 lg:mb-12">
+          <p class="mt-2 text-sm text-gray-500 lg:mb-12" v-if="!billingoStatus">
             {{
               $t(
                 "message.bank_transfers_usually_take_a_few_hours_or_in_some_cases_a_few_days_to_process",
               )
             }}.
+          </p>
+          <p class="mt-2 text-sm text-gray-500 lg:mb-12">
+            {{ billingoStatusMessage }}
           </p>
         </section>
       </div>
@@ -202,17 +205,19 @@ const successFeedbackPayWithTransfer = ref(false);
 const errorFeedbackPayWithTransfer = ref(false);
 const loading = ref(false);
 const billingoStatus = ref(0);
+const billingoStatusMessage = ref(null);
 const merchantSuspendStatus = async () => {
   loading.value = true;
 
   try {
     const response = await axios.post(
-      "/api/parent/merchant-billingo-key-status",
+      "/api/parent/billingo-connection-status",
       {
         lunch_id: store.lunch_details[0].id,
       },
     );
     billingoStatus.value = response.data.billingo_suspended;
+    billingoStatusMessage.value = response.data.message;
   } catch (error) {
     console.error(error);
   } finally {
