@@ -18,6 +18,6 @@
   </style>
 </head>
 <body class="page_bodyClass" style="word-break: break-word; -webkit-font-smoothing: antialiased; margin: 0; width: 100%; padding: 0">
-  <h1> Hello, {{$user->first_name}}, your partner_id on Billingo has been rewoked..</h1>
+  <h1> Hello, {{$user->first_name}}, your partner_id on Billingo has been rewoked, however we updated it automatically so its fine now..</h1>
 </body>
 </html>

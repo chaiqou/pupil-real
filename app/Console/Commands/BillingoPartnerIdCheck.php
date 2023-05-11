@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\BillingoController;
 use App\Mail\PartnerIdRewokedReportForAdmin;
 use App\Mail\PartnerIdRewokedReportForParent;
 use App\Models\BillingoData;
@@ -47,13 +48,23 @@ class BillingoPartnerIdCheck extends Command
                 $partnerId->update([
                     'billingo_suspended' => true,
                 ]);
+                BillingoController::createOrUpdateParentBillingo($user->id);
                 $this->info('Partner ID for parent which id is # '.$partnerId->user_id.'is probably rewoked or incorrect, sending reports to current parent and admin...');
                 Mail::to('info@pupilpay.hu')->send(new PartnerIdRewokedReportForAdmin($user));
                 $this->info('Email for admin sent');
                 Mail::to($user->email)->send(new PartnerIdRewokedReportForParent($user, $user->language));
                 $this->info('Email for parent sent');
+                $partnerId->update([
+                    'billingo_suspended' => false,
+                ]);
             } else {
                 $this->info('Partner ID for parent which id is # '.$partnerId->user_id.' is working');
+            }
+            if ($response->status() === 500) {
+                $this->info('Something happens on Billingo side..');
+                $partnerId->update([
+                    'billingo_suspended' => true,
+                ]);
             }
         }
     }

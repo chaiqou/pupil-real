@@ -51,7 +51,7 @@ class BillingoController extends Controller
         }
     }
 
-    public static function createParentBillingo($user_id): void
+    public static function createOrUpdateParentBillingo($user_id): void
     {
         $user = User::where('id', $user_id)->first();
         $merchants = Merchant::where('school_id', $user->school_id)->where('finished_onboarding', true)->get();
@@ -72,7 +72,7 @@ class BillingoController extends Controller
                     $user->email,
                 ],
             ])->json();
-            PartnerId::create([
+            PartnerId::updateOrCreate(['user_id' => $user->id, 'merchant_id' => $merchant->id], [
                 'partner_id' => $requestBillingo['id'],
                 'user_id' => $user->id,
                 'merchant_id' => $merchant->id,

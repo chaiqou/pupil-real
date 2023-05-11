@@ -147,7 +147,7 @@ class InviteController extends Controller
         Log::info($email_verification_integer_code);
         Log::info($verification_code->code);
         if ($verification_code->code === $email_verification_integer_code) {
-            BillingoController::createParentBillingo($user->id);
+            BillingoController::createOrUpdateParentBillingo($user->id);
             $user->update(['finished_onboarding' => 1]);
             $url = route('default');
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\LunchOrderRequest;
 use App\Models\BillingoData;
 use App\Models\Lunch;
+use App\Models\Merchant;
 use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
@@ -32,20 +33,33 @@ class OrderLunchController extends Controller
         // Getting billingo data to check billingo_suspended for Merchant (check that everything is good from merchant side)
         $merchantId = Lunch::where('id', $request->lunch_id)->first()->merchant_id;
         $billingoData = BillingoData::where('merchant_id', $merchantId)->first();
-
+        $merchant = Merchant::where('id', $merchantId)->first();
         // Getting partner id to check billingo_suspended for Parent (check that everything is good from parent side)
         $partnerId = PartnerId::where('user_id', auth()->user()->id)->where('merchant_id', $merchantId)->first();
 
         // billingo_suspended json response will be false no matter what if at least one (PartnerId suspend or BillingoData suspend is false)
         $conclusion = null;
         if ($billingoData->billingo_suspended || $partnerId->billingo_suspended) {
-            $conclusion = true;
+            $conclusion = 1;
         } elseif (! $billingoData->billingo_suspended && ! $partnerId->billingo_suspended) {
-            $conclusion = false;
+            $conclusion = 0;
         }
 
         // Generate the message which will tell to user what happens on which side (from which side the problem was detected)
-        return response()->json(['billingo_suspended' => $conclusion]);
+        $message = null;
+        if ($partnerId->billingo_suspended && $billingoData->billingo_suspended) {
+            $message = 'Not available at the moment, both connections (your and '.$merchant->merchant_nick.') is bad with Billingo, try to reaload page or please wait until we fix this';
+        } elseif ($partnerId->billingo_suspended) {
+            $message = 'Not available at the moment, please try to reload page or wait until your Billingo connection will fix its Partner ID';
+        } elseif ($billingoData->billingo_suspended) {
+            $message = 'Not available at the moment, please wait until '.$merchant->merchant_nick.' will fix it, or try to reload page';
+        }
+
+        if ($message === null) {
+            return response()->json(['billingo_suspended' => $conclusion]);
+        }
+
+        return response()->json(['billingo_suspended' => $conclusion, 'message' => $message]);
     }
 
     public function orderLunch(LunchOrderRequest $request): JsonResponse

@@ -17,6 +17,6 @@
   </style>
 </head>
 <body class="page_bodyClass" style="word-break: break-word; -webkit-font-smoothing: antialiased; margin: 0; width: 100%; padding: 0">
-  <h1> Hello, the billingo api key for merchant which nick is {{$merchant->merchant_nick}} and id is #{{$merchant->id}} has probably been rewoked please check.</h1>
+  <h1> Hello, the billingo api key for merchant which nick is {{$merchant->merchant_nick}} and id is #{{$merchant->id}} has probably been rewoked please check if it works now (recovered automatically).</h1>
 </body>
 </html>

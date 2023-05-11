@@ -57,6 +57,12 @@ class BillingoApiKeyCheck extends Command
             } else {
                 $this->info('Billingo api key for merchant id # '.$billingoData->merchant_id.' is working');
             }
+            if ($response->status() === 500) {
+                $this->info('Something happens on Billingo side...');
+                $billingoData->update([
+                    'billingo_suspended' => true,
+                ]);
+            }
         }
     }
 }
