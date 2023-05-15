@@ -77,6 +77,11 @@ class OrderLunchController extends Controller
             'X-API-KEY' => $merchantBillingoData->billingo_api_key,
         ])->get('https://api.billingo.hu/v3/partners/'.$partnerId->partner_id);
 
+        if ($response->status() === 200) {
+            $partnerId->update([
+                'billingo_suspended' => false,
+            ]);
+        }
         if ($response->status() === 403) {
             // partner_id is forbidden, probably revoked or incorrect
             $user = User::where('id', $partnerId->user_id)->first();
