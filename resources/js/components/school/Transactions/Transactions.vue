@@ -184,7 +184,7 @@ export default {
         if (this.currentPage > this.lastPage) {
           return;
         }
-        this.handleGetStudentRequest();
+        this.handleGetTransactionsRequest();
       }
     },
   },
