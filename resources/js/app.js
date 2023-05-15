@@ -43,7 +43,7 @@ import AdminSchoolsHeader from "@/components/admin/Schools/SchoolsHeader.vue";
 import LunchFormEdit from "@/components/Merchant/lunch-management/LunchFormEdit.vue";
 import LunchEditPage from "@/components/Merchant/lunch-management/LunchEditPage.vue";
 import ConfirmationModal from "@/components/Merchant/lunch-management/ConfirmationModal.vue";
-import ParentLunchDetails from "@/components/parent/lunch-management/parentLunchDetails.vue";
+import ParentLunchDetails from "@/components/parent/lunch-management/ParentLunchDetails.vue";
 import SchoolTerminals from "@/components/school/Terminals/Terminals.vue";
 import SchoolTerminalsHeader from "@/components/school/Terminals/TerminalsHeader.vue";
 import ParentCalendar from "@/components/parent/lunch-management/ParentCalendar.vue";
@@ -63,6 +63,7 @@ import MerchantVerifyEmail from "@/components/invite/merchant/VerifyEmail.vue";
 import SetLanguage from "@/components/Ui/SetLanguage.vue";
 import AdminSettings from "@/components/admin/Settings/Settings.vue";
 import SchoolSettings from "@/components/school/Settings/Settings.vue";
+import AdminDashboard from "@/components/admin/Dashboard/Dashboard.vue";
 
 const pinia = createPinia();
 const app = createApp({});
@@ -123,6 +124,7 @@ app.component("admin-students", AdminStudents);
 app.component("admin-invites", AdminInvites);
 app.component("admin-invites-header", AdminInvitesHeader);
 app.component("admin-settings", AdminSettings);
+app.component("admin-dashboard", AdminDashboard);
 
 // Calendar parts components
 app.component("calendar", Calendar);

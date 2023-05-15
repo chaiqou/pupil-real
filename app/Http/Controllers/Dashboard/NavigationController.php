@@ -15,11 +15,14 @@ class NavigationController extends Controller
     {
         $navigation = [];
         $role = '';
-        $student = Student::where('id', $student_id)->first();
         $user = Auth::user();
+        $student = Student::where('id', $student_id)->where('user_id', $user->id)->first();
         $userInfo = json_decode($user->user_information);
         $students = Auth::user()->students->all();
         $twoFa = 0;
+        if (! $student) {
+            abort(404);
+        }
         if ($user->hasRole('parent')) {
             $role = 'parent';
             // use lower case characters into the name with snake case (even if it is subpage, just for sure, even tho it is no need for it for subpages), because in DashboardNavigation vue we use translates (localization)
@@ -49,7 +52,7 @@ class NavigationController extends Controller
         if (auth()->user()->language === 'en') {
             app()->setLocale('en');
         } elseif (auth()->user()->language === 'hu') {
-            app()->setLocale('ka');
+            app()->setLocale('hu');
         } else {
             app()->setLocale('en');
         }
@@ -86,6 +89,7 @@ class NavigationController extends Controller
                     ['name' => 'students', 'icon' => 'UsersIcon', 'href' => '/school/students', 'current' => false],
                     ['name' => 'terminals', 'icon' => 'CommandLineIcon', 'href' => '/school/terminals', 'current' => false],
                     ['name' => 'knowledge_base', 'icon' => 'BookOpenIcon', 'href' => '/school/knowledge-base', 'current' => false],
+                    ['name' => 'payouts', 'icon' => 'BanknotesIcon', 'href' => '/school/express-dashboard', 'current' => false],
                     ['name' => 'settings', 'icon' => 'Cog8ToothIcon', 'href' => '/school/settings', 'current' => false],
                     ['name' => 'invite', 'icon' => 'nothing', 'href' => '/school/invite', 'current' => false, 'hidden' => true, 'parentPage' => 'students'],
                     ['name' => 'add_lunch', 'icon' => 'nothing', 'href' => '/school/add-lunch', 'current' => false, 'hidden' => true, 'parentPage' => 'lunch_management'],
@@ -95,6 +99,14 @@ class NavigationController extends Controller
         }
 
         $currentTab = request()->route()->getName();
+
+        if (auth()->user()->language === 'en') {
+            app()->setLocale('en');
+        } elseif (auth()->user()->language === 'hu') {
+            app()->setLocale('hu');
+        } else {
+            app()->setLocale('en');
+        }
 
         if (session()->get('is_2fa_verified') === false) {
             return redirect()->route('2fa.form');
@@ -137,6 +149,13 @@ class NavigationController extends Controller
             return redirect()->route('2fa.form');
         }
         $school = School::where('id', request()->school_id)->first();
+        if (auth()->user()->language === 'en') {
+            app()->setLocale('en');
+        } elseif (auth()->user()->language === 'hu') {
+            app()->setLocale('hu');
+        } else {
+            app()->setLocale('en');
+        }
 
         return view($currentTab, [
             'current' => $currentTab,

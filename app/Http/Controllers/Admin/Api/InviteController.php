@@ -69,8 +69,18 @@ class InviteController extends Controller
     {
         $invite = Invite::where('id', $request->invite_id)->first();
         $invite->delete();
-        $invites = Invite::with('school')->where('role', 'parent')->latest('created_at')->paginate(5);
+        $invites = Invite::with('school')->where('role', $request->inviteUserRole)->latest('created_at')->paginate(5);
 
         return InviteResource::collection($invites);
+    }
+
+    public function resend(Request $request): JsonResponse
+    {
+        $invite = Invite::where('id', $request->invite_id)->first();
+        $language = config('app.locale');
+        InviteUserJob::dispatch($invite, $invite->email, $language)->onQueue('invite-users');
+        $invite->update(['state' => 1]);
+
+        return response()->json('Resend sent successfully');
     }
 }

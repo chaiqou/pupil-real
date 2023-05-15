@@ -79,7 +79,8 @@
               <button class="text-indigo-600 hover:text-indigo-900">
                 <dropdown-animated
                   role="school"
-                  :items="['delete']"
+                  inviteUserRole="parent"
+                  :items="['resend', 'delete']"
                   :invite-id="invite.id"
                   >{{ $t("message.actions") }}</dropdown-animated
                 >

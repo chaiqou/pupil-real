@@ -79,9 +79,6 @@ class InviteController extends Controller
             'company_legal_name' => $request->company_legal_name,
             'user_id' => $user->id,
             'school_id' => $invite->school_id,
-            'billingo_api_key' => null,
-            'private_key' => null,
-            'public_key' => null,
             'company_details' => json_encode([
                 'country' => $request->country,
                 'street_address' => $request->street_address,
@@ -213,7 +210,6 @@ class InviteController extends Controller
             $invite->delete();
 
             return response()->json(['url' => route('default')]);
-            // return redirect()->route('default')->with(['success' => true, 'success_title' => 'Your created your account!', 'success_description' => 'You can now login to your account.']);
         }
 
         return response()->json(['message' => 'These credentials do not match our records.'], 404);

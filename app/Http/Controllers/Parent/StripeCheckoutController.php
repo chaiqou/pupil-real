@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Actions\Claims\CalculateClaimsArrayAction;
+use App\Http\Controllers\BillingoController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Parent\StripePaymentRequest;
+use App\Models\BillingoData;
 use App\Models\Lunch;
+use App\Models\Merchant;
+use App\Models\PartnerId;
 use App\Models\PendingTransaction;
 use App\Models\PeriodicLunch;
 use App\Models\Student;
 use App\Models\Transaction;
+use App\Models\TransactionMissingAction;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use PHPUnit\Runner\Exception;
+use Stripe\Account;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
@@ -132,12 +138,12 @@ class StripeCheckoutController extends Controller
             'payment_method' => 'stripe',
             'billing_type' => 'invoice',
             'billing_items' => json_encode([
-                'name' => 'Test lunch '.$claimArray['claimDates'][0].' - '.$claimArray['claimDates'][count($claimArray['claimDates']) - 1],
+                'name' => $lunch->title.' '.$claimArray['claimDates'][0].' - '.$claimArray['claimDates'][count($claimArray['claimDates']) - 1],
                 'unit_price' => $pricePeriod,
                 'unit_price_type' => 'gross',
                 'quantity' => 1,
                 'unit' => 'db',
-                'vat' => '27%',
+                'vat' => $lunch->vat,
             ]),
             'billing_provider' => 'none',
             'billing_comment' => json_encode([
@@ -161,8 +167,6 @@ class StripeCheckoutController extends Controller
             DB::rollBack();
         }
 
-        $checkout_session_id = session('checkout_session');
-
         return response()->json(['url' => $checkout_session->url]);
     }
 
@@ -175,12 +179,12 @@ class StripeCheckoutController extends Controller
             $session = Session::retrieve($session_id);
 
             $pending_transaction = PendingTransaction::query()->where('stripe_session_id', $session_id)->first();
-            // dd($pending_transaction);
             $order = PeriodicLunch::where('pending_transactions_id', $pending_transaction->id)->first();
             $customer = auth()->user();
 
             $existing_transaction = Transaction::where('stripe_payment_intent', $session->payment_intent)->first();
-
+            $pendingTransactionBillingItems = json_decode($pending_transaction->billing_items);
+            $pendingTransactionBillingComment = json_decode($pending_transaction->billing_comment);
             if (! $existing_transaction) {
                 $transaction = Transaction::create([
                     'user_id' => $pending_transaction->user_id,
@@ -197,19 +201,19 @@ class StripeCheckoutController extends Controller
                     'history' => json_encode([
                         'history' => [],
                     ]),
-                    'stripe_payment_intent' => $session->payment_intent,
-                    'payment_method' => 'stripe',
+                    'payment_method' => $pending_transaction->payment_method,
                     'billing_items' => json_encode([
-                        'name' => 'Test lunch',
-                        'unit_price' => 'pricePeriod',
-                        'unit_price_type' => 'gross',
-                        'quantity' => 1,
-                        'unit' => 'db',
-                        'vat' => '27%',
+                        'name' => $pendingTransactionBillingItems->name,
+                        'unit_price' => $pendingTransactionBillingItems->unit_price,
+                        'unit_price_type' => $pendingTransactionBillingItems->unit_price_type,
+                        'quantity' => $pendingTransactionBillingItems->quantity,
+                        'unit' => $pendingTransactionBillingItems->unit,
+                        'vat' => $pendingTransactionBillingItems->vat,
                     ]),
+                    'stripe_payment_intent' => null,
                     'billing_provider' => 'none',
                     'billing_comment' => json_encode([
-                        'comment' => 'hardcoded billing comment',
+                        'comment' => $pendingTransactionBillingComment->comment,
                     ]),
                 ]);
 
@@ -221,6 +225,22 @@ class StripeCheckoutController extends Controller
 
                 if (! $transaction) {
                     throw new NotFoundHttpException();
+                }
+                $merchantBillingoData = BillingoData::where('merchant_id', $transaction->merchant_id)->first();
+                $transactionBillingItems = json_decode($transaction->billing_items);
+                $transactionComment = json_decode($transaction->billing_comment);
+                if (! $merchantBillingoData->billingo_suspended) {
+                    $partnerId = PartnerId::where('user_id', auth()->user()->id)->where('merchant_id', $transaction->merchant_id)->first();
+                    BillingoController::createBillingDocument($merchantBillingoData->billingo_api_key, $partnerId->partner_id, $merchantBillingoData->block_id,
+                        'invoice', $transaction->transaction_date, 'online_bankcard', auth()->user()->language,
+                        'HUF', $transactionBillingItems->name, $transactionBillingItems->unit_price, $transactionBillingItems->unit_price_type,
+                        $transactionBillingItems->quantity, $transactionBillingItems->unit, $transactionBillingItems->vat, $transactionComment->comment, true);
+                }
+                if ($merchantBillingoData->billingo_suspended) {
+                    TransactionMissingAction::create([
+                        'transaction_id' => $transaction->id,
+                        'action' => 'must_create_and_send_missing_invoice',
+                    ]);
                 }
             }
 
@@ -270,6 +290,21 @@ class StripeCheckoutController extends Controller
         } else {
             throw new NotFoundHttpException();
         }
+    }
+
+    public function payoutsDashboardLink(Request $request): JsonResponse
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $user = auth()->user();
+        $merchant = Merchant::where('user_id', $user->id)->first();
+
+        $loginLink = Account::createLoginLink(
+            $merchant->stripe_account_id,
+            ['redirect_url' => 'http://127.0.0.1:8000/express-dashboard']
+        );
+
+        return response()->json($loginLink->url);
     }
 
     public function webhook()

@@ -23,6 +23,7 @@ use App\Http\Controllers\School\Api\InviteController as SchoolInviteController;
 use App\Http\Controllers\School\Api\LineAreaChartController;
 use App\Http\Controllers\School\Api\Lunch\LunchController;
 use App\Http\Controllers\School\Api\PieChartController;
+use App\Http\Controllers\School\Api\SettingController as SchoolSettingController;
 use App\Http\Controllers\School\Api\StudentController as SchoolStudentController;
 use App\Http\Controllers\School\Api\TerminalController;
 use App\Http\Controllers\School\Api\TransactionController as SchoolTransactionController;
@@ -51,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('update-password/{user_id}', 'updatePassword')->name('parent.update-password_api');
                 Route::post('update-student', 'updateStudent')->name('parent.update-student_api');
             });
+            Route::post('billingo-connection-status', [OrderLunchController::class, 'billingoConnectionStatus'])->name('parent.billingo-status');
         });
     });
     Route::group(['middleware' => ['role:admin']], function () {
@@ -77,10 +79,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('invite-emails', 'getInviteEmails')->name('admin_invites.invite-emails_api');
                 Route::get('user-emails', 'getUserEmails')->name('admin_invites.user-emails_api');
                 Route::post('{schoolId}/send-invite', 'store')->name('admin_send-invite_api');
-                Route::delete('invite/{invite_id}', 'delete')->name('admin.delete-invite');
+                Route::delete('{inviteUserRole}/invite/{invite_id}', 'delete')->name('admin.delete-invite');
+                Route::post('resend-invite/{invite_id}', 'resend')->name('admin.resend-invite_api');
             });
             Route::controller(AdminMerchantInviteController::class)->group(function () {
-                Route::get('/school/{school_id}/merchant-invites', 'get')->name('admin.merchant-invites-get_api');
+                Route::get('school/{school_id}/merchant-invites', 'get')->name('admin.merchant-invites-get_api');
                 Route::post('school/{schoolId}/merchant/send-invite', 'store')->name('admin_merchant-send-invite_api');
             });
         });
@@ -88,20 +91,22 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role:school']], function () {
         Route::prefix('/school/')->group(function () {
+            Route::get('/payouts-dashboard', [StripeCheckoutController::class, 'payoutsDashboardLink'])->name('school.payouts_dashboard');
             Route::controller(SchoolStudentController::class)->group(function () {
                 Route::get('{school_id}/dashboard-students', 'getDashboardStudents')->name('school.dashboard-students');
                 Route::get('{school_id}/students', 'getStudents')->name('school.students_api');
             });
             Route::controller(SchoolTransactionController::class)->group(function () {
-                Route::get('{school_id}/last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
-                Route::get('{school_id}/transactions', 'getTransactions')->name('school.transactions_api');
+                Route::get('last-transactions', 'getLastFiveTransactions')->name('school.last-transactions_api');
+                Route::get('transactions', 'getTransactions')->name('school.transactions_api');
             });
             Route::controller(SchoolInviteController::class)->group(function () {
                 Route::get('{school_id}/invites', 'get')->name('school.invites_api');
-                Route::get('{school_id}/invite-emails', 'getInviteEmails')->name('school_invite-emails');
-                Route::get('{school_id}/user-emails', 'getUserEmails')->name('school_user-emails');
+                Route::get('invite-emails', 'getInviteEmails')->name('school_invite-emails');
+                Route::get('user-emails', 'getUserEmails')->name('school_user-emails');
                 Route::post('send-invite', 'sendInvite')->name('send.invite');
-                Route::delete('invite/{invite_id}', 'delete')->name('school.delete-invite');
+                Route::delete('{inviteUserRole}/invite/{invite_id}', 'delete')->name('school.delete-invite');
+                Route::post('resend-invite/{invite_id}', 'resend')->name('school.resend-invite_api');
             });
             Route::controller(TerminalController::class)->group(function () {
                 Route::get('terminals', 'get')->name('terminal.get');
@@ -119,6 +124,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('pending-transactions-value', 'pendingTransactionValue')->name('school.pending-transactions-value_insights');
                 Route::get('average-student-weekly-spending', 'averageStudentWeeklySpending')->name('school.avg-student-weekly-spending_insights');
             });
+            Route::put('billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
+            Route::get('billingo-api-key-status', [SchoolSettingController::class, 'billingoApiKeyStatus'])->name('school.billingo-api-key-status');
         });
     });
 

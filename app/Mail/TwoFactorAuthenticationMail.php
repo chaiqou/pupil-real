@@ -12,20 +12,10 @@ class TwoFactorAuthenticationMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(private int $code, private string $name, private string $browser, private string $device, private string $year, private string $language)
     {
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         if ($this->language === 'hu') {

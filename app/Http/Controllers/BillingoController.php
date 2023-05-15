@@ -44,7 +44,6 @@ class BillingoController extends Controller
                 'billingo_api_key' => $request->api_key,
                 'merchant_id' => $merchant->id,
             ]);
-            $merchant->update(['billingo_api_key' => $request->api_key]);
 
             return $user->sendVerificationEmailApi('merchant-verify.email');
         } else {
@@ -52,7 +51,7 @@ class BillingoController extends Controller
         }
     }
 
-    public static function createParentBillingo($user_id): void
+    public static function createOrUpdateParentBillingo($user_id): void
     {
         $user = User::where('id', $user_id)->first();
         $merchants = Merchant::where('school_id', $user->school_id)->where('finished_onboarding', true)->get();
@@ -73,7 +72,7 @@ class BillingoController extends Controller
                     $user->email,
                 ],
             ])->json();
-            PartnerId::create([
+            PartnerId::updateOrCreate(['user_id' => $user->id, 'merchant_id' => $merchant->id], [
                 'partner_id' => $requestBillingo['id'],
                 'user_id' => $user->id,
                 'merchant_id' => $merchant->id,
@@ -101,7 +100,7 @@ class BillingoController extends Controller
             'fulfillment_date' => $pending_transaction->transaction_date,
             'due_date' => $transaction_due_date,
             'payment_method' => 'wire_transfer',
-            'language' => 'en',
+            'language' => $user->language,
             'currency' => 'HUF',
             'items' => [
                 [
@@ -129,7 +128,7 @@ class BillingoController extends Controller
         return new PendingTransactionResource($pending_transaction);
     }
 
-    public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $type, string $fulfillment_date,
+    public static function createBillingDocument(string $api_key, int $partner_id, int $block_id, string $billing_type, string $fulfillment_date,
         string $payment_method, string $language, string $currency, string $name, int $unit_price, string $unit_price_type, int $quantity,
         string $unit, string $vat, string $comment, bool $should_send_email
     ): JsonResponse {
@@ -141,7 +140,7 @@ class BillingoController extends Controller
         ])->post('https://api.billingo.hu/v3/documents', [
             'partner_id' => $partner_id,
             'block_id' => $block_id,
-            'type' => $type,
+            'type' => $billing_type,
             'fulfillment_date' => $fulfillment_date,
             'due_date' => $due_date,
             'payment_method' => $payment_method,

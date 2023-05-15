@@ -1,7 +1,7 @@
 <template>
   <div class="gap-2 xl:flex">
     <div class="lg:mt-10 xl:w-1/2">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
+      <h3 class="text-lg font-medium leading-6 text-gray-900">Insights</h3>
       <dl class="mt-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
         <div
           v-for="item in statsTop"
@@ -13,7 +13,7 @@
           </dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div
-              v-if="item.unavailable === false"
+              v-if="item.unavailable !== true"
               class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600"
             >
               {{ item.stat }}
@@ -22,7 +22,7 @@
               >
             </div>
             <div
-              v-if="item.unavailable === false"
+              v-if="item.unavailable !== true"
               :class="[
                 item.changeType === 'increase'
                   ? 'bg-green-100 text-green-800'
@@ -127,11 +127,10 @@
     </div>
 
     <div class="mt-10 xl:w-2/3">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Title</h3>
-      <dashboard-transactions
-        class="mt-5"
-        :schoolId="1"
-      ></dashboard-transactions>
+      <h3 class="text-lg font-medium leading-6 text-gray-900">
+        Last transactions
+      </h3>
+      <dashboard-transactions class="mt-5"></dashboard-transactions>
     </div>
   </div>
   <div class="my-12 px-1 md:mt-32 md:mb-32 xl:flex">
@@ -148,7 +147,7 @@
     </div>
     <div
       v-if="!isPieChartDataCalculated"
-      class="mb-5 flex items-center justify-center rounded-md border border-4 border-dashed sm:my-5 xl:my-0 xl:mr-3 xl:w-2/3"
+      class="mb-5 flex items-center justify-center rounded-md border-4 border-dashed sm:my-5 xl:my-0 xl:mr-3 xl:w-2/3"
     >
       <div class="my-32 flex flex-col items-center justify-center">
         <clipboard-document-list-icon
@@ -176,7 +175,7 @@
 
     <div
       v-if="!isLineChartDataCalculated"
-      class="flex items-center justify-center rounded-md border border-4 border-dashed xl:w-2/3"
+      class="flex items-center justify-center rounded-md border-4 border-dashed xl:w-2/3"
     >
       <div class="my-32 flex flex-col items-center justify-center">
         <list-bullet-icon class="w-24 text-gray-500 xl:w-32"></list-bullet-icon>
@@ -341,7 +340,7 @@ export default {
         .get("/api/school/active-students")
         .then((res) => {
           const activeStudents = this.statsTop.find(
-            (item) => item.name === "Active Students",
+            (item) => item.name === "active_students",
           );
           if (res.data !== "unavailable to calculate") {
             const data = res.data;
@@ -361,7 +360,7 @@ export default {
         .get("/api/school/average-transactions")
         .then((res) => {
           const avgTransactions = this.statsTop.find(
-            (item) => item.name === "Avg. Transactions Value",
+            (item) => item.name === "avg_transactions_value",
           );
           if (res.data !== "unavailable to calculate") {
             const data = res.data;
@@ -381,7 +380,7 @@ export default {
         .get("/api/school/pending-transactions-value")
         .then((res) => {
           const pendingTransactions = this.statsBottom.find(
-            (item) => item.name === "Pending Transactions Value",
+            (item) => item.name === "pending_transactions_value",
           );
           if (res.data !== "unavailable to calculate") {
             pendingTransactions.stat = res.data.total;
@@ -396,7 +395,7 @@ export default {
         .get("/api/school/average-student-weekly-spending")
         .then((res) => {
           const avgTransactionsPerStudent = this.statsBottom.find(
-            (item) => item.name === "Avg. Student weekly spending",
+            (item) => item.name === "avg_student_weekly_spending",
           );
           if (res.data !== "unavailable to calculate") {
             const data = res.data;

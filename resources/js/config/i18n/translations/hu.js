@@ -245,6 +245,10 @@ const hu = {
       "Period not enough for ordering lunch HU",
     order_starting_at: "Order starting at HU",
     available_days: "Available days HU",
+    resend: "Resend HU",
+    express: "Express Dashboard HU",
+    payouts: "Payouts HU",
+    enter_your_billingo_api_key_here: "Enter your Billingo api key here HU",
   },
 };
 

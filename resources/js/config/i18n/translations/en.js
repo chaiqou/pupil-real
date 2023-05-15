@@ -244,6 +244,10 @@ const en = {
     order_starting_at: "Order starting at",
     available_days: "Available days",
     invite_merchant_by_email_address: "Invite merchant by email address",
+    resend: "Resend",
+    express: "Express Dashboard",
+    payouts: "Payouts",
+    enter_your_billingo_api_key_here: "Enter your Billingo api key here",
   },
 };
 
