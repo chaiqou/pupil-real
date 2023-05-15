@@ -7,7 +7,6 @@ use Illuminate\Validation\Rules\Password;
 
 class SetupAccountRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
