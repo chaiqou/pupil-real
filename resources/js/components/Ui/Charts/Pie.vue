@@ -24,6 +24,9 @@ export default {
           position: "bottom",
         },
         chart: {
+          animations: {
+            enabled: false,
+          },
           id: this.id,
         },
         labels: this.labels,
