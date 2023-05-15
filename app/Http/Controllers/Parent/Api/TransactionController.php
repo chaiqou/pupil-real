@@ -13,7 +13,7 @@ class TransactionController extends Controller
 {
     public function getTransactions(Request $request): ResourceCollection
     {
-        $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->latest('created_at')->paginate(6);
+        $transactions = Transaction::where('student_id', $request->student_id)->with('merchant', 'student')->orderByDesc('transaction_date')->paginate(6);
 
         return TransactionResource::collection($transactions);
     }

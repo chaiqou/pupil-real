@@ -15,7 +15,7 @@ class TransactionController extends Controller
     public function getTransactions(): ResourceCollection|JsonResponse
     {
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
-        $transactions = Transaction::where('merchant_id', $merchant->id)->with('merchant', 'student')->latest('created_at')->paginate(6);
+        $transactions = Transaction::where('merchant_id', $merchant->id)->with('merchant', 'student')->orderByDesc('transaction_date')->paginate(6);
 
         return TransactionResource::collection($transactions);
     }
