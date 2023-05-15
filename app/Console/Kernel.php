@@ -18,7 +18,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('portal:request-paid-proformas')->everyTwoMinutes();
         $schedule->command('portal:check-billingo-api-key')->everyMinute();
         $schedule->command('portal:create-invoice-for-missing-transactions')->everyTwoMinutes();
-        $schedule->command('portal:billingo-partner-id-check')->everyTwoMinutes();
         $schedule->command('portal:user-partnerid-data-check')->daily();
         $schedule->command('portal:merchant-billingo-data-check')->daily();
     }
