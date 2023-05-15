@@ -29,7 +29,7 @@ class LunchController extends Controller
             $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
         }
         if (auth()->user()->hasRole('parent')) {
-            $lunches = Lunch::where('school_id', auth()->user()->school_id)->paginate(9);
+            $lunches = Lunch::where('school_id', auth()->user()->school_id)->orderByDesc('created_at')->paginate(9);
         }
 
         $weekNumbers = FindWeekNumbersAction::execute($lunches);
