@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
+    "watch": "vite build --watch",
     "prettier": "prettier --write 'resources/**/*.{vue,js}'",
     "lint": "eslint . --ext .vue --fix --ignore-path .gitignore"
   },

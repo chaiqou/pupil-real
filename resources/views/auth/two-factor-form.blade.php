@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{session()->get('locale') === 'en' ? 'Two Factor Authentication | PupilPay' : 'Two Factor Authentication | PupilPay HU'}}</title>
+    <title>{{session()->get('locale') === 'en' ? 'Two Factor Authentication | PupilPay' : 'Kétlépcsős azonosítás | PupilPay'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -30,15 +30,15 @@
             <div>
                 <img class="mx-auto h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-black-color.svg"
                     alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Two-factor Authentication' : 'Two-factor Authentication HU'}}
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Two-factor Authentication' : 'Kétlépcsős azonosítás'}}
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
-                    Enter the
-                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-{{session()->get('locale') === 'en' ? 'Digit' : 'Digit HU'}}</span>
-                    {{session()->get('locale') === 'en' ? 'verification code sent to your email address' : 'verification code sent to your email address HU'}}
+                {{session()->get('locale') === 'en' ? 'Enter the' : 'Adja meg a'}}
+                    <span class="font-medium text-indigo-600 hover:text-indigo-500">6-{{session()->get('locale') === 'en' ? 'digit' : 'számjegyű'}}</span>
+                    {{session()->get('locale') === 'en' ? 'verification code sent to your email address' : ' kódot amit küldtünk az email címére'}}
                 </p>
                 <p class="mt-2 text-center text-xs text-gray-600">
-                    {{session()->get('locale') === 'en' ? 'If you cant find the email in a few minutes, check your spam folder' : 'If you cant find the email in a few minutes, check your spam folder HU'}}.
+                    {{session()->get('locale') === 'en' ? 'If you cant find the email in a few minutes, check your spam folder' : 'Ha nem találja a kódot pár percen belül, ellenőrizze a "Spam" mappát'}}.
                 </p>
             </div>
             <div class="flex items-center justify-center">
@@ -49,7 +49,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                         </svg>
-                        {{session()->get('locale') === 'en' ? 'Resend code' : 'Resend code HU'}}.
+                        {{session()->get('locale') === 'en' ? 'Resend code' : 'Új kód küldése'}}.
 
                     </button>
                 </form>
@@ -99,7 +99,7 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        Sign in
+                        {{session()->get('locale') === 'en' ? 'Sign in' : 'Bejelentkezés'}}
                     </button>
                 </div>
             </form>
@@ -107,8 +107,7 @@
                 <form action="{{ route('logout') }}" method="GET">
                     @csrf
                     <button type="submit"
-                        class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Log
-                        out</button>
+                        class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{{session()->get('locale') === 'en' ? 'Log out' : 'Kijelentkezés'}}</button>
                 </form>
             </div>
         </div>

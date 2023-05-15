@@ -6,8 +6,8 @@ const hu = {
     password: "Password HU",
     email_address: "Email address HU",
     sign_up: "Sign up HU",
-    english: "English HU",
-    hungary: "Hungary HU",
+    english: "English",
+    hungary: "Magyar",
     personal_information: "Personal information HU",
     fill_out_your_personal_information: "Fill out your personal information HU",
     use_a_permanent_address_where_you_can_receive_mail:
