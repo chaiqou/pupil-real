@@ -7,7 +7,7 @@ const en = {
     email_address: "Email address",
     sign_up: "Sign up",
     english: "English",
-    hungary: "Hungary",
+    hungary: "Magyar",
     personal_information: "Personal information",
     fill_out_your_personal_information: "Fill out your personal information",
     use_a_permanent_address_where_you_can_receive_mail:

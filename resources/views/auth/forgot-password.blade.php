@@ -29,7 +29,7 @@
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Request password reset' : 'Request password reset HU'}}</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Request password a reset' : 'Elfejeltett jelszó'}}</h2>
             </div>
             @error('email')
                             <div class="rounded-md bg-red-50 p-4 mt-3">
@@ -59,7 +59,7 @@
                             relative block w-full appearance-none rounded-md  px-3 py-2
                             text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none
                             focus:ring-indigo-500 sm:text-sm"
-                            placeholder="{{session()->get('locale') === 'en' ? 'Email address' : 'Email address HU'}}" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'Email address' : 'Email cím'}}" />
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        {{session()->get('locale') === 'en' ? 'Reset password' : 'Reset password HU'}}
+                        {{session()->get('locale') === 'en' ? 'Reset password' : 'Küldés'}}
                     </button>
                 </div>
             </form>
