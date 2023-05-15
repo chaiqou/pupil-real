@@ -25,6 +25,7 @@ use PHPUnit\Runner\Exception;
 use Stripe\Account;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
+use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
 use Stripe\StripeClient;

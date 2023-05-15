@@ -28,7 +28,7 @@ class InviteController extends Controller
         $emails = [];
 
         foreach ($invites as $invite) {
-            array_push($emails, $invite->email);
+            $emails[] = $invite->email;
         }
 
         return response()->json($emails);
@@ -40,7 +40,7 @@ class InviteController extends Controller
         $emails = [];
 
         foreach ($users as $user) {
-            array_push($emails, $user->email);
+            $emails[] = $user->email;
         }
 
         return response()->json($emails);
