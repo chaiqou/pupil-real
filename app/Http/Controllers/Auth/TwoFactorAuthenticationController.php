@@ -16,7 +16,6 @@ class TwoFactorAuthenticationController extends Controller
 {
     public function form(): View
     {
-        // auth()->user()->update(['is_verified' => false]); // testing
         return view('auth/two-factor-form');
     }
 
