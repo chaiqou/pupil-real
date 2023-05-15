@@ -2,7 +2,7 @@
   <div>
     <button
       v-if="globalStoreSolution"
-      :disabled="axiosStatus === 'ongoing'"
+      :disabled="axiosStatus === 'ongoing' || ''"
       :class="axiosStatus === 'ongoing' ? classOngoing : classDefault"
     >
       <span class="flex items-center">

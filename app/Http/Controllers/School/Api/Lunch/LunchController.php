@@ -263,7 +263,7 @@ class LunchController extends Controller
                         //Find the claim where the name = $validated['claim_name']
                         foreach ($claim as $claimKey => $claimable) {
                             if ($claimable['name'] == $validated['claim_name']) {
-                                if (!$claimable['claimed']) {
+                                if (! $claimable['claimed']) {
                                     $claimable['claimed'] = true;
                                     $claimable['claimed_date'] = $validated['claim_date'];
                                     //Update the $claim with the new claimable

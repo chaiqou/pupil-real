@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePersonalRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
