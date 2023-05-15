@@ -2,7 +2,7 @@
   <div>
     <button
       v-if="globalStoreSolution"
-      :disabled="axiosStatus === 'ongoing' || ''"
+      :disabled="isDisabled || axiosStatus === 'ongoing'"
       :class="axiosStatus === 'ongoing' ? classOngoing : classDefault"
     >
       <span class="flex items-center">
@@ -78,6 +78,11 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+    isDisabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   computed: {
