@@ -26,6 +26,7 @@
               :placeholder="$t('message.enter_your_billingo_api_key')"
             />
             <ButtonForAxios
+              :isDisabled="!billingo_api_key"
               classOngoing="bg-indigo-600 ml-1.5 flex justify-center opacity-30 text-white px-1.5 py-1 rounded-md hover:bg-indigo-700"
               classDefault="bg-indigo-600 ml-1.5 text-white flex justify-center px-1.5 py-1 rounded-md hover:bg-indigo-700"
             >
