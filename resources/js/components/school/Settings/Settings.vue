@@ -9,11 +9,29 @@
     <div class="mt-5 w-[15rem]">
       <ValidationForm @submit="handleUpdateBillingoApiKeyRequest">
         <div>
-          <label
-            for="billingo-api-key"
-            class="block text-sm font-medium text-gray-700"
-            >{{ $t("message.billingo_key") }}</label
-          >
+          <div class="flex items-center">
+            <label
+              for="billingo-api-key"
+              class="block text-sm font-medium text-gray-700"
+              >{{ $t("message.billingo_key") }}</label
+            >
+            <svg
+              @mouseover="showBillingoApiKeyHelpText = true"
+              @mouseout="showBillingoApiKeyHelpText = false"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="ml-1 h-5 w-5 cursor-pointer"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
+            </svg>
+          </div>
           <div class="mt-1 flex items-center">
             <Field
               rules="required"
@@ -25,6 +43,7 @@
               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               :placeholder="$t('message.enter_your_billingo_api_key')"
             />
+
             <ButtonForAxios
               :isDisabled="!billingo_api_key"
               classOngoing="bg-indigo-600 ml-1.5 flex justify-center opacity-30 text-white px-1.5 py-1 rounded-md hover:bg-indigo-700"
@@ -52,7 +71,10 @@
           ></ErrorMessage>
 
           <p class="text-sm text-red-500">{{ errorData }}</p>
-          <p class="mt-1.5 text-sm text-gray-400" v-if="billingoStatus === 0">
+          <p
+            v-if="showBillingoApiKeyHelpText"
+            class="mt-1.5 text-sm text-gray-400"
+          >
             {{
               $t(
                 "message.this_field_will_activate_only_when_your_billingo_api_key_will_not_work_in_this_case_people_will_not_be_able_to_pay_with_pay_with_transfer_type_and_only_stripe_will_be_available_you_will_get_an_email_if_something_will_go_wrong_with_your_billingo_api_key",
@@ -86,6 +108,7 @@ export default {
       errorData: null,
       billingoStatus: false,
       billingoKeyStatusExplanationText: null,
+      showBillingoApiKeyHelpText: false,
     };
   },
   props: {
