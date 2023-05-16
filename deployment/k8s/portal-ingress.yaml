@@ -15,4 +15,8 @@ spec:
               service:
                 name: portal-service
                 port:
-                  name: http
+                  name: https
+  tls:
+    - hosts:
+        - portal.pupilpay.hu
+      secretName: portal-tls
