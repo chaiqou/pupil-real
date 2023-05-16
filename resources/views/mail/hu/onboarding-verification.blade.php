@@ -84,8 +84,8 @@
                   <tr>
                     <td style="padding: 45px">
                       <div style="font-size: 16px">
-                        <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi {{$user->first_name}},</h1>
-                        <p style="margin-top: 6px; margin-bottom: 21px; font-size: 16px; line-height: 24px; color: #51545E">You're just one step away from opening your PupilPay account. For the last step, all you have left is <strong>entering the code below on the verification screen.</strong></p>
+                        <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Szia {{$user->first_name}},</h1>
+                        <p style="margin-top: 6px; margin-bottom: 21px; font-size: 16px; line-height: 24px; color: #51545E">Egy lépésre vagy attól, hogy megnyisd a PupilPay fiókodat. <strong>Az utolsó lépés az, hogy beírod az alábbi kódot a ellenőrzési lépcsőnél.</strong></p>
                         <table style="margin-bottom: 21px; width: 100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr style="display: grid; justify-content: center">
                             <td align="center" class="attributes_content">
@@ -100,8 +100,7 @@
                           </tr>
                         </table>
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                          Thanks,
-                          <br>The PupilPay Team
+                          Örülünk hogy velünk tartasz!<br>A PupilPay Csapata
                         </p>
                       </div>
                     </td>
@@ -114,7 +113,7 @@
                 <table align="center" class="email-footer" style="margin-left: auto; margin-right: auto; width: 570px; text-align: center" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td align="center" style="padding: 45px; font-size: 16px">
-                      <p style="margin-top: 6px; margin-bottom: 20px; text-align: center; font-size: 12px; line-height: 24px; color: #A8AAAF">&copy; {{ date('Y') }} PupilPay. All rights reserved HU.</p>
+                      <p style="margin-top: 6px; margin-bottom: 20px; text-align: center; font-size: 12px; line-height: 24px; color: #A8AAAF">&copy; {{ date('Y') }} PupilPay. Minden jog fenntartva.</p>
                     </td>
                   </tr>
                 </table>

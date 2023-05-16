@@ -34,7 +34,8 @@ const en = {
     stripe: "Stripe",
     set_up_stripe_account: "Set up stripe account",
     we_use: "We use",
-    continue_on: "Continue on",
+    continue_on: "Continue at",
+    continue_on_suffix: "",
     to_safely_handle_online_card_payments_for_this_all_you_will_need_to_do_is_click_the_button_below_and_fill_the_forms_out:
       "to safely handle online card payments. For this, all you will need to do is click the button below and fill the forms out",
     is_one_of_the_leading_payment_processing_services_in_the_world_used_by_some_of_the_largest_companies_such_as_amazon_ford_samsung_or_apple:

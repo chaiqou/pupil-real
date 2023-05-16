@@ -82,9 +82,9 @@
                       <div style="font-size: 16px">
                       @if ($name != "unfilled")
 
-                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi {{$name}},</h1>
+                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Szia {{$name}},</h1>
                       @else
-                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Hi there!</h1>
+                      <h1 style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">Szia!</h1>
                       @endif
                         <p style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">You recently requested to reset your password for your PupilPay account. Use the button below to reset it. <strong>This password reset is only valid for the next 30 minutes.</strong></p>
                         <table align="center" style="margin: 30px auto; width: 100%; text-align: center" cellpadding="0" cellspacing="0" role="presentation">
