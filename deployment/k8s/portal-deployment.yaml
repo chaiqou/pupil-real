@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: portal
+  template:
+    metadata:
+      labels:
+        app: portal
+    spec:
+      containers:
+        - name: portal
+          image: 305880766666.dkr.ecr.eu-central-1.amazonaws.com/portal:latest
+          envFrom:
+            - secretRef:
+                name: portal-env-secrets
+          ports:
+            - containerPort: 80
