@@ -38,11 +38,5 @@ RUN composer install
 # Expose the default Laravel port
 EXPOSE 80
 
-# Generate the optimized class loader
-RUN php artisan optimize
-
-# Copy the Supervisor configuration file
-COPY deployment/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
-
-# Start Supervisor
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
+# Start the application
+CMD php artisan serve --host=0.0.0.0 --port=80
