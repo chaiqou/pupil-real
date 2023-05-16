@@ -1,7 +1,6 @@
 # Set the base image to PHP 8.1
 FROM php:8.1
 
-
 # Install required packages
 RUN apt-get update -qq -y && apt-get install -qq -y \
     git \
@@ -39,4 +38,4 @@ RUN composer install
 EXPOSE 80
 
 # Start the application
-CMD php artisan octane:start --host=0.0.0.0 --port=80
+CMD php artisan serve --host=0.0.0.0 --port=80
