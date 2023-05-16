@@ -173,6 +173,7 @@ return [
          * Package Service Providers...
          */
         hisorange\BrowserDetect\ServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
         /*
          * Application Service Providers...
          */
