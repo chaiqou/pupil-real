@@ -181,7 +181,7 @@ return [
 
     'defaults' => [
         'supervisor-1' => [
-            'connection' => 'redis',
+            'connection' => env('QUEUE_CONNECTION'),
             'queue' => ['default', 'invite-users'],
             'balance' => 'auto',
             'maxProcesses' => 1,
