@@ -57,7 +57,7 @@ class InviteController extends Controller
                 'role' => 'parent',
             ]);
             $language = config('app.locale');
-            InviteUserJob::dispatch($invite, $email, $language)->onQueue('invite-users');
+            InviteUserJob::dispatch($invite, $email, $language);
             $invite->update(['state' => 1]);
         }
 
@@ -77,7 +77,7 @@ class InviteController extends Controller
     {
         $invite = Invite::where('id', $request->invite_id)->first();
         $language = config('app.locale');
-        InviteUserJob::dispatch($invite, $invite->email, $language)->onQueue('invite-users');
+        InviteUserJob::dispatch($invite, $invite->email, $language);
         $invite->update(['state' => 1]);
 
         return response()->json('Resend sent successfully');
