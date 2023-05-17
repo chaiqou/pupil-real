@@ -22,7 +22,7 @@ RUN install-php-extensions \
     http
 
 # Install Node.js and NPM
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 
 # Install Composer
