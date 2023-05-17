@@ -248,7 +248,7 @@ const hu = {
     order_starting_at: "Rendelés kezdete",
     available_days: "Elérhető napok",
     resend: "Újraküldés",
-      express: 'Stripe Irányítópult',
+    payouts: "Kifizetések",
   },
 };
 
