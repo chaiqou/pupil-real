@@ -49,4 +49,5 @@ jobs:
         run: |
           aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
           kubectl set image deployment/portal-deployment portal=${{ env.ECR_REGISTRY }}:${{ steps.get-date.outputs.date }}
+          kubectl rollout status deployment/portal-deployment
           rm ~/.kube/config
