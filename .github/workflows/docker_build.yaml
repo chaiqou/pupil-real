@@ -1,0 +1,53 @@
+name: Build image and deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ECR_REGISTRY: 305880766666.dkr.ecr.eu-central-1.amazonaws.com/portal
+  AWS_REGION: eu-central-1
+  EKS_CLUSTER_NAME: portal-cluster
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Authenticate Docker to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+
+      - name: Get current date
+        id: get-date
+        run: echo "::set-output name=date::$(date '+%Y_%m_%d.%H-%M')"
+
+      - name: Build and tag Docker image
+        id: build-image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./deployment/Dockerfile
+          push: false
+          tags: ${{ env.ECR_REGISTRY }}:${{ steps.get-date.outputs.date }}
+
+      - name: Push Docker image to Amazon ECR
+        run: |
+          docker push ${{ env.ECR_REGISTRY }}:${{ steps.get-date.outputs.date }}
+
+      - name: Update EKS deployment
+        run: |
+          aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
+          kubectl set image deployment/portal-deployment portal=${{ env.ECR_REGISTRY }}:${{ steps.get-date.outputs.date }}
+          kubectl rollout status deployment/portal-deployment
+          rm ~/.kube/config

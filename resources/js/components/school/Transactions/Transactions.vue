@@ -170,9 +170,7 @@ export default {
     ]),
     handleGetTransactionsRequest() {
       axios
-        .get(
-          `/api/school/${this.schoolId}/transactions?page=${this.currentPage}`,
-        )
+        .get(`/api/school/transactions?page=${this.currentPage}`)
         .then((res) => {
           this.currentPage++;
           this.lastPage = res.data.meta.last_page;
@@ -186,7 +184,7 @@ export default {
         if (this.currentPage > this.lastPage) {
           return;
         }
-        this.handleGetStudentRequest();
+        this.handleGetTransactionsRequest();
       }
     },
   },

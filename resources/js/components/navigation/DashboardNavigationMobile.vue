@@ -183,7 +183,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-    ArrowRightIcon,
+  BanknotesIcon,
 } from "@heroicons/vue/24/outline";
 import { useModalStore } from "@/stores/useModalStore";
 
@@ -199,7 +199,7 @@ export default {
     CakeIcon,
     CommandLineIcon,
     ClipboardDocumentListIcon,
-      ArrowRightIcon,
+    BanknotesIcon,
   },
   computed: {
     ...mapWritableState(useModalStore, [

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Queue::failing(function (JobFailed $event) {
-            Mail::to('lomtadzenikusha@gmail.com')->send(new JobFailedMail($event));
+            Mail::to('klevente@pupilpay.hu')->send(new JobFailedMail($event));
         });
     }
 }

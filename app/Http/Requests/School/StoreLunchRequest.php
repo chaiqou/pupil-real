@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLunchRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required',
@@ -15,7 +15,7 @@ class StoreLunchRequest extends FormRequest
             'period_length' => 'required',
             'extras' => 'array',
             'holds' => 'array',
-            'price_period' => 'required|min:175|max:1000000',
+            'price_period' => 'required|numeric|between:175,1000',
             'weekdays' => 'required',
             'claimables' => 'required',
             'available_days' => 'array',

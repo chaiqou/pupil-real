@@ -49,7 +49,7 @@ class ParentSeeder extends Seeder
             'stripe_customer_id' => $lukaStripeCustomerRequest->id,
         ]);
 
-        BillingoController::createParentBillingo($parent_for_luka_merchant_is_lukaMerchant->id);
+        BillingoController::createOrUpdateParentBillingo($parent_for_luka_merchant_is_lukaMerchant->id);
 
         $parent_for_nikoloz_merchant_is_nikolozMerchant =
             User::create([
@@ -85,7 +85,7 @@ class ParentSeeder extends Seeder
             'stripe_customer_id' => $nikolozStripeCustomerRequest->id,
         ]);
 
-        BillingoController::createParentBillingo($parent_for_nikoloz_merchant_is_nikolozMerchant->id);
+        BillingoController::createOrUpdateParentBillingo($parent_for_nikoloz_merchant_is_nikolozMerchant->id);
 
         $parent_for_levente_merchant_is_leventeMerchant =
             User::create([
@@ -121,6 +121,6 @@ class ParentSeeder extends Seeder
             'stripe_customer_id' => $leventeStripeCustomerRequest->id,
         ]);
 
-        BillingoController::createParentBillingo($parent_for_levente_merchant_is_leventeMerchant->id);
+        BillingoController::createOrUpdateParentBillingo($parent_for_levente_merchant_is_leventeMerchant->id);
     }
 }

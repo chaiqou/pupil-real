@@ -29,11 +29,7 @@ class LunchController extends Controller
             $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
         }
         if (auth()->user()->hasRole('parent')) {
-            $student = Student::where('school_id', auth()->user()->school_id)->first();
-            $merchants = Merchant::where('school_id', $student->school_id)->get();
-            foreach ($merchants as $merchant) {
-                $lunches = Lunch::where('merchant_id', $merchant->id)->paginate(9);
-            }
+            $lunches = Lunch::where('school_id', auth()->user()->school_id)->orderByDesc('created_at')->paginate(9);
         }
 
         $weekNumbers = FindWeekNumbersAction::execute($lunches);
@@ -46,10 +42,11 @@ class LunchController extends Controller
     {
         $validate = $request->validated();
 
-        $merchantId = Merchant::where('user_id', auth()->user()->id)->first();
+        $merchant = Merchant::where('user_id', auth()->user()->id)->first();
 
         Lunch::create([
-            'merchant_id' => $merchantId->id,
+            'merchant_id' => $merchant->id,
+            'school_id' => $merchant->school_id,
             'title' => $validate['title'],
             'description' => $validate['description'],
             'active_range' => $validate['active_range'],
@@ -266,7 +263,7 @@ class LunchController extends Controller
                         //Find the claim where the name = $validated['claim_name']
                         foreach ($claim as $claimKey => $claimable) {
                             if ($claimable['name'] == $validated['claim_name']) {
-                                if ($claimable['claimed'] == false) {
+                                if (! $claimable['claimed']) {
                                     $claimable['claimed'] = true;
                                     $claimable['claimed_date'] = $validated['claim_date'];
                                     //Update the $claim with the new claimable

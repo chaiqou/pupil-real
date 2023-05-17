@@ -27,6 +27,9 @@ export default {
           zoom: {
             enabled: false,
           },
+          animations: {
+            enabled: false,
+          },
           toolbar: {
             tools: {
               download: false,

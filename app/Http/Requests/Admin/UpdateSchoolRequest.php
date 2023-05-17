@@ -8,34 +8,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSchoolRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'school_id' => 'required',
-            'short_name' => 'required',
-            'full_name' => 'required',
-            'long_name' => 'required',
-            'street_address' => 'required',
-            'country' => 'required',
-            'city' => 'required',
+            'school_id' => ['required'],
+            'short_name' => ['required'],
+            'full_name' => ['required'],
+            'long_name' => ['required'],
+            'street_address' => ['required'],
+            'country' => ['required'],
+            'city' => ['required'],
             'state' => '',
-            'zip' => 'required',
-            'email' => 'required|email',
+            'zip' => ['required'],
+            'email' => ['required,email'],
             'phone_number' => ['required', new PhoneNumber()],
             'mobile_number' => '',
             'extension' => '',

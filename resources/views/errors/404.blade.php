@@ -9,6 +9,13 @@
 </head>
 
 <body class="h-full">
+            <a class="flex items-center m-3" href="{{config('app.url')}}">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+    </svg>
+    <h1 class="text-indigo-600 font-bold">Return back to</h1>
+    <img class="w-20 ml-1" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
+</a>
 <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
         <div>

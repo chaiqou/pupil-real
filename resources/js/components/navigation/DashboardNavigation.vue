@@ -3,11 +3,12 @@
     <span v-for="item in navigation" :key="item">
       <a
         v-if="!item.hidden"
-        :href="item.href"
+        :href="item.href && item.name !== 'payouts' ? item.href : null"
+        @click="item.name === 'payouts' ? onClickPayoutsDashboard() : null"
         :class="
           item.current
-            ? 'group flex items-center rounded-md bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300'
-            : 'group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100'
+            ? 'group flex cursor-pointer items-center rounded-md bg-gray-200 px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300'
+            : 'group flex cursor-pointer items-center rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100'
         "
       >
         <div class="mr-3 w-5">
@@ -30,7 +31,7 @@ import {
   CakeIcon,
   CommandLineIcon,
   ClipboardDocumentListIcon,
-    ArrowRightIcon,
+  BanknotesIcon,
 } from "@heroicons/vue/24/outline";
 
 export default {
@@ -44,7 +45,7 @@ export default {
     CakeIcon,
     CommandLineIcon,
     ClipboardDocumentListIcon,
-      ArrowRightIcon,
+    BanknotesIcon,
   },
   props: {
     navigation: {
@@ -80,6 +81,11 @@ export default {
         );
         parentNavigation.current = true;
       }
+    },
+    onClickPayoutsDashboard() {
+      axios.get("/api/school/payouts-dashboard").then((response) => {
+        window.open(response.data, "_blank");
+      });
     },
   },
   created() {

@@ -1,0 +1,1 @@
+eksctl create cluster --name portal-cluster --region eu-central-1 --nodegroup-name portal-nodes --node-type t3.medium --nodes 2 --nodes-min 2 --nodes-max 5 --managed

@@ -1,6 +1,4 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div>
-       <p>Admin Dashboard</p>
-    </div>
+   <admin-dashboard></admin-dashboard>
 @endsection
