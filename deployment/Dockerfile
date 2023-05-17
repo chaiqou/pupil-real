@@ -21,9 +21,12 @@ RUN install-php-extensions \
     sockets \
     http
 
+# Install Node.js and NPM
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
 
 # Copy the application code to the container
 COPY . /var/www/html
@@ -33,6 +36,10 @@ WORKDIR /var/www/html
 
 # Install the application dependencies
 RUN composer install
+
+# Install the NPM dependencies and compile assets
+RUN npm install
+RUN npm run build
 
 # Expose the default Laravel port
 EXPOSE 80
