@@ -62,7 +62,7 @@
                 <p class="text-sm text-gray-500">
                   {{
                     $t(
-                      "message.always_use_a_password_that_you_can_easily_remember",
+                      "message.set_up_a_memorable_but_secure_password",
                     )
                   }}.
                 </p>
