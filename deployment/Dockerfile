@@ -41,8 +41,8 @@ RUN composer install
 RUN npm install
 
 # Set ownership and permissions for the build directory
-RUN chown -R www-data:www-data /var/www/html/
-RUN chmod -R 755 /var/www/html/
+RUN chown -R www-data:www-data /var/www/html/public/
+RUN chmod -R 755 /var/www/html/public/
 
 # Compile assets
 RUN npm run build
