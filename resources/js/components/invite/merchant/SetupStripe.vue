@@ -183,6 +183,7 @@
           fill-rule="evenodd"
         ></path>
       </svg>
+      {{ $t("message.continue_on_suffix") }}
     </ButtonForAxios>
   </div>
 </template>
