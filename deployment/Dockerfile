@@ -37,8 +37,14 @@ WORKDIR /var/www/html
 # Install the application dependencies
 RUN composer install
 
-# Install the NPM dependencies and compile assets
+# Install the NPM dependencies
 RUN npm install
+
+# Set ownership and permissions for the build directory
+RUN chown -R www-data:www-data /var/www/html/public/build
+RUN chmod -R 755 /var/www/html/public/build
+
+# Compile assets
 RUN npm run build
 
 # Expose the default Laravel port
