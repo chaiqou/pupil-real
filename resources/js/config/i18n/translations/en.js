@@ -110,9 +110,9 @@ const en = {
     sent: "Sent",
     failed: "Failed",
     please_wait_we_are_sending_invites: "Please wait, we are sending invites",
-    invites_send_successfully: "Invites send successfully",
+    invites_send_successfully: "Invites sent successfully",
     could_not_send_invites_at_the_moment_please_try_again_later_or_text_to_support:
-      "Could not send invites at the moment, please try again later, or text to support",
+      "Could not send invites at the moment, please try again later, or get in touch with your PupilPay Representative",
     this_school_does_not_have_any_merchants:
       "This school does not have any merchants",
     check_invites_if_they_havent_onboarding_yet:
@@ -166,10 +166,12 @@ const en = {
     active_range: "Active Range",
     weekdays: "Weekdays",
     m: "M",
-    t: "T",
+    tue: "T",
     w: "W",
+    th: "T",
     f: "F",
-    s: "S",
+    sat: "S",
+    sun: "S",
     extras_and_holds: "Extras and Holds",
     extra_period: "Extra period",
     remove: "Remove",
@@ -177,7 +179,7 @@ const en = {
     add_extra: "Add extra",
     add_holds: "Add holds",
     period_length: "Period length",
-    claimables: "Claimables",
+    claimables: "Meals",
     price_for_period: "Price for period",
     gross: "Gross",
     calculate_after_fees: "Calculate after fees",
@@ -220,8 +222,8 @@ const en = {
     last_month_total_spending: "Last month total spending",
     activate_2fa: "Activate 2FA",
     deactivate_2fa: "Deactivate 2FA",
-    always_use_a_password_that_you_can_easily_remember:
-      "Always use a password that you can easily remember",
+    set_up_a_memorable_but_secure_password:
+      "Set up a memorable, but secure password",
     change_password: "Change password",
     repeat_password: "Repeat password",
     address: "Address",
