@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role:parent']], function () {
         Route::prefix('/parent/')->group(function () {
             Route::controller(ParentStudentController::class)->group(function () {
-                Route::get('{user_id}/students', 'get')->name('parent.students_api');
+                Route::get('students', 'get')->name('parent.students_api');
                 Route::get('student/{student_id}', 'show')->name('parent.student_api');
             });
             Route::controller(ParentTransactionController::class)->group(function () {
