@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{auth()->user()->language === 'en' ? 'Stripe succeed' : 'Stripe succeed HU'}} | PupilPay</title>
+    <title>{{auth()->user()->language === 'en' ? 'Successful Payment' : 'Sikeres fizetés'}} | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -23,7 +23,7 @@
     <div class="bg-white mt-40 px-12 py-10 md:shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
         <section>
             <h2 class="text-lg font-medium text-gray-900">
-                {{auth()->user()->language === 'en' ? 'Order summary' : 'Order summary HU'}}
+                {{auth()->user()->language === 'en' ? 'Order summary' : 'Rendelés összesítése'}}
             </h2>
             <p class="mt-2 text-sm text-gray-500 font-medium lg:mb-12">
                 {{ $order->lunch_title}} | {{ \Carbon\Carbon::parse($order->start_date)->format('Y-m-d') }} - {{ \Carbon\Carbon::parse($order->end_date)->format('Y-m-d') }}
@@ -35,9 +35,9 @@
             </svg>
 
             <span class="mt-2 block text-md font-semibold text-green-700">
-               {{auth()->user()->language === 'en' ? 'Successful payment' : 'Successful payment HU'}}</span>
+               {{auth()->user()->language === 'en' ? 'Successful payment' : 'Sikeres fizetés'}}</span>
             <span class="mt-2 block text-sm font-medium text-green-800 ">
-                  {{auth()->user()->language === 'en' ? 'Your payment has been successful and the lunch order has been placed. You will shortly receive your invoice in your email' : 'Your payment has been successful and the lunch order has been placed. You will shortly receive your invoice in your email HU'}}.</span>
+                  {{auth()->user()->language === 'en' ? 'Your payment has been successful and the lunch order has been placed. You will shortly receive your invoice in your email' : 'A fizetés sikeres volt, és az ebéd rendelés le lett adva. A számlát hamarosan az email fiókjában találja.'}}.</span>
         </div>
     </div>
 
