@@ -224,7 +224,7 @@ export default {
   },
   methods: {
     ...mapActions(useGlobalStore, ["setAxiosStatus"]),
-    onSubmit() {
+    onSubmit(values,actions) {
       this.setAxiosStatus("ongoing");
       axios
         .post(`/api/merchant-billingo-verify/${this.uniqueId}`, {
@@ -235,8 +235,8 @@ export default {
           window.location.href = res.data.url;
         })
         .catch((err) => {
+          actions.setFieldError("billingo_api_key", err.response.data.message)
           this.setAxiosStatus("error");
-          console.log(err);
         });
     },
   },
