@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    {{auth()->user()->language === 'en' ? 'Merchants' : 'Merchants HU'}} | PupilPay
+    {{auth()->user()->language === 'en' ? 'Merchants' : 'Kereskedők'}} | PupilPay
 @endsection
 @section('content')
          <admin-merchants-header :school="{{$school}}"></admin-merchants-header>

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    {{auth()->user()->language === 'en' ? 'Parent Invites' : 'Parent Invites HU'}} | PupilPay
+    {{auth()->user()->language === 'en' ? 'Parent Invites' : 'Szülői meghívások'}} | PupilPay
 @endsection
 @section('content')
             <admin-invites-header></admin-invites-header>

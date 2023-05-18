@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    {{auth()->user()->language === 'en' ? 'Merchant Invites' : 'Merchant Invites HU'}} | PupilPay
+    {{auth()->user()->language === 'en' ? 'Merchant Invites' : 'Kereskedői meghívók'}} | PupilPay
 @endsection
 @section('content')
          <admin-merchant-invites-header :school="{{$school}}"></admin-merchant-invites-header>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{session()->get('locale') === 'en' ? 'Page dont exist' : 'Page dont exist HU' }} | PupilPay</title>
+    <title> {{app()->getLocale() === 'en' ? 'Page dont exist' : 'Nemlétező oldal' }} | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -21,14 +21,14 @@
         <div>
             <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                  alt="PupilPay" />
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Page dont exist' : 'Page dont exist HU' }}</h2>
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{app()->getLocale() === 'en' ? 'Page dont exist' : 'Ez az oldal nem létezik' }} </h2>
             <p class="mt-2 text-center text-lg font-semibold text-gray-700">
-                {{session()->get('locale') === 'en' ? 'Page you are searching for do not exist at the moment, please try again later, or return on auth/dashboard pages'
- : 'Page you are searching for do not exist at the moment, please try again later, or return on auth/dashboard pages HU' }}.
+                {{app()->getLocale() === 'en' ? 'Page you are searching for do not exist at the moment, please try again later, or return on auth/dashboard pages' :
+'A keresett oldal nem létezik, kérjük probáld meg később, vagy térj vissza az irányítópultba' }}.
             </p>
             <p class="mt-2 text-center text-xs text-gray-600">
                 {{session()->get('locale') === 'en' ? ' Try opening your link again, or check if you entered everything correctly'
-: 'Try opening your link again, or check if you entered everything correctly HU' }}.
+: 'Próbáld meg mégegyszer megnyitni a linket, vagy ellenőrizd hogy helyesen írtad-e le az URL-t' }}.
             </p>
         </div>
 
