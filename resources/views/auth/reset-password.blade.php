@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{session()->get('locale') === 'en' ? 'Reset password | PupilPay' : 'Reset password | PupilPay HU'}}</title>
+    <title>{{session()->get('locale') === 'en' ? 'Reset password | PupilPay' : 'Jelszó visszaállítás | PupilPay'}}</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -29,7 +29,7 @@
             <div>
                 <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>"
                     alt="PupilPay" />
-                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Reset your password' : 'Reset your password HU'}}</h2>
+                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">{{session()->get('locale') === 'en' ? 'Reset your password' : ''}}</h2>
             </div>
             @error('password')
                     <div class="rounded-md bg-red-50 p-4">

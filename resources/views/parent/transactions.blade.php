@@ -6,9 +6,9 @@
     <div class="px-4 sm:px-6 lg:px-8 mt-32">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-xl font-semibold text-gray-900">{{auth()->user()->language === 'en' ? 'My Transactions' : "My transactions HU"}}</h1>
+                <h1 class="text-xl font-semibold text-gray-900">{{auth()->user()->language === 'en' ? 'My Transactions' : "Tranzakcióid"}}</h1>
                 <p class="mt-2 text-sm text-gray-700">
-                    {{auth()->user()->language === 'en' ? 'A list of all the transactions in your account including your name, transaction amount/type/date and merchant nickname' : "A list of all the transactions in your account including your name, transaction amount/type/date and merchant nickname HU"}}.</p>
+                    {{auth()->user()->language === 'en' ? 'A list of all the transactions in your account including your name, transaction amount/type/date and merchant nickname' : "Az összes tranzakció listája a fiókjában, beleértve a nevét, tranzakció összegét/típusát/dátumát és az eladó becenevét"}}.</p>
             </div>
         </div>
         <div class="mt-8 flex flex-col">
