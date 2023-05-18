@@ -94,17 +94,12 @@ class LunchController extends Controller
 
     public function excelLunches(): JsonResponse
     {
-        $student = Student::where('school_id', auth()->user()->school_id)->first();
 
-        if (! $student) {
-            return response()->json(['error' => 'Student not found']);
-        }
+        $merchant = Merchant::where('user_id', auth()->user()->id)->get();
 
-        $merchants = Merchant::where('school_id', $student->school_id)->get();
-
-        $lunches = []; // Declare and initialize the variable $lunches as an empty array
-        foreach ($merchants as $merchant) {
-            $lunches = Lunch::where('merchant_id', $merchant->id)->get();
+        $filteredLunches = [];
+        foreach ($merchant as $merch) {
+            $lunches = Lunch::where('merchant_id', $merch->id)->get();
 
             // Extract "active_range" values from lunches and compare for duplicates
             $activeRanges = [];
@@ -124,7 +119,7 @@ class LunchController extends Controller
         $weekNumbers = FindWeekNumbersAction::execute($filteredLunches);
         $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
+        return response()->json(['lunches' => $filteredLunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
 
     public function retrieveStudents(StudentListRequest $request)

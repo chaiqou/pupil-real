@@ -204,7 +204,7 @@ const fetchData = async () => {
 
     return { lunches, weeks };
   } catch (error) {
-    console.log("We dont't have a student for this merchant account");
+    console.log("We dont't have a lunches for this merchant account");
   }
 };
 
