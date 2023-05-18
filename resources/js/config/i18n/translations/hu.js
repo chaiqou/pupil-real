@@ -254,18 +254,18 @@ const hu = {
     this_field_will_activate_only_when_your_billingo_api_key_will_not_work_in_this_case_people_will_not_be_able_to_pay_with_pay_with_transfer_type_and_only_stripe_will_be_available_you_will_get_an_email_if_something_will_go_wrong_with_your_billingo_api_key:
       "Ez a mező csak akkor aktiválódik, ha a Billingo API kulcsod nem működik. Ebben az esetben az emberek nem tudnak fizetni a Fizetés átutalással típussal, és csak a Stripe lesz elérhető. E-mailt kapsz, ha valami nem stimmel a Billingo API kulcsoddal.",
     insights: "Áttekintés",
-    or_add_a_new_student: "Or add a new student HU",
+    or_add_a_new_student: "Vagy adj regisztrálj egy új diákot",
     order_your_first_lunch_pupilpay:
-          "Order your first lunch PupilPay HU",
+          "Rendeld meg az első ebédedet a PupilPay-en",
     after_ordering_lunch_dont_forget_to_check_whats_for_lunch_head_over_to_menus:
-          "After ordering lunch dont forget to check whats for lunch head over to menus HU",
+          "Miután megrendelted az ebédet, ne felejtsd el ellenőrizni, hogy mi van lesz a menü. Látogass el a Menük oldalra",
     see_all_your_past_transactions_in_the_transactions_tab:
-          "See all your past transactions in the Transactions tab HU",
-      order_lunch: "Order lunch HU",
-      choose_a_menu: "Choose a menu HU",
-      check_your_transactions: "Check your transactions HU",
-      welcome_to_pupilpay: "Welcome to PupilPay HU",
-      whats_next: "What’s next HU",
+          "Tekintsd meg az összes korábbi tranzakciódat a Tranzakciók oldalon",
+      order_lunch: "Rendelj ebédet",
+      choose_a_menu: "Válassz menüt",
+      check_your_transactions: "Ellenőrizd a tranzakcióidat",
+      welcome_to_pupilpay: "Üdv a PupilPay-nél!",
+      whats_next: "Mi a következő?",
   },
 };
 
