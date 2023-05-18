@@ -53,4 +53,4 @@ jobs:
           rm ~/.kube/config
       - name: Clean up Docker
         run: |
-          docker system prune -f
+          docker system prune -fa
