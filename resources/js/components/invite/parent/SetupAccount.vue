@@ -19,9 +19,9 @@
         </div>
       </li>
 
-      <li class="relative md:flex md:flex-1">
+      <li class="hidden md:flex md:flex-1">
         <div
-          class="flex items-center px-6 py-4 text-sm font-medium"
+          class="hidden md:flex items-center px-6 py-4 text-sm font-medium"
           aria-current="step"
         >
           <span
@@ -35,9 +35,9 @@
         </div>
       </li>
 
-      <li class="relative md:flex md:flex-1">
+      <li class="hidden md:flex md:flex-1">
         <div
-          class="flex items-center px-6 py-4 text-sm font-medium"
+          class="hidden md:flex items-center px-6 py-4 text-sm font-medium"
           aria-current="step"
         >
           <span
@@ -51,8 +51,8 @@
         </div>
       </li>
 
-      <li class="relative md:flex md:flex-1">
-        <div class="group flex items-center">
+      <li class="hidden md:flex md:flex-1">
+        <div class="group hidden md:flex items-center">
           <span class="flex items-center px-6 py-4 text-sm font-medium">
             <span
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300"

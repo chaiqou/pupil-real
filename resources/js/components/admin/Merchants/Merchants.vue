@@ -113,8 +113,8 @@
     </table>
   </div>
   <merchant-edit-modal
-    v-if="this.merchantId"
-    :schoolId="this.schoolId"
+    v-if="merchantId"
+    :schoolId="school.id"
   ></merchant-edit-modal>
 </template>
 

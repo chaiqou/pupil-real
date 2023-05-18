@@ -13,8 +13,8 @@
     <div class="w-full max-w-xl space-y-8">
         <nav aria-label="Progress">
             <ol role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0">
-                <li class="relative md:flex md:flex-1">
-                    <div class="group flex w-full md:justify-center">
+                <li class="relative md:flex md:flex-1 hidden">
+                    <div class="group hidden md:flex w-full md:justify-center">
                             <span class="flex items-center px-6 py-4 text-sm font-medium">
                                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600">
                                     <!-- Heroicon name: solid/check -->
@@ -51,7 +51,7 @@
                     {{auth()->user()->language === 'en' ? 'Are you sure you’re ready to create a new student and request a card' : 'Are you sure you’re ready to create a new student and request a card HU'}}?
                 </p>
 
-                  <div class="flex justify-center items-center justify-around mt-10">
+                  <div class="flex justify-around items-center mt-10">
                       <div>
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
@@ -64,7 +64,7 @@
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
                               <input type="hidden" value="cancel" name="value"/>
-                              <button class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
+                              <button class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
                                   {{auth()->user()->language === 'en' ? 'Step back' : "Step back HU"}}
                               </button>
                           </form>
