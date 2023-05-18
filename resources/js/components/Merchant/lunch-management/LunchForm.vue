@@ -65,7 +65,7 @@
         name="Price Period"
         :label="$t('message.price_for_period') + ` (${$t('message.gross')})`"
         type="number"
-        rules="required|minNumber:101|maxNumber:1000000"
+        rules="required|minNumber:175|maxNumber:1000000"
       />
       <div class="my-5">
         <button
