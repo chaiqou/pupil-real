@@ -20,7 +20,7 @@ class OnboardingVerification extends Mailable implements ShouldQueue
     public function build()
     {
         if ($this->language === 'hu') {
-            return $this->view('mail.hu.onboarding-verification')->subject('Verification for PupilPay HU');
+            return $this->view('mail.hu.onboarding-verification')->subject('Ellenőrzés a PupilPay-hez');
         }
 
         return $this->view('mail.en.onboarding-verification')->subject('Verification for PupilPay');

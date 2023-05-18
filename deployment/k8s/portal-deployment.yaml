@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: portal
-          image: 305880766666.dkr.ecr.eu-central-1.amazonaws.com/portal:latest
+          image: 305880766666.dkr.ecr.eu-central-1.amazonaws.com/portal:{{ tag }}
           envFrom:
             - secretRef:
                 name: portal-env-secrets

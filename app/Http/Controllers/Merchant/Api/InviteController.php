@@ -94,7 +94,7 @@ class InviteController extends Controller
             if ($request->business_type === 'individual') {
                 $stripeAccount = $stripe->accounts->create([
                     'type' => 'express',
-                    'country' => $request->country,
+                    'country' => 'HU',
                     'email' => $user->email,
                     'business_type' => $request->business_type,
                     'business_profile' => [
@@ -127,7 +127,7 @@ class InviteController extends Controller
             } else {
                 $stripeAccount = $stripe->accounts->create([
                     'type' => 'express',
-                    'country' => $request->country,
+                    'country' => 'HU',
                     'email' => $user->email,
                     'business_type' => $request->business_type,
                     'business_profile' => [

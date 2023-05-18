@@ -24,7 +24,7 @@ class StoreSchoolRequest extends FormRequest
             'city' => ['required'],
             'state' => '',
             'zip' => ['required'],
-            'email' => ['required,email'],
+            'email' => ['required', 'email'],
             'phone_number' => ['required', new PhoneNumber()],
             'mobile_number' => '',
             'extension' => '',
