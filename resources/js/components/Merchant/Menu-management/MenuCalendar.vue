@@ -39,7 +39,7 @@
             </div>
           </div>
           <div
-            class="mt-2 ml-4 grid basis-11/12 grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
+            class="ml-4 mt-2 grid basis-11/12 grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200"
           >
             <button
               v-for="(day, dayIdx) in month.days"
@@ -140,22 +140,23 @@ const handleLunchesExport = async (dayAndWeek) => {
     link.click();
     document.body.removeChild(link);
   } catch (error) {
-    console.log(error);
+    console.error("An error occurred while exporting lunches:", error);
   }
 };
 
 // Fetch all existing lunch for merchant and mark it on calendar
 
-onBeforeMount(() => {
-  axios.get("/api/school/download-excel-lunches").then((response) => {
-    lunches.value = response.data.lunches.data;
-    weeks.value = response.data.weeks;
+const fetchData = async () => {
+  try {
+    const response = await axios.get("/api/school/download-excel-lunches");
+    const lunches = response.data.lunches.data;
+    let weeks = response.data.weeks;
 
     let first = response.data.first_week;
     let last = parseInt(
       Object.keys(response.data.weeks.slice(-1)[0]).slice(-1),
     );
-    let unsortedArr = weeks.value;
+    let unsortedArr = weeks;
     let newArr = [];
     //Pop the parent elements, combine childs
     for (var i = 0; i < unsortedArr.length; i++) {
@@ -195,11 +196,23 @@ onBeforeMount(() => {
     newArr.sort((a, b) => {
       return Object.keys(a)[0] - Object.keys(b)[0];
     });
-    weeks.value = newArr;
+    weeks = newArr;
 
     response.data.lunches.map((data) => {
       store.marked_days.push(...data.available_days);
     });
-  });
+
+    return { lunches, weeks };
+  } catch (error) {
+    console.log("We dont't have a lunches for this merchant account");
+  }
+};
+
+onBeforeMount(async () => {
+  const data = await fetchData();
+  if (data) {
+    lunches.value = data.lunches;
+    weeks.value = data.weeks;
+  }
 });
 </script>

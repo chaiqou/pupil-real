@@ -51,3 +51,6 @@ jobs:
           kubectl set image deployment/portal-deployment portal=${{ env.ECR_REGISTRY }}:${{ steps.get-date.outputs.date }}
           kubectl rollout status deployment/portal-deployment
           rm ~/.kube/config
+      - name: Clean up Docker
+        run: |
+          docker system prune -fa

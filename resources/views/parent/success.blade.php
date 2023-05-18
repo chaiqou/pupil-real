@@ -14,7 +14,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
         </svg>
-        <h1 class="text-indigo-600 font-bold">{{auth()->user()->language === 'en' ? 'Return back' : 'Return back HU'}}</h1>
+        <h1 class="text-indigo-600 font-bold">{{auth()->user()->language === 'en' ? 'Return back' : 'Vissza'}}</h1>
     </a>
     <div class="hidden sm:block" id="app">
         <parent-calendar :stripe-days="{{$order}}"></parent-calendar>

@@ -69,7 +69,7 @@
                       Personal Information
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
-                      Use a permanent address where you can receive mail.
+                      Use the permanent address where you can receive mail.
                     </p>
                   </div>
                   <div

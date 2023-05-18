@@ -25,7 +25,7 @@
                 <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">{{auth()->user()->language === 'en' ? 'Personal Information' : "Personal Information HU"}}</h3>
                     <p class="mt-1 text-sm text-gray-500">
-                        {{auth()->user()->language === 'en' ? 'Use a permanent address where you can receive mail' : "Use a permanent address where you can receive mail HU"}}.</p>
+                        {{auth()->user()->language === 'en' ? 'Use your permanent residence' : "Használja az állandó lakcímét"}}.</p>
                 </div>
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div class="sm:col-span-2">
