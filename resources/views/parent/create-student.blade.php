@@ -48,7 +48,7 @@
         <div>
             <img class="mx-auto h-16 w-auto" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
             <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                {{auth()->user()->language === 'en' ? 'Fill out the student's personal information' : 'Töltse ki a diák személyes adatait'}}
+                {{auth()->user()->language === 'en' ? "Fill out the student's personal information" : 'Töltse ki a diák személyes adatait'}}
 
             </h2>
         </div>
