@@ -1,12 +1,12 @@
 {
   "setup_account": "HU",
-  "dashboard": "Dashboard HU",
-  "all_students": "All Students HU",
-  "manage_invites": "Manage invites HU",
-  "a_list_of_all_the_students_of_all_the_schools_including_their_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the students of all the schools including their name, transaction amount/type/date and merchant nickname HU",
-  "all_transactions": "All transactions HU",
-  "a_list_of_all_the_transactions_depend_to_your_school_including_students_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the transactions depend to your school, including students name, transaction amount/type/date and merchant nickname HU",
-  "a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname": "A list of all the students depend to your school including their name, transaction amount/type/date and merchant nickname HU",
+  "dashboard": "Irányítópult",
+  "all_students": "Összes diák",
+  "manage_invites": "Meghívások kezelése",
+  "a_list_of_all_the_students_of_all_the_schools_including_their_name_transaction_amount_type_date_and_merchant_nickname": "Az összes iskola összes diákjának listája, beleértve a nevüket, tranzakció összegét/típusát/dátumát és a kereskedő becenevét",
+  "all_transactions": "Összes tranzakció",
+  "a_list_of_all_the_transactions_depend_to_your_school_including_students_name_transaction_amount_type_date_and_merchant_nickname": "Az összes tranzakció listája, beleértve a diákok nevét, tranzakció összegét/típusát/dátumát és a kereskedő becenevét",
+  "a_list_of_all_the_students_depend_to_your_school_including_their_name_transaction_amount_type_date_and_merchant_nickname": "Az összes diák listája, beleértve a nevüket, tranzakció összegét/típusát/dátumát és a kereskedő becenevét",
   "english": "English",
   "hungary": "Magyar"
 }
