@@ -15,9 +15,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
         </svg>
         <h1 class="text-indigo-600 font-bold">@section('title')
-                {{auth()->user()->language === 'en' ? 'Return back to' : 'Return back to HU'}}
+                {{auth()->user()->language === 'en' ? 'Return back' : 'Return back HU'}}
             @endsection</h1>
-        <img class="w-20 ml-1" src="<?php echo asset('img/pupilpay-black-color.svg') ?>" alt="PupilPay" />
     </a>
 
     <div class="hidden sm:block" id="app">
