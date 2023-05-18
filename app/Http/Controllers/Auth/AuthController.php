@@ -10,6 +10,7 @@ use App\Actions\Auth\OnboardingMerchantAction;
 use App\Actions\Auth\ParentCreateStudentAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
@@ -29,7 +30,12 @@ class AuthController extends Controller
 
             ParentCreateStudentAction::execute($validated);
 
-            OnboardingMerchantAction::execute();
+//            OnboardingMerchantAction::execute();
+// will need refactor maybe
+            if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
+                $route = MerchantInviteController::continueOnboarding(auth()->user());
+                return redirect($route);
+            }
 
             if (CheckMultipleStudentsAction::execute()) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
