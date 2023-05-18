@@ -119,7 +119,7 @@
                           <parent-students :user-id="{{$user->id}}"></parent-students>
                       </div>
                       <div class="m-3 mb-10 mt-10 flex justify-end">
-                          <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+                          <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">{{auth()->user()->language === 'en' ? 'Create new student' : 'Create new student HU'}}</a>
                       </div>
                   </div>
               </div>
@@ -132,7 +132,7 @@
                   </div>
               </div>
               <div class="m-3 mb-10 mt-10 md:hidden block">
-                  <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">Create new student</a>
+                  <a class="p-3 bg-indigo-600 hover:bg-indigo-700 shadow-sm border border-transparent rounded-md text-white" href="{{route('parent.create-student', ['user_id' => $user->id])}}">{{auth()->user()->language === 'en' ? 'Create new student' : 'Create new student HU'}}</a>
               </div>
           </div>
 

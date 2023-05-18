@@ -1,9 +1,9 @@
 <template>
   <div class="mx-auto max-w-lg">
     <h2 class="text-base font-semibold leading-6 text-gray-900">
-      Welcome to PupilPay
+     {{$t('message.welcome_to_pupilpay')}}
     </h2>
-    <p class="mt-1 text-sm text-gray-500">What’s next?</p>
+    <p class="mt-1 text-sm text-gray-500">{{$t('message.whats_next')}}?</p>
     <ul
       role="list"
       class="mt-6 divide-y divide-gray-200 border-b border-t border-gray-200"
@@ -28,10 +28,10 @@
             <div class="text-sm font-medium text-gray-900">
               <a :href="item.href">
                 <span class="absolute inset-0" aria-hidden="true" />
-                {{ item.name }}
+                {{ $t("message."+item.name) }}
               </a>
             </div>
-            <p class="text-sm text-gray-500">{{ item.description }}</p>
+            <p class="text-sm text-gray-500">{{ $t("message."+item.description) }}</p>
           </div>
           <div class="flex-shrink-0 self-center">
             <ChevronRightIcon
@@ -48,7 +48,7 @@
         class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
       >
         <div class="flex w-64">
-          <p>Or add a new Student</p>
+          <p>{{$t('message.or_add_a_new_student')}}</p>
           <ArrowLongRightIcon class="ml-1 w-5"></ArrowLongRightIcon>
         </div>
       </a>
@@ -74,23 +74,23 @@ const props = defineProps({
 
 const items = [
   {
-    name: "Order lunch",
-    description: "Order your first lunch PupilPay.",
+    name: "order_lunch",
+    description: "order_your_first_lunch_pupilpay",
     href: `/parent/available-lunches/${props.studentId}`,
     iconColor: "bg-pink-500",
     icon: CakeIcon,
   },
   {
-    name: "Choose a menu",
+    name: "choose_a_menu",
     description:
-      "After ordering lunch, don’t forget to check what’s for lunch! Head over to menus.",
+      "after_ordering_lunch_dont_forget_to_check_whats_for_lunch_head_over_to_menus",
     href: `/parent/menus/${props.studentId}`,
     iconColor: "bg-purple-500",
     icon: ClipboardDocumentListIcon,
   },
   {
-    name: "Check your transactions",
-    description: "See all your past transactions in the Transactions tab.",
+    name: "check_your_transactions",
+    description: "see_all_your_past_transactions_in_the_transactions_tab",
     href: `/parent/transactions/${props.studentId}`,
     iconColor: "bg-yellow-500",
     icon: ListBulletIcon,
