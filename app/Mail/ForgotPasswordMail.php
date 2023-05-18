@@ -22,7 +22,7 @@ class ForgotPasswordMail extends Mailable implements ShouldQueue
         if ($this->language === 'hu') {
             $action_link = route('password.reset', ['token' => $this->token]);
 
-            return $this->view('mail/hu/email-forgot', ['action_link' => $action_link, 'body' => 'Check your password reset link HU', 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device])->subject('Password Reset for PupilPay HU');
+            return $this->view('mail/hu/email-forgot', ['action_link' => $action_link, 'body' => 'Ellenőrizze a jelszó visszaálítási linkjét', 'name' => $this->name, 'browser' => $this->browser, 'device' => $this->device])->subject('Jelszó visszaállítása a PupilPay-hez');
         }
         $action_link = route('password.reset', ['token' => $this->token]);
 

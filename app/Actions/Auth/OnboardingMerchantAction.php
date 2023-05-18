@@ -4,6 +4,8 @@ namespace App\Actions\Auth;
 
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
+use App\Models\User;
+
 
 class OnboardingMerchantAction
 {
@@ -13,9 +15,9 @@ class OnboardingMerchantAction
             $route = InviteController::continueOnboarding(auth()->user());
 
             return redirect($route);
-        } elseif (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
+        }
+        if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
             $route = MerchantInviteController::continueOnboarding(auth()->user());
-
             return redirect($route);
         }
     }
