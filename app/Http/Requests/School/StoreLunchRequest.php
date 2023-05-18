@@ -15,7 +15,7 @@ class StoreLunchRequest extends FormRequest
             'period_length' => 'required',
             'extras' => 'array',
             'holds' => 'array',
-            'price_period' => 'required|numeric|between:175,1000',
+            'price_period' => 'required|numeric|between:175,100000',
             'weekdays' => 'required',
             'claimables' => 'required',
             'available_days' => 'array',
