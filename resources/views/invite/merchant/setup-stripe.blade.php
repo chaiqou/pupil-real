@@ -1,6 +1,6 @@
 @extends('layouts.invite.merchant.onboarding-layout')
 @section('title')
-    Stripe | PupilPay
+    {{ session()->get('locale') === 'en' ? "Stripe" : "Stripe HU"  }} | PupilPay
 @endsection
 @section('content')
     <merchant-setup-stripe :unique-id="{{json_encode($uniqueID)}}"></merchant-setup-stripe>

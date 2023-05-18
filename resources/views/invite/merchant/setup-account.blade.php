@@ -1,6 +1,6 @@
 @extends('layouts.invite.merchant.onboarding-layout')
 @section('title')
-    Set up Account | PupilPay
+    {{ session()->get('locale') === 'en' ? "Setup account" : "Setup account HU"  }} | PupilPay
 @endsection
 @section('hide-language')
 @endsection

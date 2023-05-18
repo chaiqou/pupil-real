@@ -9,12 +9,14 @@
 </head>
 
 <body class="h-full">
- <a href="/parent/dashboard/" class="flex items-center m-3 w-fit">
-     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
-         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
-     </svg>
-     <h1 class="text-indigo-600 font-bold">{{auth()->user()->language === 'en' ? 'Return back' : 'Vissza'}}</h1>
- </a>
+@if(count(auth()->user()->students))
+    <a href="/parent/dashboard/" class="flex items-center m-3 w-fit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+        </svg>
+        <h1 class="text-indigo-600 font-bold">{{auth()->user()->language === 'en' ? 'Return back' : 'Vissza'}}</h1>
+    </a>
+@endif
 <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-xl space-y-8">
         <nav aria-label="Progress">
