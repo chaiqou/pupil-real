@@ -11,7 +11,7 @@ class ParentCreateStudentAction
         $user = auth()->user();
 
         if ($user->finished_onboarding === 1 && $user->students->count() === 0 && $user->hasRole('parent')) {
-            self::deleteInviteByEmail($request->email);
+            self::deleteInviteByEmail($request['email']);
 
             return redirect()->route('parent.create-student', ['user_id' => auth()->user()->id]);
         }
