@@ -45,7 +45,7 @@ RUN chown -R www-data:www-data /var/www/html/public/
 RUN chmod -R 755 /var/www/html/public/
 
 # Copy the supervisord configuration file
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY deployment/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Compile assets
 RUN npm run build
