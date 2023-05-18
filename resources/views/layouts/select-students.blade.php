@@ -16,8 +16,9 @@
                 <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
                     <img class="mx-left h-12 w-auto" src="https://pupilpay.hu/resc/img/pupilpay-white-white.svg"
                         alt="white-logo">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Welcome Nikoloz!</h2>
-                    <p class="text-xl text-gray-300">Select a student dashboard.</p>
+                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                            {{auth()->user()->language === 'en' ? 'Welcome Nikoloz' : 'Welcome Nikoloz HU'}}!</h2>
+                    <p class="text-xl text-gray-300">{{auth()->user()->language === 'en' ? 'Select a Student Dashboard' : 'Select a Student Dashboard HU'}}.</p>
                 </div>
                 <ul role="list"
                     class="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
@@ -43,8 +44,9 @@
             <form action="{{ route('logout') }}" method="GET">
                 @csrf
                 <button type="submit"
-                    class="inline-flex items-center mb-10 rounded-md h-12 w-36 text-center px-10 py-4 bg-gray-800  text-md font-medium leading-4 text-white shadow-sm hover:bg-gray-900 focus:outline-none">Log
-                    out</button>
+                    class="inline-flex items-center mb-10 rounded-md h-12 w-36 text-center px-10 py-4 bg-gray-800  text-md font-medium leading-4 text-white shadow-sm hover:bg-gray-900 focus:outline-none">
+                    {{auth()->user()->language === 'en' ? 'Log out' : 'Log out HU'}}
+                </button>
             </form>
         </div>
     </div>

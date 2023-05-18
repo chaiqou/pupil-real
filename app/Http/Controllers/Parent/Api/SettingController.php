@@ -25,7 +25,7 @@ class SettingController extends Controller
 
     public function updateStudent(UpdateStudentRequest $request): ResourceCollection
     {
-        $student = Student::where('id', $request->student_id)->first();
+        $student = Student::where('id', $request->student_id)->where('user_id', auth()->user()->id)->first();
         $student->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,

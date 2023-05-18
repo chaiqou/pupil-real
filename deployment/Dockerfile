@@ -41,8 +41,8 @@ RUN composer install
 RUN npm install
 
 # Set ownership and permissions for the build directory
-RUN chown -R www-data:www-data /var/www/html/public/build
-RUN chmod -R 755 /var/www/html/public/build
+RUN chown -R www-data:www-data /var/www/html/public/
+RUN chmod -R 755 /var/www/html/public/
 
 # Compile assets
 RUN npm run build
@@ -51,4 +51,4 @@ RUN npm run build
 EXPOSE 80
 
 # Start the application
-CMD php artisan serve --host=0.0.0.0 --port=80
+CMD php artisan serve --host=0.0.0.0 --port=80 & php artisan horizon 
