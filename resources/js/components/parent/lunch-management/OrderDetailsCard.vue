@@ -82,7 +82,7 @@
                   {{ $t("message.order_total") }}
                 </dt>
                 <dd class="text-base font-medium text-gray-900">
-                  ${{ props.price }}
+                  {{ props.price }}HUF
                 </dd>
               </div>
             </dl>
