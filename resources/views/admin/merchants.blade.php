@@ -1,4 +1,7 @@
 @extends('layouts.dashboard')
+@section('title')
+    {{auth()->user()->language === 'en' ? 'Merchants' : 'Merchants HU'}} | PupilPay
+@endsection
 @section('content')
          <admin-merchants-header :school="{{$school}}"></admin-merchants-header>
         <div class="px-4 sm:px-6 lg:px-8">

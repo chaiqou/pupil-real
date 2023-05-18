@@ -1,4 +1,7 @@
 @extends('layouts.dashboard')
+@section('title')
+    {{auth()->user()->language === 'en' ? 'Terminals' : 'Terminals HU'}} | PupilPay
+@endsection
 @section('content')
             <school-terminals-header></school-terminals-header>
     <div class="mx-3 md:mx-7 mt-8 flex flex-col">

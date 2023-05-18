@@ -1,7 +1,7 @@
 <template>
   <div class="gap-2 xl:flex">
     <div class="lg:mt-10 xl:w-1/2">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Insights</h3>
+      <h3 class="text-lg font-medium leading-6 text-gray-900">{{$t('message.insights')}}</h3>
       <dl class="mt-5 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
         <div
           v-for="item in statsTop"
@@ -128,7 +128,7 @@
 
     <div class="mt-10 xl:w-2/3">
       <h3 class="text-lg font-medium leading-6 text-gray-900">
-        Last transactions
+        {{$t('message.last_transactions')}}
       </h3>
       <dashboard-transactions class="mt-5"></dashboard-transactions>
     </div>
