@@ -96,7 +96,7 @@ class LunchController extends Controller
     {
         $student = Student::where('school_id', auth()->user()->school_id)->first();
 
-        if (!$student) {
+        if (! $student) {
             return response()->json(['error' => 'Student not found']);
         }
 
@@ -111,7 +111,7 @@ class LunchController extends Controller
 
             $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
                 $activeRange = $lunch->active_range;
-                if (!in_array($activeRange, $activeRanges)) {
+                if (! in_array($activeRange, $activeRanges)) {
                     $activeRanges[] = $activeRange;
 
                     return true;
@@ -126,7 +126,6 @@ class LunchController extends Controller
 
         return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
-
 
     public function retrieveStudents(StudentListRequest $request)
     {
