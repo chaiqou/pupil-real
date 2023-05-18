@@ -95,7 +95,13 @@ class LunchController extends Controller
     public function excelLunches(): JsonResponse
     {
         $student = Student::where('school_id', auth()->user()->school_id)->first();
+
+        if (!$student) {
+            return response()->json(['error' => 'Student not found']);
+        }
+
         $merchants = Merchant::where('school_id', $student->school_id)->get();
+
         $lunches = []; // Declare and initialize the variable $lunches as an empty array
         foreach ($merchants as $merchant) {
             $lunches = Lunch::where('merchant_id', $merchant->id)->get();
@@ -105,7 +111,7 @@ class LunchController extends Controller
 
             $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
                 $activeRange = $lunch->active_range;
-                if (! in_array($activeRange, $activeRanges)) {
+                if (!in_array($activeRange, $activeRanges)) {
                     $activeRanges[] = $activeRange;
 
                     return true;
@@ -120,6 +126,7 @@ class LunchController extends Controller
 
         return response()->json(['lunches' => $lunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
     }
+
 
     public function retrieveStudents(StudentListRequest $request)
     {

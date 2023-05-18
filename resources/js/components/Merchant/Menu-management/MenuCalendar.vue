@@ -123,26 +123,27 @@ const computedWeeks = computed(() => {
 });
 
 const handleLunchesExport = async (dayAndWeek) => {
-  try {
-    const { data } = await axios.get("/api/merchant/request-export-menu", {
-      params: {
-        dayAndWeek: JSON.stringify(dayAndWeek),
-      },
-      responseType: "blob",
-    });
+    try {
+        const { data } = await axios.get("/api/merchant/request-export-menu", {
+            params: {
+                dayAndWeek: JSON.stringify(dayAndWeek),
+            },
+            responseType: "blob",
+        });
 
-    const url = URL.createObjectURL(new Blob([data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "weekly_orders.xlsx");
+        const url = URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "weekly_orders.xlsx");
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } catch (error) {
-    console.log(error);
-  }
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error("An error occurred while exporting lunches:", error);
+    }
 };
+
 
 // Fetch all existing lunch for merchant and mark it on calendar
 
