@@ -32,8 +32,8 @@
                     </div>
                 </li>
 
-                <li class="justify-center relative md:flex md:flex-1">
-                    <div class="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                <li class="justify-center relative md:flex md:flex-1 hidden">
+                    <div class="md:flex hidden  items-center px-6 py-4 text-sm font-medium" aria-current="step">
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
                                 <span class="text-gray-500">02</span>
                             </span>
