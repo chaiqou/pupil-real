@@ -266,7 +266,7 @@ const en = {
     check_your_transactions: "Check your transactions",
     welcome_to_pupilpay: "Welcome to PupilPay",
     whats_next: "What’s next",
-
+    no_lunch_is_currently_available_to_order: "No lunch is currently available to order",
   },
 };
 

@@ -266,6 +266,7 @@ const hu = {
       check_your_transactions: "Ellenőrizd a tranzakcióidat",
       welcome_to_pupilpay: "Üdv a PupilPay-nél!",
       whats_next: "Mi a következő?",
+      no_lunch_is_currently_available_to_order: "Jelenleg nincs rendelhető ebéd",
   },
 };
 
