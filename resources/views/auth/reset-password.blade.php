@@ -57,14 +57,14 @@
                         <label for="password" class="sr-only">Email address</label>
                         <input id="password" name="password" type="password" autocomplete="password"
                             class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="{{session()->get('locale') === 'en' ? 'New password' : 'New password HU'}}" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'New password' : 'Új jelszó'}}" />
                     </div>
                     <div>
                         <label for="password_confirmation" class="sr-only">Password</label>
                         <input id="password_confirmation" name="password_confirmation" type="password"
                             autocomplete="password_confirmation"
                             class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                            placeholder="{{session()->get('locale') === 'en' ? 'Repeat new password' : 'Repeat new password HU'}}" />
+                            placeholder="{{session()->get('locale') === 'en' ? 'Repeat new password' : 'Új jelszó ismétlése'}}" />
                     </div>
 
                 </div>
@@ -82,7 +82,7 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </span>
-                        {{session()->get('locale') === 'en' ? 'Set new password' : 'Set new password HU'}}
+                        {{session()->get('locale') === 'en' ? 'Set new password' : 'Új jelszó beállítása'}}
                     </button>
                 </div>
             </form>
