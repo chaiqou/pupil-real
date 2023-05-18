@@ -185,7 +185,7 @@ const hu = {
     gross: "Bruttó",
     calculate_after_fees: "Igazítás díjak után",
     buffer_time: "Tartalékidő",
-    to: "-ig",
+    to: "-től",
     hours: "óra",
     save_lunch: "Ebéd mentése",
     type: "Típus",
