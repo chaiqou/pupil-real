@@ -11,7 +11,7 @@ const en = {
     personal_information: "Personal information",
     fill_out_your_personal_information: "Fill out your personal information",
     use_a_permanent_address_where_you_can_receive_mail:
-      "Use a permanent address where you can receive mail",
+      "Use your permanent residence where you can receive mail",
     last_name: "Last name",
     first_name: "First name",
     middle_name: "Middle name",
