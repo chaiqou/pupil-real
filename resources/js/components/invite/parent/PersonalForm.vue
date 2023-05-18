@@ -4,8 +4,8 @@
       role="list"
       class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:w-fit md:divide-y-0"
     >
-      <li class="relative md:flex md:flex-1">
-        <div class="group flex w-full items-center">
+      <li class="hidden md:flex md:flex-1">
+        <div class="group hidden md:flex w-full items-center">
           <span class="flex items-center px-6 py-4 text-sm font-medium">
             <span
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600"
@@ -47,8 +47,8 @@
         </div>
       </li>
 
-      <li class="relative md:flex md:flex-1">
-        <div class="group flex items-center">
+      <li class="hidden md:flex md:flex-1">
+        <div class="group hidden md:flex items-center">
           <span class="flex items-center px-6 py-4 text-sm font-medium">
             <span
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
@@ -62,8 +62,8 @@
         </div>
       </li>
 
-      <li class="relative md:flex md:flex-1">
-        <div class="group flex items-center">
+      <li class="hidden md:flex md:flex-1">
+        <div class="group hidden md:flex items-center">
           <span class="flex items-center px-6 py-4 text-sm font-medium">
             <span
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300"

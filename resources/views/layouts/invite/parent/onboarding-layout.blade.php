@@ -14,7 +14,7 @@
     @if(View::hasSection('hide-language'))
         <!-- Do not render set-language component -->
     @else
-        <div class="absolute top-0 right-0 mt-3 mr-4">
+        <div class="absolute top-0 right-0 mt-3 mr-1 md:mr-4">
             <set-language :user-id="{{json_encode($user->id)}}"></set-language>
         </div>
     @endif
