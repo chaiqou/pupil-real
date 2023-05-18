@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    {{auth()->user()->language === 'en' ? 'Transactions' : 'Transactions HU'}} | PupilPay
+    {{auth()->user()->language === 'en' ? 'Transactions' : 'Tranzakciók'}} | PupilPay
 @endsection
 @section('content')
     <div class=" px-4 sm:px-6 lg:px-8 mt-32">

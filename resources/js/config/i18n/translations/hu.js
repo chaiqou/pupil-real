@@ -249,7 +249,7 @@ const hu = {
     available_days: "Elérhető napok",
     resend: "Újraküldés",
     payouts: "Kifizetések",
-    express: "Express Dashboard HU",
+    express: "Express Irányítópult",
     enter_your_billingo_api_key: "Enter your Billingo api key HU",
     this_field_will_activate_only_when_your_billingo_api_key_will_not_work_in_this_case_people_will_not_be_able_to_pay_with_pay_with_transfer_type_and_only_stripe_will_be_available_you_will_get_an_email_if_something_will_go_wrong_with_your_billingo_api_key:
       "This field will activate only when your Billingo Api Key will not work, in this case people will not be able to pay with *Pay with Transfer* type and only Stripe will be available. You will get an Email if something will go wrong with your Billingo Api Key HU",

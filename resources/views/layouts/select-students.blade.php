@@ -18,7 +18,7 @@
                         alt="white-logo">
                     <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                             {{auth()->user()->language === 'en' ? 'Welcome Nikoloz' : 'Welcome Nikoloz HU'}}!</h2>
-                    <p class="text-xl text-gray-300">{{auth()->user()->language === 'en' ? 'Select a Student Dashboard' : 'Select a Student Dashboard HU'}}.</p>
+                    <p class="text-xl text-gray-300">{{auth()->user()->language === 'en' ? 'Select a Student Dashboard' : 'Select a Student Irányítópult'}}.</p>
                 </div>
                 <ul role="list"
                     class="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
