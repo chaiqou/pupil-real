@@ -44,11 +44,14 @@ RUN npm install
 RUN chown -R www-data:www-data /var/www/html/public/
 RUN chmod -R 755 /var/www/html/public/
 
+# Copy the supervisord configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Compile assets
 RUN npm run build
 
 # Expose the default Laravel port
 EXPOSE 80
 
-# Start the application
-CMD php artisan serve --host=0.0.0.0 --port=80
+# Start the application with horizon
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
