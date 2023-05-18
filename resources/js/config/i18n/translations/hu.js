@@ -134,7 +134,7 @@ const hu = {
     user_information: "Felhasználói információk",
     balances: "Egyenlegek",
     parent: "Szülő",
-    switch_student: "Diák váltása",
+    switch_student: "Felhasználó váltás",
     log_out: "Kijelentkezés",
     lunch_management: "Ebéd kezelés",
     menu_management: "Menü kezelés",
