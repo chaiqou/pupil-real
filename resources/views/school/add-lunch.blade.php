@@ -1,6 +1,8 @@
 @extends('layouts.dashboard')
+@section('title')
+    {{auth()->user()->language === 'en' ? 'Add Lunch' : 'Add Lunch HU'}} | PupilPay
+@endsection
 @section('content')
-
 <main class="flex">
     <div class="py-6">
       <div class="mx-auto max-w-7xl px-12 sm:px-8 md:px-6">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{auth()->user()->language === 'en' ? 'Personal Form' : 'Personal Form HU'}} | PupilPay</title>
+    <title>{{auth()->user()->language === 'en' ? 'Create student' : 'Create student HU'}} | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 

@@ -1,4 +1,7 @@
 @extends('layouts.dashboard')
+@section('title')
+    {{auth()->user()->language === 'en' ? 'Parent Invites' : 'Parent Invites HU'}} | PupilPay
+@endsection
 @section('content')
             <admin-invites-header></admin-invites-header>
     <div class="mx-3 md:mx-7 mt-8 flex flex-col">
