@@ -183,7 +183,7 @@ export default {
     ...mapActions(useModalStore, ["showHideStudentEdit"]),
     handleGetStudentRequest() {
       axios
-        .get(`/api/parent/${this.userId}/students`)
+        .get(`/api/parent/students`)
         .then((res) => {
           this.students = res.data.data;
         })

@@ -106,7 +106,7 @@ class OrderLunchController extends Controller
     {
         $validated = $request->validated();
 
-        $student = Student::where('id', $validated['student_id'])->first();
+        $student = Student::where('id', $validated['student_id'])->where('user_id', auth()->user()->id)->first();
         $pricePeriod = Lunch::where('id', $validated['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validated['lunch_id'])->first();
 

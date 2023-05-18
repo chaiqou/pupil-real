@@ -37,7 +37,7 @@ class StripeCheckoutController extends Controller
     public function checkout(StripePaymentRequest $request): JsonResponse
     {
         $validate = $request->validated();
-        $student = Student::where('id', $validate['student_id'])->first();
+        $student = Student::where('id', $validate['student_id'])->where('user_id', auth()->user()->id)->first();
         $pricePeriod = Lunch::where('id', $validate['lunch_id'])->first()->price_period;
         $lunch = Lunch::where('id', $validate['lunch_id'])->first();
 
