@@ -18,7 +18,7 @@ class PartnerIdRewokedReportForParent extends Mailable implements ShouldQueue
     public function build()
     {
         if ($this->language === 'hu') {
-            return $this->view('mail.hu.partner-id-rewoke-parent')->subject('Partner ID rewoked report from PupilPay HU');
+            return $this->view('mail.hu.partner-id-rewoke-parent')->subject('Partner ID jelentés a PupilPay-től');
         }
 
         return $this->view('mail.en.partner-id-rewoke-parent')->subject('Partner ID rewoked report from PupilPay');

@@ -18,7 +18,7 @@ class BillingoApiKeyRewokedReportForMerchant extends Mailable implements ShouldQ
     public function build()
     {
         if ($this->language === 'hu') {
-            return $this->view('mail.hu.billingo-rewoke-merchant')->subject('Billingo api key report from PupilPay HU');
+            return $this->view('mail.hu.billingo-rewoke-merchant')->subject('Billingo API Kulcs jelentés a PupilPay-től');
         }
 
         return $this->view('mail.en.billingo-rewoke-merchant')->subject('Billingo api key report from PupilPay');
