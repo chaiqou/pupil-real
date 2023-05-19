@@ -101,13 +101,13 @@
       {{ $t("message.setup_your_card") }}
     </h2>
   </div>
-  <div class="w-full">
-    <div class="flex w-full justify-between">
+  <div class="w-[35rem]">
+    <div class="flex justify-around w-full">
       <ButtonForAxios
         :globalStoreSolution="true"
         @click="saveCard()"
-        classOngoing="inline-flex opacity-30 justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        classDefault="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        classOngoing="opacity-30 justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        classDefault="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >{{ $t("message.save_card_for_faster_checkout") }}</ButtonForAxios
       >
       <ButtonForAxios
