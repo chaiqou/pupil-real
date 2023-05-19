@@ -44,7 +44,7 @@
               dayIdx === month.days.length - 7 && 'rounded-bl-lg',
               dayIdx === month.days.length - 1 && 'rounded-br-lg',
               menuIsSaved(day)
-                ? 'bg-purple-700 text-white hover:bg-purple-600'
+                ? '!bg-purple-700 text-white hover:!bg-purple-600'
                 : '',
               'py-1.5 hover:bg-gray-100',
             ]"
@@ -62,7 +62,7 @@
                     determineIfMenuIsChoices(day, 'choices') &&
                     !menuIsSaved(day)
                   "
-                  class="mx-auto h-0.5 w-4 rounded-full bg-indigo-600"
+                  class="mx-auto h-0.5 w-4 rounded-full bg-purple-600"
                 ></div>
               </div>
             </time>
