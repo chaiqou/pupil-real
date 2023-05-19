@@ -268,6 +268,13 @@ const hu = {
       welcome_to_pupilpay: "Üdv a PupilPay-nél!",
       whats_next: "Mi a következő?",
       no_lunch_is_currently_available_to_order: "Jelenleg nincs rendelhető ebéd",
+      merchant_status: "Kereskedő státusz",
+      are_you_sure: "Biztos benne",
+      activate: "Aktiválás",
+      deactivate: "Deaktiválás",
+      cancel: "Mégse",
+      inactive: "Inaktív",
+      active: "Aktív",
   },
 };
 

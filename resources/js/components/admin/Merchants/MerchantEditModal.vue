@@ -66,10 +66,10 @@
                 <div class="bg-white p-8">
                   <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">
-                      Personal Information
+                        {{$t('message.personal_information')}}
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
-                      Use the permanent address where you can receive mail.
+                        {{$t('message.use_a_permanent_address_where_you_can_receive_mail')}}.
                     </p>
                   </div>
                   <div
@@ -79,7 +79,7 @@
                       <label
                         for="merchant-nick"
                         class="block text-sm font-medium text-gray-700"
-                        >Merchant Nick</label
+                        >{{$t('message.merchant_nick')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -93,9 +93,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="nickname">
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -104,7 +101,7 @@
                       <label
                         for="company-name"
                         class="block text-sm font-medium text-gray-700"
-                        >Company name</label
+                        >{{$t('message.company_name')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -120,9 +117,6 @@
                           name="company_name"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -131,7 +125,7 @@
                       <label
                         for="company-legal-name"
                         class="block text-sm font-medium text-gray-700"
-                        >Company legal name</label
+                        >{{$t('message.company_legal_name')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -148,9 +142,6 @@
                           name="company_legal_name"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -161,7 +152,7 @@
                       <label
                         for="address"
                         class="block text-sm font-medium text-gray-700"
-                        >Address</label
+                        >{{$t('message.address')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -177,9 +168,6 @@
                           name="address"
                           class="text-sm text-red-500"
                         >
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -188,7 +176,7 @@
                       <label
                         for="city"
                         class="block text-sm font-medium text-gray-700"
-                        >City</label
+                        >{{$t('message.city')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -201,9 +189,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="city" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            city field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -212,7 +197,7 @@
                       <label
                         for="state"
                         class="block text-sm font-medium text-gray-700"
-                        >state</label
+                        >{{$t('message.state_province')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -224,9 +209,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="state" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            state field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -235,7 +217,7 @@
                       <label
                         for="zip"
                         class="block text-sm font-medium text-gray-700"
-                        >ZIP</label
+                        >{{$t('message.zip_postal_code')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -248,9 +230,6 @@
                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                         <ErrorMessage name="zip" class="text-sm text-red-500">
-                          <p class="text-sm text-red-500">
-                            this field is required
-                          </p>
                         </ErrorMessage>
                       </div>
                     </div>
@@ -259,7 +238,7 @@
                       <label
                         for="VAT"
                         class="block text-sm font-medium text-gray-700"
-                        >VAT</label
+                        >{{$t('message.vat')}}</label
                       >
                       <div class="mt-1">
                         <Field
@@ -280,7 +259,7 @@
                     <div class="flex flex-col sm:col-span-4">
                       <div class="border-y-[1px] border-gray-300 pb-2 pt-2">
                         <div class="flex">
-                          <h1 class="mr-3">Merchant Status:</h1>
+                          <h1 class="mr-3">{{$t('message.merchant_status')}}:</h1>
                           <div class="flex items-center">
                             <p
                               :class="
@@ -290,7 +269,7 @@
                               "
                             >
                               {{
-                                this.merchant.activated ? "Active" : "Inactive"
+                                this.merchant.activated ? $t("message.active") : $t("message.inactive")
                               }}
                             </p>
                             <svg
@@ -323,7 +302,7 @@
                               : 'mt-4 max-w-fit cursor-pointer rounded-md bg-green-500 px-3 py-2 text-white hover:bg-green-600 hover:text-gray-200'
                           "
                         >
-                          {{ activated ? "Deactivate" : "Activate" }}
+                          {{ activated ? $t("message.deactivate") : $t("message.activate") }}
                         </p>
                       </div>
 
@@ -338,7 +317,7 @@
                             <p
                               class="w-full rounded-t-[0.3rem] bg-gray-300 px-3 py-2"
                             >
-                              Are you sure?
+                                {{$t('message.are_you_sure')}}?
                             </p>
                             <div
                               class="rounded-md border-b-[1px] border-gray-400"
@@ -357,13 +336,13 @@
                                     : 'w-fit cursor-pointer rounded-md bg-green-500 px-3 py-2 text-white hover:bg-green-600 hover:text-gray-200'
                                 "
                               >
-                                {{ activated ? "Deactivate" : "Activate" }}
+                                  {{ activated ? $t("message.deactivate") : $t("message.activate") }}
                               </p>
                               <p
                                 @click="isConfirmationVisible = false"
                                 class="text-bg-gray-400 w-fit cursor-pointer rounded-md bg-gray-200 px-3 py-2 hover:bg-gray-300"
                               >
-                                Cancel
+                                  {{$t('message.cancel')}}
                               </p>
                             </div>
                           </div>
@@ -377,7 +356,7 @@
                         type="submit"
                         class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
-                        Save
+                          {{$t('message.save')}}
                       </button>
                     </div>
                   </div>
