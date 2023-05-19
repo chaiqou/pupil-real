@@ -1,15 +1,15 @@
 <template>
   <TransitionRoot
-    v-if="this.isRequestEndSuccessfully"
+    v-if="isRequestEndSuccessfully"
     as="template"
-    :show="this.isStudentEditVisible"
+    :show="isStudentEditVisible"
   >
     <DialogComponent
       as="div"
       class="relative z-10"
       @close="
-        this.isStudentEditVisible = false;
-        this.studentId = null;
+        isStudentEditVisible = false;
+        studentId = null;
       "
     >
       <TransitionChild
@@ -47,8 +47,8 @@
                   type="button"
                   class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   @click="
-                    this.isStudentEditVisible = false;
-                    this.studentId = null;
+                    isStudentEditVisible = false;
+                    studentId = null;
                   "
                 >
                   <span class="sr-only">Close</span>
@@ -59,7 +59,7 @@
                 id="form"
                 @submit="
                   onSubmit();
-                  this.studentId = null;
+                  studentId = null;
                 "
                 class="mt-8 w-full space-y-6"
               >
@@ -91,7 +91,7 @@
                           rules="required"
                           type="text"
                           required
-                          v-model="this.studentForEdit.last_name"
+                          v-model="studentForEdit.last_name"
                           name="last_name"
                           id="last_name"
                           autocomplete="given-name"
@@ -112,7 +112,7 @@
                         <Field
                           rules="required"
                           type="text"
-                          v-model="this.studentForEdit.first_name"
+                          v-model="studentForEdit.first_name"
                           required
                           name="first_name"
                           id="first_name"
@@ -136,7 +136,7 @@
                       <div class="mt-1">
                         <Field
                           type="text"
-                          v-model="this.studentForEdit.middle_name"
+                          v-model="studentForEdit.middle_name"
                           name="middle_name"
                           id="middle_name"
                           autocomplete="additional-name"
@@ -160,11 +160,11 @@
                         <Field
                           rules="required"
                           name="country"
-                          v-model="this.studentForEdit.user_information.country"
+                          v-model="studentForEdit.user_information.country"
                         >
                           <select
                             v-model="
-                              this.studentForEdit.user_information.country
+                              studentForEdit.user_information.country
                             "
                             id="country"
                             name="country"
@@ -194,7 +194,7 @@
                         <Field
                           rules="required"
                           v-model="
-                            this.studentForEdit.user_information.street_address
+                           studentForEdit.user_information.street_address
                           "
                           type="text"
                           name="street_address"
@@ -221,7 +221,7 @@
                         <Field
                           rules="required"
                           type="text"
-                          v-model="this.studentForEdit.user_information.city"
+                          v-model="studentForEdit.user_information.city"
                           name="city"
                           id="city"
                           autocomplete="address-level2"
@@ -243,7 +243,7 @@
                         <Field
                           rules="required"
                           type="text"
-                          v-model="this.studentForEdit.user_information.state"
+                          v-model="studentForEdit.user_information.state"
                           name="state"
                           id="state"
                           autocomplete="address-level1"
@@ -265,7 +265,7 @@
                         <Field
                           rules="required"
                           type="text"
-                          v-model="this.studentForEdit.user_information.zip"
+                          v-model="studentForEdit.user_information.zip"
                           name="zip"
                           id="zip"
                           autocomplete="postal-code"

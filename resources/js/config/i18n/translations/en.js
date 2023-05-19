@@ -267,6 +267,16 @@ const en = {
     welcome_to_pupilpay: "Welcome to PupilPay",
     whats_next: "What’s next",
     no_lunch_is_currently_available_to_order: "No lunch is currently available to order",
+    merchant_status: "Merchant status",
+    are_you_sure: "Are you sure",
+    activate: "Activate",
+    deactivate: "Deactivate",
+    cancel: "Cancel",
+    inactive: "Inactive",
+    active: "Active",
+    you_are_on_admin_dashboard: "You are on admin Dashboard",
+    be_careful_you_are_on_admin_dashboard: "Be careful, you are on admin dashboard",
+    admin_panel: "Admin Panel",
   },
 };
 
