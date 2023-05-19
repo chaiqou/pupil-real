@@ -107,12 +107,11 @@
                                             <div style="font-size: 16px">
                                                 <h1
                                                     style="margin-top: 0; text-align: left; font-size: 24px; font-weight: 700; color: #333333">
-                                                    Hi {{ $name }},</h1>
+                                                    Szia {{ $name }},</h1>
                                                 <p
                                                     style="margin-top: 6px; margin-bottom: 21px; font-size: 16px; line-height: 24px; color: #51545E">
-                                                    You recently logged in to your PupilPay account. As your account has
-                                                    strong security enabled, you will have to <strong>enter the code
-                                                        below to log in.</strong></p>
+                                                    Nemrég bejelentkeztél a PupilPay fiókodba. Mivel a fiókod két lépcsős azonosítással rendelkezik, <strong>az alábbi kódot kell megadnod a bejelentkezéshez.</strong>
+                                                </p>
                                                 <table style="margin-bottom: 21px; width: 100%" cellpadding="0"
                                                     cellspacing="0" role="presentation">
                                                     <tr style="display: grid; justify-content: center">
@@ -132,17 +131,16 @@
                                                 </table>
                                                 <p
                                                     style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                                                    This request was received from an {{ $device }}
-                                                    device using {{ $browser }}.
-                                                    If you did not try logging in, consider updating your password or <a
+                                                    A bejelentkezés egy {{ $device }}
+                                                    készüléken, {{ $browser }} böngszőben történt.
+                                                    Hogyha nem te próbáltál bejelentkezni, kérjük változtasd meg a jelszavadat, és <a
                                                         target="_blank" href="https://pupilpay.hu/elérhetőségek/"
-                                                        style="color: #3869D4">contact support</a> if you have
-                                                    questions.
+                                                        style="color: #3869D4">vedd fell a kapcsolatot</a> az ügyfélszolgálattal ha bármi kérdésed van.
                                                 </p>
                                                 <p
                                                     style="margin-top: 6px; margin-bottom: 5px; font-size: 16px; line-height: 24px; color: #51545E">
-                                                    Thanks,
-                                                    <br>The PupilPay Team
+                                                    Üdvözlettel,
+                                                    <br>A PupilPay Csapata
                                                 </p>
                                             </div>
                                         </td>
