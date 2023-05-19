@@ -97,7 +97,7 @@ const props = defineProps({
 const markAllDisabledDays = (day) =>
   store.disabledDaysForLunchOrdering.map((highlight) =>
     format(highlight, "yyy-MM-dd") == format(day, "yyyy-MM-dd")
-      ? "bg-indigo-400 hover:bg-indigo-500 !text-white"
+      ? "hover:!bg-indigo-400 !bg-indigo-300 !text-white"
       : "",
   );
 
