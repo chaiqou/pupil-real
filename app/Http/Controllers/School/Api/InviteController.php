@@ -56,8 +56,7 @@ class InviteController extends Controller
                 'school_id' => auth()->user()->school_id,
                 'role' => 'parent',
             ]);
-            //            $language = config('app.locale');
-            $language = 'hu';
+            $language = auth()->user()->language;
             InviteUserJob::dispatch($invite, $email, $language);
             $invite->update(['state' => 1]);
         }
@@ -77,8 +76,7 @@ class InviteController extends Controller
     public function resend(Request $request): JsonResponse
     {
         $invite = Invite::where('id', $request->invite_id)->first();
-        //        $language = config('app.locale');
-        $language = 'hu';
+        $language = auth()->user()->language;
         InviteUserJob::dispatch($invite, $invite->email, $language);
         $invite->update(['state' => 1]);
 
