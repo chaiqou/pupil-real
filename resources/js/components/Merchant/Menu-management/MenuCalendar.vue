@@ -20,14 +20,14 @@
         <div class="flex">
           <div class="mt-4 grow-0 basis-1/12">
             <div v-for="(week, weekIdx) in computedWeeks" :key="weekIdx">
-              <div class="pb-1" v-if="month.name == week.month">
+              <div class="pb-1" v-if="month.name === week.month">
                 <div v-if="week.blank" class="invisible p-2">
                   <DownloadIcon
                     class="cursor-pointer rounded-lg bg-purple-700 p-2 hover:bg-purple-600"
                   />
                 </div>
                 <button
-                  v-if="week.blank == false"
+                  v-if="week.blank === false"
                   @click="handleLunchesExport(week.days)"
                   :disabled="week.days.length < 1"
                 >
@@ -204,7 +204,7 @@ const fetchData = async () => {
 
     return { lunches, weeks };
   } catch (error) {
-    console.log("We dont't have a lunches for this merchant account");
+    console.log("We don't have a lunches for this merchant account");
   }
 };
 

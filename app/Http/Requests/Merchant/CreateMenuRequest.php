@@ -14,7 +14,6 @@ class CreateMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => 'required|integer',
             'day' => 'required|date',
             'menu_type' => 'required|string|max:255|min:3',
             'menus' => 'required',
