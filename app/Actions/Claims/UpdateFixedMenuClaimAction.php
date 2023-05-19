@@ -12,9 +12,7 @@ class UpdateFixedMenuClaimAction
     {
         // This logic automatically updates claims json in PeriodicLunch if menu for day already exists and menu type is fixed
         $day = Carbon::parse($validated['day'])->addDay()->format('Y-m-d');
-        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")
-            ->where('student_id', $validated['student_id'])
-            ->first();
+        $periodic_lunch = PeriodicLunch::where('claims', 'like', "%$day%")->first();
 
         if ($periodic_lunch) {
             $claims_array = json_decode($periodic_lunch->claims, true);

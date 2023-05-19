@@ -31,7 +31,8 @@ class MenuManagementController extends Controller
 
         UpdateFixedMenuClaimAction::execute($validated, $menu['id'], $menu['lunch_id']);
 
-        return response()->json('Menu Created');
+
+        return response()->json('ssssssssssss');
     }
 
     public function updateChoiceMenuClaims(ChoiceMenuClaimsRequest $request)
