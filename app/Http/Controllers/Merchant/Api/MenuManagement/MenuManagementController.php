@@ -9,6 +9,7 @@ use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
+use App\Jobs\UpdateFixedMenuClaims;
 
 class MenuManagementController extends Controller
 {
