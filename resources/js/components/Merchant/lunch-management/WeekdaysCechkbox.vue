@@ -67,11 +67,11 @@ const toggleWeekdays = (day) => {
 
 const dayOptions = [
   { name: "m", fullName: "Monday", index: 1 },
-  { name: "t", fullName: "Tuesday", index: 2 },
+  { name: "tue", fullName: "Tuesday", index: 2 },
   { name: "w", fullName: "Wednesday", index: 3 },
-  { name: "t", fullName: "Thursday", index: 4 },
+  { name: "th", fullName: "Thursday", index: 4 },
   { name: "f", fullName: "Friday", index: 5 },
-  { name: "s", fullName: "Saturday", index: 6 },
-  { name: "s", fullName: "Sunday", index: 0 },
+  { name: "sat", fullName: "Saturday", index: 6 },
+  { name: "sun", fullName: "Sunday", index: 0 },
 ];
 </script>
