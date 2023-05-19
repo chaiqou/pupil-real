@@ -94,9 +94,9 @@ return [
         'name' => env('MAIL_FROM_NAME', null),
     ],
 
-//    'contact' => [
-//        'address' => env('MAIL_CONTACT_ADDRESS', null),
-//    ],
+    //    'contact' => [
+    //        'address' => env('MAIL_CONTACT_ADDRESS', null),
+    //    ],
 
     /*
     |--------------------------------------------------------------------------

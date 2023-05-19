@@ -92,7 +92,7 @@
             <h2
               class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900"
             >
-              No lunch is currently available to order
+              {{ $t("message.no_lunch_is_currently_available_to_order") }}
             </h2>
           </div>
         </div>

@@ -31,20 +31,20 @@ class AuthController extends Controller
 
             ParentCreateStudentAction::execute($validated);
 
-
-
-          // will need refactor maybe
+            // will need refactor maybe
             //  OnboardingMerchantAction::execute();
             if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('parent')) {
                 $route = InviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             }
 
             if (auth()->user()->finished_onboarding === 0 && auth()->user()->hasRole('school')) {
                 $route = MerchantInviteController::continueOnboarding(auth()->user());
+
                 return redirect($route);
             }
-          // ^^^^^^^
+            // ^^^^^^^
 
             if (CheckMultipleStudentsAction::execute()) {
                 return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);

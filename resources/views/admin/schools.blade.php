@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title')
-    {{auth()->user()->language === 'en' ? 'Schools' : 'Schools HU'}} | PupilPay
+    {{auth()->user()->language === 'en' ? 'Schools' : 'Iskolák'}} | PupilPay
 @endsection
 @section('content')
     <admin-schools-header></admin-schools-header>

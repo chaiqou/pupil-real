@@ -13,7 +13,6 @@ use App\Models\PendingTransaction;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class BillingoController extends Controller
 {
@@ -27,10 +26,10 @@ class BillingoController extends Controller
         ])->get('https://api.billingo.hu/v3/document-blocks?page=1&per_page=25&type=invoice')->json();
 
         if ($requestBillingo->status() === 401) {
-            return response()->json(['message'=>'You provided wrong API key'], 401);
+            return response()->json(['message' => 'You provided wrong API key'], 401);
         }
         if ($requestBillingo->status() === 402) {
-            return response()->json(['message' => "You dont have an active Billingo's subscription"],402);
+            return response()->json(['message' => "You dont have an active Billingo's subscription"], 402);
         }
         if ($requestBillingo->status() === 500) {
             return response()->json(['message' => "Something went wrong at Billingo's side"], 500);

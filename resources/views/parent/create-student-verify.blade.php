@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{auth()->user()->language === 'en' ? 'Verify student creation' : 'Verify student creation HU'}} | PupilPay</title>
+    <title>{{auth()->user()->language === 'en' ? 'Confirm student creation' : 'Diák regisztráció megerősítése'}} | PupilPay</title>
     <link rel="stylesheet" href="<?php echo asset('css/app.css'); ?>" type="text/css">
 </head>
 
@@ -23,7 +23,7 @@
                                     </svg>
                                 </span>
                                 <span class="ml-4 text-sm font-medium text-gray-900">
-                                    {{auth()->user()->language === 'en' ? 'Set up Student' : 'Set up Student HU'}}
+                                    {{auth()->user()->language === 'en' ? 'Set up Student' : 'Diák regisztrálása'}}
                                 </span>
                             </span>
                     </div>
@@ -34,7 +34,7 @@
                             <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
                                 <span class="text-indigo-600">02</span>
                             </span>
-                        <span class="ml-4 text-sm font-medium text-indigo-600">{{auth()->user()->language === 'en' ? 'Confirm' : 'Confirm HU'}}</span>
+                        <span class="ml-4 text-sm font-medium text-indigo-600">{{auth()->user()->language === 'en' ? 'Confirmation' : 'Megerősítés'}}</span>
                     </div>
 
                 </li>
@@ -42,13 +42,13 @@
         </nav>
         <div class="flex flex-col items-center justify-center">
             <div class="mb-8 text-xl">
-                <p class="font-bold text-3xl">{{auth()->user()->language === 'en' ? 'Confirm student creation' : 'Confirm student creation HU'}}</p>
+                <p class="font-bold text-3xl">{{auth()->user()->language === 'en' ? 'Confirm student creation' : 'Erősítse meg a diák regisztrációját'}}</p>
             </div>
             <div class="md:w-[30rem]">
                 <img class="rounded-lg shadow-2xl px-10" src="{{asset('img/pupilpay-with-lines.svg')}}" alt="PupilPay" />
                 <div>
                 <p class="mt-10 text-sm">
-                    {{auth()->user()->language === 'en' ? 'Are you sure you’re ready to create a new student and request a card' : 'Are you sure you’re ready to create a new student and request a card HU'}}?
+                    {{auth()->user()->language === 'en' ? 'Are you sure you’re ready to create a new student and request a card' : 'Biztos benne, hogy regisztrálja a diákot, és igényel kártyát'}}?
                 </p>
 
                   <div class="flex justify-around items-center mt-10">
@@ -56,7 +56,7 @@
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
                               <input type="hidden" value="confirm" name="value"/>
-                              <button class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Confirm</button>
+                              <button class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{{auth()->user()->language === 'en' ? 'Confirm' : "Megersősítés"}}</button>
                           </form>
                       </div>
 
@@ -64,8 +64,8 @@
                           <form method="POST" action="{{route('parent.create-student-verify_submit', ['student_id' => request()->student_id])}}">
                               @csrf
                               <input type="hidden" value="cancel" name="value"/>
-                              <button class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
-                                  {{auth()->user()->language === 'en' ? 'Step back' : "Step back HU"}}
+                              <button class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
+                                  {{auth()->user()->language === 'en' ? 'Step back' : "Vissza"}}
                               </button>
                           </form>
                       </div>
