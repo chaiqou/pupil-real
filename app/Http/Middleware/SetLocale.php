@@ -18,7 +18,7 @@ class SetLocale
         if (session()->get('locale') !== null) {
             app()->setLocale(session()->get('locale'));
         } else {
-            session()->put('locale', 'en');
+            session()->put('locale', 'hu');
             app()->setLocale(session()->get('locale'));
         }
 
