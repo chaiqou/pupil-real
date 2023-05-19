@@ -274,6 +274,9 @@ const en = {
     cancel: "Cancel",
     inactive: "Inactive",
     active: "Active",
+    you_are_on_admin_dashboard: "You are on admin Dashboard",
+    be_careful_you_are_on_admin_dashboard: "Be careful, you are on admin dashboard",
+    admin_panel: "Admin Panel",
   },
 };
 

@@ -275,6 +275,9 @@ const hu = {
       cancel: "Mégse",
       inactive: "Inaktív",
       active: "Aktív",
+      you_are_on_admin_dashboard: "Az admin Irányítópulton vagy",
+      be_careful_you_are_on_admin_dashboard: "Légy óvatos, az admin irányítópulton vagy",
+      admin_panel: "Admin Panel",
   },
 };
 
