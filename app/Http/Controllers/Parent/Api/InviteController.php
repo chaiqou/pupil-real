@@ -57,7 +57,7 @@ class InviteController extends Controller
                 'street_address' => $request->street_address,
                 'city' => $request->city,
                 'state' => $request->state,
-                'zip' => (int) $request->zip,
+                'zip' => $request->zip,
             ]),
         ]);
         $userInformation = json_decode($user->user_information);

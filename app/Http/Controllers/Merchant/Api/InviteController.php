@@ -58,7 +58,7 @@ class InviteController extends Controller
                 'street_address' => $request->street_address,
                 'city' => $request->city,
                 'state' => $request->state,
-                'zip' => (int) $request->zip,
+                'zip' => $request->zip,
             ],
         ]);
         $invite->update(['state' => 4]);
@@ -85,7 +85,7 @@ class InviteController extends Controller
                 'company_name' => $request->company_name,
                 'city' => $request->city,
                 'state' => $request->state,
-                'zip' => (int) $request->zip,
+                'zip' => $request->zip,
                 'VAT' => $request->VAT,
             ]),
         ]);
