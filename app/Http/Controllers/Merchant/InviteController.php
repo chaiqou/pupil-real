@@ -14,10 +14,7 @@ class InviteController extends Controller
 {
     public static function continueOnboarding($user): string
     {
-        //Get the invite
         $invite = Invite::where('email', $user->email)->first();
-        //Log out the user (So they don't have access to the dashboard)
-        Auth::logout();
         if ($invite->state == 3) {
             return route('merchant-personal.form', ['uniqueID' => $invite->uniqueID]);
         }
@@ -47,11 +44,11 @@ class InviteController extends Controller
                 ->with(['header' => 'Invalid', 'description' => 'Your request is either missing, using an invalid or expired token.', 'title' => 'Invalid', 'small_description' => 'Try opening your link again, or check if you entered everything correctly.']);
         }
         $invite->update(['state' => 2]);
-
+        $user = User::where('email', $invite->email)->first();
         return view('invite.merchant.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,
-            'user' => auth()->user(),
+            'user' => $user,
         ]);
     }
 

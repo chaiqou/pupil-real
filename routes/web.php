@@ -39,16 +39,17 @@ Route::middleware(['guest'])->group(function () {
     });
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordForm'])->name('password.reset');
     Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::controller(TwoFactorAuthenticationController::class)->group(function () {
         Route::get('/two-factor-authentication', 'form')->name('2fa.form');
         Route::post('/submit-two-factor-authentication', 'verify')->name('2fa.submit');
         Route::post('/resend-two-factor-authentication', 'resend')->name('2fa.resend');
+        Route::post('/logout-from-two-fa-form', 'logoutFromTwoFa')->name('2fa.logout');
     });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/admin/')->group(function () {

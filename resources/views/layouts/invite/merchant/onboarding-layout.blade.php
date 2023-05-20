@@ -30,7 +30,7 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 <script>
     // We are getting the user param from the controller, and here we have checks to always have the same locale as we have in our DB
-    window.language = "{{$user ? $user->language : null}}"
+    window.language = "{{$user ? $user->language : 'hu'}}"
     if(!window.language) {
         localStorage.getItem("i18n") ? window.language = localStorage.getItem("i18n") : 'hu';
     }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+use App\Actions\Auth\CheckMultipleStudentsAction;
+use App\Actions\Auth\CheckSingleStudentAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\TwoFactorAuthenticationRequest;
 use App\Jobs\Send2FAAuthenticationEmail;
@@ -11,12 +14,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TwoFactorAuthenticationController extends Controller
 {
-    public function form(): View
+    public function form(): View|RedirectResponse
     {
-        return view('auth/two-factor-form');
+            return view('auth/two-factor-form');
     }
 
     public function verify(TwoFactorAuthenticationRequest $request): RedirectResponse
@@ -25,23 +29,41 @@ class TwoFactorAuthenticationController extends Controller
         ksort($request_array['two_factor_code']);
         $two_factor_authentication_code = implode('', $request_array['two_factor_code']);
         $two_factor_integer = (int) $two_factor_authentication_code;
-        if ($two_factor_integer == auth()->user()->two_factor_code && auth()->user()->hasRole('parent')) {
+
+        $user = User::where('email', session()->get('email'))->first();
+        if ($two_factor_integer == $user->two_factor_code && $user->hasRole('parent')) {
+            Auth::login($user);
             auth()->user()->update(['two_factor_code' => null]);
-            session()->put('is_2fa_verified', true);
+            session()->forget('need_to_pass_2fa');
+            session()->forget('email');
+            session()->forget('password');
+
+            if (CheckMultipleStudentsAction::execute($user))
+            {
+                return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
+            } elseif (CheckSingleStudentAction::execute($user)) {
+                return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
+            }
 
             return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
         }
 
-        if ($two_factor_integer == auth()->user()->two_factor_code && auth()->user()->hasRole('school')) {
+        if ($two_factor_integer == $user->two_factor_code && $user->hasRole('school')) {
+            Auth::login($user);
             auth()->user()->update(['two_factor_code' => null]);
-            session()->put('is_2fa_verified', true);
+            session()->forget('need_to_pass_2fa');
+            session()->forget('email');
+            session()->forget('password');
 
             return redirect()->route('school.dashboard');
         }
 
-        if ($two_factor_integer == auth()->user()->two_factor_code && auth()->user()->hasRole('admin')) {
+        if ($two_factor_integer == $user->two_factor_code && $user->hasRole('admin')) {
+            Auth::login($user);
             auth()->user()->update(['two_factor_code' => null]);
-            session()->put('is_2fa_verified', true);
+            session()->forget('need_to_pass_2fa');
+            session()->forget('email');
+            session()->forget('password');
 
             return redirect()->route('admin.dashboard');
         }
@@ -49,9 +71,24 @@ class TwoFactorAuthenticationController extends Controller
         return redirect()->back()->withErrors(['error' => 'The two factor authentication code you entered is incorrect.']);
     }
 
+    public function logoutFromTwoFa(): RedirectResponse
+    {
+        $user = User::where('email', session()->get('email'))->first();
+        $user->update([
+            'two_factor_code' => null
+        ]);
+        session()->forget('email');
+        session()->forget('password');
+        session()->forget('need_to_pass_2fa');
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect(route('default'));
+    }
+
    public function resend(): RedirectResponse
    {
-       Send2FAAuthenticationEmail::dispatch(auth()->user());
+       $user = User::where('email', session()->get('email'))->first();
+       Send2FAAuthenticationEmail::dispatch($user);
 
        return redirect('two-factor-authentication');
    }

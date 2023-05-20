@@ -185,8 +185,8 @@
             autocomplete="language"
             class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           >
-            <option selected value="en">{{ $t("message.english") }}</option>
-            <option value="hu">{{ $t("message.hungary") }}</option>
+            <option value="en">{{ $t("message.english") }}</option>
+            <option selected value="hu">{{ $t("message.hungary") }}</option>
           </select>
         </div>
       </div>
@@ -218,7 +218,7 @@
 </template>
 <script>
 import { Form as ValidationForm, Field, ErrorMessage } from "vee-validate";
-import { mapActions } from "pinia";
+import {mapActions, mapWritableState} from "pinia";
 import { useGlobalStore } from "@/stores/useGlobalStore";
 import ButtonForAxios from "@/components/Ui/ButtonForAxios.vue";
 import { setLocale as setVeeValidateLocale } from "@vee-validate/i18n";
@@ -233,7 +233,6 @@ export default {
     return {
       email: "",
       password: "",
-      language: "en",
     };
   },
   props: {
@@ -245,6 +244,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  computed: {
+      ...mapWritableState(useGlobalStore, ["language"]),
   },
   methods: {
     ...mapActions(useGlobalStore, [
@@ -275,8 +277,7 @@ export default {
   },
   mounted() {
     this.email = this.inviteEmail;
-    this.language = localStorage.getItem("i18n");
-    setVeeValidateLocale(localStorage.getItem("i18n") || "en");
+    setVeeValidateLocale(localStorage.getItem("i18n") || "hu");
   },
 };
 </script>

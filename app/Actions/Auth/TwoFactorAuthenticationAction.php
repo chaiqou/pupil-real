@@ -6,17 +6,13 @@ use App\Jobs\Send2FAAuthenticationEmail;
 
 class TwoFactorAuthenticationAction
 {
-    public static function execute()
+    public static function execute($user)
     {
-        $user = auth()->user();
         $isOnboardingComplete = $user->finished_onboarding === 1;
-        $hasValidRoles = $user->hasRole(['2fa', 'school', 'admin']);
-
-        if ($hasValidRoles && $isOnboardingComplete) {
+        $hasValidRole = $user->hasRole(['2fa']);
+        if($hasValidRole && $isOnboardingComplete)
+        {
             Send2FAAuthenticationEmail::dispatch($user);
-            session()->put('is_2fa_verified', false);
-
-            return redirect('two-factor-authentication');
         }
     }
 }

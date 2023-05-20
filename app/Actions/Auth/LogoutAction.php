@@ -10,7 +10,9 @@ class LogoutAction
     public static function execute(Request $request)
     {
         auth()->user()->update(['two_factor_code' => null]);
-        session()->put('is_2fa_verified', false);
+        session()->forget('need_to_pass_2fa');
+        session()->forget('email');
+        session()->forget('password');
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

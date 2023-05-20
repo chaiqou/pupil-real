@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\Auth\TwoFactorAuthentication;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -38,6 +37,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\TwoFactorAuthentication::class,
         ],
 
         'api' => [
@@ -71,6 +71,5 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'two_factor_auth' => TwoFactorAuthentication::class,
     ];
 }

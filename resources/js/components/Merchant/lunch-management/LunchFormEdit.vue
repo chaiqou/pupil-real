@@ -270,11 +270,11 @@ const isOpen = ref(false);
 const dataIsLoaded = ref(false);
 // Fetch appropriate lunch from API
 const afterFeeCanBeCalculated = ref(false);
+const oldPricePeriod = ref("");
 
 // Add handleSubmit so useField can work
 const { handleSubmit } = useForm();
 const { value } = useField("Price Period");
-
 const afterFeesCalculate = () => {
   store.after_fees = Math.round(
     (Number(store.price_period) + 85) / (1 - 7 / 500),
@@ -285,11 +285,10 @@ const afterFeesCalculate = () => {
 };
 
 const calculateAvailable = computed(() => !!store.price_period);
-
 watch(
   () => store.price_period,
   () => {
-    if (store.after_fees !== store.price_period) {
+    if (store.after_fees !== store.price_period && store.price_period !== oldPricePeriod.value) {
       afterFeeCanBeCalculated.value = true;
     }
     store.after_fees = "";
@@ -311,6 +310,7 @@ onMounted(() => {
       store.marked_days = response.data.data.available_days;
       store.claimables = response.data.data.claimables;
       store.price_period = response.data.data.price_period;
+      oldPricePeriod.value = response.data.data.price_period;
       store.extras = response.data.data.extras;
       store.holds = response.data.data.holds;
       store.lunch_id = response.data.data.id;
@@ -470,12 +470,12 @@ const toggleWeekdays = (day) => {
 
 const dayOptions = [
   { name: "m", fullName: "Monday", index: 1 },
-  { name: "t", fullName: "Tuesday", index: 2 },
+  { name: "tue", fullName: "Tuesday", index: 2 },
   { name: "w", fullName: "Wednesday", index: 3 },
-  { name: "t", fullName: "Thursday", index: 4 },
+  { name: "th", fullName: "Thursday", index: 4 },
   { name: "f", fullName: "Friday", index: 5 },
-  { name: "s", fullName: "Saturday", index: 6 },
-  { name: "s", fullName: "Sunday", index: 0 },
+  { name: "sat", fullName: "Saturday", index: 6 },
+  { name: "sun", fullName: "Sunday", index: 0 },
 ];
 
 // Active range part
