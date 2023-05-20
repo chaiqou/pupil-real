@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\AttemptLoginAction;
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
 use App\Actions\Auth\LogoutAction;
-use App\Actions\Auth\OnboardingMerchantAction;
 use App\Actions\Auth\ParentCreateStudentAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
 use App\Http\Controllers\Parent\InviteController;
 use App\Http\Requests\Auth\AuthenticationRequest;
-use App\Jobs\Send2FAAuthenticationEmail;
 use App\Models\User;
 use App\Traits\BrowserNameAndDevice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller

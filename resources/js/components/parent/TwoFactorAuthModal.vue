@@ -73,7 +73,7 @@
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
                       Are you sure you want to
-                      {{ this.twoFa === 0 ? "activate" : "deactivate" }}
+                      {{ this.twoFa === 0 ? $t("message.activate") : $t("message.deactivate") }}
                       2FA?
                     </p>
                   </div>
