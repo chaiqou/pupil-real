@@ -31,10 +31,10 @@ class SettingController extends Controller
     public function changeTwoFa(): RedirectResponse
     {
         $user = auth()->user();
-        if ($user->hasRole('2fa')) {
+        if ($user->hasRole(['2fa'])) {
             $user->removeRole('2fa');
-            session()->put('is_2fa_verified', true);
         } else {
+            $user->assignRole('2fa');
             Send2FAAuthenticationEmail::dispatch(auth()->user());
 
             return redirect('two-factor-authentication');

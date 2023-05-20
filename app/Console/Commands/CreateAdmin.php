@@ -29,7 +29,7 @@ class CreateAdmin extends Command
             'email' => $email,
             'password' => bcrypt($password),
             'finished_onboarding' => 1,
-        ])->assignRole('admin');
+        ])->assignRole('admin', '2fa');
 
         $this->info('Admin created successfully.');
     }

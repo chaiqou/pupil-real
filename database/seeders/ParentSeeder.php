@@ -31,7 +31,7 @@ class ParentSeeder extends Seeder
                     'state' => 'State',
                     'zip' => '321',
                 ]),
-            ])->assignRole('parent');
+            ])->assignRole('parent', '2fa');
 
         $luka_stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $lukaStripeCustomerRequest = $luka_stripe->customers->create([
@@ -67,7 +67,7 @@ class ParentSeeder extends Seeder
                     'state' => 'State',
                     'zip' => '321',
                 ]),
-            ])->assignRole('parent');
+            ])->assignRole('parent', '2fa');
 
         $nikoloz_stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $nikolozStripeCustomerRequest = $nikoloz_stripe->customers->create([
@@ -103,7 +103,7 @@ class ParentSeeder extends Seeder
                     'state' => 'State',
                     'zip' => '321',
                 ]),
-            ])->assignRole('parent');
+            ])->assignRole('parent', '2fa');
 
         $levente_stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
         $leventeStripeCustomerRequest = $levente_stripe->customers->create([

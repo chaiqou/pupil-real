@@ -33,7 +33,7 @@ class AdminSeeder extends Seeder
             'email' => 'lomtadzenikusha@gmail.com',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
-        ])->assignRole('admin');
+        ])->assignRole('admin', '2fa');
 
         $levente_admin = User::create([
             'first_name' => 'Levente',
@@ -51,7 +51,7 @@ class AdminSeeder extends Seeder
             'email' => 'info+admin@pupilpay.hu',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
-        ])->assignRole('admin');
+        ])->assignRole('admin', '2fa');
 
         $luka_admin = User::create([
             'first_name' => 'Luka',
@@ -69,6 +69,6 @@ class AdminSeeder extends Seeder
             'email' => 'jackrestler@gmail.com',
             'password' => bcrypt('adminadmin'),
             'language' => 'en',
-        ])->assignRole('admin');
+        ])->assignRole('admin', '2fa');
     }
 }

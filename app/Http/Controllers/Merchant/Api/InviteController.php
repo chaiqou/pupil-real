@@ -33,7 +33,7 @@ class InviteController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'language' => $request->language,
-        ])->assignRole('school');
+        ])->assignRole('school', '2fa');
         $invite->update([
             'email' => isset($foundUser) ? $foundUser->email : $user->email,
             'state' => 3,

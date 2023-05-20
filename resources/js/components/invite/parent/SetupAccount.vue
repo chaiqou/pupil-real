@@ -156,8 +156,8 @@
             autocomplete="language"
             class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           >
-            <option selected value="en">{{ $t("message.english") }}</option>
-            <option value="hu">{{ $t("message.hungary") }}</option>
+            <option value="en">{{ $t("message.english") }}</option>
+            <option selected value="hu">{{ $t("message.hungary") }}</option>
           </select>
         </div>
       </div>
@@ -249,7 +249,7 @@ export default {
   },
   mounted() {
     this.email = this.inviteEmail;
-    setVeeValidateLocale(localStorage.getItem("i18n") || "en");
+    setVeeValidateLocale(localStorage.getItem("i18n") || "hu");
   },
 };
 </script>
