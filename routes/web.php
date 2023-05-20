@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
             });
 
             Route::controller(SettingController::class)->group(function () {
-                Route::post('two-fa/{user_id}', 'changeTwoFa')->name('parent.two-fa');
+                Route::post('change-two-fa-status', 'changeTwoFa')->name('parent.two-fa');
                 Route::post('settings/{student_id}', 'updatePersonal')->name('parent.settings_submit');
             });
 
