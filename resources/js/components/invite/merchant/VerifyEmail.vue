@@ -418,30 +418,34 @@ export default {
         });
     },
     handlePaste(event) {
-      const inputs = document.querySelectorAll('input[id^="sc-"]');
-      const inputsFilled = Array.from(inputs).every((input) => input.value);
-
-      if (!inputsFilled) {
-        // Only allow paste if all inputs are empty
-        const pastedValue = event.clipboardData.getData("text");
-        if (pastedValue.length === 6 && /^\d+$/.test(pastedValue)) {
-          const codeArray = pastedValue.split("");
-          for (let i = 0; i < codeArray.length; i++) {
-            this.verification_code[i] = codeArray[i];
-            inputs[i].value = codeArray[i];
-          }
-        }
-        document.getElementById("sc-6").focus();
-        // Check if all inputs are filled
-        if (this.verification_code.every((code) => code)) {
-          window.onPasteTimeout = setTimeout(() => {
-            this.onSubmit();
-          }, 2300);
-        } else {
-          document.getElementById("sc-1").focus();
-        }
-      }
       event.preventDefault();
+            const inputs = document.querySelectorAll('input[id^="sc-"]');
+            const verificationCode = [];
+            const inputsFilled = Array.from(inputs).every((input) => input.value);
+
+            if (!inputsFilled) {
+                // Only allow paste if all inputs are empty
+                const pastedValue = event.clipboardData.getData("text").trim(); // Trim whitespace
+                const maxLength = inputs.length;
+
+                if (pastedValue.length <= maxLength && /^\d+$/.test(pastedValue)) {
+                    const codeArray = pastedValue.split("");
+                    for (let i = 0; i < codeArray.length; i++) {
+                        verificationCode[i] = codeArray[i];
+                        inputs[i].value = codeArray[i];
+                    }
+                }
+                document.getElementById(`sc-${maxLength}`).focus(); // Focus on last input
+                // Check if all inputs are filled
+                if (verificationCode.every((code) => code)) {
+                    window.onPasteTimeout = setTimeout(() => {
+                        this.onSubmit();
+                    }, 2300);
+                } else {
+                    document.getElementById("sc-1").focus();
+                }
+                event.preventDefault();
+            }
     },
     checkInputLengths() {
       const inputOne = document.getElementById("sc-1").value.length;
