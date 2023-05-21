@@ -143,7 +143,7 @@
 
             if (!inputsFilled) {
                 // Only allow paste if all inputs are empty
-                const pastedValue = event.clipboardData.getData("text");
+                const pastedValue = event.clipboardData.getData("text").trim();
                 if (pastedValue.length === 6 && /^\d+$/.test(pastedValue)) {
                     const codeArray = pastedValue.split("");
                     for (let i = 0; i < codeArray.length; i++) {
