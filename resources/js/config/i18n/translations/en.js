@@ -277,6 +277,10 @@ const en = {
     you_are_on_admin_dashboard: "You are on admin Dashboard",
     be_careful_you_are_on_admin_dashboard: "Be careful, you are on admin dashboard",
     admin_panel: "Admin Panel",
+    are_you_sure_you_want_to: "Are you sure you want to",
+    activate_another: "Activate",
+    deactivate_another: "Deactivate",
+    two_fa_for_another: "2FA"
   },
 };
 

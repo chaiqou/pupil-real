@@ -278,6 +278,10 @@ const hu = {
       you_are_on_admin_dashboard: "Az admin Irányítópulton vagy",
       be_careful_you_are_on_admin_dashboard: "Légy óvatos, az admin irányítópulton vagy",
       admin_panel: "Admin Panel",
+      are_you_sure_you_want_to: "Biztos benne hogy",
+      activate_another: "Aktiválja",
+      deactivate_another: "Deaktiválja",
+      two_fa_for_another: "a kétlépcsős azonosítást"
   },
 };
 
