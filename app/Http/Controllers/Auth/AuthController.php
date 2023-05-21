@@ -39,14 +39,16 @@ class AuthController extends Controller
             if($user->finished_onboarding === 0 && $user->hasRole('parent'))
             {
                 $route = InviteController::continueOnboarding($user);
-
+                session()->forget('email');
+                session()->forget('password');
                 return redirect($route);
             }
 
             if ($user->finished_onboarding === 0 && $user->hasRole('school'))
             {
                 $route = MerchantInviteController::continueOnboarding($user);
-
+                session()->forget('email');
+                session()->forget('password');
                 return redirect($route);
             }
 
@@ -55,9 +57,13 @@ class AuthController extends Controller
                 if (CheckMultipleStudentsAction::execute($user))
                 {
                     Auth::login($user);
+                    session()->forget('email');
+                    session()->forget('password');
                     return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
                 } elseif (CheckSingleStudentAction::execute($user)) {
                     Auth::login($user);
+                    session()->forget('email');
+                    session()->forget('password');
                     return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
                 }
             }
