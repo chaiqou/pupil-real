@@ -82,13 +82,6 @@ class AuthController extends Controller
         return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
     }
-
-
-    public function redirectIfLoggedIn(): View|RedirectResponse
-    {
-        return view('auth.sign-in');
-    }
-
     public function logout(Request $request): RedirectResponse
     {
         LogoutAction::execute($request);
