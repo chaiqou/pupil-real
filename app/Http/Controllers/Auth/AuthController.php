@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -68,20 +69,23 @@ class AuthController extends Controller
                 }
             }
 
+            // Redirect parent based students count
+
+            if (CheckMultipleStudentsAction::execute($user)) {
+                return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
+            } elseif (CheckSingleStudentAction::execute($user)) {
+                return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
+            }
+
         }
+
         return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
     }
 
 
-    public function redirectIfLoggedIn()
+    public function redirectIfLoggedIn(): View|RedirectResponse
     {
-        if (auth()->user() && CheckMultipleStudentsAction::execute()) {
-            return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-        } elseif (auth()->user() && CheckSingleStudentAction::execute()) {
-            return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
-        }
-
         return view('auth.sign-in');
     }
 
