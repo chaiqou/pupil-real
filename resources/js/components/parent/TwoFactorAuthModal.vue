@@ -72,9 +72,9 @@
                   >
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
-                      Are you sure you want to
-                      {{ this.twoFa === 0 ? $t("message.activate") : $t("message.deactivate") }}
-                      2FA?
+                      {{$t('message.are_you_sure_you_want_to')}}
+                      {{ this.twoFa === 0 ? $t("message.activate_another") : $t("message.deactivate_another") }}
+                      {{$t('message.two_fa_for_another')}}?
                     </p>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
                   @click="showHideTwoFactor()"
                   ref="cancelButtonRef"
                 >
-                  Cancel
+                  {{$t('message.cancel')}}
                 </button>
               </div>
             </DialogPanel>
