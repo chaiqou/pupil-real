@@ -14,13 +14,13 @@ class TotalOrdersExcelController extends Controller
 {
     public function totalOrdersExcel(Request $request)
     {
-        $dayAndWeekJson = $request->query('dayAndWeek');
-        $dayAndWeek = json_decode($dayAndWeekJson);
+        $daysAndWeeksJson = $request->query('dayAndWeek');
+        $daysAndWeeksArray = json_decode($daysAndWeeksJson);
 
-        $lunches = FindExcelLunchesAction::execute($dayAndWeek[0]->week);
+        $lunches = FindExcelLunchesAction::execute($daysAndWeeksArray[0]->week);
 
         // Get the weekdays and filteredLunches
-        $weekDays = $lunches['weekDays'];
+        $weekDays = array_map(fn($item) => $item->date, $daysAndWeeksArray);
         $lunches = $lunches['filteredLunches'];
 
         // convert array to collection
