@@ -26,19 +26,19 @@ class TwoFactorAuthentication
             ];
 
             // Check if the current route is in the excluded routes array
-            if (!in_array($request->route()->getName(), $excludedRoutes)) {
+            if (! in_array($request->route()->getName(), $excludedRoutes)) {
                 return redirect()->route('2fa.form');
             }
         }
 
-      if(!session()->has('need_to_pass_2fa') && Auth::guest())
-      {
-          $routeName = $request->route()->getName();
+        if (! session()->has('need_to_pass_2fa') && Auth::guest()) {
+            $routeName = $request->route()->getName();
 
-          if ($routeName === '2fa.form') {
-              return redirect()->back();
-          }
-      }
+            if ($routeName === '2fa.form') {
+                return redirect()->back();
+            }
+        }
+
         return $next($request);
     }
 }

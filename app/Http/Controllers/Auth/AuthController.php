@@ -17,7 +17,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -27,57 +26,58 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $passwordMatches = Hash::check($request->password, $user->password);
-        if($passwordMatches);
-        {
+
+        if ($passwordMatches) {
             session()->put('email', $request->email);
             session()->put('password', $request->password);
-            if($user->hasRole(['2fa']))
-            {
+
+            if ($user->hasRole(['2fa'])) {
                 session()->put('need_to_pass_2fa', true);
                 TwoFactorAuthenticationAction::execute($user);
             }
+
             ParentCreateStudentAction::execute($user);
-            if($user->finished_onboarding === 0 && $user->hasRole('parent'))
-            {
+
+            if ($user->finished_onboarding === 0 && $user->hasRole('parent')) {
                 $route = InviteController::continueOnboarding($user);
-                session()->forget('email');
-                session()->forget('password');
+                session()->forget(['email', 'password']);
+
                 return redirect($route);
             }
 
-            if ($user->finished_onboarding === 0 && $user->hasRole('school'))
-            {
+            if ($user->finished_onboarding === 0 && $user->hasRole('school')) {
                 $route = MerchantInviteController::continueOnboarding($user);
-                session()->forget('email');
-                session()->forget('password');
+                session()->forget(['email', 'password']);
+
                 return redirect($route);
             }
 
-            if ($user->hasRole('parent') && !$user->hasRole('2fa'))
-            {
-                if (CheckMultipleStudentsAction::execute($user))
-                {
+            if ($user->hasRole('parent') && ! $user->hasRole('2fa')) {
+                if (CheckMultipleStudentsAction::execute($user)) {
                     Auth::login($user);
-                    session()->forget('email');
-                    session()->forget('password');
+                    session()->forget(['email', 'password']);
+
                     return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
                 } elseif (CheckSingleStudentAction::execute($user)) {
                     Auth::login($user);
-                    session()->forget('email');
-                    session()->forget('password');
+                    session()->forget(['email', 'password']);
+
                     return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
                 }
             }
 
+            // Redirect parent based students count
+
+            if (CheckMultipleStudentsAction::execute($user)) {
+                return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
+            } elseif (CheckSingleStudentAction::execute($user)) {
+                return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
+            }
+
         }
-        return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
-    }
+        return redirect()->back()->with(['error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
-
-    public function loginView(): View
-    {
-        return view('auth.sign-in');
     }
 
     public function logout(Request $request): RedirectResponse

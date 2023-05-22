@@ -7,7 +7,6 @@ use App\Models\Invite;
 use App\Models\Merchant;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class InviteController extends Controller
@@ -45,6 +44,7 @@ class InviteController extends Controller
         }
         $invite->update(['state' => 2]);
         $user = User::where('email', $invite->email)->first();
+
         return view('invite.merchant.setup-account', [
             'uniqueID' => $uniqueID,
             'email' => $invite->email,

@@ -49,8 +49,8 @@ class ParentController extends Controller
                 'state' => $request->state,
                 'zip' => $request->zip,
             ],
-            "card_data" => "04D8CD12666080",
-            "card_number" => "000000000",
+            'card_data' => '04D8CD12666080',
+            'card_number' => '000000000',
         ]);
 
         return redirect()->route('parent.create-student-verify', ['student_id' => $student->id]);
