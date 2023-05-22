@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,26 +13,21 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSize, WithHeadings
 {
-    protected $weekdayDate;
+    protected string $weekdayDate;
 
-    protected $weekdayName;
+    protected string $weekdayName;
 
-    protected $lunches;
+    protected Collection $lunches;
 
-    public function __construct($weekdayDate, $weekdayName, $lunches)
+    public function __construct(string $weekdayDate, string $weekdayName, Collection $lunches)
     {
         $this->weekdayDate = $weekdayDate;
         $this->weekdayName = $weekdayName;
         $this->lunches = $lunches;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
-        // We are calculating for each sheet specific title like "2023-04-13 - Monday"
-        $lunchDateTitle = collect($this->weekdayDate)->map(function ($weekdayDate) {
-            return "{$weekdayDate} - {$this->weekdayName}";
-        })->implode(', '); // Implode the array into a string
-
         // Lunch information
         $lunchData = [];
 
@@ -39,55 +35,39 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         $menuData = [];
 
         foreach ($this->lunches as $lunch) {
-            // Format date like "start_date" and "end_date" format in DB for periodic lunches
-            $formattedDate = date('Y-m-d H:i:s', strtotime($this->weekdayDate));
 
-            // Based on Lunches fetch specific periodic lunches which have start and end date based formatted date
-            $periodicLunches = $lunch->periodicLunches()
-                ->where('start_date', '<=', $formattedDate)
-                ->where('end_date', '>=', $formattedDate)
-                ->get();
+            $lunchOrderCount = $lunch->periodicLunches()
+                ->where('lunch_id', $lunch->id)
+                ->count();
 
-            // Total order count for each day
-            $totalCountPerDay = $periodicLunches->count();
+            // We are calculating for each sheet specific title like "2023-04-13 - Monday"
+            $lunchDateTitle = "{$this->weekdayDate} - {$this->weekdayName}";
 
-            // Keys should match headings values
-            $lunchData[] = [
+            // Add lunch data for the current day to the lunchData array
+            $lunchData[$this->weekdayDate] = [
                 'Lunch Date' => $lunchDateTitle,
-                'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
+                'Lunch Orders' => $lunchOrderCount ?: 'Not Ordered yet',
                 'Lunch Name' => $lunch->title,
             ];
 
             if (isset($lunch['menus'])) {
                 foreach ($lunch['menus'] as $lunchMenu) {
-                    $lunchMenusDecoded = json_decode($lunchMenu->menus, true);
+                    $menus = json_decode($lunchMenu->menus, true);
 
-                    foreach ($lunchMenusDecoded as $menuDate => $menuItems) {
-                        foreach ($menuItems as $menuItem) {
-                            if ($this->weekdayDate == $menuDate) { // Add the menu row only if $this->weekdayDate matches $menuDate
-                                if (is_array($menuItem['menus'])) { // Check if 'Menu Name' value is an array
-                                    foreach ($menuItem['menus'] as $menuName) {
+                    foreach ($menus as $menuDate => $menuArrays) {
+                        foreach ($menuArrays as $menu) {
+                            if ($this->weekdayDate === $menuDate) {
+                                //
+                                if (is_array($menu['menus'])) {
+                                    foreach ($menu['menus'] as $menuName) {
                                         if ($menuName) {
-                                            $menuData[] = [
-                                                'Lunch Date' => '',
-                                                'Total Orders' => '',
-                                                'Lunch Name' => $lunch->title,
-                                                'Menu Name' => $menuName['menus'], // Loop over 'Menu Name' array and generate separate rows
-                                                'Menu Count' => $menuName['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
-                                                'Menu Type' => $menuItem['name'] ?: 'Without Type',
-                                                "Menu's remainder" => $totalCountPerDay - $menuName['menu_count'] ?: 'All users have already made their choices.',
-                                            ];
+                                            $menuData[] = $this->createMenuData($lunch->title, $menuName['menus'], $menuName['menu_count'], $menu['name'], $lunchOrderCount);
+
                                         }
                                     }
                                 } else {
-                                    $menuData[] = [
-                                        'Lunch Date' => '',
-                                        'Total Orders' => '',
-                                        'Lunch Name' => $lunch->title,
-                                        'Menu Name' => $menuItem['menus'],
-                                        'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet',
-                                        'Menu Type' => $menuItem['name'] ?: 'Without Type',
-                                    ];
+                                    $menuData[] = $this->createMenuData($lunch->title, $menu['menus'], $menu['menu_count'], $menu['name'], $lunchOrderCount);
+
                                 }
                             }
                         }
@@ -101,11 +81,24 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         return collect($data);
     }
 
+    private function createMenuData($lunchTitle, $menuName, $menuCount, $menuType, $lunchOrderCount): array
+    {
+        return [
+            'Lunch Date' => '',
+            'Lunch Orders' => '',
+            'Lunch Name' => $lunchTitle,
+            'Menu Name' => $menuName,
+            'Menu Count' => $menuCount ?: 'Not Ordered yet',
+            'Menu Type' => $menuType ?: 'Without Type',
+            "Menu's remainder" => $lunchOrderCount - $menuCount ?: 'All users have already made their choices.',
+        ];
+    }
+
     public function headings(): array
     {
         return [
             'Lunch Date',
-            'Total Orders',
+            'Lunch Orders',
             'Lunch Name',
             'Menu Name',
             'Menu Count',
@@ -114,17 +107,17 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         ];
     }
 
-    public function styles(Worksheet $sheet)
+    public function styles(Worksheet $sheet): array
     {
         return [
             1 => [
                 'font' => [
-                    'bold' => true, // Set the font to bold
+                    'bold' => true,
                     'size' => 16,
                 ],
                 'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_LEFT, // Set horizontal alignment to center
-                    'vertical' => Alignment::VERTICAL_CENTER, // Set vertical alignment to center
+                    'horizontal' => Alignment::HORIZONTAL_LEFT,
+                    'vertical' => Alignment::VERTICAL_CENTER,
                 ],
             ],
 

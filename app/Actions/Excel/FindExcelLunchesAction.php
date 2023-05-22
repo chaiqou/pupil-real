@@ -31,7 +31,6 @@ class FindExcelLunchesAction
         })->all();
 
         return [
-            'weekDays' => $weekDays,
             'filteredLunches' => $filteredLunches,
         ];
     }

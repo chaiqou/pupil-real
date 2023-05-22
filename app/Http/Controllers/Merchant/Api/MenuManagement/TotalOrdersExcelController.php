@@ -12,59 +12,56 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TotalOrdersExcelController extends Controller
 {
-    public function totalOrdersExcel(Request $request)
+    public function totalOrdersExcel(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        $dayAndWeekJson = $request->query('dayAndWeek');
-        $dayAndWeek = json_decode($dayAndWeekJson);
+        $daysAndWeeksJson = $request->query('dayAndWeek');
+        $daysAndWeeksArray = json_decode($daysAndWeeksJson);
 
-        $lunches = FindExcelLunchesAction::execute($dayAndWeek[0]->week);
+        $weekNumber = $daysAndWeeksArray[0]->week;
 
-        // Get the weekdays and filteredLunches
-        $weekDays = $lunches['weekDays'];
-        $lunches = $lunches['filteredLunches'];
 
-        // convert array to collection
-        $lunchesCollection = collect($lunches);
+        $lunches = FindExcelLunchesAction::execute($weekNumber);
 
-        // eager load menus for each lunch
-        $lunchesWithMenus = Lunch::with('menus')->whereIn('id', $lunchesCollection->pluck('id'))->get();
+        $weekDays = array_map(fn($item) => $item->date, $daysAndWeeksArray);
+        $filteredLunches = $lunches['filteredLunches'];
 
-        foreach ($lunchesWithMenus as $lunchWithMenuKey => $lunchWithMenu) {
-            foreach ($lunchWithMenu->menus as $menuKey => $wholeMenu) {
-                // Each menu array's nested "Menus" json
+        $lunchesWithMenus = Lunch::with('menus')
+            ->whereIn('id', collect($filteredLunches)->pluck('id'))
+            ->get();
+
+        $this->updateMenusWithCounts($lunchesWithMenus);
+
+        $lunchesToExport = collect($lunches)->count() === 0 ? $lunches : $lunchesWithMenus;
+
+        return Excel::download(new WeeklyOrdersExport($weekDays, $lunchesToExport), 'weekly_orders.xlsx');
+    }
+
+    private function updateMenusWithCounts($lunchesWithMenus)
+    {
+        foreach ($lunchesWithMenus as $lunchWithMenu) {
+            foreach ($lunchWithMenu->menus as $wholeMenu) {
                 $menuArray = json_decode($wholeMenu->menus, true);
 
                 foreach ($menuArray as $date => &$menus) {
-                    // Get each menu separately
                     foreach ($menus as $index => &$menu) {
-                        // if menu type is choices
                         if (is_array($menu['menus'])) {
                             foreach ($menu['menus'] as $subIndex => &$subMenu) {
-                                $choicesMenuKey = "{$wholeMenu['id']}-{$wholeMenu['lunch_id']}-{$date}-{$subMenu}-{$subIndex}";
-                                $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$choicesMenuKey.'%')->count();
+                                $choicesMenuKey = "{$wholeMenu->id}-{$wholeMenu->lunch_id}-{$date}-{$subMenu}-{$subIndex}";
+                                $menuCount = PeriodicLunch::where('claims', 'LIKE', '%' . $choicesMenuKey . '%')->count();
                                 $subMenu = [
                                     'menus' => $subMenu,
                                     'menu_count' => $menuCount,
-                                ]; // Add menu_count key with value to subMenu
+                                ];
                             }
                         } else {
-                            $fixedMenuKey = "{$wholeMenu['id']}-{$wholeMenu['lunch_id']}-{$date}-{$menu['name']}-{$index}";
-                            $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$fixedMenuKey.'%')->count();
-                            $menu['menu_count'] = $menuCount; // Add menu_count key with value to menu
+                            $fixedMenuKey = "{$wholeMenu->id}-{$wholeMenu->lunch_id}-{$date}-{$menu['name']}-{$index}";
+                            $menuCount = PeriodicLunch::where('claims', 'LIKE', '%' . $fixedMenuKey . '%')->count();
+                            $menu['menu_count'] = $menuCount;
                         }
                     }
                 }
 
-                // Update the original "Menus" json with the modified array
                 $wholeMenu->menus = json_encode($menuArray);
-            }
-        }
-
-        foreach ($lunches as $lunch) {
-            if ($lunch->menus->count() == 0) {
-                return Excel::download(new WeeklyOrdersExport($weekDays, $lunches), 'weekly_orders.xlsx');
-            } else {
-                return Excel::download(new WeeklyOrdersExport($weekDays, $lunchesWithMenus), 'weekly_orders.xlsx');
             }
         }
     }

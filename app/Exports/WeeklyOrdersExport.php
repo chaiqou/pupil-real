@@ -2,22 +2,23 @@
 
 namespace App\Exports;
 
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
 {
-    protected $weekdays;
+    protected array $weekdays;
 
-    protected $lunches;
+    protected Collection $lunches;
 
-    public function __construct($weekdays, $lunches)
+    public function __construct(array $weekdays, Collection $lunches)
     {
         $this->weekdays = $weekdays;
         $this->lunches = $lunches;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         return collect([$this->weekdays]);
     }
