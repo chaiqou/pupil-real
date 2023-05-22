@@ -10,9 +10,9 @@ class WeeklyOrdersExport implements FromCollection, WithMultipleSheets
 {
     protected array $weekdays;
 
-    protected array $lunches;
+    protected Collection $lunches;
 
-    public function __construct(array $weekdays, array $lunches)
+    public function __construct(array $weekdays, Collection $lunches)
     {
         $this->weekdays = $weekdays;
         $this->lunches = $lunches;

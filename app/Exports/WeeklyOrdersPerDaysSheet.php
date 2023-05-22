@@ -18,9 +18,9 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
 
     protected string $weekdayName;
 
-    protected array $lunches;
+    protected Collection $lunches;
 
-    public function __construct(string $weekdayDate, string $weekdayName, array $lunches)
+    public function __construct(string $weekdayDate, string $weekdayName, Collection $lunches)
     {
         $this->weekdayDate = $weekdayDate;
         $this->weekdayName = $weekdayName;
