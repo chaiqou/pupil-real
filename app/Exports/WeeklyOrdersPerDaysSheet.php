@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,20 +13,20 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles, ShouldAutoSize, WithHeadings
 {
-    protected $weekdayDate;
+    protected string $weekdayDate;
 
-    protected $weekdayName;
+    protected string $weekdayName;
 
-    protected $lunches;
+    protected array $lunches;
 
-    public function __construct($weekdayDate, $weekdayName, $lunches)
+    public function __construct(string $weekdayDate, string $weekdayName, array $lunches)
     {
         $this->weekdayDate = $weekdayDate;
         $this->weekdayName = $weekdayName;
         $this->lunches = $lunches;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         // We are calculating for each sheet specific title like "2023-04-13 - Monday"
         $lunchDateTitle = collect($this->weekdayDate)->map(function ($weekdayDate) {
@@ -114,17 +115,17 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         ];
     }
 
-    public function styles(Worksheet $sheet)
+    public function styles(Worksheet $sheet): array
     {
         return [
             1 => [
                 'font' => [
-                    'bold' => true, // Set the font to bold
+                    'bold' => true,
                     'size' => 16,
                 ],
                 'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_LEFT, // Set horizontal alignment to center
-                    'vertical' => Alignment::VERTICAL_CENTER, // Set vertical alignment to center
+                    'horizontal' => Alignment::HORIZONTAL_LEFT,
+                    'vertical' => Alignment::VERTICAL_CENTER,
                 ],
             ],
 
