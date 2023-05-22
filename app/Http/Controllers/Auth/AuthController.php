@@ -6,8 +6,6 @@ use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ParentCreateStudentAction;
-use App\Actions\Auth\ParentOnboardingAction;
-use App\Actions\Auth\SchoolOnboardingAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
@@ -46,12 +44,18 @@ class AuthController extends Controller
 
             if($user->finished_onboarding === 0 && $user->hasRole('parent'))
             {
-               ParentOnboardingAction::execute($user);
+                $route = InviteController::continueOnboarding($user);
+                session()->forget('email');
+                session()->forget('password');
+                return redirect($route);
             }
 
             if ($user->finished_onboarding === 0 && $user->hasRole('school'))
             {
-              SchoolOnboardingAction::execute($user);
+                $route = MerchantInviteController::continueOnboarding($user);
+                session()->forget('email');
+                session()->forget('password');
+                return redirect($route);
             }
 
             if ($user->hasRole('parent') && !$user->hasRole('2fa'))
