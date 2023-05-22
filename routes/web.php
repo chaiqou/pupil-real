@@ -30,11 +30,7 @@ Route::middleware(['guest'])->group(function () {
         Route::get('/merchant-verify-email/{uniqueID}', 'verifyEmail')->name('merchant-verify.email');
     });
 
-<<<<<<< HEAD
     Route::view('/','auth.sign-in')->name('default');
-=======
-    Route::get('/', [AuthController::class, 'loginView'])->name('default');
->>>>>>> main
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
     Route::controller(ForgotPasswordController::class)->group(function () {
         Route::get('/mail-sent', 'forgotRedirect')->name('forgot.redirect');

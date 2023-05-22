@@ -27,7 +27,7 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $passwordMatches = Hash::check($request->password, $user->password);
-        
+
         if($passwordMatches)
         {
             session()->put('email', $request->email);
@@ -84,16 +84,7 @@ class AuthController extends Controller
         return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
     }
-<<<<<<< HEAD
-=======
 
-
-    public function loginView(): View
-    {
-        return view('auth.sign-in');
-    }
-
->>>>>>> main
     public function logout(Request $request): RedirectResponse
     {
         LogoutAction::execute($request);
