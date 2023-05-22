@@ -56,10 +56,12 @@ class AuthController extends Controller
                 if (CheckMultipleStudentsAction::execute($user)) {
                     Auth::login($user);
                     session()->forget(['email', 'password']);
+
                     return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
                 } elseif (CheckSingleStudentAction::execute($user)) {
                     Auth::login($user);
                     session()->forget(['email', 'password']);
+
                     return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
                 }
             }

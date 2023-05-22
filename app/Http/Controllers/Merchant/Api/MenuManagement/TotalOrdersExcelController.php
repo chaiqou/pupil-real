@@ -20,7 +20,7 @@ class TotalOrdersExcelController extends Controller
         $lunches = FindExcelLunchesAction::execute($daysAndWeeksArray[0]->week);
 
         // Get the weekdays and filteredLunches
-        $weekDays = array_map(fn($item) => $item->date, $daysAndWeeksArray);
+        $weekDays = array_map(fn ($item) => $item->date, $daysAndWeeksArray);
         $lunches = $lunches['filteredLunches'];
 
         // convert array to collection
