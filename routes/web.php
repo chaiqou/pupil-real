@@ -93,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::group(['middleware' => ['role:school']], function () {
+    Route::group(['middleware' => ['role:school', 'permission:can use account']], function () {
         Route::prefix('/school/')->group(function () {
             Route::controller(NavigationController::class)->group(function () {
                 Route::get('lunch-management', 'school')->name('school.lunch-management');
