@@ -27,10 +27,12 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         $passwordMatches = Hash::check($request->password, $user->password);
-        if($passwordMatches);
+        
+        if($passwordMatches)
         {
             session()->put('email', $request->email);
             session()->put('password', $request->password);
+
             if($user->hasRole(['2fa']))
             {
                 session()->put('need_to_pass_2fa', true);
