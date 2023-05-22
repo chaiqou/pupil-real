@@ -28,11 +28,6 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
 
     public function collection(): Collection
     {
-        // We are calculating for each sheet specific title like "2023-04-13 - Monday"
-        $lunchDateTitle = collect($this->weekdayDate)->map(function ($weekdayDate) {
-            return "{$weekdayDate} - {$this->weekdayName}";
-        })->implode(', '); // Implode the array into a string
-
         // Lunch information
         $lunchData = [];
 
@@ -44,16 +39,18 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
             $formattedDate = date('Y-m-d H:i:s', strtotime($this->weekdayDate));
 
             // Based on Lunches fetch specific periodic lunches which have start and end date based formatted date
-            $periodicLunches = $lunch->periodicLunches()
-                ->where('start_date', '<=', $formattedDate)
-                ->where('end_date', '>=', $formattedDate)
+            $periodicLunches = $lunch->periodicLunches()->
+                where('lunch_id', $lunch->id)
                 ->get();
 
             // Total order count for each day
             $totalCountPerDay = $periodicLunches->count();
 
-            // Keys should match headings values
-            $lunchData[] = [
+            // We are calculating for each sheet specific title like "2023-04-13 - Monday"
+            $lunchDateTitle = "{$this->weekdayDate} - {$this->weekdayName}";
+
+            // Add lunch data for the current day to the lunchData array
+            $lunchData[$this->weekdayDate] = [
                 'Lunch Date' => $lunchDateTitle,
                 'Total Orders' => $totalCountPerDay ?: 'Not Ordered yet',
                 'Lunch Name' => $lunch->title,
