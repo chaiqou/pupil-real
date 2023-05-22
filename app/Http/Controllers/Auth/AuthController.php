@@ -76,7 +76,7 @@ class AuthController extends Controller
 
         }
 
-        return redirect()->back()->with(['error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
+        return redirect()->back()->with(['error' => 'Error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
     }
 
