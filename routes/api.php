@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::group(['middleware' => ['role:school', 'permission: can use account']], function () {
+    Route::group(['middleware' => ['role:school', 'permission:can use account']], function () {
         Route::prefix('/school/')->group(function () {
             Route::get('/payouts-dashboard', [StripeCheckoutController::class, 'payoutsDashboardLink'])->name('school.payouts_dashboard');
             Route::controller(SchoolStudentController::class)->group(function () {
