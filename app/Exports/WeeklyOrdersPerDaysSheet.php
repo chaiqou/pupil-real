@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -53,34 +52,22 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
 
             if (isset($lunch['menus'])) {
                 foreach ($lunch['menus'] as $lunchMenu) {
-                    $lunchMenusDecoded = json_decode($lunchMenu->menus, true);
+                    $menus = json_decode($lunchMenu->menus, true);
 
-                    foreach ($lunchMenusDecoded as $menuDate => $menuItems) {
-                        foreach ($menuItems as $menuItem) {
-                            if ($this->weekdayDate == $menuDate) { // Add the menu row only if $this->weekdayDate matches $menuDate
-                                if (is_array($menuItem['menus'])) { // Check if 'Menu Name' value is an array
-                                    foreach ($menuItem['menus'] as $menuName) {
+                    foreach ($menus as $menuDate => $menuArrays) {
+                        foreach ($menuArrays as $menu) {
+                            if ($this->weekdayDate === $menuDate) {
+                                //
+                                if (is_array($menu['menus'])) {
+                                    foreach ($menu['menus'] as $menuName) {
                                         if ($menuName) {
-                                            $menuData[] = [
-                                                'Lunch Date' => '',
-                                                'Lunch Orders' => '',
-                                                'Lunch Name' => $lunch->title,
-                                                'Menu Name' => $menuName['menus'], // Loop over 'Menu Name' array and generate separate rows
-                                                'Menu Count' => $menuName['menu_count'] ?: 'Not Ordered yet', // Use 'Menu Count' value from original array
-                                                'Menu Type' => $menuItem['name'] ?: 'Without Type',
-                                                "Menu's remainder" => $lunchOrderCount - $menuName['menu_count'] ?: 'All users have already made their choices.',
-                                            ];
+                                            $menuData[] = $this->createMenuData($lunch->title, $menuName['menus'], $menuName['menu_count'], $menu['name'], $lunchOrderCount);
+
                                         }
                                     }
                                 } else {
-                                    $menuData[] = [
-                                        'Lunch Date' => '',
-                                        'Lunch Orders' => '',
-                                        'Lunch Name' => $lunch->title,
-                                        'Menu Name' => $menuItem['menus'],
-                                        'Menu Count' => $menuItem['menu_count'] ?: 'Not Ordered yet',
-                                        'Menu Type' => $menuItem['name'] ?: 'Without Type',
-                                    ];
+                                    $menuData[] = $this->createMenuData($lunch->title, $menu['menus'], $menu['menu_count'], $menu['name'], $lunchOrderCount);
+
                                 }
                             }
                         }
@@ -92,6 +79,19 @@ class WeeklyOrdersPerDaysSheet implements FromCollection, WithTitle, WithStyles,
         $data = array_merge($lunchData, $menuData);
 
         return collect($data);
+    }
+
+    private function createMenuData($lunchTitle, $menuName, $menuCount, $menuType, $lunchOrderCount): array
+    {
+        return [
+            'Lunch Date' => '',
+            'Lunch Orders' => '',
+            'Lunch Name' => $lunchTitle,
+            'Menu Name' => $menuName,
+            'Menu Count' => $menuCount ?: 'Not Ordered yet',
+            'Menu Type' => $menuType ?: 'Without Type',
+            "Menu's remainder" => $lunchOrderCount - $menuCount ?: 'All users have already made their choices.',
+        ];
     }
 
     public function headings(): array
