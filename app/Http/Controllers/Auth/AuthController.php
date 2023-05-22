@@ -6,6 +6,8 @@ use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ParentCreateStudentAction;
+use App\Actions\Auth\ParentOnboardingAction;
+use App\Actions\Auth\SchoolOnboardingAction;
 use App\Actions\Auth\TwoFactorAuthenticationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Merchant\InviteController as MerchantInviteController;
@@ -38,21 +40,18 @@ class AuthController extends Controller
                 session()->put('need_to_pass_2fa', true);
                 TwoFactorAuthenticationAction::execute($user);
             }
+
             ParentCreateStudentAction::execute($user);
+
+
             if($user->finished_onboarding === 0 && $user->hasRole('parent'))
             {
-                $route = InviteController::continueOnboarding($user);
-                session()->forget('email');
-                session()->forget('password');
-                return redirect($route);
+               ParentOnboardingAction::execute($user);
             }
 
             if ($user->finished_onboarding === 0 && $user->hasRole('school'))
             {
-                $route = MerchantInviteController::continueOnboarding($user);
-                session()->forget('email');
-                session()->forget('password');
-                return redirect($route);
+              SchoolOnboardingAction::execute($user);
             }
 
             if ($user->hasRole('parent') && !$user->hasRole('2fa'))
@@ -81,7 +80,7 @@ class AuthController extends Controller
 
         }
 
-        return redirect()->back()->with(['error' => 'error', 'error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
+        return redirect()->back()->with(['error_title' => 'Authentication failed', 'error_message' => 'The email address or password you entered is incorrect.']);
 
     }
 
