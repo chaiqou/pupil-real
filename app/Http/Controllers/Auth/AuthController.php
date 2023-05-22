@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -74,14 +75,8 @@ class AuthController extends Controller
     }
 
 
-    public function redirectIfLoggedIn()
+    public function loginView(): View
     {
-        if (auth()->user() && CheckMultipleStudentsAction::execute()) {
-            return redirect()->route('parents.dashboard', ['students' => auth()->user()->students->all()]);
-        } elseif (auth()->user() && CheckSingleStudentAction::execute()) {
-            return redirect()->route('parent.dashboard', ['student_id' => auth()->user()->students->first()->id]);
-        }
-
         return view('auth.sign-in');
     }
 
