@@ -9,7 +9,6 @@ use App\Http\Requests\Merchant\CreateMenuRequest;
 use App\Http\Requests\Parent\ChoiceMenuClaimsRequest;
 use App\Models\LunchMenu;
 use App\Models\PeriodicLunch;
-use App\Jobs\UpdateFixedMenuClaims;
 
 class MenuManagementController extends Controller
 {
@@ -30,7 +29,6 @@ class MenuManagementController extends Controller
         // This updates fixed menu claims when we are creating menu AND student already have ordered lunch for this day
 
         UpdateFixedMenuClaimAction::execute($validated, $menu['id'], $menu['lunch_id']);
-
 
         return response()->json('Menu Created successfully');
     }

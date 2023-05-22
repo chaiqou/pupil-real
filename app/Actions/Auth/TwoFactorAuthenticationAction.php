@@ -10,8 +10,7 @@ class TwoFactorAuthenticationAction
     {
         $isOnboardingComplete = $user->finished_onboarding === 1;
         $hasValidRole = $user->hasRole(['2fa']);
-        if($hasValidRole && $isOnboardingComplete)
-        {
+        if ($hasValidRole && $isOnboardingComplete) {
             Send2FAAuthenticationEmail::dispatch($user);
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-
 use App\Actions\Auth\CheckMultipleStudentsAction;
 use App\Actions\Auth\CheckSingleStudentAction;
 use App\Http\Controllers\Controller;
@@ -20,7 +19,7 @@ class TwoFactorAuthenticationController extends Controller
 {
     public function form(): View|RedirectResponse
     {
-            return view('auth/two-factor-form');
+        return view('auth/two-factor-form');
     }
 
     public function verify(TwoFactorAuthenticationRequest $request): RedirectResponse
@@ -38,8 +37,7 @@ class TwoFactorAuthenticationController extends Controller
             session()->forget('email');
             session()->forget('password');
 
-            if (CheckMultipleStudentsAction::execute($user))
-            {
+            if (CheckMultipleStudentsAction::execute($user)) {
                 return redirect()->route('parents.dashboard', ['students' => $user->students->all()]);
             } elseif (CheckSingleStudentAction::execute($user)) {
                 return redirect()->route('parent.dashboard', ['student_id' => $user->students->first()->id]);
@@ -75,13 +73,14 @@ class TwoFactorAuthenticationController extends Controller
     {
         $user = User::where('email', session()->get('email'))->first();
         $user->update([
-            'two_factor_code' => null
+            'two_factor_code' => null,
         ]);
         session()->forget('email');
         session()->forget('password');
         session()->forget('need_to_pass_2fa');
         session()->invalidate();
         session()->regenerateToken();
+
         return redirect(route('default'));
     }
 

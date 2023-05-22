@@ -34,7 +34,7 @@ class MerchantSeeder extends Seeder
                 ]),
                 'finished_onboarding' => 1,
                 'summary_frequency' => 1,
-            ])->assignRole('school','2fa');
+            ])->assignRole('school', '2fa');
 
         $merchant_for_luka_school_is_oxford_part_2 =
             Merchant::create([
@@ -123,7 +123,7 @@ class MerchantSeeder extends Seeder
                 ]),
                 'finished_onboarding' => 1,
                 'summary_frequency' => 1,
-            ])->assignRole('school','2fa');
+            ])->assignRole('school', '2fa');
 
         $merchant_for_nikoloz_school_is_oxford_part_2 =
             Merchant::create([
@@ -212,7 +212,7 @@ class MerchantSeeder extends Seeder
                 ]),
                 'finished_onboarding' => 1,
                 'summary_frequency' => 1,
-            ])->assignRole('school','2fa');
+            ])->assignRole('school', '2fa');
 
         $merchant_for_levente_school_is_oxford_part_2 =
             Merchant::create([
