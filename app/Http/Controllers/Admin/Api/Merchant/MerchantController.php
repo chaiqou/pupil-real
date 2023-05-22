@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateMerchantRequest;
 use App\Http\Resources\MerchantResource;
 use App\Models\Merchant;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -53,6 +54,14 @@ class MerchantController extends Controller
         $merchant->update([
             'activated' => $request->activated,
         ]);
+         $user = User::where('id', $merchant->user_id)->first();
+
+        if($merchant->activated)
+        {
+            $user->givePermissionTo('can use account');
+        } else {
+            $user->revokePermisisonTo('can use account');
+        }
 
         return response()->json($merchant);
     }

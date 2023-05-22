@@ -8,5 +8,7 @@ return [
         '2fa',
     ],
 
-    'permissions' => [],
+    'permissions' => [
+        'can use account'
+    ],
 ];
