@@ -13,8 +13,9 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class TotalOrdersExcelController extends Controller
+class ExcelController extends Controller
 {
     public function downloadLunchesExcel(): JsonResponse
     {
@@ -37,7 +38,7 @@ class TotalOrdersExcelController extends Controller
         ]);
     }
 
-    public function totalOrdersExcel(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function totalOrdersExcel(Request $request): BinaryFileResponse
     {
         $daysAndWeeksJson = $request->query('dayAndWeek');
         $daysAndWeeksArray = json_decode($daysAndWeeksJson);
