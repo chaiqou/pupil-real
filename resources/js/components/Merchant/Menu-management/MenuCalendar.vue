@@ -97,42 +97,41 @@ const onClickCalendar = (day) => {
 const computedWeeks = computed(() => {
   const computedWeekdays = [];
 
-    const uniqueKeysObject = weeks.value.reduce((accumulator, obj) => {
-        const key = Object.keys(obj)[0];
-        const value = obj[key];
-        const valueDates = value[0].date;
+  const uniqueKeysObject = weeks.value.reduce((accumulator, obj) => {
+    const key = Object.keys(obj)[0];
+    const value = obj[key];
+    const valueDates = value[0].date;
 
-        const uniqueKey = `${key}_${valueDates}`;
+    const uniqueKey = `${key}_${valueDates}`;
 
-        // Check if the uniqueKey already exists in the accumulator
-        if (!accumulator[uniqueKey]) {
-            accumulator[uniqueKey] = obj;
-        }
+    // Check if the uniqueKey already exists in the accumulator
+    if (!accumulator[uniqueKey]) {
+      accumulator[uniqueKey] = obj;
+    }
 
-        return accumulator;
+    return accumulator;
+  }, {});
 
-    }, {});
+  const newArray = Object.entries(uniqueKeysObject).map(([key, value]) => ({
+    [key]: value,
+  }));
 
+  newArray.forEach((week) => {
+    for (const key in week) {
+      const monthName = getMonthByIndex(
+        parseISO(Object.values(week[key])[0][0].date).getMonth() + 1,
+      );
 
-    const newArray = Object.entries(uniqueKeysObject).map(([key, value]) => ({ [key]: value }));
+      let blankState = Object.values(week[key])[0][0].blank;
+      if (blankState == null) {
+        blankState = false;
+      }
 
-    newArray.forEach((week) => {
-          for (const key in week) {
-              console.log(week[key]);
-     // const monthName = getMonthByIndex(
-     //    parseISO(week[key][key][0].date).getMonth() + 1,
-     //  );
-     //
-     //  let blankState = week[key][key][0].blank;
-     //  if (blankState == null) {
-     //    blankState = false;
-     //  }
-
-      // computedWeekdays.push({
-      //   month: monthName,
-      //   days: week[key],
-      //   blank: blankState,
-      // });
+      computedWeekdays.push({
+        month: monthName,
+        days: week[key],
+        blank: blankState,
+      });
     }
   });
 
