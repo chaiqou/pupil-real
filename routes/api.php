@@ -127,11 +127,12 @@ Route::middleware(['auth'])->group(function () {
             Route::put('billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
             Route::get('billingo-api-key-status', [SchoolSettingController::class, 'billingoApiKeyStatus'])->name('school.billingo-api-key-status');
         });
+
+        Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
+        Route::get('merchant/request-export-menu', [TotalOrdersExcelController::class, 'totalOrdersExcel'])->name('merchant.export_total_orders');
     });
 
-    // Here should be defended routes
-    Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
-    Route::get('merchant/request-export-menu', [TotalOrdersExcelController::class, 'totalOrdersExcel'])->name('merchant.export_total_orders');
+
 });
 
 Route::controller(TerminalController::class)->group(function () {
