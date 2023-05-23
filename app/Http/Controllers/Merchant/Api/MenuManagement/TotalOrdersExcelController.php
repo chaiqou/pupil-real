@@ -2,16 +2,50 @@
 
 namespace App\Http\Controllers\Merchant\Api\MenuManagement;
 
+use App\Actions\Calendars\FindWeekNumbersAction;
 use App\Actions\Excel\FindExcelLunchesAction;
 use App\Exports\WeeklyOrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Lunch;
+use App\Models\Merchant;
 use App\Models\PeriodicLunch;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TotalOrdersExcelController extends Controller
 {
+    public function downloadLunchesExcel(): JsonResponse
+    {
+
+        $merchant = Merchant::where('user_id', auth()->user()->id)->get();
+
+        $filteredLunches = [];
+        foreach ($merchant as $merch) {
+            $lunches = Lunch::where('merchant_id', $merch->id)->get();
+
+            // Extract "active_range" values from lunches and compare for duplicates
+            $activeRanges = [];
+
+            $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
+                $activeRange = $lunch->active_range;
+                if (! in_array($activeRange, $activeRanges)) {
+                    $activeRanges[] = $activeRange;
+
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        $weekNumbers = FindWeekNumbersAction::execute($filteredLunches);
+        $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
+
+        return response()->json(['lunches' => $filteredLunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
+    }
+
     public function totalOrdersExcel(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         $daysAndWeeksJson = $request->query('dayAndWeek');

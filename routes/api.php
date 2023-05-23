@@ -126,6 +126,7 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::put('billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
             Route::get('billingo-api-key-status', [SchoolSettingController::class, 'billingoApiKeyStatus'])->name('school.billingo-api-key-status');
+            Route::get('download-lunches-excel', [TotalOrdersExcelController::class, 'downloadLunchesExcel'])->name('school.download_lunches_excel');
         });
 
         Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
@@ -145,7 +146,6 @@ Route::controller(LunchController::class)->group(function () {
     Route::post('lunch/claim', 'claimLunch')->name('lunch.claim');
     Route::get('lunch/students/retrieve', 'retrieveStudents')->name('lunch.students.retrieve');
     Route::get('lunch/suitable-lunch/date', 'suitableLunchForDate')->name('lunch.suitable_date');
-    Route::get('school/download-excel-lunches', 'excelLunches')->name('schoo.excel_lunches');
 });
 
 Route::apiResource('school/lunch', LunchController::class);

@@ -148,7 +148,7 @@ const handleLunchesExport = async (dayAndWeek) => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.get("/api/school/download-excel-lunches");
+    const response = await axios.get("/api/school/download-lunches-excel");
     const lunches = response.data.lunches.data;
     let weeks = response.data.weeks;
 
