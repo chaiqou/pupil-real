@@ -85,9 +85,9 @@ const lunches = ref([]);
 const weeks = ref([]);
 
 const onClickCalendar = (day) => {
-  const formatedDay = format(day, "yyyy-MM-dd");
+  const formattedDay = format(day, "yyyy-MM-dd");
 
-  if (store.marked_days.includes(formatedDay)) {
+  if (store.marked_days.includes(formattedDay)) {
     menuManagementStore.toggleMenuManagementCard =
       !menuManagementStore.toggleMenuManagementCard;
     menuManagementStore.selectedDay = day;
@@ -97,25 +97,42 @@ const onClickCalendar = (day) => {
 const computedWeeks = computed(() => {
   const computedWeekdays = [];
 
-  weeks.value.forEach((week) => {
-    // Loop over weeks array and for each weeks create new array in which we have week index , month name , and days array
+    const uniqueKeysObject = weeks.value.reduce((accumulator, obj) => {
+        const key = Object.keys(obj)[0];
+        const value = obj[key];
+        const valueDates = value[0].date;
 
-    for (const key in week) {
-      // Find correct month name
-      const monthName = getMonthByIndex(
-        parseISO(week[key][0].date).getMonth() + 1,
-      );
+        const uniqueKey = `${key}_${valueDates}`;
 
-      let blankState = week[key][0].blank;
-      if (blankState == null) {
-        blankState = false;
-      }
+        // Check if the uniqueKey already exists in the accumulator
+        if (!accumulator[uniqueKey]) {
+            accumulator[uniqueKey] = obj;
+        }
 
-      computedWeekdays.push({
-        month: monthName,
-        days: week[key],
-        blank: blankState,
-      });
+        return accumulator;
+
+    }, {});
+
+
+    const newArray = Object.entries(uniqueKeysObject).map(([key, value]) => ({ [key]: value }));
+
+    newArray.forEach((week) => {
+          for (const key in week) {
+              console.log(week[key]);
+     // const monthName = getMonthByIndex(
+     //    parseISO(week[key][key][0].date).getMonth() + 1,
+     //  );
+     //
+     //  let blankState = week[key][key][0].blank;
+     //  if (blankState == null) {
+     //    blankState = false;
+     //  }
+
+      // computedWeekdays.push({
+      //   month: monthName,
+      //   days: week[key],
+      //   blank: blankState,
+      // });
     }
   });
 
