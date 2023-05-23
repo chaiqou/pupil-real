@@ -19,26 +19,23 @@ class TotalOrdersExcelController extends Controller
     public function downloadLunchesExcel(): JsonResponse
     {
 
-        $merchant = Merchant::where('user_id', auth()->user()->id)->get();
+        $merchant = Merchant::where('user_id', auth()->user()->id)->first();
+        $lunches = Lunch::where('merchant_id', $merchant->id)->get();
 
-        $filteredLunches = [];
-        foreach ($merchant as $merch) {
-            $lunches = Lunch::where('merchant_id', $merch->id)->get();
+        // Extract "active_range" values from lunches and compare for duplicates
+        $activeRanges = [];
 
-            // Extract "active_range" values from lunches and compare for duplicates
-            $activeRanges = [];
+        $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
+            $activeRange = $lunch->active_range;
+            if (! in_array($activeRange, $activeRanges)) {
+                $activeRanges[] = $activeRange;
 
-            $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
-                $activeRange = $lunch->active_range;
-                if (! in_array($activeRange, $activeRanges)) {
-                    $activeRanges[] = $activeRange;
+                return true;
+            }
 
-                    return true;
-                }
+            return false;
+        });
 
-                return false;
-            });
-        }
 
         $weekNumbers = FindWeekNumbersAction::execute($filteredLunches);
         $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
