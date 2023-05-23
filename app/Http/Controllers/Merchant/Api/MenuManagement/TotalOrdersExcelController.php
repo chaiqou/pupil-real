@@ -18,29 +18,23 @@ class TotalOrdersExcelController extends Controller
 {
     public function downloadLunchesExcel(): JsonResponse
     {
-
         $merchant = Merchant::where('user_id', auth()->user()->id)->first();
         $lunches = Lunch::where('merchant_id', $merchant->id)->get();
 
-        // Extract "active_range" values from lunches and compare for duplicates
-        $activeRanges = [];
+        $activeRanges = $lunches->pluck('active_range')->unique();
 
-        $filteredLunches = collect($lunches)->filter(function ($lunch) use (&$activeRanges) {
-            $activeRange = $lunch->active_range;
-            if (! in_array($activeRange, $activeRanges)) {
-                $activeRanges[] = $activeRange;
-
-                return true;
-            }
-
-            return false;
+        $filteredLunches = $lunches->filter(function ($lunch) use ($activeRanges) {
+            return $activeRanges->contains($lunch->active_range);
         });
-
 
         $weekNumbers = FindWeekNumbersAction::execute($filteredLunches);
         $firstWeekOfCurrentMonth = Carbon::now()->startOfMonth()->weekOfYear;
 
-        return response()->json(['lunches' => $filteredLunches, 'weeks' => $weekNumbers, 'first_week' => $firstWeekOfCurrentMonth]);
+        return response()->json([
+            'lunches' => $filteredLunches,
+            'weeks' => $weekNumbers,
+            'first_week' => $firstWeekOfCurrentMonth
+        ]);
     }
 
     public function totalOrdersExcel(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
