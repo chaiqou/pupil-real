@@ -139,10 +139,14 @@ const computedWeeks = computed(() => {
 });
 
 const handleLunchesExport = async (dayAndWeek) => {
-  try {
+
+    const convertObjectToArray = Object.values(dayAndWeek).filter(Array.isArray);
+    const daysAndWeeksArray = Object.values(convertObjectToArray)[0];
+
+    try {
     const { data } = await axios.get("/api/merchant/request-export-menu", {
       params: {
-        dayAndWeek: JSON.stringify(dayAndWeek),
+        dayAndWeek: JSON.stringify(daysAndWeeksArray),
       },
       responseType: "blob",
     });
