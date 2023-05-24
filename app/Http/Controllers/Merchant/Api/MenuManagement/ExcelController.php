@@ -34,7 +34,7 @@ class ExcelController extends Controller
         return response()->json([
             'lunches' => $filteredLunches,
             'weeks' => $weekNumbers,
-            'first_week' => $firstWeekOfCurrentMonth
+            'first_week' => $firstWeekOfCurrentMonth,
         ]);
     }
 
@@ -45,10 +45,9 @@ class ExcelController extends Controller
 
         $weekNumber = $daysAndWeeksArray[0]->week;
 
-
         $lunches = FindExcelLunchesAction::execute($weekNumber);
 
-        $weekDays = array_map(fn($item) => $item->date, $daysAndWeeksArray);
+        $weekDays = array_map(fn ($item) => $item->date, $daysAndWeeksArray);
         $filteredLunches = $lunches['filteredLunches'];
 
         $lunchesWithMenus = Lunch::with('menus')
@@ -73,7 +72,7 @@ class ExcelController extends Controller
                         if (is_array($menu['menus'])) {
                             foreach ($menu['menus'] as $subIndex => &$subMenu) {
                                 $choicesMenuKey = "{$wholeMenu->id}-{$wholeMenu->lunch_id}-{$date}-{$subMenu}-{$subIndex}";
-                                $menuCount = PeriodicLunch::where('claims', 'LIKE', '%' . $choicesMenuKey . '%')->count();
+                                $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$choicesMenuKey.'%')->count();
                                 $subMenu = [
                                     'menus' => $subMenu,
                                     'menu_count' => $menuCount,
@@ -81,7 +80,7 @@ class ExcelController extends Controller
                             }
                         } else {
                             $fixedMenuKey = "{$wholeMenu->id}-{$wholeMenu->lunch_id}-{$date}-{$menu['name']}-{$index}";
-                            $menuCount = PeriodicLunch::where('claims', 'LIKE', '%' . $fixedMenuKey . '%')->count();
+                            $menuCount = PeriodicLunch::where('claims', 'LIKE', '%'.$fixedMenuKey.'%')->count();
                             $menu['menu_count'] = $menuCount;
                         }
                     }

@@ -54,10 +54,9 @@ class MerchantController extends Controller
         $merchant->update([
             'activated' => $request->activated,
         ]);
-         $user = User::where('id', $merchant->user_id)->first();
+        $user = User::where('id', $merchant->user_id)->first();
 
-        if($merchant->activated)
-        {
+        if ($merchant->activated) {
             $user->givePermissionTo('can use account');
         } else {
             $user->revokePermisisonTo('can use account');

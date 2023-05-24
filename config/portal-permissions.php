@@ -9,6 +9,6 @@ return [
     ],
 
     'permissions' => [
-        'can use account'
+        'can use account',
     ],
 ];
