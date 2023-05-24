@@ -11,7 +11,7 @@ use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LanguageController as ApiLanguageController;
 use App\Http\Controllers\Merchant\Api\InviteController as ApiMerchantInviteController;
 use App\Http\Controllers\Merchant\Api\MenuManagement\MenuManagementController;
-use App\Http\Controllers\Merchant\Api\MenuManagement\TotalOrdersExcelController;
+use App\Http\Controllers\Merchant\Api\MenuManagement\ExcelController;
 use App\Http\Controllers\Parent\Api\InviteController as ApiParentInviteController;
 use App\Http\Controllers\Parent\Api\OrderLunchController;
 use App\Http\Controllers\Parent\Api\ParentMenuController;
@@ -126,11 +126,11 @@ Route::middleware(['auth'])->group(function () {
             });
             Route::put('billingo-api-key', [SchoolSettingController::class, 'updateBillingoApiKey'])->name('school.update-billingo-key');
             Route::get('billingo-api-key-status', [SchoolSettingController::class, 'billingoApiKeyStatus'])->name('school.billingo-api-key-status');
-            Route::get('download-lunches-excel', [TotalOrdersExcelController::class, 'downloadLunchesExcel'])->name('school.download_lunches_excel');
+            Route::get('download-lunches-excel', [ExcelController::class, 'downloadLunchesExcel'])->name('school.download_lunches_excel');
         });
 
         Route::post('merchant/create-menu', [MenuManagementController::class, 'createMenu'])->name('merchant.create_menu');
-        Route::get('merchant/request-export-menu', [TotalOrdersExcelController::class, 'totalOrdersExcel'])->name('merchant.export_total_orders');
+        Route::get('merchant/request-export-menu', [ExcelController::class, 'totalOrdersExcel'])->name('merchant.export_total_orders');
     });
 
 
