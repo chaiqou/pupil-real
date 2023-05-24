@@ -9,9 +9,12 @@
       </h2>
       <button
         class="mt-4 mb-4 flex w-full justify-center rounded-md bg-indigo-700 px-4 py-2 text-base font-medium text-white"
+        :class="{
+        'bg-indigo-700': inputCounts[claimable]?.length < 5,
+        'bg-red-500 cursor-none': inputCounts[claimable]?.length >= 5}"
         @click="onClickAddInput(claimable)"
       >
-        Add Input
+        {{ inputCounts[claimable]?.length < 5 ? "Add Option" : `You can't add more option for this ${claimable}`  }}
       </button>
       <div
         class="flex items-center justify-center space-x-2 space-y-2"
@@ -27,7 +30,7 @@
           class="basis-1/2 rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           @click="onClickRemoveInput(claimable, index)"
         >
-          Remove Input
+          Remove Option
         </button>
       </div>
     </div>
@@ -57,7 +60,10 @@ onMounted(() => {
 
 // Add one input for specific lunch
 function onClickAddInput(claimable) {
-  inputCounts.value[claimable].push(inputCounts.value[claimable].length);
+    if(inputCounts.value[claimable].length < 5)
+    {
+        inputCounts.value[claimable].push(inputCounts.value[claimable].length);
+    }
 }
 
 // Remove input by its index
