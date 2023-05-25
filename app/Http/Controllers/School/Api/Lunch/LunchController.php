@@ -92,8 +92,6 @@ class LunchController extends Controller
         return LunchResource::collection($lunches);
     }
 
-
-
     public function retrieveStudents(StudentListRequest $request)
     {
         $validated = $request->validated();
