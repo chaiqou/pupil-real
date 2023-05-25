@@ -253,20 +253,20 @@ const en = {
     enter_your_billingo_api_key: "Enter your Billingo api key",
     this_field_will_activate_only_when_your_billingo_api_key_will_not_work_in_this_case_people_will_not_be_able_to_pay_with_pay_with_transfer_type_and_only_stripe_will_be_available_you_will_get_an_email_if_something_will_go_wrong_with_your_billingo_api_key:
       "This field will activate only when your Billingo Api Key will not work, in this case people will not be able to pay with *Pay with Transfer* type and only Stripe will be available. You will get an Email if something will go wrong with your Billingo Api Key",
-    insights: 'Insights',
+    insights: "Insights",
     or_add_a_new_student: "Or add a new student",
-    order_your_first_lunch_pupilpay:
-          "Order your first lunch PupilPay",
+    order_your_first_lunch_pupilpay: "Order your first lunch PupilPay",
     after_ordering_lunch_dont_forget_to_check_whats_for_lunch_head_over_to_menus:
-          "After ordering lunch dont forget to check whats for lunch head over to menus",
+      "After ordering lunch dont forget to check whats for lunch head over to menus",
     see_all_your_past_transactions_in_the_transactions_tab:
-          "See all your past transactions in the Transactions tab",
+      "See all your past transactions in the Transactions tab",
     order_lunch: "Order lunch",
     choose_a_menu: "Choose a menu",
     check_your_transactions: "Check your transactions",
     welcome_to_pupilpay: "Welcome to PupilPay",
     whats_next: "What’s next",
-    no_lunch_is_currently_available_to_order: "No lunch is currently available to order",
+    no_lunch_is_currently_available_to_order:
+      "No lunch is currently available to order",
     merchant_status: "Merchant status",
     are_you_sure: "Are you sure",
     activate: "Activate",
@@ -275,12 +275,16 @@ const en = {
     inactive: "Inactive",
     active: "Active",
     you_are_on_admin_dashboard: "You are on admin Dashboard",
-    be_careful_you_are_on_admin_dashboard: "Be careful, you are on admin dashboard",
+    be_careful_you_are_on_admin_dashboard:
+      "Be careful, you are on admin dashboard",
     admin_panel: "Admin Panel",
     are_you_sure_you_want_to: "Are you sure you want to",
     activate_another: "Activate",
     deactivate_another: "Deactivate",
-    two_fa_for_another: "2FA"
+    two_fa_for_another: "2FA",
+    choices_add_option: "Add Option",
+    choices_can_not_add_more_option: "You can't add more option for this",
+    choices_remove_option: "Remove Option",
   },
 };
 
