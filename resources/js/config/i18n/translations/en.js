@@ -285,6 +285,7 @@ const en = {
     choices_add_option: "Add Option",
     choices_can_not_add_more_option: "You can't add more option for this",
     choices_remove_option: "Remove Option",
+    discard: "Discard",
   },
 };
 

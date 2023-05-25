@@ -284,6 +284,7 @@ const hu = {
     choices_add_option: "Add Option HU",
     choices_can_not_add_more_option: "You can't add more option for this HU",
     choices_remove_option: "Remove Option HU",
+    discard: "Discard HU",
   },
 };
 
